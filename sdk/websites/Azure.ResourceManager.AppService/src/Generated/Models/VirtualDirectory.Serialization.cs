@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualPath))
+            if (VirtualPath != null)
             {
                 writer.WritePropertyName("virtualPath"u8);
                 writer.WriteStringValue(VirtualPath);
             }
-            if (Optional.IsDefined(PhysicalPath))
+            if (PhysicalPath != null)
             {
                 writer.WritePropertyName("physicalPath"u8);
                 writer.WriteStringValue(PhysicalPath);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> virtualPath = default;
-            Optional<string> physicalPath = default;
+            string virtualPath = default;
+            string physicalPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualDirectory(virtualPath.Value, physicalPath.Value, serializedAdditionalRawData);
+            return new VirtualDirectory(virtualPath, physicalPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualDirectory>.Write(ModelReaderWriterOptions options)

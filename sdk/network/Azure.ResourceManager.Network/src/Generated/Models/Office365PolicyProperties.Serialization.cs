@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BreakOutCategories))
+            if (BreakOutCategories != null)
             {
                 writer.WritePropertyName("breakOutCategories"u8);
                 writer.WriteObjectValue(BreakOutCategories);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<BreakOutCategoryPolicies> breakOutCategories = default;
+            BreakOutCategoryPolicies breakOutCategories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    breakOutCategories = BreakOutCategoryPolicies.DeserializeBreakOutCategoryPolicies(property.Value);
+                    breakOutCategories = BreakOutCategoryPolicies.DeserializeBreakOutCategoryPolicies(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Office365PolicyProperties(breakOutCategories.Value, serializedAdditionalRawData);
+            return new Office365PolicyProperties(breakOutCategories, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Office365PolicyProperties>.Write(ModelReaderWriterOptions options)

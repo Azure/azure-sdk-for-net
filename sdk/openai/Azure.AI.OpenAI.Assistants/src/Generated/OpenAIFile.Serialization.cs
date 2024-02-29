@@ -123,7 +123,14 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OpenAIFile(@object, id, bytes, filename, createdAt, purpose, serializedAdditionalRawData);
+            return new OpenAIFile(
+                @object,
+                id,
+                bytes,
+                filename,
+                createdAt,
+                purpose,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OpenAIFile>.Write(ModelReaderWriterOptions options)

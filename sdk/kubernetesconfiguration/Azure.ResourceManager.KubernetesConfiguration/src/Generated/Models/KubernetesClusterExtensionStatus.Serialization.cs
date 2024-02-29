@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(DisplayStatus))
+            if (DisplayStatus != null)
             {
                 writer.WritePropertyName("displayStatus"u8);
                 writer.WriteStringValue(DisplayStatus);
             }
-            if (Optional.IsDefined(Level))
+            if (Level.HasValue)
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToString());
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(Time))
+            if (Time != null)
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> displayStatus = default;
-            Optional<KubernetesClusterExtensionStatusLevel> level = default;
-            Optional<string> message = default;
-            Optional<string> time = default;
+            string code = default;
+            string displayStatus = default;
+            KubernetesClusterExtensionStatusLevel? level = default;
+            string message = default;
+            string time = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterExtensionStatus(code.Value, displayStatus.Value, Optional.ToNullable(level), message.Value, time.Value, serializedAdditionalRawData);
+            return new KubernetesClusterExtensionStatus(
+                code,
+                displayStatus,
+                level,
+                message,
+                time,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterExtensionStatus>.Write(ModelReaderWriterOptions options)

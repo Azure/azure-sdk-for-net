@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccountName))
+            if (AccountName != null)
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Optional.IsDefined(AccountKey))
+            if (AccountKey != null)
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
-            if (Optional.IsDefined(AccessMode))
+            if (AccessMode.HasValue)
             {
                 writer.WritePropertyName("accessMode"u8);
                 writer.WriteStringValue(AccessMode.Value.ToString());
             }
-            if (Optional.IsDefined(ShareName))
+            if (ShareName != null)
             {
                 writer.WritePropertyName("shareName"u8);
                 writer.WriteStringValue(ShareName);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> accountKey = default;
-            Optional<ContainerAppAccessMode> accessMode = default;
-            Optional<string> shareName = default;
+            string accountName = default;
+            string accountKey = default;
+            ContainerAppAccessMode? accessMode = default;
+            string shareName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppAzureFileProperties(accountName.Value, accountKey.Value, Optional.ToNullable(accessMode), shareName.Value, serializedAdditionalRawData);
+            return new ContainerAppAzureFileProperties(accountName, accountKey, accessMode, shareName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppAzureFileProperties>.Write(ModelReaderWriterOptions options)

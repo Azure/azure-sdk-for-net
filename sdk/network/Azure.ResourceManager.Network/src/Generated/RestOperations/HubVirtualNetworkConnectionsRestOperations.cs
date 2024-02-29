@@ -74,11 +74,42 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string virtualHubName, string connectionName, HubVirtualNetworkConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+            if (virtualHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHubName));
+            }
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, virtualHubName, connectionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -103,11 +134,42 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string virtualHubName, string connectionName, HubVirtualNetworkConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+            if (virtualHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHubName));
+            }
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, virtualHubName, connectionName, data);
             _pipeline.Send(message, cancellationToken);
@@ -153,10 +215,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string virtualHubName, string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+            if (virtualHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHubName));
+            }
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, virtualHubName, connectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -181,10 +271,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string virtualHubName, string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+            if (virtualHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHubName));
+            }
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, virtualHubName, connectionName);
             _pipeline.Send(message, cancellationToken);
@@ -231,10 +349,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HubVirtualNetworkConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualHubName, string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+            if (virtualHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHubName));
+            }
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, virtualHubName, connectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -264,10 +410,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HubVirtualNetworkConnectionData> Get(string subscriptionId, string resourceGroupName, string virtualHubName, string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+            if (virtualHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHubName));
+            }
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, virtualHubName, connectionName);
             _pipeline.Send(message, cancellationToken);
@@ -317,9 +491,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ListHubVirtualNetworkConnectionsResult>> ListAsync(string subscriptionId, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+            if (virtualHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHubName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, virtualHubName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -346,9 +541,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ListHubVirtualNetworkConnectionsResult> List(string subscriptionId, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+            if (virtualHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHubName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, virtualHubName);
             _pipeline.Send(message, cancellationToken);
@@ -390,10 +606,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ListHubVirtualNetworkConnectionsResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+            if (virtualHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHubName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, virtualHubName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -421,10 +661,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ListHubVirtualNetworkConnectionsResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+            if (virtualHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHubName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, virtualHubName);
             _pipeline.Send(message, cancellationToken);

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Optional.IsDefined(AdditionalErrorInfo))
+            if (AdditionalErrorInfo != null)
             {
                 writer.WritePropertyName("additionalErrorInfo"u8);
                 writer.WriteStringValue(AdditionalErrorInfo);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<string> target = default;
-            Optional<string> additionalErrorInfo = default;
+            string code = default;
+            string message = default;
+            string target = default;
+            string additionalErrorInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraError(code.Value, message.Value, target.Value, additionalErrorInfo.Value, serializedAdditionalRawData);
+            return new CassandraError(code, message, target, additionalErrorInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraError>.Write(ModelReaderWriterOptions options)

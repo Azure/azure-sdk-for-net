@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The vectorization method to be used during query time. </summary>
-    public readonly partial struct VectorSearchVectorizerKind : IEquatable<VectorSearchVectorizerKind>
+    internal readonly partial struct VectorSearchVectorizerKind : IEquatable<VectorSearchVectorizerKind>
     {
         private readonly string _value;
 

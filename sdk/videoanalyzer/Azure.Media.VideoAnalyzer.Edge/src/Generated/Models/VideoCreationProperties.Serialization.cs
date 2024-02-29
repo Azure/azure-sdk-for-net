@@ -15,22 +15,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(SegmentLength))
+            if (SegmentLength != null)
             {
                 writer.WritePropertyName("segmentLength"u8);
                 writer.WriteStringValue(SegmentLength);
             }
-            if (Optional.IsDefined(RetentionPeriod))
+            if (RetentionPeriod != null)
             {
                 writer.WritePropertyName("retentionPeriod"u8);
                 writer.WriteStringValue(RetentionPeriod);
@@ -44,10 +44,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<string> segmentLength = default;
-            Optional<string> retentionPeriod = default;
+            string title = default;
+            string description = default;
+            string segmentLength = default;
+            string retentionPeriod = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"u8))
@@ -71,7 +71,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new VideoCreationProperties(title.Value, description.Value, segmentLength.Value, retentionPeriod.Value);
+            return new VideoCreationProperties(title, description, segmentLength, retentionPeriod);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SiteRecoveryProtectionContainerData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SiteRecoveryProtectionContainerData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SiteRecoveryProtectionContainerData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryProtectionContainerData> array = new List<SiteRecoveryProtectionContainerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryProtectionContainerData.DeserializeSiteRecoveryProtectionContainerData(item));
+                        array.Add(SiteRecoveryProtectionContainerData.DeserializeSiteRecoveryProtectionContainerData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryProtectionContainerListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SiteRecoveryProtectionContainerListResult(value ?? new ChangeTrackingList<SiteRecoveryProtectionContainerData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryProtectionContainerListResult>.Write(ModelReaderWriterOptions options)

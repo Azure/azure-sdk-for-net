@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
         public SnapshotCreationInfo(ResourceIdentifier sourceId)
         {
-            Argument.AssertNotNull(sourceId, nameof(sourceId));
+            if (sourceId == null)
+            {
+                throw new ArgumentNullException(nameof(sourceId));
+            }
 
             SourceId = sourceId;
         }

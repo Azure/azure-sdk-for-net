@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(EventSourceFriendlyName))
+            if (options.Format != "W" && EventSourceFriendlyName != null)
             {
                 writer.WritePropertyName("eventSourceFriendlyName"u8);
                 writer.WriteStringValue(EventSourceFriendlyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProtectedItemFriendlyName))
+            if (options.Format != "W" && ProtectedItemFriendlyName != null)
             {
                 writer.WritePropertyName("protectedItemFriendlyName"u8);
                 writer.WriteStringValue(ProtectedItemFriendlyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceApplianceName))
+            if (options.Format != "W" && SourceApplianceName != null)
             {
                 writer.WritePropertyName("sourceApplianceName"u8);
                 writer.WriteStringValue(SourceApplianceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetApplianceName))
+            if (options.Format != "W" && TargetApplianceName != null)
             {
                 writer.WritePropertyName("targetApplianceName"u8);
                 writer.WriteStringValue(TargetApplianceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerType))
+            if (options.Format != "W" && ServerType != null)
             {
                 writer.WritePropertyName("serverType"u8);
                 writer.WriteStringValue(ServerType);
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> eventSourceFriendlyName = default;
-            Optional<string> protectedItemFriendlyName = default;
-            Optional<string> sourceApplianceName = default;
-            Optional<string> targetApplianceName = default;
-            Optional<string> serverType = default;
+            string eventSourceFriendlyName = default;
+            string protectedItemFriendlyName = default;
+            string sourceApplianceName = default;
+            string targetApplianceName = default;
+            string serverType = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +137,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVToAzStackHciEventModelCustomProperties(instanceType, serializedAdditionalRawData, eventSourceFriendlyName.Value, protectedItemFriendlyName.Value, sourceApplianceName.Value, targetApplianceName.Value, serverType.Value);
+            return new HyperVToAzStackHciEventModelCustomProperties(
+                instanceType,
+                serializedAdditionalRawData,
+                eventSourceFriendlyName,
+                protectedItemFriendlyName,
+                sourceApplianceName,
+                targetApplianceName,
+                serverType);
         }
 
         BinaryData IPersistableModel<HyperVToAzStackHciEventModelCustomProperties>.Write(ModelReaderWriterOptions options)

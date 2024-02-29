@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PendingUploadId))
+            if (PendingUploadId != null)
             {
                 if (PendingUploadId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("pendingUploadId");
                 }
             }
-            if (Optional.IsDefined(PendingUploadType))
+            if (PendingUploadType.HasValue)
             {
                 writer.WritePropertyName("pendingUploadType"u8);
                 writer.WriteStringValue(PendingUploadType.Value.ToString());
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> pendingUploadId = default;
-            Optional<PendingUploadType> pendingUploadType = default;
+            string pendingUploadId = default;
+            PendingUploadType? pendingUploadType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PendingUploadRequestDto(pendingUploadId.Value, Optional.ToNullable(pendingUploadType), serializedAdditionalRawData);
+            return new PendingUploadRequestDto(pendingUploadId, pendingUploadType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PendingUploadRequestDto>.Write(ModelReaderWriterOptions options)

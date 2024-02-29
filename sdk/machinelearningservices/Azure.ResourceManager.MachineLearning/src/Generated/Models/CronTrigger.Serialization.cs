@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("expression"u8);
             writer.WriteStringValue(Expression);
-            if (Optional.IsDefined(EndTime))
+            if (EndTime != null)
             {
                 if (EndTime != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (Optional.IsDefined(StartTime))
+            if (StartTime != null)
             {
                 if (StartTime != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (Optional.IsDefined(TimeZone))
+            if (TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string expression = default;
-            Optional<string> endTime = default;
-            Optional<string> startTime = default;
-            Optional<string> timeZone = default;
+            string endTime = default;
+            string startTime = default;
+            string timeZone = default;
             MachineLearningTriggerType triggerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CronTrigger(endTime.Value, startTime.Value, timeZone.Value, triggerType, serializedAdditionalRawData, expression);
+            return new CronTrigger(
+                endTime,
+                startTime,
+                timeZone,
+                triggerType,
+                serializedAdditionalRawData,
+                expression);
         }
 
         BinaryData IPersistableModel<CronTrigger>.Write(ModelReaderWriterOptions options)

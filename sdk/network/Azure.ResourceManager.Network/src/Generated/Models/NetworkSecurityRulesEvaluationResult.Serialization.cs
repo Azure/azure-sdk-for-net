@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ProtocolMatched))
+            if (ProtocolMatched.HasValue)
             {
                 writer.WritePropertyName("protocolMatched"u8);
                 writer.WriteBooleanValue(ProtocolMatched.Value);
             }
-            if (Optional.IsDefined(SourceMatched))
+            if (SourceMatched.HasValue)
             {
                 writer.WritePropertyName("sourceMatched"u8);
                 writer.WriteBooleanValue(SourceMatched.Value);
             }
-            if (Optional.IsDefined(SourcePortMatched))
+            if (SourcePortMatched.HasValue)
             {
                 writer.WritePropertyName("sourcePortMatched"u8);
                 writer.WriteBooleanValue(SourcePortMatched.Value);
             }
-            if (Optional.IsDefined(DestinationMatched))
+            if (DestinationMatched.HasValue)
             {
                 writer.WritePropertyName("destinationMatched"u8);
                 writer.WriteBooleanValue(DestinationMatched.Value);
             }
-            if (Optional.IsDefined(DestinationPortMatched))
+            if (DestinationPortMatched.HasValue)
             {
                 writer.WritePropertyName("destinationPortMatched"u8);
                 writer.WriteBooleanValue(DestinationPortMatched.Value);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> protocolMatched = default;
-            Optional<bool> sourceMatched = default;
-            Optional<bool> sourcePortMatched = default;
-            Optional<bool> destinationMatched = default;
-            Optional<bool> destinationPortMatched = default;
+            string name = default;
+            bool? protocolMatched = default;
+            bool? sourceMatched = default;
+            bool? sourcePortMatched = default;
+            bool? destinationMatched = default;
+            bool? destinationPortMatched = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityRulesEvaluationResult(name.Value, Optional.ToNullable(protocolMatched), Optional.ToNullable(sourceMatched), Optional.ToNullable(sourcePortMatched), Optional.ToNullable(destinationMatched), Optional.ToNullable(destinationPortMatched), serializedAdditionalRawData);
+            return new NetworkSecurityRulesEvaluationResult(
+                name,
+                protocolMatched,
+                sourceMatched,
+                sourcePortMatched,
+                destinationMatched,
+                destinationPortMatched,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityRulesEvaluationResult>.Write(ModelReaderWriterOptions options)

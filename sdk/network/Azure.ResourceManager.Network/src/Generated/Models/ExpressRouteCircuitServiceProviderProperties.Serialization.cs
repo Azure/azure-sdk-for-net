@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceProviderName))
+            if (ServiceProviderName != null)
             {
                 writer.WritePropertyName("serviceProviderName"u8);
                 writer.WriteStringValue(ServiceProviderName);
             }
-            if (Optional.IsDefined(PeeringLocation))
+            if (PeeringLocation != null)
             {
                 writer.WritePropertyName("peeringLocation"u8);
                 writer.WriteStringValue(PeeringLocation);
             }
-            if (Optional.IsDefined(BandwidthInMbps))
+            if (BandwidthInMbps.HasValue)
             {
                 writer.WritePropertyName("bandwidthInMbps"u8);
                 writer.WriteNumberValue(BandwidthInMbps.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> serviceProviderName = default;
-            Optional<string> peeringLocation = default;
-            Optional<int> bandwidthInMbps = default;
+            string serviceProviderName = default;
+            string peeringLocation = default;
+            int? bandwidthInMbps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitServiceProviderProperties(serviceProviderName.Value, peeringLocation.Value, Optional.ToNullable(bandwidthInMbps), serializedAdditionalRawData);
+            return new ExpressRouteCircuitServiceProviderProperties(serviceProviderName, peeringLocation, bandwidthInMbps, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitServiceProviderProperties>.Write(ModelReaderWriterOptions options)

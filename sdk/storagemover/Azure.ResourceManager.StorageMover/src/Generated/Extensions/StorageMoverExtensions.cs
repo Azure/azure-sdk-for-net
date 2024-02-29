@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> Returns a <see cref="StorageMoverResource"/> object. </returns>
         public static StorageMoverResource GetStorageMoverResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableStorageMoverArmClient(client).GetStorageMoverResource(id);
         }
@@ -67,7 +70,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> Returns a <see cref="StorageMoverAgentResource"/> object. </returns>
         public static StorageMoverAgentResource GetStorageMoverAgentResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableStorageMoverArmClient(client).GetStorageMoverAgentResource(id);
         }
@@ -86,7 +92,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> Returns a <see cref="StorageMoverEndpointResource"/> object. </returns>
         public static StorageMoverEndpointResource GetStorageMoverEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableStorageMoverArmClient(client).GetStorageMoverEndpointResource(id);
         }
@@ -105,7 +114,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> Returns a <see cref="StorageMoverProjectResource"/> object. </returns>
         public static StorageMoverProjectResource GetStorageMoverProjectResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableStorageMoverArmClient(client).GetStorageMoverProjectResource(id);
         }
@@ -124,7 +136,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> Returns a <see cref="JobDefinitionResource"/> object. </returns>
         public static JobDefinitionResource GetJobDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableStorageMoverArmClient(client).GetJobDefinitionResource(id);
         }
@@ -143,7 +158,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> Returns a <see cref="JobRunResource"/> object. </returns>
         public static JobRunResource GetJobRunResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableStorageMoverArmClient(client).GetJobRunResource(id);
         }
@@ -160,7 +178,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> An object representing collection of StorageMoverResources and their operations over a StorageMoverResource. </returns>
         public static StorageMoverCollection GetStorageMovers(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableStorageMoverResourceGroupResource(resourceGroupResource).GetStorageMovers();
         }
@@ -198,7 +219,10 @@ namespace Azure.ResourceManager.StorageMover
         [ForwardsClientCalls]
         public static async Task<Response<StorageMoverResource>> GetStorageMoverAsync(this ResourceGroupResource resourceGroupResource, string storageMoverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableStorageMoverResourceGroupResource(resourceGroupResource).GetStorageMoverAsync(storageMoverName, cancellationToken).ConfigureAwait(false);
         }
@@ -236,7 +260,10 @@ namespace Azure.ResourceManager.StorageMover
         [ForwardsClientCalls]
         public static Response<StorageMoverResource> GetStorageMover(this ResourceGroupResource resourceGroupResource, string storageMoverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableStorageMoverResourceGroupResource(resourceGroupResource).GetStorageMover(storageMoverName, cancellationToken);
         }
@@ -272,7 +299,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> An async collection of <see cref="StorageMoverResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageMoverResource> GetStorageMoversAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableStorageMoverSubscriptionResource(subscriptionResource).GetStorageMoversAsync(cancellationToken);
         }
@@ -308,7 +338,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> A collection of <see cref="StorageMoverResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageMoverResource> GetStorageMovers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableStorageMoverSubscriptionResource(subscriptionResource).GetStorageMovers(cancellationToken);
         }

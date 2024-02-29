@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlertsForCriticalOperations))
+            if (AlertsForCriticalOperations.HasValue)
             {
                 writer.WritePropertyName("alertsForCriticalOperations"u8);
                 writer.WriteStringValue(AlertsForCriticalOperations.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<RecoveryServicesAlertsState> alertsForCriticalOperations = default;
+            RecoveryServicesAlertsState? alertsForCriticalOperations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClassicAlertSettings(Optional.ToNullable(alertsForCriticalOperations), serializedAdditionalRawData);
+            return new ClassicAlertSettings(alertsForCriticalOperations, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClassicAlertSettings>.Write(ModelReaderWriterOptions options)

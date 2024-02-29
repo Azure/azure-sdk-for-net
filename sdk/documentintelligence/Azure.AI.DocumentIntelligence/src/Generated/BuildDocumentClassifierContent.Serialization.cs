@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartObject();
             writer.WritePropertyName("classifierId"u8);
             writer.WriteStringValue(ClassifierId);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -81,7 +81,7 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             string classifierId = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, ClassifierDocumentTypeDetails> docTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -102,7 +102,7 @@ namespace Azure.AI.DocumentIntelligence
                     Dictionary<string, ClassifierDocumentTypeDetails> dictionary = new Dictionary<string, ClassifierDocumentTypeDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ClassifierDocumentTypeDetails.DeserializeClassifierDocumentTypeDetails(property0.Value));
+                        dictionary.Add(property0.Name, ClassifierDocumentTypeDetails.DeserializeClassifierDocumentTypeDetails(property0.Value, options));
                     }
                     docTypes = dictionary;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BuildDocumentClassifierContent(classifierId, description.Value, docTypes, serializedAdditionalRawData);
+            return new BuildDocumentClassifierContent(classifierId, description, docTypes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BuildDocumentClassifierContent>.Write(ModelReaderWriterOptions options)

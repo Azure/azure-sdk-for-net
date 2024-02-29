@@ -17,12 +17,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("metricDisplayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("metricDescription"u8);
                 writer.WriteStringValue(Description);
@@ -36,10 +36,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> metricId = default;
+            string metricId = default;
             string metricName = default;
-            Optional<string> metricDisplayName = default;
-            Optional<string> metricDescription = default;
+            string metricDisplayName = default;
+            string metricDescription = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricId"u8))
@@ -63,7 +63,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataFeedMetric(metricId.Value, metricName, metricDisplayName.Value, metricDescription.Value);
+            return new DataFeedMetric(metricId, metricName, metricDisplayName, metricDescription);
         }
     }
 }

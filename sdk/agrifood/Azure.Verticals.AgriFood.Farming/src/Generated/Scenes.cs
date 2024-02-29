@@ -69,7 +69,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='DownloadAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DownloadAsync(string filePath, RequestContext context)
         {
-            Argument.AssertNotNull(filePath, nameof(filePath));
+            if (filePath == null)
+            {
+                throw new ArgumentNullException(nameof(filePath));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Scenes.Download");
             scope.Start();
@@ -103,7 +106,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='Download(string,RequestContext)']/*" />
         public virtual Response Download(string filePath, RequestContext context)
         {
-            Argument.AssertNotNull(filePath, nameof(filePath));
+            if (filePath == null)
+            {
+                throw new ArgumentNullException(nameof(filePath));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Scenes.Download");
             scope.Start();
@@ -138,7 +144,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetSatelliteDataIngestionJobDetailsAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetSatelliteDataIngestionJobDetailsAsync(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Scenes.GetSatelliteDataIngestionJobDetails");
             scope.Start();
@@ -173,7 +186,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetSatelliteDataIngestionJobDetails(string,RequestContext)']/*" />
         public virtual Response GetSatelliteDataIngestionJobDetails(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Scenes.GetSatelliteDataIngestionJobDetails");
             scope.Start();
@@ -211,8 +231,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='SearchFeaturesAsync(string,RequestContent,int?,int?,RequestContext)']/*" />
         public virtual async Task<Response> SearchFeaturesAsync(string collectionId, RequestContent content, int? maxpagesize = null, int? skip = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (collectionId == null)
+            {
+                throw new ArgumentNullException(nameof(collectionId));
+            }
+            if (collectionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Scenes.SearchFeatures");
             scope.Start();
@@ -250,8 +280,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='SearchFeatures(string,RequestContent,int?,int?,RequestContext)']/*" />
         public virtual Response SearchFeatures(string collectionId, RequestContent content, int? maxpagesize = null, int? skip = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (collectionId == null)
+            {
+                throw new ArgumentNullException(nameof(collectionId));
+            }
+            if (collectionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Scenes.SearchFeatures");
             scope.Start();
@@ -287,8 +327,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetStacFeatureAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetStacFeatureAsync(string collectionId, string featureId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(featureId, nameof(featureId));
+            if (collectionId == null)
+            {
+                throw new ArgumentNullException(nameof(collectionId));
+            }
+            if (collectionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionId));
+            }
+            if (featureId == null)
+            {
+                throw new ArgumentNullException(nameof(featureId));
+            }
+            if (featureId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(featureId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Scenes.GetStacFeature");
             scope.Start();
@@ -324,8 +378,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetStacFeature(string,string,RequestContext)']/*" />
         public virtual Response GetStacFeature(string collectionId, string featureId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(featureId, nameof(featureId));
+            if (collectionId == null)
+            {
+                throw new ArgumentNullException(nameof(collectionId));
+            }
+            if (collectionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionId));
+            }
+            if (featureId == null)
+            {
+                throw new ArgumentNullException(nameof(featureId));
+            }
+            if (featureId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(featureId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Scenes.GetStacFeature");
             scope.Start();
@@ -374,10 +442,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetScenesAsync(string,string,string,string,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{double},IEnumerable{string},int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetScenesAsync(string provider, string partyId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNull(provider, nameof(provider));
-            Argument.AssertNotNull(partyId, nameof(partyId));
-            Argument.AssertNotNull(boundaryId, nameof(boundaryId));
-            Argument.AssertNotNull(source, nameof(source));
+            if (provider == null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (boundaryId == null)
+            {
+                throw new ArgumentNullException(nameof(boundaryId));
+            }
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScenesRequest(provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScenesNextPageRequest(nextLink, provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
@@ -417,10 +497,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetScenes(string,string,string,string,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{double},IEnumerable{string},int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetScenes(string provider, string partyId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNull(provider, nameof(provider));
-            Argument.AssertNotNull(partyId, nameof(partyId));
-            Argument.AssertNotNull(boundaryId, nameof(boundaryId));
-            Argument.AssertNotNull(source, nameof(source));
+            if (provider == null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (boundaryId == null)
+            {
+                throw new ArgumentNullException(nameof(boundaryId));
+            }
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScenesRequest(provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScenesNextPageRequest(nextLink, provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
@@ -448,8 +540,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='CreateSatelliteDataIngestionJobAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateSatelliteDataIngestionJobAsync(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Scenes.CreateSatelliteDataIngestionJob");
             scope.Start();
@@ -486,8 +588,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='CreateSatelliteDataIngestionJob(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateSatelliteDataIngestionJob(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Scenes.CreateSatelliteDataIngestionJob");
             scope.Start();
@@ -531,21 +643,21 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxDarkPixelCoveragePercentage", maxDarkPixelCoveragePercentage.Value, true);
             }
-            if (imageNames != null && Optional.IsCollectionDefined(imageNames))
+            if (imageNames != null && !(imageNames is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in imageNames)
                 {
                     uri.AppendQuery("imageNames", param, true);
                 }
             }
-            if (imageResolutions != null && Optional.IsCollectionDefined(imageResolutions))
+            if (imageResolutions != null && !(imageResolutions is ChangeTrackingList<double> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in imageResolutions)
                 {
                     uri.AppendQuery("imageResolutions", param, true);
                 }
             }
-            if (imageFormats != null && Optional.IsCollectionDefined(imageFormats))
+            if (imageFormats != null && !(imageFormats is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in imageFormats)
                 {

@@ -23,12 +23,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(IgnoreCase))
+            if (IgnoreCase.HasValue)
             {
                 writer.WritePropertyName("ignoreCase"u8);
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (Optional.IsDefined(Expand))
+            if (Expand.HasValue)
             {
                 writer.WritePropertyName("expand"u8);
                 writer.WriteBooleanValue(Expand.Value);
@@ -47,8 +47,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<string> synonyms = default;
-            Optional<bool> ignoreCase = default;
-            Optional<bool> expand = default;
+            bool? ignoreCase = default;
+            bool? expand = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SynonymTokenFilter(odataType, name, synonyms, Optional.ToNullable(ignoreCase), Optional.ToNullable(expand));
+            return new SynonymTokenFilter(odataType, name, synonyms, ignoreCase, expand);
         }
     }
 }

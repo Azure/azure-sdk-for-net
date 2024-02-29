@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthType))
+            if (AuthType.HasValue)
             {
                 writer.WritePropertyName("authType"u8);
                 writer.WriteStringValue(AuthType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            if (options.Format != "W" && ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(AadAuthority))
+            if (options.Format != "W" && AadAuthority != null)
             {
                 writer.WritePropertyName("aadAuthority"u8);
                 writer.WriteStringValue(AadAuthority);
             }
-            if (options.Format != "W" && Optional.IsDefined(AadTenantId))
+            if (options.Format != "W" && AadTenantId.HasValue)
             {
                 writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServicePrincipalClientId))
+            if (options.Format != "W" && ServicePrincipalClientId.HasValue)
             {
                 writer.WritePropertyName("servicePrincipalClientId"u8);
                 writer.WriteStringValue(ServicePrincipalClientId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServicePrincipalObjectId))
+            if (options.Format != "W" && ServicePrincipalObjectId.HasValue)
             {
                 writer.WritePropertyName("servicePrincipalObjectId"u8);
                 writer.WriteStringValue(ServicePrincipalObjectId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureManagementEndpointAudience))
+            if (options.Format != "W" && AzureManagementEndpointAudience != null)
             {
                 writer.WritePropertyName("azureManagementEndpointAudience"u8);
                 writer.WriteStringValue(AzureManagementEndpointAudience);
             }
-            if (options.Format != "W" && Optional.IsDefined(AadAudience))
+            if (options.Format != "W" && AadAudience != null)
             {
                 writer.WritePropertyName("aadAudience"u8);
                 writer.WriteStringValue(AadAudience);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<DataBoxEdgeAuthenticationType> authType = default;
-            Optional<string> resourceId = default;
-            Optional<string> aadAuthority = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<Guid> servicePrincipalClientId = default;
-            Optional<Guid> servicePrincipalObjectId = default;
-            Optional<string> azureManagementEndpointAudience = default;
-            Optional<string> aadAudience = default;
+            DataBoxEdgeAuthenticationType? authType = default;
+            string resourceId = default;
+            string aadAuthority = default;
+            Guid? aadTenantId = default;
+            Guid? servicePrincipalClientId = default;
+            Guid? servicePrincipalObjectId = default;
+            string azureManagementEndpointAudience = default;
+            string aadAudience = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UploadCertificateResponse(Optional.ToNullable(authType), resourceId.Value, aadAuthority.Value, Optional.ToNullable(aadTenantId), Optional.ToNullable(servicePrincipalClientId), Optional.ToNullable(servicePrincipalObjectId), azureManagementEndpointAudience.Value, aadAudience.Value, serializedAdditionalRawData);
+            return new UploadCertificateResponse(
+                authType,
+                resourceId,
+                aadAuthority,
+                aadTenantId,
+                servicePrincipalClientId,
+                servicePrincipalObjectId,
+                azureManagementEndpointAudience,
+                aadAudience,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UploadCertificateResponse>.Write(ModelReaderWriterOptions options)

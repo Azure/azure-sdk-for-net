@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(CheckNameAvailabilityRequestType))
+            if (CheckNameAvailabilityRequestType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CheckNameAvailabilityRequestType.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            string name = default;
+            ResourceType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateAvailabilityContent(name.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new DeviceUpdateAvailabilityContent(name, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdateAvailabilityContent>.Write(ModelReaderWriterOptions options)

@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArcAutoProvisioning))
+            if (ArcAutoProvisioning != null)
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
                 writer.WriteObjectValue(ArcAutoProvisioning);
             }
-            if (Optional.IsDefined(Rds))
+            if (Rds != null)
             {
                 writer.WritePropertyName("rds"u8);
                 writer.WriteObjectValue(Rds);
             }
-            if (Optional.IsDefined(DatabasesDspm))
+            if (DatabasesDspm != null)
             {
                 writer.WritePropertyName("databasesDspm"u8);
                 writer.WriteObjectValue(DatabasesDspm);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<DefenderForDatabasesAwsOfferingArcAutoProvisioning> arcAutoProvisioning = default;
-            Optional<DefenderForDatabasesAwsOfferingRds> rds = default;
-            Optional<DefenderFoDatabasesAwsOfferingDatabasesDspm> databasesDspm = default;
+            DefenderForDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning = default;
+            DefenderForDatabasesAwsOfferingRds rds = default;
+            DefenderFoDatabasesAwsOfferingDatabasesDspm databasesDspm = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    arcAutoProvisioning = DefenderForDatabasesAwsOfferingArcAutoProvisioning.DeserializeDefenderForDatabasesAwsOfferingArcAutoProvisioning(property.Value);
+                    arcAutoProvisioning = DefenderForDatabasesAwsOfferingArcAutoProvisioning.DeserializeDefenderForDatabasesAwsOfferingArcAutoProvisioning(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rds"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    rds = DefenderForDatabasesAwsOfferingRds.DeserializeDefenderForDatabasesAwsOfferingRds(property.Value);
+                    rds = DefenderForDatabasesAwsOfferingRds.DeserializeDefenderForDatabasesAwsOfferingRds(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("databasesDspm"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    databasesDspm = DefenderFoDatabasesAwsOfferingDatabasesDspm.DeserializeDefenderFoDatabasesAwsOfferingDatabasesDspm(property.Value);
+                    databasesDspm = DefenderFoDatabasesAwsOfferingDatabasesDspm.DeserializeDefenderFoDatabasesAwsOfferingDatabasesDspm(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForDatabasesAwsOffering(offeringType, description.Value, serializedAdditionalRawData, arcAutoProvisioning.Value, rds.Value, databasesDspm.Value);
+            return new DefenderForDatabasesAwsOffering(
+                offeringType,
+                description,
+                serializedAdditionalRawData,
+                arcAutoProvisioning,
+                rds,
+                databasesDspm);
         }
 
         BinaryData IPersistableModel<DefenderForDatabasesAwsOffering>.Write(ModelReaderWriterOptions options)

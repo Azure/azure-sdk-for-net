@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceName))
+            if (options.Format != "W" && ResourceName != null)
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentValue))
+            if (options.Format != "W" && CurrentValue.HasValue)
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Limit))
+            if (options.Format != "W" && Limit.HasValue)
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Unit))
+            if (options.Format != "W" && Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextResetOn))
+            if (options.Format != "W" && NextResetOn.HasValue)
             {
                 writer.WritePropertyName("nextResetTime"u8);
                 writer.WriteStringValue(NextResetOn.Value, "O");
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> resourceName = default;
-            Optional<string> displayName = default;
-            Optional<double> currentValue = default;
-            Optional<double> limit = default;
-            Optional<string> unit = default;
-            Optional<DateTimeOffset> nextResetTime = default;
+            string name = default;
+            string resourceName = default;
+            string displayName = default;
+            double? currentValue = default;
+            double? limit = default;
+            string unit = default;
+            DateTimeOffset? nextResetTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlPoolUsage(name.Value, resourceName.Value, displayName.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), unit.Value, Optional.ToNullable(nextResetTime), serializedAdditionalRawData);
+            return new SqlPoolUsage(
+                name,
+                resourceName,
+                displayName,
+                currentValue,
+                limit,
+                unit,
+                nextResetTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlPoolUsage>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ValueType))
+            if (ValueType != null)
             {
                 writer.WritePropertyName("valueType"u8);
                 writer.WriteStringValue(ValueType);
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> valueType = default;
-            Optional<string> value = default;
+            string valueType = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreatIntelligenceParsedPatternTypeValue(valueType.Value, value.Value, serializedAdditionalRawData);
+            return new ThreatIntelligenceParsedPatternTypeValue(valueType, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreatIntelligenceParsedPatternTypeValue>.Write(ModelReaderWriterOptions options)

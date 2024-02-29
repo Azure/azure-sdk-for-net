@@ -81,7 +81,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         public virtual async Task<Response<TenantPacketCoreControlPlaneVersionResource>> GetAsync(string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+            if (versionName == null)
+            {
+                throw new ArgumentNullException(nameof(versionName));
+            }
+            if (versionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
+            }
 
             using var scope = _tenantPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsClientDiagnostics.CreateScope("TenantPacketCoreControlPlaneVersionCollection.Get");
             scope.Start();
@@ -126,7 +133,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         public virtual Response<TenantPacketCoreControlPlaneVersionResource> Get(string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+            if (versionName == null)
+            {
+                throw new ArgumentNullException(nameof(versionName));
+            }
+            if (versionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
+            }
 
             using var scope = _tenantPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsClientDiagnostics.CreateScope("TenantPacketCoreControlPlaneVersionCollection.Get");
             scope.Start();
@@ -231,7 +245,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+            if (versionName == null)
+            {
+                throw new ArgumentNullException(nameof(versionName));
+            }
+            if (versionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
+            }
 
             using var scope = _tenantPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsClientDiagnostics.CreateScope("TenantPacketCoreControlPlaneVersionCollection.Exists");
             scope.Start();
@@ -274,7 +295,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         public virtual Response<bool> Exists(string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+            if (versionName == null)
+            {
+                throw new ArgumentNullException(nameof(versionName));
+            }
+            if (versionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
+            }
 
             using var scope = _tenantPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsClientDiagnostics.CreateScope("TenantPacketCoreControlPlaneVersionCollection.Exists");
             scope.Start();
@@ -317,7 +345,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         public virtual async Task<NullableResponse<TenantPacketCoreControlPlaneVersionResource>> GetIfExistsAsync(string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+            if (versionName == null)
+            {
+                throw new ArgumentNullException(nameof(versionName));
+            }
+            if (versionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
+            }
 
             using var scope = _tenantPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsClientDiagnostics.CreateScope("TenantPacketCoreControlPlaneVersionCollection.GetIfExists");
             scope.Start();
@@ -362,7 +397,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         public virtual NullableResponse<TenantPacketCoreControlPlaneVersionResource> GetIfExists(string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+            if (versionName == null)
+            {
+                throw new ArgumentNullException(nameof(versionName));
+            }
+            if (versionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
+            }
 
             using var scope = _tenantPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsClientDiagnostics.CreateScope("TenantPacketCoreControlPlaneVersionCollection.GetIfExists");
             scope.Start();

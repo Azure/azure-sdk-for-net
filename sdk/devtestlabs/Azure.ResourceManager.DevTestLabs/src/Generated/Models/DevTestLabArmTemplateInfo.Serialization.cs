@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Template))
+            if (Template != null)
             {
                 writer.WritePropertyName("template"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<BinaryData> template = default;
-            Optional<BinaryData> parameters = default;
+            BinaryData template = default;
+            BinaryData parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabArmTemplateInfo(template.Value, parameters.Value, serializedAdditionalRawData);
+            return new DevTestLabArmTemplateInfo(template, parameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabArmTemplateInfo>.Write(ModelReaderWriterOptions options)

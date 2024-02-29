@@ -81,7 +81,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<ArmOperation<PrivateStoreCollectionInfoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, Guid collectionId, PrivateStoreCollectionInfoData info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(info, nameof(info));
+            if (info == null)
+            {
+                throw new ArgumentNullException(nameof(info));
+            }
 
             using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoCollection.CreateOrUpdate");
             scope.Start();
@@ -128,7 +131,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual ArmOperation<PrivateStoreCollectionInfoResource> CreateOrUpdate(WaitUntil waitUntil, Guid collectionId, PrivateStoreCollectionInfoData info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(info, nameof(info));
+            if (info == null)
+            {
+                throw new ArgumentNullException(nameof(info));
+            }
 
             using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoCollection.CreateOrUpdate");
             scope.Start();

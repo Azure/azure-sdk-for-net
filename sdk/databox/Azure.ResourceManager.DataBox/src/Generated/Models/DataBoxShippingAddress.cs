@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -53,9 +52,18 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="streetAddress1"/>, <paramref name="country"/> or <paramref name="postalCode"/> is null. </exception>
         public DataBoxShippingAddress(string streetAddress1, string country, string postalCode)
         {
-            Argument.AssertNotNull(streetAddress1, nameof(streetAddress1));
-            Argument.AssertNotNull(country, nameof(country));
-            Argument.AssertNotNull(postalCode, nameof(postalCode));
+            if (streetAddress1 == null)
+            {
+                throw new ArgumentNullException(nameof(streetAddress1));
+            }
+            if (country == null)
+            {
+                throw new ArgumentNullException(nameof(country));
+            }
+            if (postalCode == null)
+            {
+                throw new ArgumentNullException(nameof(postalCode));
+            }
 
             StreetAddress1 = streetAddress1;
             Country = country;

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             writer.WritePropertyName("policyId"u8);
             writer.WriteStringValue(PolicyId);
-            if (options.Format != "W" && Optional.IsDefined(PolicyVersion))
+            if (options.Format != "W" && PolicyVersion != null)
             {
                 writer.WritePropertyName("policyVersion"u8);
                 writer.WriteStringValue(PolicyVersion);
             }
-            if (Optional.IsDefined(PolicyParameters))
+            if (PolicyParameters != null)
             {
                 writer.WritePropertyName("policyParameters"u8);
                 writer.WriteObjectValue(PolicyParameters);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             ResourceIdentifier policyId = default;
-            Optional<string> policyVersion = default;
-            Optional<BackupInstancePolicySettings> policyParameters = default;
+            string policyVersion = default;
+            BackupInstancePolicySettings policyParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    policyParameters = BackupInstancePolicySettings.DeserializeBackupInstancePolicySettings(property.Value);
+                    policyParameters = BackupInstancePolicySettings.DeserializeBackupInstancePolicySettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupInstancePolicyInfo(policyId, policyVersion.Value, policyParameters.Value, serializedAdditionalRawData);
+            return new BackupInstancePolicyInfo(policyId, policyVersion, policyParameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupInstancePolicyInfo>.Write(ModelReaderWriterOptions options)

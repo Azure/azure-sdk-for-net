@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LoadBalancerConfigType))
+            if (options.Format != "W" && LoadBalancerConfigType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LoadBalancerConfigType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> version = default;
+            string type = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeLoadBalancerConfig(type.Value, version.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeLoadBalancerConfig(type, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeLoadBalancerConfig>.Write(ModelReaderWriterOptions options)

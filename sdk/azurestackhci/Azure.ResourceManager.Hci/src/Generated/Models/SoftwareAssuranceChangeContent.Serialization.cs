@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<SoftwareAssuranceChangeRequestProperties> properties = default;
+            SoftwareAssuranceChangeRequestProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    properties = SoftwareAssuranceChangeRequestProperties.DeserializeSoftwareAssuranceChangeRequestProperties(property.Value);
+                    properties = SoftwareAssuranceChangeRequestProperties.DeserializeSoftwareAssuranceChangeRequestProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareAssuranceChangeContent(properties.Value, serializedAdditionalRawData);
+            return new SoftwareAssuranceChangeContent(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareAssuranceChangeContent>.Write(ModelReaderWriterOptions options)

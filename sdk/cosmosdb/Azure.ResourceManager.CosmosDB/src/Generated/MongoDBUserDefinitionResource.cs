@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<MongoDBUserDefinitionResource>> UpdateAsync(WaitUntil waitUntil, MongoDBUserDefinitionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBUserDefinitionResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<MongoDBUserDefinitionResource> Update(WaitUntil waitUntil, MongoDBUserDefinitionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBUserDefinitionResource.Update");
             scope.Start();

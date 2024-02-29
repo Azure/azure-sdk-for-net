@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Replicas))
+            if (!(Replicas is ChangeTrackingList<AvailabilityGroupReplica> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("replicas"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<IList<AvailabilityGroupReplica>> replicas = default;
+            IList<AvailabilityGroupReplica> replicas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     List<AvailabilityGroupReplica> array = new List<AvailabilityGroupReplica>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailabilityGroupReplica.DeserializeAvailabilityGroupReplica(item));
+                        array.Add(AvailabilityGroupReplica.DeserializeAvailabilityGroupReplica(item, options));
                     }
                     replicas = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilityGroupConfiguration(Optional.ToList(replicas), serializedAdditionalRawData);
+            return new AvailabilityGroupConfiguration(replicas ?? new ChangeTrackingList<AvailabilityGroupReplica>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilityGroupConfiguration>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContainerName))
+            if (ContainerName != null)
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (Optional.IsDefined(StorageAccountResourceId))
+            if (StorageAccountResourceId != null)
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> containerName = default;
-            Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Optional<string> name = default;
+            string containerName = default;
+            ResourceIdentifier storageAccountResourceId = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionRuleStorageBlobDestination(containerName.Value, storageAccountResourceId.Value, name.Value, serializedAdditionalRawData);
+            return new DataCollectionRuleStorageBlobDestination(containerName, storageAccountResourceId, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleStorageBlobDestination>.Write(ModelReaderWriterOptions options)

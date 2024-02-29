@@ -15,12 +15,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeType))
+            if (ComputeType.HasValue)
             {
                 writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType.Value.ToString());
             }
-            if (Optional.IsDefined(CoreCount))
+            if (CoreCount.HasValue)
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
@@ -34,8 +34,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<DataFlowComputeType> computeType = default;
-            Optional<int> coreCount = default;
+            DataFlowComputeType? computeType = default;
+            int? coreCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeType"u8))
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ExecuteDataFlowActivityTypePropertiesCompute(Optional.ToNullable(computeType), Optional.ToNullable(coreCount));
+            return new ExecuteDataFlowActivityTypePropertiesCompute(computeType, coreCount);
         }
     }
 }

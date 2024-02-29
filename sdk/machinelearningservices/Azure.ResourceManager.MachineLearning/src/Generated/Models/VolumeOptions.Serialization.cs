@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Nocopy))
+            if (Nocopy.HasValue)
             {
                 if (Nocopy != null)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<bool?> nocopy = default;
+            bool? nocopy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VolumeOptions(Optional.ToNullable(nocopy), serializedAdditionalRawData);
+            return new VolumeOptions(nocopy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VolumeOptions>.Write(ModelReaderWriterOptions options)

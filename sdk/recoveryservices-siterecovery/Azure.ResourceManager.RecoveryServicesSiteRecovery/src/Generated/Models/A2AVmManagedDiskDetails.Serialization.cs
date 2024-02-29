@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(PrimaryStagingAzureStorageAccountId);
             writer.WritePropertyName("recoveryResourceGroupId"u8);
             writer.WriteStringValue(RecoveryResourceGroupId);
-            if (Optional.IsDefined(RecoveryReplicaDiskAccountType))
+            if (RecoveryReplicaDiskAccountType != null)
             {
                 writer.WritePropertyName("recoveryReplicaDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryReplicaDiskAccountType);
             }
-            if (Optional.IsDefined(RecoveryTargetDiskAccountType))
+            if (RecoveryTargetDiskAccountType != null)
             {
                 writer.WritePropertyName("recoveryTargetDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryTargetDiskAccountType);
             }
-            if (Optional.IsDefined(RecoveryDiskEncryptionSetId))
+            if (RecoveryDiskEncryptionSetId != null)
             {
                 writer.WritePropertyName("recoveryDiskEncryptionSetId"u8);
                 writer.WriteStringValue(RecoveryDiskEncryptionSetId);
             }
-            if (Optional.IsDefined(DiskEncryptionInfo))
+            if (DiskEncryptionInfo != null)
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionInfo);
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string diskId = default;
             ResourceIdentifier primaryStagingAzureStorageAccountId = default;
             ResourceIdentifier recoveryResourceGroupId = default;
-            Optional<string> recoveryReplicaDiskAccountType = default;
-            Optional<string> recoveryTargetDiskAccountType = default;
-            Optional<ResourceIdentifier> recoveryDiskEncryptionSetId = default;
-            Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
+            string recoveryReplicaDiskAccountType = default;
+            string recoveryTargetDiskAccountType = default;
+            ResourceIdentifier recoveryDiskEncryptionSetId = default;
+            SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value);
+                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AVmManagedDiskDetails(diskId, primaryStagingAzureStorageAccountId, recoveryResourceGroupId, recoveryReplicaDiskAccountType.Value, recoveryTargetDiskAccountType.Value, recoveryDiskEncryptionSetId.Value, diskEncryptionInfo.Value, serializedAdditionalRawData);
+            return new A2AVmManagedDiskDetails(
+                diskId,
+                primaryStagingAzureStorageAccountId,
+                recoveryResourceGroupId,
+                recoveryReplicaDiskAccountType,
+                recoveryTargetDiskAccountType,
+                recoveryDiskEncryptionSetId,
+                diskEncryptionInfo,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<A2AVmManagedDiskDetails>.Write(ModelReaderWriterOptions options)

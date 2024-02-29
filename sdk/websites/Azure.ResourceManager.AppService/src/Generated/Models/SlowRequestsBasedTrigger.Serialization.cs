@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TimeTaken))
+            if (TimeTaken != null)
             {
                 writer.WritePropertyName("timeTaken"u8);
                 writer.WriteStringValue(TimeTaken);
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(TimeInterval))
+            if (TimeInterval != null)
             {
                 writer.WritePropertyName("timeInterval"u8);
                 writer.WriteStringValue(TimeInterval);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> timeTaken = default;
-            Optional<string> path = default;
-            Optional<int> count = default;
-            Optional<string> timeInterval = default;
+            string timeTaken = default;
+            string path = default;
+            int? count = default;
+            string timeInterval = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SlowRequestsBasedTrigger(timeTaken.Value, path.Value, Optional.ToNullable(count), timeInterval.Value, serializedAdditionalRawData);
+            return new SlowRequestsBasedTrigger(timeTaken, path, count, timeInterval, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SlowRequestsBasedTrigger>.Write(ModelReaderWriterOptions options)

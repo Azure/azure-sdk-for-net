@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogType))
+            if (LogType.HasValue)
             {
                 writer.WritePropertyName("logType"u8);
                 writer.WriteStringValue(LogType.Value.ToString());
             }
-            if (Optional.IsDefined(LogOption))
+            if (LogOption.HasValue)
             {
                 writer.WritePropertyName("logOption"u8);
                 writer.WriteStringValue(LogOption.Value.ToString());
             }
-            if (Optional.IsDefined(ApplicationInsights))
+            if (ApplicationInsights != null)
             {
                 writer.WritePropertyName("applicationInsights"u8);
                 writer.WriteObjectValue(ApplicationInsights);
             }
-            if (Optional.IsDefined(CommonDestination))
+            if (CommonDestination != null)
             {
                 writer.WritePropertyName("commonDestination"u8);
                 writer.WriteObjectValue(CommonDestination);
             }
-            if (Optional.IsDefined(TrafficLogDestination))
+            if (TrafficLogDestination != null)
             {
                 writer.WritePropertyName("trafficLogDestination"u8);
                 writer.WriteObjectValue(TrafficLogDestination);
             }
-            if (Optional.IsDefined(ThreatLogDestination))
+            if (ThreatLogDestination != null)
             {
                 writer.WritePropertyName("threatLogDestination"u8);
                 writer.WriteObjectValue(ThreatLogDestination);
             }
-            if (Optional.IsDefined(DecryptLogDestination))
+            if (DecryptLogDestination != null)
             {
                 writer.WritePropertyName("decryptLogDestination"u8);
                 writer.WriteObjectValue(DecryptLogDestination);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<FirewallLogType> logType = default;
-            Optional<FirewallLogOption> logOption = default;
-            Optional<FirewallApplicationInsights> applicationInsights = default;
-            Optional<FirewallLogDestination> commonDestination = default;
-            Optional<FirewallLogDestination> trafficLogDestination = default;
-            Optional<FirewallLogDestination> threatLogDestination = default;
-            Optional<FirewallLogDestination> decryptLogDestination = default;
+            FirewallLogType? logType = default;
+            FirewallLogOption? logOption = default;
+            FirewallApplicationInsights applicationInsights = default;
+            FirewallLogDestination commonDestination = default;
+            FirewallLogDestination trafficLogDestination = default;
+            FirewallLogDestination threatLogDestination = default;
+            FirewallLogDestination decryptLogDestination = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    applicationInsights = FirewallApplicationInsights.DeserializeFirewallApplicationInsights(property.Value);
+                    applicationInsights = FirewallApplicationInsights.DeserializeFirewallApplicationInsights(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("commonDestination"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    commonDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value);
+                    commonDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("trafficLogDestination"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    trafficLogDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value);
+                    trafficLogDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("threatLogDestination"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    threatLogDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value);
+                    threatLogDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("decryptLogDestination"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    decryptLogDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value);
+                    decryptLogDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallLogSettings(Optional.ToNullable(logType), Optional.ToNullable(logOption), applicationInsights.Value, commonDestination.Value, trafficLogDestination.Value, threatLogDestination.Value, decryptLogDestination.Value, serializedAdditionalRawData);
+            return new FirewallLogSettings(
+                logType,
+                logOption,
+                applicationInsights,
+                commonDestination,
+                trafficLogDestination,
+                threatLogDestination,
+                decryptLogDestination,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallLogSettings>.Write(ModelReaderWriterOptions options)

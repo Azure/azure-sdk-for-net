@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TruncationPercentage))
+            if (TruncationPercentage.HasValue)
             {
                 writer.WritePropertyName("truncationPercentage"u8);
                 writer.WriteNumberValue(TruncationPercentage.Value);
             }
-            if (Optional.IsDefined(DelayEvaluation))
+            if (DelayEvaluation.HasValue)
             {
                 writer.WritePropertyName("delayEvaluation"u8);
                 writer.WriteNumberValue(DelayEvaluation.Value);
             }
-            if (Optional.IsDefined(EvaluationInterval))
+            if (EvaluationInterval.HasValue)
             {
                 writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteNumberValue(EvaluationInterval.Value);
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> truncationPercentage = default;
-            Optional<int> delayEvaluation = default;
-            Optional<int> evaluationInterval = default;
+            int? truncationPercentage = default;
+            int? delayEvaluation = default;
+            int? evaluationInterval = default;
             EarlyTerminationPolicyType policyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TruncationSelectionPolicy(Optional.ToNullable(delayEvaluation), Optional.ToNullable(evaluationInterval), policyType, serializedAdditionalRawData, Optional.ToNullable(truncationPercentage));
+            return new TruncationSelectionPolicy(delayEvaluation, evaluationInterval, policyType, serializedAdditionalRawData, truncationPercentage);
         }
 
         BinaryData IPersistableModel<TruncationSelectionPolicy>.Write(ModelReaderWriterOptions options)

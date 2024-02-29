@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StaticSiteUserProvidedFunctionAppResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (functionAppName == null)
+            {
+                throw new ArgumentNullException(nameof(functionAppName));
+            }
+            if (functionAppName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.CreateOrUpdate");
             scope.Start();
@@ -133,8 +143,18 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StaticSiteUserProvidedFunctionAppResource> CreateOrUpdate(WaitUntil waitUntil, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (functionAppName == null)
+            {
+                throw new ArgumentNullException(nameof(functionAppName));
+            }
+            if (functionAppName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.CreateOrUpdate");
             scope.Start();
@@ -180,7 +200,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
         public virtual async Task<Response<StaticSiteUserProvidedFunctionAppResource>> GetAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
+            if (functionAppName == null)
+            {
+                throw new ArgumentNullException(nameof(functionAppName));
+            }
+            if (functionAppName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
+            }
 
             using var scope = _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.Get");
             scope.Start();
@@ -225,7 +252,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
         public virtual Response<StaticSiteUserProvidedFunctionAppResource> Get(string functionAppName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
+            if (functionAppName == null)
+            {
+                throw new ArgumentNullException(nameof(functionAppName));
+            }
+            if (functionAppName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
+            }
 
             using var scope = _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.Get");
             scope.Start();
@@ -330,7 +364,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
+            if (functionAppName == null)
+            {
+                throw new ArgumentNullException(nameof(functionAppName));
+            }
+            if (functionAppName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
+            }
 
             using var scope = _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.Exists");
             scope.Start();
@@ -373,7 +414,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
         public virtual Response<bool> Exists(string functionAppName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
+            if (functionAppName == null)
+            {
+                throw new ArgumentNullException(nameof(functionAppName));
+            }
+            if (functionAppName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
+            }
 
             using var scope = _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.Exists");
             scope.Start();
@@ -416,7 +464,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
         public virtual async Task<NullableResponse<StaticSiteUserProvidedFunctionAppResource>> GetIfExistsAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
+            if (functionAppName == null)
+            {
+                throw new ArgumentNullException(nameof(functionAppName));
+            }
+            if (functionAppName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
+            }
 
             using var scope = _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.GetIfExists");
             scope.Start();
@@ -461,7 +516,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
         public virtual NullableResponse<StaticSiteUserProvidedFunctionAppResource> GetIfExists(string functionAppName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
+            if (functionAppName == null)
+            {
+                throw new ArgumentNullException(nameof(functionAppName));
+            }
+            if (functionAppName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
+            }
 
             using var scope = _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.GetIfExists");
             scope.Start();

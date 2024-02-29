@@ -79,7 +79,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="waitStatisticsId"/> is null. </exception>
         public virtual async Task<Response<MySqlWaitStatisticResource>> GetAsync(string waitStatisticsId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(waitStatisticsId, nameof(waitStatisticsId));
+            if (waitStatisticsId == null)
+            {
+                throw new ArgumentNullException(nameof(waitStatisticsId));
+            }
+            if (waitStatisticsId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(waitStatisticsId));
+            }
 
             using var scope = _mySqlWaitStatisticWaitStatisticsClientDiagnostics.CreateScope("MySqlWaitStatisticCollection.Get");
             scope.Start();
@@ -124,7 +131,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="waitStatisticsId"/> is null. </exception>
         public virtual Response<MySqlWaitStatisticResource> Get(string waitStatisticsId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(waitStatisticsId, nameof(waitStatisticsId));
+            if (waitStatisticsId == null)
+            {
+                throw new ArgumentNullException(nameof(waitStatisticsId));
+            }
+            if (waitStatisticsId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(waitStatisticsId));
+            }
 
             using var scope = _mySqlWaitStatisticWaitStatisticsClientDiagnostics.CreateScope("MySqlWaitStatisticCollection.Get");
             scope.Start();
@@ -169,7 +183,10 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An async collection of <see cref="MySqlWaitStatisticResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlWaitStatisticResource> GetAllAsync(MySqlWaitStatisticsInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlWaitStatisticWaitStatisticsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlWaitStatisticWaitStatisticsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
@@ -203,7 +220,10 @@ namespace Azure.ResourceManager.MySql
         /// <returns> A collection of <see cref="MySqlWaitStatisticResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlWaitStatisticResource> GetAll(MySqlWaitStatisticsInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlWaitStatisticWaitStatisticsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlWaitStatisticWaitStatisticsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
@@ -237,7 +257,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="waitStatisticsId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string waitStatisticsId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(waitStatisticsId, nameof(waitStatisticsId));
+            if (waitStatisticsId == null)
+            {
+                throw new ArgumentNullException(nameof(waitStatisticsId));
+            }
+            if (waitStatisticsId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(waitStatisticsId));
+            }
 
             using var scope = _mySqlWaitStatisticWaitStatisticsClientDiagnostics.CreateScope("MySqlWaitStatisticCollection.Exists");
             scope.Start();
@@ -280,7 +307,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="waitStatisticsId"/> is null. </exception>
         public virtual Response<bool> Exists(string waitStatisticsId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(waitStatisticsId, nameof(waitStatisticsId));
+            if (waitStatisticsId == null)
+            {
+                throw new ArgumentNullException(nameof(waitStatisticsId));
+            }
+            if (waitStatisticsId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(waitStatisticsId));
+            }
 
             using var scope = _mySqlWaitStatisticWaitStatisticsClientDiagnostics.CreateScope("MySqlWaitStatisticCollection.Exists");
             scope.Start();
@@ -323,7 +357,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="waitStatisticsId"/> is null. </exception>
         public virtual async Task<NullableResponse<MySqlWaitStatisticResource>> GetIfExistsAsync(string waitStatisticsId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(waitStatisticsId, nameof(waitStatisticsId));
+            if (waitStatisticsId == null)
+            {
+                throw new ArgumentNullException(nameof(waitStatisticsId));
+            }
+            if (waitStatisticsId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(waitStatisticsId));
+            }
 
             using var scope = _mySqlWaitStatisticWaitStatisticsClientDiagnostics.CreateScope("MySqlWaitStatisticCollection.GetIfExists");
             scope.Start();
@@ -368,7 +409,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="waitStatisticsId"/> is null. </exception>
         public virtual NullableResponse<MySqlWaitStatisticResource> GetIfExists(string waitStatisticsId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(waitStatisticsId, nameof(waitStatisticsId));
+            if (waitStatisticsId == null)
+            {
+                throw new ArgumentNullException(nameof(waitStatisticsId));
+            }
+            if (waitStatisticsId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(waitStatisticsId));
+            }
 
             using var scope = _mySqlWaitStatisticWaitStatisticsClientDiagnostics.CreateScope("MySqlWaitStatisticCollection.GetIfExists");
             scope.Start();

@@ -15,12 +15,12 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AnalysisInput))
+            if (AnalysisInput != null)
             {
                 writer.WritePropertyName("analysisInput"u8);
                 writer.WriteObjectValue(AnalysisInput);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteObjectValue(Parameters);

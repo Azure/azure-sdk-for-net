@@ -49,8 +49,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public RoleDefinitionsClient(Uri endpoint, TokenCredential credential, AccessControlClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new AccessControlClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -143,7 +149,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitionByIdAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
+            if (roleDefinitionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleDefinitionId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
             scope.Start();
@@ -178,7 +191,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitionById(string,RequestContext)']/*" />
         public virtual Response GetRoleDefinitionById(string roleDefinitionId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
+            if (roleDefinitionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleDefinitionId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
             scope.Start();

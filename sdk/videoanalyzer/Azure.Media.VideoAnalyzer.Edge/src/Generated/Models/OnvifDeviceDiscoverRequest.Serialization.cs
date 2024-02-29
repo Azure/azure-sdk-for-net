@@ -15,12 +15,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiscoveryDuration))
+            if (DiscoveryDuration != null)
             {
                 writer.WritePropertyName("discoveryDuration"u8);
                 writer.WriteStringValue(DiscoveryDuration);
             }
-            if (Optional.IsDefined(ApiVersion))
+            if (ApiVersion != null)
             {
                 writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
@@ -34,9 +34,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> discoveryDuration = default;
+            string discoveryDuration = default;
             string methodName = default;
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("discoveryDuration"u8))
@@ -55,7 +55,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new OnvifDeviceDiscoverRequest(methodName, apiVersion.Value, discoveryDuration.Value);
+            return new OnvifDeviceDiscoverRequest(methodName, apiVersion, discoveryDuration);
         }
     }
 }

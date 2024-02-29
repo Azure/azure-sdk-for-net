@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlertType))
+            if (AlertType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AlertType.Value.ToString());
             }
-            if (Optional.IsDefined(Category))
+            if (Category.HasValue)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Optional.IsDefined(Criteria))
+            if (Criteria.HasValue)
             {
                 writer.WritePropertyName("criteria"u8);
                 writer.WriteStringValue(Criteria.Value.ToString());
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<CostManagementAlertType> type = default;
-            Optional<CostManagementAlertCategory> category = default;
-            Optional<AlertCriterion> criteria = default;
+            CostManagementAlertType? type = default;
+            CostManagementAlertCategory? category = default;
+            AlertCriterion? criteria = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertPropertiesDefinition(Optional.ToNullable(type), Optional.ToNullable(category), Optional.ToNullable(criteria), serializedAdditionalRawData);
+            return new AlertPropertiesDefinition(type, category, criteria, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertPropertiesDefinition>.Write(ModelReaderWriterOptions options)

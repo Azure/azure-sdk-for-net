@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScenarioName))
+            if (ScenarioName != null)
             {
                 writer.WritePropertyName("scenarioName"u8);
                 writer.WriteStringValue(ScenarioName);
             }
-            if (Optional.IsDefined(JobId))
+            if (JobId != null)
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> scenarioName = default;
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<DateTimeOffset> startTime = default;
+            string scenarioName = default;
+            ResourceIdentifier jobId = default;
+            DateTimeOffset? startTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CurrentScenarioDetails(scenarioName.Value, jobId.Value, Optional.ToNullable(startTime), serializedAdditionalRawData);
+            return new CurrentScenarioDetails(scenarioName, jobId, startTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CurrentScenarioDetails>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApplyAllocationPolicy))
+            if (ApplyAllocationPolicy.HasValue)
             {
                 writer.WritePropertyName("applyAllocationPolicy"u8);
                 writer.WriteBooleanValue(ApplyAllocationPolicy.Value);
             }
-            if (Optional.IsDefined(AllocationWeight))
+            if (AllocationWeight.HasValue)
             {
                 writer.WritePropertyName("allocationWeight"u8);
                 writer.WriteNumberValue(AllocationWeight.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<bool> applyAllocationPolicy = default;
-            Optional<int> allocationWeight = default;
-            Optional<string> name = default;
+            bool? applyAllocationPolicy = default;
+            int? allocationWeight = default;
+            string name = default;
             string connectionString = default;
             AzureLocation location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubDefinitionDescription(Optional.ToNullable(applyAllocationPolicy), Optional.ToNullable(allocationWeight), name.Value, connectionString, location, serializedAdditionalRawData);
+            return new IotHubDefinitionDescription(
+                applyAllocationPolicy,
+                allocationWeight,
+                name,
+                connectionString,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubDefinitionDescription>.Write(ModelReaderWriterOptions options)

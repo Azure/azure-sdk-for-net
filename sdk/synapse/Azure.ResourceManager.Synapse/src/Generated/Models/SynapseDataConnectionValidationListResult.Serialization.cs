@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SynapseDataConnectionValidationResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseDataConnectionValidationResult>> value = default;
+            IReadOnlyList<SynapseDataConnectionValidationResult> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseDataConnectionValidationResult> array = new List<SynapseDataConnectionValidationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseDataConnectionValidationResult.DeserializeSynapseDataConnectionValidationResult(item));
+                        array.Add(SynapseDataConnectionValidationResult.DeserializeSynapseDataConnectionValidationResult(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseDataConnectionValidationListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new SynapseDataConnectionValidationListResult(value ?? new ChangeTrackingList<SynapseDataConnectionValidationResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDataConnectionValidationListResult>.Write(ModelReaderWriterOptions options)

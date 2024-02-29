@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartObject();
             writer.WritePropertyName("filterName"u8);
             writer.WriteStringValue(FilterName);
-            if (Optional.IsDefined(Action))
+            if (Action.HasValue)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             string filterName = default;
-            Optional<IotHubNetworkRuleIPAction> action = default;
+            IotHubNetworkRuleIPAction? action = default;
             string ipMask = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubNetworkRuleSetIPRule(filterName, Optional.ToNullable(action), ipMask, serializedAdditionalRawData);
+            return new IotHubNetworkRuleSetIPRule(filterName, action, ipMask, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubNetworkRuleSetIPRule>.Write(ModelReaderWriterOptions options)

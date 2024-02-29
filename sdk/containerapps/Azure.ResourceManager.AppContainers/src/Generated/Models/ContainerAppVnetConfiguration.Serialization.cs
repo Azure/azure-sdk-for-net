@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsInternal))
+            if (IsInternal.HasValue)
             {
                 writer.WritePropertyName("internal"u8);
                 writer.WriteBooleanValue(IsInternal.Value);
             }
-            if (Optional.IsDefined(InfrastructureSubnetId))
+            if (InfrastructureSubnetId != null)
             {
                 writer.WritePropertyName("infrastructureSubnetId"u8);
                 writer.WriteStringValue(InfrastructureSubnetId);
             }
-            if (Optional.IsDefined(DockerBridgeCidr))
+            if (DockerBridgeCidr != null)
             {
                 writer.WritePropertyName("dockerBridgeCidr"u8);
                 writer.WriteStringValue(DockerBridgeCidr);
             }
-            if (Optional.IsDefined(PlatformReservedCidr))
+            if (PlatformReservedCidr != null)
             {
                 writer.WritePropertyName("platformReservedCidr"u8);
                 writer.WriteStringValue(PlatformReservedCidr);
             }
-            if (Optional.IsDefined(PlatformReservedDnsIP))
+            if (PlatformReservedDnsIP != null)
             {
                 writer.WritePropertyName("platformReservedDnsIP"u8);
                 writer.WriteStringValue(PlatformReservedDnsIP);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> @internal = default;
-            Optional<ResourceIdentifier> infrastructureSubnetId = default;
-            Optional<string> dockerBridgeCidr = default;
-            Optional<string> platformReservedCidr = default;
-            Optional<string> platformReservedDnsIP = default;
+            bool? @internal = default;
+            ResourceIdentifier infrastructureSubnetId = default;
+            string dockerBridgeCidr = default;
+            string platformReservedCidr = default;
+            string platformReservedDnsIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppVnetConfiguration(Optional.ToNullable(@internal), infrastructureSubnetId.Value, dockerBridgeCidr.Value, platformReservedCidr.Value, platformReservedDnsIP.Value, serializedAdditionalRawData);
+            return new ContainerAppVnetConfiguration(
+                @internal,
+                infrastructureSubnetId,
+                dockerBridgeCidr,
+                platformReservedCidr,
+                platformReservedDnsIP,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppVnetConfiguration>.Write(ModelReaderWriterOptions options)

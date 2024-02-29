@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(ApplicationId))
+            if (ApplicationId != null)
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
-            if (Optional.IsDefined(ObjectId))
+            if (ObjectId != null)
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (Optional.IsDefined(Audience))
+            if (Audience != null)
             {
                 writer.WritePropertyName("audience"u8);
                 writer.WriteStringValue(Audience);
             }
-            if (Optional.IsDefined(AadAuthority))
+            if (AadAuthority != null)
             {
                 writer.WritePropertyName("aadAuthority"u8);
                 writer.WriteStringValue(AadAuthority);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> applicationId = default;
-            Optional<string> objectId = default;
-            Optional<string> audience = default;
-            Optional<string> aadAuthority = default;
+            Guid? tenantId = default;
+            string applicationId = default;
+            string objectId = default;
+            string audience = default;
+            string aadAuthority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdentityProviderDetails(Optional.ToNullable(tenantId), applicationId.Value, objectId.Value, audience.Value, aadAuthority.Value, serializedAdditionalRawData);
+            return new IdentityProviderDetails(
+                tenantId,
+                applicationId,
+                objectId,
+                audience,
+                aadAuthority,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdentityProviderDetails>.Write(ModelReaderWriterOptions options)

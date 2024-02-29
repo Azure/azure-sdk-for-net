@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsUsCoreMissingDataEnabled))
+            if (IsUsCoreMissingDataEnabled.HasValue)
             {
                 writer.WritePropertyName("usCoreMissingData"u8);
                 writer.WriteBooleanValue(IsUsCoreMissingDataEnabled.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<bool> usCoreMissingData = default;
+            bool? usCoreMissingData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImplementationGuidesConfiguration(Optional.ToNullable(usCoreMissingData), serializedAdditionalRawData);
+            return new ImplementationGuidesConfiguration(usCoreMissingData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImplementationGuidesConfiguration>.Write(ModelReaderWriterOptions options)

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(ResourceId);
             writer.WritePropertyName("callbackUrl"u8);
             writer.WriteStringValue(CallbackUri.AbsoluteUri);
-            if (Optional.IsDefined(UseCommonAlertSchema))
+            if (UseCommonAlertSchema.HasValue)
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string name = default;
             ResourceIdentifier resourceId = default;
             Uri callbackUrl = default;
-            Optional<bool> useCommonAlertSchema = default;
+            bool? useCommonAlertSchema = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorLogicAppReceiver(name, resourceId, callbackUrl, Optional.ToNullable(useCommonAlertSchema), serializedAdditionalRawData);
+            return new MonitorLogicAppReceiver(name, resourceId, callbackUrl, useCommonAlertSchema, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorLogicAppReceiver>.Write(ModelReaderWriterOptions options)

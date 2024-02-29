@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
         public virtual async Task<Response<BlueprintVersionArtifactResource>> GetAsync(string artifactName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
+            if (artifactName == null)
+            {
+                throw new ArgumentNullException(nameof(artifactName));
+            }
+            if (artifactName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactName));
+            }
 
             using var scope = _blueprintVersionArtifactPublishedArtifactsClientDiagnostics.CreateScope("BlueprintVersionArtifactCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
         public virtual Response<BlueprintVersionArtifactResource> Get(string artifactName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
+            if (artifactName == null)
+            {
+                throw new ArgumentNullException(nameof(artifactName));
+            }
+            if (artifactName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactName));
+            }
 
             using var scope = _blueprintVersionArtifactPublishedArtifactsClientDiagnostics.CreateScope("BlueprintVersionArtifactCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string artifactName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
+            if (artifactName == null)
+            {
+                throw new ArgumentNullException(nameof(artifactName));
+            }
+            if (artifactName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactName));
+            }
 
             using var scope = _blueprintVersionArtifactPublishedArtifactsClientDiagnostics.CreateScope("BlueprintVersionArtifactCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
         public virtual Response<bool> Exists(string artifactName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
+            if (artifactName == null)
+            {
+                throw new ArgumentNullException(nameof(artifactName));
+            }
+            if (artifactName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactName));
+            }
 
             using var scope = _blueprintVersionArtifactPublishedArtifactsClientDiagnostics.CreateScope("BlueprintVersionArtifactCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
         public virtual async Task<NullableResponse<BlueprintVersionArtifactResource>> GetIfExistsAsync(string artifactName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
+            if (artifactName == null)
+            {
+                throw new ArgumentNullException(nameof(artifactName));
+            }
+            if (artifactName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactName));
+            }
 
             using var scope = _blueprintVersionArtifactPublishedArtifactsClientDiagnostics.CreateScope("BlueprintVersionArtifactCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
         public virtual NullableResponse<BlueprintVersionArtifactResource> GetIfExists(string artifactName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
+            if (artifactName == null)
+            {
+                throw new ArgumentNullException(nameof(artifactName));
+            }
+            if (artifactName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactName));
+            }
 
             using var scope = _blueprintVersionArtifactPublishedArtifactsClientDiagnostics.CreateScope("BlueprintVersionArtifactCollection.GetIfExists");
             scope.Start();

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Limit))
+            if (options.Format != "W" && Limit.HasValue)
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Unit))
+            if (options.Format != "W" && Unit.HasValue)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<double> limit = default;
-            Optional<PerformanceLevelUnit> unit = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            double? limit = default;
+            PerformanceLevelUnit? unit = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolPerDatabaseMinPerformanceLevelCapability(Optional.ToNullable(limit), Optional.ToNullable(unit), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ElasticPoolPerDatabaseMinPerformanceLevelCapability(limit, unit, status, reason, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolPerDatabaseMinPerformanceLevelCapability>.Write(ModelReaderWriterOptions options)

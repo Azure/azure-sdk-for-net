@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         public virtual async Task<Response<WebSiteSlotConfigConnectionStringResource>> GetAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
+            if (connectionStringKey == null)
+            {
+                throw new ArgumentNullException(nameof(connectionStringKey));
+            }
+            if (connectionStringKey.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionStringKey));
+            }
 
             using var scope = _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigConnectionStringCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         public virtual Response<WebSiteSlotConfigConnectionStringResource> Get(string connectionStringKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
+            if (connectionStringKey == null)
+            {
+                throw new ArgumentNullException(nameof(connectionStringKey));
+            }
+            if (connectionStringKey.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionStringKey));
+            }
 
             using var scope = _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigConnectionStringCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
+            if (connectionStringKey == null)
+            {
+                throw new ArgumentNullException(nameof(connectionStringKey));
+            }
+            if (connectionStringKey.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionStringKey));
+            }
 
             using var scope = _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigConnectionStringCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         public virtual Response<bool> Exists(string connectionStringKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
+            if (connectionStringKey == null)
+            {
+                throw new ArgumentNullException(nameof(connectionStringKey));
+            }
+            if (connectionStringKey.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionStringKey));
+            }
 
             using var scope = _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigConnectionStringCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         public virtual async Task<NullableResponse<WebSiteSlotConfigConnectionStringResource>> GetIfExistsAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
+            if (connectionStringKey == null)
+            {
+                throw new ArgumentNullException(nameof(connectionStringKey));
+            }
+            if (connectionStringKey.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionStringKey));
+            }
 
             using var scope = _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigConnectionStringCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         public virtual NullableResponse<WebSiteSlotConfigConnectionStringResource> GetIfExists(string connectionStringKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
+            if (connectionStringKey == null)
+            {
+                throw new ArgumentNullException(nameof(connectionStringKey));
+            }
+            if (connectionStringKey.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionStringKey));
+            }
 
             using var scope = _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigConnectionStringCollection.GetIfExists");
             scope.Start();

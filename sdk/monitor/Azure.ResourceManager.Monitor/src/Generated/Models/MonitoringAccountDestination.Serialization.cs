@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccountResourceId))
+            if (AccountResourceId != null)
             {
                 writer.WritePropertyName("accountResourceId"u8);
                 writer.WriteStringValue(AccountResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(AccountId))
+            if (options.Format != "W" && AccountId != null)
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> accountResourceId = default;
-            Optional<string> accountId = default;
-            Optional<string> name = default;
+            ResourceIdentifier accountResourceId = default;
+            string accountId = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitoringAccountDestination(accountResourceId.Value, accountId.Value, name.Value, serializedAdditionalRawData);
+            return new MonitoringAccountDestination(accountResourceId, accountId, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringAccountDestination>.Write(ModelReaderWriterOptions options)

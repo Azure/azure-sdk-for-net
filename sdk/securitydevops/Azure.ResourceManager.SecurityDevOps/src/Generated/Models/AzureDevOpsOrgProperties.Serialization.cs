@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(AutoDiscovery))
+            if (AutoDiscovery.HasValue)
             {
                 writer.WritePropertyName("autoDiscovery"u8);
                 writer.WriteStringValue(AutoDiscovery.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<AutoDiscovery> autoDiscovery = default;
+            ProvisioningState? provisioningState = default;
+            AutoDiscovery? autoDiscovery = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsOrgProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(autoDiscovery), serializedAdditionalRawData);
+            return new AzureDevOpsOrgProperties(provisioningState, autoDiscovery, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsOrgProperties>.Write(ModelReaderWriterOptions options)

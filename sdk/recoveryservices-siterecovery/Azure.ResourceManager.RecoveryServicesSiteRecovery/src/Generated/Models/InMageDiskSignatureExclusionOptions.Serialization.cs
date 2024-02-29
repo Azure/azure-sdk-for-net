@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskSignature))
+            if (DiskSignature != null)
             {
                 writer.WritePropertyName("diskSignature"u8);
                 writer.WriteStringValue(DiskSignature);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskSignature = default;
+            string diskSignature = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageDiskSignatureExclusionOptions(diskSignature.Value, serializedAdditionalRawData);
+            return new InMageDiskSignatureExclusionOptions(diskSignature, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageDiskSignatureExclusionOptions>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("datacenterAddressType"u8);
             writer.WriteStringValue(DataCenterAddressType.ToSerialString());
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedCarriersForReturnShipment))
+            if (options.Format != "W" && !(SupportedCarriersForReturnShipment is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedCarriersForReturnShipment"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(DataCenterAzureLocation))
+            if (options.Format != "W" && DataCenterAzureLocation.HasValue)
             {
                 writer.WritePropertyName("dataCenterAzureLocation"u8);
                 writer.WriteStringValue(DataCenterAzureLocation.Value);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataCenterAddressResponse(document.RootElement, options);
+            return DeserializeDataCenterAddressResult(document.RootElement, options);
         }
 
         internal static UnknownDataCenterAddressResponse DeserializeUnknownDataCenterAddressResponse(JsonElement element, ModelReaderWriterOptions options = null)
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataCenterAddressType dataCenterAddressType = default;
-            Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
-            Optional<AzureLocation> dataCenterAzureLocation = default;
+            IReadOnlyList<string> supportedCarriersForReturnShipment = default;
+            AzureLocation? dataCenterAzureLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDataCenterAddressResponse(dataCenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), Optional.ToNullable(dataCenterAzureLocation), serializedAdditionalRawData);
+            return new UnknownDataCenterAddressResponse(dataCenterAddressType, supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(), dataCenterAzureLocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCenterAddressResult>.Write(ModelReaderWriterOptions options)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataCenterAddressResponse(document.RootElement, options);
+                        return DeserializeDataCenterAddressResult(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support '{options.Format}' format.");

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OldestRecoverOn))
+            if (OldestRecoverOn.HasValue)
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
                 writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
-            if (Optional.IsDefined(OldestRecoveryPointInVault))
+            if (OldestRecoveryPointInVault.HasValue)
             {
                 writer.WritePropertyName("oldestRecoveryPointInVault"u8);
                 writer.WriteStringValue(OldestRecoveryPointInVault.Value, "O");
             }
-            if (Optional.IsDefined(OldestRecoveryPointInArchive))
+            if (OldestRecoveryPointInArchive.HasValue)
             {
                 writer.WritePropertyName("oldestRecoveryPointInArchive"u8);
                 writer.WriteStringValue(OldestRecoveryPointInArchive.Value, "O");
             }
-            if (Optional.IsDefined(NewestRecoveryPointInArchive))
+            if (NewestRecoveryPointInArchive.HasValue)
             {
                 writer.WritePropertyName("newestRecoveryPointInArchive"u8);
                 writer.WriteStringValue(NewestRecoveryPointInArchive.Value, "O");
             }
-            if (Optional.IsDefined(RecoveryPointCount))
+            if (RecoveryPointCount.HasValue)
             {
                 writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
-            if (Optional.IsDefined(IsPolicyInconsistent))
+            if (IsPolicyInconsistent.HasValue)
             {
                 writer.WritePropertyName("policyInconsistent"u8);
                 writer.WriteBooleanValue(IsPolicyInconsistent.Value);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> oldestRecoveryPoint = default;
-            Optional<DateTimeOffset> oldestRecoveryPointInVault = default;
-            Optional<DateTimeOffset> oldestRecoveryPointInArchive = default;
-            Optional<DateTimeOffset> newestRecoveryPointInArchive = default;
-            Optional<int> recoveryPointCount = default;
-            Optional<bool> policyInconsistent = default;
+            DateTimeOffset? oldestRecoveryPoint = default;
+            DateTimeOffset? oldestRecoveryPointInVault = default;
+            DateTimeOffset? oldestRecoveryPointInArchive = default;
+            DateTimeOffset? newestRecoveryPointInArchive = default;
+            int? recoveryPointCount = default;
+            bool? policyInconsistent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmProtectedItemExtendedInfo(Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(oldestRecoveryPointInVault), Optional.ToNullable(oldestRecoveryPointInArchive), Optional.ToNullable(newestRecoveryPointInArchive), Optional.ToNullable(recoveryPointCount), Optional.ToNullable(policyInconsistent), serializedAdditionalRawData);
+            return new IaasVmProtectedItemExtendedInfo(
+                oldestRecoveryPoint,
+                oldestRecoveryPointInVault,
+                oldestRecoveryPointInArchive,
+                newestRecoveryPointInArchive,
+                recoveryPointCount,
+                policyInconsistent,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IaasVmProtectedItemExtendedInfo>.Write(ModelReaderWriterOptions options)

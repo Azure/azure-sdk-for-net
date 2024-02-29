@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthKey1))
+            if (AuthKey1 != null)
             {
                 writer.WritePropertyName("authKey1"u8);
                 writer.WriteStringValue(AuthKey1);
             }
-            if (Optional.IsDefined(AuthKey2))
+            if (AuthKey2 != null)
             {
                 writer.WritePropertyName("authKey2"u8);
                 writer.WriteStringValue(AuthKey2);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> authKey1 = default;
-            Optional<string> authKey2 = default;
+            string authKey1 = default;
+            string authKey2 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthenticationKeys(authKey1.Value, authKey2.Value, serializedAdditionalRawData);
+            return new AuthenticationKeys(authKey1, authKey2, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthenticationKeys>.Write(ModelReaderWriterOptions options)

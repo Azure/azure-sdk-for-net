@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Display))
+            if (Display != null)
             {
                 writer.WritePropertyName("display"u8);
                 writer.WriteObjectValue(Display);
             }
-            if (Optional.IsDefined(ModelName))
+            if (ModelName != null)
             {
                 writer.WritePropertyName("modelName"u8);
                 writer.WriteStringValue(ModelName);
             }
-            if (Optional.IsDefined(TargetType))
+            if (TargetType != null)
             {
                 writer.WritePropertyName("targetType"u8);
                 writer.WriteStringValue(TargetType);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<StorageCacheUsageModelDisplay> display = default;
-            Optional<string> modelName = default;
-            Optional<string> targetType = default;
+            StorageCacheUsageModelDisplay display = default;
+            string modelName = default;
+            string targetType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    display = StorageCacheUsageModelDisplay.DeserializeStorageCacheUsageModelDisplay(property.Value);
+                    display = StorageCacheUsageModelDisplay.DeserializeStorageCacheUsageModelDisplay(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("modelName"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheUsageModel(display.Value, modelName.Value, targetType.Value, serializedAdditionalRawData);
+            return new StorageCacheUsageModel(display, modelName, targetType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheUsageModel>.Write(ModelReaderWriterOptions options)

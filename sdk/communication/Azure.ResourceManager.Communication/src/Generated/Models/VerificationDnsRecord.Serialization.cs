@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Communication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DnsRecordType))
+            if (options.Format != "W" && DnsRecordType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DnsRecordType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeToLiveInSeconds))
+            if (options.Format != "W" && TimeToLiveInSeconds.HasValue)
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(TimeToLiveInSeconds.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> name = default;
-            Optional<string> value = default;
-            Optional<int> ttl = default;
+            string type = default;
+            string name = default;
+            string value = default;
+            int? ttl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VerificationDnsRecord(type.Value, name.Value, value.Value, Optional.ToNullable(ttl), serializedAdditionalRawData);
+            return new VerificationDnsRecord(type, name, value, ttl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VerificationDnsRecord>.Write(ModelReaderWriterOptions options)

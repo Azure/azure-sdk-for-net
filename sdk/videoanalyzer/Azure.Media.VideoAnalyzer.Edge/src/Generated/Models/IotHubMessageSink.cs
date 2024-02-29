@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -21,9 +20,18 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/> or <paramref name="hubOutputName"/> is null. </exception>
         public IotHubMessageSink(string name, IEnumerable<NodeInput> inputs, string hubOutputName) : base(name, inputs)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(hubOutputName, nameof(hubOutputName));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (inputs == null)
+            {
+                throw new ArgumentNullException(nameof(inputs));
+            }
+            if (hubOutputName == null)
+            {
+                throw new ArgumentNullException(nameof(hubOutputName));
+            }
 
             HubOutputName = hubOutputName;
             Type = "#Microsoft.VideoAnalyzer.IotHubMessageSink";

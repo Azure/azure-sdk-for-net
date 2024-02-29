@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPAddress))
+            if (IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Optional<string> ipAddress = default;
+            string ipAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceIPAddress(ipAddress.Value, serializedAdditionalRawData);
+            return new LargeInstanceIPAddress(ipAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceIPAddress>.Write(ModelReaderWriterOptions options)

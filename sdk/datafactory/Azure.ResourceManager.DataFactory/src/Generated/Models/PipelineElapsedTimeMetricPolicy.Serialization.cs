@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Duration))
+            if (Duration != null)
             {
                 writer.WritePropertyName("duration"u8);
 #if NET6_0_OR_GREATER
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<BinaryData> duration = default;
+            BinaryData duration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PipelineElapsedTimeMetricPolicy(duration.Value, serializedAdditionalRawData);
+            return new PipelineElapsedTimeMetricPolicy(duration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PipelineElapsedTimeMetricPolicy>.Write(ModelReaderWriterOptions options)

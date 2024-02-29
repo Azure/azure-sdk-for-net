@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HybridComputePrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, HybridComputePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("HybridComputePrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HybridComputePrivateEndpointConnectionResource> Update(WaitUntil waitUntil, HybridComputePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("HybridComputePrivateEndpointConnectionResource.Update");
             scope.Start();

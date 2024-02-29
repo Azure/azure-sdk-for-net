@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
+            if (ImmutabilityPeriodSinceCreationInDays.HasValue)
             {
                 writer.WritePropertyName("immutabilityPeriodSinceCreationInDays"u8);
                 writer.WriteNumberValue(ImmutabilityPeriodSinceCreationInDays.Value);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(AllowProtectedAppendWrites))
+            if (AllowProtectedAppendWrites.HasValue)
             {
                 writer.WritePropertyName("allowProtectedAppendWrites"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWrites.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<int> immutabilityPeriodSinceCreationInDays = default;
-            Optional<AccountImmutabilityPolicyState> state = default;
-            Optional<bool> allowProtectedAppendWrites = default;
+            int? immutabilityPeriodSinceCreationInDays = default;
+            AccountImmutabilityPolicyState? state = default;
+            bool? allowProtectedAppendWrites = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccountImmutabilityPolicy(Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(state), Optional.ToNullable(allowProtectedAppendWrites), serializedAdditionalRawData);
+            return new AccountImmutabilityPolicy(immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccountImmutabilityPolicy>.Write(ModelReaderWriterOptions options)

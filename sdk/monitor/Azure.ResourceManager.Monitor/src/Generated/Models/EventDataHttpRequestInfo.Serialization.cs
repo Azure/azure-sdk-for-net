@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientRequestId))
+            if (ClientRequestId != null)
             {
                 writer.WritePropertyName("clientRequestId"u8);
                 writer.WriteStringValue(ClientRequestId);
             }
-            if (Optional.IsDefined(ClientIPAddress))
+            if (ClientIPAddress != null)
             {
                 writer.WritePropertyName("clientIpAddress"u8);
                 writer.WriteStringValue(ClientIPAddress.ToString());
             }
-            if (Optional.IsDefined(Method))
+            if (Method != null)
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> clientRequestId = default;
-            Optional<IPAddress> clientIPAddress = default;
-            Optional<string> method = default;
-            Optional<Uri> uri = default;
+            string clientRequestId = default;
+            IPAddress clientIPAddress = default;
+            string method = default;
+            Uri uri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventDataHttpRequestInfo(clientRequestId.Value, clientIPAddress.Value, method.Value, uri.Value, serializedAdditionalRawData);
+            return new EventDataHttpRequestInfo(clientRequestId, clientIPAddress, method, uri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventDataHttpRequestInfo>.Write(ModelReaderWriterOptions options)

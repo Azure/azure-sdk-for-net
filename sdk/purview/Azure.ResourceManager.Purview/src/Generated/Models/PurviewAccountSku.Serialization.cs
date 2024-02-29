@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Capacity))
+            if (Capacity.HasValue)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name.HasValue)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<int> capacity = default;
-            Optional<PurviewAccountSkuName> name = default;
+            int? capacity = default;
+            PurviewAccountSkuName? name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewAccountSku(Optional.ToNullable(capacity), Optional.ToNullable(name), serializedAdditionalRawData);
+            return new PurviewAccountSku(capacity, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewAccountSku>.Write(ModelReaderWriterOptions options)

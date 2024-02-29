@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -55,7 +54,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="matchConditions"/> is null. </exception>
         public WebApplicationCustomRule(int priority, WebApplicationRuleType ruleType, IEnumerable<WebApplicationRuleMatchCondition> matchConditions, RuleMatchActionType action)
         {
-            Argument.AssertNotNull(matchConditions, nameof(matchConditions));
+            if (matchConditions == null)
+            {
+                throw new ArgumentNullException(nameof(matchConditions));
+            }
 
             Priority = priority;
             RuleType = ruleType;

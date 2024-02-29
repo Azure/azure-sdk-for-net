@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Models
             writer.WriteStringValue(Publisher);
             writer.WritePropertyName("product"u8);
             writer.WriteStringValue(Product);
-            if (Optional.IsDefined(PromotionCode))
+            if (PromotionCode != null)
             {
                 writer.WritePropertyName("promotionCode"u8);
                 writer.WriteStringValue(PromotionCode);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.Models
             string name = default;
             string publisher = default;
             string product = default;
-            Optional<string> promotionCode = default;
-            Optional<string> version = default;
+            string promotionCode = default;
+            string version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new ArmPlan(name, publisher, product, promotionCode.Value, version.Value);
+            return new ArmPlan(name, publisher, product, promotionCode, version);
         }
 
         BinaryData IPersistableModel<ArmPlan>.Write(ModelReaderWriterOptions options)

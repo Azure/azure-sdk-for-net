@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
         public LiveEventOutputTranscriptionTrack(string trackName)
         {
-            Argument.AssertNotNull(trackName, nameof(trackName));
+            if (trackName == null)
+            {
+                throw new ArgumentNullException(nameof(trackName));
+            }
 
             TrackName = trackName;
         }

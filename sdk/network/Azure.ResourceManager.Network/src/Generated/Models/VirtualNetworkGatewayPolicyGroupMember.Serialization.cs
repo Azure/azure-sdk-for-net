@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(AttributeType))
+            if (AttributeType.HasValue)
             {
                 writer.WritePropertyName("attributeType"u8);
                 writer.WriteStringValue(AttributeType.Value.ToString());
             }
-            if (Optional.IsDefined(AttributeValue))
+            if (AttributeValue != null)
             {
                 writer.WritePropertyName("attributeValue"u8);
                 writer.WriteStringValue(AttributeValue);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<VpnPolicyMemberAttributeType> attributeType = default;
-            Optional<string> attributeValue = default;
+            string name = default;
+            VpnPolicyMemberAttributeType? attributeType = default;
+            string attributeValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkGatewayPolicyGroupMember(name.Value, Optional.ToNullable(attributeType), attributeValue.Value, serializedAdditionalRawData);
+            return new VirtualNetworkGatewayPolicyGroupMember(name, attributeType, attributeValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewayPolicyGroupMember>.Write(ModelReaderWriterOptions options)

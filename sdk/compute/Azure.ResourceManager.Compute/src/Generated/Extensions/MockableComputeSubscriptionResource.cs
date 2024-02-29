@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -878,10 +878,38 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
         public virtual async Task<Response<VirtualMachineImage>> GetVirtualMachineImageAsync(AzureLocation location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
-            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (offer == null)
+            {
+                throw new ArgumentNullException(nameof(offer));
+            }
+            if (offer.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(offer));
+            }
+            if (skus == null)
+            {
+                throw new ArgumentNullException(nameof(skus));
+            }
+            if (skus.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(skus));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetVirtualMachineImage");
             scope.Start();
@@ -924,10 +952,38 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
         public virtual Response<VirtualMachineImage> GetVirtualMachineImage(AzureLocation location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
-            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (offer == null)
+            {
+                throw new ArgumentNullException(nameof(offer));
+            }
+            if (offer.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(offer));
+            }
+            if (skus == null)
+            {
+                throw new ArgumentNullException(nameof(skus));
+            }
+            if (skus.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(skus));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetVirtualMachineImage");
             scope.Start();
@@ -966,7 +1022,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImages", "", null, cancellationToken);
@@ -995,7 +1054,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImages(SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImages", "", null, cancellationToken);
@@ -1026,7 +1088,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageOffersAsync(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListOffersRequest(Id.SubscriptionId, location, publisherName);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageOffers", "", null, cancellationToken);
@@ -1057,7 +1126,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageOffers(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListOffersRequest(Id.SubscriptionId, location, publisherName);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageOffers", "", null, cancellationToken);
@@ -1141,8 +1217,22 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageSkusAsync(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (offer == null)
+            {
+                throw new ArgumentNullException(nameof(offer));
+            }
+            if (offer.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(offer));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListSkusRequest(Id.SubscriptionId, location, publisherName, offer);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageSkus", "", null, cancellationToken);
@@ -1174,8 +1264,22 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageSkus(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (offer == null)
+            {
+                throw new ArgumentNullException(nameof(offer));
+            }
+            if (offer.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(offer));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListSkusRequest(Id.SubscriptionId, location, publisherName, offer);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageSkus", "", null, cancellationToken);
@@ -1206,7 +1310,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZoneAsync(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            if (edgeZone == null)
+            {
+                throw new ArgumentNullException(nameof(edgeZone));
+            }
+            if (edgeZone.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(edgeZone));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListByEdgeZoneRequest(Id.SubscriptionId, location, edgeZone);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone", "value", null, cancellationToken);
@@ -1237,7 +1348,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZone(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            if (edgeZone == null)
+            {
+                throw new ArgumentNullException(nameof(edgeZone));
+            }
+            if (edgeZone.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(edgeZone));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListByEdgeZoneRequest(Id.SubscriptionId, location, edgeZone);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone", "value", null, cancellationToken);
@@ -1265,7 +1383,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZone");
             scope.Start();
@@ -1303,7 +1424,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<VirtualMachineImage> GetVirtualMachineImagesEdgeZone(SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZone");
             scope.Start();
@@ -1342,7 +1466,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
@@ -1371,7 +1498,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
@@ -1403,8 +1533,22 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            if (edgeZone == null)
+            {
+                throw new ArgumentNullException(nameof(edgeZone));
+            }
+            if (edgeZone.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(edgeZone));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListOffersRequest(Id.SubscriptionId, location, edgeZone, publisherName);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
@@ -1436,8 +1580,22 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            if (edgeZone == null)
+            {
+                throw new ArgumentNullException(nameof(edgeZone));
+            }
+            if (edgeZone.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(edgeZone));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListOffersRequest(Id.SubscriptionId, location, edgeZone, publisherName);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
@@ -1468,7 +1626,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            if (edgeZone == null)
+            {
+                throw new ArgumentNullException(nameof(edgeZone));
+            }
+            if (edgeZone.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(edgeZone));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListPublishersRequest(Id.SubscriptionId, location, edgeZone);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
@@ -1499,7 +1664,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            if (edgeZone == null)
+            {
+                throw new ArgumentNullException(nameof(edgeZone));
+            }
+            if (edgeZone.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(edgeZone));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListPublishersRequest(Id.SubscriptionId, location, edgeZone);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
@@ -1532,9 +1704,30 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkusAsync(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+            if (edgeZone == null)
+            {
+                throw new ArgumentNullException(nameof(edgeZone));
+            }
+            if (edgeZone.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(edgeZone));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (offer == null)
+            {
+                throw new ArgumentNullException(nameof(offer));
+            }
+            if (offer.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(offer));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListSkusRequest(Id.SubscriptionId, location, edgeZone, publisherName, offer);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus", "", null, cancellationToken);
@@ -1567,9 +1760,30 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkus(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+            if (edgeZone == null)
+            {
+                throw new ArgumentNullException(nameof(edgeZone));
+            }
+            if (edgeZone.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(edgeZone));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (offer == null)
+            {
+                throw new ArgumentNullException(nameof(offer));
+            }
+            if (offer.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(offer));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListSkusRequest(Id.SubscriptionId, location, edgeZone, publisherName, offer);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus", "", null, cancellationToken);
@@ -2023,7 +2237,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<LogAnalytics>> ExportLogAnalyticsRequestRateByIntervalAsync(WaitUntil waitUntil, AzureLocation location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = LogAnalyticsClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.ExportLogAnalyticsRequestRateByInterval");
             scope.Start();
@@ -2066,7 +2283,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<LogAnalytics> ExportLogAnalyticsRequestRateByInterval(WaitUntil waitUntil, AzureLocation location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = LogAnalyticsClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.ExportLogAnalyticsRequestRateByInterval");
             scope.Start();
@@ -2109,7 +2329,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<LogAnalytics>> ExportLogAnalyticsThrottledRequestsAsync(WaitUntil waitUntil, AzureLocation location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = LogAnalyticsClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.ExportLogAnalyticsThrottledRequests");
             scope.Start();
@@ -2152,7 +2375,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<LogAnalytics> ExportLogAnalyticsThrottledRequests(WaitUntil waitUntil, AzureLocation location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = LogAnalyticsClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.ExportLogAnalyticsThrottledRequests");
             scope.Start();
@@ -2261,7 +2487,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
         public virtual async Task<Response<RunCommandDocument>> GetVirtualMachineRunCommandAsync(AzureLocation location, string commandId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(commandId, nameof(commandId));
+            if (commandId == null)
+            {
+                throw new ArgumentNullException(nameof(commandId));
+            }
+            if (commandId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commandId));
+            }
 
             using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetVirtualMachineRunCommand");
             scope.Start();
@@ -2305,7 +2538,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
         public virtual Response<RunCommandDocument> GetVirtualMachineRunCommand(AzureLocation location, string commandId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(commandId, nameof(commandId));
+            if (commandId == null)
+            {
+                throw new ArgumentNullException(nameof(commandId));
+            }
+            if (commandId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commandId));
+            }
 
             using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetVirtualMachineRunCommand");
             scope.Start();
@@ -2630,7 +2870,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2660,7 +2900,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

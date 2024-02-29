@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CurrentTimeStamp))
+            if (CurrentTimeStamp.HasValue)
             {
                 writer.WritePropertyName("currentTimeStamp"u8);
                 writer.WriteStringValue(CurrentTimeStamp.Value, "O");
             }
-            if (Optional.IsDefined(PreviousTimeStamp))
+            if (PreviousTimeStamp.HasValue)
             {
                 writer.WritePropertyName("previousTimeStamp"u8);
                 writer.WriteStringValue(PreviousTimeStamp.Value, "O");
             }
-            if (Optional.IsDefined(CurrentCpuStats))
+            if (CurrentCpuStats != null)
             {
                 writer.WritePropertyName("currentCpuStats"u8);
                 writer.WriteObjectValue(CurrentCpuStats);
             }
-            if (Optional.IsDefined(PreviousCpuStats))
+            if (PreviousCpuStats != null)
             {
                 writer.WritePropertyName("previousCpuStats"u8);
                 writer.WriteObjectValue(PreviousCpuStats);
             }
-            if (Optional.IsDefined(MemoryStats))
+            if (MemoryStats != null)
             {
                 writer.WritePropertyName("memoryStats"u8);
                 writer.WriteObjectValue(MemoryStats);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Eth0))
+            if (Eth0 != null)
             {
                 writer.WritePropertyName("eth0"u8);
                 writer.WriteObjectValue(Eth0);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> currentTimeStamp = default;
-            Optional<DateTimeOffset> previousTimeStamp = default;
-            Optional<ContainerCpuStatistics> currentCpuStats = default;
-            Optional<ContainerCpuStatistics> previousCpuStats = default;
-            Optional<ContainerMemoryStatistics> memoryStats = default;
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<ContainerNetworkInterfaceStatistics> eth0 = default;
+            DateTimeOffset? currentTimeStamp = default;
+            DateTimeOffset? previousTimeStamp = default;
+            ContainerCpuStatistics currentCpuStats = default;
+            ContainerCpuStatistics previousCpuStats = default;
+            ContainerMemoryStatistics memoryStats = default;
+            string name = default;
+            string id = default;
+            ContainerNetworkInterfaceStatistics eth0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    currentCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value);
+                    currentCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("previousCpuStats"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    previousCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value);
+                    previousCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("memoryStats"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    memoryStats = ContainerMemoryStatistics.DeserializeContainerMemoryStatistics(property.Value);
+                    memoryStats = ContainerMemoryStatistics.DeserializeContainerMemoryStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    eth0 = ContainerNetworkInterfaceStatistics.DeserializeContainerNetworkInterfaceStatistics(property.Value);
+                    eth0 = ContainerNetworkInterfaceStatistics.DeserializeContainerNetworkInterfaceStatistics(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerInfo(Optional.ToNullable(currentTimeStamp), Optional.ToNullable(previousTimeStamp), currentCpuStats.Value, previousCpuStats.Value, memoryStats.Value, name.Value, id.Value, eth0.Value, serializedAdditionalRawData);
+            return new ContainerInfo(
+                currentTimeStamp,
+                previousTimeStamp,
+                currentCpuStats,
+                previousCpuStats,
+                memoryStats,
+                name,
+                id,
+                eth0,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerInfo>.Write(ModelReaderWriterOptions options)

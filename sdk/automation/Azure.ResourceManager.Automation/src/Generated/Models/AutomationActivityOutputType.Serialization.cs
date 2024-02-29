@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ActivityOutputType))
+            if (ActivityOutputType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ActivityOutputType);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
+            string name = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationActivityOutputType(name.Value, type.Value, serializedAdditionalRawData);
+            return new AutomationActivityOutputType(name, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationActivityOutputType>.Write(ModelReaderWriterOptions options)

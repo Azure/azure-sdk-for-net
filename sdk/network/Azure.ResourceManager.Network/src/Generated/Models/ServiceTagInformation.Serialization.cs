@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Properties))
+            if (options.Format != "W" && Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceTagChangeNumber))
+            if (options.Format != "W" && ServiceTagChangeNumber != null)
             {
                 writer.WritePropertyName("serviceTagChangeNumber"u8);
                 writer.WriteStringValue(ServiceTagChangeNumber);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ServiceTagInformationPropertiesFormat> properties = default;
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> serviceTagChangeNumber = default;
+            ServiceTagInformationPropertiesFormat properties = default;
+            string name = default;
+            string id = default;
+            string serviceTagChangeNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    properties = ServiceTagInformationPropertiesFormat.DeserializeServiceTagInformationPropertiesFormat(property.Value);
+                    properties = ServiceTagInformationPropertiesFormat.DeserializeServiceTagInformationPropertiesFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTagInformation(properties.Value, name.Value, id.Value, serviceTagChangeNumber.Value, serializedAdditionalRawData);
+            return new ServiceTagInformation(properties, name, id, serviceTagChangeNumber, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTagInformation>.Write(ModelReaderWriterOptions options)

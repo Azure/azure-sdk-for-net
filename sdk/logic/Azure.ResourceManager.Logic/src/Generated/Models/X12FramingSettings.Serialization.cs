@@ -130,7 +130,15 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X12FramingSettings(dataElementSeparator, componentSeparator, replaceSeparatorsInPayload, replaceCharacter, segmentTerminator, characterSet, segmentTerminatorSuffix, serializedAdditionalRawData);
+            return new X12FramingSettings(
+                dataElementSeparator,
+                componentSeparator,
+                replaceSeparatorsInPayload,
+                replaceCharacter,
+                segmentTerminator,
+                characterSet,
+                segmentTerminatorSuffix,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X12FramingSettings>.Write(ModelReaderWriterOptions options)

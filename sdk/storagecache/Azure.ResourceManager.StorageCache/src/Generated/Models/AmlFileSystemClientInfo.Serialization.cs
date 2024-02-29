@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MgsAddress))
+            if (options.Format != "W" && MgsAddress != null)
             {
                 writer.WritePropertyName("mgsAddress"u8);
                 writer.WriteStringValue(MgsAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(MountCommand))
+            if (options.Format != "W" && MountCommand != null)
             {
                 writer.WritePropertyName("mountCommand"u8);
                 writer.WriteStringValue(MountCommand);
             }
-            if (options.Format != "W" && Optional.IsDefined(LustreVersion))
+            if (options.Format != "W" && LustreVersion != null)
             {
                 writer.WritePropertyName("lustreVersion"u8);
                 writer.WriteStringValue(LustreVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(ContainerStorageInterface))
+            if (options.Format != "W" && ContainerStorageInterface != null)
             {
                 writer.WritePropertyName("containerStorageInterface"u8);
                 writer.WriteObjectValue(ContainerStorageInterface);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> mgsAddress = default;
-            Optional<string> mountCommand = default;
-            Optional<string> lustreVersion = default;
-            Optional<AmlFileSystemContainerStorageInterface> containerStorageInterface = default;
+            string mgsAddress = default;
+            string mountCommand = default;
+            string lustreVersion = default;
+            AmlFileSystemContainerStorageInterface containerStorageInterface = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    containerStorageInterface = AmlFileSystemContainerStorageInterface.DeserializeAmlFileSystemContainerStorageInterface(property.Value);
+                    containerStorageInterface = AmlFileSystemContainerStorageInterface.DeserializeAmlFileSystemContainerStorageInterface(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemClientInfo(mgsAddress.Value, mountCommand.Value, lustreVersion.Value, containerStorageInterface.Value, serializedAdditionalRawData);
+            return new AmlFileSystemClientInfo(mgsAddress, mountCommand, lustreVersion, containerStorageInterface, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemClientInfo>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<GlobalReachConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GlobalReachConnectionData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<GlobalReachConnectionData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<GlobalReachConnectionData> array = new List<GlobalReachConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GlobalReachConnectionData.DeserializeGlobalReachConnectionData(item));
+                        array.Add(GlobalReachConnectionData.DeserializeGlobalReachConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GlobalReachConnectionList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GlobalReachConnectionList(value ?? new ChangeTrackingList<GlobalReachConnectionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GlobalReachConnectionList>.Write(ModelReaderWriterOptions options)

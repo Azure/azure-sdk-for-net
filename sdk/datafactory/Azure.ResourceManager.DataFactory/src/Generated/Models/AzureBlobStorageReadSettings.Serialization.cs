@@ -27,64 +27,64 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Recursive))
+            if (Recursive != null)
             {
                 writer.WritePropertyName("recursive"u8);
                 JsonSerializer.Serialize(writer, Recursive);
             }
-            if (Optional.IsDefined(WildcardFolderPath))
+            if (WildcardFolderPath != null)
             {
                 writer.WritePropertyName("wildcardFolderPath"u8);
                 JsonSerializer.Serialize(writer, WildcardFolderPath);
             }
-            if (Optional.IsDefined(WildcardFileName))
+            if (WildcardFileName != null)
             {
                 writer.WritePropertyName("wildcardFileName"u8);
                 JsonSerializer.Serialize(writer, WildcardFileName);
             }
-            if (Optional.IsDefined(Prefix))
+            if (Prefix != null)
             {
                 writer.WritePropertyName("prefix"u8);
                 JsonSerializer.Serialize(writer, Prefix);
             }
-            if (Optional.IsDefined(FileListPath))
+            if (FileListPath != null)
             {
                 writer.WritePropertyName("fileListPath"u8);
                 JsonSerializer.Serialize(writer, FileListPath);
             }
-            if (Optional.IsDefined(EnablePartitionDiscovery))
+            if (EnablePartitionDiscovery != null)
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
                 JsonSerializer.Serialize(writer, EnablePartitionDiscovery);
             }
-            if (Optional.IsDefined(PartitionRootPath))
+            if (PartitionRootPath != null)
             {
                 writer.WritePropertyName("partitionRootPath"u8);
                 JsonSerializer.Serialize(writer, PartitionRootPath);
             }
-            if (Optional.IsDefined(DeleteFilesAfterCompletion))
+            if (DeleteFilesAfterCompletion != null)
             {
                 writer.WritePropertyName("deleteFilesAfterCompletion"u8);
                 JsonSerializer.Serialize(writer, DeleteFilesAfterCompletion);
             }
-            if (Optional.IsDefined(ModifiedDatetimeStart))
+            if (ModifiedDatetimeStart != null)
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
                 JsonSerializer.Serialize(writer, ModifiedDatetimeStart);
             }
-            if (Optional.IsDefined(ModifiedDatetimeEnd))
+            if (ModifiedDatetimeEnd != null)
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
                 JsonSerializer.Serialize(writer, ModifiedDatetimeEnd);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreReadSettingsType);
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -124,19 +124,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<bool>> recursive = default;
-            Optional<DataFactoryElement<string>> wildcardFolderPath = default;
-            Optional<DataFactoryElement<string>> wildcardFileName = default;
-            Optional<DataFactoryElement<string>> prefix = default;
-            Optional<DataFactoryElement<string>> fileListPath = default;
-            Optional<DataFactoryElement<bool>> enablePartitionDiscovery = default;
-            Optional<DataFactoryElement<string>> partitionRootPath = default;
-            Optional<DataFactoryElement<bool>> deleteFilesAfterCompletion = default;
-            Optional<DataFactoryElement<string>> modifiedDatetimeStart = default;
-            Optional<DataFactoryElement<string>> modifiedDatetimeEnd = default;
+            DataFactoryElement<bool> recursive = default;
+            DataFactoryElement<string> wildcardFolderPath = default;
+            DataFactoryElement<string> wildcardFileName = default;
+            DataFactoryElement<string> prefix = default;
+            DataFactoryElement<string> fileListPath = default;
+            DataFactoryElement<bool> enablePartitionDiscovery = default;
+            DataFactoryElement<string> partitionRootPath = default;
+            DataFactoryElement<bool> deleteFilesAfterCompletion = default;
+            DataFactoryElement<string> modifiedDatetimeStart = default;
+            DataFactoryElement<string> modifiedDatetimeEnd = default;
             string type = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +257,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobStorageReadSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, prefix.Value, fileListPath.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, deleteFilesAfterCompletion.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value);
+            return new AzureBlobStorageReadSettings(
+                type,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                recursive,
+                wildcardFolderPath,
+                wildcardFileName,
+                prefix,
+                fileListPath,
+                enablePartitionDiscovery,
+                partitionRootPath,
+                deleteFilesAfterCompletion,
+                modifiedDatetimeStart,
+                modifiedDatetimeEnd);
         }
 
         BinaryData IPersistableModel<AzureBlobStorageReadSettings>.Write(ModelReaderWriterOptions options)

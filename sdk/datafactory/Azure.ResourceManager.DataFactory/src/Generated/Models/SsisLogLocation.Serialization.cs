@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(LocationType.ToString());
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccessCredential))
+            if (AccessCredential != null)
             {
                 writer.WritePropertyName("accessCredential"u8);
                 writer.WriteObjectValue(AccessCredential);
             }
-            if (Optional.IsDefined(LogRefreshInterval))
+            if (LogRefreshInterval != null)
             {
                 writer.WritePropertyName("logRefreshInterval"u8);
                 JsonSerializer.Serialize(writer, LogRefreshInterval);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> logPath = default;
             SsisLogLocationType type = default;
-            Optional<SsisAccessCredential> accessCredential = default;
-            Optional<DataFactoryElement<string>> logRefreshInterval = default;
+            SsisAccessCredential accessCredential = default;
+            DataFactoryElement<string> logRefreshInterval = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
+                            accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("logRefreshInterval"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisLogLocation(logPath, type, accessCredential.Value, logRefreshInterval.Value, serializedAdditionalRawData);
+            return new SsisLogLocation(logPath, type, accessCredential, logRefreshInterval, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsisLogLocation>.Write(ModelReaderWriterOptions options)

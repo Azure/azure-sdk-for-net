@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DownloadSizeInMB))
+            if (DownloadSizeInMB.HasValue)
             {
                 writer.WritePropertyName("downloadSizeInMB"u8);
                 writer.WriteNumberValue(DownloadSizeInMB.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<long> downloadSizeInMB = default;
+            long? downloadSizeInMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageStatusDownloadStatus(Optional.ToNullable(downloadSizeInMB), serializedAdditionalRawData);
+            return new GalleryImageStatusDownloadStatus(downloadSizeInMB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageStatusDownloadStatus>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.AI.OpenAI
             {
                 if (property.NameEquals("function"u8))
                 {
-                    function = FunctionCall.DeserializeFunctionCall(property.Value);
+                    function = FunctionCall.DeserializeFunctionCall(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

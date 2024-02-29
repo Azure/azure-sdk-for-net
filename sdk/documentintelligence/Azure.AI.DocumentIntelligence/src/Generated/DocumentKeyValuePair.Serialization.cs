@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
             writer.WriteObjectValue(Key);
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(Value);
@@ -75,7 +75,7 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             DocumentKeyValueElement key = default;
-            Optional<DocumentKeyValueElement> value = default;
+            DocumentKeyValueElement value = default;
             float confidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -83,7 +83,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 if (property.NameEquals("key"u8))
                 {
-                    key = DocumentKeyValueElement.DeserializeDocumentKeyValueElement(property.Value);
+                    key = DocumentKeyValueElement.DeserializeDocumentKeyValueElement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -92,7 +92,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    value = DocumentKeyValueElement.DeserializeDocumentKeyValueElement(property.Value);
+                    value = DocumentKeyValueElement.DeserializeDocumentKeyValueElement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("confidence"u8))
@@ -106,7 +106,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentKeyValuePair(key, value.Value, confidence, serializedAdditionalRawData);
+            return new DocumentKeyValuePair(key, value, confidence, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentKeyValuePair>.Write(ModelReaderWriterOptions options)

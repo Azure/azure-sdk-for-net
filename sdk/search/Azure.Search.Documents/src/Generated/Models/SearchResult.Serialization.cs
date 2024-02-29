@@ -20,10 +20,10 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             double searchScore = default;
-            Optional<double?> searchRerankerScore = default;
-            Optional<IReadOnlyDictionary<string, IList<string>>> searchHighlights = default;
-            Optional<IReadOnlyList<QueryCaptionResult>> searchCaptions = default;
-            Optional<IReadOnlyList<DocumentDebugInfo>> searchDocumentDebugInfo = default;
+            double? searchRerankerScore = default;
+            IReadOnlyDictionary<string, IList<string>> searchHighlights = default;
+            IReadOnlyList<QueryCaptionResult> searchCaptions = default;
+            IReadOnlyList<DocumentDebugInfo> searchDocumentDebugInfo = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,13 @@ namespace Azure.Search.Documents.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SearchResult(searchScore, Optional.ToNullable(searchRerankerScore), Optional.ToDictionary(searchHighlights), Optional.ToList(searchCaptions), Optional.ToList(searchDocumentDebugInfo), additionalProperties);
+            return new SearchResult(
+                searchScore,
+                searchRerankerScore,
+                searchHighlights ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                searchCaptions ?? new ChangeTrackingList<QueryCaptionResult>(),
+                searchDocumentDebugInfo ?? new ChangeTrackingList<DocumentDebugInfo>(),
+                additionalProperties);
         }
     }
 }

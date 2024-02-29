@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxDeliveryCount))
+            if (MaxDeliveryCount.HasValue)
             {
                 writer.WritePropertyName("maxDeliveryCount"u8);
                 writer.WriteNumberValue(MaxDeliveryCount.Value);
             }
-            if (Optional.IsDefined(EventTimeToLive))
+            if (EventTimeToLive != null)
             {
                 writer.WritePropertyName("eventTimeToLive"u8);
                 writer.WriteStringValue(EventTimeToLive);
             }
-            if (Optional.IsDefined(DeadLetterDestinationWithResourceIdentity))
+            if (DeadLetterDestinationWithResourceIdentity != null)
             {
                 writer.WritePropertyName("deadLetterDestinationWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeadLetterDestinationWithResourceIdentity);
             }
-            if (Optional.IsDefined(DeliveryWithResourceIdentity))
+            if (DeliveryWithResourceIdentity != null)
             {
                 writer.WritePropertyName("deliveryWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeliveryWithResourceIdentity);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<int> maxDeliveryCount = default;
-            Optional<string> eventTimeToLive = default;
-            Optional<DeadLetterWithResourceIdentity> deadLetterDestinationWithResourceIdentity = default;
-            Optional<DeliveryWithResourceIdentity> deliveryWithResourceIdentity = default;
+            int? maxDeliveryCount = default;
+            string eventTimeToLive = default;
+            DeadLetterWithResourceIdentity deadLetterDestinationWithResourceIdentity = default;
+            DeliveryWithResourceIdentity deliveryWithResourceIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    deadLetterDestinationWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property.Value);
+                    deadLetterDestinationWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deliveryWithResourceIdentity"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    deliveryWithResourceIdentity = DeliveryWithResourceIdentity.DeserializeDeliveryWithResourceIdentity(property.Value);
+                    deliveryWithResourceIdentity = DeliveryWithResourceIdentity.DeserializeDeliveryWithResourceIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PushInfo(Optional.ToNullable(maxDeliveryCount), eventTimeToLive.Value, deadLetterDestinationWithResourceIdentity.Value, deliveryWithResourceIdentity.Value, serializedAdditionalRawData);
+            return new PushInfo(maxDeliveryCount, eventTimeToLive, deadLetterDestinationWithResourceIdentity, deliveryWithResourceIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PushInfo>.Write(ModelReaderWriterOptions options)

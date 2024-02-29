@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MigrationOperationId))
+            if (MigrationOperationId.HasValue)
             {
                 writer.WritePropertyName("migrationOperationId"u8);
                 writer.WriteStringValue(MigrationOperationId.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<Guid> migrationOperationId = default;
+            Guid? migrationOperationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrationOperationInput(Optional.ToNullable(migrationOperationId), serializedAdditionalRawData);
+            return new MigrationOperationInput(migrationOperationId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrationOperationInput>.Write(ModelReaderWriterOptions options)

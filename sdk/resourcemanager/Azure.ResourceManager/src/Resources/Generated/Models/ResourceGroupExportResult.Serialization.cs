@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Template))
+            if (Template != null)
             {
                 writer.WritePropertyName("template"u8);
 #if NET6_0_OR_GREATER
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<BinaryData> template = default;
-            Optional<ResponseError> error = default;
+            BinaryData template = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGroupExportResult(template.Value, error.Value, serializedAdditionalRawData);
+            return new ResourceGroupExportResult(template, error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGroupExportResult>.Write(ModelReaderWriterOptions options)

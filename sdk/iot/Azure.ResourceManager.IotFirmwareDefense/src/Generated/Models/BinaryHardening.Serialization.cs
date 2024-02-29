@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BinaryHardeningId))
+            if (BinaryHardeningId != null)
             {
                 if (BinaryHardeningId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("binaryHardeningId");
                 }
             }
-            if (Optional.IsDefined(Architecture))
+            if (Architecture != null)
             {
                 if (Architecture != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("architecture");
                 }
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 if (Path != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("path");
                 }
             }
-            if (Optional.IsDefined(Class))
+            if (Class != null)
             {
                 if (Class != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("class");
                 }
             }
-            if (Optional.IsDefined(Runpath))
+            if (Runpath != null)
             {
                 if (Runpath != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("runpath");
                 }
             }
-            if (Optional.IsDefined(Rpath))
+            if (Rpath != null)
             {
                 if (Rpath != null)
                 {
@@ -100,27 +100,27 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             writer.WritePropertyName("features"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Nx))
+            if (Nx.HasValue)
             {
                 writer.WritePropertyName("nx"u8);
                 writer.WriteStringValue(Nx.Value.ToString());
             }
-            if (Optional.IsDefined(Pie))
+            if (Pie.HasValue)
             {
                 writer.WritePropertyName("pie"u8);
                 writer.WriteStringValue(Pie.Value.ToString());
             }
-            if (Optional.IsDefined(Relro))
+            if (Relro.HasValue)
             {
                 writer.WritePropertyName("relro"u8);
                 writer.WriteStringValue(Relro.Value.ToString());
             }
-            if (Optional.IsDefined(Canary))
+            if (Canary.HasValue)
             {
                 writer.WritePropertyName("canary"u8);
                 writer.WriteStringValue(Canary.Value.ToString());
             }
-            if (Optional.IsDefined(Stripped))
+            if (Stripped.HasValue)
             {
                 writer.WritePropertyName("stripped"u8);
                 writer.WriteStringValue(Stripped.Value.ToString());
@@ -164,17 +164,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<string> binaryHardeningId = default;
-            Optional<string> architecture = default;
-            Optional<string> path = default;
-            Optional<string> @class = default;
-            Optional<string> runpath = default;
-            Optional<string> rpath = default;
-            Optional<NxFlag> nx = default;
-            Optional<PieFlag> pie = default;
-            Optional<RelroFlag> relro = default;
-            Optional<CanaryFlag> canary = default;
-            Optional<StrippedFlag> stripped = default;
+            string binaryHardeningId = default;
+            string architecture = default;
+            string path = default;
+            string @class = default;
+            string runpath = default;
+            string rpath = default;
+            NxFlag? nx = default;
+            PieFlag? pie = default;
+            RelroFlag? relro = default;
+            CanaryFlag? canary = default;
+            StrippedFlag? stripped = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -302,7 +302,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BinaryHardening(binaryHardeningId.Value, architecture.Value, path.Value, @class.Value, runpath.Value, rpath.Value, Optional.ToNullable(nx), Optional.ToNullable(pie), Optional.ToNullable(relro), Optional.ToNullable(canary), Optional.ToNullable(stripped), serializedAdditionalRawData);
+            return new BinaryHardening(
+                binaryHardeningId,
+                architecture,
+                path,
+                @class,
+                runpath,
+                rpath,
+                nx,
+                pie,
+                relro,
+                canary,
+                stripped,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BinaryHardening>.Write(ModelReaderWriterOptions options)

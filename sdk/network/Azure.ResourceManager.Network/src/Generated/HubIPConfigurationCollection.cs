@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HubIPConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ipConfigName, HubIPConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (ipConfigName == null)
+            {
+                throw new ArgumentNullException(nameof(ipConfigName));
+            }
+            if (ipConfigName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ipConfigName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HubIPConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string ipConfigName, HubIPConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (ipConfigName == null)
+            {
+                throw new ArgumentNullException(nameof(ipConfigName));
+            }
+            if (ipConfigName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ipConfigName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
         public virtual async Task<Response<HubIPConfigurationResource>> GetAsync(string ipConfigName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
+            if (ipConfigName == null)
+            {
+                throw new ArgumentNullException(nameof(ipConfigName));
+            }
+            if (ipConfigName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ipConfigName));
+            }
 
             using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
         public virtual Response<HubIPConfigurationResource> Get(string ipConfigName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
+            if (ipConfigName == null)
+            {
+                throw new ArgumentNullException(nameof(ipConfigName));
+            }
+            if (ipConfigName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ipConfigName));
+            }
 
             using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ipConfigName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
+            if (ipConfigName == null)
+            {
+                throw new ArgumentNullException(nameof(ipConfigName));
+            }
+            if (ipConfigName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ipConfigName));
+            }
 
             using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
         public virtual Response<bool> Exists(string ipConfigName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
+            if (ipConfigName == null)
+            {
+                throw new ArgumentNullException(nameof(ipConfigName));
+            }
+            if (ipConfigName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ipConfigName));
+            }
 
             using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
         public virtual async Task<NullableResponse<HubIPConfigurationResource>> GetIfExistsAsync(string ipConfigName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
+            if (ipConfigName == null)
+            {
+                throw new ArgumentNullException(nameof(ipConfigName));
+            }
+            if (ipConfigName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ipConfigName));
+            }
 
             using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
         public virtual NullableResponse<HubIPConfigurationResource> GetIfExists(string ipConfigName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
+            if (ipConfigName == null)
+            {
+                throw new ArgumentNullException(nameof(ipConfigName));
+            }
+            if (ipConfigName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ipConfigName));
+            }
 
             using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.GetIfExists");
             scope.Start();

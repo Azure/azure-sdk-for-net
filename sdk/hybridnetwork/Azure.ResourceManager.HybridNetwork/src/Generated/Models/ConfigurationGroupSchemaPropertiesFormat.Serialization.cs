@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(VersionState))
+            if (options.Format != "W" && VersionState.HasValue)
             {
                 writer.WritePropertyName("versionState"u8);
                 writer.WriteStringValue(VersionState.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(SchemaDefinition))
+            if (SchemaDefinition != null)
             {
                 writer.WritePropertyName("schemaDefinition"u8);
                 writer.WriteStringValue(SchemaDefinition);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<VersionState> versionState = default;
-            Optional<string> description = default;
-            Optional<string> schemaDefinition = default;
+            ProvisioningState? provisioningState = default;
+            VersionState? versionState = default;
+            string description = default;
+            string schemaDefinition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationGroupSchemaPropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, schemaDefinition.Value, serializedAdditionalRawData);
+            return new ConfigurationGroupSchemaPropertiesFormat(provisioningState, versionState, description, schemaDefinition, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationGroupSchemaPropertiesFormat>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ScaleSettingsInformation> properties = default;
+            ScaleSettingsInformation properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            properties = ScaleSettingsInformation.DeserializeScaleSettingsInformation(property0.Value);
+                            properties = ScaleSettingsInformation.DeserializeScaleSettingsInformation(property0.Value, options);
                             continue;
                         }
                     }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningComputePatch(properties.Value, serializedAdditionalRawData);
+            return new MachineLearningComputePatch(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningComputePatch>.Write(ModelReaderWriterOptions options)

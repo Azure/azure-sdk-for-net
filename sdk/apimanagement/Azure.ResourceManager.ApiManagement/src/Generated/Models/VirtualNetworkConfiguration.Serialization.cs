@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(VnetId))
+            if (options.Format != "W" && VnetId.HasValue)
             {
                 writer.WritePropertyName("vnetid"u8);
                 writer.WriteStringValue(VnetId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Subnetname))
+            if (options.Format != "W" && Subnetname != null)
             {
                 writer.WritePropertyName("subnetname"u8);
                 writer.WriteStringValue(Subnetname);
             }
-            if (Optional.IsDefined(SubnetResourceId))
+            if (SubnetResourceId != null)
             {
                 writer.WritePropertyName("subnetResourceId"u8);
                 writer.WriteStringValue(SubnetResourceId);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<Guid> vnetid = default;
-            Optional<string> subnetname = default;
-            Optional<ResourceIdentifier> subnetResourceId = default;
+            Guid? vnetid = default;
+            string subnetname = default;
+            ResourceIdentifier subnetResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkConfiguration(Optional.ToNullable(vnetid), subnetname.Value, subnetResourceId.Value, serializedAdditionalRawData);
+            return new VirtualNetworkConfiguration(vnetid, subnetname, subnetResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkConfiguration>.Write(ModelReaderWriterOptions options)

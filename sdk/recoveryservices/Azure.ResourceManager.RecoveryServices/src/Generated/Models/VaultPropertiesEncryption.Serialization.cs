@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (KeyVaultProperties != null)
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Optional.IsDefined(KekIdentity))
+            if (KekIdentity != null)
             {
                 writer.WritePropertyName("kekIdentity"u8);
                 writer.WriteObjectValue(KekIdentity);
             }
-            if (Optional.IsDefined(InfrastructureEncryption))
+            if (InfrastructureEncryption.HasValue)
             {
                 writer.WritePropertyName("infrastructureEncryption"u8);
                 writer.WriteStringValue(InfrastructureEncryption.Value.ToString());
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<CmkKeyVaultProperties> keyVaultProperties = default;
-            Optional<CmkKekIdentity> kekIdentity = default;
-            Optional<InfrastructureEncryptionState> infrastructureEncryption = default;
+            CmkKeyVaultProperties keyVaultProperties = default;
+            CmkKekIdentity kekIdentity = default;
+            InfrastructureEncryptionState? infrastructureEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = CmkKeyVaultProperties.DeserializeCmkKeyVaultProperties(property.Value);
+                    keyVaultProperties = CmkKeyVaultProperties.DeserializeCmkKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kekIdentity"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    kekIdentity = CmkKekIdentity.DeserializeCmkKekIdentity(property.Value);
+                    kekIdentity = CmkKekIdentity.DeserializeCmkKekIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("infrastructureEncryption"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultPropertiesEncryption(keyVaultProperties.Value, kekIdentity.Value, Optional.ToNullable(infrastructureEncryption), serializedAdditionalRawData);
+            return new VaultPropertiesEncryption(keyVaultProperties, kekIdentity, infrastructureEncryption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultPropertiesEncryption>.Write(ModelReaderWriterOptions options)

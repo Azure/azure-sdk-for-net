@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Capacity))
+            if (Capacity != null)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<IntegrationServiceEnvironmentSkuDefinitionSku> sku = default;
-            Optional<IntegrationServiceEnvironmentSkuCapacity> capacity = default;
+            ResourceType? resourceType = default;
+            IntegrationServiceEnvironmentSkuDefinitionSku sku = default;
+            IntegrationServiceEnvironmentSkuCapacity capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    sku = IntegrationServiceEnvironmentSkuDefinitionSku.DeserializeIntegrationServiceEnvironmentSkuDefinitionSku(property.Value);
+                    sku = IntegrationServiceEnvironmentSkuDefinitionSku.DeserializeIntegrationServiceEnvironmentSkuDefinitionSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    capacity = IntegrationServiceEnvironmentSkuCapacity.DeserializeIntegrationServiceEnvironmentSkuCapacity(property.Value);
+                    capacity = IntegrationServiceEnvironmentSkuCapacity.DeserializeIntegrationServiceEnvironmentSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentSkuDefinition(Optional.ToNullable(resourceType), sku.Value, capacity.Value, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentSkuDefinition(resourceType, sku, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentSkuDefinition>.Write(ModelReaderWriterOptions options)

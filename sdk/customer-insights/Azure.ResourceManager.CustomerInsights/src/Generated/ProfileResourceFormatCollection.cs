@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ProfileResourceFormatResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string profileName, ProfileResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (profileName == null)
+            {
+                throw new ArgumentNullException(nameof(profileName));
+            }
+            if (profileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _profileResourceFormatProfilesClientDiagnostics.CreateScope("ProfileResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ProfileResourceFormatResource> CreateOrUpdate(WaitUntil waitUntil, string profileName, ProfileResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (profileName == null)
+            {
+                throw new ArgumentNullException(nameof(profileName));
+            }
+            if (profileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _profileResourceFormatProfilesClientDiagnostics.CreateScope("ProfileResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         public virtual async Task<Response<ProfileResourceFormatResource>> GetAsync(string profileName, string localeCode = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            if (profileName == null)
+            {
+                throw new ArgumentNullException(nameof(profileName));
+            }
+            if (profileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
+            }
 
             using var scope = _profileResourceFormatProfilesClientDiagnostics.CreateScope("ProfileResourceFormatCollection.Get");
             scope.Start();
@@ -225,7 +252,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         public virtual Response<ProfileResourceFormatResource> Get(string profileName, string localeCode = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            if (profileName == null)
+            {
+                throw new ArgumentNullException(nameof(profileName));
+            }
+            if (profileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
+            }
 
             using var scope = _profileResourceFormatProfilesClientDiagnostics.CreateScope("ProfileResourceFormatCollection.Get");
             scope.Start();
@@ -333,7 +367,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string profileName, string localeCode = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            if (profileName == null)
+            {
+                throw new ArgumentNullException(nameof(profileName));
+            }
+            if (profileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
+            }
 
             using var scope = _profileResourceFormatProfilesClientDiagnostics.CreateScope("ProfileResourceFormatCollection.Exists");
             scope.Start();
@@ -377,7 +418,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         public virtual Response<bool> Exists(string profileName, string localeCode = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            if (profileName == null)
+            {
+                throw new ArgumentNullException(nameof(profileName));
+            }
+            if (profileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
+            }
 
             using var scope = _profileResourceFormatProfilesClientDiagnostics.CreateScope("ProfileResourceFormatCollection.Exists");
             scope.Start();
@@ -421,7 +469,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         public virtual async Task<NullableResponse<ProfileResourceFormatResource>> GetIfExistsAsync(string profileName, string localeCode = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            if (profileName == null)
+            {
+                throw new ArgumentNullException(nameof(profileName));
+            }
+            if (profileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
+            }
 
             using var scope = _profileResourceFormatProfilesClientDiagnostics.CreateScope("ProfileResourceFormatCollection.GetIfExists");
             scope.Start();
@@ -467,7 +522,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         public virtual NullableResponse<ProfileResourceFormatResource> GetIfExists(string profileName, string localeCode = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            if (profileName == null)
+            {
+                throw new ArgumentNullException(nameof(profileName));
+            }
+            if (profileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
+            }
 
             using var scope = _profileResourceFormatProfilesClientDiagnostics.CreateScope("ProfileResourceFormatCollection.GetIfExists");
             scope.Start();

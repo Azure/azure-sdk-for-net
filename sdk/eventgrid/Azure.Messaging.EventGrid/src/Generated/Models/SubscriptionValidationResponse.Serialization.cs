@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ValidationResponse))
+            if (ValidationResponse != null)
             {
                 writer.WritePropertyName("validationResponse"u8);
                 writer.WriteStringValue(ValidationResponse);
@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> validationResponse = default;
+            string validationResponse = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationResponse"u8))
@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new SubscriptionValidationResponse(validationResponse.Value);
+            return new SubscriptionValidationResponse(validationResponse);
         }
 
         internal partial class SubscriptionValidationResponseConverter : JsonConverter<SubscriptionValidationResponse>

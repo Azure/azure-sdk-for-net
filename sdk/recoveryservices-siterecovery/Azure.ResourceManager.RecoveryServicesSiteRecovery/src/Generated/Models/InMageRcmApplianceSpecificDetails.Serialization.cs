@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Appliances))
+            if (options.Format != "W" && !(Appliances is ChangeTrackingList<InMageRcmApplianceDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("appliances"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<InMageRcmApplianceDetails>> appliances = default;
+            IReadOnlyList<InMageRcmApplianceDetails> appliances = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmApplianceDetails> array = new List<InMageRcmApplianceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmApplianceDetails.DeserializeInMageRcmApplianceDetails(item));
+                        array.Add(InMageRcmApplianceDetails.DeserializeInMageRcmApplianceDetails(item, options));
                     }
                     appliances = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmApplianceSpecificDetails(instanceType, serializedAdditionalRawData, Optional.ToList(appliances));
+            return new InMageRcmApplianceSpecificDetails(instanceType, serializedAdditionalRawData, appliances ?? new ChangeTrackingList<InMageRcmApplianceDetails>());
         }
 
         BinaryData IPersistableModel<InMageRcmApplianceSpecificDetails>.Write(ModelReaderWriterOptions options)

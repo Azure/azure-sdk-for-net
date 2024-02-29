@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HubPattern))
+            if (HubPattern != null)
             {
                 writer.WritePropertyName("hubPattern"u8);
                 writer.WriteStringValue(HubPattern);
             }
-            if (Optional.IsDefined(EventPattern))
+            if (EventPattern != null)
             {
                 writer.WritePropertyName("eventPattern"u8);
                 writer.WriteStringValue(EventPattern);
             }
-            if (Optional.IsDefined(CategoryPattern))
+            if (CategoryPattern != null)
             {
                 writer.WritePropertyName("categoryPattern"u8);
                 writer.WriteStringValue(CategoryPattern);
             }
             writer.WritePropertyName("urlTemplate"u8);
             writer.WriteStringValue(UrlTemplate);
-            if (Optional.IsDefined(Auth))
+            if (Auth != null)
             {
                 writer.WritePropertyName("auth"u8);
                 writer.WriteObjectValue(Auth);
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<string> hubPattern = default;
-            Optional<string> eventPattern = default;
-            Optional<string> categoryPattern = default;
+            string hubPattern = default;
+            string eventPattern = default;
+            string categoryPattern = default;
             string urlTemplate = default;
-            Optional<SignalRUpstreamAuthSettings> auth = default;
+            SignalRUpstreamAuthSettings auth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     {
                         continue;
                     }
-                    auth = SignalRUpstreamAuthSettings.DeserializeSignalRUpstreamAuthSettings(property.Value);
+                    auth = SignalRUpstreamAuthSettings.DeserializeSignalRUpstreamAuthSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRUpstreamTemplate(hubPattern.Value, eventPattern.Value, categoryPattern.Value, urlTemplate, auth.Value, serializedAdditionalRawData);
+            return new SignalRUpstreamTemplate(
+                hubPattern,
+                eventPattern,
+                categoryPattern,
+                urlTemplate,
+                auth,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRUpstreamTemplate>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownJobOutput(document.RootElement, options);
+            return DeserializeMachineLearningJobOutput(document.RootElement, options);
         }
 
         internal static UnknownJobOutput DeserializeUnknownJobOutput(JsonElement element, ModelReaderWriterOptions options = null)
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> description = default;
+            string description = default;
             JobOutputType jobOutputType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownJobOutput(description.Value, jobOutputType, serializedAdditionalRawData);
+            return new UnknownJobOutput(description, jobOutputType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningJobOutput>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownJobOutput(document.RootElement, options);
+                        return DeserializeMachineLearningJobOutput(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningJobOutput)} does not support '{options.Format}' format.");

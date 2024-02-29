@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.MachineLearning/WebService": return EMachineLearningStudioFunctionBinding.DeserializeEMachineLearningStudioFunctionBinding(element);
-                    case "Microsoft.MachineLearningServices": return MachineLearningServiceFunctionBinding.DeserializeMachineLearningServiceFunctionBinding(element);
-                    case "Microsoft.StreamAnalytics/CLRUdf": return CSharpFunctionBinding.DeserializeCSharpFunctionBinding(element);
-                    case "Microsoft.StreamAnalytics/JavascriptUdf": return JavaScriptFunctionBinding.DeserializeJavaScriptFunctionBinding(element);
+                    case "Microsoft.MachineLearning/WebService": return EMachineLearningStudioFunctionBinding.DeserializeEMachineLearningStudioFunctionBinding(element, options);
+                    case "Microsoft.MachineLearningServices": return MachineLearningServiceFunctionBinding.DeserializeMachineLearningServiceFunctionBinding(element, options);
+                    case "Microsoft.StreamAnalytics/CLRUdf": return CSharpFunctionBinding.DeserializeCSharpFunctionBinding(element, options);
+                    case "Microsoft.StreamAnalytics/JavascriptUdf": return JavaScriptFunctionBinding.DeserializeJavaScriptFunctionBinding(element, options);
                 }
             }
-            return UnknownFunctionBinding.DeserializeUnknownFunctionBinding(element);
+            return UnknownFunctionBinding.DeserializeUnknownFunctionBinding(element, options);
         }
 
         BinaryData IPersistableModel<StreamingJobFunctionBinding>.Write(ModelReaderWriterOptions options)

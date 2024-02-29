@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsManagedAadEnabled))
+            if (IsManagedAadEnabled.HasValue)
             {
                 writer.WritePropertyName("managed"u8);
                 writer.WriteBooleanValue(IsManagedAadEnabled.Value);
             }
-            if (Optional.IsDefined(IsAzureRbacEnabled))
+            if (IsAzureRbacEnabled.HasValue)
             {
                 writer.WritePropertyName("enableAzureRBAC"u8);
                 writer.WriteBooleanValue(IsAzureRbacEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(AdminGroupObjectIds))
+            if (!(AdminGroupObjectIds is ChangeTrackingList<Guid> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("adminGroupObjectIDs"u8);
                 writer.WriteStartArray();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ClientAppId))
+            if (ClientAppId.HasValue)
             {
                 writer.WritePropertyName("clientAppID"u8);
                 writer.WriteStringValue(ClientAppId.Value);
             }
-            if (Optional.IsDefined(ServerAppId))
+            if (ServerAppId.HasValue)
             {
                 writer.WritePropertyName("serverAppID"u8);
                 writer.WriteStringValue(ServerAppId.Value);
             }
-            if (Optional.IsDefined(ServerAppSecret))
+            if (ServerAppSecret != null)
             {
                 writer.WritePropertyName("serverAppSecret"u8);
                 writer.WriteStringValue(ServerAppSecret);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantID"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<bool> managed = default;
-            Optional<bool> enableAzureRBAC = default;
-            Optional<IList<Guid>> adminGroupObjectIds = default;
-            Optional<Guid> clientAppId = default;
-            Optional<Guid> serverAppId = default;
-            Optional<string> serverAppSecret = default;
-            Optional<Guid> tenantId = default;
+            bool? managed = default;
+            bool? enableAzureRBAC = default;
+            IList<Guid> adminGroupObjectIds = default;
+            Guid? clientAppId = default;
+            Guid? serverAppId = default;
+            string serverAppSecret = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterAadProfile(Optional.ToNullable(managed), Optional.ToNullable(enableAzureRBAC), Optional.ToList(adminGroupObjectIds), Optional.ToNullable(clientAppId), Optional.ToNullable(serverAppId), serverAppSecret.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new ManagedClusterAadProfile(
+                managed,
+                enableAzureRBAC,
+                adminGroupObjectIds ?? new ChangeTrackingList<Guid>(),
+                clientAppId,
+                serverAppId,
+                serverAppSecret,
+                tenantId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterAadProfile>.Write(ModelReaderWriterOptions options)

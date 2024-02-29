@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TriggerName))
+            if (options.Format != "W" && TriggerName != null)
             {
                 writer.WritePropertyName("triggerName"u8);
                 writer.WriteStringValue(TriggerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> triggerName = default;
-            Optional<EventSubscriptionStatus> status = default;
+            string triggerName = default;
+            EventSubscriptionStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryTriggerSubscriptionOperationResult(triggerName.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new DataFactoryTriggerSubscriptionOperationResult(triggerName, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryTriggerSubscriptionOperationResult>.Write(ModelReaderWriterOptions options)

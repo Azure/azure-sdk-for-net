@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DataPartitionInfo))
+            if (!(DataPartitionInfo is ChangeTrackingList<DataPartition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataPartitionInfo"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataPartition>> dataPartitionInfo = default;
+            IReadOnlyList<DataPartition> dataPartitionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                     List<DataPartition> array = new List<DataPartition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataPartition.DeserializeDataPartition(item));
+                        array.Add(DataPartition.DeserializeDataPartition(item, options));
                     }
                     dataPartitionInfo = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataPartitionsListResult(Optional.ToList(dataPartitionInfo), serializedAdditionalRawData);
+            return new DataPartitionsListResult(dataPartitionInfo ?? new ChangeTrackingList<DataPartition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataPartitionsListResult>.Write(ModelReaderWriterOptions options)

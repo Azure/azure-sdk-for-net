@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MachineLearningOnlineDeploymentData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<MachineLearningOnlineDeploymentData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<MachineLearningOnlineDeploymentData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningOnlineDeploymentData> array = new List<MachineLearningOnlineDeploymentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningOnlineDeploymentData.DeserializeMachineLearningOnlineDeploymentData(item));
+                        array.Add(MachineLearningOnlineDeploymentData.DeserializeMachineLearningOnlineDeploymentData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OnlineDeploymentTrackedResourceArmPaginatedResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new OnlineDeploymentTrackedResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<MachineLearningOnlineDeploymentData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OnlineDeploymentTrackedResourceArmPaginatedResult>.Write(ModelReaderWriterOptions options)

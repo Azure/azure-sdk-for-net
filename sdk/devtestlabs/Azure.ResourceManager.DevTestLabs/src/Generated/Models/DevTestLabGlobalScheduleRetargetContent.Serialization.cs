@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CurrentResourceId))
+            if (CurrentResourceId != null)
             {
                 writer.WritePropertyName("currentResourceId"u8);
                 writer.WriteStringValue(CurrentResourceId);
             }
-            if (Optional.IsDefined(TargetResourceId))
+            if (TargetResourceId != null)
             {
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> currentResourceId = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
+            ResourceIdentifier currentResourceId = default;
+            ResourceIdentifier targetResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabGlobalScheduleRetargetContent(currentResourceId.Value, targetResourceId.Value, serializedAdditionalRawData);
+            return new DevTestLabGlobalScheduleRetargetContent(currentResourceId, targetResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabGlobalScheduleRetargetContent>.Write(ModelReaderWriterOptions options)

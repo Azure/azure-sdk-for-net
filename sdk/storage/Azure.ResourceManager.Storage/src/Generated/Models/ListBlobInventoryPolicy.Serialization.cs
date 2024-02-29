@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<BlobInventoryPolicyData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BlobInventoryPolicyData>> value = default;
+            IReadOnlyList<BlobInventoryPolicyData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<BlobInventoryPolicyData> array = new List<BlobInventoryPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BlobInventoryPolicyData.DeserializeBlobInventoryPolicyData(item));
+                        array.Add(BlobInventoryPolicyData.DeserializeBlobInventoryPolicyData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListBlobInventoryPolicy(Optional.ToList(value), serializedAdditionalRawData);
+            return new ListBlobInventoryPolicy(value ?? new ChangeTrackingList<BlobInventoryPolicyData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListBlobInventoryPolicy>.Write(ModelReaderWriterOptions options)

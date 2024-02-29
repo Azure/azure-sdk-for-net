@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             IReadOnlyList<ContainerAppManagedCertificateData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppManagedCertificateData> array = new List<ContainerAppManagedCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppManagedCertificateData.DeserializeContainerAppManagedCertificateData(item));
+                        array.Add(ContainerAppManagedCertificateData.DeserializeContainerAppManagedCertificateData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedCertificateCollection(value, nextLink.Value, serializedAdditionalRawData);
+            return new ManagedCertificateCollection(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedCertificateCollection>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Currency))
+            if (options.Format != "W" && Currency != null)
             {
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Value.HasValue)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<string> currency = default;
-            Optional<decimal> value = default;
+            string currency = default;
+            decimal? value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionAmount(currency.Value, Optional.ToNullable(value), serializedAdditionalRawData);
+            return new ConsumptionAmount(currency, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionAmount>.Write(ModelReaderWriterOptions options)

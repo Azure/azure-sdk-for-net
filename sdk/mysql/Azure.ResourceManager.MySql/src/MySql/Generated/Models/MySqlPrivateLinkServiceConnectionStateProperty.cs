@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.MySql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> or <paramref name="description"/> is null. </exception>
         public MySqlPrivateLinkServiceConnectionStateProperty(string status, string description)
         {
-            Argument.AssertNotNull(status, nameof(status));
-            Argument.AssertNotNull(description, nameof(description));
+            if (status == null)
+            {
+                throw new ArgumentNullException(nameof(status));
+            }
+            if (description == null)
+            {
+                throw new ArgumentNullException(nameof(description));
+            }
 
             Status = status;
             Description = description;

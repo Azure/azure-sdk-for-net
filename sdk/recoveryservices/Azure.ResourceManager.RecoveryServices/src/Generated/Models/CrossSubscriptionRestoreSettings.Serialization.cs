@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CrossSubscriptionRestoreState))
+            if (CrossSubscriptionRestoreState.HasValue)
             {
                 writer.WritePropertyName("crossSubscriptionRestoreState"u8);
                 writer.WriteStringValue(CrossSubscriptionRestoreState.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<CrossSubscriptionRestoreState> crossSubscriptionRestoreState = default;
+            CrossSubscriptionRestoreState? crossSubscriptionRestoreState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CrossSubscriptionRestoreSettings(Optional.ToNullable(crossSubscriptionRestoreState), serializedAdditionalRawData);
+            return new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CrossSubscriptionRestoreSettings>.Write(ModelReaderWriterOptions options)

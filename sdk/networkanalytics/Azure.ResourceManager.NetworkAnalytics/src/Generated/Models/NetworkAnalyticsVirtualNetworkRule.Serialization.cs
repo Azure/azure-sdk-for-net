@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(Action))
+            if (Action != null)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
-            if (Optional.IsDefined(State))
+            if (State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 return null;
             }
             string id = default;
-            Optional<string> action = default;
-            Optional<string> state = default;
+            string action = default;
+            string state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkAnalyticsVirtualNetworkRule(id, action.Value, state.Value, serializedAdditionalRawData);
+            return new NetworkAnalyticsVirtualNetworkRule(id, action, state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkAnalyticsVirtualNetworkRule>.Write(ModelReaderWriterOptions options)

@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyId))
+            if (KeyId != null)
             {
                 writer.WritePropertyName("kid"u8);
                 writer.WriteStringValue(KeyId.AbsoluteUri);
             }
             writer.WritePropertyName("attributes"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteNumberValue(CreatedOn.Value, "U");
             }
-            if (Optional.IsDefined(UpdatedOn))
+            if (UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteNumberValue(UpdatedOn.Value, "U");
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<Uri> kid = default;
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
+            Uri kid = default;
+            bool? enabled = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? updated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountKeyVaultKey(kid.Value, Optional.ToNullable(enabled), Optional.ToNullable(created), Optional.ToNullable(updated), serializedAdditionalRawData);
+            return new IntegrationAccountKeyVaultKey(kid, enabled, created, updated, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountKeyVaultKey>.Write(ModelReaderWriterOptions options)

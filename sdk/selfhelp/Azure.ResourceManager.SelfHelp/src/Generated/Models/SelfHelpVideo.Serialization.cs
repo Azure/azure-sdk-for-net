@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReplacementKey))
+            if (ReplacementKey != null)
             {
                 writer.WritePropertyName("replacementKey"u8);
                 writer.WriteStringValue(ReplacementKey);
             }
-            if (Optional.IsDefined(Src))
+            if (Src != null)
             {
                 writer.WritePropertyName("src"u8);
                 writer.WriteStringValue(Src);
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> replacementKey = default;
-            Optional<string> src = default;
-            Optional<string> title = default;
+            string replacementKey = default;
+            string src = default;
+            string title = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpVideo(src.Value, title.Value, serializedAdditionalRawData, replacementKey.Value);
+            return new SelfHelpVideo(src, title, serializedAdditionalRawData, replacementKey);
         }
 
         BinaryData IPersistableModel<SelfHelpVideo>.Write(ModelReaderWriterOptions options)

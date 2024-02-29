@@ -26,62 +26,62 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DataType))
+            if (DataType != null)
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
-            if (Optional.IsDefined(IsRequired))
+            if (IsRequired.HasValue)
             {
                 writer.WritePropertyName("required"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
-            if (Optional.IsDefined(IsSensitive))
+            if (IsSensitive.HasValue)
             {
                 writer.WritePropertyName("sensitive"u8);
                 writer.WriteBooleanValue(IsSensitive.Value);
             }
-            if (Optional.IsDefined(DesignDefaultValue))
+            if (DesignDefaultValue != null)
             {
                 writer.WritePropertyName("designDefaultValue"u8);
                 writer.WriteStringValue(DesignDefaultValue);
             }
-            if (Optional.IsDefined(DefaultValue))
+            if (DefaultValue != null)
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
-            if (Optional.IsDefined(SensitiveDefaultValue))
+            if (SensitiveDefaultValue != null)
             {
                 writer.WritePropertyName("sensitiveDefaultValue"u8);
                 writer.WriteStringValue(SensitiveDefaultValue);
             }
-            if (Optional.IsDefined(ValueType))
+            if (ValueType != null)
             {
                 writer.WritePropertyName("valueType"u8);
                 writer.WriteStringValue(ValueType);
             }
-            if (Optional.IsDefined(HasValueSet))
+            if (HasValueSet.HasValue)
             {
                 writer.WritePropertyName("valueSet"u8);
                 writer.WriteBooleanValue(HasValueSet.Value);
             }
-            if (Optional.IsDefined(Variable))
+            if (Variable != null)
             {
                 writer.WritePropertyName("variable"u8);
                 writer.WriteStringValue(Variable);
@@ -124,18 +124,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<long> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> dataType = default;
-            Optional<bool> required = default;
-            Optional<bool> sensitive = default;
-            Optional<string> designDefaultValue = default;
-            Optional<string> defaultValue = default;
-            Optional<string> sensitiveDefaultValue = default;
-            Optional<string> valueType = default;
-            Optional<bool> valueSet = default;
-            Optional<string> variable = default;
+            long? id = default;
+            string name = default;
+            string description = default;
+            string dataType = default;
+            bool? required = default;
+            bool? sensitive = default;
+            string designDefaultValue = default;
+            string defaultValue = default;
+            string sensitiveDefaultValue = default;
+            string valueType = default;
+            bool? valueSet = default;
+            string variable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -222,7 +222,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisParameterInfo(Optional.ToNullable(id), name.Value, description.Value, dataType.Value, Optional.ToNullable(required), Optional.ToNullable(sensitive), designDefaultValue.Value, defaultValue.Value, sensitiveDefaultValue.Value, valueType.Value, Optional.ToNullable(valueSet), variable.Value, serializedAdditionalRawData);
+            return new SsisParameterInfo(
+                id,
+                name,
+                description,
+                dataType,
+                required,
+                sensitive,
+                designDefaultValue,
+                defaultValue,
+                sensitiveDefaultValue,
+                valueType,
+                valueSet,
+                variable,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsisParameterInfo>.Write(ModelReaderWriterOptions options)

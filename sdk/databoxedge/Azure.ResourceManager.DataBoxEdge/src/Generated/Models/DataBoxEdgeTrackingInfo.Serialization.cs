@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SerialNumber))
+            if (SerialNumber != null)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (Optional.IsDefined(CarrierName))
+            if (CarrierName != null)
             {
                 writer.WritePropertyName("carrierName"u8);
                 writer.WriteStringValue(CarrierName);
             }
-            if (Optional.IsDefined(TrackingId))
+            if (TrackingId != null)
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId);
             }
-            if (Optional.IsDefined(TrackingUri))
+            if (TrackingUri != null)
             {
                 writer.WritePropertyName("trackingUrl"u8);
                 writer.WriteStringValue(TrackingUri.AbsoluteUri);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> serialNumber = default;
-            Optional<string> carrierName = default;
-            Optional<string> trackingId = default;
-            Optional<Uri> trackingUrl = default;
+            string serialNumber = default;
+            string carrierName = default;
+            string trackingId = default;
+            Uri trackingUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeTrackingInfo(serialNumber.Value, carrierName.Value, trackingId.Value, trackingUrl.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeTrackingInfo(serialNumber, carrierName, trackingId, trackingUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeTrackingInfo>.Write(ModelReaderWriterOptions options)

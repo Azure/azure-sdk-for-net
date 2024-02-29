@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -54,7 +53,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ports"/> is null. </exception>
         public ContainerGroupIPAddress(IEnumerable<ContainerGroupPort> ports, ContainerGroupIPAddressType addressType)
         {
-            Argument.AssertNotNull(ports, nameof(ports));
+            if (ports == null)
+            {
+                throw new ArgumentNullException(nameof(ports));
+            }
 
             Ports = ports.ToList();
             AddressType = addressType;

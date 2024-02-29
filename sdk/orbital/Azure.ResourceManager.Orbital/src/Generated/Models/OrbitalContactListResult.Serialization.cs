@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Orbital.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<OrbitalContactData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Orbital.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OrbitalContactData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<OrbitalContactData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     List<OrbitalContactData> array = new List<OrbitalContactData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrbitalContactData.DeserializeOrbitalContactData(item));
+                        array.Add(OrbitalContactData.DeserializeOrbitalContactData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalContactListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new OrbitalContactListResult(value ?? new ChangeTrackingList<OrbitalContactData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalContactListResult>.Write(ModelReaderWriterOptions options)

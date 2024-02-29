@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMonitoringFeatureFilterBase(document.RootElement, options);
+            return DeserializeMonitoringFeatureFilterBase(document.RootElement, options);
         }
 
         internal static UnknownMonitoringFeatureFilterBase DeserializeUnknownMonitoringFeatureFilterBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMonitoringFeatureFilterBase(document.RootElement, options);
+                        return DeserializeMonitoringFeatureFilterBase(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MonitoringFeatureFilterBase)} does not support '{options.Format}' format.");

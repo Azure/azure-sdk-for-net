@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CodeConfiguration))
+            if (CodeConfiguration != null)
             {
                 if (CodeConfiguration != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningCodeConfiguration> codeConfiguration = default;
+            MachineLearningCodeConfiguration codeConfiguration = default;
             InferencingServerType serverType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         codeConfiguration = null;
                         continue;
                     }
-                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value);
+                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serverType"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureMLOnlineInferencingServer(serverType, serializedAdditionalRawData, codeConfiguration.Value);
+            return new AzureMLOnlineInferencingServer(serverType, serializedAdditionalRawData, codeConfiguration);
         }
 
         BinaryData IPersistableModel<AzureMLOnlineInferencingServer>.Write(ModelReaderWriterOptions options)

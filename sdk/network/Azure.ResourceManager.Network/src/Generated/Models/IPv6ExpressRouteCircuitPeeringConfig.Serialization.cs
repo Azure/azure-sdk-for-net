@@ -27,27 +27,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryPeerAddressPrefix))
+            if (PrimaryPeerAddressPrefix != null)
             {
                 writer.WritePropertyName("primaryPeerAddressPrefix"u8);
                 writer.WriteStringValue(PrimaryPeerAddressPrefix);
             }
-            if (Optional.IsDefined(SecondaryPeerAddressPrefix))
+            if (SecondaryPeerAddressPrefix != null)
             {
                 writer.WritePropertyName("secondaryPeerAddressPrefix"u8);
                 writer.WriteStringValue(SecondaryPeerAddressPrefix);
             }
-            if (Optional.IsDefined(MicrosoftPeeringConfig))
+            if (MicrosoftPeeringConfig != null)
             {
                 writer.WritePropertyName("microsoftPeeringConfig"u8);
                 writer.WriteObjectValue(MicrosoftPeeringConfig);
             }
-            if (Optional.IsDefined(RouteFilter))
+            if (RouteFilter != null)
             {
                 writer.WritePropertyName("routeFilter"u8);
                 JsonSerializer.Serialize(writer, RouteFilter);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> primaryPeerAddressPrefix = default;
-            Optional<string> secondaryPeerAddressPrefix = default;
-            Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;
-            Optional<WritableSubResource> routeFilter = default;
-            Optional<ExpressRouteCircuitPeeringState> state = default;
+            string primaryPeerAddressPrefix = default;
+            string secondaryPeerAddressPrefix = default;
+            ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default;
+            WritableSubResource routeFilter = default;
+            ExpressRouteCircuitPeeringState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property.Value);
+                    microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("routeFilter"u8))
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPv6ExpressRouteCircuitPeeringConfig(primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, microsoftPeeringConfig.Value, routeFilter, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new IPv6ExpressRouteCircuitPeeringConfig(
+                primaryPeerAddressPrefix,
+                secondaryPeerAddressPrefix,
+                microsoftPeeringConfig,
+                routeFilter,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>.Write(ModelReaderWriterOptions options)

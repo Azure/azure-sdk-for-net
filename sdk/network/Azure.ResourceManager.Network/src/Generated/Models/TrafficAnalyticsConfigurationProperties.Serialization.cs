@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Enabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(WorkspaceId))
+            if (WorkspaceId != null)
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
-            if (Optional.IsDefined(WorkspaceRegion))
+            if (WorkspaceRegion != null)
             {
                 writer.WritePropertyName("workspaceRegion"u8);
                 writer.WriteStringValue(WorkspaceRegion);
             }
-            if (Optional.IsDefined(WorkspaceResourceId))
+            if (WorkspaceResourceId != null)
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
             }
-            if (Optional.IsDefined(TrafficAnalyticsIntervalInMinutes))
+            if (TrafficAnalyticsIntervalInMinutes.HasValue)
             {
                 writer.WritePropertyName("trafficAnalyticsInterval"u8);
                 writer.WriteNumberValue(TrafficAnalyticsIntervalInMinutes.Value);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> workspaceId = default;
-            Optional<string> workspaceRegion = default;
-            Optional<ResourceIdentifier> workspaceResourceId = default;
-            Optional<int> trafficAnalyticsInterval = default;
+            bool? enabled = default;
+            string workspaceId = default;
+            string workspaceRegion = default;
+            ResourceIdentifier workspaceResourceId = default;
+            int? trafficAnalyticsInterval = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficAnalyticsConfigurationProperties(Optional.ToNullable(enabled), workspaceId.Value, workspaceRegion.Value, workspaceResourceId.Value, Optional.ToNullable(trafficAnalyticsInterval), serializedAdditionalRawData);
+            return new TrafficAnalyticsConfigurationProperties(
+                enabled,
+                workspaceId,
+                workspaceRegion,
+                workspaceResourceId,
+                trafficAnalyticsInterval,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficAnalyticsConfigurationProperties>.Write(ModelReaderWriterOptions options)

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -53,7 +52,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentResponse"/> is null. </exception>
         internal RoleAssignmentListResult(int count, IEnumerable<RoleAssignmentDetail> roleAssignmentResponse)
         {
-            Argument.AssertNotNull(roleAssignmentResponse, nameof(roleAssignmentResponse));
+            if (roleAssignmentResponse == null)
+            {
+                throw new ArgumentNullException(nameof(roleAssignmentResponse));
+            }
 
             Count = count;
             RoleAssignmentResponse = roleAssignmentResponse.ToList();

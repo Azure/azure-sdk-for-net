@@ -199,7 +199,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<GeoBackupPolicyResource>> UpdateAsync(WaitUntil waitUntil, GeoBackupPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _geoBackupPolicyClientDiagnostics.CreateScope("GeoBackupPolicyResource.Update");
             scope.Start();
@@ -245,7 +248,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<GeoBackupPolicyResource> Update(WaitUntil waitUntil, GeoBackupPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _geoBackupPolicyClientDiagnostics.CreateScope("GeoBackupPolicyResource.Update");
             scope.Start();

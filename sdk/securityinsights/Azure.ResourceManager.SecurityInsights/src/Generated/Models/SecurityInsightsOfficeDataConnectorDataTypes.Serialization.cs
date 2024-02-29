@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Exchange))
+            if (Exchange != null)
             {
                 writer.WritePropertyName("exchange"u8);
                 writer.WriteObjectValue(Exchange);
             }
-            if (Optional.IsDefined(SharePoint))
+            if (SharePoint != null)
             {
                 writer.WritePropertyName("sharePoint"u8);
                 writer.WriteObjectValue(SharePoint);
             }
-            if (Optional.IsDefined(Teams))
+            if (Teams != null)
             {
                 writer.WritePropertyName("teams"u8);
                 writer.WriteObjectValue(Teams);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<OfficeDataConnectorDataTypesExchange> exchange = default;
-            Optional<OfficeDataConnectorDataTypesSharePoint> sharePoint = default;
-            Optional<OfficeDataConnectorDataTypesTeams> teams = default;
+            OfficeDataConnectorDataTypesExchange exchange = default;
+            OfficeDataConnectorDataTypesSharePoint sharePoint = default;
+            OfficeDataConnectorDataTypesTeams teams = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    exchange = OfficeDataConnectorDataTypesExchange.DeserializeOfficeDataConnectorDataTypesExchange(property.Value);
+                    exchange = OfficeDataConnectorDataTypesExchange.DeserializeOfficeDataConnectorDataTypesExchange(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sharePoint"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    sharePoint = OfficeDataConnectorDataTypesSharePoint.DeserializeOfficeDataConnectorDataTypesSharePoint(property.Value);
+                    sharePoint = OfficeDataConnectorDataTypesSharePoint.DeserializeOfficeDataConnectorDataTypesSharePoint(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("teams"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    teams = OfficeDataConnectorDataTypesTeams.DeserializeOfficeDataConnectorDataTypesTeams(property.Value);
+                    teams = OfficeDataConnectorDataTypesTeams.DeserializeOfficeDataConnectorDataTypesTeams(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsOfficeDataConnectorDataTypes(exchange.Value, sharePoint.Value, teams.Value, serializedAdditionalRawData);
+            return new SecurityInsightsOfficeDataConnectorDataTypes(exchange, sharePoint, teams, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>.Write(ModelReaderWriterOptions options)

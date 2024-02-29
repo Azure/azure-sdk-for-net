@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RackSlot))
+            if (options.Format != "W" && RackSlot.HasValue)
             {
                 writer.WritePropertyName("rackSlot"u8);
                 writer.WriteNumberValue(RackSlot.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CapacityGB))
+            if (options.Format != "W" && CapacityGB.HasValue)
             {
                 writer.WritePropertyName("capacityGB"u8);
                 writer.WriteNumberValue(CapacityGB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Model))
+            if (options.Format != "W" && Model != null)
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<long> rackSlot = default;
-            Optional<long> capacityGB = default;
-            Optional<string> model = default;
+            long? rackSlot = default;
+            long? capacityGB = default;
+            string model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageApplianceSkuSlot(Optional.ToNullable(rackSlot), Optional.ToNullable(capacityGB), model.Value, serializedAdditionalRawData);
+            return new StorageApplianceSkuSlot(rackSlot, capacityGB, model, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageApplianceSkuSlot>.Write(ModelReaderWriterOptions options)

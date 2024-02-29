@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainer"/> is null. </exception>
         public KnowledgeStoreObjectProjectionSelector(string storageContainer) : base(storageContainer)
         {
-            Argument.AssertNotNull(storageContainer, nameof(storageContainer));
+            if (storageContainer == null)
+            {
+                throw new ArgumentNullException(nameof(storageContainer));
+            }
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeStoreObjectProjectionSelector"/>. </summary>

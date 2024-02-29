@@ -20,43 +20,43 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class ImageAnalysisClient
     {
         /// <summary> Performs a single Image Analysis operation. </summary>
-        /// <param name="imageContent"> The image to be analyzed. </param>
+        /// <param name="imageData"> The image to be analyzed. </param>
         /// <param name="visualFeatures"> A flags enumeration indicating what visual feature types to return. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
-        /// <param name="options">A structure containg the per call analysis options.</param>
+        /// <param name="options">A structure containing the per call analysis options.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageData"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Task<Response<ImageAnalysisResult>> AnalyzeAsync(BinaryData imageContent, VisualFeatures visualFeatures, ImageAnalysisOptions options = default, CancellationToken cancellationToken = default)
-            => AnalyzeFromImageDataAsync(visualFeatures.ToImplArray(), imageContent, options.Language, options.GenderNeutralCaption, options.SmartCropsAspectRatios, options.ModelVersion, cancellationToken);
+        public virtual Task<Response<ImageAnalysisResult>> AnalyzeAsync(BinaryData imageData, VisualFeatures visualFeatures, ImageAnalysisOptions options = default, CancellationToken cancellationToken = default)
+            => AnalyzeFromImageDataAsync(visualFeatures.ToImplArray(), imageData, options.Language, options.GenderNeutralCaption, options.SmartCropsAspectRatios, options.ModelVersion, cancellationToken);
 
         /// <summary> Performs a single Image Analysis operation. </summary>
-        /// <param name="imageContent"> The image to be analyzed. </param>
+        /// <param name="imageData"> The image to be analyzed. </param>
         /// <param name="visualFeatures"> A flags enumeration indicating what visual feature types to return. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
-        /// <param name="options">A structure containg the per call analysis options.</param>
+        /// <param name="options">A structure containing the per call analysis options.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageData"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ImageAnalysisResult> Analyze(BinaryData imageContent, VisualFeatures visualFeatures, ImageAnalysisOptions options = default, CancellationToken cancellationToken = default)
-            => AnalyzeFromImageData(visualFeatures.ToImplArray(), imageContent, options.Language, options.GenderNeutralCaption, options.SmartCropsAspectRatios, options.ModelVersion, cancellationToken);
+        public virtual Response<ImageAnalysisResult> Analyze(BinaryData imageData, VisualFeatures visualFeatures, ImageAnalysisOptions options = default, CancellationToken cancellationToken = default)
+            => AnalyzeFromImageData(visualFeatures.ToImplArray(), imageData, options.Language, options.GenderNeutralCaption, options.SmartCropsAspectRatios, options.ModelVersion, cancellationToken);
 
         /// <summary> Performs a single Image Analysis operation. </summary>
-        /// <param name="imageContent"> The image to be analyzed. </param>
+        /// <param name="imageUri"> The image to be analyzed. </param>
         /// <param name="visualFeatures"> A flags enumeration indicating what visual feature types to return. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
-        /// <param name="options">A structure containg the per call analysis options.</param>
+        /// <param name="options">A structure containing the per call analysis options.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageUri"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ImageAnalysisResult>> AnalyzeAsync(Uri imageContent, VisualFeatures visualFeatures, ImageAnalysisOptions options = default, CancellationToken cancellationToken = default)
-            => await AnalyzeFromUrlAsync(visualFeatures.ToImplArray(), new ImageUrl(imageContent), options.Language, options.GenderNeutralCaption, options.SmartCropsAspectRatios, options.ModelVersion, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response<ImageAnalysisResult>> AnalyzeAsync(Uri imageUri, VisualFeatures visualFeatures, ImageAnalysisOptions options = default, CancellationToken cancellationToken = default)
+            => await AnalyzeFromUrlAsync(visualFeatures.ToImplArray(), new ImageUrl(imageUri), options.Language, options.GenderNeutralCaption, options.SmartCropsAspectRatios, options.ModelVersion, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Performs a single Image Analysis operation. </summary>
-        /// <param name="imageContent"> The image to be analyzed. </param>
+        /// <param name="imageUri"> The image to be analyzed. </param>
         /// <param name="visualFeatures"> A flags enumeration indicating what visual feature types to return. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
-        /// <param name="options">A structure containg the per call analysis options.</param>
+        /// <param name="options">A structure containing the per call analysis options.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageUri"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ImageAnalysisResult> Analyze(Uri imageContent, VisualFeatures visualFeatures, ImageAnalysisOptions options = default, CancellationToken cancellationToken = default)
-            => AnalyzeFromUrl(visualFeatures.ToImplArray(), new ImageUrl(imageContent), options.Language, options.GenderNeutralCaption, options.SmartCropsAspectRatios, options.ModelVersion, cancellationToken);
+        public virtual Response<ImageAnalysisResult> Analyze(Uri imageUri, VisualFeatures visualFeatures, ImageAnalysisOptions options = default, CancellationToken cancellationToken = default)
+            => AnalyzeFromUrl(visualFeatures.ToImplArray(), new ImageUrl(imageUri), options.Language, options.GenderNeutralCaption, options.SmartCropsAspectRatios, options.ModelVersion, cancellationToken);
     }
 }

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MoveState))
+            if (options.Format != "W" && MoveState.HasValue)
             {
                 writer.WritePropertyName("moveState"u8);
                 writer.WriteStringValue(MoveState.Value.ToString());
             }
-            if (Optional.IsDefined(JobStatus))
+            if (JobStatus != null)
             {
                 if (JobStatus != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("jobStatus");
                 }
             }
-            if (Optional.IsDefined(Errors))
+            if (Errors != null)
             {
                 if (Errors != null)
                 {
@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<MoverResourceMoveState> moveState = default;
-            Optional<MoverResourceJobStatus> jobStatus = default;
-            Optional<MoveResourceError> errors = default;
+            MoverResourceMoveState? moveState = default;
+            MoverResourceJobStatus jobStatus = default;
+            MoveResourceError errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         jobStatus = null;
                         continue;
                     }
-                    jobStatus = MoverResourceJobStatus.DeserializeMoverResourceJobStatus(property.Value);
+                    jobStatus = MoverResourceJobStatus.DeserializeMoverResourceJobStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         errors = null;
                         continue;
                     }
-                    errors = MoveResourceError.DeserializeMoveResourceError(property.Value);
+                    errors = MoveResourceError.DeserializeMoveResourceError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourcePropertiesMoveStatus(Optional.ToNullable(moveState), jobStatus.Value, errors.Value, serializedAdditionalRawData);
+            return new MoverResourcePropertiesMoveStatus(moveState, jobStatus, errors, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourcePropertiesMoveStatus>.Write(ModelReaderWriterOptions options)

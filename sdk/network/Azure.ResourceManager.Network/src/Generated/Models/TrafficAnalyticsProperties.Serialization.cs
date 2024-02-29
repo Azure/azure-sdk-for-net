@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TrafficAnalyticsConfiguration))
+            if (TrafficAnalyticsConfiguration != null)
             {
                 writer.WritePropertyName("networkWatcherFlowAnalyticsConfiguration"u8);
                 writer.WriteObjectValue(TrafficAnalyticsConfiguration);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<TrafficAnalyticsConfigurationProperties> networkWatcherFlowAnalyticsConfiguration = default;
+            TrafficAnalyticsConfigurationProperties networkWatcherFlowAnalyticsConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkWatcherFlowAnalyticsConfiguration = TrafficAnalyticsConfigurationProperties.DeserializeTrafficAnalyticsConfigurationProperties(property.Value);
+                    networkWatcherFlowAnalyticsConfiguration = TrafficAnalyticsConfigurationProperties.DeserializeTrafficAnalyticsConfigurationProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficAnalyticsProperties(networkWatcherFlowAnalyticsConfiguration.Value, serializedAdditionalRawData);
+            return new TrafficAnalyticsProperties(networkWatcherFlowAnalyticsConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficAnalyticsProperties>.Write(ModelReaderWriterOptions options)

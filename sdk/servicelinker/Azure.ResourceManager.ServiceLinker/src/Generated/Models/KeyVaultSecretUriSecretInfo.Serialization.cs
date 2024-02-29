@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<string> value = default;
+            string value = default;
             LinkerSecretType secretType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultSecretUriSecretInfo(secretType, serializedAdditionalRawData, value.Value);
+            return new KeyVaultSecretUriSecretInfo(secretType, serializedAdditionalRawData, value);
         }
 
         BinaryData IPersistableModel<KeyVaultSecretUriSecretInfo>.Write(ModelReaderWriterOptions options)

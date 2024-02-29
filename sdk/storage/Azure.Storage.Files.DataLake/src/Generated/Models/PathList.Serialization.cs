@@ -19,7 +19,7 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<Path>> paths = default;
+            IReadOnlyList<Path> paths = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("paths"u8))
@@ -37,7 +37,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     continue;
                 }
             }
-            return new PathList(Optional.ToList(paths));
+            return new PathList(paths ?? new ChangeTrackingList<Path>());
         }
     }
 }

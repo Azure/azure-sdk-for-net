@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Priority))
+            if (options.Format != "W" && Priority != null)
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteStringValue(Priority);
             }
-            if (Optional.IsDefined(RuleStackName))
+            if (RuleStackName != null)
             {
                 writer.WritePropertyName("ruleStackName"u8);
                 writer.WriteStringValue(RuleStackName);
             }
-            if (Optional.IsDefined(RuleListName))
+            if (RuleListName != null)
             {
                 writer.WritePropertyName("ruleListName"u8);
                 writer.WriteStringValue(RuleListName);
             }
-            if (Optional.IsDefined(FirewallName))
+            if (FirewallName != null)
             {
                 writer.WritePropertyName("firewallName"u8);
                 writer.WriteStringValue(FirewallName);
             }
-            if (Optional.IsDefined(RuleName))
+            if (RuleName != null)
             {
                 writer.WritePropertyName("ruleName"u8);
                 writer.WriteStringValue(RuleName);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<string> priority = default;
-            Optional<string> ruleStackName = default;
-            Optional<string> ruleListName = default;
-            Optional<string> firewallName = default;
-            Optional<string> ruleName = default;
+            string priority = default;
+            string ruleStackName = default;
+            string ruleListName = default;
+            string firewallName = default;
+            string ruleName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallRuleResetConter(priority.Value, ruleStackName.Value, ruleListName.Value, firewallName.Value, ruleName.Value, serializedAdditionalRawData);
+            return new FirewallRuleResetConter(
+                priority,
+                ruleStackName,
+                ruleListName,
+                firewallName,
+                ruleName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallRuleResetConter>.Write(ModelReaderWriterOptions options)

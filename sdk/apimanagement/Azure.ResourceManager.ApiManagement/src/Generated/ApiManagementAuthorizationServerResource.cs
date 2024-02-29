@@ -284,7 +284,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ApiManagementAuthorizationServerResource>> UpdateAsync(ETag ifMatch, ApiManagementAuthorizationServerPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ApiManagementAuthorizationServerResource> Update(ETag ifMatch, ApiManagementAuthorizationServerPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerResource.Update");
             scope.Start();

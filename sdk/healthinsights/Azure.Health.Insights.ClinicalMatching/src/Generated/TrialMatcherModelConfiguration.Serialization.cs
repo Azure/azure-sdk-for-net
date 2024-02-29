@@ -27,12 +27,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Verbose))
+            if (Verbose.HasValue)
             {
                 writer.WritePropertyName("verbose"u8);
                 writer.WriteBooleanValue(Verbose.Value);
             }
-            if (Optional.IsDefined(IncludeEvidence))
+            if (IncludeEvidence.HasValue)
             {
                 writer.WritePropertyName("includeEvidence"u8);
                 writer.WriteBooleanValue(IncludeEvidence.Value);
@@ -77,8 +77,8 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 return null;
             }
-            Optional<bool> verbose = default;
-            Optional<bool> includeEvidence = default;
+            bool? verbose = default;
+            bool? includeEvidence = default;
             ClinicalTrials clinicalTrials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 if (property.NameEquals("clinicalTrials"u8))
                 {
-                    clinicalTrials = ClinicalTrials.DeserializeClinicalTrials(property.Value);
+                    clinicalTrials = ClinicalTrials.DeserializeClinicalTrials(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -113,7 +113,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrialMatcherModelConfiguration(Optional.ToNullable(verbose), Optional.ToNullable(includeEvidence), clinicalTrials, serializedAdditionalRawData);
+            return new TrialMatcherModelConfiguration(verbose, includeEvidence, clinicalTrials, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrialMatcherModelConfiguration>.Write(ModelReaderWriterOptions options)

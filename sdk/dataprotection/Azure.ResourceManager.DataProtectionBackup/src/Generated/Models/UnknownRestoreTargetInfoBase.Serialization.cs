@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("recoveryOption"u8);
             writer.WriteStringValue(RecoverySetting.ToString());
-            if (Optional.IsDefined(RestoreLocation))
+            if (RestoreLocation.HasValue)
             {
                 writer.WritePropertyName("restoreLocation"u8);
                 writer.WriteStringValue(RestoreLocation.Value);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRestoreTargetInfoBase(document.RootElement, options);
+            return DeserializeRestoreTargetInfoBase(document.RootElement, options);
         }
 
         internal static UnknownRestoreTargetInfoBase DeserializeUnknownRestoreTargetInfoBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             string objectType = "Unknown";
             RecoverySetting recoveryOption = default;
-            Optional<AzureLocation> restoreLocation = default;
+            AzureLocation? restoreLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownRestoreTargetInfoBase(objectType, recoveryOption, Optional.ToNullable(restoreLocation), serializedAdditionalRawData);
+            return new UnknownRestoreTargetInfoBase(objectType, recoveryOption, restoreLocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestoreTargetInfoBase>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownRestoreTargetInfoBase(document.RootElement, options);
+                        return DeserializeRestoreTargetInfoBase(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(RestoreTargetInfoBase)} does not support '{options.Format}' format.");

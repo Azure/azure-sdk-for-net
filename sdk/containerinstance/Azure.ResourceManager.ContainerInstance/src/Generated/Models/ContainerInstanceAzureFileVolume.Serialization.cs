@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             writer.WritePropertyName("shareName"u8);
             writer.WriteStringValue(ShareName);
-            if (Optional.IsDefined(IsReadOnly))
+            if (IsReadOnly.HasValue)
             {
                 writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
             writer.WritePropertyName("storageAccountName"u8);
             writer.WriteStringValue(StorageAccountName);
-            if (Optional.IsDefined(StorageAccountKey))
+            if (StorageAccountKey != null)
             {
                 writer.WritePropertyName("storageAccountKey"u8);
                 writer.WriteStringValue(StorageAccountKey);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             string shareName = default;
-            Optional<bool> readOnly = default;
+            bool? readOnly = default;
             string storageAccountName = default;
-            Optional<string> storageAccountKey = default;
+            string storageAccountKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerInstanceAzureFileVolume(shareName, Optional.ToNullable(readOnly), storageAccountName, storageAccountKey.Value, serializedAdditionalRawData);
+            return new ContainerInstanceAzureFileVolume(shareName, readOnly, storageAccountName, storageAccountKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerInstanceAzureFileVolume>.Write(ModelReaderWriterOptions options)

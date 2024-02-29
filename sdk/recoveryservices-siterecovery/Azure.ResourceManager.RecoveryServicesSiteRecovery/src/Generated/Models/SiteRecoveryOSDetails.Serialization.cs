@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OSType))
+            if (OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Optional.IsDefined(ProductType))
+            if (ProductType != null)
             {
                 writer.WritePropertyName("productType"u8);
                 writer.WriteStringValue(ProductType);
             }
-            if (Optional.IsDefined(OSEdition))
+            if (OSEdition != null)
             {
                 writer.WritePropertyName("osEdition"u8);
                 writer.WriteStringValue(OSEdition);
             }
-            if (Optional.IsDefined(OSVersion))
+            if (OSVersion != null)
             {
                 writer.WritePropertyName("oSVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
-            if (Optional.IsDefined(OSMajorVersion))
+            if (OSMajorVersion != null)
             {
                 writer.WritePropertyName("oSMajorVersion"u8);
                 writer.WriteStringValue(OSMajorVersion);
             }
-            if (Optional.IsDefined(OSMinorVersion))
+            if (OSMinorVersion != null)
             {
                 writer.WritePropertyName("oSMinorVersion"u8);
                 writer.WriteStringValue(OSMinorVersion);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> osType = default;
-            Optional<string> productType = default;
-            Optional<string> osEdition = default;
-            Optional<string> osVersion = default;
-            Optional<string> osMajorVersion = default;
-            Optional<string> osMinorVersion = default;
+            string osType = default;
+            string productType = default;
+            string osEdition = default;
+            string osVersion = default;
+            string osMajorVersion = default;
+            string osMinorVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryOSDetails(osType.Value, productType.Value, osEdition.Value, osVersion.Value, osMajorVersion.Value, osMinorVersion.Value, serializedAdditionalRawData);
+            return new SiteRecoveryOSDetails(
+                osType,
+                productType,
+                osEdition,
+                osVersion,
+                osMajorVersion,
+                osMinorVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryOSDetails>.Write(ModelReaderWriterOptions options)

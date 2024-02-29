@@ -28,69 +28,69 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(FrontendIPConfiguration))
+            if (FrontendIPConfiguration != null)
             {
                 writer.WritePropertyName("frontendIPConfiguration"u8);
                 JsonSerializer.Serialize(writer, FrontendIPConfiguration);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol.HasValue)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(FrontendPortRangeStart))
+            if (FrontendPortRangeStart.HasValue)
             {
                 writer.WritePropertyName("frontendPortRangeStart"u8);
                 writer.WriteNumberValue(FrontendPortRangeStart.Value);
             }
-            if (Optional.IsDefined(FrontendPortRangeEnd))
+            if (FrontendPortRangeEnd.HasValue)
             {
                 writer.WritePropertyName("frontendPortRangeEnd"u8);
                 writer.WriteNumberValue(FrontendPortRangeEnd.Value);
             }
-            if (Optional.IsDefined(BackendPort))
+            if (BackendPort.HasValue)
             {
                 writer.WritePropertyName("backendPort"u8);
                 writer.WriteNumberValue(BackendPort.Value);
             }
-            if (Optional.IsDefined(IdleTimeoutInMinutes))
+            if (IdleTimeoutInMinutes.HasValue)
             {
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
-            if (Optional.IsDefined(EnableFloatingIP))
+            if (EnableFloatingIP.HasValue)
             {
                 writer.WritePropertyName("enableFloatingIP"u8);
                 writer.WriteBooleanValue(EnableFloatingIP.Value);
             }
-            if (Optional.IsDefined(EnableTcpReset))
+            if (EnableTcpReset.HasValue)
             {
                 writer.WritePropertyName("enableTcpReset"u8);
                 writer.WriteBooleanValue(EnableTcpReset.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -134,19 +134,19 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> frontendIPConfiguration = default;
-            Optional<LoadBalancingTransportProtocol> protocol = default;
-            Optional<int> frontendPortRangeStart = default;
-            Optional<int> frontendPortRangeEnd = default;
-            Optional<int> backendPort = default;
-            Optional<int> idleTimeoutInMinutes = default;
-            Optional<bool> enableFloatingIP = default;
-            Optional<bool> enableTcpReset = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource frontendIPConfiguration = default;
+            LoadBalancingTransportProtocol? protocol = default;
+            int? frontendPortRangeStart = default;
+            int? frontendPortRangeEnd = default;
+            int? backendPort = default;
+            int? idleTimeoutInMinutes = default;
+            bool? enableFloatingIP = default;
+            bool? enableTcpReset = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -282,7 +282,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerInboundNatPool(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), frontendIPConfiguration, Optional.ToNullable(protocol), Optional.ToNullable(frontendPortRangeStart), Optional.ToNullable(frontendPortRangeEnd), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(provisioningState));
+            return new LoadBalancerInboundNatPool(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                frontendIPConfiguration,
+                protocol,
+                frontendPortRangeStart,
+                frontendPortRangeEnd,
+                backendPort,
+                idleTimeoutInMinutes,
+                enableFloatingIP,
+                enableTcpReset,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<LoadBalancerInboundNatPool>.Write(ModelReaderWriterOptions options)

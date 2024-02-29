@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ScheduleRunDays))
+            if (!(ScheduleRunDays is ChangeTrackingList<BackupDayOfWeek> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("scheduleRunDays"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ScheduleRunTimes))
+            if (!(ScheduleRunTimes is ChangeTrackingList<DateTimeOffset> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("scheduleRunTimes"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<BackupDayOfWeek>> scheduleRunDays = default;
-            Optional<IList<DateTimeOffset>> scheduleRunTimes = default;
+            IList<BackupDayOfWeek> scheduleRunDays = default;
+            IList<DateTimeOffset> scheduleRunTimes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupWeeklySchedule(Optional.ToList(scheduleRunDays), Optional.ToList(scheduleRunTimes), serializedAdditionalRawData);
+            return new BackupWeeklySchedule(scheduleRunDays ?? new ChangeTrackingList<BackupDayOfWeek>(), scheduleRunTimes ?? new ChangeTrackingList<DateTimeOffset>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupWeeklySchedule>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
 #if NET6_0_OR_GREATER
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<BinaryData> configuration = default;
+            bool? enabled = default;
+            BinaryData configuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForServersGcpOfferingMdeAutoProvisioning(Optional.ToNullable(enabled), configuration.Value, serializedAdditionalRawData);
+            return new DefenderForServersGcpOfferingMdeAutoProvisioning(enabled, configuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderForServersGcpOfferingMdeAutoProvisioning>.Write(ModelReaderWriterOptions options)

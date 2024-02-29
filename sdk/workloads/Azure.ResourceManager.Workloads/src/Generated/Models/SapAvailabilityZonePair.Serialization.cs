@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ZoneA))
+            if (ZoneA.HasValue)
             {
                 writer.WritePropertyName("zoneA"u8);
                 writer.WriteNumberValue(ZoneA.Value);
             }
-            if (Optional.IsDefined(ZoneB))
+            if (ZoneB.HasValue)
             {
                 writer.WritePropertyName("zoneB"u8);
                 writer.WriteNumberValue(ZoneB.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<long> zoneA = default;
-            Optional<long> zoneB = default;
+            long? zoneA = default;
+            long? zoneB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapAvailabilityZonePair(Optional.ToNullable(zoneA), Optional.ToNullable(zoneB), serializedAdditionalRawData);
+            return new SapAvailabilityZonePair(zoneA, zoneB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapAvailabilityZonePair>.Write(ModelReaderWriterOptions options)

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(LabSubnetName))
+            if (LabSubnetName != null)
             {
                 writer.WritePropertyName("labSubnetName"u8);
                 writer.WriteStringValue(LabSubnetName);
             }
-            if (Optional.IsDefined(UseInVmCreationPermission))
+            if (UseInVmCreationPermission.HasValue)
             {
                 writer.WritePropertyName("useInVmCreationPermission"u8);
                 writer.WriteStringValue(UseInVmCreationPermission.Value.ToString());
             }
-            if (Optional.IsDefined(UsePublicIPAddressPermission))
+            if (UsePublicIPAddressPermission.HasValue)
             {
                 writer.WritePropertyName("usePublicIpAddressPermission"u8);
                 writer.WriteStringValue(UsePublicIPAddressPermission.Value.ToString());
             }
-            if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
+            if (SharedPublicIPAddressConfiguration != null)
             {
                 writer.WritePropertyName("sharedPublicIpAddressConfiguration"u8);
                 writer.WriteObjectValue(SharedPublicIPAddressConfiguration);
             }
-            if (Optional.IsDefined(VirtualNetworkPoolName))
+            if (VirtualNetworkPoolName != null)
             {
                 writer.WritePropertyName("virtualNetworkPoolName"u8);
                 writer.WriteStringValue(VirtualNetworkPoolName);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> labSubnetName = default;
-            Optional<DevTestLabUsagePermissionType> useInVmCreationPermission = default;
-            Optional<DevTestLabUsagePermissionType> usePublicIPAddressPermission = default;
-            Optional<SubnetSharedPublicIPAddressConfiguration> sharedPublicIPAddressConfiguration = default;
-            Optional<string> virtualNetworkPoolName = default;
+            ResourceIdentifier resourceId = default;
+            string labSubnetName = default;
+            DevTestLabUsagePermissionType? useInVmCreationPermission = default;
+            DevTestLabUsagePermissionType? usePublicIPAddressPermission = default;
+            SubnetSharedPublicIPAddressConfiguration sharedPublicIPAddressConfiguration = default;
+            string virtualNetworkPoolName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    sharedPublicIPAddressConfiguration = SubnetSharedPublicIPAddressConfiguration.DeserializeSubnetSharedPublicIPAddressConfiguration(property.Value);
+                    sharedPublicIPAddressConfiguration = SubnetSharedPublicIPAddressConfiguration.DeserializeSubnetSharedPublicIPAddressConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("virtualNetworkPoolName"u8))
@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabSubnetOverride(resourceId.Value, labSubnetName.Value, Optional.ToNullable(useInVmCreationPermission), Optional.ToNullable(usePublicIPAddressPermission), sharedPublicIPAddressConfiguration.Value, virtualNetworkPoolName.Value, serializedAdditionalRawData);
+            return new DevTestLabSubnetOverride(
+                resourceId,
+                labSubnetName,
+                useInVmCreationPermission,
+                usePublicIPAddressPermission,
+                sharedPublicIPAddressConfiguration,
+                virtualNetworkPoolName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabSubnetOverride>.Write(ModelReaderWriterOptions options)

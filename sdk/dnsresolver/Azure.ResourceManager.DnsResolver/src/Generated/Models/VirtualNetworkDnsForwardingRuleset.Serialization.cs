@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualNetworkLink))
+            if (VirtualNetworkLink != null)
             {
                 writer.WritePropertyName("virtualNetworkLink"u8);
                 JsonSerializer.Serialize(writer, VirtualNetworkLink);
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<WritableSubResource> virtualNetworkLink = default;
+            ResourceIdentifier id = default;
+            WritableSubResource virtualNetworkLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkDnsForwardingRuleset(id.Value, virtualNetworkLink, serializedAdditionalRawData);
+            return new VirtualNetworkDnsForwardingRuleset(id, virtualNetworkLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkDnsForwardingRuleset>.Write(ModelReaderWriterOptions options)

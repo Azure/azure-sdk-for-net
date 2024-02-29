@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VerifyClientCertIssuerDN))
+            if (VerifyClientCertIssuerDN.HasValue)
             {
                 writer.WritePropertyName("verifyClientCertIssuerDN"u8);
                 writer.WriteBooleanValue(VerifyClientCertIssuerDN.Value);
             }
-            if (Optional.IsDefined(VerifyClientRevocation))
+            if (VerifyClientRevocation.HasValue)
             {
                 writer.WritePropertyName("verifyClientRevocation"u8);
                 writer.WriteStringValue(VerifyClientRevocation.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<bool> verifyClientCertIssuerDN = default;
-            Optional<ApplicationGatewayClientRevocationOption> verifyClientRevocation = default;
+            bool? verifyClientCertIssuerDN = default;
+            ApplicationGatewayClientRevocationOption? verifyClientRevocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayClientAuthConfiguration(Optional.ToNullable(verifyClientCertIssuerDN), Optional.ToNullable(verifyClientRevocation), serializedAdditionalRawData);
+            return new ApplicationGatewayClientAuthConfiguration(verifyClientCertIssuerDN, verifyClientRevocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayClientAuthConfiguration>.Write(ModelReaderWriterOptions options)

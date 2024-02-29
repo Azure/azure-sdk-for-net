@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AcsKubeConfig))
+            if (options.Format != "W" && AcsKubeConfig != null)
             {
                 writer.WritePropertyName("acsKubeConfig"u8);
                 writer.WriteStringValue(AcsKubeConfig);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServicePrincipalConfiguration))
+            if (options.Format != "W" && ServicePrincipalConfiguration != null)
             {
                 writer.WritePropertyName("servicePrincipalConfiguration"u8);
                 writer.WriteObjectValue(ServicePrincipalConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(ImagePullSecretName))
+            if (options.Format != "W" && ImagePullSecretName != null)
             {
                 writer.WritePropertyName("imagePullSecretName"u8);
                 writer.WriteStringValue(ImagePullSecretName);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<string> acsKubeConfig = default;
-            Optional<ServicePrincipalProperties> servicePrincipalConfiguration = default;
-            Optional<string> imagePullSecretName = default;
+            string acsKubeConfig = default;
+            ServicePrincipalProperties servicePrincipalConfiguration = default;
+            string imagePullSecretName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    servicePrincipalConfiguration = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value);
+                    servicePrincipalConfiguration = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("imagePullSecretName"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceCredentials(acsKubeConfig.Value, servicePrincipalConfiguration.Value, imagePullSecretName.Value, serializedAdditionalRawData);
+            return new ContainerServiceCredentials(acsKubeConfig, servicePrincipalConfiguration, imagePullSecretName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceCredentials>.Write(ModelReaderWriterOptions options)

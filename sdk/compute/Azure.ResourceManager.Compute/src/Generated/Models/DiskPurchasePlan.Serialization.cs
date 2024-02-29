@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Publisher);
             writer.WritePropertyName("product"u8);
             writer.WriteStringValue(Product);
-            if (Optional.IsDefined(PromotionCode))
+            if (PromotionCode != null)
             {
                 writer.WritePropertyName("promotionCode"u8);
                 writer.WriteStringValue(PromotionCode);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             string name = default;
             string publisher = default;
             string product = default;
-            Optional<string> promotionCode = default;
+            string promotionCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPurchasePlan(name, publisher, product, promotionCode.Value, serializedAdditionalRawData);
+            return new DiskPurchasePlan(name, publisher, product, promotionCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPurchasePlan>.Write(ModelReaderWriterOptions options)

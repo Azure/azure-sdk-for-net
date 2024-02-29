@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             SynapseIntegrationRuntimeStatus properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = SynapseIntegrationRuntimeStatus.DeserializeSynapseIntegrationRuntimeStatus(property.Value);
+                    properties = SynapseIntegrationRuntimeStatus.DeserializeSynapseIntegrationRuntimeStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeStatusResult(name.Value, properties, serializedAdditionalRawData);
+            return new SynapseIntegrationRuntimeStatusResult(name, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeStatusResult>.Write(ModelReaderWriterOptions options)

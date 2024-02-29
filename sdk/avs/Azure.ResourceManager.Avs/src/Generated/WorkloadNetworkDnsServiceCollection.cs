@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServiceId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WorkloadNetworkDnsServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dnsServiceId, WorkloadNetworkDnsServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (dnsServiceId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsServiceId));
+            }
+            if (dnsServiceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsServiceId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServiceId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WorkloadNetworkDnsServiceResource> CreateOrUpdate(WaitUntil waitUntil, string dnsServiceId, WorkloadNetworkDnsServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (dnsServiceId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsServiceId));
+            }
+            if (dnsServiceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsServiceId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServiceId"/> is null. </exception>
         public virtual async Task<Response<WorkloadNetworkDnsServiceResource>> GetAsync(string dnsServiceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
+            if (dnsServiceId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsServiceId));
+            }
+            if (dnsServiceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsServiceId));
+            }
 
             using var scope = _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServiceId"/> is null. </exception>
         public virtual Response<WorkloadNetworkDnsServiceResource> Get(string dnsServiceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
+            if (dnsServiceId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsServiceId));
+            }
+            if (dnsServiceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsServiceId));
+            }
 
             using var scope = _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServiceId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dnsServiceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
+            if (dnsServiceId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsServiceId));
+            }
+            if (dnsServiceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsServiceId));
+            }
 
             using var scope = _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServiceId"/> is null. </exception>
         public virtual Response<bool> Exists(string dnsServiceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
+            if (dnsServiceId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsServiceId));
+            }
+            if (dnsServiceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsServiceId));
+            }
 
             using var scope = _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServiceId"/> is null. </exception>
         public virtual async Task<NullableResponse<WorkloadNetworkDnsServiceResource>> GetIfExistsAsync(string dnsServiceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
+            if (dnsServiceId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsServiceId));
+            }
+            if (dnsServiceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsServiceId));
+            }
 
             using var scope = _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServiceId"/> is null. </exception>
         public virtual NullableResponse<WorkloadNetworkDnsServiceResource> GetIfExists(string dnsServiceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
+            if (dnsServiceId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsServiceId));
+            }
+            if (dnsServiceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsServiceId));
+            }
 
             using var scope = _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.GetIfExists");
             scope.Start();

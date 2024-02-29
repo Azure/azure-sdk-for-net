@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(MinReplicas))
+            if (MinReplicas.HasValue)
             {
                 writer.WritePropertyName("minReplicas"u8);
                 writer.WriteNumberValue(MinReplicas.Value);
             }
-            if (Optional.IsDefined(MaxReplicas))
+            if (MaxReplicas.HasValue)
             {
                 writer.WritePropertyName("maxReplicas"u8);
                 writer.WriteNumberValue(MaxReplicas.Value);
             }
-            if (Optional.IsDefined(TargetUtilization))
+            if (TargetUtilization.HasValue)
             {
                 writer.WritePropertyName("targetUtilization"u8);
                 writer.WriteNumberValue(TargetUtilization.Value);
             }
-            if (Optional.IsDefined(RefreshPeriodInSeconds))
+            if (RefreshPeriodInSeconds.HasValue)
             {
                 writer.WritePropertyName("refreshPeriodInSeconds"u8);
                 writer.WriteNumberValue(RefreshPeriodInSeconds.Value);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<Status> status = default;
-            Optional<int> minReplicas = default;
-            Optional<int> maxReplicas = default;
-            Optional<float> targetUtilization = default;
-            Optional<int> refreshPeriodInSeconds = default;
+            Status? status = default;
+            int? minReplicas = default;
+            int? maxReplicas = default;
+            float? targetUtilization = default;
+            int? refreshPeriodInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoScaleConfiguration(Optional.ToNullable(status), Optional.ToNullable(minReplicas), Optional.ToNullable(maxReplicas), Optional.ToNullable(targetUtilization), Optional.ToNullable(refreshPeriodInSeconds), serializedAdditionalRawData);
+            return new AutoScaleConfiguration(
+                status,
+                minReplicas,
+                maxReplicas,
+                targetUtilization,
+                refreshPeriodInSeconds,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoScaleConfiguration>.Write(ModelReaderWriterOptions options)

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (options.Format != "W" && SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataFactoryName))
+            if (options.Format != "W" && DataFactoryName != null)
             {
                 writer.WritePropertyName("dataFactoryName"u8);
                 writer.WriteStringValue(DataFactoryName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataFactoryLocation))
+            if (options.Format != "W" && DataFactoryLocation != null)
             {
                 writer.WritePropertyName("dataFactoryLocation"u8);
                 writer.WriteStringValue(DataFactoryLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreateOn))
+            if (options.Format != "W" && CreateOn.HasValue)
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreateOn.Value, "O");
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> dataFactoryName = default;
-            Optional<string> dataFactoryLocation = default;
-            Optional<DateTimeOffset> createTime = default;
+            string name = default;
+            string subscriptionId = default;
+            string dataFactoryName = default;
+            string dataFactoryLocation = default;
+            DateTimeOffset? createTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseLinkedIntegrationRuntime(name.Value, subscriptionId.Value, dataFactoryName.Value, dataFactoryLocation.Value, Optional.ToNullable(createTime), serializedAdditionalRawData);
+            return new SynapseLinkedIntegrationRuntime(
+                name,
+                subscriptionId,
+                dataFactoryName,
+                dataFactoryLocation,
+                createTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseLinkedIntegrationRuntime>.Write(ModelReaderWriterOptions options)

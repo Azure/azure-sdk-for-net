@@ -19,7 +19,7 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteStartElement("Id");
             writer.WriteValue(Id);
             writer.WriteEndElement();
-            if (Optional.IsDefined(AccessPolicy))
+            if (AccessPolicy != null)
             {
                 writer.WriteObjectValue(AccessPolicy, "AccessPolicy");
             }

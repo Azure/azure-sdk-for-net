@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TelemetryInstrumentationKey))
+            if (options.Format != "W" && TelemetryInstrumentationKey != null)
             {
                 writer.WritePropertyName("telemetryInstrumentationKey"u8);
                 writer.WriteStringValue(TelemetryInstrumentationKey);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<string> telemetryInstrumentationKey = default;
+            string telemetryInstrumentationKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceTelemetryConfigResult(telemetryInstrumentationKey.Value, serializedAdditionalRawData);
+            return new ApplianceTelemetryConfigResult(telemetryInstrumentationKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceTelemetryConfigResult>.Write(ModelReaderWriterOptions options)

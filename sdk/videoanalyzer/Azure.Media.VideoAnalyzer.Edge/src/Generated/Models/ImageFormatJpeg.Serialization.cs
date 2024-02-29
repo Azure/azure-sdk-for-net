@@ -15,7 +15,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Quality))
+            if (Quality != null)
             {
                 writer.WritePropertyName("quality"u8);
                 writer.WriteStringValue(Quality);
@@ -31,7 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> quality = default;
+            string quality = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -46,7 +46,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new ImageFormatJpeg(type, quality.Value);
+            return new ImageFormatJpeg(type, quality);
         }
     }
 }

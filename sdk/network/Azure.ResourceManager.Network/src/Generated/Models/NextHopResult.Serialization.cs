@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextHopType))
+            if (NextHopType.HasValue)
             {
                 writer.WritePropertyName("nextHopType"u8);
                 writer.WriteStringValue(NextHopType.Value.ToString());
             }
-            if (Optional.IsDefined(NextHopIPAddress))
+            if (NextHopIPAddress != null)
             {
                 writer.WritePropertyName("nextHopIpAddress"u8);
                 writer.WriteStringValue(NextHopIPAddress);
             }
-            if (Optional.IsDefined(RouteTableId))
+            if (RouteTableId != null)
             {
                 writer.WritePropertyName("routeTableId"u8);
                 writer.WriteStringValue(RouteTableId);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<NextHopType> nextHopType = default;
-            Optional<string> nextHopIPAddress = default;
-            Optional<ResourceIdentifier> routeTableId = default;
+            NextHopType? nextHopType = default;
+            string nextHopIPAddress = default;
+            ResourceIdentifier routeTableId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NextHopResult(Optional.ToNullable(nextHopType), nextHopIPAddress.Value, routeTableId.Value, serializedAdditionalRawData);
+            return new NextHopResult(nextHopType, nextHopIPAddress, routeTableId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NextHopResult>.Write(ModelReaderWriterOptions options)

@@ -40,7 +40,22 @@ namespace Azure.ResourceManager.Marketplace.Models
             branding ??= new Dictionary<string, string>();
             recipients ??= new List<NotificationRecipient>();
 
-            return new PrivateStoreData(id, name, resourceType, systemData, availability, privateStoreId, eTag, privateStoreName, tenantId, isGov, collectionIds?.ToList(), branding, recipients?.ToList(), sendToAllMarketplaceAdmins, serializedAdditionalRawData: null);
+            return new PrivateStoreData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                availability,
+                privateStoreId,
+                eTag,
+                privateStoreName,
+                tenantId,
+                isGov,
+                collectionIds?.ToList(),
+                branding,
+                recipients?.ToList(),
+                sendToAllMarketplaceAdmins,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotificationRecipient"/>. </summary>
@@ -80,7 +95,19 @@ namespace Azure.ResourceManager.Marketplace.Models
             iconFileUris ??= new Dictionary<string, Uri>();
             plans ??= new List<PrivateStorePlan>();
 
-            return new PrivateStoreOfferResult(uniqueOfferId, offerDisplayName, publisherDisplayName, eTag, privateStoreId, createdOn, modifiedOn, specificPlanIdsLimitation?.ToList(), isUpdateSuppressedDueToIdempotence, iconFileUris, plans?.ToList(), serializedAdditionalRawData: null);
+            return new PrivateStoreOfferResult(
+                uniqueOfferId,
+                offerDisplayName,
+                publisherDisplayName,
+                eTag,
+                privateStoreId,
+                createdOn,
+                modifiedOn,
+                specificPlanIdsLimitation?.ToList(),
+                isUpdateSuppressedDueToIdempotence,
+                iconFileUris,
+                plans?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrivateStorePlan"/>. </summary>
@@ -93,7 +120,14 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <returns> A new <see cref="Models.PrivateStorePlan"/> instance for mocking. </returns>
         public static PrivateStorePlan PrivateStorePlan(string skuId = null, string planId = null, string planDisplayName = null, PrivateStorePlanAccessibility? accessibility = null, string altStackReference = null, string stackType = null)
         {
-            return new PrivateStorePlan(skuId, planId, planDisplayName, accessibility, altStackReference, stackType, serializedAdditionalRawData: null);
+            return new PrivateStorePlan(
+                skuId,
+                planId,
+                planDisplayName,
+                accessibility,
+                altStackReference,
+                stackType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrivateStoreBillingAccountsResult"/>. </summary>
@@ -148,7 +182,22 @@ namespace Azure.ResourceManager.Marketplace.Models
             subscriptionsList ??= new List<string>();
             appliedRules ??= new List<MarketplaceRule>();
 
-            return new PrivateStoreCollectionInfoData(id, name, resourceType, systemData, collectionId, collectionName, claim, areAllSubscriptionsSelected, areAllItemsApproved, approveAllItemsModifiedOn, subscriptionsList?.ToList(), isEnabled, numberOfOffers, appliedRules?.ToList(), serializedAdditionalRawData: null);
+            return new PrivateStoreCollectionInfoData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                collectionId,
+                collectionName,
+                claim,
+                areAllSubscriptionsSelected,
+                areAllItemsApproved,
+                approveAllItemsModifiedOn,
+                subscriptionsList?.ToList(),
+                isEnabled,
+                numberOfOffers,
+                appliedRules?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TransferOffersResult"/>. </summary>
@@ -229,7 +278,23 @@ namespace Azure.ResourceManager.Marketplace.Models
             iconFileUris ??= new Dictionary<string, Uri>();
             plans ??= new List<PrivateStorePlan>();
 
-            return new PrivateStoreOfferData(id, name, resourceType, systemData, uniqueOfferId, offerDisplayName, publisherDisplayName, eTag, privateStoreId, createdOn, modifiedOn, specificPlanIdsLimitation?.ToList(), isUpdateSuppressedDueToIdempotence, iconFileUris, plans?.ToList(), serializedAdditionalRawData: null);
+            return new PrivateStoreOfferData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                uniqueOfferId,
+                offerDisplayName,
+                publisherDisplayName,
+                eTag,
+                privateStoreId,
+                createdOn,
+                modifiedOn,
+                specificPlanIdsLimitation?.ToList(),
+                isUpdateSuppressedDueToIdempotence,
+                iconFileUris,
+                plans?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CollectionOffersByContext"/>. </summary>
@@ -259,7 +324,18 @@ namespace Azure.ResourceManager.Marketplace.Models
         {
             plansDetails ??= new List<PrivateStorePlanDetails>();
 
-            return new MarketplaceApprovalRequestData(id, name, resourceType, systemData, offerId, offerDisplayName, publisherId, plansDetails?.ToList(), isClosed, messageCode, serializedAdditionalRawData: null);
+            return new MarketplaceApprovalRequestData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                offerId,
+                offerDisplayName,
+                publisherId,
+                plansDetails?.ToList(),
+                isClosed,
+                messageCode,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrivateStorePlanDetails"/>. </summary>
@@ -272,7 +348,14 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <returns> A new <see cref="Models.PrivateStorePlanDetails"/> instance for mocking. </returns>
         public static PrivateStorePlanDetails PrivateStorePlanDetails(string planId = null, PrivateStorePlanStatus? status = null, BinaryData requestDate = null, string justification = null, string subscriptionId = null, string subscriptionName = null)
         {
-            return new PrivateStorePlanDetails(planId, status, requestDate, justification, subscriptionId, subscriptionName, serializedAdditionalRawData: null);
+            return new PrivateStorePlanDetails(
+                planId,
+                status,
+                requestDate,
+                justification,
+                subscriptionId,
+                subscriptionName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryApprovalRequestResult"/>. </summary>
@@ -310,7 +393,22 @@ namespace Azure.ResourceManager.Marketplace.Models
             plans ??= new List<PlanRequesterDetails>();
             collectionIds ??= new List<Guid>();
 
-            return new MarketplaceAdminApprovalRequestData(id, name, resourceType, systemData, offerId, displayName, publisherId, adminAction, approvedPlans?.ToList(), comment, administrator, plans?.ToList(), collectionIds?.ToList(), iconUri, serializedAdditionalRawData: null);
+            return new MarketplaceAdminApprovalRequestData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                offerId,
+                displayName,
+                publisherId,
+                adminAction,
+                approvedPlans?.ToList(),
+                comment,
+                administrator,
+                plans?.ToList(),
+                collectionIds?.ToList(),
+                iconUri,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PlanRequesterDetails"/>. </summary>
@@ -334,7 +432,13 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <returns> A new <see cref="Models.PlanRequesterInfo"/> instance for mocking. </returns>
         public static PlanRequesterInfo PlanRequesterInfo(string user = null, string date = null, string justification = null, string subscriptionId = null, string subscriptionName = null)
         {
-            return new PlanRequesterInfo(user, date, justification, subscriptionId, subscriptionName, serializedAdditionalRawData: null);
+            return new PlanRequesterInfo(
+                user,
+                date,
+                justification,
+                subscriptionId,
+                subscriptionName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrivateStoreNotificationsState"/>. </summary>
@@ -363,7 +467,14 @@ namespace Azure.ResourceManager.Marketplace.Models
         {
             plans ??= new List<PlanNotificationDetails>();
 
-            return new StopSellNotifications(offerId, displayName, isEntire, messageCode, iconUri, plans?.ToList(), serializedAdditionalRawData: null);
+            return new StopSellNotifications(
+                offerId,
+                displayName,
+                isEntire,
+                messageCode,
+                iconUri,
+                plans?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PlanNotificationDetails"/>. </summary>
@@ -387,7 +498,14 @@ namespace Azure.ResourceManager.Marketplace.Models
         {
             plans ??= new List<PlanNotificationDetails>();
 
-            return new NewPlanNotification(offerId, displayName, isFuturePlansEnabled, messageCode, iconUri, plans?.ToList(), serializedAdditionalRawData: null);
+            return new NewPlanNotification(
+                offerId,
+                displayName,
+                isFuturePlansEnabled,
+                messageCode,
+                iconUri,
+                plans?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RequestApprovalsDetails"/>. </summary>
@@ -402,7 +520,14 @@ namespace Azure.ResourceManager.Marketplace.Models
         {
             plans ??= new List<PlanNotificationDetails>();
 
-            return new RequestApprovalsDetails(offerId, displayName, publisherId, messageCode, iconUri, plans?.ToList(), serializedAdditionalRawData: null);
+            return new RequestApprovalsDetails(
+                offerId,
+                displayName,
+                publisherId,
+                messageCode,
+                iconUri,
+                plans?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSubscription"/>. </summary>
@@ -451,7 +576,16 @@ namespace Azure.ResourceManager.Marketplace.Models
             plans ??= new List<PlanNotificationDetails>();
             subscriptionsIds ??= new List<string>();
 
-            return new StopSellOffersPlansNotificationsResult(offerId, displayName, isEntireInStopSell, messageCode, iconUri, plans?.ToList(), hasPublicContext, subscriptionsIds?.ToList(), serializedAdditionalRawData: null);
+            return new StopSellOffersPlansNotificationsResult(
+                offerId,
+                displayName,
+                isEntireInStopSell,
+                messageCode,
+                iconUri,
+                plans?.ToList(),
+                hasPublicContext,
+                subscriptionsIds?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SubscriptionsContextList"/>. </summary>

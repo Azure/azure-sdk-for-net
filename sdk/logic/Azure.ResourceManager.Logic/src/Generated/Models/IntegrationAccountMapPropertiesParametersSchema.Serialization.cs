@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Ref))
+            if (Ref != null)
             {
                 writer.WritePropertyName("ref"u8);
                 writer.WriteStringValue(Ref);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> @ref = default;
+            string @ref = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountMapPropertiesParametersSchema(@ref.Value, serializedAdditionalRawData);
+            return new IntegrationAccountMapPropertiesParametersSchema(@ref, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountMapPropertiesParametersSchema>.Write(ModelReaderWriterOptions options)

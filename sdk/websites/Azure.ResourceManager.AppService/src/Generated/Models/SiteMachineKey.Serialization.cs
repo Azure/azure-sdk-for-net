@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Validation))
+            if (Validation != null)
             {
                 writer.WritePropertyName("validation"u8);
                 writer.WriteStringValue(Validation);
             }
-            if (Optional.IsDefined(ValidationKey))
+            if (ValidationKey != null)
             {
                 writer.WritePropertyName("validationKey"u8);
                 writer.WriteStringValue(ValidationKey);
             }
-            if (Optional.IsDefined(Decryption))
+            if (Decryption != null)
             {
                 writer.WritePropertyName("decryption"u8);
                 writer.WriteStringValue(Decryption);
             }
-            if (Optional.IsDefined(DecryptionKey))
+            if (DecryptionKey != null)
             {
                 writer.WritePropertyName("decryptionKey"u8);
                 writer.WriteStringValue(DecryptionKey);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> validation = default;
-            Optional<string> validationKey = default;
-            Optional<string> decryption = default;
-            Optional<string> decryptionKey = default;
+            string validation = default;
+            string validationKey = default;
+            string decryption = default;
+            string decryptionKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteMachineKey(validation.Value, validationKey.Value, decryption.Value, decryptionKey.Value, serializedAdditionalRawData);
+            return new SiteMachineKey(validation, validationKey, decryption, decryptionKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteMachineKey>.Write(ModelReaderWriterOptions options)

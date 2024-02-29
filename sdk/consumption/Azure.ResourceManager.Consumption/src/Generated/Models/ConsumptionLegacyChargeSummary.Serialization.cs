@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -50,44 +50,44 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(BillingPeriodId))
+            if (options.Format != "W" && BillingPeriodId != null)
             {
                 writer.WritePropertyName("billingPeriodId"u8);
                 writer.WriteStringValue(BillingPeriodId);
             }
-            if (options.Format != "W" && Optional.IsDefined(UsageStart))
+            if (options.Format != "W" && UsageStart != null)
             {
                 writer.WritePropertyName("usageStart"u8);
                 writer.WriteStringValue(UsageStart);
             }
-            if (options.Format != "W" && Optional.IsDefined(UsageEnd))
+            if (options.Format != "W" && UsageEnd != null)
             {
                 writer.WritePropertyName("usageEnd"u8);
                 writer.WriteStringValue(UsageEnd);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureCharges))
+            if (options.Format != "W" && AzureCharges.HasValue)
             {
                 writer.WritePropertyName("azureCharges"u8);
                 writer.WriteNumberValue(AzureCharges.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ChargesBilledSeparately))
+            if (options.Format != "W" && ChargesBilledSeparately.HasValue)
             {
                 writer.WritePropertyName("chargesBilledSeparately"u8);
                 writer.WriteNumberValue(ChargesBilledSeparately.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MarketplaceCharges))
+            if (options.Format != "W" && MarketplaceCharges.HasValue)
             {
                 writer.WritePropertyName("marketplaceCharges"u8);
                 writer.WriteNumberValue(MarketplaceCharges.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Currency))
+            if (options.Format != "W" && Currency != null)
             {
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
@@ -132,18 +132,18 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             ChargeSummaryKind kind = default;
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> billingPeriodId = default;
-            Optional<string> usageStart = default;
-            Optional<string> usageEnd = default;
-            Optional<decimal> azureCharges = default;
-            Optional<decimal> chargesBilledSeparately = default;
-            Optional<decimal> marketplaceCharges = default;
-            Optional<string> currency = default;
+            SystemData systemData = default;
+            string billingPeriodId = default;
+            string usageStart = default;
+            string usageEnd = default;
+            decimal? azureCharges = default;
+            decimal? chargesBilledSeparately = default;
+            decimal? marketplaceCharges = default;
+            string currency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,7 +251,21 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionLegacyChargeSummary(id, name, type, systemData.Value, kind, Optional.ToNullable(eTag), serializedAdditionalRawData, billingPeriodId.Value, usageStart.Value, usageEnd.Value, Optional.ToNullable(azureCharges), Optional.ToNullable(chargesBilledSeparately), Optional.ToNullable(marketplaceCharges), currency.Value);
+            return new ConsumptionLegacyChargeSummary(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                eTag,
+                serializedAdditionalRawData,
+                billingPeriodId,
+                usageStart,
+                usageEnd,
+                azureCharges,
+                chargesBilledSeparately,
+                marketplaceCharges,
+                currency);
         }
 
         BinaryData IPersistableModel<ConsumptionLegacyChargeSummary>.Write(ModelReaderWriterOptions options)

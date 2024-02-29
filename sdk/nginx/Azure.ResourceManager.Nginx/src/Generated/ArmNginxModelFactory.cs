@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Nginx.NginxCertificateData"/> instance for mocking. </returns>
         public static NginxCertificateData NginxCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NginxCertificateProperties properties = null, AzureLocation? location = null)
         {
-            return new NginxCertificateData(id, name, resourceType, systemData, properties, location, serializedAdditionalRawData: null);
+            return new NginxCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NginxCertificateProperties"/>. </summary>
@@ -51,7 +58,14 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Nginx.NginxConfigurationData"/> instance for mocking. </returns>
         public static NginxConfigurationData NginxConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NginxConfigurationProperties properties = null, AzureLocation? location = null)
         {
-            return new NginxConfigurationData(id, name, resourceType, systemData, properties, location, serializedAdditionalRawData: null);
+            return new NginxConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NginxConfigurationProperties"/>. </summary>
@@ -66,7 +80,13 @@ namespace Azure.ResourceManager.Nginx.Models
             files ??= new List<NginxConfigurationFile>();
             protectedFiles ??= new List<NginxConfigurationFile>();
 
-            return new NginxConfigurationProperties(provisioningState, files?.ToList(), protectedFiles?.ToList(), package, rootFile, serializedAdditionalRawData: null);
+            return new NginxConfigurationProperties(
+                provisioningState,
+                files?.ToList(),
+                protectedFiles?.ToList(),
+                package,
+                rootFile,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Nginx.NginxDeploymentData"/>. </summary>
@@ -84,7 +104,17 @@ namespace Azure.ResourceManager.Nginx.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NginxDeploymentData(id, name, resourceType, systemData, tags, location, identity, properties, skuName != null ? new NginxResourceSku(skuName, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new NginxDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                properties,
+                skuName != null ? new NginxResourceSku(skuName, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NginxDeploymentProperties"/>. </summary>
@@ -100,7 +130,17 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.NginxDeploymentProperties"/> instance for mocking. </returns>
         public static NginxDeploymentProperties NginxDeploymentProperties(NginxProvisioningState? provisioningState = null, string nginxVersion = null, string managedResourceGroup = null, NginxNetworkProfile networkProfile = null, string ipAddress = null, bool? enableDiagnosticsSupport = null, NginxStorageAccount loggingStorageAccount = null, int? scalingCapacity = null, string userPreferredEmail = null)
         {
-            return new NginxDeploymentProperties(provisioningState, nginxVersion, managedResourceGroup, networkProfile, ipAddress, enableDiagnosticsSupport, loggingStorageAccount != null ? new NginxLogging(loggingStorageAccount, serializedAdditionalRawData: null) : null, scalingCapacity != null ? new NginxDeploymentScalingProperties(scalingCapacity, serializedAdditionalRawData: null) : null, userPreferredEmail != null ? new NginxDeploymentUserProfile(userPreferredEmail, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new NginxDeploymentProperties(
+                provisioningState,
+                nginxVersion,
+                managedResourceGroup,
+                networkProfile,
+                ipAddress,
+                enableDiagnosticsSupport,
+                loggingStorageAccount != null ? new NginxLogging(loggingStorageAccount, serializedAdditionalRawData: null) : null,
+                scalingCapacity != null ? new NginxDeploymentScalingProperties(scalingCapacity, serializedAdditionalRawData: null) : null,
+                userPreferredEmail != null ? new NginxDeploymentUserProfile(userPreferredEmail, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
     }
 }

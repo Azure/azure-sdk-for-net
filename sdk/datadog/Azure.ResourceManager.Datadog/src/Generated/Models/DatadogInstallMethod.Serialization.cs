@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Tool))
+            if (Tool != null)
             {
                 writer.WritePropertyName("tool"u8);
                 writer.WriteStringValue(Tool);
             }
-            if (Optional.IsDefined(ToolVersion))
+            if (ToolVersion != null)
             {
                 writer.WritePropertyName("toolVersion"u8);
                 writer.WriteStringValue(ToolVersion);
             }
-            if (Optional.IsDefined(InstallerVersion))
+            if (InstallerVersion != null)
             {
                 writer.WritePropertyName("installerVersion"u8);
                 writer.WriteStringValue(InstallerVersion);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> tool = default;
-            Optional<string> toolVersion = default;
-            Optional<string> installerVersion = default;
+            string tool = default;
+            string toolVersion = default;
+            string installerVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogInstallMethod(tool.Value, toolVersion.Value, installerVersion.Value, serializedAdditionalRawData);
+            return new DatadogInstallMethod(tool, toolVersion, installerVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogInstallMethod>.Write(ModelReaderWriterOptions options)

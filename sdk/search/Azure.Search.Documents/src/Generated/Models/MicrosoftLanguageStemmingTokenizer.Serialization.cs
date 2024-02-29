@@ -15,17 +15,17 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxTokenLength))
+            if (MaxTokenLength.HasValue)
             {
                 writer.WritePropertyName("maxTokenLength"u8);
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
-            if (Optional.IsDefined(IsSearchTokenizer))
+            if (IsSearchTokenizer.HasValue)
             {
                 writer.WritePropertyName("isSearchTokenizer"u8);
                 writer.WriteBooleanValue(IsSearchTokenizer.Value);
             }
-            if (Optional.IsDefined(Language))
+            if (Language.HasValue)
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language.Value.ToSerialString());
@@ -43,9 +43,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<int> maxTokenLength = default;
-            Optional<bool> isSearchTokenizer = default;
-            Optional<MicrosoftStemmingTokenizerLanguage> language = default;
+            int? maxTokenLength = default;
+            bool? isSearchTokenizer = default;
+            MicrosoftStemmingTokenizerLanguage? language = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new MicrosoftLanguageStemmingTokenizer(odataType, name, Optional.ToNullable(maxTokenLength), Optional.ToNullable(isSearchTokenizer), Optional.ToNullable(language));
+            return new MicrosoftLanguageStemmingTokenizer(odataType, name, maxTokenLength, isSearchTokenizer, language);
         }
     }
 }

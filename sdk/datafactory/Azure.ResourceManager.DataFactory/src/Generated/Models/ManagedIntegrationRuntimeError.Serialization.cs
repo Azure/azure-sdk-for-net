@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Time))
+            if (options.Format != "W" && Time.HasValue)
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (options.Format != "W" && Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Parameters))
+            if (options.Format != "W" && !(Parameters is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> time = default;
-            Optional<string> code = default;
-            Optional<IReadOnlyList<string>> parameters = default;
-            Optional<string> message = default;
+            DateTimeOffset? time = default;
+            string code = default;
+            IReadOnlyList<string> parameters = default;
+            string message = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedIntegrationRuntimeError(Optional.ToNullable(time), code.Value, Optional.ToList(parameters), message.Value, additionalProperties);
+            return new ManagedIntegrationRuntimeError(time, code, parameters ?? new ChangeTrackingList<string>(), message, additionalProperties);
         }
 
         BinaryData IPersistableModel<ManagedIntegrationRuntimeError>.Write(ModelReaderWriterOptions options)

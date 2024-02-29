@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyUri))
+            if (KeyUri != null)
             {
                 writer.WritePropertyName("keyUrl"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(KeyVaultId))
+            if (KeyVaultId != null)
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
-            if (Optional.IsDefined(KeyBackupData))
+            if (KeyBackupData != null)
             {
                 writer.WritePropertyName("keyBackupData"u8);
                 writer.WriteStringValue(KeyBackupData);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<Uri> keyUrl = default;
-            Optional<ResourceIdentifier> keyVaultId = default;
-            Optional<string> keyBackupData = default;
+            Uri keyUrl = default;
+            ResourceIdentifier keyVaultId = default;
+            string keyBackupData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KekDetails(keyUrl.Value, keyVaultId.Value, keyBackupData.Value, serializedAdditionalRawData);
+            return new KekDetails(keyUrl, keyVaultId, keyBackupData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KekDetails>.Write(ModelReaderWriterOptions options)

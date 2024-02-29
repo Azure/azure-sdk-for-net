@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmSize))
+            if (VmSize != null)
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> vmSize = default;
-            Optional<double> count = default;
+            string vmSize = default;
+            double? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedHostAllocatableVm(vmSize.Value, Optional.ToNullable(count), serializedAdditionalRawData);
+            return new DedicatedHostAllocatableVm(vmSize, count, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DedicatedHostAllocatableVm>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PassedCount))
+            if (PassedCount.HasValue)
             {
                 writer.WritePropertyName("passedCount"u8);
                 writer.WriteNumberValue(PassedCount.Value);
             }
-            if (Optional.IsDefined(FailedCount))
+            if (FailedCount.HasValue)
             {
                 writer.WritePropertyName("failedCount"u8);
                 writer.WriteNumberValue(FailedCount.Value);
             }
-            if (Optional.IsDefined(ManualCount))
+            if (ManualCount.HasValue)
             {
                 writer.WritePropertyName("manualCount"u8);
                 writer.WriteNumberValue(ManualCount.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<int> passedCount = default;
-            Optional<int> failedCount = default;
-            Optional<int> manualCount = default;
+            int? passedCount = default;
+            int? failedCount = default;
+            int? manualCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OverviewStatus(Optional.ToNullable(passedCount), Optional.ToNullable(failedCount), Optional.ToNullable(manualCount), serializedAdditionalRawData);
+            return new OverviewStatus(passedCount, failedCount, manualCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OverviewStatus>.Write(ModelReaderWriterOptions options)

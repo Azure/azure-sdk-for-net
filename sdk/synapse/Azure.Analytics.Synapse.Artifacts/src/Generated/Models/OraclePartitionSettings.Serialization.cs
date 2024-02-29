@@ -18,22 +18,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PartitionNames))
+            if (PartitionNames != null)
             {
                 writer.WritePropertyName("partitionNames"u8);
                 writer.WriteObjectValue(PartitionNames);
             }
-            if (Optional.IsDefined(PartitionColumnName))
+            if (PartitionColumnName != null)
             {
                 writer.WritePropertyName("partitionColumnName"u8);
                 writer.WriteObjectValue(PartitionColumnName);
             }
-            if (Optional.IsDefined(PartitionUpperBound))
+            if (PartitionUpperBound != null)
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
                 writer.WriteObjectValue(PartitionUpperBound);
             }
-            if (Optional.IsDefined(PartitionLowerBound))
+            if (PartitionLowerBound != null)
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
                 writer.WriteObjectValue(PartitionLowerBound);
@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> partitionNames = default;
-            Optional<object> partitionColumnName = default;
-            Optional<object> partitionUpperBound = default;
-            Optional<object> partitionLowerBound = default;
+            object partitionNames = default;
+            object partitionColumnName = default;
+            object partitionUpperBound = default;
+            object partitionLowerBound = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionNames"u8))
@@ -90,7 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new OraclePartitionSettings(partitionNames.Value, partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value);
+            return new OraclePartitionSettings(partitionNames, partitionColumnName, partitionUpperBound, partitionLowerBound);
         }
 
         internal partial class OraclePartitionSettingsConverter : JsonConverter<OraclePartitionSettings>

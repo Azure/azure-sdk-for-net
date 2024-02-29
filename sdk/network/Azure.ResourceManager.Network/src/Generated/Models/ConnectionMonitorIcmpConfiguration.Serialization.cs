@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisableTraceRoute))
+            if (DisableTraceRoute.HasValue)
             {
                 writer.WritePropertyName("disableTraceRoute"u8);
                 writer.WriteBooleanValue(DisableTraceRoute.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<bool> disableTraceRoute = default;
+            bool? disableTraceRoute = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorIcmpConfiguration(Optional.ToNullable(disableTraceRoute), serializedAdditionalRawData);
+            return new ConnectionMonitorIcmpConfiguration(disableTraceRoute, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorIcmpConfiguration>.Write(ModelReaderWriterOptions options)

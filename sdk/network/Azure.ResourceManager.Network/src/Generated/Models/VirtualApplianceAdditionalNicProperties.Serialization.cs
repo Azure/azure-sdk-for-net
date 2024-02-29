@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(HasPublicIP))
+            if (HasPublicIP.HasValue)
             {
                 writer.WritePropertyName("hasPublicIp"u8);
                 writer.WriteBooleanValue(HasPublicIP.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> hasPublicIP = default;
+            string name = default;
+            bool? hasPublicIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualApplianceAdditionalNicProperties(name.Value, Optional.ToNullable(hasPublicIP), serializedAdditionalRawData);
+            return new VirtualApplianceAdditionalNicProperties(name, hasPublicIP, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualApplianceAdditionalNicProperties>.Write(ModelReaderWriterOptions options)

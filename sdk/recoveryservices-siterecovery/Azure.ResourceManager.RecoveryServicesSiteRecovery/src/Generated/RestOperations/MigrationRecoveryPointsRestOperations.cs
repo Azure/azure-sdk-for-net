@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-01";
+            _apiVersion = apiVersion ?? "2023-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -76,12 +76,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="migrationItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MigrationRecoveryPointListResult>> ListByReplicationMigrationItemsAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
-            Argument.AssertNotNullOrEmpty(migrationItemName, nameof(migrationItemName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (protectionContainerName == null)
+            {
+                throw new ArgumentNullException(nameof(protectionContainerName));
+            }
+            if (protectionContainerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
+            }
+            if (migrationItemName == null)
+            {
+                throw new ArgumentNullException(nameof(migrationItemName));
+            }
+            if (migrationItemName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationItemName));
+            }
 
             using var message = CreateListByReplicationMigrationItemsRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, migrationItemName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -111,12 +153,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="migrationItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MigrationRecoveryPointListResult> ListByReplicationMigrationItems(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
-            Argument.AssertNotNullOrEmpty(migrationItemName, nameof(migrationItemName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (protectionContainerName == null)
+            {
+                throw new ArgumentNullException(nameof(protectionContainerName));
+            }
+            if (protectionContainerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
+            }
+            if (migrationItemName == null)
+            {
+                throw new ArgumentNullException(nameof(migrationItemName));
+            }
+            if (migrationItemName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationItemName));
+            }
 
             using var message = CreateListByReplicationMigrationItemsRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, migrationItemName);
             _pipeline.Send(message, cancellationToken);
@@ -175,13 +259,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/>, <paramref name="migrationItemName"/> or <paramref name="migrationRecoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MigrationRecoveryPointData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, string migrationRecoveryPointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
-            Argument.AssertNotNullOrEmpty(migrationItemName, nameof(migrationItemName));
-            Argument.AssertNotNullOrEmpty(migrationRecoveryPointName, nameof(migrationRecoveryPointName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (protectionContainerName == null)
+            {
+                throw new ArgumentNullException(nameof(protectionContainerName));
+            }
+            if (protectionContainerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
+            }
+            if (migrationItemName == null)
+            {
+                throw new ArgumentNullException(nameof(migrationItemName));
+            }
+            if (migrationItemName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationItemName));
+            }
+            if (migrationRecoveryPointName == null)
+            {
+                throw new ArgumentNullException(nameof(migrationRecoveryPointName));
+            }
+            if (migrationRecoveryPointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationRecoveryPointName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, migrationItemName, migrationRecoveryPointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -214,13 +347,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/>, <paramref name="migrationItemName"/> or <paramref name="migrationRecoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MigrationRecoveryPointData> Get(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, string migrationRecoveryPointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
-            Argument.AssertNotNullOrEmpty(migrationItemName, nameof(migrationItemName));
-            Argument.AssertNotNullOrEmpty(migrationRecoveryPointName, nameof(migrationRecoveryPointName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (protectionContainerName == null)
+            {
+                throw new ArgumentNullException(nameof(protectionContainerName));
+            }
+            if (protectionContainerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
+            }
+            if (migrationItemName == null)
+            {
+                throw new ArgumentNullException(nameof(migrationItemName));
+            }
+            if (migrationItemName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationItemName));
+            }
+            if (migrationRecoveryPointName == null)
+            {
+                throw new ArgumentNullException(nameof(migrationRecoveryPointName));
+            }
+            if (migrationRecoveryPointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationRecoveryPointName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, migrationItemName, migrationRecoveryPointName);
             _pipeline.Send(message, cancellationToken);
@@ -267,13 +449,58 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="migrationItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MigrationRecoveryPointListResult>> ListByReplicationMigrationItemsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
-            Argument.AssertNotNullOrEmpty(migrationItemName, nameof(migrationItemName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (protectionContainerName == null)
+            {
+                throw new ArgumentNullException(nameof(protectionContainerName));
+            }
+            if (protectionContainerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
+            }
+            if (migrationItemName == null)
+            {
+                throw new ArgumentNullException(nameof(migrationItemName));
+            }
+            if (migrationItemName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationItemName));
+            }
 
             using var message = CreateListByReplicationMigrationItemsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, migrationItemName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -304,13 +531,58 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="migrationItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MigrationRecoveryPointListResult> ListByReplicationMigrationItemsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
-            Argument.AssertNotNullOrEmpty(migrationItemName, nameof(migrationItemName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (protectionContainerName == null)
+            {
+                throw new ArgumentNullException(nameof(protectionContainerName));
+            }
+            if (protectionContainerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
+            }
+            if (migrationItemName == null)
+            {
+                throw new ArgumentNullException(nameof(migrationItemName));
+            }
+            if (migrationItemName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationItemName));
+            }
 
             using var message = CreateListByReplicationMigrationItemsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, migrationItemName);
             _pipeline.Send(message, cancellationToken);

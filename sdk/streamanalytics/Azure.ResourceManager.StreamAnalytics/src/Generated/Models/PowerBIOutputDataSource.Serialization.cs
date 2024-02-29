@@ -30,42 +30,42 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RefreshToken))
+            if (RefreshToken != null)
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (Optional.IsDefined(TokenUserPrincipalName))
+            if (TokenUserPrincipalName != null)
             {
                 writer.WritePropertyName("tokenUserPrincipalName"u8);
                 writer.WriteStringValue(TokenUserPrincipalName);
             }
-            if (Optional.IsDefined(TokenUserDisplayName))
+            if (TokenUserDisplayName != null)
             {
                 writer.WritePropertyName("tokenUserDisplayName"u8);
                 writer.WriteStringValue(TokenUserDisplayName);
             }
-            if (Optional.IsDefined(Dataset))
+            if (Dataset != null)
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteStringValue(Dataset);
             }
-            if (Optional.IsDefined(Table))
+            if (Table != null)
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(Table);
             }
-            if (Optional.IsDefined(GroupId))
+            if (GroupId.HasValue)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId.Value);
             }
-            if (Optional.IsDefined(GroupName))
+            if (GroupName != null)
             {
                 writer.WritePropertyName("groupName"u8);
                 writer.WriteStringValue(GroupName);
             }
-            if (Optional.IsDefined(AuthenticationMode))
+            if (AuthenticationMode.HasValue)
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> refreshToken = default;
-            Optional<string> tokenUserPrincipalName = default;
-            Optional<string> tokenUserDisplayName = default;
-            Optional<string> dataset = default;
-            Optional<string> table = default;
-            Optional<Guid> groupId = default;
-            Optional<string> groupName = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            string refreshToken = default;
+            string tokenUserPrincipalName = default;
+            string tokenUserDisplayName = default;
+            string dataset = default;
+            string table = default;
+            Guid? groupId = default;
+            string groupName = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,7 +193,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PowerBIOutputDataSource(type, serializedAdditionalRawData, refreshToken.Value, tokenUserPrincipalName.Value, tokenUserDisplayName.Value, dataset.Value, table.Value, Optional.ToNullable(groupId), groupName.Value, Optional.ToNullable(authenticationMode));
+            return new PowerBIOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                refreshToken,
+                tokenUserPrincipalName,
+                tokenUserDisplayName,
+                dataset,
+                table,
+                groupId,
+                groupName,
+                authenticationMode);
         }
 
         BinaryData IPersistableModel<PowerBIOutputDataSource>.Write(ModelReaderWriterOptions options)

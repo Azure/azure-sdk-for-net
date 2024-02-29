@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OutputType))
+            if (OutputType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());
             }
-            if (Optional.IsDefined(WorkspaceSettings))
+            if (WorkspaceSettings != null)
             {
                 writer.WritePropertyName("workspaceSettings"u8);
                 writer.WriteObjectValue(WorkspaceSettings);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<OutputType> type = default;
-            Optional<ConnectionMonitorWorkspaceSettings> workspaceSettings = default;
+            OutputType? type = default;
+            ConnectionMonitorWorkspaceSettings workspaceSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    workspaceSettings = ConnectionMonitorWorkspaceSettings.DeserializeConnectionMonitorWorkspaceSettings(property.Value);
+                    workspaceSettings = ConnectionMonitorWorkspaceSettings.DeserializeConnectionMonitorWorkspaceSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorOutput(Optional.ToNullable(type), workspaceSettings.Value, serializedAdditionalRawData);
+            return new ConnectionMonitorOutput(type, workspaceSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorOutput>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartObject();
             writer.WritePropertyName("domainName"u8);
             writer.WriteStringValue(DomainName);
-            if (Optional.IsDefined(Port))
+            if (Port.HasValue)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             string domainName = default;
-            Optional<long> port = default;
+            long? port = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointDependency(domainName, Optional.ToNullable(port), serializedAdditionalRawData);
+            return new EndpointDependency(domainName, port, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointDependency>.Write(ModelReaderWriterOptions options)

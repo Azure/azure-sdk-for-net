@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceAccountEmailAddress))
+            if (ServiceAccountEmailAddress != null)
             {
                 writer.WritePropertyName("serviceAccountEmailAddress"u8);
                 writer.WriteStringValue(ServiceAccountEmailAddress);
             }
-            if (Optional.IsDefined(WorkloadIdentityProviderId))
+            if (WorkloadIdentityProviderId != null)
             {
                 writer.WritePropertyName("workloadIdentityProviderId"u8);
                 writer.WriteStringValue(WorkloadIdentityProviderId);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> serviceAccountEmailAddress = default;
-            Optional<string> workloadIdentityProviderId = default;
+            string serviceAccountEmailAddress = default;
+            string workloadIdentityProviderId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection(serviceAccountEmailAddress.Value, workloadIdentityProviderId.Value, serializedAdditionalRawData);
+            return new DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection(serviceAccountEmailAddress, workloadIdentityProviderId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection>.Write(ModelReaderWriterOptions options)

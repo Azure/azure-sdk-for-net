@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<CosmosDBLocationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBLocationData>> value = default;
+            IReadOnlyList<CosmosDBLocationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBLocationData> array = new List<CosmosDBLocationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBLocationData.DeserializeCosmosDBLocationData(item));
+                        array.Add(CosmosDBLocationData.DeserializeCosmosDBLocationData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBLocationListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new CosmosDBLocationListResult(value ?? new ChangeTrackingList<CosmosDBLocationData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBLocationListResult>.Write(ModelReaderWriterOptions options)

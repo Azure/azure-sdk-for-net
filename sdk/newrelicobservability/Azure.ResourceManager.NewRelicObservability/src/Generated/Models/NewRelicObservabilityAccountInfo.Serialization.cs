@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccountId))
+            if (AccountId != null)
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (Optional.IsDefined(IngestionKey))
+            if (IngestionKey != null)
             {
                 writer.WritePropertyName("ingestionKey"u8);
                 writer.WriteStringValue(IngestionKey);
             }
-            if (Optional.IsDefined(Region))
+            if (Region.HasValue)
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<string> accountId = default;
-            Optional<string> ingestionKey = default;
-            Optional<AzureLocation> region = default;
+            string accountId = default;
+            string ingestionKey = default;
+            AzureLocation? region = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicObservabilityAccountInfo(accountId.Value, ingestionKey.Value, Optional.ToNullable(region), serializedAdditionalRawData);
+            return new NewRelicObservabilityAccountInfo(accountId, ingestionKey, region, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicObservabilityAccountInfo>.Write(ModelReaderWriterOptions options)

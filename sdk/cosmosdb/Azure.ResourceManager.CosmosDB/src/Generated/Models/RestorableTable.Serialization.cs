@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Resource))
+            if (Resource != null)
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteObjectValue(Resource);
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ExtendedRestorableTableResourceInfo> resource = default;
+            SystemData systemData = default;
+            ExtendedRestorableTableResourceInfo resource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            resource = ExtendedRestorableTableResourceInfo.DeserializeExtendedRestorableTableResourceInfo(property0.Value);
+                            resource = ExtendedRestorableTableResourceInfo.DeserializeExtendedRestorableTableResourceInfo(property0.Value, options);
                             continue;
                         }
                     }
@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableTable(id, name, type, systemData.Value, resource.Value, serializedAdditionalRawData);
+            return new RestorableTable(
+                id,
+                name,
+                type,
+                systemData,
+                resource,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableTable>.Write(ModelReaderWriterOptions options)

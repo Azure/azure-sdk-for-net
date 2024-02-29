@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WriteNumberValue(SequenceNumber);
             writer.WritePropertyName("networkPrefix"u8);
             writer.WriteStringValue(NetworkPrefix);
-            if (Optional.IsDefined(Condition))
+            if (Condition.HasValue)
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition.Value.ToString());
             }
-            if (Optional.IsDefined(SubnetMaskLength))
+            if (SubnetMaskLength != null)
             {
                 writer.WritePropertyName("subnetMaskLength"u8);
                 writer.WriteStringValue(SubnetMaskLength);
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             CommunityActionType action = default;
             long sequenceNumber = default;
             string networkPrefix = default;
-            Optional<IPPrefixRuleCondition> condition = default;
-            Optional<string> subnetMaskLength = default;
+            IPPrefixRuleCondition? condition = default;
+            string subnetMaskLength = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPPrefixRule(action, sequenceNumber, networkPrefix, Optional.ToNullable(condition), subnetMaskLength.Value, serializedAdditionalRawData);
+            return new IPPrefixRule(
+                action,
+                sequenceNumber,
+                networkPrefix,
+                condition,
+                subnetMaskLength,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPPrefixRule>.Write(ModelReaderWriterOptions options)

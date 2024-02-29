@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Day))
+            if (Day.HasValue)
             {
                 writer.WritePropertyName("day"u8);
                 writer.WriteStringValue(Day.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Occurrence))
+            if (Occurrence.HasValue)
             {
                 writer.WritePropertyName("occurrence"u8);
                 writer.WriteNumberValue(Occurrence.Value);
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryDayOfWeek> day = default;
-            Optional<int> occurrence = default;
+            DataFactoryDayOfWeek? day = default;
+            int? occurrence = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryRecurrenceScheduleOccurrence(Optional.ToNullable(day), Optional.ToNullable(occurrence), additionalProperties);
+            return new DataFactoryRecurrenceScheduleOccurrence(day, occurrence, additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryRecurrenceScheduleOccurrence>.Write(ModelReaderWriterOptions options)

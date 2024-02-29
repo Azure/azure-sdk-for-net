@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("ruleId"u8);
             writer.WriteStringValue(RuleId);
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(Action))
+            if (Action.HasValue)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string ruleId = default;
-            Optional<ManagedRuleEnabledState> state = default;
-            Optional<RuleMatchActionType> action = default;
+            ManagedRuleEnabledState? state = default;
+            RuleMatchActionType? action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleOverride(ruleId, Optional.ToNullable(state), Optional.ToNullable(action), serializedAdditionalRawData);
+            return new ManagedRuleOverride(ruleId, state, action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleOverride>.Write(ModelReaderWriterOptions options)

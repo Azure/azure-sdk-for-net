@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Count))
+            if (options.Format != "W" && Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FirstTimestamp))
+            if (options.Format != "W" && FirstTimestamp.HasValue)
             {
                 writer.WritePropertyName("firstTimestamp"u8);
                 writer.WriteStringValue(FirstTimestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastTimestamp))
+            if (options.Format != "W" && LastTimestamp.HasValue)
             {
                 writer.WritePropertyName("lastTimestamp"u8);
                 writer.WriteStringValue(LastTimestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(EventType))
+            if (options.Format != "W" && EventType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EventType);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<int> count = default;
-            Optional<DateTimeOffset> firstTimestamp = default;
-            Optional<DateTimeOffset> lastTimestamp = default;
-            Optional<string> name = default;
-            Optional<string> message = default;
-            Optional<string> type = default;
+            int? count = default;
+            DateTimeOffset? firstTimestamp = default;
+            DateTimeOffset? lastTimestamp = default;
+            string name = default;
+            string message = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerEvent(Optional.ToNullable(count), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp), name.Value, message.Value, type.Value, serializedAdditionalRawData);
+            return new ContainerEvent(
+                count,
+                firstTimestamp,
+                lastTimestamp,
+                name,
+                message,
+                type,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerEvent>.Write(ModelReaderWriterOptions options)

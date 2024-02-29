@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ErrorCode))
+            if (ErrorCode != null)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Optional.IsDefined(PowerState))
+            if (PowerState.HasValue)
             {
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteStringValue(PowerState.Value.ToString());
             }
-            if (Optional.IsDefined(ProvisioningStatus))
+            if (ProvisioningStatus != null)
             {
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteObjectValue(ProvisioningStatus);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<PowerStateEnum> powerState = default;
-            Optional<VirtualMachineInstanceStatusProvisioningStatus> provisioningStatus = default;
+            string errorCode = default;
+            string errorMessage = default;
+            PowerStateEnum? powerState = default;
+            VirtualMachineInstanceStatusProvisioningStatus provisioningStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    provisioningStatus = VirtualMachineInstanceStatusProvisioningStatus.DeserializeVirtualMachineInstanceStatusProvisioningStatus(property.Value);
+                    provisioningStatus = VirtualMachineInstanceStatusProvisioningStatus.DeserializeVirtualMachineInstanceStatusProvisioningStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstanceStatus(errorCode.Value, errorMessage.Value, Optional.ToNullable(powerState), provisioningStatus.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstanceStatus(errorCode, errorMessage, powerState, provisioningStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstanceStatus>.Write(ModelReaderWriterOptions options)

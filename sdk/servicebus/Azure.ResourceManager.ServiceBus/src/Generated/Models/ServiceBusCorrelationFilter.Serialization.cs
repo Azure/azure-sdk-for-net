@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ApplicationProperties))
+            if (!(ApplicationProperties is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -42,47 +42,47 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(CorrelationId))
+            if (CorrelationId != null)
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (Optional.IsDefined(MessageId))
+            if (MessageId != null)
             {
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
-            if (Optional.IsDefined(SendTo))
+            if (SendTo != null)
             {
                 writer.WritePropertyName("to"u8);
                 writer.WriteStringValue(SendTo);
             }
-            if (Optional.IsDefined(ReplyTo))
+            if (ReplyTo != null)
             {
                 writer.WritePropertyName("replyTo"u8);
                 writer.WriteStringValue(ReplyTo);
             }
-            if (Optional.IsDefined(Subject))
+            if (Subject != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (Optional.IsDefined(SessionId))
+            if (SessionId != null)
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId);
             }
-            if (Optional.IsDefined(ReplyToSessionId))
+            if (ReplyToSessionId != null)
             {
                 writer.WritePropertyName("replyToSessionId"u8);
                 writer.WriteStringValue(ReplyToSessionId);
             }
-            if (Optional.IsDefined(ContentType))
+            if (ContentType != null)
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (Optional.IsDefined(RequiresPreprocessing))
+            if (RequiresPreprocessing.HasValue)
             {
                 writer.WritePropertyName("requiresPreprocessing"u8);
                 writer.WriteBooleanValue(RequiresPreprocessing.Value);
@@ -125,16 +125,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, object>> properties = default;
-            Optional<string> correlationId = default;
-            Optional<string> messageId = default;
-            Optional<string> to = default;
-            Optional<string> replyTo = default;
-            Optional<string> label = default;
-            Optional<string> sessionId = default;
-            Optional<string> replyToSessionId = default;
-            Optional<string> contentType = default;
-            Optional<bool> requiresPreprocessing = default;
+            IDictionary<string, object> properties = default;
+            string correlationId = default;
+            string messageId = default;
+            string to = default;
+            string replyTo = default;
+            string label = default;
+            string sessionId = default;
+            string replyToSessionId = default;
+            string contentType = default;
+            bool? requiresPreprocessing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,7 +215,18 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusCorrelationFilter(Optional.ToDictionary(properties), correlationId.Value, messageId.Value, to.Value, replyTo.Value, label.Value, sessionId.Value, replyToSessionId.Value, contentType.Value, Optional.ToNullable(requiresPreprocessing), serializedAdditionalRawData);
+            return new ServiceBusCorrelationFilter(
+                properties ?? new ChangeTrackingDictionary<string, object>(),
+                correlationId,
+                messageId,
+                to,
+                replyTo,
+                label,
+                sessionId,
+                replyToSessionId,
+                contentType,
+                requiresPreprocessing,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusCorrelationFilter>.Write(ModelReaderWriterOptions options)

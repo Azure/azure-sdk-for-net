@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identifier))
+            if (Identifier != null)
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteStringValue(Identifier);
             }
-            if (Optional.IsDefined(Base64Key))
+            if (Base64Key != null)
             {
                 writer.WritePropertyName("base64Key"u8);
                 writer.WriteStringValue(Base64Key);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiration"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> identifier = default;
-            Optional<string> base64Key = default;
-            Optional<DateTimeOffset> expiration = default;
+            string identifier = default;
+            string base64Key = default;
+            DateTimeOffset? expiration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AkamaiSignatureHeaderAuthenticationKey(identifier.Value, base64Key.Value, Optional.ToNullable(expiration), serializedAdditionalRawData);
+            return new AkamaiSignatureHeaderAuthenticationKey(identifier, base64Key, expiration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AkamaiSignatureHeaderAuthenticationKey>.Write(ModelReaderWriterOptions options)

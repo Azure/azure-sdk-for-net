@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DesiredState))
+            if (DesiredState.HasValue)
             {
                 writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ActualState))
+            if (options.Format != "W" && ActualState.HasValue)
             {
                 writer.WritePropertyName("actualState"u8);
                 writer.WriteStringValue(ActualState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ReasonCode))
+            if (options.Format != "W" && ReasonCode.HasValue)
             {
                 writer.WritePropertyName("reasonCode"u8);
                 writer.WriteNumberValue(ReasonCode.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReasonDesc))
+            if (options.Format != "W" && ReasonDesc.HasValue)
             {
                 writer.WritePropertyName("reasonDesc"u8);
                 writer.WriteStringValue(ReasonDesc.Value.ToSerialString());
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<AutomaticTuningOptionModeDesired> desiredState = default;
-            Optional<AutomaticTuningOptionModeActual> actualState = default;
-            Optional<int> reasonCode = default;
-            Optional<AutomaticTuningServerReason> reasonDesc = default;
+            AutomaticTuningOptionModeDesired? desiredState = default;
+            AutomaticTuningOptionModeActual? actualState = default;
+            int? reasonCode = default;
+            AutomaticTuningServerReason? reasonDesc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomaticTuningServerOptions(Optional.ToNullable(desiredState), Optional.ToNullable(actualState), Optional.ToNullable(reasonCode), Optional.ToNullable(reasonDesc), serializedAdditionalRawData);
+            return new AutomaticTuningServerOptions(desiredState, actualState, reasonCode, reasonDesc, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomaticTuningServerOptions>.Write(ModelReaderWriterOptions options)

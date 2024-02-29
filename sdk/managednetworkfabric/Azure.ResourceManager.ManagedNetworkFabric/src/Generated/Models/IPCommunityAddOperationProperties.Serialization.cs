@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Add))
+            if (Add != null)
             {
                 writer.WritePropertyName("add"u8);
                 writer.WriteObjectValue(Add);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IPCommunityIdList> @add = default;
+            IPCommunityIdList @add = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @add = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value);
+                    @add = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPCommunityAddOperationProperties(@add.Value, serializedAdditionalRawData);
+            return new IPCommunityAddOperationProperties(@add, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPCommunityAddOperationProperties>.Write(ModelReaderWriterOptions options)

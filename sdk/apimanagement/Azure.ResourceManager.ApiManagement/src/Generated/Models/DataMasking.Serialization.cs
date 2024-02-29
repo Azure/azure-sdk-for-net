@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(QueryParams))
+            if (!(QueryParams is ChangeTrackingList<DataMaskingEntity> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("queryParams"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (!(Headers is ChangeTrackingList<DataMaskingEntity> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IList<DataMaskingEntity>> queryParams = default;
-            Optional<IList<DataMaskingEntity>> headers = default;
+            IList<DataMaskingEntity> queryParams = default;
+            IList<DataMaskingEntity> headers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<DataMaskingEntity> array = new List<DataMaskingEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMaskingEntity.DeserializeDataMaskingEntity(item));
+                        array.Add(DataMaskingEntity.DeserializeDataMaskingEntity(item, options));
                     }
                     queryParams = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<DataMaskingEntity> array = new List<DataMaskingEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMaskingEntity.DeserializeDataMaskingEntity(item));
+                        array.Add(DataMaskingEntity.DeserializeDataMaskingEntity(item, options));
                     }
                     headers = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataMasking(Optional.ToList(queryParams), Optional.ToList(headers), serializedAdditionalRawData);
+            return new DataMasking(queryParams ?? new ChangeTrackingList<DataMaskingEntity>(), headers ?? new ChangeTrackingList<DataMaskingEntity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataMasking>.Write(ModelReaderWriterOptions options)

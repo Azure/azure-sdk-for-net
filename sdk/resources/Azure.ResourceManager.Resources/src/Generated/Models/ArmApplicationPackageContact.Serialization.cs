@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContactName))
+            if (ContactName != null)
             {
                 writer.WritePropertyName("contactName"u8);
                 writer.WriteStringValue(ContactName);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> contactName = default;
+            string contactName = default;
             string email = default;
             string phone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationPackageContact(contactName.Value, email, phone, serializedAdditionalRawData);
+            return new ArmApplicationPackageContact(contactName, email, phone, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmApplicationPackageContact>.Write(ModelReaderWriterOptions options)

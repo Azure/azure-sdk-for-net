@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="contactProfileName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<OrbitalContactProfileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string contactProfileName, OrbitalContactProfileData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(contactProfileName, nameof(contactProfileName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (contactProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(contactProfileName));
+            }
+            if (contactProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(contactProfileName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _orbitalContactProfileContactProfilesClientDiagnostics.CreateScope("OrbitalContactProfileCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="contactProfileName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<OrbitalContactProfileResource> CreateOrUpdate(WaitUntil waitUntil, string contactProfileName, OrbitalContactProfileData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(contactProfileName, nameof(contactProfileName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (contactProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(contactProfileName));
+            }
+            if (contactProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(contactProfileName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _orbitalContactProfileContactProfilesClientDiagnostics.CreateScope("OrbitalContactProfileCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="contactProfileName"/> is null. </exception>
         public virtual async Task<Response<OrbitalContactProfileResource>> GetAsync(string contactProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(contactProfileName, nameof(contactProfileName));
+            if (contactProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(contactProfileName));
+            }
+            if (contactProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(contactProfileName));
+            }
 
             using var scope = _orbitalContactProfileContactProfilesClientDiagnostics.CreateScope("OrbitalContactProfileCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="contactProfileName"/> is null. </exception>
         public virtual Response<OrbitalContactProfileResource> Get(string contactProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(contactProfileName, nameof(contactProfileName));
+            if (contactProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(contactProfileName));
+            }
+            if (contactProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(contactProfileName));
+            }
 
             using var scope = _orbitalContactProfileContactProfilesClientDiagnostics.CreateScope("OrbitalContactProfileCollection.Get");
             scope.Start();
@@ -331,7 +365,14 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="contactProfileName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string contactProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(contactProfileName, nameof(contactProfileName));
+            if (contactProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(contactProfileName));
+            }
+            if (contactProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(contactProfileName));
+            }
 
             using var scope = _orbitalContactProfileContactProfilesClientDiagnostics.CreateScope("OrbitalContactProfileCollection.Exists");
             scope.Start();
@@ -374,7 +415,14 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="contactProfileName"/> is null. </exception>
         public virtual Response<bool> Exists(string contactProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(contactProfileName, nameof(contactProfileName));
+            if (contactProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(contactProfileName));
+            }
+            if (contactProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(contactProfileName));
+            }
 
             using var scope = _orbitalContactProfileContactProfilesClientDiagnostics.CreateScope("OrbitalContactProfileCollection.Exists");
             scope.Start();
@@ -417,7 +465,14 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="contactProfileName"/> is null. </exception>
         public virtual async Task<NullableResponse<OrbitalContactProfileResource>> GetIfExistsAsync(string contactProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(contactProfileName, nameof(contactProfileName));
+            if (contactProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(contactProfileName));
+            }
+            if (contactProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(contactProfileName));
+            }
 
             using var scope = _orbitalContactProfileContactProfilesClientDiagnostics.CreateScope("OrbitalContactProfileCollection.GetIfExists");
             scope.Start();
@@ -462,7 +517,14 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="contactProfileName"/> is null. </exception>
         public virtual NullableResponse<OrbitalContactProfileResource> GetIfExists(string contactProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(contactProfileName, nameof(contactProfileName));
+            if (contactProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(contactProfileName));
+            }
+            if (contactProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(contactProfileName));
+            }
 
             using var scope = _orbitalContactProfileContactProfilesClientDiagnostics.CreateScope("OrbitalContactProfileCollection.GetIfExists");
             scope.Start();

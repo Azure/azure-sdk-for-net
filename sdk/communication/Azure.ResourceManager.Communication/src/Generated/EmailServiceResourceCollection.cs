@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EmailServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string emailServiceName, EmailServiceResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (emailServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(emailServiceName));
+            }
+            if (emailServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(emailServiceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _emailServiceResourceEmailServicesClientDiagnostics.CreateScope("EmailServiceResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -116,7 +126,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EmailServiceResource> CreateOrUpdate(WaitUntil waitUntil, string emailServiceName, EmailServiceResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (emailServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(emailServiceName));
+            }
+            if (emailServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(emailServiceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _emailServiceResourceEmailServicesClientDiagnostics.CreateScope("EmailServiceResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -165,7 +185,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
         public virtual async Task<Response<EmailServiceResource>> GetAsync(string emailServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            if (emailServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(emailServiceName));
+            }
+            if (emailServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(emailServiceName));
+            }
 
             using var scope = _emailServiceResourceEmailServicesClientDiagnostics.CreateScope("EmailServiceResourceCollection.Get");
             scope.Start();
@@ -210,7 +237,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
         public virtual Response<EmailServiceResource> Get(string emailServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            if (emailServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(emailServiceName));
+            }
+            if (emailServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(emailServiceName));
+            }
 
             using var scope = _emailServiceResourceEmailServicesClientDiagnostics.CreateScope("EmailServiceResourceCollection.Get");
             scope.Start();
@@ -255,7 +289,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -285,7 +319,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -315,7 +349,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string emailServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            if (emailServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(emailServiceName));
+            }
+            if (emailServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(emailServiceName));
+            }
 
             using var scope = _emailServiceResourceEmailServicesClientDiagnostics.CreateScope("EmailServiceResourceCollection.Exists");
             scope.Start();
@@ -358,7 +399,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
         public virtual Response<bool> Exists(string emailServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            if (emailServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(emailServiceName));
+            }
+            if (emailServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(emailServiceName));
+            }
 
             using var scope = _emailServiceResourceEmailServicesClientDiagnostics.CreateScope("EmailServiceResourceCollection.Exists");
             scope.Start();
@@ -401,7 +449,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
         public virtual async Task<NullableResponse<EmailServiceResource>> GetIfExistsAsync(string emailServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            if (emailServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(emailServiceName));
+            }
+            if (emailServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(emailServiceName));
+            }
 
             using var scope = _emailServiceResourceEmailServicesClientDiagnostics.CreateScope("EmailServiceResourceCollection.GetIfExists");
             scope.Start();
@@ -446,7 +501,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
         public virtual NullableResponse<EmailServiceResource> GetIfExists(string emailServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            if (emailServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(emailServiceName));
+            }
+            if (emailServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(emailServiceName));
+            }
 
             using var scope = _emailServiceResourceEmailServicesClientDiagnostics.CreateScope("EmailServiceResourceCollection.GetIfExists");
             scope.Start();

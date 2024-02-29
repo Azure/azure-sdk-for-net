@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IncludePrivacy))
+            if (IncludePrivacy.HasValue)
             {
                 writer.WritePropertyName("includePrivacy"u8);
                 writer.WriteBooleanValue(IncludePrivacy.Value);
             }
-            if (Optional.IsDefined(IsForTransfer))
+            if (IsForTransfer.HasValue)
             {
                 writer.WritePropertyName("forTransfer"u8);
                 writer.WriteBooleanValue(IsForTransfer.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> includePrivacy = default;
-            Optional<bool> forTransfer = default;
+            bool? includePrivacy = default;
+            bool? forTransfer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopLevelDomainAgreementOption(Optional.ToNullable(includePrivacy), Optional.ToNullable(forTransfer), serializedAdditionalRawData);
+            return new TopLevelDomainAgreementOption(includePrivacy, forTransfer, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopLevelDomainAgreementOption>.Write(ModelReaderWriterOptions options)

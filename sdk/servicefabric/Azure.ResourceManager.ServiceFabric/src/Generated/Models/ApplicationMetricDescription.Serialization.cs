@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(MaximumCapacity))
+            if (MaximumCapacity.HasValue)
             {
                 writer.WritePropertyName("maximumCapacity"u8);
                 writer.WriteNumberValue(MaximumCapacity.Value);
             }
-            if (Optional.IsDefined(ReservationCapacity))
+            if (ReservationCapacity.HasValue)
             {
                 writer.WritePropertyName("reservationCapacity"u8);
                 writer.WriteNumberValue(ReservationCapacity.Value);
             }
-            if (Optional.IsDefined(TotalApplicationCapacity))
+            if (TotalApplicationCapacity.HasValue)
             {
                 writer.WritePropertyName("totalApplicationCapacity"u8);
                 writer.WriteNumberValue(TotalApplicationCapacity.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> maximumCapacity = default;
-            Optional<long> reservationCapacity = default;
-            Optional<long> totalApplicationCapacity = default;
+            string name = default;
+            long? maximumCapacity = default;
+            long? reservationCapacity = default;
+            long? totalApplicationCapacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationMetricDescription(name.Value, Optional.ToNullable(maximumCapacity), Optional.ToNullable(reservationCapacity), Optional.ToNullable(totalApplicationCapacity), serializedAdditionalRawData);
+            return new ApplicationMetricDescription(name, maximumCapacity, reservationCapacity, totalApplicationCapacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationMetricDescription>.Write(ModelReaderWriterOptions options)

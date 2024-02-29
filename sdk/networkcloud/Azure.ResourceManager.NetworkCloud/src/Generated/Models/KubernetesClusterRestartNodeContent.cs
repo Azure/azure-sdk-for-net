@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         public KubernetesClusterRestartNodeContent(string nodeName)
         {
-            Argument.AssertNotNull(nodeName, nameof(nodeName));
+            if (nodeName == null)
+            {
+                throw new ArgumentNullException(nameof(nodeName));
+            }
 
             NodeName = nodeName;
         }

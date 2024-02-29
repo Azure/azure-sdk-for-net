@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
+            bool? enabled = default;
             string name = default;
             ManagementPolicyRuleType type = default;
             ManagementPolicyDefinition definition = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("definition"u8))
                 {
-                    definition = ManagementPolicyDefinition.DeserializeManagementPolicyDefinition(property.Value);
+                    definition = ManagementPolicyDefinition.DeserializeManagementPolicyDefinition(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementPolicyRule(Optional.ToNullable(enabled), name, type, definition, serializedAdditionalRawData);
+            return new ManagementPolicyRule(enabled, name, type, definition, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementPolicyRule>.Write(ModelReaderWriterOptions options)

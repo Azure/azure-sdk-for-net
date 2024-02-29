@@ -15,12 +15,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Width))
+            if (Width.HasValue)
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteNumberValue(Width.Value);
             }
-            if (Optional.IsDefined(Height))
+            if (Height.HasValue)
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteNumberValue(Height.Value);
@@ -34,8 +34,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<float> width = default;
-            Optional<float> height = default;
+            float? width = default;
+            float? height = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("width"u8))
@@ -57,7 +57,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new VideoResolution(Optional.ToNullable(width), Optional.ToNullable(height));
+            return new VideoResolution(width, height);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CommandOutput))
+            if (CommandOutput != null)
             {
                 writer.WritePropertyName("commandOutput"u8);
                 writer.WriteStringValue(CommandOutput);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> commandOutput = default;
+            string commandOutput = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraCommandOutput(commandOutput.Value, serializedAdditionalRawData);
+            return new CassandraCommandOutput(commandOutput, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraCommandOutput>.Write(ModelReaderWriterOptions options)

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -18,8 +17,8 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<string> searchString = default;
-            Optional<string> highlightedSearchString = default;
+            string searchString = default;
+            string highlightedSearchString = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("searchString"u8))
@@ -33,7 +32,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new InstancesSearchStringSuggestion(searchString.Value, highlightedSearchString.Value);
+            return new InstancesSearchStringSuggestion(searchString, highlightedSearchString);
         }
     }
 }

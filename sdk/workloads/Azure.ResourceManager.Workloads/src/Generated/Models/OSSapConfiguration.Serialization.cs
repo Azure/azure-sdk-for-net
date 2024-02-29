@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeployerVmPackages))
+            if (DeployerVmPackages != null)
             {
                 writer.WritePropertyName("deployerVmPackages"u8);
                 writer.WriteObjectValue(DeployerVmPackages);
             }
-            if (Optional.IsDefined(SapFqdn))
+            if (SapFqdn != null)
             {
                 writer.WritePropertyName("sapFqdn"u8);
                 writer.WriteStringValue(SapFqdn);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<DeployerVmPackages> deployerVmPackages = default;
-            Optional<string> sapFqdn = default;
+            DeployerVmPackages deployerVmPackages = default;
+            string sapFqdn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    deployerVmPackages = DeployerVmPackages.DeserializeDeployerVmPackages(property.Value);
+                    deployerVmPackages = DeployerVmPackages.DeserializeDeployerVmPackages(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sapFqdn"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OSSapConfiguration(deployerVmPackages.Value, sapFqdn.Value, serializedAdditionalRawData);
+            return new OSSapConfiguration(deployerVmPackages, sapFqdn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OSSapConfiguration>.Write(ModelReaderWriterOptions options)

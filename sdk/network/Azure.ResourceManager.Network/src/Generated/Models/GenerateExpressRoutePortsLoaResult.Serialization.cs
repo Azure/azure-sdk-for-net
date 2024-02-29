@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncodedContent))
+            if (EncodedContent != null)
             {
                 writer.WritePropertyName("encodedContent"u8);
                 writer.WriteStringValue(EncodedContent);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> encodedContent = default;
+            string encodedContent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenerateExpressRoutePortsLoaResult(encodedContent.Value, serializedAdditionalRawData);
+            return new GenerateExpressRoutePortsLoaResult(encodedContent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GenerateExpressRoutePortsLoaResult>.Write(ModelReaderWriterOptions options)

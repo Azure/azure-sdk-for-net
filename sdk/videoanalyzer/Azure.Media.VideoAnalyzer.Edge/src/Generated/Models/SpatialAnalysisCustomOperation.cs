@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="extensionConfiguration"/> is null. </exception>
         public SpatialAnalysisCustomOperation(string extensionConfiguration)
         {
-            Argument.AssertNotNull(extensionConfiguration, nameof(extensionConfiguration));
+            if (extensionConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(extensionConfiguration));
+            }
 
             ExtensionConfiguration = extensionConfiguration;
             Type = "#Microsoft.VideoAnalyzer.SpatialAnalysisCustomOperation";

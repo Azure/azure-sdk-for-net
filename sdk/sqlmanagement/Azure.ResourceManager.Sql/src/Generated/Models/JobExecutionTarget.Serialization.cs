@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TargetType))
+            if (options.Format != "W" && TargetType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TargetType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerName))
+            if (options.Format != "W" && ServerName != null)
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<JobTargetType> type = default;
-            Optional<string> serverName = default;
-            Optional<string> databaseName = default;
+            JobTargetType? type = default;
+            string serverName = default;
+            string databaseName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobExecutionTarget(Optional.ToNullable(type), serverName.Value, databaseName.Value, serializedAdditionalRawData);
+            return new JobExecutionTarget(type, serverName, databaseName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobExecutionTarget>.Write(ModelReaderWriterOptions options)

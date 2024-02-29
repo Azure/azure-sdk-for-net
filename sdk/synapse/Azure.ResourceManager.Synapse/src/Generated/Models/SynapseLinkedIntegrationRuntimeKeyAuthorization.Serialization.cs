@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 if (property.NameEquals("key"u8))
                 {
-                    key = SynapseSecureString.DeserializeSynapseSecureString(property.Value);
+                    key = SynapseSecureString.DeserializeSynapseSecureString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("authorizationType"u8))

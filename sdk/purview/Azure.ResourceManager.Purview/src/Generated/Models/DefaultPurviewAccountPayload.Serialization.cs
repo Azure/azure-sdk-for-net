@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccountName))
+            if (AccountName != null)
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Optional.IsDefined(ResourceGroupName))
+            if (ResourceGroupName != null)
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(ScopeTenantId))
+            if (ScopeTenantId.HasValue)
             {
                 writer.WritePropertyName("scopeTenantId"u8);
                 writer.WriteStringValue(ScopeTenantId.Value);
             }
-            if (Optional.IsDefined(ScopeType))
+            if (ScopeType.HasValue)
             {
                 writer.WritePropertyName("scopeType"u8);
                 writer.WriteStringValue(ScopeType.Value.ToString());
             }
-            if (Optional.IsDefined(SubscriptionId))
+            if (SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> resourceGroupName = default;
-            Optional<string> scope = default;
-            Optional<Guid> scopeTenantId = default;
-            Optional<PurviewAccountScopeType> scopeType = default;
-            Optional<string> subscriptionId = default;
+            string accountName = default;
+            string resourceGroupName = default;
+            string scope = default;
+            Guid? scopeTenantId = default;
+            PurviewAccountScopeType? scopeType = default;
+            string subscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefaultPurviewAccountPayload(accountName.Value, resourceGroupName.Value, scope.Value, Optional.ToNullable(scopeTenantId), Optional.ToNullable(scopeType), subscriptionId.Value, serializedAdditionalRawData);
+            return new DefaultPurviewAccountPayload(
+                accountName,
+                resourceGroupName,
+                scope,
+                scopeTenantId,
+                scopeType,
+                subscriptionId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefaultPurviewAccountPayload>.Write(ModelReaderWriterOptions options)

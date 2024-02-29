@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("roleId"u8);
             writer.WriteStringValue(RoleId);
-            if (Optional.IsDefined(UseCommonAlertSchema))
+            if (UseCommonAlertSchema.HasValue)
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             string name = default;
             string roleId = default;
-            Optional<bool> useCommonAlertSchema = default;
+            bool? useCommonAlertSchema = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorArmRoleReceiver(name, roleId, Optional.ToNullable(useCommonAlertSchema), serializedAdditionalRawData);
+            return new MonitorArmRoleReceiver(name, roleId, useCommonAlertSchema, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorArmRoleReceiver>.Write(ModelReaderWriterOptions options)

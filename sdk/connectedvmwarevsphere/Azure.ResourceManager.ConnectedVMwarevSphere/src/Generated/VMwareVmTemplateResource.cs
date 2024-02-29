@@ -284,7 +284,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<VMwareVmTemplateResource>> UpdateAsync(VMwareResourcePatchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _vMwareVmTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("VMwareVmTemplateResource.Update");
             scope.Start();
@@ -326,7 +329,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<VMwareVmTemplateResource> Update(VMwareResourcePatchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _vMwareVmTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("VMwareVmTemplateResource.Update");
             scope.Start();
@@ -369,8 +375,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<VMwareVmTemplateResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _vMwareVmTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("VMwareVmTemplateResource.AddTag");
             scope.Start();
@@ -431,8 +443,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<VMwareVmTemplateResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _vMwareVmTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("VMwareVmTemplateResource.AddTag");
             scope.Start();
@@ -492,7 +510,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<VMwareVmTemplateResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _vMwareVmTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("VMwareVmTemplateResource.SetTags");
             scope.Start();
@@ -549,7 +570,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<VMwareVmTemplateResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _vMwareVmTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("VMwareVmTemplateResource.SetTags");
             scope.Start();
@@ -606,7 +630,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<VMwareVmTemplateResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _vMwareVmTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("VMwareVmTemplateResource.RemoveTag");
             scope.Start();
@@ -666,7 +693,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<VMwareVmTemplateResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _vMwareVmTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("VMwareVmTemplateResource.RemoveTag");
             scope.Start();

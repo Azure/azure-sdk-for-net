@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public MediaJobOutputAsset(string assetName)
         {
-            Argument.AssertNotNull(assetName, nameof(assetName));
+            if (assetName == null)
+            {
+                throw new ArgumentNullException(nameof(assetName));
+            }
 
             AssetName = assetName;
             OdataType = "#Microsoft.Media.JobOutputAsset";

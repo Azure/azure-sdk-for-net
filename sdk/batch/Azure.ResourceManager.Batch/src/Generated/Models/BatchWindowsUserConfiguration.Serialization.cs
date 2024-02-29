@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LoginMode))
+            if (LoginMode.HasValue)
             {
                 writer.WritePropertyName("loginMode"u8);
                 writer.WriteStringValue(LoginMode.Value.ToSerialString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchWindowsLoginMode> loginMode = default;
+            BatchWindowsLoginMode? loginMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchWindowsUserConfiguration(Optional.ToNullable(loginMode), serializedAdditionalRawData);
+            return new BatchWindowsUserConfiguration(loginMode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchWindowsUserConfiguration>.Write(ModelReaderWriterOptions options)

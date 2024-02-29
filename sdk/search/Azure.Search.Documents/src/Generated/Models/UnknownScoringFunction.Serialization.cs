@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Models
             writer.WriteStringValue(FieldName);
             writer.WritePropertyName("boost"u8);
             writer.WriteNumberValue(Boost);
-            if (Optional.IsDefined(Interpolation))
+            if (Interpolation.HasValue)
             {
                 writer.WritePropertyName("interpolation"u8);
                 writer.WriteStringValue(Interpolation.Value.ToSerialString());
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Models
             string type = "Unknown";
             string fieldName = default;
             double boost = default;
-            Optional<ScoringFunctionInterpolation> interpolation = default;
+            ScoringFunctionInterpolation? interpolation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -67,7 +67,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new UnknownScoringFunction(type, fieldName, boost, Optional.ToNullable(interpolation));
+            return new UnknownScoringFunction(type, fieldName, boost, interpolation);
         }
     }
 }

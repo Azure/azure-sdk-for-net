@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Uri))
+            if (options.Format != "W" && Uri != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(UploadUri))
+            if (options.Format != "W" && UploadUri != null)
             {
                 writer.WritePropertyName("uploadUrl"u8);
                 writer.WriteStringValue(UploadUri.AbsoluteUri);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<Uri> uploadUrl = default;
+            Uri url = default;
+            Uri uploadUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UriToken(url.Value, uploadUrl.Value, serializedAdditionalRawData);
+            return new UriToken(url, uploadUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UriToken>.Write(ModelReaderWriterOptions options)

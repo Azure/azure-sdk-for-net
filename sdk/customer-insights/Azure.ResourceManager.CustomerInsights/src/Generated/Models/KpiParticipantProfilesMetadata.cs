@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         internal KpiParticipantProfilesMetadata(string typeName)
         {
-            Argument.AssertNotNull(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
 
             TypeName = typeName;
         }
