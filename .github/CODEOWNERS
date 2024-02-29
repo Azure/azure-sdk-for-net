@@ -942,6 +942,9 @@
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
 
+# ServiceLabel: %EASM - Language
+/sdk/easm/                                                         @thang-bit
+
 # Reviewers to double check any API changes
 /sdk/**/api/                                                       @KrzysztofCwalina @tg-msft
 
