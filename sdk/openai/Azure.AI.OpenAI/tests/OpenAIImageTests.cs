@@ -50,6 +50,16 @@ namespace Azure.AI.OpenAI.Tests
             ImageGenerationData firstImageLocation = imageGenerations.Data[0];
             Assert.That(firstImageLocation, Is.Not.Null);
             Assert.That(firstImageLocation.Url, Is.Not.Null.Or.Empty);
+
+            // ContentFilterResults and PromptFilterResults are currently Azure Only
+            if (serviceTarget is Service.Azure)
+            {
+                foreach (ImageGenerationData data in imageGenerations.Data)
+                {
+                    Assert.That(data.ContentFilterResults, Is.Null.Or.Empty);
+                    Assert.That(data.PromptFilterResults, Is.Not.Null.Or.Empty);
+                }
+            }
         }
 
         [RecordedTest]
