@@ -29,7 +29,8 @@ stages:
           runOnce:
             deploy:
               steps:
-                - checkout: none
+                # 1es templates require credscan path at eng/CredScanSuppression.json
+                - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
 
                 - download: current
                   artifact: ${{parameters.ArtifactName}}
