@@ -4,11 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core.TestFramework;
+using Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure;
 using NUnit.Framework;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
 {
-    internal class Sample01_CriticalResultSample
+    internal class Sample01_CriticalResultSample : SamplesBase<HealthInsightsTestEnvironment>
     {
         private const string DOC_CONTENT = "CLINICAL HISTORY:   "
             + "\r\n20-year-old female presenting with abdominal pain. Surgical history significant for appendectomy."
@@ -35,9 +37,13 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
         [Test]
         public void RadiologyInsightsCriticalResultScenario()
         {
-            Uri endpoint = new Uri("AZURE_HEALTH_INSIGHTS_ENDPOINT");
-            AzureKeyCredential credential = new AzureKeyCredential("AZURE_HEALTH_INSIGHTS_KEY");
-            RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
+            // Read endpoint and apiKey
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
+
+            Uri endpointUri = new Uri(endpoint);
+            AzureKeyCredential credential = new AzureKeyCredential(apiKey);
+            RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, credential);
 
             RadiologyInsightsData radiologyInsightsData = GetRadiologyInsightsData();
 

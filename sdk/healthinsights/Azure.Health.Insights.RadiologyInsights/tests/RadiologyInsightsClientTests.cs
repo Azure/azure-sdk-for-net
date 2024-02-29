@@ -4,18 +4,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core.TestFramework;
+using Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure;
 using NUnit.Framework;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
 {
-    internal class RadiologyInsightsClientTests
+    internal class RadiologyInsightsClientTests : SamplesBase<HealthInsightsTestEnvironment>
     {
         [Test]
         public void RadiologyInsightsHeroScenario()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
+            // Read endpoint and apiKey
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
+
+            Uri endpointUri = new Uri(endpoint);
+            AzureKeyCredential credential = new AzureKeyCredential(apiKey);
+            RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, credential);
 
             PatientRecord patientRecord = RadiologyInsightsClientTests.CreatePatientRecord();
             patientRecord.PatientDocuments[0].AdministrativeMetadata = CreateDocumentAdministrativeMetadata();
