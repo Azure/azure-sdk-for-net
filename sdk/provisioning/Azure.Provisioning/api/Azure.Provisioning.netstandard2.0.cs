@@ -90,9 +90,10 @@ namespace Azure.Provisioning
         public Azure.Provisioning.Resource? Parent { get { throw null; } }
         public Azure.Provisioning.IConstruct Scope { get { throw null; } }
         public string Version { get { throw null; } }
-        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.Authorization.RoleDefinition roleDefinition, System.Guid? principalId = default(System.Guid?)) { throw null; }
         protected virtual Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         protected virtual string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
+        protected virtual bool NeedsParent() { throw null; }
+        protected virtual bool NeedsScope() { throw null; }
         Azure.Provisioning.Resource System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -154,9 +155,15 @@ namespace Azure.Provisioning.AppService
 }
 namespace Azure.Provisioning.Authorization
 {
+    public static partial class AuthorizationExtensions
+    {
+        public static Azure.Provisioning.Authorization.RoleAssignment AssignRole(this Azure.Provisioning.Resource resource, Azure.Provisioning.Authorization.RoleDefinition roleDefinition, System.Guid? principalId = default(System.Guid?)) { throw null; }
+    }
     public partial class RoleAssignment : Azure.Provisioning.Resource<Azure.ResourceManager.Authorization.RoleAssignmentData>
     {
         internal RoleAssignment() : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Authorization.RoleAssignmentData>)) { }
+        protected override bool NeedsParent() { throw null; }
+        protected override bool NeedsScope() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RoleDefinition : System.IEquatable<Azure.Provisioning.Authorization.RoleDefinition>

@@ -7,7 +7,7 @@ param location string = resourceGroup().location
 param principalId string
 
 
-resource storageAccount_d1RlrfJGB 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+resource storageAccount_jW2g4ryFz 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: toLower(take(concat('photoAcct', uniqueString(resourceGroup().id)), 24))
   location: location
   sku: {
@@ -18,18 +18,18 @@ resource storageAccount_d1RlrfJGB 'Microsoft.Storage/storageAccounts@2022-09-01'
   }
 }
 
-resource blobService_tjgcRkcbL 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
-  parent: storageAccount_d1RlrfJGB
+resource blobService_a6I9rA4wm 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
+  parent: storageAccount_jW2g4ryFz
   name: 'default'
   properties: {
   }
 }
 
-resource roleAssignment_XCw6aC1YR 'Microsoft.Resources/roleAssignments@2022-04-01' = {
-  scope: storageAccount_d1RlrfJGB
-  name: guid('storageAccount_d1RlrfJGB', principalId, 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')
+resource roleAssignment_nQO6JfG3m 'Microsoft.Resources/roleAssignments@2022-04-01' = {
+  scope: storageAccount_jW2g4ryFz
+  name: guid('storageAccount_jW2g4ryFz', principalId, 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')
   properties: {
-    roleDefinitionId: '/providers/Microsoft.Authorization/roleDefinitions/ba92f5b4-2d11-453d-a403-e96b0029c9fe'
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')
     principalId: principalId
   }
 }

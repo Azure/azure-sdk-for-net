@@ -15,30 +15,21 @@ namespace Azure.Provisioning.Authorization
     {
         internal static readonly ResourceType ResourceType = "Microsoft.Resources/roleAssignments";
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RoleAssignment"/>.
-        /// </summary>
-        /// <param name="scope">The scope.</param>
-        /// <param name="resource"></param>
-        /// <param name="roleDefinition"></param>
-        /// <param name="principalId"></param>
         internal RoleAssignment(
-            IConstruct scope,
             Resource resource,
             RoleDefinition roleDefinition,
             Guid? principalId = default)
             : base(
-                scope,
+                resource.Scope,
                 resource,
                 resource.Name,
                 ResourceType,
                 "2022-04-01",
                 (name) => ArmAuthorizationModelFactory.RoleAssignmentData(
                     name: name,
-                    roleDefinitionId: ResourceIdentifier.Parse($"/providers/Microsoft.Authorization/roleDefinitions/{roleDefinition}"),
                     principalId: principalId))
         {
-            if (scope.Configuration?.UseInteractiveMode != true && principalId == null)
+            if (resource.Scope.Configuration?.UseInteractiveMode != true && principalId == null)
             {
                 throw new InvalidOperationException("PrincipalId must be specified when not in interactive mode.");
             }
@@ -52,6 +43,13 @@ namespace Azure.Provisioning.Authorization
             {
                 AssignProperty(data => data.Name, $"guid('{resource.Name}', '{principalId}', '{roleDefinition}')");
             }
+            AssignProperty(data => data.RoleDefinitionId, $"subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '{roleDefinition}')");
         }
+
+        /// <inheritdoc />
+        protected override bool NeedsScope() => true;
+
+        /// <inheritdoc />
+        protected override bool NeedsParent() => false;
     }
 }

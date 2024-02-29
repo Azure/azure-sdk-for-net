@@ -194,16 +194,6 @@ namespace Azure.Provisioning
         }
 
         /// <summary>
-        /// Assigns a role to the resource.
-        /// </summary>
-        /// <param name="roleDefinition">The role definition.</param>
-        /// <param name="principalId">The principal ID.</param>
-        public RoleAssignment AssignRole(RoleDefinition roleDefinition, Guid? principalId = default)
-        {
-            return new RoleAssignment(Scope, this, roleDefinition, principalId);
-        }
-
-        /// <summary>
         /// Adds an output to the resource.
         /// </summary>
         /// <param name="name">The name of the output.</param>
@@ -310,20 +300,22 @@ namespace Azure.Provisioning
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
-        private bool NeedsParent()
+        /// <summary>
+        /// Determines whether the resource needs a parent declaration.
+        /// </summary>
+        /// <returns>Whether the resource needs a parent.</returns>
+        protected virtual bool NeedsParent()
         {
-            return this is not (Subscription or RoleAssignment) &&
-                   Parent is not null && Parent is not (ResourceGroup or Subscription or RoleAssignment);
+            return this is not Subscription && Parent is not null && Parent is not (ResourceGroup or Subscription);
         }
 
-        private bool NeedsScope()
+        /// <summary>
+        /// Determines whether the resource needs a scope declaration.
+        /// </summary>
+        /// <returns>Whether the resource needs a scope.</returns>
+        protected virtual bool NeedsScope()
         {
             Debug.Assert(ModuleScope != null, "ModuleScope should not be null");
-
-            if (this is RoleAssignment)
-            {
-                return true;
-            }
 
             switch (Parent)
             {
