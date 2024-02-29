@@ -225,7 +225,7 @@ namespace Azure.Provisioning.ResourceManager
     public partial class Tenant : Azure.Provisioning.Resource<Azure.ResourceManager.Resources.TenantData>
     {
         public Tenant(Azure.Provisioning.IConstruct scope, System.Guid? tenantId = default(System.Guid?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Resources.TenantData>)) { }
-        protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
+        protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string? resourceName) { throw null; }
     }
 }
 namespace Azure.Provisioning.Resources

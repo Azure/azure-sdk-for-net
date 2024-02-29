@@ -7,7 +7,7 @@ param sqlAdminPassword string
 param appUserPassword string
 
 
-resource appServicePlan_nKzfukzAR 'Microsoft.Web/serverfarms@2021-02-01' = {
+resource appServicePlan_kjMZSF1FP 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'appServicePlan-TEST'
   location: 'westus'
   sku: {
@@ -18,12 +18,12 @@ resource appServicePlan_nKzfukzAR 'Microsoft.Web/serverfarms@2021-02-01' = {
   }
 }
 
-resource webSite_3FpK5CT8n 'Microsoft.Web/sites@2021-02-01' = {
+resource webSite_W5EweSXEq 'Microsoft.Web/sites@2021-02-01' = {
   name: 'frontEnd-TEST'
   location: 'westus'
   kind: 'app,linux'
   properties: {
-    serverFarmId: '/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
+    serverFarmId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
     siteConfig: {
       linuxFxVersion: 'node|18-lts'
       alwaysOn: true
@@ -41,13 +41,13 @@ resource webSite_3FpK5CT8n 'Microsoft.Web/sites@2021-02-01' = {
   }
 }
 
-resource applicationSettingsResource_yiPI2wk9b 'Microsoft.Web/sites/config@2021-02-01' = {
-  parent: webSite_3FpK5CT8n
+resource applicationSettingsResource_9BG7vUQd2 'Microsoft.Web/sites/config@2021-02-01' = {
+  parent: webSite_W5EweSXEq
   name: 'appsettings'
 }
 
-resource webSiteConfigLogs_DBqwiSXAX 'Microsoft.Web/sites/config@2021-02-01' = {
-  parent: webSite_3FpK5CT8n
+resource webSiteConfigLogs_giqxapQs0 'Microsoft.Web/sites/config@2021-02-01' = {
+  parent: webSite_W5EweSXEq
   name: 'logs'
   properties: {
     applicationLogs: {
@@ -71,7 +71,7 @@ resource webSiteConfigLogs_DBqwiSXAX 'Microsoft.Web/sites/config@2021-02-01' = {
   }
 }
 
-resource keyVault_NOcGdMTAl 'Microsoft.KeyVault/vaults@2023-02-01' = {
+resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: 'kv-TEST'
   location: 'westus'
   properties: {
@@ -84,14 +84,14 @@ resource keyVault_NOcGdMTAl 'Microsoft.KeyVault/vaults@2023-02-01' = {
   }
 }
 
-resource keyVaultAddAccessPolicy_fdtNwabkj 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
-  parent: keyVault_NOcGdMTAl
+resource keyVaultAddAccessPolicy_NWCGclP20 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
+  parent: keyVault_CRoMbemLF
   name: 'add'
   properties: {
     accessPolicies: [
       {
         tenantId: '00000000-0000-0000-0000-000000000000'
-        objectId: webSite_3FpK5CT8n.identity.principalId
+        objectId: webSite_W5EweSXEq.identity.principalId
         permissions: {
           secrets: [
             'get'
@@ -103,31 +103,31 @@ resource keyVaultAddAccessPolicy_fdtNwabkj 'Microsoft.KeyVault/vaults/accessPoli
   }
 }
 
-resource keyVaultSecret_WEEeoRpl3 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault_NOcGdMTAl
+resource keyVaultSecret_NmXfhaHvM 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  parent: keyVault_CRoMbemLF
   name: 'sqlAdminPassword-TEST'
   properties: {
     value: sqlAdminPassword
   }
 }
 
-resource keyVaultSecret_xSSyrFMVp 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault_NOcGdMTAl
+resource keyVaultSecret_QRsiyFBMe 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  parent: keyVault_CRoMbemLF
   name: 'appUserPassword-TEST'
   properties: {
     value: appUserPassword
   }
 }
 
-resource keyVaultSecret_KqH6qKQUV 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault_NOcGdMTAl
+resource keyVaultSecret_7eiFxkj0r 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  parent: keyVault_CRoMbemLF
   name: 'connectionString-TEST'
   properties: {
-    value: 'Server=${sqlServer_34dfu0qpx.properties.fullyQualifiedDomainName}; Database=${sqlDatabase_tV9E87T4T.name}; User=appUser; Password=${appUserPassword}'
+    value: 'Server=${sqlServer_zjdvvB2wl.properties.fullyQualifiedDomainName}; Database=${sqlDatabase_U7NzorRJT.name}; User=appUser; Password=${appUserPassword}'
   }
 }
 
-resource sqlServer_34dfu0qpx 'Microsoft.Sql/servers@2022-08-01-preview' = {
+resource sqlServer_zjdvvB2wl 'Microsoft.Sql/servers@2022-08-01-preview' = {
   name: 'sqlserver-TEST'
   location: 'westus'
   properties: {
@@ -139,15 +139,15 @@ resource sqlServer_34dfu0qpx 'Microsoft.Sql/servers@2022-08-01-preview' = {
   }
 }
 
-resource sqlDatabase_tV9E87T4T 'Microsoft.Sql/servers/databases@2022-08-01-preview' = {
-  parent: sqlServer_34dfu0qpx
+resource sqlDatabase_U7NzorRJT 'Microsoft.Sql/servers/databases@2022-08-01-preview' = {
+  parent: sqlServer_zjdvvB2wl
   name: 'db-TEST'
   properties: {
   }
 }
 
-resource sqlFirewallRule_RcqDFN0Hf 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
-  parent: sqlServer_34dfu0qpx
+resource sqlFirewallRule_eS4m8st65 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
+  parent: sqlServer_zjdvvB2wl
   name: 'firewallRule-TEST'
   properties: {
     startIpAddress: '0.0.0.1'
@@ -155,7 +155,7 @@ resource sqlFirewallRule_RcqDFN0Hf 'Microsoft.Sql/servers/firewallRules@2020-11-
   }
 }
 
-resource deploymentScript_AX1YbZ1ue 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
+resource deploymentScript_3Zq2Pl8xa 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   name: 'cliScript-TEST'
   location: 'westus'
   kind: 'AzureCLI'
@@ -184,7 +184,7 @@ SCRIPT_END
       }
       {
         name: 'DBSERVER'
-        value: sqlServer_34dfu0qpx.properties.fullyQualifiedDomainName
+        value: sqlServer_zjdvvB2wl.properties.fullyQualifiedDomainName
       }
       {
         name: 'DBNAME'
@@ -205,12 +205,12 @@ SCRIPT_END
   }
 }
 
-resource webSite_k7tHspdBX 'Microsoft.Web/sites@2021-02-01' = {
+resource webSite_4pzZqR2OO 'Microsoft.Web/sites@2021-02-01' = {
   name: 'backEnd-TEST'
   location: 'westus'
   kind: 'app,linux'
   properties: {
-    serverFarmId: '/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
+    serverFarmId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
     siteConfig: {
       linuxFxVersion: 'dotnetcore|6.0'
       alwaysOn: true
@@ -228,8 +228,8 @@ resource webSite_k7tHspdBX 'Microsoft.Web/sites@2021-02-01' = {
   }
 }
 
-resource applicationSettingsResource_NvIa6MBRq 'Microsoft.Web/sites/config@2021-02-01' = {
-  parent: webSite_k7tHspdBX
+resource applicationSettingsResource_vEe46o8Zn 'Microsoft.Web/sites/config@2021-02-01' = {
+  parent: webSite_4pzZqR2OO
   name: 'appsettings'
   properties: {
     'SCM_DO_BUILD_DURING_DEPLOYMENT': 'False'
@@ -237,6 +237,6 @@ resource applicationSettingsResource_NvIa6MBRq 'Microsoft.Web/sites/config@2021-
   }
 }
 
-output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_3FpK5CT8n.identity.principalId
-output vaultUri string = keyVault_NOcGdMTAl.properties.vaultUri
-output sqlServerName string = sqlServer_34dfu0qpx.properties.fullyQualifiedDomainName
+output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_W5EweSXEq.identity.principalId
+output vaultUri string = keyVault_CRoMbemLF.properties.vaultUri
+output sqlServerName string = sqlServer_zjdvvB2wl.properties.fullyQualifiedDomainName
