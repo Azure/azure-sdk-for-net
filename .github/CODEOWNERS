@@ -478,10 +478,10 @@
 # ServiceLabel: %TimeSeriesInsights
 # ServiceOwners:                                                   @yeskarthik @rasidhan @dmdenmsft
 
-# PRLabel: %EASM
+# PRLabel: %Defender EASM
 /sdk/easm/Azure.Analytics.Defender.Easm                            @thang-bit
 
-# ServiceLabel: %EASM
+# ServiceLabel: %Defender EASM
 # ServiceOwners:                                                   @thang-bit
 
 # PRLabel: %Event Grid
