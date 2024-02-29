@@ -76,6 +76,9 @@ extends:
     template: v1/1ES.Unofficial.PipelineTemplate.yml@1ESPipelineTemplates
   parameters:
     sdl:
+      sourceRepositoriesToScan:
+        exclude:
+          - repository: azure-sdk-build-tools
       sourceAnalysisPool:
         name: azsdk-pool-mms-win-2022-1es-pt
         image: azsdk-pool-mms-win-2022-1espt
