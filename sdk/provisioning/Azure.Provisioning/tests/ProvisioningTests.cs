@@ -200,7 +200,7 @@ namespace Azure.Provisioning.Tests
         public async Task StorageBlobDefaults()
         {
             var infra = new TestInfrastructure();
-            infra.AddStorageAccount(prefix: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             infra.AddBlobService();
             infra.Build(GetOutputPath());
 
@@ -211,7 +211,7 @@ namespace Azure.Provisioning.Tests
         public async Task StorageBlobDefaultsInPromptMode()
         {
             var infra = new TestInfrastructure(configuration: new Configuration { UsePromptMode = true });
-            infra.AddStorageAccount(prefix: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             infra.AddBlobService();
             infra.Build(GetOutputPath());
 
@@ -222,7 +222,7 @@ namespace Azure.Provisioning.Tests
         public async Task StorageBlobDropDown()
         {
             var infra = new TestInfrastructure();
-            infra.AddStorageAccount(prefix: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             var blob = infra.AddBlobService();
             blob.Properties.DeleteRetentionPolicy = new DeleteRetentionPolicy()
             {
