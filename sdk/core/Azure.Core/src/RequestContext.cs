@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -31,25 +32,23 @@ namespace Azure
             set => base.ErrorOptions = ToResponseErrorOptions(value);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static ErrorOptions FromResponseErrorOptions(ClientErrorBehaviors options)
-        {
-            return options switch
+            => options switch
             {
                 ClientErrorBehaviors.Default => ErrorOptions.Default,
                 ClientErrorBehaviors.NoThrow => ErrorOptions.NoThrow,
                 _ => throw new NotSupportedException(),
             };
-        }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static ClientErrorBehaviors ToResponseErrorOptions(ErrorOptions options)
-        {
-            return options switch
+            => options switch
             {
                 ErrorOptions.Default => ClientErrorBehaviors.Default,
                 ErrorOptions.NoThrow => ClientErrorBehaviors.NoThrow,
                 _ => throw new NotSupportedException(),
             };
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
@@ -127,7 +126,23 @@ namespace Azure
             _handlers[0] = classifier;
         }
 
-        internal ResponseClassifier Apply(ResponseClassifier classifier)
+        /// <inheritdoc/>
+        protected override void Apply(PipelineMessage message)
+        {
+            base.Apply(message);
+
+            HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
+
+            if (Policies?.Count > 0)
+            {
+                httpMessage.Policies ??= new(Policies.Count);
+                httpMessage.Policies.AddRange(Policies);
+            }
+
+            httpMessage.ResponseClassifier = ApplyClassifier(httpMessage.ResponseClassifier);
+        }
+
+        private ResponseClassifier ApplyClassifier(ResponseClassifier classifier)
         {
             if (_statusCodes == null && _handlers == null)
             {

@@ -45,12 +45,15 @@ namespace Azure.Core
                 if (base.Response is null)
                 {
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw new InvalidOperationException($"{nameof(Response)} is not set on this message. "
-                        + "This is may be because the message was not sent via pipeline.Send, "
-                        + "the pipeline transport did not populate the response, or because "
-                        + $"{nameof(ExtractResponse)} was called. You can check the {nameof(HasResponse)} "
-                        + "property to test whether the message has a response value before "
-                        + $"accessing the {nameof(Response)} property.");
+                    throw new InvalidOperationException($"""
+                        {nameof(Response)} is not set on this message.  This
+                        may be because the message was not sent via
+                        pipeline.Send, the pipeline transport did not populate
+                        the response, or because {nameof(ExtractResponse)} was
+                        called. You can check the {nameof(HasResponse)}
+                        property to test whether the message has a response
+                        value before accessing the {nameof(Response)} property.
+                        """);
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
                 return (Response)base.Response;
@@ -91,24 +94,6 @@ namespace Azure.Core
         /// The processing context for the message.
         /// </summary>
         public MessageProcessingContext ProcessingContext => new(this);
-
-        internal void ApplyRequestContext(RequestContext context, ResponseClassifier? classifier)
-        {
-            context.Freeze();
-
-            if (context.Policies?.Count > 0)
-            {
-                Policies ??= new(context.Policies.Count);
-                Policies.AddRange(context.Policies);
-            }
-
-            if (classifier != null)
-            {
-                ResponseClassifier = context.Apply(classifier);
-            }
-
-            Apply(context);
-        }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
 
