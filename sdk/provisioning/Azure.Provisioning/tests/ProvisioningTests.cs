@@ -219,12 +219,31 @@ namespace Azure.Provisioning.Tests
         }
 
         [Test]
-        public void LocationParameterCannotBeAddedInPromptMode()
+        public void CannotAddLocationParameterInPromptMode()
         {
             var infra = new TestInfrastructure(configuration: new Configuration { UsePromptMode = true });
             var sa = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             Assert.Throws<InvalidOperationException>(() =>
                 sa.AssignParameter(d => d.Location, new Parameter("myLocationParam")));
+        }
+
+        [Test]
+        public void CannotOverrideSamePropertyMoreThanOnce()
+        {
+            var infra = new TestInfrastructure();
+            var sa = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+
+            sa.AssignParameter(d => d.Kind, new Parameter("skuParam"));
+            Assert.Throws<InvalidOperationException>(() =>
+                sa.AssignProperty(d => d.Kind, StorageKind.BlockBlobStorage.ToString()));
+            Assert.Throws<InvalidOperationException>(() =>
+                sa.AssignParameter(d => d.Kind, new Parameter("skuParam")));
+
+            sa.AssignProperty(d => d.AccessTier, StorageAccountAccessTier.Cool.ToString());
+            Assert.Throws<InvalidOperationException>(() =>
+                sa.AssignProperty(d => d.AccessTier, StorageAccountAccessTier.Cool.ToString()));
+            Assert.Throws<InvalidOperationException>(() =>
+                sa.AssignParameter(d => d.AccessTier, new Parameter("tierParam")));
         }
 
         [Test]

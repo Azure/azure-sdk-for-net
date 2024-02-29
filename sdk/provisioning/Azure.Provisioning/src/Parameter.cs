@@ -32,7 +32,7 @@ namespace Azure.Provisioning
         /// <summary>
         /// Gets a value indicating whether the parameter is an expression.
         /// </summary>
-        public bool IsExpression { get; }
+        internal bool IsExpression { get; }
 
         internal bool IsFromOutput => Output != null;
         internal bool IsLiteral => Output?.IsLiteral ?? false;
@@ -71,13 +71,24 @@ namespace Azure.Provisioning
         /// <param name="description">The parameter description.</param>
         /// <param name="defaultValue">The parameter defaultValue.</param>
         /// <param name="isSecure">Is the parameter secure.</param>
-        /// <param name="isExpression">Is the parameter an expression.</param>
-        public Parameter(string name, string? description = default, object? defaultValue = default, bool isSecure = false, bool isExpression = false)
+        public Parameter(string name, string? description = default, object? defaultValue = default, bool isSecure = false)
         {
             Name = name;
             Description = description;
             DefaultValue = defaultValue;
             IsSecure = isSecure;
+        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Parameter"/>.
+        /// </summary>
+        /// <param name="name">The parameter name.</param>
+        /// <param name="description">The parameter description.</param>
+        /// <param name="defaultValue">The parameter defaultValue.</param>
+        /// <param name="isSecure">Is the parameter secure.</param>
+        /// <param name="isExpression">Is the parameter an expression.</param>
+        internal Parameter(string name, string? description = default, object? defaultValue = default, bool isSecure = false, bool isExpression = false)
+        : this (name, description, defaultValue, isSecure)
+        {
             IsExpression = isExpression;
         }
         internal string GetParameterString(IConstruct parentScope)

@@ -76,10 +76,9 @@ namespace Azure.Provisioning
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public Parameter(Azure.Provisioning.Output output) { throw null; }
-        public Parameter(string name, string? description = null, object? defaultValue = null, bool isSecure = false, bool isExpression = false) { throw null; }
+        public Parameter(string name, string? description = null, object? defaultValue = null, bool isSecure = false) { throw null; }
         public object? DefaultValue { get { throw null; } }
         public string? Description { get { throw null; } }
-        public bool IsExpression { get { throw null; } }
         public bool IsSecure { get { throw null; } }
         public string Name { get { throw null; } }
     }
