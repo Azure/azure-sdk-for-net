@@ -211,7 +211,7 @@ namespace Azure.Provisioning.Tests
         public async Task StorageBlobDefaultsInPromptMode()
         {
             var infra = new TestInfrastructure(configuration: new Configuration { UsePromptMode = true });
-            var sa = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             infra.AddBlobService();
             infra.Build(GetOutputPath());
 
