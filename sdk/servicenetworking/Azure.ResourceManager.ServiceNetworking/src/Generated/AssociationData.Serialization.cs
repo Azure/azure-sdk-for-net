@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.ServiceNetworking
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AssociationType> associationType = default;
-            Optional<WritableSubResource> subnet = default;
-            Optional<ProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            AssociationType? associationType = default;
+            WritableSubResource subnet = default;
+            ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,7 +219,17 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssociationData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(associationType), subnet, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AssociationData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                associationType,
+                subnet,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssociationData>.Write(ModelReaderWriterOptions options)

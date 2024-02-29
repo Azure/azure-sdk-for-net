@@ -124,13 +124,13 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> virtualNetworkName = default;
-            Optional<AppServiceVirtualNetworkProperties> virtualNetworkConnection = default;
+            SystemData systemData = default;
+            string virtualNetworkName = default;
+            AppServiceVirtualNetworkProperties virtualNetworkConnection = default;
             IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections = default;
             IReadOnlyList<HybridConnectionData> hybridConnectionsV2 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -226,7 +226,17 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFeatureData(id, name, type, systemData.Value, virtualNetworkName.Value, virtualNetworkConnection.Value, hybridConnections ?? new ChangeTrackingList<RelayServiceConnectionEntityData>(), hybridConnectionsV2 ?? new ChangeTrackingList<HybridConnectionData>(), kind.Value, serializedAdditionalRawData);
+            return new NetworkFeatureData(
+                id,
+                name,
+                type,
+                systemData,
+                virtualNetworkName,
+                virtualNetworkConnection,
+                hybridConnections ?? new ChangeTrackingList<RelayServiceConnectionEntityData>(),
+                hybridConnectionsV2 ?? new ChangeTrackingList<HybridConnectionData>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFeatureData>.Write(ModelReaderWriterOptions options)

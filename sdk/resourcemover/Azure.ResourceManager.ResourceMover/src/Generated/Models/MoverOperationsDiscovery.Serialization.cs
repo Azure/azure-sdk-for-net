@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> isDataAction = default;
-            Optional<MoverDisplayInfo> display = default;
-            Optional<string> origin = default;
-            Optional<BinaryData> properties = default;
+            string name = default;
+            bool? isDataAction = default;
+            MoverDisplayInfo display = default;
+            string origin = default;
+            BinaryData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverOperationsDiscovery(name.Value, Optional.ToNullable(isDataAction), display.Value, origin.Value, properties.Value, serializedAdditionalRawData);
+            return new MoverOperationsDiscovery(
+                name,
+                isDataAction,
+                display,
+                origin,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverOperationsDiscovery>.Write(ModelReaderWriterOptions options)

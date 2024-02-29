@@ -227,30 +227,30 @@ namespace Azure.ResourceManager.ContainerInstance
                 return null;
             }
             IList<string> zones = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            string provisioningState = default;
             IList<ContainerInstanceContainer> containers = default;
             IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default;
-            Optional<ContainerGroupRestartPolicy> restartPolicy = default;
-            Optional<ContainerGroupIPAddress> ipAddress = default;
+            ContainerGroupRestartPolicy? restartPolicy = default;
+            ContainerGroupIPAddress ipAddress = default;
             ContainerInstanceOperatingSystemType osType = default;
             IList<ContainerVolume> volumes = default;
-            Optional<ContainerGroupInstanceView> instanceView = default;
-            Optional<ContainerGroupDiagnostics> diagnostics = default;
+            ContainerGroupInstanceView instanceView = default;
+            ContainerGroupDiagnostics diagnostics = default;
             IList<ContainerGroupSubnetId> subnetIds = default;
-            Optional<ContainerGroupDnsConfiguration> dnsConfig = default;
-            Optional<ContainerGroupSku> sku = default;
-            Optional<ContainerGroupEncryptionProperties> encryptionProperties = default;
+            ContainerGroupDnsConfiguration dnsConfig = default;
+            ContainerGroupSku? sku = default;
+            ContainerGroupEncryptionProperties encryptionProperties = default;
             IList<InitContainerDefinitionContent> initContainers = default;
             IList<DeploymentExtensionSpec> extensions = default;
-            Optional<ConfidentialComputeProperties> confidentialComputeProperties = default;
-            Optional<ContainerGroupPriority> priority = default;
+            ConfidentialComputeProperties confidentialComputeProperties = default;
+            ContainerGroupPriority? priority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -510,7 +510,33 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, zones ?? new ChangeTrackingList<string>(), identity, provisioningState.Value, containers, imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>(), Optional.ToNullable(restartPolicy), ipAddress.Value, osType, volumes ?? new ChangeTrackingList<ContainerVolume>(), instanceView.Value, diagnostics.Value, subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>(), dnsConfig.Value, Optional.ToNullable(sku), encryptionProperties.Value, initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>(), extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>(), confidentialComputeProperties.Value, Optional.ToNullable(priority), serializedAdditionalRawData);
+            return new ContainerGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                zones ?? new ChangeTrackingList<string>(),
+                identity,
+                provisioningState,
+                containers,
+                imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>(),
+                restartPolicy,
+                ipAddress,
+                osType,
+                volumes ?? new ChangeTrackingList<ContainerVolume>(),
+                instanceView,
+                diagnostics,
+                subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>(),
+                dnsConfig,
+                sku,
+                encryptionProperties,
+                initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>(),
+                extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>(),
+                confidentialComputeProperties,
+                priority,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupData>.Write(ModelReaderWriterOptions options)

@@ -22,14 +22,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<CommunicationIdentifierModel> editedByCommunicationIdentifier = default;
-            Optional<DateTimeOffset> editTime = default;
+            CommunicationIdentifierModel editedByCommunicationIdentifier = default;
+            DateTimeOffset? editTime = default;
             IReadOnlyDictionary<string, object> properties = default;
             IReadOnlyDictionary<string, string> metadata = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<long> version = default;
-            Optional<string> transactionId = default;
-            Optional<string> threadId = default;
+            DateTimeOffset? createTime = default;
+            long? version = default;
+            string transactionId = default;
+            string threadId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("editedByCommunicationIdentifier"u8))
@@ -114,7 +114,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatThreadPropertiesUpdatedEventData(transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), editedByCommunicationIdentifier.Value, Optional.ToNullable(editTime), properties ?? new ChangeTrackingDictionary<string, object>(), metadata ?? new ChangeTrackingDictionary<string, string>());
+            return new AcsChatThreadPropertiesUpdatedEventData(
+                transactionId,
+                threadId,
+                createTime,
+                version,
+                editedByCommunicationIdentifier,
+                editTime,
+                properties ?? new ChangeTrackingDictionary<string, object>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class AcsChatThreadPropertiesUpdatedEventDataConverter : JsonConverter<AcsChatThreadPropertiesUpdatedEventData>

@@ -137,18 +137,18 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<ArcVmExtendedLocation> extendedLocation = default;
+            ArcVmExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<IPConfiguration> ipConfigurations = default;
-            Optional<string> macAddress = default;
-            Optional<InterfaceDnsSettings> dnsSettings = default;
-            Optional<ProvisioningStateEnum> provisioningState = default;
-            Optional<NetworkInterfaceStatus> status = default;
+            string macAddress = default;
+            InterfaceDnsSettings dnsSettings = default;
+            ProvisioningStateEnum? provisioningState = default;
+            NetworkInterfaceStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,7 +269,20 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation.Value, ipConfigurations ?? new ChangeTrackingList<IPConfiguration>(), macAddress.Value, dnsSettings.Value, Optional.ToNullable(provisioningState), status.Value, serializedAdditionalRawData);
+            return new NetworkInterfaceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                ipConfigurations ?? new ChangeTrackingList<IPConfiguration>(),
+                macAddress,
+                dnsSettings,
+                provisioningState,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceData>.Write(ModelReaderWriterOptions options)

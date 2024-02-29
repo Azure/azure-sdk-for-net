@@ -179,28 +179,28 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> sizeInBytes = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<DateTimeOffset> accessedAt = default;
-            Optional<int> subscriptionCount = default;
-            Optional<MessageCountDetails> countDetails = default;
-            Optional<TimeSpan> defaultMessageTimeToLive = default;
-            Optional<int> maxSizeInMegabytes = default;
-            Optional<long> maxMessageSizeInKilobytes = default;
-            Optional<bool> requiresDuplicateDetection = default;
-            Optional<TimeSpan> duplicateDetectionHistoryTimeWindow = default;
-            Optional<bool> enableBatchedOperations = default;
-            Optional<ServiceBusMessagingEntityStatus> status = default;
-            Optional<bool> supportOrdering = default;
-            Optional<TimeSpan> autoDeleteOnIdle = default;
-            Optional<bool> enablePartitioning = default;
-            Optional<bool> enableExpress = default;
+            SystemData systemData = default;
+            long? sizeInBytes = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
+            DateTimeOffset? accessedAt = default;
+            int? subscriptionCount = default;
+            MessageCountDetails countDetails = default;
+            TimeSpan? defaultMessageTimeToLive = default;
+            int? maxSizeInMegabytes = default;
+            long? maxMessageSizeInKilobytes = default;
+            bool? requiresDuplicateDetection = default;
+            TimeSpan? duplicateDetectionHistoryTimeWindow = default;
+            bool? enableBatchedOperations = default;
+            ServiceBusMessagingEntityStatus? status = default;
+            bool? supportOrdering = default;
+            TimeSpan? autoDeleteOnIdle = default;
+            bool? enablePartitioning = default;
+            bool? enableExpress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -409,7 +409,30 @@ namespace Azure.ResourceManager.ServiceBus
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusTopicData(id, name, type, systemData.Value, Optional.ToNullable(sizeInBytes), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(accessedAt), Optional.ToNullable(subscriptionCount), countDetails.Value, Optional.ToNullable(defaultMessageTimeToLive), Optional.ToNullable(maxSizeInMegabytes), Optional.ToNullable(maxMessageSizeInKilobytes), Optional.ToNullable(requiresDuplicateDetection), Optional.ToNullable(duplicateDetectionHistoryTimeWindow), Optional.ToNullable(enableBatchedOperations), Optional.ToNullable(status), Optional.ToNullable(supportOrdering), Optional.ToNullable(autoDeleteOnIdle), Optional.ToNullable(enablePartitioning), Optional.ToNullable(enableExpress), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ServiceBusTopicData(
+                id,
+                name,
+                type,
+                systemData,
+                sizeInBytes,
+                createdAt,
+                updatedAt,
+                accessedAt,
+                subscriptionCount,
+                countDetails,
+                defaultMessageTimeToLive,
+                maxSizeInMegabytes,
+                maxMessageSizeInKilobytes,
+                requiresDuplicateDetection,
+                duplicateDetectionHistoryTimeWindow,
+                enableBatchedOperations,
+                status,
+                supportOrdering,
+                autoDeleteOnIdle,
+                enablePartitioning,
+                enableExpress,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusTopicData>.Write(ModelReaderWriterOptions options)

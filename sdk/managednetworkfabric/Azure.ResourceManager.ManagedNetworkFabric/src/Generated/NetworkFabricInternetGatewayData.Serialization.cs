@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
-            Optional<ResourceIdentifier> internetGatewayRuleId = default;
-            Optional<string> ipv4Address = default;
-            Optional<int> port = default;
+            SystemData systemData = default;
+            string annotation = default;
+            ResourceIdentifier internetGatewayRuleId = default;
+            string ipv4Address = default;
+            int? port = default;
             InternetGatewayType type0 = default;
             ResourceIdentifier networkFabricControllerId = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -256,7 +256,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricInternetGatewayData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, annotation.Value, internetGatewayRuleId.Value, ipv4Address.Value, Optional.ToNullable(port), type0, networkFabricControllerId, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkFabricInternetGatewayData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation,
+                internetGatewayRuleId,
+                ipv4Address,
+                port,
+                type0,
+                networkFabricControllerId,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricInternetGatewayData>.Write(ModelReaderWriterOptions options)

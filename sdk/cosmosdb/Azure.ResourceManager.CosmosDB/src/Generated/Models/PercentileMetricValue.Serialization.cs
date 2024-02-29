@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<double> p10 = default;
-            Optional<double> p25 = default;
-            Optional<double> p50 = default;
-            Optional<double> p75 = default;
-            Optional<double> p90 = default;
-            Optional<double> p95 = default;
-            Optional<double> p99 = default;
-            Optional<int> count = default;
-            Optional<double> average = default;
-            Optional<double> maximum = default;
-            Optional<double> minimum = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<double> total = default;
+            double? p10 = default;
+            double? p25 = default;
+            double? p50 = default;
+            double? p75 = default;
+            double? p90 = default;
+            double? p95 = default;
+            double? p99 = default;
+            int? count = default;
+            double? average = default;
+            double? maximum = default;
+            double? minimum = default;
+            DateTimeOffset? timestamp = default;
+            double? total = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,7 +269,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PercentileMetricValue(Optional.ToNullable(count), Optional.ToNullable(average), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(timestamp), Optional.ToNullable(total), serializedAdditionalRawData, Optional.ToNullable(p10), Optional.ToNullable(p25), Optional.ToNullable(p50), Optional.ToNullable(p75), Optional.ToNullable(p90), Optional.ToNullable(p95), Optional.ToNullable(p99));
+            return new PercentileMetricValue(
+                count,
+                average,
+                maximum,
+                minimum,
+                timestamp,
+                total,
+                serializedAdditionalRawData,
+                p10,
+                p25,
+                p50,
+                p75,
+                p90,
+                p95,
+                p99);
         }
 
         BinaryData IPersistableModel<PercentileMetricValue>.Write(ModelReaderWriterOptions options)

@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
+            string description = default;
             IList<BinaryData> annotations = default;
-            Optional<DataFlowFolder> folder = default;
+            DataFlowFolder folder = default;
             IList<PowerQuerySource> sources = default;
-            Optional<string> script = default;
-            Optional<string> documentLocale = default;
+            string script = default;
+            string documentLocale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +214,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryWranglingDataFlowProperties(type, description.Value, annotations ?? new ChangeTrackingList<BinaryData>(), folder.Value, serializedAdditionalRawData, sources ?? new ChangeTrackingList<PowerQuerySource>(), script.Value, documentLocale.Value);
+            return new DataFactoryWranglingDataFlowProperties(
+                type,
+                description,
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                folder,
+                serializedAdditionalRawData,
+                sources ?? new ChangeTrackingList<PowerQuerySource>(),
+                script,
+                documentLocale);
         }
 
         BinaryData IPersistableModel<DataFactoryWranglingDataFlowProperties>.Write(ModelReaderWriterOptions options)

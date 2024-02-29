@@ -147,15 +147,15 @@ namespace Azure.ResourceManager.ContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerServiceCreationData> creationData = default;
-            Optional<SnapshotType> snapshotType = default;
-            Optional<string> kubernetesVersion = default;
-            Optional<string> nodeImageVersion = default;
-            Optional<ContainerServiceOSType> osType = default;
-            Optional<ContainerServiceOSSku> osSku = default;
-            Optional<string> vmSize = default;
-            Optional<bool> enableFIPS = default;
+            SystemData systemData = default;
+            ContainerServiceCreationData creationData = default;
+            SnapshotType? snapshotType = default;
+            string kubernetesVersion = default;
+            string nodeImageVersion = default;
+            ContainerServiceOSType? osType = default;
+            ContainerServiceOSSku? osSku = default;
+            string vmSize = default;
+            bool? enableFIPS = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -281,7 +281,22 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolSnapshotData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, creationData.Value, Optional.ToNullable(snapshotType), kubernetesVersion.Value, nodeImageVersion.Value, Optional.ToNullable(osType), Optional.ToNullable(osSku), vmSize.Value, Optional.ToNullable(enableFIPS), serializedAdditionalRawData);
+            return new AgentPoolSnapshotData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                creationData,
+                snapshotType,
+                kubernetesVersion,
+                nodeImageVersion,
+                osType,
+                osSku,
+                vmSize,
+                enableFIPS,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolSnapshotData>.Write(ModelReaderWriterOptions options)

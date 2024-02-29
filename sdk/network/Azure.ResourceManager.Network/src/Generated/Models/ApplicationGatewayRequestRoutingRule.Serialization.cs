@@ -139,20 +139,20 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ApplicationGatewayRequestRoutingRuleType> ruleType = default;
-            Optional<int> priority = default;
-            Optional<WritableSubResource> backendAddressPool = default;
-            Optional<WritableSubResource> backendHttpSettings = default;
-            Optional<WritableSubResource> httpListener = default;
-            Optional<WritableSubResource> urlPathMap = default;
-            Optional<WritableSubResource> rewriteRuleSet = default;
-            Optional<WritableSubResource> redirectConfiguration = default;
-            Optional<WritableSubResource> loadDistributionPolicy = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            ApplicationGatewayRequestRoutingRuleType? ruleType = default;
+            int? priority = default;
+            WritableSubResource backendAddressPool = default;
+            WritableSubResource backendHttpSettings = default;
+            WritableSubResource httpListener = default;
+            WritableSubResource urlPathMap = default;
+            WritableSubResource rewriteRuleSet = default;
+            WritableSubResource redirectConfiguration = default;
+            WritableSubResource loadDistributionPolicy = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -297,7 +297,22 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayRequestRoutingRule(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(ruleType), Optional.ToNullable(priority), backendAddressPool, backendHttpSettings, httpListener, urlPathMap, rewriteRuleSet, redirectConfiguration, loadDistributionPolicy, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayRequestRoutingRule(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                ruleType,
+                priority,
+                backendAddressPool,
+                backendHttpSettings,
+                httpListener,
+                urlPathMap,
+                rewriteRuleSet,
+                redirectConfiguration,
+                loadDistributionPolicy,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayRequestRoutingRule>.Write(ModelReaderWriterOptions options)

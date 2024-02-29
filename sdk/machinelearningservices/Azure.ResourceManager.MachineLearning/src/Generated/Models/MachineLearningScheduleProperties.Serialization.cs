@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningScheduleAction action = default;
-            Optional<string> displayName = default;
-            Optional<bool> isEnabled = default;
-            Optional<MachineLearningScheduleProvisioningStatus> provisioningState = default;
+            string displayName = default;
+            bool? isEnabled = default;
+            MachineLearningScheduleProvisioningStatus? provisioningState = default;
             MachineLearningTriggerBase trigger = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -234,7 +234,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningScheduleProperties(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, action, displayName.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(provisioningState), trigger);
+            return new MachineLearningScheduleProperties(
+                description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                action,
+                displayName,
+                isEnabled,
+                provisioningState,
+                trigger);
         }
 
         BinaryData IPersistableModel<MachineLearningScheduleProperties>.Write(ModelReaderWriterOptions options)

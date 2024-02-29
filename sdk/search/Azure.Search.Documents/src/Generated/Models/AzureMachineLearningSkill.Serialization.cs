@@ -129,16 +129,16 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<Uri> uri = default;
-            Optional<string> key = default;
-            Optional<string> resourceId = default;
-            Optional<TimeSpan?> timeout = default;
-            Optional<string> region = default;
-            Optional<int?> degreeOfParallelism = default;
+            Uri uri = default;
+            string key = default;
+            string resourceId = default;
+            TimeSpan? timeout = default;
+            string region = default;
+            int? degreeOfParallelism = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -244,7 +244,19 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new AzureMachineLearningSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, uri.Value, key.Value, resourceId.Value, Optional.ToNullable(timeout), region.Value, Optional.ToNullable(degreeOfParallelism));
+            return new AzureMachineLearningSkill(
+                odataType,
+                name,
+                description,
+                context,
+                inputs,
+                outputs,
+                uri,
+                key,
+                resourceId,
+                timeout,
+                region,
+                degreeOfParallelism);
         }
     }
 }

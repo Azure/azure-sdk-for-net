@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> recoveryPointThresholdInMinutes = default;
-            Optional<int> recoveryPointHistory = default;
-            Optional<int> appConsistentFrequencyInMinutes = default;
-            Optional<string> multiVmSyncStatus = default;
-            Optional<int> crashConsistentFrequencyInMinutes = default;
+            int? recoveryPointThresholdInMinutes = default;
+            int? recoveryPointHistory = default;
+            int? appConsistentFrequencyInMinutes = default;
+            string multiVmSyncStatus = default;
+            int? crashConsistentFrequencyInMinutes = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -153,7 +153,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2APolicyDetails(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointThresholdInMinutes), Optional.ToNullable(recoveryPointHistory), Optional.ToNullable(appConsistentFrequencyInMinutes), multiVmSyncStatus.Value, Optional.ToNullable(crashConsistentFrequencyInMinutes));
+            return new A2APolicyDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                recoveryPointThresholdInMinutes,
+                recoveryPointHistory,
+                appConsistentFrequencyInMinutes,
+                multiVmSyncStatus,
+                crashConsistentFrequencyInMinutes);
         }
 
         BinaryData IPersistableModel<A2APolicyDetails>.Write(ModelReaderWriterOptions options)

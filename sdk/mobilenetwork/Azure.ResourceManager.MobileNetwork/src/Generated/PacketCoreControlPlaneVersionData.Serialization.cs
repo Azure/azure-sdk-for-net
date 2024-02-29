@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.MobileNetwork
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            MobileNetworkProvisioningState? provisioningState = default;
             IList<MobileNetworkPlatform> platforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCoreControlPlaneVersionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), platforms ?? new ChangeTrackingList<MobileNetworkPlatform>(), serializedAdditionalRawData);
+            return new PacketCoreControlPlaneVersionData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                platforms ?? new ChangeTrackingList<MobileNetworkPlatform>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCoreControlPlaneVersionData>.Write(ModelReaderWriterOptions options)

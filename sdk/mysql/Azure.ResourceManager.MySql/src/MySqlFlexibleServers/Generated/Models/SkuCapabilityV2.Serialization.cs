@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> vCores = default;
-            Optional<long> supportedIops = default;
-            Optional<long> supportedMemoryPerVCoreMB = default;
+            string name = default;
+            long? vCores = default;
+            long? supportedIops = default;
+            long? supportedMemoryPerVCoreMB = default;
             IReadOnlyList<string> supportedZones = default;
             IReadOnlyList<string> supportedHAMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -180,7 +180,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuCapabilityV2(name.Value, Optional.ToNullable(vCores), Optional.ToNullable(supportedIops), Optional.ToNullable(supportedMemoryPerVCoreMB), supportedZones ?? new ChangeTrackingList<string>(), supportedHAMode ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new SkuCapabilityV2(
+                name,
+                vCores,
+                supportedIops,
+                supportedMemoryPerVCoreMB,
+                supportedZones ?? new ChangeTrackingList<string>(),
+                supportedHAMode ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkuCapabilityV2>.Write(ModelReaderWriterOptions options)

@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> state = default;
-            Optional<DateTimeOffset> creationTimeUtc = default;
-            Optional<SecurityTaskProperties> securityTaskParameters = default;
-            Optional<DateTimeOffset> lastStateChangeTimeUtc = default;
-            Optional<string> subState = default;
+            SystemData systemData = default;
+            string state = default;
+            DateTimeOffset? creationTimeUtc = default;
+            SecurityTaskProperties securityTaskParameters = default;
+            DateTimeOffset? lastStateChangeTimeUtc = default;
+            string subState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +206,17 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityTaskData(id, name, type, systemData.Value, state.Value, Optional.ToNullable(creationTimeUtc), securityTaskParameters.Value, Optional.ToNullable(lastStateChangeTimeUtc), subState.Value, serializedAdditionalRawData);
+            return new SecurityTaskData(
+                id,
+                name,
+                type,
+                systemData,
+                state,
+                creationTimeUtc,
+                securityTaskParameters,
+                lastStateChangeTimeUtc,
+                subState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityTaskData>.Write(ModelReaderWriterOptions options)

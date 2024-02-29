@@ -127,8 +127,8 @@ namespace Azure.ResourceManager.ResourceHealth
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
+            SystemData systemData = default;
+            string displayName = default;
             IReadOnlyList<string> dependsOn = default;
             IReadOnlyList<MetadataEntityScenario> applicableScenarios = default;
             IReadOnlyList<MetadataSupportedValueDetail> supportedValues = default;
@@ -225,7 +225,16 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthMetadataEntityData(id, name, type, systemData.Value, displayName.Value, dependsOn ?? new ChangeTrackingList<string>(), applicableScenarios ?? new ChangeTrackingList<MetadataEntityScenario>(), supportedValues ?? new ChangeTrackingList<MetadataSupportedValueDetail>(), serializedAdditionalRawData);
+            return new ResourceHealthMetadataEntityData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                applicableScenarios ?? new ChangeTrackingList<MetadataEntityScenario>(),
+                supportedValues ?? new ChangeTrackingList<MetadataSupportedValueDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthMetadataEntityData>.Write(ModelReaderWriterOptions options)

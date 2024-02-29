@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<string> builtInOperation = default;
-            Optional<string> itemsPath = default;
-            Optional<string> itemValuePath = default;
-            Optional<string> itemTitlePath = default;
+            string operationId = default;
+            string builtInOperation = default;
+            string itemsPath = default;
+            string itemValuePath = default;
+            string itemTitlePath = default;
             IDictionary<string, SwaggerCustomDynamicProperties> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicList(operationId.Value, builtInOperation.Value, itemsPath.Value, itemValuePath.Value, itemTitlePath.Value, parameters ?? new ChangeTrackingDictionary<string, SwaggerCustomDynamicProperties>(), serializedAdditionalRawData);
+            return new SwaggerCustomDynamicList(
+                operationId,
+                builtInOperation,
+                itemsPath,
+                itemValuePath,
+                itemTitlePath,
+                parameters ?? new ChangeTrackingDictionary<string, SwaggerCustomDynamicProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicList>.Write(ModelReaderWriterOptions options)

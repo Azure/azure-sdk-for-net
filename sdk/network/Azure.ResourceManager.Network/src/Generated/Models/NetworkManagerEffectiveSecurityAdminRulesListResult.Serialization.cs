@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IReadOnlyList<EffectiveBaseSecurityAdminRule> value = default;
-            Optional<string> skipToken = default;
+            string skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerEffectiveSecurityAdminRulesListResult(value ?? new ChangeTrackingList<EffectiveBaseSecurityAdminRule>(), skipToken.Value, serializedAdditionalRawData);
+            return new NetworkManagerEffectiveSecurityAdminRulesListResult(value ?? new ChangeTrackingList<EffectiveBaseSecurityAdminRule>(), skipToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkManagerEffectiveSecurityAdminRulesListResult>.Write(ModelReaderWriterOptions options)

@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareWorkspaceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new FirmwareWorkspaceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareWorkspaceData>.Write(ModelReaderWriterOptions options)

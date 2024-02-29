@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> apiId = default;
-            Optional<string> apiRevision = default;
-            Optional<DateTimeOffset> createdDateTime = default;
-            Optional<DateTimeOffset> updatedDateTime = default;
-            Optional<string> description = default;
-            Optional<string> privateUri = default;
-            Optional<bool> isOnline = default;
-            Optional<bool> isCurrent = default;
+            string apiId = default;
+            string apiRevision = default;
+            DateTimeOffset? createdDateTime = default;
+            DateTimeOffset? updatedDateTime = default;
+            string description = default;
+            string privateUri = default;
+            bool? isOnline = default;
+            bool? isCurrent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiRevisionContract(apiId.Value, apiRevision.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(updatedDateTime), description.Value, privateUri.Value, Optional.ToNullable(isOnline), Optional.ToNullable(isCurrent), serializedAdditionalRawData);
+            return new ApiRevisionContract(
+                apiId,
+                apiRevision,
+                createdDateTime,
+                updatedDateTime,
+                description,
+                privateUri,
+                isOnline,
+                isCurrent,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiRevisionContract>.Write(ModelReaderWriterOptions options)

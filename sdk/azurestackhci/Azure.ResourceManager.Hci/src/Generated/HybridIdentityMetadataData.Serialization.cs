@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Hci
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> resourceUid = default;
-            Optional<string> publicKey = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            string resourceUid = default;
+            string publicKey = default;
+            ManagedServiceIdentity identity = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridIdentityMetadataData(id, name, type, systemData.Value, resourceUid.Value, publicKey.Value, identity, provisioningState.Value, serializedAdditionalRawData);
+            return new HybridIdentityMetadataData(
+                id,
+                name,
+                type,
+                systemData,
+                resourceUid,
+                publicKey,
+                identity,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridIdentityMetadataData>.Write(ModelReaderWriterOptions options)

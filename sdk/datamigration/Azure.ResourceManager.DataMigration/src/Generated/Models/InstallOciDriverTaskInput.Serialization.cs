@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> driverPackageName = default;
+            string driverPackageName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstallOciDriverTaskInput(driverPackageName.Value, serializedAdditionalRawData);
+            return new InstallOciDriverTaskInput(driverPackageName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstallOciDriverTaskInput>.Write(ModelReaderWriterOptions options)

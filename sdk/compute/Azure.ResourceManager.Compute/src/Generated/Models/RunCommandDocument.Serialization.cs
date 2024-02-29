@@ -157,7 +157,15 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunCommandDocument(schema, id, osType, label, description, serializedAdditionalRawData, script, parameters ?? new ChangeTrackingList<RunCommandParameterDefinition>());
+            return new RunCommandDocument(
+                schema,
+                id,
+                osType,
+                label,
+                description,
+                serializedAdditionalRawData,
+                script,
+                parameters ?? new ChangeTrackingList<RunCommandParameterDefinition>());
         }
 
         BinaryData IPersistableModel<RunCommandDocument>.Write(ModelReaderWriterOptions options)

@@ -134,18 +134,18 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> packageUri = default;
-            Optional<string> connectionString = default;
-            Optional<string> dbType = default;
-            Optional<Uri> setParametersXmlFileUri = default;
+            SystemData systemData = default;
+            Uri packageUri = default;
+            string connectionString = default;
+            string dbType = default;
+            Uri setParametersXmlFileUri = default;
             IDictionary<string, string> setParameters = default;
-            Optional<bool> skipAppData = default;
-            Optional<bool> appOffline = default;
+            bool? skipAppData = default;
+            bool? appOffline = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +257,20 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppMSDeploy(id, name, type, systemData.Value, packageUri.Value, connectionString.Value, dbType.Value, setParametersXmlFileUri.Value, setParameters ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(skipAppData), Optional.ToNullable(appOffline), kind.Value, serializedAdditionalRawData);
+            return new WebAppMSDeploy(
+                id,
+                name,
+                type,
+                systemData,
+                packageUri,
+                connectionString,
+                dbType,
+                setParametersXmlFileUri,
+                setParameters ?? new ChangeTrackingDictionary<string, string>(),
+                skipAppData,
+                appOffline,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppMSDeploy>.Write(ModelReaderWriterOptions options)

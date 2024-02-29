@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> connectorId = default;
-            Optional<string> configDisplayName = default;
-            Optional<bool> isDefault = default;
-            Optional<string> id = default;
-            Optional<string> configProperties = default;
+            string connectorId = default;
+            string configDisplayName = default;
+            bool? isDefault = default;
+            string id = default;
+            string configProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkItemConfiguration(connectorId.Value, configDisplayName.Value, Optional.ToNullable(isDefault), id.Value, configProperties.Value, serializedAdditionalRawData);
+            return new WorkItemConfiguration(
+                connectorId,
+                configDisplayName,
+                isDefault,
+                id,
+                configProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkItemConfiguration>.Write(ModelReaderWriterOptions options)

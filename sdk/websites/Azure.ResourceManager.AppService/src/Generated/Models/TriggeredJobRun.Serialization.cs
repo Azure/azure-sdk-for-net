@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> webJobId = default;
-            Optional<string> webJobName = default;
-            Optional<TriggeredWebJobStatus> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<TimeSpan> duration = default;
-            Optional<Uri> outputUrl = default;
-            Optional<Uri> errorUrl = default;
-            Optional<Uri> url = default;
-            Optional<string> jobName = default;
-            Optional<string> trigger = default;
+            string webJobId = default;
+            string webJobName = default;
+            TriggeredWebJobStatus? status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            TimeSpan? duration = default;
+            Uri outputUrl = default;
+            Uri errorUrl = default;
+            Uri url = default;
+            string jobName = default;
+            string trigger = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +223,19 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TriggeredJobRun(webJobId.Value, webJobName.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(duration), outputUrl.Value, errorUrl.Value, url.Value, jobName.Value, trigger.Value, serializedAdditionalRawData);
+            return new TriggeredJobRun(
+                webJobId,
+                webJobName,
+                status,
+                startTime,
+                endTime,
+                duration,
+                outputUrl,
+                errorUrl,
+                url,
+                jobName,
+                trigger,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TriggeredJobRun>.Write(ModelReaderWriterOptions options)

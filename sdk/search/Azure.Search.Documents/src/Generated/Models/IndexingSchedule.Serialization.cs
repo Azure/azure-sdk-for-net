@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             TimeSpan interval = default;
-            Optional<DateTimeOffset> startTime = default;
+            DateTimeOffset? startTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("interval"u8))
@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new IndexingSchedule(interval, Optional.ToNullable(startTime));
+            return new IndexingSchedule(interval, startTime);
         }
     }
 }

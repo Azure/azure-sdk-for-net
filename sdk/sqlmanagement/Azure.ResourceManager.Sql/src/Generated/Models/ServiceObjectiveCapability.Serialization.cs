@@ -154,20 +154,20 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<string> name = default;
+            Guid? id = default;
+            string name = default;
             IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes = default;
-            Optional<PerformanceLevelCapability> performanceLevel = default;
-            Optional<SqlSku> sku = default;
+            PerformanceLevelCapability performanceLevel = default;
+            SqlSku sku = default;
             IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes = default;
-            Optional<MaxSizeCapability> includedMaxSize = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<AutoPauseDelayTimeRange> supportedAutoPauseDelay = default;
+            MaxSizeCapability includedMaxSize = default;
+            bool? zoneRedundant = default;
+            AutoPauseDelayTimeRange supportedAutoPauseDelay = default;
             IReadOnlyList<MinCapacityCapability> supportedMinCapacities = default;
-            Optional<string> computeModel = default;
+            string computeModel = default;
             IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -312,7 +312,22 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceObjectiveCapability(Optional.ToNullable(id), name.Value, supportedMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(), performanceLevel.Value, sku.Value, supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(), includedMaxSize.Value, Optional.ToNullable(zoneRedundant), supportedAutoPauseDelay.Value, supportedMinCapacities ?? new ChangeTrackingList<MinCapacityCapability>(), computeModel.Value, supportedMaintenanceConfigurations ?? new ChangeTrackingList<MaintenanceConfigurationCapability>(), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ServiceObjectiveCapability(
+                id,
+                name,
+                supportedMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
+                performanceLevel,
+                sku,
+                supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(),
+                includedMaxSize,
+                zoneRedundant,
+                supportedAutoPauseDelay,
+                supportedMinCapacities ?? new ChangeTrackingList<MinCapacityCapability>(),
+                computeModel,
+                supportedMaintenanceConfigurations ?? new ChangeTrackingList<MaintenanceConfigurationCapability>(),
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceObjectiveCapability>.Write(ModelReaderWriterOptions options)

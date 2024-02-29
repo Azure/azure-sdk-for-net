@@ -180,19 +180,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> packageAlias = default;
-            Optional<string> imagePath = default;
-            Optional<string> packageName = default;
-            Optional<string> packageFamilyName = default;
-            Optional<string> packageFullName = default;
-            Optional<string> displayName = default;
-            Optional<string> packageRelativePath = default;
-            Optional<bool> isRegularRegistration = default;
-            Optional<bool> isActive = default;
+            SystemData systemData = default;
+            string packageAlias = default;
+            string imagePath = default;
+            string packageName = default;
+            string packageFamilyName = default;
+            string packageFullName = default;
+            string displayName = default;
+            string packageRelativePath = default;
+            bool? isRegularRegistration = default;
+            bool? isActive = default;
             IList<MsixPackageDependencies> packageDependencies = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> lastUpdated = default;
+            string version = default;
+            DateTimeOffset? lastUpdated = default;
             IList<MsixPackageApplications> packageApplications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -341,7 +341,25 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpandMsixImage(id, name, type, systemData.Value, packageAlias.Value, imagePath.Value, packageName.Value, packageFamilyName.Value, packageFullName.Value, displayName.Value, packageRelativePath.Value, Optional.ToNullable(isRegularRegistration), Optional.ToNullable(isActive), packageDependencies ?? new ChangeTrackingList<MsixPackageDependencies>(), version.Value, Optional.ToNullable(lastUpdated), packageApplications ?? new ChangeTrackingList<MsixPackageApplications>(), serializedAdditionalRawData);
+            return new ExpandMsixImage(
+                id,
+                name,
+                type,
+                systemData,
+                packageAlias,
+                imagePath,
+                packageName,
+                packageFamilyName,
+                packageFullName,
+                displayName,
+                packageRelativePath,
+                isRegularRegistration,
+                isActive,
+                packageDependencies ?? new ChangeTrackingList<MsixPackageDependencies>(),
+                version,
+                lastUpdated,
+                packageApplications ?? new ChangeTrackingList<MsixPackageApplications>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpandMsixImage>.Write(ModelReaderWriterOptions options)

@@ -223,32 +223,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             AlertRuleKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> query = default;
-            Optional<TimeSpan> queryFrequency = default;
-            Optional<TimeSpan> queryPeriod = default;
-            Optional<SecurityInsightsAlertSeverity> severity = default;
-            Optional<SecurityInsightsAlertRuleTriggerOperator> triggerOperator = default;
-            Optional<int> triggerThreshold = default;
-            Optional<EventGroupingSettings> eventGroupingSettings = default;
+            SystemData systemData = default;
+            string query = default;
+            TimeSpan? queryFrequency = default;
+            TimeSpan? queryPeriod = default;
+            SecurityInsightsAlertSeverity? severity = default;
+            SecurityInsightsAlertRuleTriggerOperator? triggerOperator = default;
+            int? triggerThreshold = default;
+            EventGroupingSettings eventGroupingSettings = default;
             IDictionary<string, string> customDetails = default;
             IList<SecurityInsightsAlertRuleEntityMapping> entityMappings = default;
-            Optional<SecurityInsightsAlertDetailsOverride> alertDetailsOverride = default;
-            Optional<string> alertRuleTemplateName = default;
-            Optional<string> templateVersion = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> lastModifiedUtc = default;
-            Optional<TimeSpan> suppressionDuration = default;
-            Optional<bool> suppressionEnabled = default;
+            SecurityInsightsAlertDetailsOverride alertDetailsOverride = default;
+            string alertRuleTemplateName = default;
+            string templateVersion = default;
+            string description = default;
+            string displayName = default;
+            bool? enabled = default;
+            DateTimeOffset? lastModifiedUtc = default;
+            TimeSpan? suppressionDuration = default;
+            bool? suppressionEnabled = default;
             IList<SecurityInsightsAttackTactic> tactics = default;
             IList<string> techniques = default;
-            Optional<SecurityInsightsIncidentConfiguration> incidentConfiguration = default;
+            SecurityInsightsIncidentConfiguration incidentConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -498,7 +498,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsScheduledAlertRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, query.Value, Optional.ToNullable(queryFrequency), Optional.ToNullable(queryPeriod), Optional.ToNullable(severity), Optional.ToNullable(triggerOperator), Optional.ToNullable(triggerThreshold), eventGroupingSettings.Value, customDetails ?? new ChangeTrackingDictionary<string, string>(), entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>(), alertDetailsOverride.Value, alertRuleTemplateName.Value, templateVersion.Value, description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc), Optional.ToNullable(suppressionDuration), Optional.ToNullable(suppressionEnabled), tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(), techniques ?? new ChangeTrackingList<string>(), incidentConfiguration.Value);
+            return new SecurityInsightsScheduledAlertRule(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                etag,
+                serializedAdditionalRawData,
+                query,
+                queryFrequency,
+                queryPeriod,
+                severity,
+                triggerOperator,
+                triggerThreshold,
+                eventGroupingSettings,
+                customDetails ?? new ChangeTrackingDictionary<string, string>(),
+                entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>(),
+                alertDetailsOverride,
+                alertRuleTemplateName,
+                templateVersion,
+                description,
+                displayName,
+                enabled,
+                lastModifiedUtc,
+                suppressionDuration,
+                suppressionEnabled,
+                tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
+                techniques ?? new ChangeTrackingList<string>(),
+                incidentConfiguration);
         }
 
         BinaryData IPersistableModel<SecurityInsightsScheduledAlertRule>.Write(ModelReaderWriterOptions options)

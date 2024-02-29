@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             RemoteAddressMatchConditionType typeName = default;
             RemoteAddressOperator @operator = default;
-            Optional<bool> negateCondition = default;
+            bool? negateCondition = default;
             IList<string> matchValues = default;
             IList<PreTransformCategory> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemoteAddressMatchCondition(typeName, @operator, Optional.ToNullable(negateCondition), matchValues ?? new ChangeTrackingList<string>(), transforms ?? new ChangeTrackingList<PreTransformCategory>(), serializedAdditionalRawData);
+            return new RemoteAddressMatchCondition(
+                typeName,
+                @operator,
+                negateCondition,
+                matchValues ?? new ChangeTrackingList<string>(),
+                transforms ?? new ChangeTrackingList<PreTransformCategory>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemoteAddressMatchCondition>.Write(ModelReaderWriterOptions options)

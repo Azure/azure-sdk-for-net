@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> extension = default;
-            Optional<string> scriptProcessor = default;
-            Optional<string> arguments = default;
+            string extension = default;
+            string scriptProcessor = default;
+            string arguments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HttpRequestHandlerMapping(extension.Value, scriptProcessor.Value, arguments.Value, serializedAdditionalRawData);
+            return new HttpRequestHandlerMapping(extension, scriptProcessor, arguments, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HttpRequestHandlerMapping>.Write(ModelReaderWriterOptions options)

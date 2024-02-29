@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string ruleSetType = default;
             string ruleSetVersion = default;
-            Optional<ApplicationGatewayRuleSetStatusOption> status = default;
+            ApplicationGatewayRuleSetStatusOption? status = default;
             IReadOnlyList<ApplicationGatewayTierType> tiers = default;
             IReadOnlyList<ApplicationGatewayFirewallRuleGroup> ruleGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayFirewallManifestRuleSet(ruleSetType, ruleSetVersion, Optional.ToNullable(status), tiers ?? new ChangeTrackingList<ApplicationGatewayTierType>(), ruleGroups, serializedAdditionalRawData);
+            return new ApplicationGatewayFirewallManifestRuleSet(
+                ruleSetType,
+                ruleSetVersion,
+                status,
+                tiers ?? new ChangeTrackingList<ApplicationGatewayTierType>(),
+                ruleGroups,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayFirewallManifestRuleSet>.Write(ModelReaderWriterOptions options)

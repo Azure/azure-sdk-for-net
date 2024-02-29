@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> domain = default;
-            Optional<string> provider = default;
-            Optional<string> userDetails = default;
-            Optional<string> roles = default;
-            Optional<int> numHoursToExpiration = default;
+            SystemData systemData = default;
+            string domain = default;
+            string provider = default;
+            string userDetails = default;
+            string roles = default;
+            int? numHoursToExpiration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,7 +208,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteUserInvitationContent(id, name, type, systemData.Value, domain.Value, provider.Value, userDetails.Value, roles.Value, Optional.ToNullable(numHoursToExpiration), kind.Value, serializedAdditionalRawData);
+            return new StaticSiteUserInvitationContent(
+                id,
+                name,
+                type,
+                systemData,
+                domain,
+                provider,
+                userDetails,
+                roles,
+                numHoursToExpiration,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteUserInvitationContent>.Write(ModelReaderWriterOptions options)

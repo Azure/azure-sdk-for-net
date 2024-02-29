@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> owner = default;
-            Optional<DateTimeOffset> remediationDueDate = default;
-            Optional<RemediationEta> remediationEta = default;
-            Optional<bool> isGracePeriod = default;
-            Optional<GovernanceEmailNotification> governanceEmailNotification = default;
-            Optional<GovernanceAssignmentAdditionalInfo> additionalData = default;
+            SystemData systemData = default;
+            string owner = default;
+            DateTimeOffset? remediationDueDate = default;
+            RemediationEta remediationEta = default;
+            bool? isGracePeriod = default;
+            GovernanceEmailNotification governanceEmailNotification = default;
+            GovernanceAssignmentAdditionalInfo additionalData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +225,18 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GovernanceAssignmentData(id, name, type, systemData.Value, owner.Value, Optional.ToNullable(remediationDueDate), remediationEta.Value, Optional.ToNullable(isGracePeriod), governanceEmailNotification.Value, additionalData.Value, serializedAdditionalRawData);
+            return new GovernanceAssignmentData(
+                id,
+                name,
+                type,
+                systemData,
+                owner,
+                remediationDueDate,
+                remediationEta,
+                isGracePeriod,
+                governanceEmailNotification,
+                additionalData,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GovernanceAssignmentData>.Write(ModelReaderWriterOptions options)

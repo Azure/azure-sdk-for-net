@@ -100,8 +100,8 @@ namespace Azure.AI.ContentSafety
             string text = default;
             IList<TextCategory> categories = default;
             IList<string> blocklistNames = default;
-            Optional<bool> haltOnBlocklistHit = default;
-            Optional<AnalyzeTextOutputType> outputType = default;
+            bool? haltOnBlocklistHit = default;
+            AnalyzeTextOutputType? outputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +163,13 @@ namespace Azure.AI.ContentSafety
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalyzeTextOptions(text, categories ?? new ChangeTrackingList<TextCategory>(), blocklistNames ?? new ChangeTrackingList<string>(), Optional.ToNullable(haltOnBlocklistHit), Optional.ToNullable(outputType), serializedAdditionalRawData);
+            return new AnalyzeTextOptions(
+                text,
+                categories ?? new ChangeTrackingList<TextCategory>(),
+                blocklistNames ?? new ChangeTrackingList<string>(),
+                haltOnBlocklistHit,
+                outputType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalyzeTextOptions>.Write(ModelReaderWriterOptions options)

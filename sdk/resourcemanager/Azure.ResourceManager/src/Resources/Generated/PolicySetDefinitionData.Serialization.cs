@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PolicyType> policyType = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<BinaryData> metadata = default;
+            SystemData systemData = default;
+            PolicyType? policyType = default;
+            string displayName = default;
+            string description = default;
+            BinaryData metadata = default;
             IDictionary<string, ArmPolicyParameter> parameters = default;
             IList<PolicyDefinitionReference> policyDefinitions = default;
             IList<PolicyDefinitionGroup> policyDefinitionGroups = default;
@@ -274,7 +274,19 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySetDefinitionData(id, name, type, systemData.Value, Optional.ToNullable(policyType), displayName.Value, description.Value, metadata.Value, parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameter>(), policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionReference>(), policyDefinitionGroups ?? new ChangeTrackingList<PolicyDefinitionGroup>(), serializedAdditionalRawData);
+            return new PolicySetDefinitionData(
+                id,
+                name,
+                type,
+                systemData,
+                policyType,
+                displayName,
+                description,
+                metadata,
+                parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameter>(),
+                policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionReference>(),
+                policyDefinitionGroups ?? new ChangeTrackingList<PolicyDefinitionGroup>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySetDefinitionData>.Write(ModelReaderWriterOptions options)

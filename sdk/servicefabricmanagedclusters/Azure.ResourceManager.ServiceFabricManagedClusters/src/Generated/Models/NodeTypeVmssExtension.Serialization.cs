@@ -143,13 +143,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             string publisher = default;
             string type = default;
             string typeHandlerVersion = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<BinaryData> settings = default;
-            Optional<BinaryData> protectedSettings = default;
-            Optional<string> forceUpdateTag = default;
+            bool? autoUpgradeMinorVersion = default;
+            BinaryData settings = default;
+            BinaryData protectedSettings = default;
+            string forceUpdateTag = default;
             IList<string> provisionAfterExtensions = default;
-            Optional<string> provisioningState = default;
-            Optional<bool> enableAutomaticUpgrade = default;
+            string provisioningState = default;
+            bool? enableAutomaticUpgrade = default;
             IList<VmssExtensionSetupOrder> setupOrder = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -267,7 +267,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodeTypeVmssExtension(name, publisher, type, typeHandlerVersion, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, forceUpdateTag.Value, provisionAfterExtensions ?? new ChangeTrackingList<string>(), provisioningState.Value, Optional.ToNullable(enableAutomaticUpgrade), setupOrder ?? new ChangeTrackingList<VmssExtensionSetupOrder>(), serializedAdditionalRawData);
+            return new NodeTypeVmssExtension(
+                name,
+                publisher,
+                type,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                settings,
+                protectedSettings,
+                forceUpdateTag,
+                provisionAfterExtensions ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                enableAutomaticUpgrade,
+                setupOrder ?? new ChangeTrackingList<VmssExtensionSetupOrder>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodeTypeVmssExtension>.Write(ModelReaderWriterOptions options)

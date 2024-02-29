@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<long> folderId = default;
-            Optional<long> version = default;
+            long? folderId = default;
+            long? version = default;
             IReadOnlyList<SynapseSsisEnvironmentReference> environmentRefs = default;
             IReadOnlyList<SynapseSsisParameter> parameters = default;
             SynapseSsisObjectMetadataType type = default;
-            Optional<long> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            long? id = default;
+            string name = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSsisProject(type, Optional.ToNullable(id), name.Value, description.Value, serializedAdditionalRawData, Optional.ToNullable(folderId), Optional.ToNullable(version), environmentRefs ?? new ChangeTrackingList<SynapseSsisEnvironmentReference>(), parameters ?? new ChangeTrackingList<SynapseSsisParameter>());
+            return new SynapseSsisProject(
+                type,
+                id,
+                name,
+                description,
+                serializedAdditionalRawData,
+                folderId,
+                version,
+                environmentRefs ?? new ChangeTrackingList<SynapseSsisEnvironmentReference>(),
+                parameters ?? new ChangeTrackingList<SynapseSsisParameter>());
         }
 
         BinaryData IPersistableModel<SynapseSsisProject>.Write(ModelReaderWriterOptions options)

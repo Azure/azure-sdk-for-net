@@ -128,17 +128,17 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
+            ExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> sourceVirtualMachine = default;
-            Optional<ImageStorageProfile> storageProfile = default;
-            Optional<string> provisioningState = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
+            SystemData systemData = default;
+            WritableSubResource sourceVirtualMachine = default;
+            ImageStorageProfile storageProfile = default;
+            string provisioningState = default;
+            HyperVGeneration? hyperVGeneration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,7 +245,19 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskImageData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, sourceVirtualMachine, storageProfile.Value, provisioningState.Value, Optional.ToNullable(hyperVGeneration), serializedAdditionalRawData);
+            return new DiskImageData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                sourceVirtualMachine,
+                storageProfile,
+                provisioningState,
+                hyperVGeneration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskImageData>.Write(ModelReaderWriterOptions options)

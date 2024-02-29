@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<ServiceBusAccessRight> rights = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.ServiceBus
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusAuthorizationRuleData(id, name, type, systemData.Value, rights ?? new ChangeTrackingList<ServiceBusAccessRight>(), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ServiceBusAuthorizationRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                rights ?? new ChangeTrackingList<ServiceBusAccessRight>(),
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusAuthorizationRuleData>.Write(ModelReaderWriterOptions options)

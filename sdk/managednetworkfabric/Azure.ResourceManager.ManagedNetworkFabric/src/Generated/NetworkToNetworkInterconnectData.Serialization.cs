@@ -154,20 +154,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NniType> nniType = default;
-            Optional<IsManagementType> isManagementType = default;
+            SystemData systemData = default;
+            NniType? nniType = default;
+            IsManagementType? isManagementType = default;
             NetworkFabricBooleanValue useOptionB = default;
-            Optional<Layer2Configuration> layer2Configuration = default;
-            Optional<NetworkToNetworkInterconnectOptionBLayer3Configuration> optionBLayer3Configuration = default;
-            Optional<NpbStaticRouteConfiguration> npbStaticRouteConfiguration = default;
-            Optional<ImportRoutePolicyInformation> importRoutePolicy = default;
-            Optional<ExportRoutePolicyInformation> exportRoutePolicy = default;
-            Optional<ResourceIdentifier> egressAclId = default;
-            Optional<ResourceIdentifier> ingressAclId = default;
-            Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            Layer2Configuration layer2Configuration = default;
+            NetworkToNetworkInterconnectOptionBLayer3Configuration optionBLayer3Configuration = default;
+            NpbStaticRouteConfiguration npbStaticRouteConfiguration = default;
+            ImportRoutePolicyInformation importRoutePolicy = default;
+            ExportRoutePolicyInformation exportRoutePolicy = default;
+            ResourceIdentifier egressAclId = default;
+            ResourceIdentifier ingressAclId = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -327,7 +327,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkToNetworkInterconnectData(id, name, type, systemData.Value, Optional.ToNullable(nniType), Optional.ToNullable(isManagementType), useOptionB, layer2Configuration.Value, optionBLayer3Configuration.Value, npbStaticRouteConfiguration.Value, importRoutePolicy.Value, exportRoutePolicy.Value, egressAclId.Value, ingressAclId.Value, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkToNetworkInterconnectData(
+                id,
+                name,
+                type,
+                systemData,
+                nniType,
+                isManagementType,
+                useOptionB,
+                layer2Configuration,
+                optionBLayer3Configuration,
+                npbStaticRouteConfiguration,
+                importRoutePolicy,
+                exportRoutePolicy,
+                egressAclId,
+                ingressAclId,
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkToNetworkInterconnectData>.Write(ModelReaderWriterOptions options)

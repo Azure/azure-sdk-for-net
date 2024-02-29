@@ -73,14 +73,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             DynamicsSinkWriteBehavior writeBehavior = default;
-            Optional<object> ignoreNullValues = default;
-            Optional<object> alternateKeyName = default;
+            object ignoreNullValues = default;
+            object alternateKeyName = default;
             string type = default;
-            Optional<object> writeBatchSize = default;
-            Optional<object> writeBatchTimeout = default;
-            Optional<object> sinkRetryCount = default;
-            Optional<object> sinkRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object writeBatchSize = default;
+            object writeBatchTimeout = default;
+            object sinkRetryCount = default;
+            object sinkRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DynamicsSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, writeBehavior, ignoreNullValues.Value, alternateKeyName.Value);
+            return new DynamicsSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                writeBehavior,
+                ignoreNullValues,
+                alternateKeyName);
         }
 
         internal partial class DynamicsSinkConverter : JsonConverter<DynamicsSink>

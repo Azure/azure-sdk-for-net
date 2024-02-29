@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<CosmosDBDataType> dataType = default;
-            Optional<int> precision = default;
-            Optional<CosmosDBIndexKind> kind = default;
+            CosmosDBDataType? dataType = default;
+            int? precision = default;
+            CosmosDBIndexKind? kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBPathIndexes(Optional.ToNullable(dataType), Optional.ToNullable(precision), Optional.ToNullable(kind), serializedAdditionalRawData);
+            return new CosmosDBPathIndexes(dataType, precision, kind, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBPathIndexes>.Write(ModelReaderWriterOptions options)

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> jobVersion = default;
+            string jobVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryDataFlowStartDebugSessionResult(jobVersion.Value, serializedAdditionalRawData);
+            return new DataFactoryDataFlowStartDebugSessionResult(jobVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryDataFlowStartDebugSessionResult>.Write(ModelReaderWriterOptions options)

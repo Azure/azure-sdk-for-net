@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> secretText = default;
-            Optional<string> keyId = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> endDateTime = default;
+            string secretText = default;
+            string keyId = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? endDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArcPasswordCredential(secretText.Value, keyId.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), serializedAdditionalRawData);
+            return new ArcPasswordCredential(secretText, keyId, startDateTime, endDateTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArcPasswordCredential>.Write(ModelReaderWriterOptions options)

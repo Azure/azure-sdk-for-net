@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> severity = default;
-            Optional<bool> recommendationsExist = default;
-            Optional<string> networkZones = default;
-            Optional<int> topologyScore = default;
-            Optional<AzureLocation> location = default;
+            ResourceIdentifier resourceId = default;
+            string severity = default;
+            bool? recommendationsExist = default;
+            string networkZones = default;
+            int? topologyScore = default;
+            AzureLocation? location = default;
             IReadOnlyList<TopologySingleResourceParent> parents = default;
             IReadOnlyList<TopologySingleResourceChild> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -206,7 +206,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopologySingleResource(resourceId.Value, severity.Value, Optional.ToNullable(recommendationsExist), networkZones.Value, Optional.ToNullable(topologyScore), Optional.ToNullable(location), parents ?? new ChangeTrackingList<TopologySingleResourceParent>(), children ?? new ChangeTrackingList<TopologySingleResourceChild>(), serializedAdditionalRawData);
+            return new TopologySingleResource(
+                resourceId,
+                severity,
+                recommendationsExist,
+                networkZones,
+                topologyScore,
+                location,
+                parents ?? new ChangeTrackingList<TopologySingleResourceParent>(),
+                children ?? new ChangeTrackingList<TopologySingleResourceChild>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopologySingleResource>.Write(ModelReaderWriterOptions options)

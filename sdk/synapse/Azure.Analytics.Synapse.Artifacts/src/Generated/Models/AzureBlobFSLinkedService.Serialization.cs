@@ -135,22 +135,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
-            Optional<object> url = default;
-            Optional<object> accountKey = default;
-            Optional<object> servicePrincipalId = default;
-            Optional<SecretBase> servicePrincipalKey = default;
-            Optional<object> tenant = default;
-            Optional<object> azureCloudType = default;
-            Optional<object> servicePrincipalCredentialType = default;
-            Optional<SecretBase> servicePrincipalCredential = default;
-            Optional<object> encryptedCredential = default;
-            Optional<object> sasUri = default;
-            Optional<SecretBase> sasToken = default;
-            Optional<CredentialReference> credential = default;
+            object url = default;
+            object accountKey = default;
+            object servicePrincipalId = default;
+            SecretBase servicePrincipalKey = default;
+            object tenant = default;
+            object azureCloudType = default;
+            object servicePrincipalCredentialType = default;
+            SecretBase servicePrincipalCredential = default;
+            object encryptedCredential = default;
+            object sasUri = default;
+            SecretBase sasToken = default;
+            CredentialReference credential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -332,7 +332,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobFSLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, url.Value, accountKey.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential.Value, encryptedCredential.Value, sasUri.Value, sasToken.Value, credential.Value);
+            return new AzureBlobFSLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                url,
+                accountKey,
+                servicePrincipalId,
+                servicePrincipalKey,
+                tenant,
+                azureCloudType,
+                servicePrincipalCredentialType,
+                servicePrincipalCredential,
+                encryptedCredential,
+                sasUri,
+                sasToken,
+                credential);
         }
 
         internal partial class AzureBlobFSLinkedServiceConverter : JsonConverter<AzureBlobFSLinkedService>

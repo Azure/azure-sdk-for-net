@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<ConnectToSourceSqlServerTaskInput> input = default;
+            ConnectToSourceSqlServerTaskInput input = default;
             IReadOnlyList<ConnectToSourceSqlServerTaskOutput> output = default;
-            Optional<string> taskId = default;
+            string taskId = default;
             TaskType taskType = default;
             IReadOnlyList<ODataError> errors = default;
-            Optional<TaskState> state = default;
+            TaskState? state = default;
             IReadOnlyList<CommandProperties> commands = default;
             IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -224,7 +224,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceSqlServerTaskProperties(taskType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), commands ?? new ChangeTrackingList<CommandProperties>(), clientData ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, input.Value, output ?? new ChangeTrackingList<ConnectToSourceSqlServerTaskOutput>(), taskId.Value);
+            return new ConnectToSourceSqlServerTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                state,
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input,
+                output ?? new ChangeTrackingList<ConnectToSourceSqlServerTaskOutput>(),
+                taskId);
         }
 
         BinaryData IPersistableModel<ConnectToSourceSqlServerTaskProperties>.Write(ModelReaderWriterOptions options)

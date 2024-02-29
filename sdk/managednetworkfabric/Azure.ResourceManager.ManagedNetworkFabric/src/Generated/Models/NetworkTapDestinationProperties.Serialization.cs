@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<NetworkTapDestinationType> destinationType = default;
-            Optional<ResourceIdentifier> destinationId = default;
-            Optional<IsolationDomainProperties> isolationDomainProperties = default;
-            Optional<ResourceIdentifier> destinationTapRuleId = default;
+            string name = default;
+            NetworkTapDestinationType? destinationType = default;
+            ResourceIdentifier destinationId = default;
+            IsolationDomainProperties isolationDomainProperties = default;
+            ResourceIdentifier destinationTapRuleId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkTapDestinationProperties(name.Value, Optional.ToNullable(destinationType), destinationId.Value, isolationDomainProperties.Value, destinationTapRuleId.Value, serializedAdditionalRawData);
+            return new NetworkTapDestinationProperties(
+                name,
+                destinationType,
+                destinationId,
+                isolationDomainProperties,
+                destinationTapRuleId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkTapDestinationProperties>.Write(ModelReaderWriterOptions options)

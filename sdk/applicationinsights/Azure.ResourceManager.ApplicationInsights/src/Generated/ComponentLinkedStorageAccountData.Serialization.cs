@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.ApplicationInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> linkedStorageAccount = default;
+            SystemData systemData = default;
+            string linkedStorageAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComponentLinkedStorageAccountData(id, name, type, systemData.Value, linkedStorageAccount.Value, serializedAdditionalRawData);
+            return new ComponentLinkedStorageAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                linkedStorageAccount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComponentLinkedStorageAccountData>.Write(ModelReaderWriterOptions options)

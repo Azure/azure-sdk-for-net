@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> accountId = default;
+            string accountId = default;
             string awsAccessKeyId = default;
             string awsSecretAccessKey = default;
-            Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
+            AuthenticationProvisioningState? authenticationProvisioningState = default;
             IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions = default;
             AuthenticationType authenticationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -149,7 +149,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AwsCredsAuthenticationDetailsProperties(Optional.ToNullable(authenticationProvisioningState), grantedPermissions ?? new ChangeTrackingList<SecurityCenterCloudPermission>(), authenticationType, serializedAdditionalRawData, accountId.Value, awsAccessKeyId, awsSecretAccessKey);
+            return new AwsCredsAuthenticationDetailsProperties(
+                authenticationProvisioningState,
+                grantedPermissions ?? new ChangeTrackingList<SecurityCenterCloudPermission>(),
+                authenticationType,
+                serializedAdditionalRawData,
+                accountId,
+                awsAccessKeyId,
+                awsSecretAccessKey);
         }
 
         BinaryData IPersistableModel<AwsCredsAuthenticationDetailsProperties>.Write(ModelReaderWriterOptions options)

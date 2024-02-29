@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             string workspaceId = default;
             string workspaceKey = default;
-            Optional<ContainerGroupLogAnalyticsLogType> logType = default;
+            ContainerGroupLogAnalyticsLogType? logType = default;
             IDictionary<string, string> metadata = default;
-            Optional<ResourceIdentifier> workspaceResourceId = default;
+            ResourceIdentifier workspaceResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupLogAnalytics(workspaceId, workspaceKey, Optional.ToNullable(logType), metadata ?? new ChangeTrackingDictionary<string, string>(), workspaceResourceId.Value, serializedAdditionalRawData);
+            return new ContainerGroupLogAnalytics(
+                workspaceId,
+                workspaceKey,
+                logType,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                workspaceResourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupLogAnalytics>.Write(ModelReaderWriterOptions options)

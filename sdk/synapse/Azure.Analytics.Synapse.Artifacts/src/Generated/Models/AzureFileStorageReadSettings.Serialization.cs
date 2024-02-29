@@ -90,18 +90,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> recursive = default;
-            Optional<object> wildcardFolderPath = default;
-            Optional<object> wildcardFileName = default;
-            Optional<object> prefix = default;
-            Optional<object> fileListPath = default;
-            Optional<object> enablePartitionDiscovery = default;
-            Optional<object> partitionRootPath = default;
-            Optional<object> deleteFilesAfterCompletion = default;
-            Optional<object> modifiedDatetimeStart = default;
-            Optional<object> modifiedDatetimeEnd = default;
+            object recursive = default;
+            object wildcardFolderPath = default;
+            object wildcardFileName = default;
+            object prefix = default;
+            object fileListPath = default;
+            object enablePartitionDiscovery = default;
+            object partitionRootPath = default;
+            object deleteFilesAfterCompletion = default;
+            object modifiedDatetimeStart = default;
+            object modifiedDatetimeEnd = default;
             string type = default;
-            Optional<object> maxConcurrentConnections = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -213,7 +213,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureFileStorageReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, prefix.Value, fileListPath.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, deleteFilesAfterCompletion.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value);
+            return new AzureFileStorageReadSettings(
+                type,
+                maxConcurrentConnections,
+                additionalProperties,
+                recursive,
+                wildcardFolderPath,
+                wildcardFileName,
+                prefix,
+                fileListPath,
+                enablePartitionDiscovery,
+                partitionRootPath,
+                deleteFilesAfterCompletion,
+                modifiedDatetimeStart,
+                modifiedDatetimeEnd);
         }
 
         internal partial class AzureFileStorageReadSettingsConverter : JsonConverter<AzureFileStorageReadSettings>

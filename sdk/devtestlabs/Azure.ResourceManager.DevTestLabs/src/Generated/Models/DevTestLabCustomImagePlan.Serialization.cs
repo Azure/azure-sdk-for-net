@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> publisher = default;
-            Optional<string> offer = default;
+            string id = default;
+            string publisher = default;
+            string offer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabCustomImagePlan(id.Value, publisher.Value, offer.Value, serializedAdditionalRawData);
+            return new DevTestLabCustomImagePlan(id, publisher, offer, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabCustomImagePlan>.Write(ModelReaderWriterOptions options)

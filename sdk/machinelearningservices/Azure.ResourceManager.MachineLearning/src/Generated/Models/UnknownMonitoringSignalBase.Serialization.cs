@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MonitoringNotificationMode> mode = default;
+            MonitoringNotificationMode? mode = default;
             IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownMonitoringSignalBase(Optional.ToNullable(mode), properties ?? new ChangeTrackingDictionary<string, string>(), signalType, serializedAdditionalRawData);
+            return new UnknownMonitoringSignalBase(mode, properties ?? new ChangeTrackingDictionary<string, string>(), signalType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringSignalBase>.Write(ModelReaderWriterOptions options)

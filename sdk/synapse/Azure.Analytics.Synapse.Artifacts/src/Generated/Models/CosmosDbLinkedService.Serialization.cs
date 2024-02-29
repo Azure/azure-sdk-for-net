@@ -105,16 +105,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
-            Optional<object> connectionString = default;
-            Optional<object> accountEndpoint = default;
-            Optional<object> database = default;
-            Optional<SecretBase> accountKey = default;
-            Optional<object> encryptedCredential = default;
-            Optional<CredentialReference> credential = default;
+            object connectionString = default;
+            object accountEndpoint = default;
+            object database = default;
+            SecretBase accountKey = default;
+            object encryptedCredential = default;
+            CredentialReference credential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -242,7 +242,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CosmosDbLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, connectionString.Value, accountEndpoint.Value, database.Value, accountKey.Value, encryptedCredential.Value, credential.Value);
+            return new CosmosDbLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                connectionString,
+                accountEndpoint,
+                database,
+                accountKey,
+                encryptedCredential,
+                credential);
         }
 
         internal partial class CosmosDbLinkedServiceConverter : JsonConverter<CosmosDbLinkedService>

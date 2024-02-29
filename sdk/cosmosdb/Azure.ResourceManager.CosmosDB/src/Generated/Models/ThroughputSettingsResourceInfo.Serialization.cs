@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<int> throughput = default;
-            Optional<AutoscaleSettingsResourceInfo> autoscaleSettings = default;
-            Optional<string> minimumThroughput = default;
-            Optional<string> offerReplacePending = default;
-            Optional<string> instantMaximumThroughput = default;
-            Optional<string> softAllowedMaximumThroughput = default;
+            int? throughput = default;
+            AutoscaleSettingsResourceInfo autoscaleSettings = default;
+            string minimumThroughput = default;
+            string offerReplacePending = default;
+            string instantMaximumThroughput = default;
+            string softAllowedMaximumThroughput = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThroughputSettingsResourceInfo(Optional.ToNullable(throughput), autoscaleSettings.Value, minimumThroughput.Value, offerReplacePending.Value, instantMaximumThroughput.Value, softAllowedMaximumThroughput.Value, serializedAdditionalRawData);
+            return new ThroughputSettingsResourceInfo(
+                throughput,
+                autoscaleSettings,
+                minimumThroughput,
+                offerReplacePending,
+                instantMaximumThroughput,
+                softAllowedMaximumThroughput,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThroughputSettingsResourceInfo>.Write(ModelReaderWriterOptions options)

@@ -132,15 +132,15 @@ namespace Azure.ResourceManager.StorageSync
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> lastStepName = default;
-            Optional<StorageSyncWorkflowStatus> status = default;
-            Optional<StorageSyncOperationDirection> operation = default;
-            Optional<string> steps = default;
-            Optional<Guid> lastOperationId = default;
-            Optional<string> commandName = default;
-            Optional<DateTimeOffset> createdTimestamp = default;
-            Optional<DateTimeOffset> lastStatusTimestamp = default;
+            SystemData systemData = default;
+            string lastStepName = default;
+            StorageSyncWorkflowStatus? status = default;
+            StorageSyncOperationDirection? operation = default;
+            string steps = default;
+            Guid? lastOperationId = default;
+            string commandName = default;
+            DateTimeOffset? createdTimestamp = default;
+            DateTimeOffset? lastStatusTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -247,7 +247,20 @@ namespace Azure.ResourceManager.StorageSync
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncWorkflowData(id, name, type, systemData.Value, lastStepName.Value, Optional.ToNullable(status), Optional.ToNullable(operation), steps.Value, Optional.ToNullable(lastOperationId), commandName.Value, Optional.ToNullable(createdTimestamp), Optional.ToNullable(lastStatusTimestamp), serializedAdditionalRawData);
+            return new StorageSyncWorkflowData(
+                id,
+                name,
+                type,
+                systemData,
+                lastStepName,
+                status,
+                operation,
+                steps,
+                lastOperationId,
+                commandName,
+                createdTimestamp,
+                lastStatusTimestamp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncWorkflowData>.Write(ModelReaderWriterOptions options)

@@ -103,13 +103,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<CertificateOrderActionType> actionType = default;
-            Optional<DateTimeOffset> createdAt = default;
+            SystemData systemData = default;
+            CertificateOrderActionType? actionType = default;
+            DateTimeOffset? createdAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CertificateOrderAction(id, name, type, systemData.Value, Optional.ToNullable(actionType), Optional.ToNullable(createdAt), kind.Value, serializedAdditionalRawData);
+            return new CertificateOrderAction(
+                id,
+                name,
+                type,
+                systemData,
+                actionType,
+                createdAt,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CertificateOrderAction>.Write(ModelReaderWriterOptions options)

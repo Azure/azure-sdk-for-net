@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> cloudRoleArn = default;
-            Optional<DefenderForServersAwsOfferingArcAutoProvisioningConfiguration> configuration = default;
+            bool? enabled = default;
+            string cloudRoleArn = default;
+            DefenderForServersAwsOfferingArcAutoProvisioningConfiguration configuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForServersAwsOfferingArcAutoProvisioning(Optional.ToNullable(enabled), cloudRoleArn.Value, configuration.Value, serializedAdditionalRawData);
+            return new DefenderForServersAwsOfferingArcAutoProvisioning(enabled, cloudRoleArn, configuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderForServersAwsOfferingArcAutoProvisioning>.Write(ModelReaderWriterOptions options)

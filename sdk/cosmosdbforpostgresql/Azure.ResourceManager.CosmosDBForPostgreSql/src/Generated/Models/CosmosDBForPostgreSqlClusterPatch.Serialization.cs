@@ -159,22 +159,22 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> administratorLoginPassword = default;
-            Optional<string> postgresqlVersion = default;
-            Optional<string> citusVersion = default;
-            Optional<bool> enableShardsOnCoordinator = default;
-            Optional<bool> enableHa = default;
-            Optional<string> preferredPrimaryZone = default;
-            Optional<string> coordinatorServerEdition = default;
-            Optional<int> coordinatorStorageQuotaInMb = default;
-            Optional<int> coordinatorVCores = default;
-            Optional<bool> coordinatorEnablePublicIPAccess = default;
-            Optional<string> nodeServerEdition = default;
-            Optional<int> nodeCount = default;
-            Optional<int> nodeStorageQuotaInMb = default;
-            Optional<int> nodeVCores = default;
-            Optional<bool> nodeEnablePublicIPAccess = default;
-            Optional<CosmosDBForPostgreSqlMaintenanceWindow> maintenanceWindow = default;
+            string administratorLoginPassword = default;
+            string postgresqlVersion = default;
+            string citusVersion = default;
+            bool? enableShardsOnCoordinator = default;
+            bool? enableHa = default;
+            string preferredPrimaryZone = default;
+            string coordinatorServerEdition = default;
+            int? coordinatorStorageQuotaInMb = default;
+            int? coordinatorVCores = default;
+            bool? coordinatorEnablePublicIPAccess = default;
+            string nodeServerEdition = default;
+            int? nodeCount = default;
+            int? nodeStorageQuotaInMb = default;
+            int? nodeVCores = default;
+            bool? nodeEnablePublicIPAccess = default;
+            CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -331,7 +331,25 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), administratorLoginPassword.Value, postgresqlVersion.Value, citusVersion.Value, Optional.ToNullable(enableShardsOnCoordinator), Optional.ToNullable(enableHa), preferredPrimaryZone.Value, coordinatorServerEdition.Value, Optional.ToNullable(coordinatorStorageQuotaInMb), Optional.ToNullable(coordinatorVCores), Optional.ToNullable(coordinatorEnablePublicIPAccess), nodeServerEdition.Value, Optional.ToNullable(nodeCount), Optional.ToNullable(nodeStorageQuotaInMb), Optional.ToNullable(nodeVCores), Optional.ToNullable(nodeEnablePublicIPAccess), maintenanceWindow.Value, serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlClusterPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                administratorLoginPassword,
+                postgresqlVersion,
+                citusVersion,
+                enableShardsOnCoordinator,
+                enableHa,
+                preferredPrimaryZone,
+                coordinatorServerEdition,
+                coordinatorStorageQuotaInMb,
+                coordinatorVCores,
+                coordinatorEnablePublicIPAccess,
+                nodeServerEdition,
+                nodeCount,
+                nodeStorageQuotaInMb,
+                nodeVCores,
+                nodeEnablePublicIPAccess,
+                maintenanceWindow,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlClusterPatch>.Write(ModelReaderWriterOptions options)

@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.FrontDoor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<RulesEngineRule> rules = default;
-            Optional<FrontDoorResourceState> resourceState = default;
+            FrontDoorResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.FrontDoor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorRulesEngineData(id, name, type, systemData.Value, rules ?? new ChangeTrackingList<RulesEngineRule>(), Optional.ToNullable(resourceState), serializedAdditionalRawData);
+            return new FrontDoorRulesEngineData(
+                id,
+                name,
+                type,
+                systemData,
+                rules ?? new ChangeTrackingList<RulesEngineRule>(),
+                resourceState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorRulesEngineData>.Write(ModelReaderWriterOptions options)

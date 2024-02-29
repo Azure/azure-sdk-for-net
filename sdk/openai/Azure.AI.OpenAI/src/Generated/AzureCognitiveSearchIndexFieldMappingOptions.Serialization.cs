@@ -115,11 +115,11 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<string> titleField = default;
-            Optional<string> urlField = default;
-            Optional<string> filepathField = default;
+            string titleField = default;
+            string urlField = default;
+            string filepathField = default;
             IList<string> contentFields = default;
-            Optional<string> contentFieldsSeparator = default;
+            string contentFieldsSeparator = default;
             IList<string> vectorFields = default;
             IList<string> imageVectorFields = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -194,7 +194,15 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCognitiveSearchIndexFieldMappingOptions(titleField.Value, urlField.Value, filepathField.Value, contentFields ?? new ChangeTrackingList<string>(), contentFieldsSeparator.Value, vectorFields ?? new ChangeTrackingList<string>(), imageVectorFields ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AzureCognitiveSearchIndexFieldMappingOptions(
+                titleField,
+                urlField,
+                filepathField,
+                contentFields ?? new ChangeTrackingList<string>(),
+                contentFieldsSeparator,
+                vectorFields ?? new ChangeTrackingList<string>(),
+                imageVectorFields ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureCognitiveSearchIndexFieldMappingOptions>.Write(ModelReaderWriterOptions options)

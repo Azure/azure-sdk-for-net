@@ -134,17 +134,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> taskId = default;
-            Optional<string> name = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            string taskId = default;
+            string name = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IReadOnlyList<string> allowedActions = default;
-            Optional<string> friendlyName = default;
-            Optional<string> state = default;
-            Optional<string> stateDescription = default;
-            Optional<string> taskType = default;
-            Optional<SiteRecoveryTaskTypeDetails> customDetails = default;
-            Optional<SiteRecoveryGroupTaskDetails> groupTaskCustomDetails = default;
+            string friendlyName = default;
+            string state = default;
+            string stateDescription = default;
+            string taskType = default;
+            SiteRecoveryTaskTypeDetails customDetails = default;
+            SiteRecoveryGroupTaskDetails groupTaskCustomDetails = default;
             IReadOnlyList<SiteRecoveryJobErrorDetails> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -250,7 +250,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AsrTask(taskId.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), allowedActions ?? new ChangeTrackingList<string>(), friendlyName.Value, state.Value, stateDescription.Value, taskType.Value, customDetails.Value, groupTaskCustomDetails.Value, errors ?? new ChangeTrackingList<SiteRecoveryJobErrorDetails>(), serializedAdditionalRawData);
+            return new AsrTask(
+                taskId,
+                name,
+                startTime,
+                endTime,
+                allowedActions ?? new ChangeTrackingList<string>(),
+                friendlyName,
+                state,
+                stateDescription,
+                taskType,
+                customDetails,
+                groupTaskCustomDetails,
+                errors ?? new ChangeTrackingList<SiteRecoveryJobErrorDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AsrTask>.Write(ModelReaderWriterOptions options)

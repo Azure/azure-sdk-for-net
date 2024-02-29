@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<ManagementPolicyBaseBlob> baseBlob = default;
-            Optional<ManagementPolicySnapShot> snapshot = default;
-            Optional<ManagementPolicyVersion> version = default;
+            ManagementPolicyBaseBlob baseBlob = default;
+            ManagementPolicySnapShot snapshot = default;
+            ManagementPolicyVersion version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementPolicyAction(baseBlob.Value, snapshot.Value, version.Value, serializedAdditionalRawData);
+            return new ManagementPolicyAction(baseBlob, snapshot, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementPolicyAction>.Write(ModelReaderWriterOptions options)

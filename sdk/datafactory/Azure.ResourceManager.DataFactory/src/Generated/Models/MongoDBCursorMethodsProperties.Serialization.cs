@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> project = default;
-            Optional<DataFactoryElement<string>> sort = default;
-            Optional<DataFactoryElement<int>> skip = default;
-            Optional<DataFactoryElement<int>> limit = default;
+            DataFactoryElement<string> project = default;
+            DataFactoryElement<string> sort = default;
+            DataFactoryElement<int> skip = default;
+            DataFactoryElement<int> limit = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MongoDBCursorMethodsProperties(project.Value, sort.Value, skip.Value, limit.Value, additionalProperties);
+            return new MongoDBCursorMethodsProperties(project, sort, skip, limit, additionalProperties);
         }
 
         BinaryData IPersistableModel<MongoDBCursorMethodsProperties>.Write(ModelReaderWriterOptions options)

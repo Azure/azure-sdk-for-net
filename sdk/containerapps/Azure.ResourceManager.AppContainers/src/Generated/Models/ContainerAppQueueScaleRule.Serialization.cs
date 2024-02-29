@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> queueName = default;
-            Optional<int> queueLength = default;
+            string queueName = default;
+            int? queueLength = default;
             IList<ContainerAppScaleRuleAuth> auth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppQueueScaleRule(queueName.Value, Optional.ToNullable(queueLength), auth ?? new ChangeTrackingList<ContainerAppScaleRuleAuth>(), serializedAdditionalRawData);
+            return new ContainerAppQueueScaleRule(queueName, queueLength, auth ?? new ChangeTrackingList<ContainerAppScaleRuleAuth>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppQueueScaleRule>.Write(ModelReaderWriterOptions options)

@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> provisioningState = default;
-            Optional<bool> isEnabled = default;
-            Optional<AlertRuleCondition> condition = default;
-            Optional<AlertRuleAction> action = default;
+            string name = default;
+            string description = default;
+            string provisioningState = default;
+            bool? isEnabled = default;
+            AlertRuleCondition condition = default;
+            AlertRuleAction action = default;
             IList<AlertRuleAction> actions = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
+            DateTimeOffset? lastUpdatedTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -233,7 +233,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertRulePatch(tags ?? new ChangeTrackingDictionary<string, string>(), name.Value, description.Value, provisioningState.Value, Optional.ToNullable(isEnabled), condition.Value, action.Value, actions ?? new ChangeTrackingList<AlertRuleAction>(), Optional.ToNullable(lastUpdatedTime), serializedAdditionalRawData);
+            return new AlertRulePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                name,
+                description,
+                provisioningState,
+                isEnabled,
+                condition,
+                action,
+                actions ?? new ChangeTrackingList<AlertRuleAction>(),
+                lastUpdatedTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertRulePatch>.Write(ModelReaderWriterOptions options)

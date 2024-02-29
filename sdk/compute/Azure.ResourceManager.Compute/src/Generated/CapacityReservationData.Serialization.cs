@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> reservationId = default;
-            Optional<int> platformFaultDomainCount = default;
+            SystemData systemData = default;
+            string reservationId = default;
+            int? platformFaultDomainCount = default;
             IReadOnlyList<SubResource> virtualMachinesAssociated = default;
-            Optional<DateTimeOffset> provisioningTime = default;
-            Optional<string> provisioningState = default;
-            Optional<CapacityReservationInstanceView> instanceView = default;
-            Optional<DateTimeOffset> timeCreated = default;
+            DateTimeOffset? provisioningTime = default;
+            string provisioningState = default;
+            CapacityReservationInstanceView instanceView = default;
+            DateTimeOffset? timeCreated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -314,7 +314,23 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku, zones ?? new ChangeTrackingList<string>(), reservationId.Value, Optional.ToNullable(platformFaultDomainCount), virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated), serializedAdditionalRawData);
+            return new CapacityReservationData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                zones ?? new ChangeTrackingList<string>(),
+                reservationId,
+                platformFaultDomainCount,
+                virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(),
+                provisioningTime,
+                provisioningState,
+                instanceView,
+                timeCreated,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapacityReservationData>.Write(ModelReaderWriterOptions options)

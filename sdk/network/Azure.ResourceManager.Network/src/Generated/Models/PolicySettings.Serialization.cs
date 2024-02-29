@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<WebApplicationFirewallEnabledState> state = default;
-            Optional<WebApplicationFirewallMode> mode = default;
-            Optional<bool> requestBodyCheck = default;
-            Optional<int> requestBodyInspectLimitInKB = default;
-            Optional<bool> requestBodyEnforcement = default;
-            Optional<int> maxRequestBodySizeInKb = default;
-            Optional<bool> fileUploadEnforcement = default;
-            Optional<int> fileUploadLimitInMb = default;
-            Optional<int> customBlockResponseStatusCode = default;
-            Optional<string> customBlockResponseBody = default;
-            Optional<PolicySettingsLogScrubbing> logScrubbing = default;
+            WebApplicationFirewallEnabledState? state = default;
+            WebApplicationFirewallMode? mode = default;
+            bool? requestBodyCheck = default;
+            int? requestBodyInspectLimitInKB = default;
+            bool? requestBodyEnforcement = default;
+            int? maxRequestBodySizeInKb = default;
+            bool? fileUploadEnforcement = default;
+            int? fileUploadLimitInMb = default;
+            int? customBlockResponseStatusCode = default;
+            string customBlockResponseBody = default;
+            PolicySettingsLogScrubbing logScrubbing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -235,7 +235,19 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySettings(Optional.ToNullable(state), Optional.ToNullable(mode), Optional.ToNullable(requestBodyCheck), Optional.ToNullable(requestBodyInspectLimitInKB), Optional.ToNullable(requestBodyEnforcement), Optional.ToNullable(maxRequestBodySizeInKb), Optional.ToNullable(fileUploadEnforcement), Optional.ToNullable(fileUploadLimitInMb), Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value, logScrubbing.Value, serializedAdditionalRawData);
+            return new PolicySettings(
+                state,
+                mode,
+                requestBodyCheck,
+                requestBodyInspectLimitInKB,
+                requestBodyEnforcement,
+                maxRequestBodySizeInKb,
+                fileUploadEnforcement,
+                fileUploadLimitInMb,
+                customBlockResponseStatusCode,
+                customBlockResponseBody,
+                logScrubbing,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySettings>.Write(ModelReaderWriterOptions options)

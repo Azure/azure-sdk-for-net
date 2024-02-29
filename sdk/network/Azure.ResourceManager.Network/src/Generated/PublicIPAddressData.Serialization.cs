@@ -211,31 +211,31 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<PublicIPAddressSku> sku = default;
-            Optional<ETag> etag = default;
+            ExtendedLocation extendedLocation = default;
+            PublicIPAddressSku sku = default;
+            ETag? etag = default;
             IList<string> zones = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<NetworkIPAllocationMethod> publicIPAllocationMethod = default;
-            Optional<NetworkIPVersion> publicIPAddressVersion = default;
-            Optional<NetworkIPConfiguration> ipConfiguration = default;
-            Optional<PublicIPAddressDnsSettings> dnsSettings = default;
-            Optional<DdosSettings> ddosSettings = default;
+            NetworkIPAllocationMethod? publicIPAllocationMethod = default;
+            NetworkIPVersion? publicIPAddressVersion = default;
+            NetworkIPConfiguration ipConfiguration = default;
+            PublicIPAddressDnsSettings dnsSettings = default;
+            DdosSettings ddosSettings = default;
             IList<IPTag> ipTags = default;
-            Optional<string> ipAddress = default;
-            Optional<WritableSubResource> publicIPPrefix = default;
-            Optional<int> idleTimeoutInMinutes = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<PublicIPAddressData> servicePublicIPAddress = default;
-            Optional<NatGatewayData> natGateway = default;
-            Optional<PublicIPAddressMigrationPhase> migrationPhase = default;
-            Optional<PublicIPAddressData> linkedPublicIPAddress = default;
-            Optional<IPAddressDeleteOption> deleteOption = default;
+            string ipAddress = default;
+            WritableSubResource publicIPPrefix = default;
+            int? idleTimeoutInMinutes = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            PublicIPAddressData servicePublicIPAddress = default;
+            NatGatewayData natGateway = default;
+            PublicIPAddressMigrationPhase? migrationPhase = default;
+            PublicIPAddressData linkedPublicIPAddress = default;
+            IPAddressDeleteOption? deleteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -490,7 +490,33 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublicIPAddressData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, extendedLocation, sku.Value, Optional.ToNullable(etag), zones ?? new ChangeTrackingList<string>(), Optional.ToNullable(publicIPAllocationMethod), Optional.ToNullable(publicIPAddressVersion), ipConfiguration.Value, dnsSettings.Value, ddosSettings.Value, ipTags ?? new ChangeTrackingList<IPTag>(), ipAddress.Value, publicIPPrefix, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), servicePublicIPAddress.Value, natGateway.Value, Optional.ToNullable(migrationPhase), linkedPublicIPAddress.Value, Optional.ToNullable(deleteOption));
+            return new PublicIPAddressData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                extendedLocation,
+                sku,
+                etag,
+                zones ?? new ChangeTrackingList<string>(),
+                publicIPAllocationMethod,
+                publicIPAddressVersion,
+                ipConfiguration,
+                dnsSettings,
+                ddosSettings,
+                ipTags ?? new ChangeTrackingList<IPTag>(),
+                ipAddress,
+                publicIPPrefix,
+                idleTimeoutInMinutes,
+                resourceGuid,
+                provisioningState,
+                servicePublicIPAddress,
+                natGateway,
+                migrationPhase,
+                linkedPublicIPAddress,
+                deleteOption);
         }
 
         BinaryData IPersistableModel<PublicIPAddressData>.Write(ModelReaderWriterOptions options)

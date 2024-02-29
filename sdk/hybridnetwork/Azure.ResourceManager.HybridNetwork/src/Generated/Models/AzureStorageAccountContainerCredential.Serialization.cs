@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> containerName = default;
-            Optional<Uri> containerSasUri = default;
+            string containerName = default;
+            Uri containerSasUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureStorageAccountContainerCredential(containerName.Value, containerSasUri.Value, serializedAdditionalRawData);
+            return new AzureStorageAccountContainerCredential(containerName, containerSasUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureStorageAccountContainerCredential>.Write(ModelReaderWriterOptions options)

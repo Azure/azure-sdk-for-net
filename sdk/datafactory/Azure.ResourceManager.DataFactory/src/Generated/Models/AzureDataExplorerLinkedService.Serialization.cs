@@ -135,16 +135,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> endpoint = default;
-            Optional<DataFactoryElement<string>> servicePrincipalId = default;
-            Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
+            DataFactoryElement<string> servicePrincipalId = default;
+            DataFactorySecretBaseDefinition servicePrincipalKey = default;
             DataFactoryElement<string> database = default;
-            Optional<DataFactoryElement<string>> tenant = default;
-            Optional<DataFactoryCredentialReference> credential = default;
+            DataFactoryElement<string> tenant = default;
+            DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,7 +264,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataExplorerLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, endpoint, servicePrincipalId.Value, servicePrincipalKey, database, tenant.Value, credential.Value);
+            return new AzureDataExplorerLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                endpoint,
+                servicePrincipalId,
+                servicePrincipalKey,
+                database,
+                tenant,
+                credential);
         }
 
         BinaryData IPersistableModel<AzureDataExplorerLinkedService>.Write(ModelReaderWriterOptions options)

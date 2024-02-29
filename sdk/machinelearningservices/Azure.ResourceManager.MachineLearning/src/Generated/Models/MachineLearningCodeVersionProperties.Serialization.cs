@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<Uri> codeUri = default;
-            Optional<RegistryAssetProvisioningState> provisioningState = default;
-            Optional<AutoDeleteSetting> autoDeleteSetting = default;
-            Optional<bool> isAnonymous = default;
-            Optional<bool> isArchived = default;
-            Optional<string> description = default;
+            Uri codeUri = default;
+            RegistryAssetProvisioningState? provisioningState = default;
+            AutoDeleteSetting autoDeleteSetting = default;
+            bool? isAnonymous = default;
+            bool? isArchived = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -256,7 +256,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningCodeVersionProperties(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, autoDeleteSetting.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), codeUri.Value, Optional.ToNullable(provisioningState));
+            return new MachineLearningCodeVersionProperties(
+                description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                autoDeleteSetting,
+                isAnonymous,
+                isArchived,
+                codeUri,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<MachineLearningCodeVersionProperties>.Write(ModelReaderWriterOptions options)

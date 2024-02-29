@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<MigrateSqlServerSqlDBTaskInput> input = default;
+            MigrateSqlServerSqlDBTaskInput input = default;
             IReadOnlyList<MigrateSqlServerSqlDBTaskOutput> output = default;
-            Optional<string> taskId = default;
-            Optional<bool> isCloneable = default;
-            Optional<string> createdOn = default;
+            string taskId = default;
+            bool? isCloneable = default;
+            string createdOn = default;
             TaskType taskType = default;
             IReadOnlyList<ODataError> errors = default;
-            Optional<TaskState> state = default;
+            TaskState? state = default;
             IReadOnlyList<CommandProperties> commands = default;
             IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -250,7 +250,18 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBTaskProperties(taskType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), commands ?? new ChangeTrackingList<CommandProperties>(), clientData ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, input.Value, output ?? new ChangeTrackingList<MigrateSqlServerSqlDBTaskOutput>(), taskId.Value, Optional.ToNullable(isCloneable), createdOn.Value);
+            return new MigrateSqlServerSqlDBTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                state,
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input,
+                output ?? new ChangeTrackingList<MigrateSqlServerSqlDBTaskOutput>(),
+                taskId,
+                isCloneable,
+                createdOn);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskProperties>.Write(ModelReaderWriterOptions options)

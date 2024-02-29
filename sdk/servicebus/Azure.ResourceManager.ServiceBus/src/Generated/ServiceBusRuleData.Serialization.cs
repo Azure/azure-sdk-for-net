@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ServiceBusFilterAction> action = default;
-            Optional<ServiceBusFilterType> filterType = default;
-            Optional<ServiceBusSqlFilter> sqlFilter = default;
-            Optional<ServiceBusCorrelationFilter> correlationFilter = default;
+            SystemData systemData = default;
+            ServiceBusFilterAction action = default;
+            ServiceBusFilterType? filterType = default;
+            ServiceBusSqlFilter sqlFilter = default;
+            ServiceBusCorrelationFilter correlationFilter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.ServiceBus
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusRuleData(id, name, type, systemData.Value, action.Value, Optional.ToNullable(filterType), sqlFilter.Value, correlationFilter.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ServiceBusRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                action,
+                filterType,
+                sqlFilter,
+                correlationFilter,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusRuleData>.Write(ModelReaderWriterOptions options)

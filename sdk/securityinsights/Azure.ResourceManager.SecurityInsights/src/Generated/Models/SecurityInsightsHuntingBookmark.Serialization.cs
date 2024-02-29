@@ -182,20 +182,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<SecurityInsightsUserInfo> createdBy = default;
-            Optional<string> displayName = default;
-            Optional<DateTimeOffset> eventTime = default;
+            string friendlyName = default;
+            DateTimeOffset? created = default;
+            SecurityInsightsUserInfo createdBy = default;
+            string displayName = default;
+            DateTimeOffset? eventTime = default;
             IList<string> labels = default;
-            Optional<string> notes = default;
-            Optional<string> query = default;
-            Optional<string> queryResult = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<SecurityInsightsUserInfo> updatedBy = default;
-            Optional<SecurityInsightsBookmarkIncidentInfo> incidentInfo = default;
+            string notes = default;
+            string query = default;
+            string queryResult = default;
+            DateTimeOffset? updated = default;
+            SecurityInsightsUserInfo updatedBy = default;
+            SecurityInsightsBookmarkIncidentInfo incidentInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -361,7 +361,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsHuntingBookmark(id, name, type, systemData.Value, kind, serializedAdditionalRawData, additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName.Value, Optional.ToNullable(created), createdBy.Value, displayName.Value, Optional.ToNullable(eventTime), labels ?? new ChangeTrackingList<string>(), notes.Value, query.Value, queryResult.Value, Optional.ToNullable(updated), updatedBy.Value, incidentInfo.Value);
+            return new SecurityInsightsHuntingBookmark(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName,
+                created,
+                createdBy,
+                displayName,
+                eventTime,
+                labels ?? new ChangeTrackingList<string>(),
+                notes,
+                query,
+                queryResult,
+                updated,
+                updatedBy,
+                incidentInfo);
         }
 
         BinaryData IPersistableModel<SecurityInsightsHuntingBookmark>.Write(ModelReaderWriterOptions options)

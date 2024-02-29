@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AssociationEntityProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            AssociationEntityProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssociationContract(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AssociationContract(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssociationContract>.Write(ModelReaderWriterOptions options)

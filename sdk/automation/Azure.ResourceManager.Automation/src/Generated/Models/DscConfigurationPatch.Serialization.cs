@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IDictionary<string, string> tags = default;
-            Optional<bool> logVerbose = default;
-            Optional<bool> logProgress = default;
-            Optional<AutomationContentSource> source = default;
+            bool? logVerbose = default;
+            bool? logProgress = default;
+            AutomationContentSource source = default;
             IDictionary<string, DscConfigurationParameterDefinition> parameters = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,7 +208,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscConfigurationPatch(name.Value, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(logVerbose), Optional.ToNullable(logProgress), source.Value, parameters ?? new ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>(), description.Value, serializedAdditionalRawData);
+            return new DscConfigurationPatch(
+                name,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                logVerbose,
+                logProgress,
+                source,
+                parameters ?? new ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>(),
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscConfigurationPatch>.Write(ModelReaderWriterOptions options)

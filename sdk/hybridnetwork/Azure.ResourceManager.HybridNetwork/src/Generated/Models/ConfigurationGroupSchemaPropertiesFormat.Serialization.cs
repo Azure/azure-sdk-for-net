@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<VersionState> versionState = default;
-            Optional<string> description = default;
-            Optional<string> schemaDefinition = default;
+            ProvisioningState? provisioningState = default;
+            VersionState? versionState = default;
+            string description = default;
+            string schemaDefinition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationGroupSchemaPropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, schemaDefinition.Value, serializedAdditionalRawData);
+            return new ConfigurationGroupSchemaPropertiesFormat(provisioningState, versionState, description, schemaDefinition, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationGroupSchemaPropertiesFormat>.Write(ModelReaderWriterOptions options)

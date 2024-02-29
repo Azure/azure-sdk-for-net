@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> instanceCount = default;
-            Optional<string> instanceType = default;
+            int? instanceCount = default;
+            string instanceType = default;
             IList<string> locations = default;
-            Optional<int?> maxInstanceCount = default;
+            int? maxInstanceCount = default;
             IDictionary<string, BinaryData> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -221,7 +221,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningResourceConfiguration(Optional.ToNullable(instanceCount), instanceType.Value, locations ?? new ChangeTrackingList<string>(), Optional.ToNullable(maxInstanceCount), properties ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
+            return new MachineLearningResourceConfiguration(
+                instanceCount,
+                instanceType,
+                locations ?? new ChangeTrackingList<string>(),
+                maxInstanceCount,
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningResourceConfiguration>.Write(ModelReaderWriterOptions options)

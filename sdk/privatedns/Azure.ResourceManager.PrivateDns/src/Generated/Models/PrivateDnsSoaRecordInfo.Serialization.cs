@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 return null;
             }
-            Optional<string> host = default;
-            Optional<string> email = default;
-            Optional<long> serialNumber = default;
-            Optional<long> refreshTime = default;
-            Optional<long> retryTime = default;
-            Optional<long> expireTime = default;
-            Optional<long> minimumTtl = default;
+            string host = default;
+            string email = default;
+            long? serialNumber = default;
+            long? refreshTime = default;
+            long? retryTime = default;
+            long? expireTime = default;
+            long? minimumTtl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsSoaRecordInfo(host.Value, email.Value, Optional.ToNullable(serialNumber), Optional.ToNullable(refreshTime), Optional.ToNullable(retryTime), Optional.ToNullable(expireTime), Optional.ToNullable(minimumTtl), serializedAdditionalRawData);
+            return new PrivateDnsSoaRecordInfo(
+                host,
+                email,
+                serialNumber,
+                refreshTime,
+                retryTime,
+                expireTime,
+                minimumTtl,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateDnsSoaRecordInfo>.Write(ModelReaderWriterOptions options)

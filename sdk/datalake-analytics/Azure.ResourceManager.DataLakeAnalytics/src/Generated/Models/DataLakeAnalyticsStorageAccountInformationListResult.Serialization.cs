@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 return null;
             }
             IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsStorageAccountInformationListResult(value ?? new ChangeTrackingList<DataLakeAnalyticsStorageAccountInformationData>(), nextLink.Value, serializedAdditionalRawData);
+            return new DataLakeAnalyticsStorageAccountInformationListResult(value ?? new ChangeTrackingList<DataLakeAnalyticsStorageAccountInformationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsStorageAccountInformationListResult>.Write(ModelReaderWriterOptions options)

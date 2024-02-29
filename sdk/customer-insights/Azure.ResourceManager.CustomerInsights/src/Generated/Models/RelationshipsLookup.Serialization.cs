@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> profileName = default;
+            string profileName = default;
             IReadOnlyList<ParticipantProfilePropertyReference> profilePropertyReferences = default;
-            Optional<string> relatedProfileName = default;
+            string relatedProfileName = default;
             IReadOnlyList<ParticipantProfilePropertyReference> relatedProfilePropertyReferences = default;
-            Optional<string> existingRelationshipName = default;
+            string existingRelationshipName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelationshipsLookup(profileName.Value, profilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(), relatedProfileName.Value, relatedProfilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(), existingRelationshipName.Value, serializedAdditionalRawData);
+            return new RelationshipsLookup(
+                profileName,
+                profilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(),
+                relatedProfileName,
+                relatedProfilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(),
+                existingRelationshipName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelationshipsLookup>.Write(ModelReaderWriterOptions options)

@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<int> count = default;
-            Optional<double> average = default;
-            Optional<double> maximum = default;
-            Optional<double> minimum = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<double> total = default;
+            int? count = default;
+            double? average = default;
+            double? maximum = default;
+            double? minimum = default;
+            DateTimeOffset? timestamp = default;
+            double? total = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBMetricValue(Optional.ToNullable(count), Optional.ToNullable(average), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(timestamp), Optional.ToNullable(total), serializedAdditionalRawData);
+            return new CosmosDBMetricValue(
+                count,
+                average,
+                maximum,
+                minimum,
+                timestamp,
+                total,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBMetricValue>.Write(ModelReaderWriterOptions options)

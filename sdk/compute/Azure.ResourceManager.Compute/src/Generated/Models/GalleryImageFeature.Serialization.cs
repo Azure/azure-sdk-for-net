@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> value = default;
+            string name = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageFeature(name.Value, value.Value, serializedAdditionalRawData);
+            return new GalleryImageFeature(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageFeature>.Write(ModelReaderWriterOptions options)

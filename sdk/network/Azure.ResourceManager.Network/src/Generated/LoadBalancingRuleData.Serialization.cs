@@ -160,23 +160,23 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> frontendIPConfiguration = default;
-            Optional<WritableSubResource> backendAddressPool = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource frontendIPConfiguration = default;
+            WritableSubResource backendAddressPool = default;
             IList<WritableSubResource> backendAddressPools = default;
-            Optional<WritableSubResource> probe = default;
-            Optional<LoadBalancingTransportProtocol> protocol = default;
-            Optional<LoadDistribution> loadDistribution = default;
-            Optional<int> frontendPort = default;
-            Optional<int> backendPort = default;
-            Optional<int> idleTimeoutInMinutes = default;
-            Optional<bool> enableFloatingIP = default;
-            Optional<bool> enableTcpReset = default;
-            Optional<bool> disableOutboundSnat = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            WritableSubResource probe = default;
+            LoadBalancingTransportProtocol? protocol = default;
+            LoadDistribution? loadDistribution = default;
+            int? frontendPort = default;
+            int? backendPort = default;
+            int? idleTimeoutInMinutes = default;
+            bool? enableFloatingIP = default;
+            bool? enableTcpReset = default;
+            bool? disableOutboundSnat = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -353,7 +353,25 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancingRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), frontendIPConfiguration, backendAddressPool, backendAddressPools ?? new ChangeTrackingList<WritableSubResource>(), probe, Optional.ToNullable(protocol), Optional.ToNullable(loadDistribution), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(disableOutboundSnat), Optional.ToNullable(provisioningState));
+            return new LoadBalancingRuleData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                frontendIPConfiguration,
+                backendAddressPool,
+                backendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),
+                probe,
+                protocol,
+                loadDistribution,
+                frontendPort,
+                backendPort,
+                idleTimeoutInMinutes,
+                enableFloatingIP,
+                enableTcpReset,
+                disableOutboundSnat,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<LoadBalancingRuleData>.Write(ModelReaderWriterOptions options)

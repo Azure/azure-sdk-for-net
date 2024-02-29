@@ -158,23 +158,23 @@ namespace Azure.ResourceManager.Workloads
             {
                 return null;
             }
-            Optional<UserAssignedServiceIdentity> identity = default;
+            UserAssignedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WorkloadMonitorProvisioningState> provisioningState = default;
-            Optional<ResponseError> errors = default;
-            Optional<AzureLocation> appLocation = default;
-            Optional<SapRoutingPreference> routingPreference = default;
-            Optional<string> zoneRedundancyPreference = default;
-            Optional<ManagedRGConfiguration> managedResourceGroupConfiguration = default;
-            Optional<ResourceIdentifier> logAnalyticsWorkspaceArmId = default;
-            Optional<ResourceIdentifier> monitorSubnet = default;
-            Optional<ResourceIdentifier> msiArmId = default;
-            Optional<ResourceIdentifier> storageAccountArmId = default;
+            SystemData systemData = default;
+            WorkloadMonitorProvisioningState? provisioningState = default;
+            ResponseError errors = default;
+            AzureLocation? appLocation = default;
+            SapRoutingPreference? routingPreference = default;
+            string zoneRedundancyPreference = default;
+            ManagedRGConfiguration managedResourceGroupConfiguration = default;
+            ResourceIdentifier logAnalyticsWorkspaceArmId = default;
+            ResourceIdentifier monitorSubnet = default;
+            ResourceIdentifier msiArmId = default;
+            ResourceIdentifier storageAccountArmId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -335,7 +335,25 @@ namespace Azure.ResourceManager.Workloads
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapMonitorData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity.Value, Optional.ToNullable(provisioningState), errors.Value, Optional.ToNullable(appLocation), Optional.ToNullable(routingPreference), zoneRedundancyPreference.Value, managedResourceGroupConfiguration.Value, logAnalyticsWorkspaceArmId.Value, monitorSubnet.Value, msiArmId.Value, storageAccountArmId.Value, serializedAdditionalRawData);
+            return new SapMonitorData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState,
+                errors,
+                appLocation,
+                routingPreference,
+                zoneRedundancyPreference,
+                managedResourceGroupConfiguration,
+                logAnalyticsWorkspaceArmId,
+                monitorSubnet,
+                msiArmId,
+                storageAccountArmId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapMonitorData>.Write(ModelReaderWriterOptions options)

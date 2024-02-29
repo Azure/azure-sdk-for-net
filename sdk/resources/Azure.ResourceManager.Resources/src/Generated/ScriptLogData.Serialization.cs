@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> log = default;
+            SystemData systemData = default;
+            string log = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptLogData(id, name, type, systemData.Value, log.Value, serializedAdditionalRawData);
+            return new ScriptLogData(
+                id,
+                name,
+                type,
+                systemData,
+                log,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptLogData>.Write(ModelReaderWriterOptions options)

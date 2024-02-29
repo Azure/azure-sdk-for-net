@@ -198,20 +198,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<AutoRebuildSetting> autoRebuild = default;
-            Optional<MachineLearningBuildContext> build = default;
-            Optional<string> condaFile = default;
-            Optional<MachineLearningEnvironmentType> environmentType = default;
-            Optional<string> image = default;
-            Optional<MachineLearningInferenceContainerProperties> inferenceConfig = default;
-            Optional<IntellectualProperty> intellectualProperty = default;
-            Optional<MachineLearningOperatingSystemType> osType = default;
-            Optional<RegistryAssetProvisioningState> provisioningState = default;
-            Optional<string> stage = default;
-            Optional<AutoDeleteSetting> autoDeleteSetting = default;
-            Optional<bool> isAnonymous = default;
-            Optional<bool> isArchived = default;
-            Optional<string> description = default;
+            AutoRebuildSetting? autoRebuild = default;
+            MachineLearningBuildContext build = default;
+            string condaFile = default;
+            MachineLearningEnvironmentType? environmentType = default;
+            string image = default;
+            MachineLearningInferenceContainerProperties inferenceConfig = default;
+            IntellectualProperty intellectualProperty = default;
+            MachineLearningOperatingSystemType? osType = default;
+            RegistryAssetProvisioningState? provisioningState = default;
+            string stage = default;
+            AutoDeleteSetting autoDeleteSetting = default;
+            bool? isAnonymous = default;
+            bool? isArchived = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -376,7 +376,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningEnvironmentVersionProperties(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, autoDeleteSetting.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), Optional.ToNullable(autoRebuild), build.Value, condaFile.Value, Optional.ToNullable(environmentType), image.Value, inferenceConfig.Value, intellectualProperty.Value, Optional.ToNullable(osType), Optional.ToNullable(provisioningState), stage.Value);
+            return new MachineLearningEnvironmentVersionProperties(
+                description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                autoDeleteSetting,
+                isAnonymous,
+                isArchived,
+                autoRebuild,
+                build,
+                condaFile,
+                environmentType,
+                image,
+                inferenceConfig,
+                intellectualProperty,
+                osType,
+                provisioningState,
+                stage);
         }
 
         BinaryData IPersistableModel<MachineLearningEnvironmentVersionProperties>.Write(ModelReaderWriterOptions options)

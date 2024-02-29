@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> actionsRequired = default;
-            Optional<string> description = default;
-            Optional<MachineLearningPrivateEndpointServiceConnectionStatus> status = default;
+            string actionsRequired = default;
+            string description = default;
+            MachineLearningPrivateEndpointServiceConnectionStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningPrivateLinkServiceConnectionState(actionsRequired.Value, description.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new MachineLearningPrivateLinkServiceConnectionState(actionsRequired, description, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningPrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options)

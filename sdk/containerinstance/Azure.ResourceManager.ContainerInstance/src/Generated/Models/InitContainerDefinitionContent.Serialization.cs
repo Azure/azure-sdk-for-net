@@ -115,12 +115,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             string name = default;
-            Optional<string> image = default;
+            string image = default;
             IList<string> command = default;
             IList<ContainerEnvironmentVariable> environmentVariables = default;
-            Optional<InitContainerPropertiesDefinitionInstanceView> instanceView = default;
+            InitContainerPropertiesDefinitionInstanceView instanceView = default;
             IList<ContainerVolumeMount> volumeMounts = default;
-            Optional<ContainerSecurityContextDefinition> securityContext = default;
+            ContainerSecurityContextDefinition securityContext = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,7 +213,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InitContainerDefinitionContent(name, image.Value, command ?? new ChangeTrackingList<string>(), environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>(), instanceView.Value, volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>(), securityContext.Value, serializedAdditionalRawData);
+            return new InitContainerDefinitionContent(
+                name,
+                image,
+                command ?? new ChangeTrackingList<string>(),
+                environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>(),
+                instanceView,
+                volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>(),
+                securityContext,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InitContainerDefinitionContent>.Write(ModelReaderWriterOptions options)

@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
-            Optional<Guid> reportId = default;
-            Optional<GuestConfigurationAssignmentInfo> assignment = default;
-            Optional<GuestConfigurationVmInfo> vm = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<GuestConfigurationAssignmentReportDetails> details = default;
-            Optional<string> vmssResourceId = default;
+            AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
+            Guid? reportId = default;
+            GuestConfigurationAssignmentInfo assignment = default;
+            GuestConfigurationVmInfo vm = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            GuestConfigurationAssignmentReportDetails details = default;
+            string vmssResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,7 +198,16 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationAssignmentReportProperties(Optional.ToNullable(complianceStatus), Optional.ToNullable(reportId), assignment.Value, vm.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), details.Value, vmssResourceId.Value, serializedAdditionalRawData);
+            return new GuestConfigurationAssignmentReportProperties(
+                complianceStatus,
+                reportId,
+                assignment,
+                vm,
+                startTime,
+                endTime,
+                details,
+                vmssResourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestConfigurationAssignmentReportProperties>.Write(ModelReaderWriterOptions options)

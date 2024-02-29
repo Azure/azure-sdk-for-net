@@ -128,18 +128,18 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ChangeDataCaptureFolder> folder = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            ChangeDataCaptureFolder folder = default;
+            string description = default;
             IList<MapperSourceConnectionsInfo> sourceConnectionsInfo = default;
             IList<MapperTargetConnectionsInfo> targetConnectionsInfo = default;
             MapperPolicy policy = default;
-            Optional<bool> allowVnetOverride = default;
-            Optional<string> status = default;
+            bool? allowVnetOverride = default;
+            string status = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,7 +245,20 @@ namespace Azure.ResourceManager.DataFactory
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryChangeDataCaptureData(id, name, type, systemData.Value, folder.Value, description.Value, sourceConnectionsInfo, targetConnectionsInfo, policy, Optional.ToNullable(allowVnetOverride), status.Value, Optional.ToNullable(etag), additionalProperties);
+            return new DataFactoryChangeDataCaptureData(
+                id,
+                name,
+                type,
+                systemData,
+                folder,
+                description,
+                sourceConnectionsInfo,
+                targetConnectionsInfo,
+                policy,
+                allowVnetOverride,
+                status,
+                etag,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryChangeDataCaptureData>.Write(ModelReaderWriterOptions options)

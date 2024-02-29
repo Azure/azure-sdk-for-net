@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             IList<ForecastFilter> and = default;
             IList<ForecastFilter> or = default;
-            Optional<ForecastComparisonExpression> dimensions = default;
-            Optional<ForecastComparisonExpression> tags = default;
+            ForecastComparisonExpression dimensions = default;
+            ForecastComparisonExpression tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastFilter(and ?? new ChangeTrackingList<ForecastFilter>(), or ?? new ChangeTrackingList<ForecastFilter>(), dimensions.Value, tags.Value, serializedAdditionalRawData);
+            return new ForecastFilter(and ?? new ChangeTrackingList<ForecastFilter>(), or ?? new ChangeTrackingList<ForecastFilter>(), dimensions, tags, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForecastFilter>.Write(ModelReaderWriterOptions options)

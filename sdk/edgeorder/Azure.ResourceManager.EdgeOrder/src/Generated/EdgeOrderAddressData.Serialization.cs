@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.EdgeOrder
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EdgeOrderShippingAddress> shippingAddress = default;
+            SystemData systemData = default;
+            EdgeOrderShippingAddress shippingAddress = default;
             EdgeOrderAddressContactDetails contactDetails = default;
-            Optional<EdgeOrderAddressValidationStatus> addressValidationStatus = default;
+            EdgeOrderAddressValidationStatus? addressValidationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,7 +211,17 @@ namespace Azure.ResourceManager.EdgeOrder
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderAddressData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, shippingAddress.Value, contactDetails, Optional.ToNullable(addressValidationStatus), serializedAdditionalRawData);
+            return new EdgeOrderAddressData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                shippingAddress,
+                contactDetails,
+                addressValidationStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderAddressData>.Write(ModelReaderWriterOptions options)

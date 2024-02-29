@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> accountId = default;
+            string accountId = default;
             string awsAssumeRoleArn = default;
             Guid awsExternalId = default;
-            Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
+            AuthenticationProvisioningState? authenticationProvisioningState = default;
             IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions = default;
             AuthenticationType authenticationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -149,7 +149,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AwsAssumeRoleAuthenticationDetailsProperties(Optional.ToNullable(authenticationProvisioningState), grantedPermissions ?? new ChangeTrackingList<SecurityCenterCloudPermission>(), authenticationType, serializedAdditionalRawData, accountId.Value, awsAssumeRoleArn, awsExternalId);
+            return new AwsAssumeRoleAuthenticationDetailsProperties(
+                authenticationProvisioningState,
+                grantedPermissions ?? new ChangeTrackingList<SecurityCenterCloudPermission>(),
+                authenticationType,
+                serializedAdditionalRawData,
+                accountId,
+                awsAssumeRoleArn,
+                awsExternalId);
         }
 
         BinaryData IPersistableModel<AwsAssumeRoleAuthenticationDetailsProperties>.Write(ModelReaderWriterOptions options)

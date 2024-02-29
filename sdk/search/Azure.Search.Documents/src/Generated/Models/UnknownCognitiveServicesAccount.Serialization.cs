@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             string odataType = "Unknown";
-            Optional<string> description = default;
+            string description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"u8))
@@ -46,7 +46,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new UnknownCognitiveServicesAccount(odataType, description.Value);
+            return new UnknownCognitiveServicesAccount(odataType, description);
         }
     }
 }

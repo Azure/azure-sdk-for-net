@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> timeGrain = default;
-            Optional<string> retention = default;
+            string timeGrain = default;
+            string retention = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBMetricAvailability(timeGrain.Value, retention.Value, serializedAdditionalRawData);
+            return new CosmosDBMetricAvailability(timeGrain, retention, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBMetricAvailability>.Write(ModelReaderWriterOptions options)

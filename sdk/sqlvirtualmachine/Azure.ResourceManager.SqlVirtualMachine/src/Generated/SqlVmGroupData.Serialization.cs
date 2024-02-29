@@ -142,14 +142,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> sqlImageOffer = default;
-            Optional<SqlVmGroupImageSku> sqlImageSku = default;
-            Optional<SqlVmGroupScaleType> scaleType = default;
-            Optional<SqlVmClusterManagerType> clusterManagerType = default;
-            Optional<SqlVmClusterConfiguration> clusterConfiguration = default;
-            Optional<WindowsServerFailoverClusterDomainProfile> windowsServerFailoverClusterDomainProfile = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string sqlImageOffer = default;
+            SqlVmGroupImageSku? sqlImageSku = default;
+            SqlVmGroupScaleType? scaleType = default;
+            SqlVmClusterManagerType? clusterManagerType = default;
+            SqlVmClusterConfiguration? clusterConfiguration = default;
+            WindowsServerFailoverClusterDomainProfile windowsServerFailoverClusterDomainProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -270,7 +270,21 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmGroupData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, provisioningState.Value, sqlImageOffer.Value, Optional.ToNullable(sqlImageSku), Optional.ToNullable(scaleType), Optional.ToNullable(clusterManagerType), Optional.ToNullable(clusterConfiguration), windowsServerFailoverClusterDomainProfile.Value, serializedAdditionalRawData);
+            return new SqlVmGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                sqlImageOffer,
+                sqlImageSku,
+                scaleType,
+                clusterManagerType,
+                clusterConfiguration,
+                windowsServerFailoverClusterDomainProfile,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmGroupData>.Write(ModelReaderWriterOptions options)

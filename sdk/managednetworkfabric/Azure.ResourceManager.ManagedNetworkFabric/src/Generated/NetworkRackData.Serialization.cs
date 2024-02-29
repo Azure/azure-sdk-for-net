@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
-            Optional<NetworkRackType> networkRackType = default;
+            SystemData systemData = default;
+            string annotation = default;
+            NetworkRackType? networkRackType = default;
             ResourceIdentifier networkFabricId = default;
             IReadOnlyList<ResourceIdentifier> networkDevices = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -259,7 +259,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkRackData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, annotation.Value, Optional.ToNullable(networkRackType), networkFabricId, networkDevices ?? new ChangeTrackingList<ResourceIdentifier>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkRackData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation,
+                networkRackType,
+                networkFabricId,
+                networkDevices ?? new ChangeTrackingList<ResourceIdentifier>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkRackData>.Write(ModelReaderWriterOptions options)

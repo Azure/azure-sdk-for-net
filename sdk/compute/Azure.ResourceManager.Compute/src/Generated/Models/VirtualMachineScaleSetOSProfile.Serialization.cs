@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> computerNamePrefix = default;
-            Optional<string> adminUsername = default;
-            Optional<string> adminPassword = default;
-            Optional<string> customData = default;
-            Optional<WindowsConfiguration> windowsConfiguration = default;
-            Optional<LinuxConfiguration> linuxConfiguration = default;
+            string computerNamePrefix = default;
+            string adminUsername = default;
+            string adminPassword = default;
+            string customData = default;
+            WindowsConfiguration windowsConfiguration = default;
+            LinuxConfiguration linuxConfiguration = default;
             IList<VaultSecretGroup> secrets = default;
-            Optional<bool> allowExtensionOperations = default;
-            Optional<bool> requireGuestProvisionSignal = default;
+            bool? allowExtensionOperations = default;
+            bool? requireGuestProvisionSignal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetOSProfile(computerNamePrefix.Value, adminUsername.Value, adminPassword.Value, customData.Value, windowsConfiguration.Value, linuxConfiguration.Value, secrets ?? new ChangeTrackingList<VaultSecretGroup>(), Optional.ToNullable(allowExtensionOperations), Optional.ToNullable(requireGuestProvisionSignal), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetOSProfile(
+                computerNamePrefix,
+                adminUsername,
+                adminPassword,
+                customData,
+                windowsConfiguration,
+                linuxConfiguration,
+                secrets ?? new ChangeTrackingList<VaultSecretGroup>(),
+                allowExtensionOperations,
+                requireGuestProvisionSignal,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetOSProfile>.Write(ModelReaderWriterOptions options)

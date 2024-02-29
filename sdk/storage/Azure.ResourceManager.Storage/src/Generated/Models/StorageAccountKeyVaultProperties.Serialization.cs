@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<string> keyname = default;
-            Optional<string> keyversion = default;
-            Optional<Uri> keyvaulturi = default;
-            Optional<string> currentVersionedKeyIdentifier = default;
-            Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
-            Optional<DateTimeOffset> currentVersionedKeyExpirationTimestamp = default;
+            string keyname = default;
+            string keyversion = default;
+            Uri keyvaulturi = default;
+            string currentVersionedKeyIdentifier = default;
+            DateTimeOffset? lastKeyRotationTimestamp = default;
+            DateTimeOffset? currentVersionedKeyExpirationTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountKeyVaultProperties(keyname.Value, keyversion.Value, keyvaulturi.Value, currentVersionedKeyIdentifier.Value, Optional.ToNullable(lastKeyRotationTimestamp), Optional.ToNullable(currentVersionedKeyExpirationTimestamp), serializedAdditionalRawData);
+            return new StorageAccountKeyVaultProperties(
+                keyname,
+                keyversion,
+                keyvaulturi,
+                currentVersionedKeyIdentifier,
+                lastKeyRotationTimestamp,
+                currentVersionedKeyExpirationTimestamp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountKeyVaultProperties>.Write(ModelReaderWriterOptions options)

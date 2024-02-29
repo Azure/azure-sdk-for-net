@@ -169,20 +169,20 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> displayDescription = default;
-            Optional<string> unit = default;
-            Optional<string> aggregationType = default;
-            Optional<bool> supportsInstanceLevelAggregation = default;
-            Optional<bool> enableRegionalMdmAccount = default;
-            Optional<string> sourceMdmAccount = default;
-            Optional<string> sourceMdmNamespace = default;
-            Optional<string> metricFilterPattern = default;
-            Optional<bool> fillGapWithZero = default;
-            Optional<bool> isInternal = default;
+            string name = default;
+            string displayName = default;
+            string displayDescription = default;
+            string unit = default;
+            string aggregationType = default;
+            bool? supportsInstanceLevelAggregation = default;
+            bool? enableRegionalMdmAccount = default;
+            string sourceMdmAccount = default;
+            string sourceMdmNamespace = default;
+            string metricFilterPattern = default;
+            bool? fillGapWithZero = default;
+            bool? isInternal = default;
             IReadOnlyList<MetricDimension> dimensions = default;
-            Optional<string> category = default;
+            string category = default;
             IReadOnlyList<MetricAvailability> availabilities = default;
             IReadOnlyList<string> supportedTimeGrainTypes = default;
             IReadOnlyList<string> supportedAggregationTypes = default;
@@ -333,7 +333,25 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricSpecification(name.Value, displayName.Value, displayDescription.Value, unit.Value, aggregationType.Value, Optional.ToNullable(supportsInstanceLevelAggregation), Optional.ToNullable(enableRegionalMdmAccount), sourceMdmAccount.Value, sourceMdmNamespace.Value, metricFilterPattern.Value, Optional.ToNullable(fillGapWithZero), Optional.ToNullable(isInternal), dimensions ?? new ChangeTrackingList<MetricDimension>(), category.Value, availabilities ?? new ChangeTrackingList<MetricAvailability>(), supportedTimeGrainTypes ?? new ChangeTrackingList<string>(), supportedAggregationTypes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new MetricSpecification(
+                name,
+                displayName,
+                displayDescription,
+                unit,
+                aggregationType,
+                supportsInstanceLevelAggregation,
+                enableRegionalMdmAccount,
+                sourceMdmAccount,
+                sourceMdmNamespace,
+                metricFilterPattern,
+                fillGapWithZero,
+                isInternal,
+                dimensions ?? new ChangeTrackingList<MetricDimension>(),
+                category,
+                availabilities ?? new ChangeTrackingList<MetricAvailability>(),
+                supportedTimeGrainTypes ?? new ChangeTrackingList<string>(),
+                supportedAggregationTypes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricSpecification>.Write(ModelReaderWriterOptions options)

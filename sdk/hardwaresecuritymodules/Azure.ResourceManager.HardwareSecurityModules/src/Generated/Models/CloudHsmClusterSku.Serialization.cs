@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
             CloudHsmClusterSkuFamily family = default;
             CloudHsmClusterSkuName name = default;
-            Optional<int> capacity = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudHsmClusterSku(family, name, Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new CloudHsmClusterSku(family, name, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudHsmClusterSku>.Write(ModelReaderWriterOptions options)

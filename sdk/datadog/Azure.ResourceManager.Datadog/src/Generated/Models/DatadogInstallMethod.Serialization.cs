@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> tool = default;
-            Optional<string> toolVersion = default;
-            Optional<string> installerVersion = default;
+            string tool = default;
+            string toolVersion = default;
+            string installerVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogInstallMethod(tool.Value, toolVersion.Value, installerVersion.Value, serializedAdditionalRawData);
+            return new DatadogInstallMethod(tool, toolVersion, installerVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogInstallMethod>.Write(ModelReaderWriterOptions options)

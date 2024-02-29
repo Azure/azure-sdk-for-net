@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<bool> sparkReady = default;
-            Optional<ManagedNetworkStatus> status = default;
+            bool? sparkReady = default;
+            ManagedNetworkStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedNetworkProvisionStatus(Optional.ToNullable(sparkReady), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new ManagedNetworkProvisionStatus(sparkReady, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedNetworkProvisionStatus>.Write(ModelReaderWriterOptions options)

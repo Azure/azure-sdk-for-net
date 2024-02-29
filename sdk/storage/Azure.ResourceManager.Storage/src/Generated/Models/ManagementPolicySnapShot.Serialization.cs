@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<DateAfterCreation> tierToCool = default;
-            Optional<DateAfterCreation> tierToArchive = default;
-            Optional<DateAfterCreation> tierToCold = default;
-            Optional<DateAfterCreation> tierToHot = default;
-            Optional<DateAfterCreation> delete = default;
+            DateAfterCreation tierToCool = default;
+            DateAfterCreation tierToArchive = default;
+            DateAfterCreation tierToCold = default;
+            DateAfterCreation tierToHot = default;
+            DateAfterCreation delete = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementPolicySnapShot(tierToCool.Value, tierToArchive.Value, tierToCold.Value, tierToHot.Value, delete.Value, serializedAdditionalRawData);
+            return new ManagementPolicySnapShot(
+                tierToCool,
+                tierToArchive,
+                tierToCold,
+                tierToHot,
+                delete,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementPolicySnapShot>.Write(ModelReaderWriterOptions options)

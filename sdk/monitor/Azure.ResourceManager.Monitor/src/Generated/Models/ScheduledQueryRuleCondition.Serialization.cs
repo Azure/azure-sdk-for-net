@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> query = default;
-            Optional<ScheduledQueryRuleTimeAggregationType> timeAggregation = default;
-            Optional<string> metricMeasureColumn = default;
-            Optional<string> resourceIdColumn = default;
+            string query = default;
+            ScheduledQueryRuleTimeAggregationType? timeAggregation = default;
+            string metricMeasureColumn = default;
+            string resourceIdColumn = default;
             IList<MonitorDimension> dimensions = default;
-            Optional<MonitorConditionOperator> @operator = default;
-            Optional<double> threshold = default;
-            Optional<ConditionFailingPeriods> failingPeriods = default;
-            Optional<string> metricName = default;
+            MonitorConditionOperator? @operator = default;
+            double? threshold = default;
+            ConditionFailingPeriods failingPeriods = default;
+            string metricName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledQueryRuleCondition(query.Value, Optional.ToNullable(timeAggregation), metricMeasureColumn.Value, resourceIdColumn.Value, dimensions ?? new ChangeTrackingList<MonitorDimension>(), Optional.ToNullable(@operator), Optional.ToNullable(threshold), failingPeriods.Value, metricName.Value, serializedAdditionalRawData);
+            return new ScheduledQueryRuleCondition(
+                query,
+                timeAggregation,
+                metricMeasureColumn,
+                resourceIdColumn,
+                dimensions ?? new ChangeTrackingList<MonitorDimension>(),
+                @operator,
+                threshold,
+                failingPeriods,
+                metricName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScheduledQueryRuleCondition>.Write(ModelReaderWriterOptions options)

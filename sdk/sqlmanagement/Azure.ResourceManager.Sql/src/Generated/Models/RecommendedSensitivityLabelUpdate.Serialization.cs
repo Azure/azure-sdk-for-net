@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RecommendedSensitivityLabelUpdateKind> op = default;
-            Optional<string> schema = default;
-            Optional<string> table = default;
-            Optional<string> column = default;
+            SystemData systemData = default;
+            RecommendedSensitivityLabelUpdateKind? op = default;
+            string schema = default;
+            string table = default;
+            string column = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendedSensitivityLabelUpdate(id, name, type, systemData.Value, Optional.ToNullable(op), schema.Value, table.Value, column.Value, serializedAdditionalRawData);
+            return new RecommendedSensitivityLabelUpdate(
+                id,
+                name,
+                type,
+                systemData,
+                op,
+                schema,
+                table,
+                column,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendedSensitivityLabelUpdate>.Write(ModelReaderWriterOptions options)

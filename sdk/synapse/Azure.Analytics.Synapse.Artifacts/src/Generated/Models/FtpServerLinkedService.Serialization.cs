@@ -112,18 +112,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object host = default;
-            Optional<object> port = default;
-            Optional<FtpAuthenticationType> authenticationType = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<object> encryptedCredential = default;
-            Optional<object> enableSsl = default;
-            Optional<object> enableServerCertificateValidation = default;
+            object port = default;
+            FtpAuthenticationType? authenticationType = default;
+            object userName = default;
+            SecretBase password = default;
+            object encryptedCredential = default;
+            object enableSsl = default;
+            object enableServerCertificateValidation = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -265,7 +265,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FtpServerLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, host, port.Value, Optional.ToNullable(authenticationType), userName.Value, password.Value, encryptedCredential.Value, enableSsl.Value, enableServerCertificateValidation.Value);
+            return new FtpServerLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                host,
+                port,
+                authenticationType,
+                userName,
+                password,
+                encryptedCredential,
+                enableSsl,
+                enableServerCertificateValidation);
         }
 
         internal partial class FtpServerLinkedServiceConverter : JsonConverter<FtpServerLinkedService>

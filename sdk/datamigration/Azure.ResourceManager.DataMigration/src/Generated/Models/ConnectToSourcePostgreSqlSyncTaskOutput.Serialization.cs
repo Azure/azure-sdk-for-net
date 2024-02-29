@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> sourceServerVersion = default;
+            string id = default;
+            string sourceServerVersion = default;
             IReadOnlyList<string> databases = default;
-            Optional<string> sourceServerBrandVersion = default;
+            string sourceServerBrandVersion = default;
             IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourcePostgreSqlSyncTaskOutput(id.Value, sourceServerVersion.Value, databases ?? new ChangeTrackingList<string>(), sourceServerBrandVersion.Value, validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
+            return new ConnectToSourcePostgreSqlSyncTaskOutput(
+                id,
+                sourceServerVersion,
+                databases ?? new ChangeTrackingList<string>(),
+                sourceServerBrandVersion,
+                validationErrors ?? new ChangeTrackingList<ReportableException>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectToSourcePostgreSqlSyncTaskOutput>.Write(ModelReaderWriterOptions options)

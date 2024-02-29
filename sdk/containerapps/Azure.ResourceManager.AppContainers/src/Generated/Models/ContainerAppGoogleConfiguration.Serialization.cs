@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<ContainerAppClientRegistration> registration = default;
-            Optional<LoginScopes> login = default;
-            Optional<AllowedAudiencesValidation> validation = default;
+            bool? enabled = default;
+            ContainerAppClientRegistration registration = default;
+            LoginScopes login = default;
+            AllowedAudiencesValidation validation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppGoogleConfiguration(Optional.ToNullable(enabled), registration.Value, login.Value, validation.Value, serializedAdditionalRawData);
+            return new ContainerAppGoogleConfiguration(enabled, registration, login, validation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppGoogleConfiguration>.Write(ModelReaderWriterOptions options)

@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> apiKey = default;
-            Optional<string> createdDate = default;
-            Optional<string> name = default;
+            string id = default;
+            string apiKey = default;
+            string createdDate = default;
+            string name = default;
             IReadOnlyList<string> linkedReadProperties = default;
             IReadOnlyList<string> linkedWriteProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentAPIKey(id.Value, apiKey.Value, createdDate.Value, name.Value, linkedReadProperties ?? new ChangeTrackingList<string>(), linkedWriteProperties ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ApplicationInsightsComponentAPIKey(
+                id,
+                apiKey,
+                createdDate,
+                name,
+                linkedReadProperties ?? new ChangeTrackingList<string>(),
+                linkedWriteProperties ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentAPIKey>.Write(ModelReaderWriterOptions options)

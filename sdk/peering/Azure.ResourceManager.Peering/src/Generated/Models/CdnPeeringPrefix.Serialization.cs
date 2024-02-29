@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.Peering.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> prefix = default;
-            Optional<AzureLocation> azureRegion = default;
-            Optional<string> azureService = default;
-            Optional<bool> isPrimaryRegion = default;
-            Optional<string> bgpCommunity = default;
+            SystemData systemData = default;
+            string prefix = default;
+            AzureLocation? azureRegion = default;
+            string azureService = default;
+            bool? isPrimaryRegion = default;
+            string bgpCommunity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,17 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnPeeringPrefix(id, name, type, systemData.Value, prefix.Value, Optional.ToNullable(azureRegion), azureService.Value, Optional.ToNullable(isPrimaryRegion), bgpCommunity.Value, serializedAdditionalRawData);
+            return new CdnPeeringPrefix(
+                id,
+                name,
+                type,
+                systemData,
+                prefix,
+                azureRegion,
+                azureService,
+                isPrimaryRegion,
+                bgpCommunity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnPeeringPrefix>.Write(ModelReaderWriterOptions options)

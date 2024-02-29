@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride = default;
-            Optional<MonitoringFeatureFilterBase> features = default;
+            MonitoringFeatureFilterBase features = default;
             IList<DataQualityMetricThresholdBase> metricThresholds = default;
             MonitoringInputDataBase productionData = default;
             MonitoringInputDataBase referenceData = default;
-            Optional<MonitoringNotificationMode> mode = default;
+            MonitoringNotificationMode? mode = default;
             IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -222,7 +222,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataQualityMonitoringSignal(Optional.ToNullable(mode), properties ?? new ChangeTrackingDictionary<string, string>(), signalType, serializedAdditionalRawData, featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>(), features.Value, metricThresholds, productionData, referenceData);
+            return new DataQualityMonitoringSignal(
+                mode,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>(),
+                features,
+                metricThresholds,
+                productionData,
+                referenceData);
         }
 
         BinaryData IPersistableModel<DataQualityMonitoringSignal>.Write(ModelReaderWriterOptions options)

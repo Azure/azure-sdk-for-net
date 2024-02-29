@@ -144,15 +144,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ApplicationGatewayRedirectType> redirectType = default;
-            Optional<WritableSubResource> targetListener = default;
-            Optional<Uri> targetUrl = default;
-            Optional<bool> includePath = default;
-            Optional<bool> includeQueryString = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            ApplicationGatewayRedirectType? redirectType = default;
+            WritableSubResource targetListener = default;
+            Uri targetUrl = default;
+            bool? includePath = default;
+            bool? includeQueryString = default;
             IList<WritableSubResource> requestRoutingRules = default;
             IList<WritableSubResource> urlPathMaps = default;
             IList<WritableSubResource> pathRules = default;
@@ -297,7 +297,20 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayRedirectConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(redirectType), targetListener, targetUrl.Value, Optional.ToNullable(includePath), Optional.ToNullable(includeQueryString), requestRoutingRules ?? new ChangeTrackingList<WritableSubResource>(), urlPathMaps ?? new ChangeTrackingList<WritableSubResource>(), pathRules ?? new ChangeTrackingList<WritableSubResource>());
+            return new ApplicationGatewayRedirectConfiguration(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                redirectType,
+                targetListener,
+                targetUrl,
+                includePath,
+                includeQueryString,
+                requestRoutingRules ?? new ChangeTrackingList<WritableSubResource>(),
+                urlPathMaps ?? new ChangeTrackingList<WritableSubResource>(),
+                pathRules ?? new ChangeTrackingList<WritableSubResource>());
         }
 
         BinaryData IPersistableModel<ApplicationGatewayRedirectConfiguration>.Write(ModelReaderWriterOptions options)

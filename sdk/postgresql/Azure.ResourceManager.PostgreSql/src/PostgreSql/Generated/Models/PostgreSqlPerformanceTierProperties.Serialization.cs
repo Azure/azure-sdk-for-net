@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<int> maxBackupRetentionDays = default;
-            Optional<int> minBackupRetentionDays = default;
-            Optional<int> maxStorageMB = default;
-            Optional<int> minLargeStorageMB = default;
-            Optional<int> maxLargeStorageMB = default;
-            Optional<int> minStorageMB = default;
+            string id = default;
+            int? maxBackupRetentionDays = default;
+            int? minBackupRetentionDays = default;
+            int? maxStorageMB = default;
+            int? minLargeStorageMB = default;
+            int? maxLargeStorageMB = default;
+            int? minStorageMB = default;
             IReadOnlyList<PostgreSqlPerformanceTierServiceLevelObjectives> serviceLevelObjectives = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -200,7 +200,16 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlPerformanceTierProperties(id.Value, Optional.ToNullable(maxBackupRetentionDays), Optional.ToNullable(minBackupRetentionDays), Optional.ToNullable(maxStorageMB), Optional.ToNullable(minLargeStorageMB), Optional.ToNullable(maxLargeStorageMB), Optional.ToNullable(minStorageMB), serviceLevelObjectives ?? new ChangeTrackingList<PostgreSqlPerformanceTierServiceLevelObjectives>(), serializedAdditionalRawData);
+            return new PostgreSqlPerformanceTierProperties(
+                id,
+                maxBackupRetentionDays,
+                minBackupRetentionDays,
+                maxStorageMB,
+                minLargeStorageMB,
+                maxLargeStorageMB,
+                minStorageMB,
+                serviceLevelObjectives ?? new ChangeTrackingList<PostgreSqlPerformanceTierServiceLevelObjectives>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlPerformanceTierProperties>.Write(ModelReaderWriterOptions options)

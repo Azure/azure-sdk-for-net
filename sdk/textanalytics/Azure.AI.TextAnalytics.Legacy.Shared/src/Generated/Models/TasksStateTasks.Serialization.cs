@@ -121,7 +121,16 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     continue;
                 }
             }
-            return new TasksStateTasks(completed, failed, inProgress, total, entityRecognitionTasks ?? new ChangeTrackingList<TasksStateTasksEntityRecognitionTasksItem>(), entityRecognitionPiiTasks ?? new ChangeTrackingList<TasksStateTasksEntityRecognitionPiiTasksItem>(), keyPhraseExtractionTasks ?? new ChangeTrackingList<TasksStateTasksKeyPhraseExtractionTasksItem>(), entityLinkingTasks ?? new ChangeTrackingList<TasksStateTasksEntityLinkingTasksItem>(), sentimentAnalysisTasks ?? new ChangeTrackingList<TasksStateTasksSentimentAnalysisTasksItem>());
+            return new TasksStateTasks(
+                completed,
+                failed,
+                inProgress,
+                total,
+                entityRecognitionTasks ?? new ChangeTrackingList<TasksStateTasksEntityRecognitionTasksItem>(),
+                entityRecognitionPiiTasks ?? new ChangeTrackingList<TasksStateTasksEntityRecognitionPiiTasksItem>(),
+                keyPhraseExtractionTasks ?? new ChangeTrackingList<TasksStateTasksKeyPhraseExtractionTasksItem>(),
+                entityLinkingTasks ?? new ChangeTrackingList<TasksStateTasksEntityLinkingTasksItem>(),
+                sentimentAnalysisTasks ?? new ChangeTrackingList<TasksStateTasksSentimentAnalysisTasksItem>());
         }
     }
 }

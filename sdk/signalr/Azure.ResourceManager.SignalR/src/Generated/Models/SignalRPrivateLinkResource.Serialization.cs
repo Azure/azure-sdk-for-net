@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.SignalR.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
+            SystemData systemData = default;
+            string groupId = default;
             IList<string> requiredMembers = default;
             IList<string> requiredZoneNames = default;
             IList<ShareablePrivateLinkResourceType> shareablePrivateLinkResourceTypes = default;
@@ -224,7 +224,16 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRPrivateLinkResource(id, name, type, systemData.Value, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), shareablePrivateLinkResourceTypes ?? new ChangeTrackingList<ShareablePrivateLinkResourceType>(), serializedAdditionalRawData);
+            return new SignalRPrivateLinkResource(
+                id,
+                name,
+                type,
+                systemData,
+                groupId,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                shareablePrivateLinkResourceTypes ?? new ChangeTrackingList<ShareablePrivateLinkResourceType>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRPrivateLinkResource>.Write(ModelReaderWriterOptions options)

@@ -117,15 +117,15 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Optional<IntegrationAccountSku> sku = default;
+            IntegrationAccountSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LogicResourceReference> integrationServiceEnvironment = default;
-            Optional<LogicWorkflowState> state = default;
+            SystemData systemData = default;
+            LogicResourceReference integrationServiceEnvironment = default;
+            LogicWorkflowState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,7 +218,17 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, integrationServiceEnvironment.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new IntegrationAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                integrationServiceEnvironment,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountData>.Write(ModelReaderWriterOptions options)

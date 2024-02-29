@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebSiteAnalysisDefinitionData(id, name, type, systemData.Value, description.Value, kind.Value, serializedAdditionalRawData);
+            return new WebSiteAnalysisDefinitionData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebSiteAnalysisDefinitionData>.Write(ModelReaderWriterOptions options)

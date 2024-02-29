@@ -132,18 +132,18 @@ namespace Azure.ResourceManager.AgFoodPlatform
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> instanceUri = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<SensorIntegration> sensorIntegration = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
-            Optional<AgFoodPlatformPrivateEndpointConnectionData> privateEndpointConnections = default;
+            SystemData systemData = default;
+            Uri instanceUri = default;
+            ProvisioningState? provisioningState = default;
+            SensorIntegration sensorIntegration = default;
+            PublicNetworkAccess? publicNetworkAccess = default;
+            AgFoodPlatformPrivateEndpointConnectionData privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,7 +263,20 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FarmBeatData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, instanceUri.Value, Optional.ToNullable(provisioningState), sensorIntegration.Value, Optional.ToNullable(publicNetworkAccess), privateEndpointConnections.Value, serializedAdditionalRawData);
+            return new FarmBeatData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                instanceUri,
+                provisioningState,
+                sensorIntegration,
+                publicNetworkAccess,
+                privateEndpointConnections,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FarmBeatData>.Write(ModelReaderWriterOptions options)

@@ -154,22 +154,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             string fabricDiscoveryMachineId = default;
             IList<InMageRcmDiskContent> disksToInclude = default;
-            Optional<InMageRcmDisksDefaultContent> disksDefault = default;
+            InMageRcmDisksDefaultContent disksDefault = default;
             ResourceIdentifier targetResourceGroupId = default;
-            Optional<ResourceIdentifier> targetNetworkId = default;
-            Optional<ResourceIdentifier> testNetworkId = default;
-            Optional<string> targetSubnetName = default;
-            Optional<string> testSubnetName = default;
-            Optional<string> targetVmName = default;
-            Optional<string> targetVmSize = default;
-            Optional<SiteRecoveryLicenseType> licenseType = default;
-            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
-            Optional<string> targetAvailabilityZone = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
-            Optional<string> runAsAccountId = default;
+            ResourceIdentifier targetNetworkId = default;
+            ResourceIdentifier testNetworkId = default;
+            string targetSubnetName = default;
+            string testSubnetName = default;
+            string targetVmName = default;
+            string targetVmSize = default;
+            SiteRecoveryLicenseType? licenseType = default;
+            ResourceIdentifier targetAvailabilitySetId = default;
+            string targetAvailabilityZone = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            ResourceIdentifier targetBootDiagnosticsStorageAccountId = default;
+            string runAsAccountId = default;
             Guid processServerId = default;
-            Optional<string> multiVmGroupName = default;
+            string multiVmGroupName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -313,7 +313,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmEnableProtectionContent(instanceType, serializedAdditionalRawData, fabricDiscoveryMachineId, disksToInclude ?? new ChangeTrackingList<InMageRcmDiskContent>(), disksDefault.Value, targetResourceGroupId, targetNetworkId.Value, testNetworkId.Value, targetSubnetName.Value, testSubnetName.Value, targetVmName.Value, targetVmSize.Value, Optional.ToNullable(licenseType), targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, runAsAccountId.Value, processServerId, multiVmGroupName.Value);
+            return new InMageRcmEnableProtectionContent(
+                instanceType,
+                serializedAdditionalRawData,
+                fabricDiscoveryMachineId,
+                disksToInclude ?? new ChangeTrackingList<InMageRcmDiskContent>(),
+                disksDefault,
+                targetResourceGroupId,
+                targetNetworkId,
+                testNetworkId,
+                targetSubnetName,
+                testSubnetName,
+                targetVmName,
+                targetVmSize,
+                licenseType,
+                targetAvailabilitySetId,
+                targetAvailabilityZone,
+                targetProximityPlacementGroupId,
+                targetBootDiagnosticsStorageAccountId,
+                runAsAccountId,
+                processServerId,
+                multiVmGroupName);
         }
 
         BinaryData IPersistableModel<InMageRcmEnableProtectionContent>.Write(ModelReaderWriterOptions options)

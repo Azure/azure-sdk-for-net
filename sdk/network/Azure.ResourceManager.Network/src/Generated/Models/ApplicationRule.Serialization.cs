@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.Network.Models
             IList<string> targetUrls = default;
             IList<string> fqdnTags = default;
             IList<string> sourceIPGroups = default;
-            Optional<bool> terminateTLS = default;
+            bool? terminateTLS = default;
             IList<string> webCategories = default;
             IList<FirewallPolicyHttpHeaderToInsert> httpHeadersToInsert = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            string name = default;
+            string description = default;
             FirewallPolicyRuleType ruleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -344,7 +344,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationRule(name.Value, description.Value, ruleType, serializedAdditionalRawData, sourceAddresses ?? new ChangeTrackingList<string>(), destinationAddresses ?? new ChangeTrackingList<string>(), protocols ?? new ChangeTrackingList<FirewallPolicyRuleApplicationProtocol>(), targetFqdns ?? new ChangeTrackingList<string>(), targetUrls ?? new ChangeTrackingList<string>(), fqdnTags ?? new ChangeTrackingList<string>(), sourceIPGroups ?? new ChangeTrackingList<string>(), Optional.ToNullable(terminateTLS), webCategories ?? new ChangeTrackingList<string>(), httpHeadersToInsert ?? new ChangeTrackingList<FirewallPolicyHttpHeaderToInsert>());
+            return new ApplicationRule(
+                name,
+                description,
+                ruleType,
+                serializedAdditionalRawData,
+                sourceAddresses ?? new ChangeTrackingList<string>(),
+                destinationAddresses ?? new ChangeTrackingList<string>(),
+                protocols ?? new ChangeTrackingList<FirewallPolicyRuleApplicationProtocol>(),
+                targetFqdns ?? new ChangeTrackingList<string>(),
+                targetUrls ?? new ChangeTrackingList<string>(),
+                fqdnTags ?? new ChangeTrackingList<string>(),
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
+                terminateTLS,
+                webCategories ?? new ChangeTrackingList<string>(),
+                httpHeadersToInsert ?? new ChangeTrackingList<FirewallPolicyHttpHeaderToInsert>());
         }
 
         BinaryData IPersistableModel<ApplicationRule>.Write(ModelReaderWriterOptions options)

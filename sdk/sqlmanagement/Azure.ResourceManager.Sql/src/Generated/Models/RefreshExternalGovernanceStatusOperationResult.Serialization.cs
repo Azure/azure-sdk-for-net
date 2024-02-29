@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> requestId = default;
-            Optional<string> requestType = default;
-            Optional<string> queuedTime = default;
-            Optional<string> serverName = default;
-            Optional<string> status = default;
-            Optional<string> errorMessage = default;
+            SystemData systemData = default;
+            Guid? requestId = default;
+            string requestType = default;
+            string queuedTime = default;
+            string serverName = default;
+            string status = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,7 +208,18 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RefreshExternalGovernanceStatusOperationResult(id, name, type, systemData.Value, Optional.ToNullable(requestId), requestType.Value, queuedTime.Value, serverName.Value, status.Value, errorMessage.Value, serializedAdditionalRawData);
+            return new RefreshExternalGovernanceStatusOperationResult(
+                id,
+                name,
+                type,
+                systemData,
+                requestId,
+                requestType,
+                queuedTime,
+                serverName,
+                status,
+                errorMessage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RefreshExternalGovernanceStatusOperationResult>.Write(ModelReaderWriterOptions options)

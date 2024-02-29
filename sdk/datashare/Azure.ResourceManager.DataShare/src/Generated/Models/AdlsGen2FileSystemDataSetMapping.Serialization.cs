@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             Guid dataSetId = default;
-            Optional<DataSetMappingStatus> dataSetMappingStatus = default;
+            DataSetMappingStatus? dataSetMappingStatus = default;
             string fileSystem = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            DataShareProvisioningState? provisioningState = default;
             string resourceGroup = default;
             string storageAccountName = default;
             string subscriptionId = default;
@@ -216,7 +216,20 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdlsGen2FileSystemDataSetMapping(id, name, type, systemData.Value, kind, serializedAdditionalRawData, dataSetId, Optional.ToNullable(dataSetMappingStatus), fileSystem, Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FileSystemDataSetMapping(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                dataSetId,
+                dataSetMappingStatus,
+                fileSystem,
+                provisioningState,
+                resourceGroup,
+                storageAccountName,
+                subscriptionId);
         }
 
         BinaryData IPersistableModel<AdlsGen2FileSystemDataSetMapping>.Write(ModelReaderWriterOptions options)

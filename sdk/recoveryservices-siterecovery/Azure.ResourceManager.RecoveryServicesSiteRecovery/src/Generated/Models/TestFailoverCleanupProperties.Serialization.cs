@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> comments = default;
+            string comments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TestFailoverCleanupProperties(comments.Value, serializedAdditionalRawData);
+            return new TestFailoverCleanupProperties(comments, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TestFailoverCleanupProperties>.Write(ModelReaderWriterOptions options)

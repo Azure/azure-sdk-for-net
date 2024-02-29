@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> biosId = default;
-            Optional<ResourceIdentifier> fabricObjectId = default;
-            Optional<string> fqdn = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> lastHeartbeatUtc = default;
-            Optional<SiteRecoveryProtectionHealth> health = default;
+            string id = default;
+            string name = default;
+            string biosId = default;
+            ResourceIdentifier fabricObjectId = default;
+            string fqdn = default;
+            string version = default;
+            DateTimeOffset? lastHeartbeatUtc = default;
+            SiteRecoveryProtectionHealth? health = default;
             IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -199,7 +199,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationAgentDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(health), healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), serializedAdditionalRawData);
+            return new ReplicationAgentDetails(
+                id,
+                name,
+                biosId,
+                fabricObjectId,
+                fqdn,
+                version,
+                lastHeartbeatUtc,
+                health,
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationAgentDetails>.Write(ModelReaderWriterOptions options)

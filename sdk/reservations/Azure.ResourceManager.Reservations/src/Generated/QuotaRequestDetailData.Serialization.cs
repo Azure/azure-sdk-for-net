@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.Reservations
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<QuotaRequestState> provisioningState = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> requestSubmitTime = default;
+            SystemData systemData = default;
+            QuotaRequestState? provisioningState = default;
+            string message = default;
+            DateTimeOffset? requestSubmitTime = default;
             IReadOnlyList<SubContent> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.Reservations
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaRequestDetailData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), message.Value, Optional.ToNullable(requestSubmitTime), value ?? new ChangeTrackingList<SubContent>(), serializedAdditionalRawData);
+            return new QuotaRequestDetailData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                message,
+                requestSubmitTime,
+                value ?? new ChangeTrackingList<SubContent>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaRequestDetailData>.Write(ModelReaderWriterOptions options)

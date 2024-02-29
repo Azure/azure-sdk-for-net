@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<MigrationState> state = default;
-            Optional<SchemaMigrationStage> stage = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<string> databaseErrorResultPrefix = default;
-            Optional<string> schemaErrorResultPrefix = default;
-            Optional<long> numberOfSuccessfulOperations = default;
-            Optional<long> numberOfFailedOperations = default;
-            Optional<string> fileId = default;
-            Optional<string> id = default;
+            string databaseName = default;
+            MigrationState? state = default;
+            SchemaMigrationStage? stage = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            string databaseErrorResultPrefix = default;
+            string schemaErrorResultPrefix = default;
+            long? numberOfSuccessfulOperations = default;
+            long? numberOfFailedOperations = default;
+            string fileId = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -227,7 +227,20 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, databaseName.Value, Optional.ToNullable(state), Optional.ToNullable(stage), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), databaseErrorResultPrefix.Value, schemaErrorResultPrefix.Value, Optional.ToNullable(numberOfSuccessfulOperations), Optional.ToNullable(numberOfFailedOperations), fileId.Value);
+            return new MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                databaseName,
+                state,
+                stage,
+                startedOn,
+                endedOn,
+                databaseErrorResultPrefix,
+                schemaErrorResultPrefix,
+                numberOfSuccessfulOperations,
+                numberOfFailedOperations,
+                fileId);
         }
 
         BinaryData IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)

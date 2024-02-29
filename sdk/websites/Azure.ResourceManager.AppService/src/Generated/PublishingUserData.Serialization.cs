@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> publishingUserName = default;
-            Optional<string> publishingPassword = default;
-            Optional<string> publishingPasswordHash = default;
-            Optional<string> publishingPasswordHashSalt = default;
-            Optional<Uri> scmUri = default;
+            SystemData systemData = default;
+            string publishingUserName = default;
+            string publishingPassword = default;
+            string publishingPasswordHash = default;
+            string publishingPasswordHashSalt = default;
+            Uri scmUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,7 +208,18 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublishingUserData(id, name, type, systemData.Value, publishingUserName.Value, publishingPassword.Value, publishingPasswordHash.Value, publishingPasswordHashSalt.Value, scmUri.Value, kind.Value, serializedAdditionalRawData);
+            return new PublishingUserData(
+                id,
+                name,
+                type,
+                systemData,
+                publishingUserName,
+                publishingPassword,
+                publishingPasswordHash,
+                publishingPasswordHashSalt,
+                scmUri,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PublishingUserData>.Write(ModelReaderWriterOptions options)

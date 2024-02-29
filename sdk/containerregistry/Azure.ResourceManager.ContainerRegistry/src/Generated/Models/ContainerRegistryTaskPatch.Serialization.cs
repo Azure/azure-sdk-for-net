@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
-            Optional<ContainerRegistryTaskStatus> status = default;
-            Optional<ContainerRegistryPlatformUpdateContent> platform = default;
-            Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
-            Optional<string> agentPoolName = default;
-            Optional<int> timeout = default;
-            Optional<ContainerRegistryTaskStepUpdateContent> step = default;
-            Optional<ContainerRegistryTriggerUpdateContent> trigger = default;
-            Optional<ContainerRegistryCredentials> credentials = default;
-            Optional<string> logTemplate = default;
+            ContainerRegistryTaskStatus? status = default;
+            ContainerRegistryPlatformUpdateContent platform = default;
+            ContainerRegistryAgentProperties agentConfiguration = default;
+            string agentPoolName = default;
+            int? timeout = default;
+            ContainerRegistryTaskStepUpdateContent step = default;
+            ContainerRegistryTriggerUpdateContent trigger = default;
+            ContainerRegistryCredentials credentials = default;
+            string logTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,7 +258,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTaskPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(status), platform.Value, agentConfiguration.Value, agentPoolName.Value, Optional.ToNullable(timeout), step.Value, trigger.Value, credentials.Value, logTemplate.Value, serializedAdditionalRawData);
+            return new ContainerRegistryTaskPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                status,
+                platform,
+                agentConfiguration,
+                agentPoolName,
+                timeout,
+                step,
+                trigger,
+                credentials,
+                logTemplate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTaskPatch>.Write(ModelReaderWriterOptions options)

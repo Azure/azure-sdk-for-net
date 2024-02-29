@@ -141,19 +141,19 @@ namespace Azure.ResourceManager.Consumption
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<BudgetCategory> category = default;
-            Optional<decimal> amount = default;
-            Optional<BudgetTimeGrainType> timeGrain = default;
-            Optional<BudgetTimePeriod> timePeriod = default;
-            Optional<ConsumptionBudgetFilter> filter = default;
-            Optional<BudgetCurrentSpend> currentSpend = default;
+            SystemData systemData = default;
+            BudgetCategory? category = default;
+            decimal? amount = default;
+            BudgetTimeGrainType? timeGrain = default;
+            BudgetTimePeriod timePeriod = default;
+            ConsumptionBudgetFilter filter = default;
+            BudgetCurrentSpend currentSpend = default;
             IDictionary<string, BudgetAssociatedNotification> notifications = default;
-            Optional<BudgetForecastSpend> forecastSpend = default;
+            BudgetForecastSpend forecastSpend = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -286,7 +286,21 @@ namespace Azure.ResourceManager.Consumption
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionBudgetData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(amount), Optional.ToNullable(timeGrain), timePeriod.Value, filter.Value, currentSpend.Value, notifications ?? new ChangeTrackingDictionary<string, BudgetAssociatedNotification>(), forecastSpend.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new ConsumptionBudgetData(
+                id,
+                name,
+                type,
+                systemData,
+                category,
+                amount,
+                timeGrain,
+                timePeriod,
+                filter,
+                currentSpend,
+                notifications ?? new ChangeTrackingDictionary<string, BudgetAssociatedNotification>(),
+                forecastSpend,
+                eTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionBudgetData>.Write(ModelReaderWriterOptions options)

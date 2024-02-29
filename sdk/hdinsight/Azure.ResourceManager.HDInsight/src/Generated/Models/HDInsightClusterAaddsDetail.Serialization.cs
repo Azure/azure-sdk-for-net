@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
-            Optional<bool> initialSyncComplete = default;
-            Optional<bool> ldapsEnabled = default;
-            Optional<string> ldapsPublicCertificateInBase64 = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<Guid> tenantId = default;
+            string domainName = default;
+            bool? initialSyncComplete = default;
+            bool? ldapsEnabled = default;
+            string ldapsPublicCertificateInBase64 = default;
+            ResourceIdentifier resourceId = default;
+            ResourceIdentifier subnetId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterAaddsDetail(domainName.Value, Optional.ToNullable(initialSyncComplete), Optional.ToNullable(ldapsEnabled), ldapsPublicCertificateInBase64.Value, resourceId.Value, subnetId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new HDInsightClusterAaddsDetail(
+                domainName,
+                initialSyncComplete,
+                ldapsEnabled,
+                ldapsPublicCertificateInBase64,
+                resourceId,
+                subnetId,
+                tenantId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterAaddsDetail>.Write(ModelReaderWriterOptions options)

@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DataBoxContactDetails> contactDetails = default;
-            Optional<DataBoxShippingAddress> shippingAddress = default;
-            Optional<ReverseShippingDetails> reverseShippingDetails = default;
-            Optional<DataBoxOrderPreferences> preferences = default;
-            Optional<DataBoxKeyEncryptionKey> keyEncryptionKey = default;
-            Optional<PackageCarrierDetails> returnToCustomerPackageDetails = default;
+            DataBoxContactDetails contactDetails = default;
+            DataBoxShippingAddress shippingAddress = default;
+            ReverseShippingDetails reverseShippingDetails = default;
+            DataBoxOrderPreferences preferences = default;
+            DataBoxKeyEncryptionKey keyEncryptionKey = default;
+            PackageCarrierDetails returnToCustomerPackageDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateJobDetails(contactDetails.Value, shippingAddress.Value, reverseShippingDetails.Value, preferences.Value, keyEncryptionKey.Value, returnToCustomerPackageDetails.Value, serializedAdditionalRawData);
+            return new UpdateJobDetails(
+                contactDetails,
+                shippingAddress,
+                reverseShippingDetails,
+                preferences,
+                keyEncryptionKey,
+                returnToCustomerPackageDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateJobDetails>.Write(ModelReaderWriterOptions options)

@@ -137,16 +137,16 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<Uri> resourceId = default;
-            Optional<BackendProperties> properties = default;
-            Optional<BackendCredentialsContract> credentials = default;
-            Optional<BackendProxyContract> proxy = default;
-            Optional<BackendTlsProperties> tls = default;
-            Optional<Uri> uri = default;
-            Optional<BackendProtocol> protocol = default;
+            SystemData systemData = default;
+            string title = default;
+            string description = default;
+            Uri resourceId = default;
+            BackendProperties properties = default;
+            BackendCredentialsContract credentials = default;
+            BackendProxyContract proxy = default;
+            BackendTlsProperties tls = default;
+            Uri uri = default;
+            BackendProtocol? protocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -266,7 +266,21 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementBackendData(id, name, type, systemData.Value, title.Value, description.Value, resourceId.Value, properties.Value, credentials.Value, proxy.Value, tls.Value, uri.Value, Optional.ToNullable(protocol), serializedAdditionalRawData);
+            return new ApiManagementBackendData(
+                id,
+                name,
+                type,
+                systemData,
+                title,
+                description,
+                resourceId,
+                properties,
+                credentials,
+                proxy,
+                tls,
+                uri,
+                protocol,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementBackendData>.Write(ModelReaderWriterOptions options)

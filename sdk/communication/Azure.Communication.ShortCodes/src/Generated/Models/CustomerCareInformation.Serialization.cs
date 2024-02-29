@@ -34,8 +34,8 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<string> tollFreeNumber = default;
-            Optional<string> email = default;
+            string tollFreeNumber = default;
+            string email = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tollFreeNumber"u8))
@@ -49,7 +49,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new CustomerCareInformation(tollFreeNumber.Value, email.Value);
+            return new CustomerCareInformation(tollFreeNumber, email);
         }
     }
 }

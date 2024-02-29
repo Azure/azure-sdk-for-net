@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             IReadOnlyList<LogicApiOperationInfo> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiOperationListResult(value ?? new ChangeTrackingList<LogicApiOperationInfo>(), nextLink.Value, serializedAdditionalRawData);
+            return new LogicApiOperationListResult(value ?? new ChangeTrackingList<LogicApiOperationInfo>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiOperationListResult>.Write(ModelReaderWriterOptions options)

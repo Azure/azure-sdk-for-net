@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> biosId = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> lastHeartbeatUtc = default;
-            Optional<SiteRecoveryProtectionHealth> health = default;
+            string id = default;
+            string name = default;
+            string biosId = default;
+            string version = default;
+            DateTimeOffset? lastHeartbeatUtc = default;
+            SiteRecoveryProtectionHealth? health = default;
             IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
-            Optional<int> forwardProtectedItemCount = default;
-            Optional<int> reverseProtectedItemCount = default;
+            int? forwardProtectedItemCount = default;
+            int? reverseProtectedItemCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryDraDetails(id.Value, name.Value, biosId.Value, version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(health), healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), Optional.ToNullable(forwardProtectedItemCount), Optional.ToNullable(reverseProtectedItemCount), serializedAdditionalRawData);
+            return new SiteRecoveryDraDetails(
+                id,
+                name,
+                biosId,
+                version,
+                lastHeartbeatUtc,
+                health,
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                forwardProtectedItemCount,
+                reverseProtectedItemCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryDraDetails>.Write(ModelReaderWriterOptions options)

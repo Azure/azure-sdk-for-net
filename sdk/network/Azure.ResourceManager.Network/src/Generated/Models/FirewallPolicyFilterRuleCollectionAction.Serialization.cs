@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<FirewallPolicyFilterRuleCollectionActionType> type = default;
+            FirewallPolicyFilterRuleCollectionActionType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyFilterRuleCollectionAction(Optional.ToNullable(type), serializedAdditionalRawData);
+            return new FirewallPolicyFilterRuleCollectionAction(type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyFilterRuleCollectionAction>.Write(ModelReaderWriterOptions options)

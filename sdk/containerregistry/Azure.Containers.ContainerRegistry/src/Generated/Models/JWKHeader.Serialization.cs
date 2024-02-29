@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -18,11 +17,11 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<string> crv = default;
-            Optional<string> kid = default;
-            Optional<string> kty = default;
-            Optional<string> x = default;
-            Optional<string> y = default;
+            string crv = default;
+            string kid = default;
+            string kty = default;
+            string x = default;
+            string y = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("crv"u8))
@@ -51,7 +50,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new JWKHeader(crv.Value, kid.Value, kty.Value, x.Value, y.Value);
+            return new JWKHeader(crv, kid, kty, x, y);
         }
     }
 }

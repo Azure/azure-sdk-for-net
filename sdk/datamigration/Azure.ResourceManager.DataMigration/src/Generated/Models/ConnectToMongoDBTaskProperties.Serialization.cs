@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<MongoDBConnectionInfo> input = default;
+            MongoDBConnectionInfo input = default;
             IReadOnlyList<MongoDBClusterInfo> output = default;
             TaskType taskType = default;
             IReadOnlyList<ODataError> errors = default;
-            Optional<TaskState> state = default;
+            TaskState? state = default;
             IReadOnlyList<CommandProperties> commands = default;
             IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -213,7 +213,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToMongoDBTaskProperties(taskType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), commands ?? new ChangeTrackingList<CommandProperties>(), clientData ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, input.Value, output ?? new ChangeTrackingList<MongoDBClusterInfo>());
+            return new ConnectToMongoDBTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                state,
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input,
+                output ?? new ChangeTrackingList<MongoDBClusterInfo>());
         }
 
         BinaryData IPersistableModel<ConnectToMongoDBTaskProperties>.Write(ModelReaderWriterOptions options)

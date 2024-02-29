@@ -157,23 +157,23 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<ArcVmExtendedLocation> extendedLocation = default;
+            ArcVmExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> blockSizeBytes = default;
-            Optional<long> diskSizeGB = default;
-            Optional<bool> @dynamic = default;
-            Optional<int> logicalSectorBytes = default;
-            Optional<int> physicalSectorBytes = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<DiskFileFormat> diskFileFormat = default;
-            Optional<ProvisioningStateEnum> provisioningState = default;
-            Optional<ResourceIdentifier> containerId = default;
-            Optional<VirtualHardDiskStatus> status = default;
+            SystemData systemData = default;
+            int? blockSizeBytes = default;
+            long? diskSizeGB = default;
+            bool? @dynamic = default;
+            int? logicalSectorBytes = default;
+            int? physicalSectorBytes = default;
+            HyperVGeneration? hyperVGeneration = default;
+            DiskFileFormat? diskFileFormat = default;
+            ProvisioningStateEnum? provisioningState = default;
+            ResourceIdentifier containerId = default;
+            VirtualHardDiskStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -338,7 +338,25 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHardDiskData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation.Value, Optional.ToNullable(blockSizeBytes), Optional.ToNullable(diskSizeGB), Optional.ToNullable(@dynamic), Optional.ToNullable(logicalSectorBytes), Optional.ToNullable(physicalSectorBytes), Optional.ToNullable(hyperVGeneration), Optional.ToNullable(diskFileFormat), Optional.ToNullable(provisioningState), containerId.Value, status.Value, serializedAdditionalRawData);
+            return new VirtualHardDiskData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                blockSizeBytes,
+                diskSizeGB,
+                @dynamic,
+                logicalSectorBytes,
+                physicalSectorBytes,
+                hyperVGeneration,
+                diskFileFormat,
+                provisioningState,
+                containerId,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualHardDiskData>.Write(ModelReaderWriterOptions options)

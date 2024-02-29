@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             ResourceIdentifier shareId = default;
-            Optional<ResourceIdentifier> roleId = default;
-            Optional<string> mountPoint = default;
-            Optional<DataBoxEdgeMountType> mountType = default;
-            Optional<DataBoxEdgeRoleType> roleType = default;
+            ResourceIdentifier roleId = default;
+            string mountPoint = default;
+            DataBoxEdgeMountType? mountType = default;
+            DataBoxEdgeRoleType? roleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeMountPointMap(shareId, roleId.Value, mountPoint.Value, Optional.ToNullable(mountType), Optional.ToNullable(roleType), serializedAdditionalRawData);
+            return new DataBoxEdgeMountPointMap(
+                shareId,
+                roleId,
+                mountPoint,
+                mountType,
+                roleType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeMountPointMap>.Write(ModelReaderWriterOptions options)

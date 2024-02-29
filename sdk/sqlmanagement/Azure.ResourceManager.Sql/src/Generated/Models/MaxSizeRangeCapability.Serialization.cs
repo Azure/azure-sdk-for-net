@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<MaxSizeCapability> minValue = default;
-            Optional<MaxSizeCapability> maxValue = default;
-            Optional<MaxSizeCapability> scaleSize = default;
-            Optional<LogSizeCapability> logSize = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            MaxSizeCapability minValue = default;
+            MaxSizeCapability maxValue = default;
+            MaxSizeCapability scaleSize = default;
+            LogSizeCapability logSize = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaxSizeRangeCapability(minValue.Value, maxValue.Value, scaleSize.Value, logSize.Value, Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new MaxSizeRangeCapability(
+                minValue,
+                maxValue,
+                scaleSize,
+                logSize,
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaxSizeRangeCapability>.Write(ModelReaderWriterOptions options)

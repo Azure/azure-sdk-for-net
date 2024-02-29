@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<bool>> quoteAllText = default;
+            DataFactoryElement<bool> quoteAllText = default;
             DataFactoryElement<string> fileExtension = default;
-            Optional<DataFactoryElement<int>> maxRowsPerFile = default;
-            Optional<DataFactoryElement<string>> fileNamePrefix = default;
+            DataFactoryElement<int> maxRowsPerFile = default;
+            DataFactoryElement<string> fileNamePrefix = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DelimitedTextWriteSettings(type, additionalProperties, quoteAllText.Value, fileExtension, maxRowsPerFile.Value, fileNamePrefix.Value);
+            return new DelimitedTextWriteSettings(
+                type,
+                additionalProperties,
+                quoteAllText,
+                fileExtension,
+                maxRowsPerFile,
+                fileNamePrefix);
         }
 
         BinaryData IPersistableModel<DelimitedTextWriteSettings>.Write(ModelReaderWriterOptions options)

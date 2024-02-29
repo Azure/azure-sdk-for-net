@@ -88,10 +88,10 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             string assignmentId = default;
-            Optional<string> workerId = default;
+            string workerId = default;
             DateTimeOffset assignedAt = default;
-            Optional<DateTimeOffset> completedAt = default;
-            Optional<DateTimeOffset> closedAt = default;
+            DateTimeOffset? completedAt = default;
+            DateTimeOffset? closedAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,13 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterJobAssignment(assignmentId, workerId.Value, assignedAt, Optional.ToNullable(completedAt), Optional.ToNullable(closedAt), serializedAdditionalRawData);
+            return new RouterJobAssignment(
+                assignmentId,
+                workerId,
+                assignedAt,
+                completedAt,
+                closedAt,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterJobAssignment>.Write(ModelReaderWriterOptions options)

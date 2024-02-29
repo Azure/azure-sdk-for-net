@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> principal = default;
-            Optional<string> entityStoreDatabaseLink = default;
+            SystemData systemData = default;
+            string principal = default;
+            string entityStoreDatabaseLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomEntityStoreAssignmentData(id, name, type, systemData.Value, principal.Value, entityStoreDatabaseLink.Value, serializedAdditionalRawData);
+            return new CustomEntityStoreAssignmentData(
+                id,
+                name,
+                type,
+                systemData,
+                principal,
+                entityStoreDatabaseLink,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomEntityStoreAssignmentData>.Write(ModelReaderWriterOptions options)

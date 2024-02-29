@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<SmartGroupModificationEvent> modificationEvent = default;
-            Optional<string> oldValue = default;
-            Optional<string> newValue = default;
-            Optional<DateTimeOffset> modifiedAt = default;
-            Optional<string> modifiedBy = default;
-            Optional<string> comments = default;
-            Optional<string> description = default;
+            SmartGroupModificationEvent? modificationEvent = default;
+            string oldValue = default;
+            string newValue = default;
+            DateTimeOffset? modifiedAt = default;
+            string modifiedBy = default;
+            string comments = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SmartGroupModificationItemInfo(Optional.ToNullable(modificationEvent), oldValue.Value, newValue.Value, Optional.ToNullable(modifiedAt), modifiedBy.Value, comments.Value, description.Value, serializedAdditionalRawData);
+            return new SmartGroupModificationItemInfo(
+                modificationEvent,
+                oldValue,
+                newValue,
+                modifiedAt,
+                modifiedBy,
+                comments,
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SmartGroupModificationItemInfo>.Write(ModelReaderWriterOptions options)

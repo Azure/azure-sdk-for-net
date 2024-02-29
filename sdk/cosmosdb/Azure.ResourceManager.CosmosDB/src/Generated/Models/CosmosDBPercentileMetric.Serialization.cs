@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> timeGrain = default;
-            Optional<CosmosDBMetricUnitType> unit = default;
-            Optional<CosmosDBMetricName> name = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string timeGrain = default;
+            CosmosDBMetricUnitType? unit = default;
+            CosmosDBMetricName name = default;
             IReadOnlyList<PercentileMetricValue> metricValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -170,7 +170,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBPercentileMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, metricValues ?? new ChangeTrackingList<PercentileMetricValue>(), serializedAdditionalRawData);
+            return new CosmosDBPercentileMetric(
+                startTime,
+                endTime,
+                timeGrain,
+                unit,
+                name,
+                metricValues ?? new ChangeTrackingList<PercentileMetricValue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBPercentileMetric>.Write(ModelReaderWriterOptions options)

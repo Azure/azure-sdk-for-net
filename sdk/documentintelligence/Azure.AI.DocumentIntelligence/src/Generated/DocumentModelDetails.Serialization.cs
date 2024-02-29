@@ -122,14 +122,14 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             string modelId = default;
-            Optional<string> description = default;
+            string description = default;
             DateTimeOffset createdDateTime = default;
-            Optional<DateTimeOffset> expirationDateTime = default;
-            Optional<string> apiVersion = default;
+            DateTimeOffset? expirationDateTime = default;
+            string apiVersion = default;
             IReadOnlyDictionary<string, string> tags = default;
-            Optional<DocumentBuildMode> buildMode = default;
-            Optional<AzureBlobContentSource> azureBlobSource = default;
-            Optional<AzureBlobFileListContentSource> azureBlobFileListSource = default;
+            DocumentBuildMode? buildMode = default;
+            AzureBlobContentSource azureBlobSource = default;
+            AzureBlobFileListContentSource azureBlobFileListSource = default;
             IReadOnlyDictionary<string, DocumentTypeDetails> docTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -225,7 +225,18 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentModelDetails(modelId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion.Value, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(buildMode), azureBlobSource.Value, azureBlobFileListSource.Value, docTypes ?? new ChangeTrackingDictionary<string, DocumentTypeDetails>(), serializedAdditionalRawData);
+            return new DocumentModelDetails(
+                modelId,
+                description,
+                createdDateTime,
+                expirationDateTime,
+                apiVersion,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                buildMode,
+                azureBlobSource,
+                azureBlobFileListSource,
+                docTypes ?? new ChangeTrackingDictionary<string, DocumentTypeDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentModelDetails>.Write(ModelReaderWriterOptions options)

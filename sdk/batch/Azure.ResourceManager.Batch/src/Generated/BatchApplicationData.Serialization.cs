@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<bool> allowUpdates = default;
-            Optional<string> defaultVersion = default;
+            SystemData systemData = default;
+            string displayName = default;
+            bool? allowUpdates = default;
+            string defaultVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.Batch
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchApplicationData(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(allowUpdates), defaultVersion.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new BatchApplicationData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                allowUpdates,
+                defaultVersion,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchApplicationData>.Write(ModelReaderWriterOptions options)

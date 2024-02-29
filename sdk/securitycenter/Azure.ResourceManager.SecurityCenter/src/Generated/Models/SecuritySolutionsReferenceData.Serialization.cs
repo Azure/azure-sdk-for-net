@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             SecurityFamily securityFamily = default;
             string alertVendorName = default;
             Uri packageInfoUrl = default;
@@ -209,7 +209,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecuritySolutionsReferenceData(id, name, type, systemData.Value, securityFamily, alertVendorName, packageInfoUrl, productName, publisher, publisherDisplayName, template, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new SecuritySolutionsReferenceData(
+                id,
+                name,
+                type,
+                systemData,
+                securityFamily,
+                alertVendorName,
+                packageInfoUrl,
+                productName,
+                publisher,
+                publisherDisplayName,
+                template,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecuritySolutionsReferenceData>.Write(ModelReaderWriterOptions options)

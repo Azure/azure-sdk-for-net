@@ -77,8 +77,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             IList<TriggerPipelineReference> pipelines = default;
             string type = "MultiplePipelineTrigger";
-            Optional<string> description = default;
-            Optional<TriggerRuntimeState> runtimeState = default;
+            string description = default;
+            TriggerRuntimeState? runtimeState = default;
             IList<object> annotations = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -141,7 +141,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MultiplePipelineTrigger(type, description.Value, Optional.ToNullable(runtimeState), annotations ?? new ChangeTrackingList<object>(), additionalProperties, pipelines ?? new ChangeTrackingList<TriggerPipelineReference>());
+            return new MultiplePipelineTrigger(
+                type,
+                description,
+                runtimeState,
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                pipelines ?? new ChangeTrackingList<TriggerPipelineReference>());
         }
 
         internal partial class MultiplePipelineTriggerConverter : JsonConverter<MultiplePipelineTrigger>

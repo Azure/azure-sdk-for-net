@@ -119,20 +119,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object endpoint = default;
             ServiceNowAuthenticationType authenticationType = default;
-            Optional<object> username = default;
-            Optional<SecretBase> password = default;
-            Optional<object> clientId = default;
-            Optional<SecretBase> clientSecret = default;
-            Optional<object> useEncryptedEndpoints = default;
-            Optional<object> useHostVerification = default;
-            Optional<object> usePeerVerification = default;
-            Optional<object> encryptedCredential = default;
+            object username = default;
+            SecretBase password = default;
+            object clientId = default;
+            SecretBase clientSecret = default;
+            object useEncryptedEndpoints = default;
+            object useHostVerification = default;
+            object usePeerVerification = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -288,7 +288,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ServiceNowLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, endpoint, authenticationType, username.Value, password.Value, clientId.Value, clientSecret.Value, useEncryptedEndpoints.Value, useHostVerification.Value, usePeerVerification.Value, encryptedCredential.Value);
+            return new ServiceNowLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                endpoint,
+                authenticationType,
+                username,
+                password,
+                clientId,
+                clientSecret,
+                useEncryptedEndpoints,
+                useHostVerification,
+                usePeerVerification,
+                encryptedCredential);
         }
 
         internal partial class ServiceNowLinkedServiceConverter : JsonConverter<ServiceNowLinkedService>

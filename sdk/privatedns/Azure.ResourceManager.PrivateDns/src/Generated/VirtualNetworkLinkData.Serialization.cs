@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> virtualNetwork = default;
-            Optional<bool> registrationEnabled = default;
-            Optional<VirtualNetworkLinkState> virtualNetworkLinkState = default;
-            Optional<PrivateDnsProvisioningState> privateDnsProvisioningState = default;
+            SystemData systemData = default;
+            WritableSubResource virtualNetwork = default;
+            bool? registrationEnabled = default;
+            VirtualNetworkLinkState? virtualNetworkLinkState = default;
+            PrivateDnsProvisioningState? privateDnsProvisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +250,19 @@ namespace Azure.ResourceManager.PrivateDns
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkLinkData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), virtualNetwork, Optional.ToNullable(registrationEnabled), Optional.ToNullable(virtualNetworkLinkState), Optional.ToNullable(privateDnsProvisioningState), serializedAdditionalRawData);
+            return new VirtualNetworkLinkData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                virtualNetwork,
+                registrationEnabled,
+                virtualNetworkLinkState,
+                privateDnsProvisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkLinkData>.Write(ModelReaderWriterOptions options)

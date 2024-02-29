@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
+            SystemData systemData = default;
+            string displayName = default;
             IList<string> members = default;
-            Optional<WorkloadNetworkVmGroupStatus> status = default;
-            Optional<WorkloadNetworkVmGroupProvisioningState> provisioningState = default;
-            Optional<long> revision = default;
+            WorkloadNetworkVmGroupStatus? status = default;
+            WorkloadNetworkVmGroupProvisioningState? provisioningState = default;
+            long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,17 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkVmGroupData(id, name, type, systemData.Value, displayName.Value, members ?? new ChangeTrackingList<string>(), Optional.ToNullable(status), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData);
+            return new WorkloadNetworkVmGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                members ?? new ChangeTrackingList<string>(),
+                status,
+                provisioningState,
+                revision,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkVmGroupData>.Write(ModelReaderWriterOptions options)

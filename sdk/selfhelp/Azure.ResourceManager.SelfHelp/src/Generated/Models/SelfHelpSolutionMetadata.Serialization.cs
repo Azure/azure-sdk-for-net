@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<SolutionMetadataProperties> solutions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpSolutionMetadata(id, name, type, systemData.Value, solutions ?? new ChangeTrackingList<SolutionMetadataProperties>(), serializedAdditionalRawData);
+            return new SelfHelpSolutionMetadata(
+                id,
+                name,
+                type,
+                systemData,
+                solutions ?? new ChangeTrackingList<SolutionMetadataProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpSolutionMetadata>.Write(ModelReaderWriterOptions options)

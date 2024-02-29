@@ -23,11 +23,11 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             TasksStateTasks tasks = default;
             IReadOnlyList<TextAnalyticsError> errors = default;
-            Optional<RequestStatistics> statistics = default;
-            Optional<string> nextLink = default;
-            Optional<string> displayName = default;
+            RequestStatistics statistics = default;
+            string nextLink = default;
+            string displayName = default;
             DateTimeOffset createdDateTime = default;
-            Optional<DateTimeOffset> expirationDateTime = default;
+            DateTimeOffset? expirationDateTime = default;
             Guid jobId = default;
             DateTimeOffset lastUpdateDateTime = default;
             State status = default;
@@ -101,7 +101,17 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new AnalyzeJobState(createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, displayName.Value, tasks, errors ?? new ChangeTrackingList<TextAnalyticsError>(), statistics.Value, nextLink.Value);
+            return new AnalyzeJobState(
+                createdDateTime,
+                expirationDateTime,
+                jobId,
+                lastUpdateDateTime,
+                status,
+                displayName,
+                tasks,
+                errors ?? new ChangeTrackingList<TextAnalyticsError>(),
+                statistics,
+                nextLink);
         }
     }
 }

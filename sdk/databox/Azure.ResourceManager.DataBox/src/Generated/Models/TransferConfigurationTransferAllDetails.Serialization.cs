@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<TransferAllDetails> include = default;
+            TransferAllDetails include = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransferConfigurationTransferAllDetails(include.Value, serializedAdditionalRawData);
+            return new TransferConfigurationTransferAllDetails(include, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TransferConfigurationTransferAllDetails>.Write(ModelReaderWriterOptions options)

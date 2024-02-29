@@ -129,18 +129,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<MySqlFlexibleServerBackupAndExportOperationStatus> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<double> percentComplete = default;
-            Optional<ResponseError> error = default;
+            MySqlFlexibleServerBackupAndExportOperationStatus? status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            double? percentComplete = default;
+            ResponseError error = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> datasourceSizeInBytes = default;
-            Optional<long> dataTransferredInBytes = default;
-            Optional<string> backupMetadata = default;
+            SystemData systemData = default;
+            long? datasourceSizeInBytes = default;
+            long? dataTransferredInBytes = default;
+            string backupMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -255,7 +255,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerBackupAndExportResult(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), Optional.ToNullable(datasourceSizeInBytes), Optional.ToNullable(dataTransferredInBytes), backupMetadata.Value, error.Value, serializedAdditionalRawData);
+            return new MySqlFlexibleServerBackupAndExportResult(
+                id,
+                name,
+                type,
+                systemData,
+                status,
+                startTime,
+                endTime,
+                percentComplete,
+                datasourceSizeInBytes,
+                dataTransferredInBytes,
+                backupMetadata,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerBackupAndExportResult>.Write(ModelReaderWriterOptions options)

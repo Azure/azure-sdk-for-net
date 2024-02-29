@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.AppService.Models
             BackupFrequencyUnit frequencyUnit = default;
             bool keepAtLeastOneBackup = default;
             int retentionPeriodInDays = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> lastExecutionTime = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? lastExecutionTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppBackupSchedule(frequencyInterval, frequencyUnit, keepAtLeastOneBackup, retentionPeriodInDays, Optional.ToNullable(startTime), Optional.ToNullable(lastExecutionTime), serializedAdditionalRawData);
+            return new WebAppBackupSchedule(
+                frequencyInterval,
+                frequencyUnit,
+                keepAtLeastOneBackup,
+                retentionPeriodInDays,
+                startTime,
+                lastExecutionTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppBackupSchedule>.Write(ModelReaderWriterOptions options)

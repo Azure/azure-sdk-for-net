@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<Uri> helpUrl = default;
-            Optional<bool> isHidden = default;
-            Optional<bool> isEnabledByDefault = default;
-            Optional<bool> isInPreview = default;
-            Optional<bool> supportsEmailNotifications = default;
+            string name = default;
+            string displayName = default;
+            string description = default;
+            Uri helpUrl = default;
+            bool? isHidden = default;
+            bool? isEnabledByDefault = default;
+            bool? isInPreview = default;
+            bool? supportsEmailNotifications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +182,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(name.Value, displayName.Value, description.Value, helpUrl.Value, Optional.ToNullable(isHidden), Optional.ToNullable(isEnabledByDefault), Optional.ToNullable(isInPreview), Optional.ToNullable(supportsEmailNotifications), serializedAdditionalRawData);
+            return new ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(
+                name,
+                displayName,
+                description,
+                helpUrl,
+                isHidden,
+                isEnabledByDefault,
+                isInPreview,
+                supportsEmailNotifications,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>.Write(ModelReaderWriterOptions options)

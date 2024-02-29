@@ -65,13 +65,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> treatEmptyAsNull = default;
-            Optional<object> skipHeaderLineCount = default;
-            Optional<object> recursive = default;
+            object treatEmptyAsNull = default;
+            object skipHeaderLineCount = default;
+            object recursive = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object sourceRetryCount = default;
+            object sourceRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobFSSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, treatEmptyAsNull.Value, skipHeaderLineCount.Value, recursive.Value);
+            return new AzureBlobFSSource(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                treatEmptyAsNull,
+                skipHeaderLineCount,
+                recursive);
         }
 
         internal partial class AzureBlobFSSourceConverter : JsonConverter<AzureBlobFSSource>

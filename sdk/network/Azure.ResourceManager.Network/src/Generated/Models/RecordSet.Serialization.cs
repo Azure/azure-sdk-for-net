@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> recordType = default;
-            Optional<string> recordSetName = default;
-            Optional<string> fqdn = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<int> ttl = default;
+            string recordType = default;
+            string recordSetName = default;
+            string fqdn = default;
+            NetworkProvisioningState? provisioningState = default;
+            int? ttl = default;
             IReadOnlyList<string> ipAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecordSet(recordType.Value, recordSetName.Value, fqdn.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(ttl), ipAddresses ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new RecordSet(
+                recordType,
+                recordSetName,
+                fqdn,
+                provisioningState,
+                ttl,
+                ipAddresses ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecordSet>.Write(ModelReaderWriterOptions options)

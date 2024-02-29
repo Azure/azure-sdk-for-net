@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             InputSchemaMappingType inputSchemaMappingType = default;
-            Optional<JsonField> id = default;
-            Optional<JsonField> topic = default;
-            Optional<JsonField> eventTime = default;
-            Optional<JsonFieldWithDefault> eventType = default;
-            Optional<JsonFieldWithDefault> subject = default;
-            Optional<JsonFieldWithDefault> dataVersion = default;
+            JsonField id = default;
+            JsonField topic = default;
+            JsonField eventTime = default;
+            JsonFieldWithDefault eventType = default;
+            JsonFieldWithDefault subject = default;
+            JsonFieldWithDefault dataVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,7 +187,15 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridJsonInputSchemaMapping(inputSchemaMappingType, serializedAdditionalRawData, id.Value, topic.Value, eventTime.Value, eventType.Value, subject.Value, dataVersion.Value);
+            return new EventGridJsonInputSchemaMapping(
+                inputSchemaMappingType,
+                serializedAdditionalRawData,
+                id,
+                topic,
+                eventTime,
+                eventType,
+                subject,
+                dataVersion);
         }
 
         BinaryData IPersistableModel<EventGridJsonInputSchemaMapping>.Write(ModelReaderWriterOptions options)

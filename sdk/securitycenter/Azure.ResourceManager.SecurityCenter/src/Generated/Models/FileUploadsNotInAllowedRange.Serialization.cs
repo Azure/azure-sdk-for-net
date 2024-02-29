@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             TimeSpan timeWindowSize = default;
             int minThreshold = default;
             int maxThreshold = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            string displayName = default;
+            string description = default;
             bool isEnabled = default;
             string ruleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -136,7 +136,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileUploadsNotInAllowedRange(displayName.Value, description.Value, isEnabled, ruleType, serializedAdditionalRawData, minThreshold, maxThreshold, timeWindowSize);
+            return new FileUploadsNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
         }
 
         BinaryData IPersistableModel<FileUploadsNotInAllowedRange>.Write(ModelReaderWriterOptions options)

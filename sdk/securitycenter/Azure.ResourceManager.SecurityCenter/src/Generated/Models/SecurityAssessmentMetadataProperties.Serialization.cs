@@ -126,17 +126,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             string displayName = default;
-            Optional<ResourceIdentifier> policyDefinitionId = default;
-            Optional<string> description = default;
-            Optional<string> remediationDescription = default;
+            ResourceIdentifier policyDefinitionId = default;
+            string description = default;
+            string remediationDescription = default;
             IList<SecurityAssessmentResourceCategory> categories = default;
             SecurityAssessmentSeverity severity = default;
-            Optional<SecurityAssessmentUserImpact> userImpact = default;
-            Optional<ImplementationEffort> implementationEffort = default;
+            SecurityAssessmentUserImpact? userImpact = default;
+            ImplementationEffort? implementationEffort = default;
             IList<SecurityThreat> threats = default;
-            Optional<bool> preview = default;
+            bool? preview = default;
             SecurityAssessmentType assessmentType = default;
-            Optional<SecurityAssessmentMetadataPartner> partnerData = default;
+            SecurityAssessmentMetadataPartner partnerData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,7 +245,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentMetadataProperties(displayName, policyDefinitionId.Value, description.Value, remediationDescription.Value, categories ?? new ChangeTrackingList<SecurityAssessmentResourceCategory>(), severity, Optional.ToNullable(userImpact), Optional.ToNullable(implementationEffort), threats ?? new ChangeTrackingList<SecurityThreat>(), Optional.ToNullable(preview), assessmentType, partnerData.Value, serializedAdditionalRawData);
+            return new SecurityAssessmentMetadataProperties(
+                displayName,
+                policyDefinitionId,
+                description,
+                remediationDescription,
+                categories ?? new ChangeTrackingList<SecurityAssessmentResourceCategory>(),
+                severity,
+                userImpact,
+                implementationEffort,
+                threats ?? new ChangeTrackingList<SecurityThreat>(),
+                preview,
+                assessmentType,
+                partnerData,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAssessmentMetadataProperties>.Write(ModelReaderWriterOptions options)

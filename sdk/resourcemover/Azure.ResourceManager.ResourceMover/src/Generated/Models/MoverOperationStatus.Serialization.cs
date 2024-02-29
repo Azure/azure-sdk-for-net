@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<MoverOperationStatusError> error = default;
-            Optional<BinaryData> properties = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            string status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            MoverOperationStatusError error = default;
+            BinaryData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverOperationStatus(id.Value, name.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), error.Value, properties.Value, serializedAdditionalRawData);
+            return new MoverOperationStatus(
+                id,
+                name,
+                status,
+                startTime,
+                endTime,
+                error,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverOperationStatus>.Write(ModelReaderWriterOptions options)

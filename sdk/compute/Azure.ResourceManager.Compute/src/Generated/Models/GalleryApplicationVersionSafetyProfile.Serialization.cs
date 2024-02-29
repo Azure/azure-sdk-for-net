@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> allowDeletionOfReplicatedLocations = default;
+            bool? allowDeletionOfReplicatedLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryApplicationVersionSafetyProfile(Optional.ToNullable(allowDeletionOfReplicatedLocations), serializedAdditionalRawData);
+            return new GalleryApplicationVersionSafetyProfile(allowDeletionOfReplicatedLocations, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryApplicationVersionSafetyProfile>.Write(ModelReaderWriterOptions options)

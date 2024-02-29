@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string name = default;
-            Optional<ConnectionMonitorEndpointType> type = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> address = default;
-            Optional<ConnectionMonitorEndpointFilter> filter = default;
-            Optional<ConnectionMonitorEndpointScope> scope = default;
-            Optional<CoverageLevel> coverageLevel = default;
+            ConnectionMonitorEndpointType? type = default;
+            ResourceIdentifier resourceId = default;
+            string address = default;
+            ConnectionMonitorEndpointFilter filter = default;
+            ConnectionMonitorEndpointScope scope = default;
+            CoverageLevel? coverageLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorEndpoint(name, Optional.ToNullable(type), resourceId.Value, address.Value, filter.Value, scope.Value, Optional.ToNullable(coverageLevel), serializedAdditionalRawData);
+            return new ConnectionMonitorEndpoint(
+                name,
+                type,
+                resourceId,
+                address,
+                filter,
+                scope,
+                coverageLevel,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorEndpoint>.Write(ModelReaderWriterOptions options)

@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
-            Optional<NeighborGroupDestination> destination = default;
+            SystemData systemData = default;
+            string annotation = default;
+            NeighborGroupDestination destination = default;
             IReadOnlyList<ResourceIdentifier> networkTapIds = default;
             IReadOnlyList<ResourceIdentifier> networkTapRuleIds = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -288,7 +288,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricNeighborGroupData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, annotation.Value, destination.Value, networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>(), networkTapRuleIds ?? new ChangeTrackingList<ResourceIdentifier>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkFabricNeighborGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation,
+                destination,
+                networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                networkTapRuleIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricNeighborGroupData>.Write(ModelReaderWriterOptions options)

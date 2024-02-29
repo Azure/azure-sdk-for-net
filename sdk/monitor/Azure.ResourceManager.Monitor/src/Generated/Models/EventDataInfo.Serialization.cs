@@ -196,30 +196,30 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<SenderAuthorization> authorization = default;
+            SenderAuthorization authorization = default;
             IReadOnlyDictionary<string, string> claims = default;
-            Optional<string> caller = default;
-            Optional<string> description = default;
-            Optional<string> id = default;
-            Optional<string> eventDataId = default;
-            Optional<string> correlationId = default;
-            Optional<MonitorLocalizableString> eventName = default;
-            Optional<MonitorLocalizableString> category = default;
-            Optional<EventDataHttpRequestInfo> httpRequest = default;
-            Optional<MonitorEventLevel> level = default;
-            Optional<string> resourceGroupName = default;
-            Optional<MonitorLocalizableString> resourceProviderName = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<MonitorLocalizableString> resourceType = default;
-            Optional<string> operationId = default;
-            Optional<MonitorLocalizableString> operationName = default;
+            string caller = default;
+            string description = default;
+            string id = default;
+            string eventDataId = default;
+            string correlationId = default;
+            MonitorLocalizableString eventName = default;
+            MonitorLocalizableString category = default;
+            EventDataHttpRequestInfo httpRequest = default;
+            MonitorEventLevel? level = default;
+            string resourceGroupName = default;
+            MonitorLocalizableString resourceProviderName = default;
+            ResourceIdentifier resourceId = default;
+            MonitorLocalizableString resourceType = default;
+            string operationId = default;
+            MonitorLocalizableString operationName = default;
             IReadOnlyDictionary<string, string> properties = default;
-            Optional<MonitorLocalizableString> status = default;
-            Optional<MonitorLocalizableString> subStatus = default;
-            Optional<DateTimeOffset> eventTimestamp = default;
-            Optional<DateTimeOffset> submissionTimestamp = default;
-            Optional<string> subscriptionId = default;
-            Optional<Guid> tenantId = default;
+            MonitorLocalizableString status = default;
+            MonitorLocalizableString subStatus = default;
+            DateTimeOffset? eventTimestamp = default;
+            DateTimeOffset? submissionTimestamp = default;
+            string subscriptionId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -424,7 +424,32 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventDataInfo(authorization.Value, claims ?? new ChangeTrackingDictionary<string, string>(), caller.Value, description.Value, id.Value, eventDataId.Value, correlationId.Value, eventName.Value, category.Value, httpRequest.Value, Optional.ToNullable(level), resourceGroupName.Value, resourceProviderName.Value, resourceId.Value, resourceType.Value, operationId.Value, operationName.Value, properties ?? new ChangeTrackingDictionary<string, string>(), status.Value, subStatus.Value, Optional.ToNullable(eventTimestamp), Optional.ToNullable(submissionTimestamp), subscriptionId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new EventDataInfo(
+                authorization,
+                claims ?? new ChangeTrackingDictionary<string, string>(),
+                caller,
+                description,
+                id,
+                eventDataId,
+                correlationId,
+                eventName,
+                category,
+                httpRequest,
+                level,
+                resourceGroupName,
+                resourceProviderName,
+                resourceId,
+                resourceType,
+                operationId,
+                operationName,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                status,
+                subStatus,
+                eventTimestamp,
+                submissionTimestamp,
+                subscriptionId,
+                tenantId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventDataInfo>.Write(ModelReaderWriterOptions options)

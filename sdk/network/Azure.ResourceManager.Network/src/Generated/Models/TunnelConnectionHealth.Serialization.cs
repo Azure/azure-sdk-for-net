@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> tunnel = default;
-            Optional<VirtualNetworkGatewayConnectionStatus> connectionStatus = default;
-            Optional<long> ingressBytesTransferred = default;
-            Optional<long> egressBytesTransferred = default;
-            Optional<string> lastConnectionEstablishedUtcTime = default;
+            string tunnel = default;
+            VirtualNetworkGatewayConnectionStatus? connectionStatus = default;
+            long? ingressBytesTransferred = default;
+            long? egressBytesTransferred = default;
+            string lastConnectionEstablishedUtcTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TunnelConnectionHealth(tunnel.Value, Optional.ToNullable(connectionStatus), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), lastConnectionEstablishedUtcTime.Value, serializedAdditionalRawData);
+            return new TunnelConnectionHealth(
+                tunnel,
+                connectionStatus,
+                ingressBytesTransferred,
+                egressBytesTransferred,
+                lastConnectionEstablishedUtcTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TunnelConnectionHealth>.Write(ModelReaderWriterOptions options)

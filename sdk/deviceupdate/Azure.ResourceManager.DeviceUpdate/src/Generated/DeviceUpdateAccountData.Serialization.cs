@@ -153,19 +153,19 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DeviceUpdateProvisioningState> provisioningState = default;
-            Optional<string> hostName = default;
-            Optional<DeviceUpdatePublicNetworkAccess> publicNetworkAccess = default;
+            SystemData systemData = default;
+            DeviceUpdateProvisioningState? provisioningState = default;
+            string hostName = default;
+            DeviceUpdatePublicNetworkAccess? publicNetworkAccess = default;
             IList<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<DeviceUpdateSku> sku = default;
-            Optional<DeviceUpdateEncryption> encryption = default;
+            DeviceUpdateSku? sku = default;
+            DeviceUpdateEncryption encryption = default;
             IReadOnlyList<DeviceUpdateAccountLocationDetail> locations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -311,7 +311,22 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateAccountData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(publicNetworkAccess), privateEndpointConnections ?? new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionData>(), Optional.ToNullable(sku), encryption.Value, locations ?? new ChangeTrackingList<DeviceUpdateAccountLocationDetail>(), serializedAdditionalRawData);
+            return new DeviceUpdateAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState,
+                hostName,
+                publicNetworkAccess,
+                privateEndpointConnections ?? new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionData>(),
+                sku,
+                encryption,
+                locations ?? new ChangeTrackingList<DeviceUpdateAccountLocationDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdateAccountData>.Write(ModelReaderWriterOptions options)

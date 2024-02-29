@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> value = default;
+            string name = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceConfiguration(name.Value, value.Value, serializedAdditionalRawData);
+            return new SourceConfiguration(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceConfiguration>.Write(ModelReaderWriterOptions options)

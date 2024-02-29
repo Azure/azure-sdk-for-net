@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SyncMemberDbType> databaseType = default;
-            Optional<Guid> databaseId = default;
-            Optional<string> description = default;
-            Optional<string> serverName = default;
-            Optional<string> databaseName = default;
-            Optional<string> userName = default;
+            SystemData systemData = default;
+            SyncMemberDbType? databaseType = default;
+            Guid? databaseId = default;
+            string description = default;
+            string serverName = default;
+            string databaseName = default;
+            string userName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncAgentLinkedDatabase(id, name, type, systemData.Value, Optional.ToNullable(databaseType), Optional.ToNullable(databaseId), description.Value, serverName.Value, databaseName.Value, userName.Value, serializedAdditionalRawData);
+            return new SyncAgentLinkedDatabase(
+                id,
+                name,
+                type,
+                systemData,
+                databaseType,
+                databaseId,
+                description,
+                serverName,
+                databaseName,
+                userName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncAgentLinkedDatabase>.Write(ModelReaderWriterOptions options)

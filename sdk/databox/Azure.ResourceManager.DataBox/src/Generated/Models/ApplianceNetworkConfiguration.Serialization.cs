@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> macAddress = default;
+            string name = default;
+            string macAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceNetworkConfiguration(name.Value, macAddress.Value, serializedAdditionalRawData);
+            return new ApplianceNetworkConfiguration(name, macAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceNetworkConfiguration>.Write(ModelReaderWriterOptions options)

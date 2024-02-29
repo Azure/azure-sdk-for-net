@@ -167,17 +167,17 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<MediaJobState> state = default;
-            Optional<string> description = default;
-            Optional<MediaJobInputBasicProperties> input = default;
-            Optional<DateTimeOffset> lastModified = default;
+            SystemData systemData = default;
+            DateTimeOffset? created = default;
+            MediaJobState? state = default;
+            string description = default;
+            MediaJobInputBasicProperties input = default;
+            DateTimeOffset? lastModified = default;
             IList<MediaJobOutput> outputs = default;
-            Optional<MediaJobPriority> priority = default;
+            MediaJobPriority? priority = default;
             IDictionary<string, string> correlationData = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -322,7 +322,22 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaJobData(id, name, type, systemData.Value, Optional.ToNullable(created), Optional.ToNullable(state), description.Value, input.Value, Optional.ToNullable(lastModified), outputs ?? new ChangeTrackingList<MediaJobOutput>(), Optional.ToNullable(priority), correlationData ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(startTime), Optional.ToNullable(endTime), serializedAdditionalRawData);
+            return new MediaJobData(
+                id,
+                name,
+                type,
+                systemData,
+                created,
+                state,
+                description,
+                input,
+                lastModified,
+                outputs ?? new ChangeTrackingList<MediaJobOutput>(),
+                priority,
+                correlationData ?? new ChangeTrackingDictionary<string, string>(),
+                startTime,
+                endTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaJobData>.Write(ModelReaderWriterOptions options)

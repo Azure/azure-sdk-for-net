@@ -137,23 +137,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<object> structure = default;
-            Optional<object> schema = default;
+            string description = default;
+            object structure = default;
+            object schema = default;
             LinkedServiceReference linkedServiceName = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
-            Optional<DatasetFolder> folder = default;
-            Optional<DatasetLocation> location = default;
-            Optional<object> columnDelimiter = default;
-            Optional<object> rowDelimiter = default;
-            Optional<object> encodingName = default;
-            Optional<object> compressionCodec = default;
-            Optional<object> compressionLevel = default;
-            Optional<object> quoteChar = default;
-            Optional<object> escapeChar = default;
-            Optional<object> firstRowAsHeader = default;
-            Optional<object> nullValue = default;
+            DatasetFolder folder = default;
+            DatasetLocation location = default;
+            object columnDelimiter = default;
+            object rowDelimiter = default;
+            object encodingName = default;
+            object compressionCodec = default;
+            object compressionLevel = default;
+            object quoteChar = default;
+            object escapeChar = default;
+            object firstRowAsHeader = default;
+            object nullValue = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -340,7 +340,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DelimitedTextDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), folder.Value, additionalProperties, location.Value, columnDelimiter.Value, rowDelimiter.Value, encodingName.Value, compressionCodec.Value, compressionLevel.Value, quoteChar.Value, escapeChar.Value, firstRowAsHeader.Value, nullValue.Value);
+            return new DelimitedTextDataset(
+                type,
+                description,
+                structure,
+                schema,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                folder,
+                additionalProperties,
+                location,
+                columnDelimiter,
+                rowDelimiter,
+                encodingName,
+                compressionCodec,
+                compressionLevel,
+                quoteChar,
+                escapeChar,
+                firstRowAsHeader,
+                nullValue);
         }
 
         internal partial class DelimitedTextDatasetConverter : JsonConverter<DelimitedTextDataset>

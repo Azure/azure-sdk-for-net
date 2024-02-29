@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.Automation.Models
             }
             string name = default;
             string base64Value = default;
-            Optional<string> description = default;
-            Optional<string> thumbprint = default;
-            Optional<bool> isExportable = default;
+            string description = default;
+            string thumbprint = default;
+            bool? isExportable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationCertificateCreateOrUpdateContent(name, base64Value, description.Value, thumbprint.Value, Optional.ToNullable(isExportable), serializedAdditionalRawData);
+            return new AutomationCertificateCreateOrUpdateContent(
+                name,
+                base64Value,
+                description,
+                thumbprint,
+                isExportable,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationCertificateCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

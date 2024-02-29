@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<SchemaComparisonValidationResultType> schemaDifferences = default;
-            Optional<ValidationError> validationErrors = default;
+            SchemaComparisonValidationResultType schemaDifferences = default;
+            ValidationError validationErrors = default;
             IReadOnlyDictionary<string, long> sourceDatabaseObjectCount = default;
             IReadOnlyDictionary<string, long> targetDatabaseObjectCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SchemaComparisonValidationResult(schemaDifferences.Value, validationErrors.Value, sourceDatabaseObjectCount ?? new ChangeTrackingDictionary<string, long>(), targetDatabaseObjectCount ?? new ChangeTrackingDictionary<string, long>(), serializedAdditionalRawData);
+            return new SchemaComparisonValidationResult(schemaDifferences, validationErrors, sourceDatabaseObjectCount ?? new ChangeTrackingDictionary<string, long>(), targetDatabaseObjectCount ?? new ChangeTrackingDictionary<string, long>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SchemaComparisonValidationResult>.Write(ModelReaderWriterOptions options)

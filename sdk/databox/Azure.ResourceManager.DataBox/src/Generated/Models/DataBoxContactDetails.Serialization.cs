@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             string contactName = default;
             string phone = default;
-            Optional<string> phoneExtension = default;
-            Optional<string> mobile = default;
+            string phoneExtension = default;
+            string mobile = default;
             IList<string> emailList = default;
             IList<NotificationPreference> notificationPreference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxContactDetails(contactName, phone, phoneExtension.Value, mobile.Value, emailList, notificationPreference ?? new ChangeTrackingList<NotificationPreference>(), serializedAdditionalRawData);
+            return new DataBoxContactDetails(
+                contactName,
+                phone,
+                phoneExtension,
+                mobile,
+                emailList,
+                notificationPreference ?? new ChangeTrackingList<NotificationPreference>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxContactDetails>.Write(ModelReaderWriterOptions options)

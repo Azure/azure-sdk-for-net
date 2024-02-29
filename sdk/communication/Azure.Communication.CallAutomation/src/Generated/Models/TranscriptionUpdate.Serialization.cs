@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,8 +17,8 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<TranscriptionStatus> transcriptionStatus = default;
-            Optional<TranscriptionStatusDetails> transcriptionStatusDetails = default;
+            TranscriptionStatus? transcriptionStatus = default;
+            TranscriptionStatusDetails? transcriptionStatusDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transcriptionStatus"u8))
@@ -41,7 +40,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new TranscriptionUpdate(Optional.ToNullable(transcriptionStatus), Optional.ToNullable(transcriptionStatusDetails));
+            return new TranscriptionUpdate(transcriptionStatus, transcriptionStatusDetails);
         }
     }
 }

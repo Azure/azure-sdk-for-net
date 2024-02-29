@@ -295,34 +295,34 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, IList<string>> attributes = default;
             IDictionary<string, string> description = default;
             IDictionary<string, string> displayName = default;
             IDictionary<string, IDictionary<string, string>> localizedAttributes = default;
-            Optional<string> smallImage = default;
-            Optional<string> mediumImage = default;
-            Optional<string> largeImage = default;
-            Optional<string> apiEntitySetName = default;
-            Optional<EntityType> entityType = default;
+            string smallImage = default;
+            string mediumImage = default;
+            string largeImage = default;
+            string apiEntitySetName = default;
+            EntityType? entityType = default;
             IList<PropertyDefinition> fields = default;
-            Optional<int> instancesCount = default;
-            Optional<DateTimeOffset> lastChangedUtc = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> schemaItemTypeLink = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> timestampFieldName = default;
-            Optional<string> typeName = default;
+            int? instancesCount = default;
+            DateTimeOffset? lastChangedUtc = default;
+            ProvisioningState? provisioningState = default;
+            string schemaItemTypeLink = default;
+            Guid? tenantId = default;
+            string timestampFieldName = default;
+            string typeName = default;
             IList<string> idPropertyNames = default;
             IList<Participant> participantProfiles = default;
-            Optional<string> primaryParticipantProfilePropertyName = default;
+            string primaryParticipantProfilePropertyName = default;
             IReadOnlyList<DataSourcePrecedence> dataSourcePrecedenceRules = default;
-            Optional<bool> isActivity = default;
-            Optional<string> name0 = default;
-            Optional<DataSourceType> dataSourceType = default;
-            Optional<Status> status = default;
-            Optional<int> id0 = default;
-            Optional<string> dataSourceReferenceId = default;
+            bool? isActivity = default;
+            string name0 = default;
+            DataSourceType? dataSourceType = default;
+            Status? status = default;
+            int? id0 = default;
+            string dataSourceReferenceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -648,7 +648,39 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InteractionResourceFormatData(id, name, type, systemData.Value, attributes ?? new ChangeTrackingDictionary<string, IList<string>>(), description ?? new ChangeTrackingDictionary<string, string>(), displayName ?? new ChangeTrackingDictionary<string, string>(), localizedAttributes ?? new ChangeTrackingDictionary<string, IDictionary<string, string>>(), smallImage.Value, mediumImage.Value, largeImage.Value, apiEntitySetName.Value, Optional.ToNullable(entityType), fields ?? new ChangeTrackingList<PropertyDefinition>(), Optional.ToNullable(instancesCount), Optional.ToNullable(lastChangedUtc), Optional.ToNullable(provisioningState), schemaItemTypeLink.Value, Optional.ToNullable(tenantId), timestampFieldName.Value, typeName.Value, idPropertyNames ?? new ChangeTrackingList<string>(), participantProfiles ?? new ChangeTrackingList<Participant>(), primaryParticipantProfilePropertyName.Value, dataSourcePrecedenceRules ?? new ChangeTrackingList<DataSourcePrecedence>(), Optional.ToNullable(isActivity), name0.Value, Optional.ToNullable(dataSourceType), Optional.ToNullable(status), Optional.ToNullable(id0), dataSourceReferenceId.Value, serializedAdditionalRawData);
+            return new InteractionResourceFormatData(
+                id,
+                name,
+                type,
+                systemData,
+                attributes ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                localizedAttributes ?? new ChangeTrackingDictionary<string, IDictionary<string, string>>(),
+                smallImage,
+                mediumImage,
+                largeImage,
+                apiEntitySetName,
+                entityType,
+                fields ?? new ChangeTrackingList<PropertyDefinition>(),
+                instancesCount,
+                lastChangedUtc,
+                provisioningState,
+                schemaItemTypeLink,
+                tenantId,
+                timestampFieldName,
+                typeName,
+                idPropertyNames ?? new ChangeTrackingList<string>(),
+                participantProfiles ?? new ChangeTrackingList<Participant>(),
+                primaryParticipantProfilePropertyName,
+                dataSourcePrecedenceRules ?? new ChangeTrackingList<DataSourcePrecedence>(),
+                isActivity,
+                name0,
+                dataSourceType,
+                status,
+                id0,
+                dataSourceReferenceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InteractionResourceFormatData>.Write(ModelReaderWriterOptions options)

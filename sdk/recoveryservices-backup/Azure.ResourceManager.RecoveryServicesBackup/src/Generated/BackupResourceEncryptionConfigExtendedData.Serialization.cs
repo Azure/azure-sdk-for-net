@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 return null;
             }
-            Optional<BackupResourceEncryptionConfigExtendedProperties> properties = default;
-            Optional<ETag> eTag = default;
+            BackupResourceEncryptionConfigExtendedProperties properties = default;
+            ETag? eTag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +189,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupResourceEncryptionConfigExtendedData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new BackupResourceEncryptionConfigExtendedData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupResourceEncryptionConfigExtendedData>.Write(ModelReaderWriterOptions options)

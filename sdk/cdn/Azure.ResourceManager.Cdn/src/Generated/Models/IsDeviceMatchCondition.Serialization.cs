@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             IsDeviceMatchConditionType typeName = default;
             IsDeviceOperator @operator = default;
-            Optional<bool> negateCondition = default;
+            bool? negateCondition = default;
             IList<IsDeviceMatchConditionMatchValue> matchValues = default;
             IList<PreTransformCategory> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IsDeviceMatchCondition(typeName, @operator, Optional.ToNullable(negateCondition), matchValues ?? new ChangeTrackingList<IsDeviceMatchConditionMatchValue>(), transforms ?? new ChangeTrackingList<PreTransformCategory>(), serializedAdditionalRawData);
+            return new IsDeviceMatchCondition(
+                typeName,
+                @operator,
+                negateCondition,
+                matchValues ?? new ChangeTrackingList<IsDeviceMatchConditionMatchValue>(),
+                transforms ?? new ChangeTrackingList<PreTransformCategory>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IsDeviceMatchCondition>.Write(ModelReaderWriterOptions options)

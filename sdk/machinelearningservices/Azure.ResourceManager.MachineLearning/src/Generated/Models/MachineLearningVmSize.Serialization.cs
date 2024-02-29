@@ -124,16 +124,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> family = default;
-            Optional<int> vCpus = default;
-            Optional<int> gpus = default;
-            Optional<int> osVhdSizeMB = default;
-            Optional<int> maxResourceVolumeMB = default;
-            Optional<double> memoryGB = default;
-            Optional<bool> lowPriorityCapable = default;
-            Optional<bool> premiumIO = default;
-            Optional<MachineLearningEstimatedVmPrices> estimatedVmPrices = default;
+            string name = default;
+            string family = default;
+            int? vCpus = default;
+            int? gpus = default;
+            int? osVhdSizeMB = default;
+            int? maxResourceVolumeMB = default;
+            double? memoryGB = default;
+            bool? lowPriorityCapable = default;
+            bool? premiumIO = default;
+            MachineLearningEstimatedVmPrices estimatedVmPrices = default;
             IReadOnlyList<string> supportedComputeTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -241,7 +241,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningVmSize(name.Value, family.Value, Optional.ToNullable(vCpus), Optional.ToNullable(gpus), Optional.ToNullable(osVhdSizeMB), Optional.ToNullable(maxResourceVolumeMB), Optional.ToNullable(memoryGB), Optional.ToNullable(lowPriorityCapable), Optional.ToNullable(premiumIO), estimatedVmPrices.Value, supportedComputeTypes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new MachineLearningVmSize(
+                name,
+                family,
+                vCpus,
+                gpus,
+                osVhdSizeMB,
+                maxResourceVolumeMB,
+                memoryGB,
+                lowPriorityCapable,
+                premiumIO,
+                estimatedVmPrices,
+                supportedComputeTypes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningVmSize>.Write(ModelReaderWriterOptions options)

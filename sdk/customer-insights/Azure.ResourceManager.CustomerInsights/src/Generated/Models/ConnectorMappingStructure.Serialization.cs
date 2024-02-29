@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             string propertyName = default;
             string columnName = default;
-            Optional<string> customFormatSpecifier = default;
-            Optional<bool> isEncrypted = default;
+            string customFormatSpecifier = default;
+            bool? isEncrypted = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectorMappingStructure(propertyName, columnName, customFormatSpecifier.Value, Optional.ToNullable(isEncrypted), serializedAdditionalRawData);
+            return new ConnectorMappingStructure(propertyName, columnName, customFormatSpecifier, isEncrypted, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectorMappingStructure>.Write(ModelReaderWriterOptions options)

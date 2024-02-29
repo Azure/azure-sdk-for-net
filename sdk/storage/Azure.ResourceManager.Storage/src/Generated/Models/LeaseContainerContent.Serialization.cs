@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             LeaseContainerAction action = default;
-            Optional<string> leaseId = default;
-            Optional<int> breakPeriod = default;
-            Optional<int> leaseDuration = default;
-            Optional<string> proposedLeaseId = default;
+            string leaseId = default;
+            int? breakPeriod = default;
+            int? leaseDuration = default;
+            string proposedLeaseId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LeaseContainerContent(action, leaseId.Value, Optional.ToNullable(breakPeriod), Optional.ToNullable(leaseDuration), proposedLeaseId.Value, serializedAdditionalRawData);
+            return new LeaseContainerContent(
+                action,
+                leaseId,
+                breakPeriod,
+                leaseDuration,
+                proposedLeaseId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LeaseContainerContent>.Write(ModelReaderWriterOptions options)

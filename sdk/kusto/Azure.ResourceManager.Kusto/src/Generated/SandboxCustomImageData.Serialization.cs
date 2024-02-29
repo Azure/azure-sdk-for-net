@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Kusto
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SandboxCustomImageLanguage> language = default;
-            Optional<string> languageVersion = default;
-            Optional<string> requirementsFileContent = default;
-            Optional<KustoProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            SandboxCustomImageLanguage? language = default;
+            string languageVersion = default;
+            string requirementsFileContent = default;
+            KustoProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.Kusto
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SandboxCustomImageData(id, name, type, systemData.Value, Optional.ToNullable(language), languageVersion.Value, requirementsFileContent.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SandboxCustomImageData(
+                id,
+                name,
+                type,
+                systemData,
+                language,
+                languageVersion,
+                requirementsFileContent,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SandboxCustomImageData>.Write(ModelReaderWriterOptions options)

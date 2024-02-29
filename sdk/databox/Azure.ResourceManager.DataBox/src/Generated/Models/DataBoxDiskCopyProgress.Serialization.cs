@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> serialNumber = default;
-            Optional<long> bytesCopied = default;
-            Optional<int> percentComplete = default;
-            Optional<DataBoxCopyStatus> status = default;
-            Optional<ResponseError> error = default;
+            string serialNumber = default;
+            long? bytesCopied = default;
+            int? percentComplete = default;
+            DataBoxCopyStatus? status = default;
+            ResponseError error = default;
             IReadOnlyList<CustomerResolutionCode> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -171,7 +171,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxDiskCopyProgress(serialNumber.Value, Optional.ToNullable(bytesCopied), Optional.ToNullable(percentComplete), Optional.ToNullable(status), error.Value, actions ?? new ChangeTrackingList<CustomerResolutionCode>(), serializedAdditionalRawData);
+            return new DataBoxDiskCopyProgress(
+                serialNumber,
+                bytesCopied,
+                percentComplete,
+                status,
+                error,
+                actions ?? new ChangeTrackingList<CustomerResolutionCode>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxDiskCopyProgress>.Write(ModelReaderWriterOptions options)

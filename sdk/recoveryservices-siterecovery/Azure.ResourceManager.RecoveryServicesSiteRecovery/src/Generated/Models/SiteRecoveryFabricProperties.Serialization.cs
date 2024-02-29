@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<SiteRecoveryEncryptionDetails> encryptionDetails = default;
-            Optional<SiteRecoveryEncryptionDetails> rolloverEncryptionDetails = default;
-            Optional<string> internalIdentifier = default;
-            Optional<string> bcdrState = default;
-            Optional<FabricSpecificDetails> customDetails = default;
+            string friendlyName = default;
+            SiteRecoveryEncryptionDetails encryptionDetails = default;
+            SiteRecoveryEncryptionDetails rolloverEncryptionDetails = default;
+            string internalIdentifier = default;
+            string bcdrState = default;
+            FabricSpecificDetails customDetails = default;
             IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails = default;
-            Optional<string> health = default;
+            string health = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryFabricProperties(friendlyName.Value, encryptionDetails.Value, rolloverEncryptionDetails.Value, internalIdentifier.Value, bcdrState.Value, customDetails.Value, healthErrorDetails ?? new ChangeTrackingList<SiteRecoveryHealthError>(), health.Value, serializedAdditionalRawData);
+            return new SiteRecoveryFabricProperties(
+                friendlyName,
+                encryptionDetails,
+                rolloverEncryptionDetails,
+                internalIdentifier,
+                bcdrState,
+                customDetails,
+                healthErrorDetails ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                health,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryFabricProperties>.Write(ModelReaderWriterOptions options)

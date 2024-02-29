@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> migrationState = default;
+            string migrationState = default;
             IReadOnlyList<string> sqlDataCopyErrors = default;
             IReadOnlyList<CopyProgressDetails> listOfCopyProgressDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDBMigrationStatusDetails(migrationState.Value, sqlDataCopyErrors ?? new ChangeTrackingList<string>(), listOfCopyProgressDetails ?? new ChangeTrackingList<CopyProgressDetails>(), serializedAdditionalRawData);
+            return new SqlDBMigrationStatusDetails(migrationState, sqlDataCopyErrors ?? new ChangeTrackingList<string>(), listOfCopyProgressDetails ?? new ChangeTrackingList<CopyProgressDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDBMigrationStatusDetails>.Write(ModelReaderWriterOptions options)

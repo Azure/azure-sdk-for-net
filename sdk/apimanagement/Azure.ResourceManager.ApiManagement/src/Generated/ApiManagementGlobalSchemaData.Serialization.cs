@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ApiSchemaType> schemaType = default;
-            Optional<string> description = default;
-            Optional<BinaryData> value = default;
-            Optional<BinaryData> document = default;
+            SystemData systemData = default;
+            ApiSchemaType? schemaType = default;
+            string description = default;
+            BinaryData value = default;
+            BinaryData document = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +209,16 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementGlobalSchemaData(id, name, type, systemData.Value, Optional.ToNullable(schemaType), description.Value, value.Value, document.Value, serializedAdditionalRawData);
+            return new ApiManagementGlobalSchemaData(
+                id,
+                name,
+                type,
+                systemData,
+                schemaType,
+                description,
+                value,
+                document,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementGlobalSchemaData>.Write(ModelReaderWriterOptions options)

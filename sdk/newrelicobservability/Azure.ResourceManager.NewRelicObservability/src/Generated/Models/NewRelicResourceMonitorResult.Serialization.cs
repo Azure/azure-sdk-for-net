@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<NewRelicObservabilitySendingMetricsStatus> sendingMetrics = default;
-            Optional<string> reasonForMetricsStatus = default;
-            Optional<NewRelicObservabilitySendingLogsStatus> sendingLogs = default;
-            Optional<string> reasonForLogsStatus = default;
+            ResourceIdentifier id = default;
+            NewRelicObservabilitySendingMetricsStatus? sendingMetrics = default;
+            string reasonForMetricsStatus = default;
+            NewRelicObservabilitySendingLogsStatus? sendingLogs = default;
+            string reasonForLogsStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicResourceMonitorResult(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value, serializedAdditionalRawData);
+            return new NewRelicResourceMonitorResult(
+                id,
+                sendingMetrics,
+                reasonForMetricsStatus,
+                sendingLogs,
+                reasonForLogsStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicResourceMonitorResult>.Write(ModelReaderWriterOptions options)

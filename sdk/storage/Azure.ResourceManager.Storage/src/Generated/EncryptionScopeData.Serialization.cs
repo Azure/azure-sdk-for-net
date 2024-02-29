@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EncryptionScopeSource> source = default;
-            Optional<EncryptionScopeState> state = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<EncryptionScopeKeyVaultProperties> keyVaultProperties = default;
-            Optional<bool> requireInfrastructureEncryption = default;
+            SystemData systemData = default;
+            EncryptionScopeSource? source = default;
+            EncryptionScopeState? state = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            EncryptionScopeKeyVaultProperties keyVaultProperties = default;
+            bool? requireInfrastructureEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,7 +229,18 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionScopeData(id, name, type, systemData.Value, Optional.ToNullable(source), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), keyVaultProperties.Value, Optional.ToNullable(requireInfrastructureEncryption), serializedAdditionalRawData);
+            return new EncryptionScopeData(
+                id,
+                name,
+                type,
+                systemData,
+                source,
+                state,
+                creationTime,
+                lastModifiedTime,
+                keyVaultProperties,
+                requireInfrastructureEncryption,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptionScopeData>.Write(ModelReaderWriterOptions options)

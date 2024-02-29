@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<BackupVaultImmutabilityState> state = default;
+            BackupVaultImmutabilityState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImmutabilitySettings(Optional.ToNullable(state), serializedAdditionalRawData);
+            return new ImmutabilitySettings(state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImmutabilitySettings>.Write(ModelReaderWriterOptions options)

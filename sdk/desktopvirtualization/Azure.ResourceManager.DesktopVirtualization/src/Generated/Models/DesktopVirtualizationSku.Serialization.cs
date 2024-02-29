@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 return null;
             }
             string name = default;
-            Optional<DesktopVirtualizationSkuTier> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<int> capacity = default;
+            DesktopVirtualizationSkuTier? tier = default;
+            string size = default;
+            string family = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DesktopVirtualizationSku(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new DesktopVirtualizationSku(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DesktopVirtualizationSku>.Write(ModelReaderWriterOptions options)

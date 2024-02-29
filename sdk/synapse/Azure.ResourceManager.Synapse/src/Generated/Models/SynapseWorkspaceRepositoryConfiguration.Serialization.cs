@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> hostName = default;
-            Optional<string> accountName = default;
-            Optional<string> projectName = default;
-            Optional<string> repositoryName = default;
-            Optional<string> collaborationBranch = default;
-            Optional<string> rootFolder = default;
-            Optional<string> lastCommitId = default;
-            Optional<Guid> tenantId = default;
+            string type = default;
+            string hostName = default;
+            string accountName = default;
+            string projectName = default;
+            string repositoryName = default;
+            string collaborationBranch = default;
+            string rootFolder = default;
+            string lastCommitId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,17 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkspaceRepositoryConfiguration(type.Value, hostName.Value, accountName.Value, projectName.Value, repositoryName.Value, collaborationBranch.Value, rootFolder.Value, lastCommitId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new SynapseWorkspaceRepositoryConfiguration(
+                type,
+                hostName,
+                accountName,
+                projectName,
+                repositoryName,
+                collaborationBranch,
+                rootFolder,
+                lastCommitId,
+                tenantId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseWorkspaceRepositoryConfiguration>.Write(ModelReaderWriterOptions options)

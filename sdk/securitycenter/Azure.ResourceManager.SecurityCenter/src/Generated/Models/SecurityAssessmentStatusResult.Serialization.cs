@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> firstEvaluationDate = default;
-            Optional<DateTimeOffset> statusChangeDate = default;
+            DateTimeOffset? firstEvaluationDate = default;
+            DateTimeOffset? statusChangeDate = default;
             SecurityAssessmentStatusCode code = default;
-            Optional<string> cause = default;
-            Optional<string> description = default;
+            string cause = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentStatusResult(code, cause.Value, description.Value, serializedAdditionalRawData, Optional.ToNullable(firstEvaluationDate), Optional.ToNullable(statusChangeDate));
+            return new SecurityAssessmentStatusResult(
+                code,
+                cause,
+                description,
+                serializedAdditionalRawData,
+                firstEvaluationDate,
+                statusChangeDate);
         }
 
         BinaryData IPersistableModel<SecurityAssessmentStatusResult>.Write(ModelReaderWriterOptions options)

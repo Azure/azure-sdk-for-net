@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
+            string name = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorServiceDetails(name.Value, displayName.Value, serializedAdditionalRawData);
+            return new MonitorServiceDetails(name, displayName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorServiceDetails>.Write(ModelReaderWriterOptions options)

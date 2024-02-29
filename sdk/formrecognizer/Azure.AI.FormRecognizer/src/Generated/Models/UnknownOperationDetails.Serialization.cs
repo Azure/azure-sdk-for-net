@@ -23,14 +23,14 @@ namespace Azure.AI.FormRecognizer.Models
             }
             string operationId = default;
             DocumentOperationStatus status = default;
-            Optional<int> percentCompleted = default;
+            int? percentCompleted = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
             DocumentOperationKind kind = "Unknown";
             Uri resourceLocation = default;
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             IReadOnlyDictionary<string, string> tags = default;
-            Optional<JsonElement> error = default;
+            JsonElement error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
@@ -97,7 +97,17 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new UnknownOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, tags ?? new ChangeTrackingDictionary<string, string>(), error);
+            return new UnknownOperationDetails(
+                operationId,
+                status,
+                percentCompleted,
+                createdDateTime,
+                lastUpdatedDateTime,
+                kind,
+                resourceLocation,
+                apiVersion,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                error);
         }
     }
 }

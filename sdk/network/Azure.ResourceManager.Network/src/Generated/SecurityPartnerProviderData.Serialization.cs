@@ -126,16 +126,16 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<SecurityProviderName> securityProviderName = default;
-            Optional<SecurityPartnerProviderConnectionStatus> connectionStatus = default;
-            Optional<WritableSubResource> virtualHub = default;
+            NetworkProvisioningState? provisioningState = default;
+            SecurityProviderName? securityProviderName = default;
+            SecurityPartnerProviderConnectionStatus? connectionStatus = default;
+            WritableSubResource virtualHub = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -249,7 +249,18 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityPartnerProviderData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(securityProviderName), Optional.ToNullable(connectionStatus), virtualHub);
+            return new SecurityPartnerProviderData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                provisioningState,
+                securityProviderName,
+                connectionStatus,
+                virtualHub);
         }
 
         BinaryData IPersistableModel<SecurityPartnerProviderData>.Write(ModelReaderWriterOptions options)

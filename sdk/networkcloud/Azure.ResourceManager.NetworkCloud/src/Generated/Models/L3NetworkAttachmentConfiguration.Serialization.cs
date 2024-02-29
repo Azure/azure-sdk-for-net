@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<L3NetworkConfigurationIpamEnabled> ipamEnabled = default;
+            L3NetworkConfigurationIpamEnabled? ipamEnabled = default;
             ResourceIdentifier networkId = default;
-            Optional<KubernetesPluginType> pluginType = default;
+            KubernetesPluginType? pluginType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new L3NetworkAttachmentConfiguration(Optional.ToNullable(ipamEnabled), networkId, Optional.ToNullable(pluginType), serializedAdditionalRawData);
+            return new L3NetworkAttachmentConfiguration(ipamEnabled, networkId, pluginType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<L3NetworkAttachmentConfiguration>.Write(ModelReaderWriterOptions options)

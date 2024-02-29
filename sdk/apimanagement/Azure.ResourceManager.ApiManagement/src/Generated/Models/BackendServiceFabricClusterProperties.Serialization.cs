@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> clientCertificateId = default;
-            Optional<string> clientCertificatethumbprint = default;
-            Optional<int> maxPartitionResolutionRetries = default;
+            string clientCertificateId = default;
+            string clientCertificatethumbprint = default;
+            int? maxPartitionResolutionRetries = default;
             IList<string> managementEndpoints = default;
             IList<string> serverCertificateThumbprints = default;
             IList<X509CertificateName> serverX509Names = default;
@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendServiceFabricClusterProperties(clientCertificateId.Value, clientCertificatethumbprint.Value, Optional.ToNullable(maxPartitionResolutionRetries), managementEndpoints, serverCertificateThumbprints ?? new ChangeTrackingList<string>(), serverX509Names ?? new ChangeTrackingList<X509CertificateName>(), serializedAdditionalRawData);
+            return new BackendServiceFabricClusterProperties(
+                clientCertificateId,
+                clientCertificatethumbprint,
+                maxPartitionResolutionRetries,
+                managementEndpoints,
+                serverCertificateThumbprints ?? new ChangeTrackingList<string>(),
+                serverX509Names ?? new ChangeTrackingList<X509CertificateName>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackendServiceFabricClusterProperties>.Write(ModelReaderWriterOptions options)

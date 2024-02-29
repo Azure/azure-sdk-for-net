@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> mechanismType = default;
-            Optional<string> name = default;
-            Optional<string> status = default;
-            Optional<string> subState = default;
-            Optional<DateTimeOffset> sendTime = default;
-            Optional<string> detail = default;
+            string mechanismType = default;
+            string name = default;
+            string status = default;
+            string subState = default;
+            DateTimeOffset? sendTime = default;
+            string detail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationActionDetail(mechanismType.Value, name.Value, status.Value, subState.Value, Optional.ToNullable(sendTime), detail.Value, serializedAdditionalRawData);
+            return new NotificationActionDetail(
+                mechanismType,
+                name,
+                status,
+                subState,
+                sendTime,
+                detail,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationActionDetail>.Write(ModelReaderWriterOptions options)

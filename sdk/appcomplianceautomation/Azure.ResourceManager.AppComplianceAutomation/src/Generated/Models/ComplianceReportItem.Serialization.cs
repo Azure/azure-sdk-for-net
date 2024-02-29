@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> categoryName = default;
-            Optional<string> controlId = default;
-            Optional<string> controlName = default;
-            Optional<ControlType> controlType = default;
-            Optional<ComplianceState> complianceState = default;
-            Optional<string> policyId = default;
-            Optional<string> policyDisplayName = default;
-            Optional<string> policyDescription = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> resourceType = default;
-            Optional<string> resourceId = default;
-            Optional<string> statusChangeDate = default;
+            string categoryName = default;
+            string controlId = default;
+            string controlName = default;
+            ControlType? controlType = default;
+            ComplianceState? complianceState = default;
+            string policyId = default;
+            string policyDisplayName = default;
+            string policyDescription = default;
+            string subscriptionId = default;
+            string resourceGroup = default;
+            string resourceType = default;
+            string resourceId = default;
+            string statusChangeDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +225,21 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComplianceReportItem(categoryName.Value, controlId.Value, controlName.Value, Optional.ToNullable(controlType), Optional.ToNullable(complianceState), policyId.Value, policyDisplayName.Value, policyDescription.Value, subscriptionId.Value, resourceGroup.Value, resourceType.Value, resourceId.Value, statusChangeDate.Value, serializedAdditionalRawData);
+            return new ComplianceReportItem(
+                categoryName,
+                controlId,
+                controlName,
+                controlType,
+                complianceState,
+                policyId,
+                policyDisplayName,
+                policyDescription,
+                subscriptionId,
+                resourceGroup,
+                resourceType,
+                resourceId,
+                statusChangeDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComplianceReportItem>.Write(ModelReaderWriterOptions options)

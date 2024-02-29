@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<int> minimum = default;
-            Optional<int> maximum = default;
-            Optional<int> @default = default;
-            Optional<ApiManagementResourceSkuCapacityScaleType> scaleType = default;
+            int? minimum = default;
+            int? maximum = default;
+            int? @default = default;
+            ApiManagementResourceSkuCapacityScaleType? scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementResourceSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType), serializedAdditionalRawData);
+            return new ApiManagementResourceSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementResourceSkuCapacity>.Write(ModelReaderWriterOptions options)

@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> workspaceId = default;
-            Optional<string> scope = default;
+            SystemData systemData = default;
+            ResourceIdentifier workspaceId = default;
+            string scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityWorkspaceSettingData(id, name, type, systemData.Value, workspaceId.Value, scope.Value, serializedAdditionalRawData);
+            return new SecurityWorkspaceSettingData(
+                id,
+                name,
+                type,
+                systemData,
+                workspaceId,
+                scope,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityWorkspaceSettingData>.Write(ModelReaderWriterOptions options)

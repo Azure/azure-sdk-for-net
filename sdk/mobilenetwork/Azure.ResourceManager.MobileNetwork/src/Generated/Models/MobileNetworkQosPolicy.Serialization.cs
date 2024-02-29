@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<int> _5qi = default;
-            Optional<int> allocationAndRetentionPriorityLevel = default;
-            Optional<MobileNetworkPreemptionCapability> preemptionCapability = default;
-            Optional<MobileNetworkPreemptionVulnerability> preemptionVulnerability = default;
+            int? _5qi = default;
+            int? allocationAndRetentionPriorityLevel = default;
+            MobileNetworkPreemptionCapability? preemptionCapability = default;
+            MobileNetworkPreemptionVulnerability? preemptionVulnerability = default;
             Ambr maximumBitRate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkQosPolicy(Optional.ToNullable(_5qi), Optional.ToNullable(allocationAndRetentionPriorityLevel), Optional.ToNullable(preemptionCapability), Optional.ToNullable(preemptionVulnerability), maximumBitRate, serializedAdditionalRawData);
+            return new MobileNetworkQosPolicy(
+                _5qi,
+                allocationAndRetentionPriorityLevel,
+                preemptionCapability,
+                preemptionVulnerability,
+                maximumBitRate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkQosPolicy>.Write(ModelReaderWriterOptions options)

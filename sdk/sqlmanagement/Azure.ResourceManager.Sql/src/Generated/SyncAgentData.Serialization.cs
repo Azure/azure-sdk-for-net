@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> syncDatabaseId = default;
-            Optional<DateTimeOffset> lastAliveTime = default;
-            Optional<SyncAgentState> state = default;
-            Optional<bool> isUpToDate = default;
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<string> version = default;
+            SystemData systemData = default;
+            ResourceIdentifier syncDatabaseId = default;
+            DateTimeOffset? lastAliveTime = default;
+            SyncAgentState? state = default;
+            bool? isUpToDate = default;
+            DateTimeOffset? expiryTime = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +225,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncAgentData(id, name, type, systemData.Value, syncDatabaseId.Value, Optional.ToNullable(lastAliveTime), Optional.ToNullable(state), Optional.ToNullable(isUpToDate), Optional.ToNullable(expiryTime), version.Value, serializedAdditionalRawData);
+            return new SyncAgentData(
+                id,
+                name,
+                type,
+                systemData,
+                syncDatabaseId,
+                lastAliveTime,
+                state,
+                isUpToDate,
+                expiryTime,
+                version,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncAgentData>.Write(ModelReaderWriterOptions options)

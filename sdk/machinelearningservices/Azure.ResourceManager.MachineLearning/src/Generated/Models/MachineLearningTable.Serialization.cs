@@ -187,12 +187,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IList<Uri> referencedUris = default;
             MachineLearningDataType dataType = default;
             Uri dataUri = default;
-            Optional<IntellectualProperty> intellectualProperty = default;
-            Optional<string> stage = default;
-            Optional<AutoDeleteSetting> autoDeleteSetting = default;
-            Optional<bool> isAnonymous = default;
-            Optional<bool> isArchived = default;
-            Optional<string> description = default;
+            IntellectualProperty intellectualProperty = default;
+            string stage = default;
+            AutoDeleteSetting autoDeleteSetting = default;
+            bool? isAnonymous = default;
+            bool? isArchived = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -325,7 +325,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningTable(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, autoDeleteSetting.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), dataType, dataUri, intellectualProperty.Value, stage.Value, referencedUris ?? new ChangeTrackingList<Uri>());
+            return new MachineLearningTable(
+                description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                autoDeleteSetting,
+                isAnonymous,
+                isArchived,
+                dataType,
+                dataUri,
+                intellectualProperty,
+                stage,
+                referencedUris ?? new ChangeTrackingList<Uri>());
         }
 
         BinaryData IPersistableModel<MachineLearningTable>.Write(ModelReaderWriterOptions options)

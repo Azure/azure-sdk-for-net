@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> displayName = default;
-            Optional<Guid> tenantId = default;
-            Optional<SubscriptionState> state = default;
-            Optional<SubscriptionPolicies> subscriptionPolicies = default;
-            Optional<string> authorizationSource = default;
+            ResourceIdentifier id = default;
+            string subscriptionId = default;
+            string displayName = default;
+            Guid? tenantId = default;
+            SubscriptionState? state = default;
+            SubscriptionPolicies subscriptionPolicies = default;
+            string authorizationSource = default;
             IReadOnlyList<ManagedByTenant> managedByTenants = default;
             IReadOnlyDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -219,7 +219,17 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionData(id.Value, subscriptionId.Value, displayName.Value, Optional.ToNullable(tenantId), Optional.ToNullable(state), subscriptionPolicies.Value, authorizationSource.Value, managedByTenants ?? new ChangeTrackingList<ManagedByTenant>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new SubscriptionData(
+                id,
+                subscriptionId,
+                displayName,
+                tenantId,
+                state,
+                subscriptionPolicies,
+                authorizationSource,
+                managedByTenants ?? new ChangeTrackingList<ManagedByTenant>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionData>.Write(ModelReaderWriterOptions options)

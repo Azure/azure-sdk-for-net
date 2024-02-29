@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = "Unknown";
-            Optional<IntellectualProperty> intellectualProperty = default;
-            Optional<bool> isDefault = default;
-            Optional<string> description = default;
+            IntellectualProperty intellectualProperty = default;
+            bool? isDefault = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -219,7 +219,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDatastore(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, credentials, datastoreType, intellectualProperty.Value, Optional.ToNullable(isDefault));
+            return new UnknownDatastore(
+                description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                credentials,
+                datastoreType,
+                intellectualProperty,
+                isDefault);
         }
 
         BinaryData IPersistableModel<MachineLearningDatastoreProperties>.Write(ModelReaderWriterOptions options)

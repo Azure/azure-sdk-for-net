@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> bmcConnectionString = default;
+            string bmcConnectionString = default;
             AdministrativeCredentials bmcCredentials = default;
             string bmcMacAddress = default;
             string bootMacAddress = default;
-            Optional<string> machineDetails = default;
-            Optional<string> machineName = default;
+            string machineDetails = default;
+            string machineName = default;
             long rackSlot = default;
             string serialNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -147,7 +147,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BareMetalMachineConfiguration(bmcConnectionString.Value, bmcCredentials, bmcMacAddress, bootMacAddress, machineDetails.Value, machineName.Value, rackSlot, serialNumber, serializedAdditionalRawData);
+            return new BareMetalMachineConfiguration(
+                bmcConnectionString,
+                bmcCredentials,
+                bmcMacAddress,
+                bootMacAddress,
+                machineDetails,
+                machineName,
+                rackSlot,
+                serialNumber,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BareMetalMachineConfiguration>.Write(ModelReaderWriterOptions options)

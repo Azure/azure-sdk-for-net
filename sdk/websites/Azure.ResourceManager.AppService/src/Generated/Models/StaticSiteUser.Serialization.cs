@@ -113,15 +113,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provider = default;
-            Optional<string> userId = default;
-            Optional<string> displayName = default;
-            Optional<string> roles = default;
+            SystemData systemData = default;
+            string provider = default;
+            string userId = default;
+            string displayName = default;
+            string roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,7 +193,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteUser(id, name, type, systemData.Value, provider.Value, userId.Value, displayName.Value, roles.Value, kind.Value, serializedAdditionalRawData);
+            return new StaticSiteUser(
+                id,
+                name,
+                type,
+                systemData,
+                provider,
+                userId,
+                displayName,
+                roles,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteUser>.Write(ModelReaderWriterOptions options)

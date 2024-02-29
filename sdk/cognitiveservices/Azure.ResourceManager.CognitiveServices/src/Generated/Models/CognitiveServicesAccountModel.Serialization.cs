@@ -152,20 +152,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<CognitiveServicesAccountDeploymentModel> baseModel = default;
-            Optional<bool> isDefaultVersion = default;
+            CognitiveServicesAccountDeploymentModel baseModel = default;
+            bool? isDefaultVersion = default;
             IList<CognitiveServicesModelSku> skus = default;
-            Optional<int> maxCapacity = default;
+            int? maxCapacity = default;
             IDictionary<string, string> capabilities = default;
             IDictionary<string, string> finetuneCapabilities = default;
-            Optional<ServiceAccountModelDeprecationInfo> deprecation = default;
-            Optional<ModelLifecycleStatus> lifecycleStatus = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> format = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
-            Optional<string> source = default;
-            Optional<ServiceAccountCallRateLimit> callRateLimit = default;
+            ServiceAccountModelDeprecationInfo deprecation = default;
+            ModelLifecycleStatus? lifecycleStatus = default;
+            SystemData systemData = default;
+            string format = default;
+            string name = default;
+            string version = default;
+            string source = default;
+            ServiceAccountCallRateLimit callRateLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -301,7 +301,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountModel(format.Value, name.Value, version.Value, source.Value, callRateLimit.Value, serializedAdditionalRawData, baseModel.Value, Optional.ToNullable(isDefaultVersion), skus ?? new ChangeTrackingList<CognitiveServicesModelSku>(), Optional.ToNullable(maxCapacity), capabilities ?? new ChangeTrackingDictionary<string, string>(), finetuneCapabilities ?? new ChangeTrackingDictionary<string, string>(), deprecation.Value, Optional.ToNullable(lifecycleStatus), systemData);
+            return new CognitiveServicesAccountModel(
+                format,
+                name,
+                version,
+                source,
+                callRateLimit,
+                serializedAdditionalRawData,
+                baseModel,
+                isDefaultVersion,
+                skus ?? new ChangeTrackingList<CognitiveServicesModelSku>(),
+                maxCapacity,
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
+                finetuneCapabilities ?? new ChangeTrackingDictionary<string, string>(),
+                deprecation,
+                lifecycleStatus,
+                systemData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountModel>.Write(ModelReaderWriterOptions options)

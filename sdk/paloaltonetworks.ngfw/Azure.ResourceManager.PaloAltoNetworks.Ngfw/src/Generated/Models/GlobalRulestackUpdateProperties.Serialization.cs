@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<ETag> panETag = default;
-            Optional<AzureLocation> panLocation = default;
-            Optional<RulestackScopeType> scope = default;
+            ETag? panETag = default;
+            AzureLocation? panLocation = default;
+            RulestackScopeType? scope = default;
             IList<string> associatedSubscriptions = default;
-            Optional<string> description = default;
-            Optional<RuleCreationDefaultMode> defaultMode = default;
-            Optional<string> minAppIdVersion = default;
-            Optional<RulestackSecurityServices> securityServices = default;
+            string description = default;
+            RuleCreationDefaultMode? defaultMode = default;
+            string minAppIdVersion = default;
+            RulestackSecurityServices securityServices = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GlobalRulestackUpdateProperties(Optional.ToNullable(panETag), Optional.ToNullable(panLocation), Optional.ToNullable(scope), associatedSubscriptions ?? new ChangeTrackingList<string>(), description.Value, Optional.ToNullable(defaultMode), minAppIdVersion.Value, securityServices.Value, serializedAdditionalRawData);
+            return new GlobalRulestackUpdateProperties(
+                panETag,
+                panLocation,
+                scope,
+                associatedSubscriptions ?? new ChangeTrackingList<string>(),
+                description,
+                defaultMode,
+                minAppIdVersion,
+                securityServices,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GlobalRulestackUpdateProperties>.Write(ModelReaderWriterOptions options)

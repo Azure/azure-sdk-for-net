@@ -179,20 +179,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> targetVmName = default;
-            Optional<string> targetVmSize = default;
-            Optional<ResourceIdentifier> targetResourceGroupId = default;
-            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
-            Optional<string> targetAvailabilityZone = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
-            Optional<ResourceIdentifier> targetNetworkId = default;
-            Optional<ResourceIdentifier> testNetworkId = default;
+            string targetVmName = default;
+            string targetVmSize = default;
+            ResourceIdentifier targetResourceGroupId = default;
+            ResourceIdentifier targetAvailabilitySetId = default;
+            string targetAvailabilityZone = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            ResourceIdentifier targetBootDiagnosticsStorageAccountId = default;
+            ResourceIdentifier targetNetworkId = default;
+            ResourceIdentifier testNetworkId = default;
             IList<VMwareCbtNicContent> vmNics = default;
             IList<VMwareCbtUpdateDiskContent> vmDisks = default;
-            Optional<SiteRecoveryLicenseType> licenseType = default;
-            Optional<SiteRecoverySqlServerLicenseType> sqlServerLicenseType = default;
-            Optional<string> performAutoResync = default;
+            SiteRecoveryLicenseType? licenseType = default;
+            SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
+            string performAutoResync = default;
             IDictionary<string, string> targetVmTags = default;
             IDictionary<string, string> targetDiskTags = default;
             IDictionary<string, string> targetNicTags = default;
@@ -374,7 +374,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtUpdateMigrationItemContent(instanceType, serializedAdditionalRawData, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, vmNics ?? new ChangeTrackingList<VMwareCbtNicContent>(), vmDisks ?? new ChangeTrackingList<VMwareCbtUpdateDiskContent>(), Optional.ToNullable(licenseType), Optional.ToNullable(sqlServerLicenseType), performAutoResync.Value, targetVmTags ?? new ChangeTrackingDictionary<string, string>(), targetDiskTags ?? new ChangeTrackingDictionary<string, string>(), targetNicTags ?? new ChangeTrackingDictionary<string, string>());
+            return new VMwareCbtUpdateMigrationItemContent(
+                instanceType,
+                serializedAdditionalRawData,
+                targetVmName,
+                targetVmSize,
+                targetResourceGroupId,
+                targetAvailabilitySetId,
+                targetAvailabilityZone,
+                targetProximityPlacementGroupId,
+                targetBootDiagnosticsStorageAccountId,
+                targetNetworkId,
+                testNetworkId,
+                vmNics ?? new ChangeTrackingList<VMwareCbtNicContent>(),
+                vmDisks ?? new ChangeTrackingList<VMwareCbtUpdateDiskContent>(),
+                licenseType,
+                sqlServerLicenseType,
+                performAutoResync,
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<VMwareCbtUpdateMigrationItemContent>.Write(ModelReaderWriterOptions options)

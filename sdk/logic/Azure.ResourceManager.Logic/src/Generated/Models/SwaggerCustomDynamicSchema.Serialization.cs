@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<string> valuePath = default;
+            string operationId = default;
+            string valuePath = default;
             IDictionary<string, BinaryData> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicSchema(operationId.Value, valuePath.Value, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
+            return new SwaggerCustomDynamicSchema(operationId, valuePath, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicSchema>.Write(ModelReaderWriterOptions options)

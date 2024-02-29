@@ -114,7 +114,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HiveCatalogOption(catalogName, metastoreDBConnectionPasswordSecret, metastoreDBConnectionURL, metastoreDBConnectionUserName, metastoreWarehouseDir, serializedAdditionalRawData);
+            return new HiveCatalogOption(
+                catalogName,
+                metastoreDBConnectionPasswordSecret,
+                metastoreDBConnectionURL,
+                metastoreDBConnectionUserName,
+                metastoreWarehouseDir,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HiveCatalogOption>.Write(ModelReaderWriterOptions options)

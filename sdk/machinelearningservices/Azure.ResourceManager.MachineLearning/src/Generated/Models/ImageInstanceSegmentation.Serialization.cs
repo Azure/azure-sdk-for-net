@@ -157,15 +157,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<InstanceSegmentationPrimaryMetric> primaryMetric = default;
-            Optional<ImageModelSettingsObjectDetection> modelSettings = default;
+            InstanceSegmentationPrimaryMetric? primaryMetric = default;
+            ImageModelSettingsObjectDetection modelSettings = default;
             IList<ImageModelDistributionSettingsObjectDetection> searchSpace = default;
             ImageLimitSettings limitSettings = default;
-            Optional<ImageSweepSettings> sweepSettings = default;
-            Optional<MachineLearningTableJobInput> validationData = default;
-            Optional<double?> validationDataSize = default;
-            Optional<MachineLearningLogVerbosity> logVerbosity = default;
-            Optional<string> targetColumnName = default;
+            ImageSweepSettings sweepSettings = default;
+            MachineLearningTableJobInput validationData = default;
+            double? validationDataSize = default;
+            MachineLearningLogVerbosity? logVerbosity = default;
+            string targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -276,7 +276,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageInstanceSegmentation(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, Optional.ToNullable(primaryMetric), modelSettings.Value, searchSpace ?? new ChangeTrackingList<ImageModelDistributionSettingsObjectDetection>(), limitSettings, sweepSettings.Value, validationData.Value, Optional.ToNullable(validationDataSize));
+            return new ImageInstanceSegmentation(
+                logVerbosity,
+                targetColumnName,
+                taskType,
+                trainingData,
+                serializedAdditionalRawData,
+                primaryMetric,
+                modelSettings,
+                searchSpace ?? new ChangeTrackingList<ImageModelDistributionSettingsObjectDetection>(),
+                limitSettings,
+                sweepSettings,
+                validationData,
+                validationDataSize);
         }
 
         BinaryData IPersistableModel<ImageInstanceSegmentation>.Write(ModelReaderWriterOptions options)

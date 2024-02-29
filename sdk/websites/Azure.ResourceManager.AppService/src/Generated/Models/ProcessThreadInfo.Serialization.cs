@@ -153,23 +153,23 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> identifier = default;
-            Optional<string> href = default;
-            Optional<string> process = default;
-            Optional<string> startAddress = default;
-            Optional<int> currentPriority = default;
-            Optional<string> priorityLevel = default;
-            Optional<int> basePriority = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> totalProcessorTime = default;
-            Optional<string> userProcessorTime = default;
-            Optional<string> state = default;
-            Optional<string> waitReason = default;
+            SystemData systemData = default;
+            int? identifier = default;
+            string href = default;
+            string process = default;
+            string startAddress = default;
+            int? currentPriority = default;
+            string priorityLevel = default;
+            int? basePriority = default;
+            DateTimeOffset? startTime = default;
+            string totalProcessorTime = default;
+            string userProcessorTime = default;
+            string state = default;
+            string waitReason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -297,7 +297,25 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProcessThreadInfo(id, name, type, systemData.Value, Optional.ToNullable(identifier), href.Value, process.Value, startAddress.Value, Optional.ToNullable(currentPriority), priorityLevel.Value, Optional.ToNullable(basePriority), Optional.ToNullable(startTime), totalProcessorTime.Value, userProcessorTime.Value, state.Value, waitReason.Value, kind.Value, serializedAdditionalRawData);
+            return new ProcessThreadInfo(
+                id,
+                name,
+                type,
+                systemData,
+                identifier,
+                href,
+                process,
+                startAddress,
+                currentPriority,
+                priorityLevel,
+                basePriority,
+                startTime,
+                totalProcessorTime,
+                userProcessorTime,
+                state,
+                waitReason,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProcessThreadInfo>.Write(ModelReaderWriterOptions options)

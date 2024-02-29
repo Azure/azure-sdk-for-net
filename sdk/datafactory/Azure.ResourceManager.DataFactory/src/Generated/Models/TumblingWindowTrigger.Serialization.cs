@@ -136,16 +136,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             TriggerPipelineReference pipeline = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryTriggerRuntimeState> runtimeState = default;
+            string description = default;
+            DataFactoryTriggerRuntimeState? runtimeState = default;
             IList<BinaryData> annotations = default;
             TumblingWindowFrequency frequency = default;
             int interval = default;
             DateTimeOffset startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<DataFactoryElement<string>> delay = default;
+            DateTimeOffset? endTime = default;
+            DataFactoryElement<string> delay = default;
             int maxConcurrency = default;
-            Optional<RetryPolicy> retryPolicy = default;
+            RetryPolicy retryPolicy = default;
             IList<DependencyReference> dependsOn = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -272,7 +272,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TumblingWindowTrigger(type, description.Value, Optional.ToNullable(runtimeState), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, pipeline, frequency, interval, startTime, Optional.ToNullable(endTime), delay.Value, maxConcurrency, retryPolicy.Value, dependsOn ?? new ChangeTrackingList<DependencyReference>());
+            return new TumblingWindowTrigger(
+                type,
+                description,
+                runtimeState,
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                pipeline,
+                frequency,
+                interval,
+                startTime,
+                endTime,
+                delay,
+                maxConcurrency,
+                retryPolicy,
+                dependsOn ?? new ChangeTrackingList<DependencyReference>());
         }
 
         BinaryData IPersistableModel<TumblingWindowTrigger>.Write(ModelReaderWriterOptions options)

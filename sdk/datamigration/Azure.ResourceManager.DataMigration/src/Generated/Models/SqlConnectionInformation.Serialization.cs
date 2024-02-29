@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> dataSource = default;
-            Optional<string> authentication = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
-            Optional<bool> encryptConnection = default;
-            Optional<bool> trustServerCertificate = default;
+            string dataSource = default;
+            string authentication = default;
+            string userName = default;
+            string password = default;
+            bool? encryptConnection = default;
+            bool? trustServerCertificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlConnectionInformation(dataSource.Value, authentication.Value, userName.Value, password.Value, Optional.ToNullable(encryptConnection), Optional.ToNullable(trustServerCertificate), serializedAdditionalRawData);
+            return new SqlConnectionInformation(
+                dataSource,
+                authentication,
+                userName,
+                password,
+                encryptConnection,
+                trustServerCertificate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlConnectionInformation>.Write(ModelReaderWriterOptions options)

@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Monitor.Models
             CriterionType criterionType = default;
             string name = default;
             string metricName = default;
-            Optional<string> metricNamespace = default;
+            string metricNamespace = default;
             MetricCriteriaTimeAggregationType timeAggregation = default;
             IList<MetricDimension> dimensions = default;
-            Optional<bool> skipMetricValidation = default;
+            bool? skipMetricValidation = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +167,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MetricCriteria(criterionType, name, metricName, metricNamespace.Value, timeAggregation, dimensions ?? new ChangeTrackingList<MetricDimension>(), Optional.ToNullable(skipMetricValidation), additionalProperties, @operator, threshold);
+            return new MetricCriteria(
+                criterionType,
+                name,
+                metricName,
+                metricNamespace,
+                timeAggregation,
+                dimensions ?? new ChangeTrackingList<MetricDimension>(),
+                skipMetricValidation,
+                additionalProperties,
+                @operator,
+                threshold);
         }
 
         BinaryData IPersistableModel<MetricCriteria>.Write(ModelReaderWriterOptions options)

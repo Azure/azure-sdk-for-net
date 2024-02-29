@@ -179,29 +179,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> diskName = default;
-            Optional<string> protectionStage = default;
-            Optional<string> healthErrorCode = default;
-            Optional<long> rpoInSeconds = default;
-            Optional<string> resyncRequired = default;
-            Optional<int> resyncProgressPercentage = default;
-            Optional<long> resyncDurationInSeconds = default;
-            Optional<long> diskCapacityInBytes = default;
-            Optional<long> fileSystemCapacityInBytes = default;
-            Optional<double> sourceDataInMegaBytes = default;
-            Optional<double> psDataInMegaBytes = default;
-            Optional<double> targetDataInMegaBytes = default;
-            Optional<string> diskResized = default;
-            Optional<DateTimeOffset> lastRpoCalculatedTime = default;
-            Optional<long> resyncProcessedBytes = default;
-            Optional<long> resyncTotalTransferredBytes = default;
-            Optional<long> resyncLast15MinutesTransferredBytes = default;
-            Optional<DateTimeOffset> resyncLastDataTransferTimeUTC = default;
-            Optional<DateTimeOffset> resyncStartTime = default;
-            Optional<string> progressHealth = default;
-            Optional<string> progressStatus = default;
-            Optional<long> secondsToTakeSwitchProvider = default;
+            string diskId = default;
+            string diskName = default;
+            string protectionStage = default;
+            string healthErrorCode = default;
+            long? rpoInSeconds = default;
+            string resyncRequired = default;
+            int? resyncProgressPercentage = default;
+            long? resyncDurationInSeconds = default;
+            long? diskCapacityInBytes = default;
+            long? fileSystemCapacityInBytes = default;
+            double? sourceDataInMegaBytes = default;
+            double? psDataInMegaBytes = default;
+            double? targetDataInMegaBytes = default;
+            string diskResized = default;
+            DateTimeOffset? lastRpoCalculatedTime = default;
+            long? resyncProcessedBytes = default;
+            long? resyncTotalTransferredBytes = default;
+            long? resyncLast15MinutesTransferredBytes = default;
+            DateTimeOffset? resyncLastDataTransferTimeUTC = default;
+            DateTimeOffset? resyncStartTime = default;
+            string progressHealth = default;
+            string progressStatus = default;
+            long? secondsToTakeSwitchProvider = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -387,7 +387,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2ProtectedDiskDetails(diskId.Value, diskName.Value, protectionStage.Value, healthErrorCode.Value, Optional.ToNullable(rpoInSeconds), resyncRequired.Value, Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncDurationInSeconds), Optional.ToNullable(diskCapacityInBytes), Optional.ToNullable(fileSystemCapacityInBytes), Optional.ToNullable(sourceDataInMegaBytes), Optional.ToNullable(psDataInMegaBytes), Optional.ToNullable(targetDataInMegaBytes), diskResized.Value, Optional.ToNullable(lastRpoCalculatedTime), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTotalTransferredBytes), Optional.ToNullable(resyncLast15MinutesTransferredBytes), Optional.ToNullable(resyncLastDataTransferTimeUTC), Optional.ToNullable(resyncStartTime), progressHealth.Value, progressStatus.Value, Optional.ToNullable(secondsToTakeSwitchProvider), serializedAdditionalRawData);
+            return new InMageAzureV2ProtectedDiskDetails(
+                diskId,
+                diskName,
+                protectionStage,
+                healthErrorCode,
+                rpoInSeconds,
+                resyncRequired,
+                resyncProgressPercentage,
+                resyncDurationInSeconds,
+                diskCapacityInBytes,
+                fileSystemCapacityInBytes,
+                sourceDataInMegaBytes,
+                psDataInMegaBytes,
+                targetDataInMegaBytes,
+                diskResized,
+                lastRpoCalculatedTime,
+                resyncProcessedBytes,
+                resyncTotalTransferredBytes,
+                resyncLast15MinutesTransferredBytes,
+                resyncLastDataTransferTimeUTC,
+                resyncStartTime,
+                progressHealth,
+                progressStatus,
+                secondsToTakeSwitchProvider,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageAzureV2ProtectedDiskDetails>.Write(ModelReaderWriterOptions options)

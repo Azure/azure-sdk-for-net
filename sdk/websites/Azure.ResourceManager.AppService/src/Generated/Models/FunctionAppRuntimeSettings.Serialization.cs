@@ -145,20 +145,20 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> runtimeVersion = default;
-            Optional<bool> remoteDebuggingSupported = default;
-            Optional<AppInsightsWebAppStackSettings> appInsightsSettings = default;
-            Optional<GitHubActionWebAppStackSettings> gitHubActionSettings = default;
+            string runtimeVersion = default;
+            bool? remoteDebuggingSupported = default;
+            AppInsightsWebAppStackSettings appInsightsSettings = default;
+            GitHubActionWebAppStackSettings gitHubActionSettings = default;
             IReadOnlyDictionary<string, string> appSettingsDictionary = default;
-            Optional<SiteConfigPropertiesDictionary> siteConfigPropertiesDictionary = default;
+            SiteConfigPropertiesDictionary siteConfigPropertiesDictionary = default;
             IReadOnlyList<string> supportedFunctionsExtensionVersions = default;
-            Optional<bool> isPreview = default;
-            Optional<bool> isDeprecated = default;
-            Optional<bool> isHidden = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<bool> isAutoUpdate = default;
-            Optional<bool> isEarlyAccess = default;
-            Optional<bool> isDefault = default;
+            bool? isPreview = default;
+            bool? isDeprecated = default;
+            bool? isHidden = default;
+            DateTimeOffset? endOfLifeDate = default;
+            bool? isAutoUpdate = default;
+            bool? isEarlyAccess = default;
+            bool? isDefault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -301,7 +301,22 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionAppRuntimeSettings(runtimeVersion.Value, Optional.ToNullable(remoteDebuggingSupported), appInsightsSettings.Value, gitHubActionSettings.Value, appSettingsDictionary ?? new ChangeTrackingDictionary<string, string>(), siteConfigPropertiesDictionary.Value, supportedFunctionsExtensionVersions ?? new ChangeTrackingList<string>(), Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(isAutoUpdate), Optional.ToNullable(isEarlyAccess), Optional.ToNullable(isDefault), serializedAdditionalRawData);
+            return new FunctionAppRuntimeSettings(
+                runtimeVersion,
+                remoteDebuggingSupported,
+                appInsightsSettings,
+                gitHubActionSettings,
+                appSettingsDictionary ?? new ChangeTrackingDictionary<string, string>(),
+                siteConfigPropertiesDictionary,
+                supportedFunctionsExtensionVersions ?? new ChangeTrackingList<string>(),
+                isPreview,
+                isDeprecated,
+                isHidden,
+                endOfLifeDate,
+                isAutoUpdate,
+                isEarlyAccess,
+                isDefault,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FunctionAppRuntimeSettings>.Write(ModelReaderWriterOptions options)

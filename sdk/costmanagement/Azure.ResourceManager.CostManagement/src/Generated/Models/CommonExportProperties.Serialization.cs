@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<ExportFormatType> format = default;
+            ExportFormatType? format = default;
             ExportDeliveryInfo deliveryInfo = default;
             ExportDefinition definition = default;
-            Optional<ExportExecutionListResult> runHistory = default;
-            Optional<bool> partitionData = default;
-            Optional<DateTimeOffset> nextRunTimeEstimate = default;
+            ExportExecutionListResult runHistory = default;
+            bool? partitionData = default;
+            DateTimeOffset? nextRunTimeEstimate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommonExportProperties(Optional.ToNullable(format), deliveryInfo, definition, runHistory.Value, Optional.ToNullable(partitionData), Optional.ToNullable(nextRunTimeEstimate), serializedAdditionalRawData);
+            return new CommonExportProperties(
+                format,
+                deliveryInfo,
+                definition,
+                runHistory,
+                partitionData,
+                nextRunTimeEstimate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommonExportProperties>.Write(ModelReaderWriterOptions options)

@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> userId = default;
+            SystemData systemData = default;
+            string userId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecipientUserContract(id, name, type, systemData.Value, userId.Value, serializedAdditionalRawData);
+            return new RecipientUserContract(
+                id,
+                name,
+                type,
+                systemData,
+                userId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecipientUserContract>.Write(ModelReaderWriterOptions options)

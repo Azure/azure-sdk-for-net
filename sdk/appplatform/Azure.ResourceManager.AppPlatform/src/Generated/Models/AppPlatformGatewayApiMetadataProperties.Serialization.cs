@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<string> documentation = default;
-            Optional<string> version = default;
-            Optional<Uri> serverUri = default;
+            string title = default;
+            string description = default;
+            string documentation = default;
+            string version = default;
+            Uri serverUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayApiMetadataProperties(title.Value, description.Value, documentation.Value, version.Value, serverUri.Value, serializedAdditionalRawData);
+            return new AppPlatformGatewayApiMetadataProperties(
+                title,
+                description,
+                documentation,
+                version,
+                serverUri,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayApiMetadataProperties>.Write(ModelReaderWriterOptions options)

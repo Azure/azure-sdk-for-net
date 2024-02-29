@@ -43,5 +43,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             return new Uri(uriString);
         }
+
+        public static BinaryData CreateBinaryData(string filename)
+        {
+            var path = CreatePath(filename);
+            var bytes = File.ReadAllBytes(path);
+
+            return BinaryData.FromBytes(bytes);
+        }
     }
 }

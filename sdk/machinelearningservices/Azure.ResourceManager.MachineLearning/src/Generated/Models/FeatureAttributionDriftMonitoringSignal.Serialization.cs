@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             FeatureAttributionMetricThreshold metricThreshold = default;
             IList<MonitoringInputDataBase> productionData = default;
             MonitoringInputDataBase referenceData = default;
-            Optional<MonitoringNotificationMode> mode = default;
+            MonitoringNotificationMode? mode = default;
             IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeatureAttributionDriftMonitoringSignal(Optional.ToNullable(mode), properties ?? new ChangeTrackingDictionary<string, string>(), signalType, serializedAdditionalRawData, metricThreshold, productionData, referenceData);
+            return new FeatureAttributionDriftMonitoringSignal(
+                mode,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                metricThreshold,
+                productionData,
+                referenceData);
         }
 
         BinaryData IPersistableModel<FeatureAttributionDriftMonitoringSignal>.Write(ModelReaderWriterOptions options)

@@ -144,22 +144,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<bool> supportExportData = default;
-            Optional<string> burstThrottlePolicy = default;
-            Optional<string> metadataClass = default;
-            Optional<bool> liveStreamMetrics = default;
-            Optional<bool> applicationMap = default;
-            Optional<bool> workItemIntegration = default;
-            Optional<bool> powerBIIntegration = default;
-            Optional<bool> openSchema = default;
-            Optional<bool> proactiveDetection = default;
-            Optional<bool> analyticsIntegration = default;
-            Optional<bool> multipleStepWebTest = default;
-            Optional<string> apiAccessLevel = default;
-            Optional<string> trackingType = default;
-            Optional<float> dailyCap = default;
-            Optional<float> dailyCapResetTime = default;
-            Optional<float> throttleRate = default;
+            bool? supportExportData = default;
+            string burstThrottlePolicy = default;
+            string metadataClass = default;
+            bool? liveStreamMetrics = default;
+            bool? applicationMap = default;
+            bool? workItemIntegration = default;
+            bool? powerBIIntegration = default;
+            bool? openSchema = default;
+            bool? proactiveDetection = default;
+            bool? analyticsIntegration = default;
+            bool? multipleStepWebTest = default;
+            string apiAccessLevel = default;
+            string trackingType = default;
+            float? dailyCap = default;
+            float? dailyCapResetTime = default;
+            float? throttleRate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -298,7 +298,24 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentFeatureCapabilities(Optional.ToNullable(supportExportData), burstThrottlePolicy.Value, metadataClass.Value, Optional.ToNullable(liveStreamMetrics), Optional.ToNullable(applicationMap), Optional.ToNullable(workItemIntegration), Optional.ToNullable(powerBIIntegration), Optional.ToNullable(openSchema), Optional.ToNullable(proactiveDetection), Optional.ToNullable(analyticsIntegration), Optional.ToNullable(multipleStepWebTest), apiAccessLevel.Value, trackingType.Value, Optional.ToNullable(dailyCap), Optional.ToNullable(dailyCapResetTime), Optional.ToNullable(throttleRate), serializedAdditionalRawData);
+            return new ApplicationInsightsComponentFeatureCapabilities(
+                supportExportData,
+                burstThrottlePolicy,
+                metadataClass,
+                liveStreamMetrics,
+                applicationMap,
+                workItemIntegration,
+                powerBIIntegration,
+                openSchema,
+                proactiveDetection,
+                analyticsIntegration,
+                multipleStepWebTest,
+                apiAccessLevel,
+                trackingType,
+                dailyCap,
+                dailyCapResetTime,
+                throttleRate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentFeatureCapabilities>.Write(ModelReaderWriterOptions options)

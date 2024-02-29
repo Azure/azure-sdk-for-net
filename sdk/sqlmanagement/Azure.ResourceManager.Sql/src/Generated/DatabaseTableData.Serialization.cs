@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<TableTemporalType> temporalType = default;
-            Optional<bool> memoryOptimized = default;
+            SystemData systemData = default;
+            TableTemporalType? temporalType = default;
+            bool? memoryOptimized = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseTableData(id, name, type, systemData.Value, Optional.ToNullable(temporalType), Optional.ToNullable(memoryOptimized), serializedAdditionalRawData);
+            return new DatabaseTableData(
+                id,
+                name,
+                type,
+                systemData,
+                temporalType,
+                memoryOptimized,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseTableData>.Write(ModelReaderWriterOptions options)

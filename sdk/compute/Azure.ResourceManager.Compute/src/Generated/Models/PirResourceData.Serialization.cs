@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
+            string name = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PirResourceData(name.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new PirResourceData(name, location, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PirResourceData>.Write(ModelReaderWriterOptions options)

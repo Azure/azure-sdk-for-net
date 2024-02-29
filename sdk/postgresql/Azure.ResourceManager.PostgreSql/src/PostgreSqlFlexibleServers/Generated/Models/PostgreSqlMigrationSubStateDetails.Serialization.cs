@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<PostgreSqlMigrationSubState> currentSubState = default;
+            PostgreSqlMigrationSubState? currentSubState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlMigrationSubStateDetails(Optional.ToNullable(currentSubState), serializedAdditionalRawData);
+            return new PostgreSqlMigrationSubStateDetails(currentSubState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlMigrationSubStateDetails>.Write(ModelReaderWriterOptions options)

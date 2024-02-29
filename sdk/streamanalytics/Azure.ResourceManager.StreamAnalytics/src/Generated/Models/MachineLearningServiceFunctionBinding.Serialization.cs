@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> endpoint = default;
-            Optional<string> apiKey = default;
+            string endpoint = default;
+            string apiKey = default;
             IList<MachineLearningServiceInputColumn> inputs = default;
             IList<MachineLearningServiceOutputColumn> outputs = default;
-            Optional<int> batchSize = default;
-            Optional<int> numberOfParallelRequests = default;
-            Optional<string> inputRequestName = default;
-            Optional<string> outputResponseName = default;
+            int? batchSize = default;
+            int? numberOfParallelRequests = default;
+            string inputRequestName = default;
+            string outputResponseName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningServiceFunctionBinding(type, serializedAdditionalRawData, endpoint.Value, apiKey.Value, inputs ?? new ChangeTrackingList<MachineLearningServiceInputColumn>(), outputs ?? new ChangeTrackingList<MachineLearningServiceOutputColumn>(), Optional.ToNullable(batchSize), Optional.ToNullable(numberOfParallelRequests), inputRequestName.Value, outputResponseName.Value);
+            return new MachineLearningServiceFunctionBinding(
+                type,
+                serializedAdditionalRawData,
+                endpoint,
+                apiKey,
+                inputs ?? new ChangeTrackingList<MachineLearningServiceInputColumn>(),
+                outputs ?? new ChangeTrackingList<MachineLearningServiceOutputColumn>(),
+                batchSize,
+                numberOfParallelRequests,
+                inputRequestName,
+                outputResponseName);
         }
 
         BinaryData IPersistableModel<MachineLearningServiceFunctionBinding>.Write(ModelReaderWriterOptions options)

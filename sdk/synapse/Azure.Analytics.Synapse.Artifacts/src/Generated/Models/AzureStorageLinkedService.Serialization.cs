@@ -100,15 +100,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
-            Optional<object> connectionString = default;
-            Optional<AzureKeyVaultSecretReference> accountKey = default;
-            Optional<object> sasUri = default;
-            Optional<AzureKeyVaultSecretReference> sasToken = default;
-            Optional<string> encryptedCredential = default;
+            object connectionString = default;
+            AzureKeyVaultSecretReference accountKey = default;
+            object sasUri = default;
+            AzureKeyVaultSecretReference sasToken = default;
+            string encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +223,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureStorageLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, connectionString.Value, accountKey.Value, sasUri.Value, sasToken.Value, encryptedCredential.Value);
+            return new AzureStorageLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                connectionString,
+                accountKey,
+                sasUri,
+                sasToken,
+                encryptedCredential);
         }
 
         internal partial class AzureStorageLinkedServiceConverter : JsonConverter<AzureStorageLinkedService>

@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<AzureCoreVhdImageArtifactProfile> artifactProfile = default;
-            Optional<AzureCoreVhdImageDeployMappingRuleProfile> deployParametersMappingRuleProfile = default;
+            AzureCoreVhdImageArtifactProfile artifactProfile = default;
+            AzureCoreVhdImageDeployMappingRuleProfile deployParametersMappingRuleProfile = default;
             AzureCoreArtifactType artifactType = default;
-            Optional<string> name = default;
-            Optional<DependsOnProfile> dependsOnProfile = default;
+            string name = default;
+            DependsOnProfile dependsOnProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCoreNetworkFunctionVhdApplication(name.Value, dependsOnProfile.Value, serializedAdditionalRawData, artifactType, artifactProfile.Value, deployParametersMappingRuleProfile.Value);
+            return new AzureCoreNetworkFunctionVhdApplication(
+                name,
+                dependsOnProfile,
+                serializedAdditionalRawData,
+                artifactType,
+                artifactProfile,
+                deployParametersMappingRuleProfile);
         }
 
         BinaryData IPersistableModel<AzureCoreNetworkFunctionVhdApplication>.Write(ModelReaderWriterOptions options)

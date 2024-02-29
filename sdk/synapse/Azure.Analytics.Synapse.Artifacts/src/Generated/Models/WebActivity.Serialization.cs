@@ -129,23 +129,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<ActivityDependency> dependsOn = default;
             IList<UserProperty> userProperties = default;
             WebActivityMethod method = default;
             object url = default;
-            Optional<object> headers = default;
-            Optional<object> body = default;
-            Optional<WebActivityAuthentication> authentication = default;
+            object headers = default;
+            object body = default;
+            WebActivityAuthentication authentication = default;
             IList<DatasetReference> datasets = default;
             IList<LinkedServiceReference> linkedServices = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
+            IntegrationRuntimeReference connectVia = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -318,7 +318,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new WebActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, method, url, headers.Value, body.Value, authentication.Value, datasets ?? new ChangeTrackingList<DatasetReference>(), linkedServices ?? new ChangeTrackingList<LinkedServiceReference>(), connectVia.Value);
+            return new WebActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                method,
+                url,
+                headers,
+                body,
+                authentication,
+                datasets ?? new ChangeTrackingList<DatasetReference>(),
+                linkedServices ?? new ChangeTrackingList<LinkedServiceReference>(),
+                connectVia);
         }
 
         internal partial class WebActivityConverter : JsonConverter<WebActivity>

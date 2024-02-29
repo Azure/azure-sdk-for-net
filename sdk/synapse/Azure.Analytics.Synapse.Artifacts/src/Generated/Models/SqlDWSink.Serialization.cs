@@ -90,18 +90,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> preCopyScript = default;
-            Optional<object> allowPolyBase = default;
-            Optional<PolybaseSettings> polyBaseSettings = default;
-            Optional<object> allowCopyCommand = default;
-            Optional<DWCopyCommandSettings> copyCommandSettings = default;
-            Optional<object> tableOption = default;
+            object preCopyScript = default;
+            object allowPolyBase = default;
+            PolybaseSettings polyBaseSettings = default;
+            object allowCopyCommand = default;
+            DWCopyCommandSettings copyCommandSettings = default;
+            object tableOption = default;
             string type = default;
-            Optional<object> writeBatchSize = default;
-            Optional<object> writeBatchTimeout = default;
-            Optional<object> sinkRetryCount = default;
-            Optional<object> sinkRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object writeBatchSize = default;
+            object writeBatchTimeout = default;
+            object sinkRetryCount = default;
+            object sinkRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -213,7 +213,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlDWSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, preCopyScript.Value, allowPolyBase.Value, polyBaseSettings.Value, allowCopyCommand.Value, copyCommandSettings.Value, tableOption.Value);
+            return new SqlDWSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                preCopyScript,
+                allowPolyBase,
+                polyBaseSettings,
+                allowCopyCommand,
+                copyCommandSettings,
+                tableOption);
         }
 
         internal partial class SqlDWSinkConverter : JsonConverter<SqlDWSink>

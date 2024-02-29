@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = default;
-            Optional<string> startedOn = default;
+            string startedOn = default;
             IList<string> selectedLogins = default;
             IList<string> selectedAgentJobs = default;
-            Optional<FileShare> backupFileShare = default;
+            FileShare backupFileShare = default;
             BlobShare backupBlobShare = default;
-            Optional<BackupMode> backupMode = default;
-            Optional<string> aadDomainName = default;
-            Optional<string> encryptedKeyForSecureFields = default;
+            BackupMode? backupMode = default;
+            string aadDomainName = default;
+            string encryptedKeyForSecureFields = default;
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -229,7 +229,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlMITaskInput(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData, selectedDatabases, startedOn.Value, selectedLogins ?? new ChangeTrackingList<string>(), selectedAgentJobs ?? new ChangeTrackingList<string>(), backupFileShare.Value, backupBlobShare, Optional.ToNullable(backupMode), aadDomainName.Value, encryptedKeyForSecureFields.Value);
+            return new MigrateSqlServerSqlMITaskInput(
+                sourceConnectionInfo,
+                targetConnectionInfo,
+                serializedAdditionalRawData,
+                selectedDatabases,
+                startedOn,
+                selectedLogins ?? new ChangeTrackingList<string>(),
+                selectedAgentJobs ?? new ChangeTrackingList<string>(),
+                backupFileShare,
+                backupBlobShare,
+                backupMode,
+                aadDomainName,
+                encryptedKeyForSecureFields);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMITaskInput>.Write(ModelReaderWriterOptions options)

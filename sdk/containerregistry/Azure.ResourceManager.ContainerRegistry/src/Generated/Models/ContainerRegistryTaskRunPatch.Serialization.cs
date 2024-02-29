@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<AzureLocation> location = default;
+            ManagedServiceIdentity identity = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<ContainerRegistryRunContent> runRequest = default;
-            Optional<string> forceUpdateTag = default;
+            ContainerRegistryRunContent runRequest = default;
+            string forceUpdateTag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,7 +172,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTaskRunPatch(identity, Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), runRequest.Value, forceUpdateTag.Value, serializedAdditionalRawData);
+            return new ContainerRegistryTaskRunPatch(
+                identity,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                runRequest,
+                forceUpdateTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTaskRunPatch>.Write(ModelReaderWriterOptions options)

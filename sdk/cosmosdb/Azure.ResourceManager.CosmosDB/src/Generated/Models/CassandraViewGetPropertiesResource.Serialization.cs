@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> rid = default;
-            Optional<float> ts = default;
-            Optional<ETag> etag = default;
+            string rid = default;
+            float? ts = default;
+            ETag? etag = default;
             string id = default;
             string viewDefinition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraViewGetPropertiesResource(id, viewDefinition, serializedAdditionalRawData, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new CassandraViewGetPropertiesResource(
+                id,
+                viewDefinition,
+                serializedAdditionalRawData,
+                rid,
+                ts,
+                etag);
         }
 
         BinaryData IPersistableModel<CassandraViewGetPropertiesResource>.Write(ModelReaderWriterOptions options)

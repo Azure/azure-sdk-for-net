@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             Uri inputBlobContainerUri = default;
             Uri outputBlobContainerUri = default;
-            Optional<string> inputBlobName = default;
-            Optional<string> outputBlobName = default;
-            Optional<IotHubAuthenticationType> authenticationType = default;
-            Optional<ManagedIdentity> identity = default;
-            Optional<bool> includeConfigurations = default;
-            Optional<string> configurationsBlobName = default;
+            string inputBlobName = default;
+            string outputBlobName = default;
+            IotHubAuthenticationType? authenticationType = default;
+            ManagedIdentity identity = default;
+            bool? includeConfigurations = default;
+            string configurationsBlobName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,16 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubImportDevicesContent(inputBlobContainerUri, outputBlobContainerUri, inputBlobName.Value, outputBlobName.Value, Optional.ToNullable(authenticationType), identity.Value, Optional.ToNullable(includeConfigurations), configurationsBlobName.Value, serializedAdditionalRawData);
+            return new IotHubImportDevicesContent(
+                inputBlobContainerUri,
+                outputBlobContainerUri,
+                inputBlobName,
+                outputBlobName,
+                authenticationType,
+                identity,
+                includeConfigurations,
+                configurationsBlobName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubImportDevicesContent>.Write(ModelReaderWriterOptions options)

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             string nicId = default;
-            Optional<string> networkName = default;
+            string networkName = default;
             string targetNetworkId = default;
             string testNetworkId = default;
             VmNicSelection selectionTypeForFailover = default;
@@ -117,7 +117,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVToAzStackHciNicInput(nicId, networkName.Value, targetNetworkId, testNetworkId, selectionTypeForFailover, serializedAdditionalRawData);
+            return new HyperVToAzStackHciNicInput(
+                nicId,
+                networkName,
+                targetNetworkId,
+                testNetworkId,
+                selectionTypeForFailover,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HyperVToAzStackHciNicInput>.Write(ModelReaderWriterOptions options)

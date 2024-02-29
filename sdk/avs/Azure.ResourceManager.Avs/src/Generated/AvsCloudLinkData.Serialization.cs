@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AvsCloudLinkStatus> status = default;
-            Optional<ResourceIdentifier> linkedCloud = default;
+            SystemData systemData = default;
+            AvsCloudLinkStatus? status = default;
+            ResourceIdentifier linkedCloud = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsCloudLinkData(id, name, type, systemData.Value, Optional.ToNullable(status), linkedCloud.Value, serializedAdditionalRawData);
+            return new AvsCloudLinkData(
+                id,
+                name,
+                type,
+                systemData,
+                status,
+                linkedCloud,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsCloudLinkData>.Write(ModelReaderWriterOptions options)

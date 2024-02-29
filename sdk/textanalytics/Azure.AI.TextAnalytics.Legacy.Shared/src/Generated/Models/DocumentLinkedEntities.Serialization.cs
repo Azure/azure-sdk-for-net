@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -22,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             string id = default;
             IReadOnlyList<LinkedEntity> entities = default;
             IReadOnlyList<TextAnalyticsWarning> warnings = default;
-            Optional<DocumentStatistics> statistics = default;
+            DocumentStatistics statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -60,7 +59,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new DocumentLinkedEntities(id, entities, warnings, statistics.Value);
+            return new DocumentLinkedEntities(id, entities, warnings, statistics);
         }
     }
 }

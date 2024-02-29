@@ -82,8 +82,8 @@ namespace Azure.Communication.Messages
                 return null;
             }
             Uri url = default;
-            Optional<string> caption = default;
-            Optional<string> fileName = default;
+            string caption = default;
+            string fileName = default;
             string name = default;
             string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -121,7 +121,13 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageTemplateVideo(name, kind, serializedAdditionalRawData, url, caption.Value, fileName.Value);
+            return new MessageTemplateVideo(
+                name,
+                kind,
+                serializedAdditionalRawData,
+                url,
+                caption,
+                fileName);
         }
 
         BinaryData IPersistableModel<MessageTemplateVideo>.Write(ModelReaderWriterOptions options)

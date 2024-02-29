@@ -103,13 +103,13 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<BlobIndexerParsingMode?> parsingMode = default;
-            Optional<BlobIndexerDataToExtract?> dataToExtract = default;
+            BlobIndexerParsingMode? parsingMode = default;
+            BlobIndexerDataToExtract? dataToExtract = default;
             IDictionary<string, object> configuration = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new DocumentExtractionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(parsingMode), Optional.ToNullable(dataToExtract), configuration ?? new ChangeTrackingDictionary<string, object>());
+            return new DocumentExtractionSkill(
+                odataType,
+                name,
+                description,
+                context,
+                inputs,
+                outputs,
+                parsingMode,
+                dataToExtract,
+                configuration ?? new ChangeTrackingDictionary<string, object>());
         }
     }
 }

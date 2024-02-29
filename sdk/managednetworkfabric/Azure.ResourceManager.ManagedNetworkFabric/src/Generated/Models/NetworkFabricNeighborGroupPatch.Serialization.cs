@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> annotation = default;
-            Optional<NeighborGroupDestination> destination = default;
+            string annotation = default;
+            NeighborGroupDestination destination = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricNeighborGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, annotation.Value, destination.Value);
+            return new NetworkFabricNeighborGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, annotation, destination);
         }
 
         BinaryData IPersistableModel<NetworkFabricNeighborGroupPatch>.Write(ModelReaderWriterOptions options)

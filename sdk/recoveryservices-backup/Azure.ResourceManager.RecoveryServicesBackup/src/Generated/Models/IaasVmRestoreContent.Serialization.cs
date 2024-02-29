@@ -199,29 +199,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "IaasVMRestoreWithRehydrationRequest": return IaasVmRestoreWithRehydrationContent.DeserializeIaasVmRestoreWithRehydrationContent(element, options);
                 }
             }
-            Optional<string> recoveryPointId = default;
-            Optional<FileShareRecoveryType> recoveryType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<ResourceIdentifier> targetVirtualMachineId = default;
-            Optional<ResourceIdentifier> targetResourceGroupId = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<ResourceIdentifier> virtualNetworkId = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<ResourceIdentifier> targetDomainNameId = default;
-            Optional<AzureLocation> region = default;
-            Optional<string> affinityGroup = default;
-            Optional<bool> createNewCloudService = default;
-            Optional<bool> originalStorageAccountOption = default;
-            Optional<VmEncryptionDetails> encryptionDetails = default;
+            string recoveryPointId = default;
+            FileShareRecoveryType? recoveryType = default;
+            ResourceIdentifier sourceResourceId = default;
+            ResourceIdentifier targetVirtualMachineId = default;
+            ResourceIdentifier targetResourceGroupId = default;
+            ResourceIdentifier storageAccountId = default;
+            ResourceIdentifier virtualNetworkId = default;
+            ResourceIdentifier subnetId = default;
+            ResourceIdentifier targetDomainNameId = default;
+            AzureLocation? region = default;
+            string affinityGroup = default;
+            bool? createNewCloudService = default;
+            bool? originalStorageAccountOption = default;
+            VmEncryptionDetails encryptionDetails = default;
             IList<int> restoreDiskLunList = default;
-            Optional<bool> restoreWithManagedDisks = default;
-            Optional<string> diskEncryptionSetId = default;
+            bool? restoreWithManagedDisks = default;
+            string diskEncryptionSetId = default;
             IList<string> zones = default;
-            Optional<BackupIdentityInfo> identityInfo = default;
-            Optional<IdentityBasedRestoreDetails> identityBasedRestoreDetails = default;
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<SecuredVmDetails> securedVmDetails = default;
-            Optional<BackupTargetDiskNetworkAccessSettings> targetDiskNetworkAccessSettings = default;
+            BackupIdentityInfo identityInfo = default;
+            IdentityBasedRestoreDetails identityBasedRestoreDetails = default;
+            ExtendedLocation extendedLocation = default;
+            SecuredVmDetails securedVmDetails = default;
+            BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings = default;
             string objectType = "IaasVMRestoreRequest";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -443,7 +443,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmRestoreContent(objectType, serializedAdditionalRawData, recoveryPointId.Value, Optional.ToNullable(recoveryType), sourceResourceId.Value, targetVirtualMachineId.Value, targetResourceGroupId.Value, storageAccountId.Value, virtualNetworkId.Value, subnetId.Value, targetDomainNameId.Value, Optional.ToNullable(region), affinityGroup.Value, Optional.ToNullable(createNewCloudService), Optional.ToNullable(originalStorageAccountOption), encryptionDetails.Value, restoreDiskLunList ?? new ChangeTrackingList<int>(), Optional.ToNullable(restoreWithManagedDisks), diskEncryptionSetId.Value, zones ?? new ChangeTrackingList<string>(), identityInfo.Value, identityBasedRestoreDetails.Value, extendedLocation, securedVmDetails.Value, targetDiskNetworkAccessSettings.Value);
+            return new IaasVmRestoreContent(
+                objectType,
+                serializedAdditionalRawData,
+                recoveryPointId,
+                recoveryType,
+                sourceResourceId,
+                targetVirtualMachineId,
+                targetResourceGroupId,
+                storageAccountId,
+                virtualNetworkId,
+                subnetId,
+                targetDomainNameId,
+                region,
+                affinityGroup,
+                createNewCloudService,
+                originalStorageAccountOption,
+                encryptionDetails,
+                restoreDiskLunList ?? new ChangeTrackingList<int>(),
+                restoreWithManagedDisks,
+                diskEncryptionSetId,
+                zones ?? new ChangeTrackingList<string>(),
+                identityInfo,
+                identityBasedRestoreDetails,
+                extendedLocation,
+                securedVmDetails,
+                targetDiskNetworkAccessSettings);
         }
 
         BinaryData IPersistableModel<IaasVmRestoreContent>.Write(ModelReaderWriterOptions options)

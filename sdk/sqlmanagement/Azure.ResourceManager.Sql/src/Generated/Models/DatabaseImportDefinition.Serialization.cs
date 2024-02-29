@@ -104,17 +104,17 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<string> edition = default;
-            Optional<string> serviceObjectiveName = default;
-            Optional<string> maxSizeBytes = default;
+            string databaseName = default;
+            string edition = default;
+            string serviceObjectiveName = default;
+            string maxSizeBytes = default;
             StorageKeyType storageKeyType = default;
             string storageKey = default;
             Uri storageUri = default;
             string administratorLogin = default;
             string administratorLoginPassword = default;
-            Optional<string> authenticationType = default;
-            Optional<NetworkIsolationSettings> networkIsolation = default;
+            string authenticationType = default;
+            NetworkIsolationSettings networkIsolation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,7 +184,19 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseImportDefinition(databaseName.Value, edition.Value, serviceObjectiveName.Value, maxSizeBytes.Value, storageKeyType, storageKey, storageUri, administratorLogin, administratorLoginPassword, authenticationType.Value, networkIsolation.Value, serializedAdditionalRawData);
+            return new DatabaseImportDefinition(
+                databaseName,
+                edition,
+                serviceObjectiveName,
+                maxSizeBytes,
+                storageKeyType,
+                storageKey,
+                storageUri,
+                administratorLogin,
+                administratorLoginPassword,
+                authenticationType,
+                networkIsolation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseImportDefinition>.Write(ModelReaderWriterOptions options)

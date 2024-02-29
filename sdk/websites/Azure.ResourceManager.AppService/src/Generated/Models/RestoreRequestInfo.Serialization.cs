@@ -153,22 +153,22 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> storageAccountUrl = default;
-            Optional<string> blobName = default;
-            Optional<bool> overwrite = default;
-            Optional<string> siteName = default;
+            SystemData systemData = default;
+            Uri storageAccountUrl = default;
+            string blobName = default;
+            bool? overwrite = default;
+            string siteName = default;
             IList<AppServiceDatabaseBackupSetting> databases = default;
-            Optional<bool> ignoreConflictingHostNames = default;
-            Optional<bool> ignoreDatabases = default;
-            Optional<string> appServicePlan = default;
-            Optional<BackupRestoreOperationType> operationType = default;
-            Optional<bool> adjustConnectionStrings = default;
-            Optional<string> hostingEnvironment = default;
+            bool? ignoreConflictingHostNames = default;
+            bool? ignoreDatabases = default;
+            string appServicePlan = default;
+            BackupRestoreOperationType? operationType = default;
+            bool? adjustConnectionStrings = default;
+            string hostingEnvironment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -308,7 +308,24 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestoreRequestInfo(id, name, type, systemData.Value, storageAccountUrl.Value, blobName.Value, Optional.ToNullable(overwrite), siteName.Value, databases ?? new ChangeTrackingList<AppServiceDatabaseBackupSetting>(), Optional.ToNullable(ignoreConflictingHostNames), Optional.ToNullable(ignoreDatabases), appServicePlan.Value, Optional.ToNullable(operationType), Optional.ToNullable(adjustConnectionStrings), hostingEnvironment.Value, kind.Value, serializedAdditionalRawData);
+            return new RestoreRequestInfo(
+                id,
+                name,
+                type,
+                systemData,
+                storageAccountUrl,
+                blobName,
+                overwrite,
+                siteName,
+                databases ?? new ChangeTrackingList<AppServiceDatabaseBackupSetting>(),
+                ignoreConflictingHostNames,
+                ignoreDatabases,
+                appServicePlan,
+                operationType,
+                adjustConnectionStrings,
+                hostingEnvironment,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestoreRequestInfo>.Write(ModelReaderWriterOptions options)

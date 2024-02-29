@@ -102,19 +102,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
-            Optional<object> connectionProperties = default;
+            object connectionProperties = default;
             object endpoint = default;
             object companyId = default;
             object consumerKey = default;
             SecretBase consumerSecret = default;
             SecretBase accessToken = default;
             SecretBase accessTokenSecret = default;
-            Optional<object> useEncryptedEndpoints = default;
-            Optional<object> encryptedCredential = default;
+            object useEncryptedEndpoints = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -245,7 +245,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new QuickBooksLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, connectionProperties.Value, endpoint, companyId, consumerKey, consumerSecret, accessToken, accessTokenSecret, useEncryptedEndpoints.Value, encryptedCredential.Value);
+            return new QuickBooksLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                connectionProperties,
+                endpoint,
+                companyId,
+                consumerKey,
+                consumerSecret,
+                accessToken,
+                accessTokenSecret,
+                useEncryptedEndpoints,
+                encryptedCredential);
         }
 
         internal partial class QuickBooksLinkedServiceConverter : JsonConverter<QuickBooksLinkedService>

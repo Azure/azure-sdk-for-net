@@ -121,15 +121,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<MonitoringSettings> monitoringSettings = default;
-            Optional<DataProtectionBackupProvisioningState> provisioningState = default;
-            Optional<BackupVaultResourceMoveState> resourceMoveState = default;
-            Optional<BackupVaultResourceMoveDetails> resourceMoveDetails = default;
-            Optional<BackupVaultSecuritySettings> securitySettings = default;
+            MonitoringSettings monitoringSettings = default;
+            DataProtectionBackupProvisioningState? provisioningState = default;
+            BackupVaultResourceMoveState? resourceMoveState = default;
+            BackupVaultResourceMoveDetails resourceMoveDetails = default;
+            BackupVaultSecuritySettings securitySettings = default;
             IList<DataProtectionBackupStorageSetting> storageSettings = default;
-            Optional<bool> isVaultProtectedByResourceGuard = default;
-            Optional<BackupVaultFeatureSettings> featureSettings = default;
-            Optional<BackupVaultSecureScoreLevel> secureScore = default;
+            bool? isVaultProtectedByResourceGuard = default;
+            BackupVaultFeatureSettings featureSettings = default;
+            BackupVaultSecureScoreLevel? secureScore = default;
             IList<AzureLocation> replicatedRegions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -237,7 +237,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupVaultProperties(monitoringSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(resourceMoveState), resourceMoveDetails.Value, securitySettings.Value, storageSettings, Optional.ToNullable(isVaultProtectedByResourceGuard), featureSettings.Value, Optional.ToNullable(secureScore), replicatedRegions ?? new ChangeTrackingList<AzureLocation>(), serializedAdditionalRawData);
+            return new DataProtectionBackupVaultProperties(
+                monitoringSettings,
+                provisioningState,
+                resourceMoveState,
+                resourceMoveDetails,
+                securitySettings,
+                storageSettings,
+                isVaultProtectedByResourceGuard,
+                featureSettings,
+                secureScore,
+                replicatedRegions ?? new ChangeTrackingList<AzureLocation>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupVaultProperties>.Write(ModelReaderWriterOptions options)

@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<MigrateMISyncCompleteCommandInput> input = default;
-            Optional<MigrateMISyncCompleteCommandOutput> output = default;
+            MigrateMISyncCompleteCommandInput input = default;
+            MigrateMISyncCompleteCommandOutput output = default;
             CommandType commandType = default;
             IReadOnlyList<ODataError> errors = default;
-            Optional<CommandState> state = default;
+            CommandState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMISyncCompleteCommandProperties(commandType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), serializedAdditionalRawData, input.Value, output.Value);
+            return new MigrateMISyncCompleteCommandProperties(
+                commandType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                state,
+                serializedAdditionalRawData,
+                input,
+                output);
         }
 
         BinaryData IPersistableModel<MigrateMISyncCompleteCommandProperties>.Write(ModelReaderWriterOptions options)

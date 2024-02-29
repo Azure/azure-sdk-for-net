@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> allowNewSession = default;
-            Optional<string> assignedUser = default;
-            Optional<string> friendlyName = default;
+            SystemData systemData = default;
+            bool? allowNewSession = default;
+            string assignedUser = default;
+            string friendlyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SessionHostPatch(id, name, type, systemData.Value, Optional.ToNullable(allowNewSession), assignedUser.Value, friendlyName.Value, serializedAdditionalRawData);
+            return new SessionHostPatch(
+                id,
+                name,
+                type,
+                systemData,
+                allowNewSession,
+                assignedUser,
+                friendlyName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SessionHostPatch>.Write(ModelReaderWriterOptions options)

@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> amlWorkspaceLocation = default;
-            Optional<string> type = default;
-            Optional<MachineLearningUsageUnit> unit = default;
-            Optional<long> currentValue = default;
-            Optional<long> limit = default;
-            Optional<MachineLearningUsageName> name = default;
+            string id = default;
+            string amlWorkspaceLocation = default;
+            string type = default;
+            MachineLearningUsageUnit? unit = default;
+            long? currentValue = default;
+            long? limit = default;
+            MachineLearningUsageName name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningUsage(id.Value, amlWorkspaceLocation.Value, type.Value, Optional.ToNullable(unit), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, serializedAdditionalRawData);
+            return new MachineLearningUsage(
+                id,
+                amlWorkspaceLocation,
+                type,
+                unit,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningUsage>.Write(ModelReaderWriterOptions options)

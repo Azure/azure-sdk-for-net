@@ -20,15 +20,15 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Optional<string> recoveryId = default;
-            Optional<DateTimeOffset> scheduledPurgeDate = default;
-            Optional<DateTimeOffset> deletedDate = default;
-            Optional<string> id = default;
-            Optional<string> sid = default;
-            Optional<string> templateUri = default;
-            Optional<SasTokenType> sasType = default;
-            Optional<string> validityPeriod = default;
-            Optional<SasDefinitionAttributes> attributes = default;
+            string recoveryId = default;
+            DateTimeOffset? scheduledPurgeDate = default;
+            DateTimeOffset? deletedDate = default;
+            string id = default;
+            string sid = default;
+            string templateUri = default;
+            SasTokenType? sasType = default;
+            string validityPeriod = default;
+            SasDefinitionAttributes attributes = default;
             IReadOnlyDictionary<string, string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -108,7 +108,17 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new DeletedSasDefinitionBundle(id.Value, sid.Value, templateUri.Value, Optional.ToNullable(sasType), validityPeriod.Value, attributes.Value, tags ?? new ChangeTrackingDictionary<string, string>(), recoveryId.Value, Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(deletedDate));
+            return new DeletedSasDefinitionBundle(
+                id,
+                sid,
+                templateUri,
+                sasType,
+                validityPeriod,
+                attributes,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                recoveryId,
+                scheduledPurgeDate,
+                deletedDate);
         }
     }
 }

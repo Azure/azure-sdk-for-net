@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> assetId = default;
-            Optional<DedicatedHostAvailableCapacity> availableCapacity = default;
+            string assetId = default;
+            DedicatedHostAvailableCapacity availableCapacity = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedHostInstanceView(assetId.Value, availableCapacity.Value, statuses ?? new ChangeTrackingList<InstanceViewStatus>(), serializedAdditionalRawData);
+            return new DedicatedHostInstanceView(assetId, availableCapacity, statuses ?? new ChangeTrackingList<InstanceViewStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DedicatedHostInstanceView>.Write(ModelReaderWriterOptions options)

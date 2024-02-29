@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MixedReality.Models
             {
                 return null;
             }
-            Optional<MixedRealityAccountKeySerial> serial = default;
+            MixedRealityAccountKeySerial? serial = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MixedRealityAccountKeyRegenerateContent(Optional.ToNullable(serial), serializedAdditionalRawData);
+            return new MixedRealityAccountKeyRegenerateContent(serial, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MixedRealityAccountKeyRegenerateContent>.Write(ModelReaderWriterOptions options)

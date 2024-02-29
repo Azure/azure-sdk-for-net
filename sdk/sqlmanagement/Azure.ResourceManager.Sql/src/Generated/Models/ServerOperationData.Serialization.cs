@@ -156,20 +156,20 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> operation = default;
-            Optional<string> operationFriendlyName = default;
-            Optional<int> percentComplete = default;
-            Optional<string> serverName = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<ManagementOperationState> state = default;
-            Optional<int> errorCode = default;
-            Optional<string> errorDescription = default;
-            Optional<int> errorSeverity = default;
-            Optional<bool> isUserError = default;
-            Optional<DateTimeOffset> estimatedCompletionTime = default;
-            Optional<string> description = default;
-            Optional<bool> isCancellable = default;
+            SystemData systemData = default;
+            string operation = default;
+            string operationFriendlyName = default;
+            int? percentComplete = default;
+            string serverName = default;
+            DateTimeOffset? startTime = default;
+            ManagementOperationState? state = default;
+            int? errorCode = default;
+            string errorDescription = default;
+            int? errorSeverity = default;
+            bool? isUserError = default;
+            DateTimeOffset? estimatedCompletionTime = default;
+            string description = default;
+            bool? isCancellable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -313,7 +313,25 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerOperationData(id, name, type, systemData.Value, operation.Value, operationFriendlyName.Value, Optional.ToNullable(percentComplete), serverName.Value, Optional.ToNullable(startTime), Optional.ToNullable(state), Optional.ToNullable(errorCode), errorDescription.Value, Optional.ToNullable(errorSeverity), Optional.ToNullable(isUserError), Optional.ToNullable(estimatedCompletionTime), description.Value, Optional.ToNullable(isCancellable), serializedAdditionalRawData);
+            return new ServerOperationData(
+                id,
+                name,
+                type,
+                systemData,
+                operation,
+                operationFriendlyName,
+                percentComplete,
+                serverName,
+                startTime,
+                state,
+                errorCode,
+                errorDescription,
+                errorSeverity,
+                isUserError,
+                estimatedCompletionTime,
+                description,
+                isCancellable,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerOperationData>.Write(ModelReaderWriterOptions options)

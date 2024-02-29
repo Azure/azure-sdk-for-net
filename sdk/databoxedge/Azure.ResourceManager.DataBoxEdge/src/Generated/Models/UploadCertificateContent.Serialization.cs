@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<DataBoxEdgeAuthenticationType> authenticationType = default;
+            DataBoxEdgeAuthenticationType? authenticationType = default;
             string certificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UploadCertificateContent(Optional.ToNullable(authenticationType), certificate, serializedAdditionalRawData);
+            return new UploadCertificateContent(authenticationType, certificate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UploadCertificateContent>.Write(ModelReaderWriterOptions options)

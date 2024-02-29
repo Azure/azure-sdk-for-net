@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.Relay
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<RelayAccessRight> rights = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.Relay
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayAuthorizationRuleData(id, name, type, systemData.Value, rights ?? new ChangeTrackingList<RelayAccessRight>(), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new RelayAuthorizationRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                rights ?? new ChangeTrackingList<RelayAccessRight>(),
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayAuthorizationRuleData>.Write(ModelReaderWriterOptions options)

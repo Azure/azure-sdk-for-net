@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<CloudEndpointChangeEnumerationActivityState> operationState = default;
-            Optional<int> statusCode = default;
-            Optional<DateTimeOffset> startedTimestamp = default;
-            Optional<long> processedFilesCount = default;
-            Optional<long> processedDirectoriesCount = default;
-            Optional<long> totalFilesCount = default;
-            Optional<long> totalDirectoriesCount = default;
-            Optional<long> totalSizeBytes = default;
-            Optional<int> progressPercent = default;
-            Optional<int> minutesRemaining = default;
-            Optional<CloudEndpointChangeEnumerationTotalCountsState> totalCountsState = default;
-            Optional<int> deletesProgressPercent = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            CloudEndpointChangeEnumerationActivityState? operationState = default;
+            int? statusCode = default;
+            DateTimeOffset? startedTimestamp = default;
+            long? processedFilesCount = default;
+            long? processedDirectoriesCount = default;
+            long? totalFilesCount = default;
+            long? totalDirectoriesCount = default;
+            long? totalSizeBytes = default;
+            int? progressPercent = default;
+            int? minutesRemaining = default;
+            CloudEndpointChangeEnumerationTotalCountsState? totalCountsState = default;
+            int? deletesProgressPercent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,7 +269,21 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudEndpointChangeEnumerationActivity(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(operationState), Optional.ToNullable(statusCode), Optional.ToNullable(startedTimestamp), Optional.ToNullable(processedFilesCount), Optional.ToNullable(processedDirectoriesCount), Optional.ToNullable(totalFilesCount), Optional.ToNullable(totalDirectoriesCount), Optional.ToNullable(totalSizeBytes), Optional.ToNullable(progressPercent), Optional.ToNullable(minutesRemaining), Optional.ToNullable(totalCountsState), Optional.ToNullable(deletesProgressPercent), serializedAdditionalRawData);
+            return new CloudEndpointChangeEnumerationActivity(
+                lastUpdatedTimestamp,
+                operationState,
+                statusCode,
+                startedTimestamp,
+                processedFilesCount,
+                processedDirectoriesCount,
+                totalFilesCount,
+                totalDirectoriesCount,
+                totalSizeBytes,
+                progressPercent,
+                minutesRemaining,
+                totalCountsState,
+                deletesProgressPercent,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudEndpointChangeEnumerationActivity>.Write(ModelReaderWriterOptions options)

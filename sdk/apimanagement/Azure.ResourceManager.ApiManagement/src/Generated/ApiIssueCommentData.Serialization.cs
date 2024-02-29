@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> text = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<ResourceIdentifier> userId = default;
+            SystemData systemData = default;
+            string text = default;
+            DateTimeOffset? createdDate = default;
+            ResourceIdentifier userId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiIssueCommentData(id, name, type, systemData.Value, text.Value, Optional.ToNullable(createdDate), userId.Value, serializedAdditionalRawData);
+            return new ApiIssueCommentData(
+                id,
+                name,
+                type,
+                systemData,
+                text,
+                createdDate,
+                userId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiIssueCommentData>.Write(ModelReaderWriterOptions options)

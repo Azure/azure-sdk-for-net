@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> customDomainVerificationId = default;
-            Optional<string> dnsSuffix = default;
-            Optional<byte[]> certificateValue = default;
-            Optional<string> certificatePassword = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> thumbprint = default;
-            Optional<string> subjectName = default;
+            string customDomainVerificationId = default;
+            string dnsSuffix = default;
+            byte[] certificateValue = default;
+            string certificatePassword = default;
+            DateTimeOffset? expirationDate = default;
+            string thumbprint = default;
+            string subjectName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCustomDomainConfiguration(customDomainVerificationId.Value, dnsSuffix.Value, certificateValue.Value, certificatePassword.Value, Optional.ToNullable(expirationDate), thumbprint.Value, subjectName.Value, serializedAdditionalRawData);
+            return new ContainerAppCustomDomainConfiguration(
+                customDomainVerificationId,
+                dnsSuffix,
+                certificateValue,
+                certificatePassword,
+                expirationDate,
+                thumbprint,
+                subjectName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCustomDomainConfiguration>.Write(ModelReaderWriterOptions options)

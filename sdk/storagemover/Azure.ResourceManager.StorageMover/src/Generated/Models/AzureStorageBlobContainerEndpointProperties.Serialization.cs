@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             string storageAccountResourceId = default;
             string blobContainerName = default;
             EndpointType endpointType = default;
-            Optional<string> description = default;
-            Optional<StorageMoverProvisioningState> provisioningState = default;
+            string description = default;
+            StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureStorageBlobContainerEndpointProperties(endpointType, description.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData, storageAccountResourceId, blobContainerName);
+            return new AzureStorageBlobContainerEndpointProperties(
+                endpointType,
+                description,
+                provisioningState,
+                serializedAdditionalRawData,
+                storageAccountResourceId,
+                blobContainerName);
         }
 
         BinaryData IPersistableModel<AzureStorageBlobContainerEndpointProperties>.Write(ModelReaderWriterOptions options)

@@ -160,7 +160,13 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalyzedDocument(docType, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans, fields ?? new ChangeTrackingDictionary<string, DocumentField>(), confidence, serializedAdditionalRawData);
+            return new AnalyzedDocument(
+                docType,
+                boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
+                spans,
+                fields ?? new ChangeTrackingDictionary<string, DocumentField>(),
+                confidence,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalyzedDocument>.Write(ModelReaderWriterOptions options)

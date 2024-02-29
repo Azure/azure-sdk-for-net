@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> configurationDescription = default;
-            Optional<string> ruleCollectionDescription = default;
+            ResourceIdentifier id = default;
+            string configurationDescription = default;
+            string ruleCollectionDescription = default;
             IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = default;
             IReadOnlyList<NetworkConfigurationGroup> ruleGroups = default;
             EffectiveAdminRuleKind kind = "Unknown";
@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownEffectiveBaseSecurityAdminRule(id.Value, configurationDescription.Value, ruleCollectionDescription.Value, ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>(), ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(), kind, serializedAdditionalRawData);
+            return new UnknownEffectiveBaseSecurityAdminRule(
+                id,
+                configurationDescription,
+                ruleCollectionDescription,
+                ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>(),
+                ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveBaseSecurityAdminRule>.Write(ModelReaderWriterOptions options)

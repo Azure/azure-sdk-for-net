@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             TriggerPipelineReference pipeline = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryTriggerRuntimeState> runtimeState = default;
+            string description = default;
+            DataFactoryTriggerRuntimeState? runtimeState = default;
             IList<BinaryData> annotations = default;
             IList<DataFactoryPipelineReference> dependsOn = default;
             string runDimension = default;
@@ -195,7 +195,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ChainingTrigger(type, description.Value, Optional.ToNullable(runtimeState), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, pipeline, dependsOn, runDimension);
+            return new ChainingTrigger(
+                type,
+                description,
+                runtimeState,
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                pipeline,
+                dependsOn,
+                runDimension);
         }
 
         BinaryData IPersistableModel<ChainingTrigger>.Write(ModelReaderWriterOptions options)

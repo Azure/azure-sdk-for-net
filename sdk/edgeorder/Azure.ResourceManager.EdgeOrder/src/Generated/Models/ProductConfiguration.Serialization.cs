@@ -127,15 +127,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<ProductDescription> description = default;
+            string displayName = default;
+            ProductDescription description = default;
             IReadOnlyList<EdgeOrderProductImageInformation> imageInformation = default;
-            Optional<EdgeOrderProductCostInformation> costInformation = default;
-            Optional<ProductAvailabilityInformation> availabilityInformation = default;
-            Optional<HierarchyInformation> hierarchyInformation = default;
+            EdgeOrderProductCostInformation costInformation = default;
+            ProductAvailabilityInformation availabilityInformation = default;
+            HierarchyInformation hierarchyInformation = default;
             IReadOnlyList<FilterableProperty> filterableProperties = default;
             IReadOnlyList<ProductSpecification> specifications = default;
-            Optional<ProductDimensions> dimensions = default;
+            ProductDimensions dimensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +250,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductConfiguration(displayName.Value, description.Value, imageInformation ?? new ChangeTrackingList<EdgeOrderProductImageInformation>(), costInformation.Value, availabilityInformation.Value, hierarchyInformation.Value, filterableProperties ?? new ChangeTrackingList<FilterableProperty>(), specifications ?? new ChangeTrackingList<ProductSpecification>(), dimensions.Value, serializedAdditionalRawData);
+            return new ProductConfiguration(
+                displayName,
+                description,
+                imageInformation ?? new ChangeTrackingList<EdgeOrderProductImageInformation>(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                filterableProperties ?? new ChangeTrackingList<FilterableProperty>(),
+                specifications ?? new ChangeTrackingList<ProductSpecification>(),
+                dimensions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductConfiguration>.Write(ModelReaderWriterOptions options)

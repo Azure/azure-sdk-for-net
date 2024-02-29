@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<IssueState> state = default;
-            Optional<ResourceIdentifier> apiId = default;
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<ResourceIdentifier> userId = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdDate = default;
+            IssueState? state = default;
+            ResourceIdentifier apiId = default;
+            string title = default;
+            string description = default;
+            ResourceIdentifier userId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IssueContractData(id, name, type, systemData.Value, Optional.ToNullable(createdDate), Optional.ToNullable(state), apiId.Value, title.Value, description.Value, userId.Value, serializedAdditionalRawData);
+            return new IssueContractData(
+                id,
+                name,
+                type,
+                systemData,
+                createdDate,
+                state,
+                apiId,
+                title,
+                description,
+                userId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IssueContractData>.Write(ModelReaderWriterOptions options)

@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> content = default;
+            string content = default;
             IReadOnlyDictionary<string, string> headers = default;
-            Optional<string> reasonPhrase = default;
-            Optional<string> statusCode = default;
-            Optional<string> version = default;
+            string reasonPhrase = default;
+            string statusCode = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryWebhookEventResponseMessage(content.Value, headers ?? new ChangeTrackingDictionary<string, string>(), reasonPhrase.Value, statusCode.Value, version.Value, serializedAdditionalRawData);
+            return new ContainerRegistryWebhookEventResponseMessage(
+                content,
+                headers ?? new ChangeTrackingDictionary<string, string>(),
+                reasonPhrase,
+                statusCode,
+                version,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryWebhookEventResponseMessage>.Write(ModelReaderWriterOptions options)

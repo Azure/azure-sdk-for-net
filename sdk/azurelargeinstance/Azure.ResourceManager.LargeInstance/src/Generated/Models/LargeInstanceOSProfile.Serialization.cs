@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Optional<string> computerName = default;
-            Optional<string> osType = default;
-            Optional<string> version = default;
-            Optional<string> sshPublicKey = default;
+            string computerName = default;
+            string osType = default;
+            string version = default;
+            string sshPublicKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceOSProfile(computerName.Value, osType.Value, version.Value, sshPublicKey.Value, serializedAdditionalRawData);
+            return new LargeInstanceOSProfile(computerName, osType, version, sshPublicKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceOSProfile>.Write(ModelReaderWriterOptions options)

@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> charset = default;
-            Optional<string> collation = default;
+            SystemData systemData = default;
+            string charset = default;
+            string collation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerDatabaseData(id, name, type, systemData.Value, charset.Value, collation.Value, serializedAdditionalRawData);
+            return new MySqlFlexibleServerDatabaseData(
+                id,
+                name,
+                type,
+                systemData,
+                charset,
+                collation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerDatabaseData>.Write(ModelReaderWriterOptions options)

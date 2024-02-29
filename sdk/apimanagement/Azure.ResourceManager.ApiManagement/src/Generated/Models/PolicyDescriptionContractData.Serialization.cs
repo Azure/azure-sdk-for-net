@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<long> scope = default;
+            SystemData systemData = default;
+            string description = default;
+            long? scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyDescriptionContractData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(scope), serializedAdditionalRawData);
+            return new PolicyDescriptionContractData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                scope,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyDescriptionContractData>.Write(ModelReaderWriterOptions options)

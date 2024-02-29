@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             long totalRecords = default;
             long count = default;
             ResultTruncated resultTruncated = default;
-            Optional<string> skipToken = default;
+            string skipToken = default;
             BinaryData data = default;
             IReadOnlyList<Facet> facets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -149,7 +149,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceQueryResult(totalRecords, count, resultTruncated, skipToken.Value, data, facets ?? new ChangeTrackingList<Facet>(), serializedAdditionalRawData);
+            return new ResourceQueryResult(
+                totalRecords,
+                count,
+                resultTruncated,
+                skipToken,
+                data,
+                facets ?? new ChangeTrackingList<Facet>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceQueryResult>.Write(ModelReaderWriterOptions options)

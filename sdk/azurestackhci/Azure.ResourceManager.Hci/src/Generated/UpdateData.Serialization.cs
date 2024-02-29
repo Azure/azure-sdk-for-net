@@ -217,32 +217,32 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HciProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> installedDate = default;
-            Optional<string> description = default;
-            Optional<HciUpdateState> state = default;
+            SystemData systemData = default;
+            HciProvisioningState? provisioningState = default;
+            DateTimeOffset? installedDate = default;
+            string description = default;
+            HciUpdateState? state = default;
             IList<UpdatePrerequisite> prerequisites = default;
             IList<HciPackageVersionInfo> componentVersions = default;
-            Optional<HciNodeRebootRequirement> rebootRequired = default;
-            Optional<HciHealthState> healthState = default;
+            HciNodeRebootRequirement? rebootRequired = default;
+            HciHealthState? healthState = default;
             IList<HciPrecheckResult> healthCheckResult = default;
-            Optional<DateTimeOffset> healthCheckDate = default;
-            Optional<string> packagePath = default;
-            Optional<float> packageSizeInMb = default;
-            Optional<string> displayName = default;
-            Optional<string> version = default;
-            Optional<string> publisher = default;
-            Optional<string> releaseLink = default;
-            Optional<HciAvailabilityType> availabilityType = default;
-            Optional<string> packageType = default;
-            Optional<string> additionalProperties = default;
-            Optional<float> progressPercentage = default;
-            Optional<string> notifyMessage = default;
+            DateTimeOffset? healthCheckDate = default;
+            string packagePath = default;
+            float? packageSizeInMb = default;
+            string displayName = default;
+            string version = default;
+            string publisher = default;
+            string releaseLink = default;
+            HciAvailabilityType? availabilityType = default;
+            string packageType = default;
+            string additionalProperties = default;
+            float? progressPercentage = default;
+            string notifyMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -478,7 +478,34 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), Optional.ToNullable(installedDate), description.Value, Optional.ToNullable(state), prerequisites ?? new ChangeTrackingList<UpdatePrerequisite>(), componentVersions ?? new ChangeTrackingList<HciPackageVersionInfo>(), Optional.ToNullable(rebootRequired), Optional.ToNullable(healthState), healthCheckResult ?? new ChangeTrackingList<HciPrecheckResult>(), Optional.ToNullable(healthCheckDate), packagePath.Value, Optional.ToNullable(packageSizeInMb), displayName.Value, version.Value, publisher.Value, releaseLink.Value, Optional.ToNullable(availabilityType), packageType.Value, additionalProperties.Value, Optional.ToNullable(progressPercentage), notifyMessage.Value, serializedAdditionalRawData);
+            return new UpdateData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                provisioningState,
+                installedDate,
+                description,
+                state,
+                prerequisites ?? new ChangeTrackingList<UpdatePrerequisite>(),
+                componentVersions ?? new ChangeTrackingList<HciPackageVersionInfo>(),
+                rebootRequired,
+                healthState,
+                healthCheckResult ?? new ChangeTrackingList<HciPrecheckResult>(),
+                healthCheckDate,
+                packagePath,
+                packageSizeInMb,
+                displayName,
+                version,
+                publisher,
+                releaseLink,
+                availabilityType,
+                packageType,
+                additionalProperties,
+                progressPercentage,
+                notifyMessage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateData>.Write(ModelReaderWriterOptions options)

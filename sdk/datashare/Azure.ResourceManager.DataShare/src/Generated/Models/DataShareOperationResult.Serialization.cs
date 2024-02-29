@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> endTime = default;
-            Optional<ResponseError> error = default;
-            Optional<DateTimeOffset> startTime = default;
+            DateTimeOffset? endTime = default;
+            ResponseError error = default;
+            DateTimeOffset? startTime = default;
             DataShareOperationStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataShareOperationResult(Optional.ToNullable(endTime), error.Value, Optional.ToNullable(startTime), status, serializedAdditionalRawData);
+            return new DataShareOperationResult(endTime, error, startTime, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataShareOperationResult>.Write(ModelReaderWriterOptions options)

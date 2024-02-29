@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 return null;
             }
             IReadOnlyList<HybridContainerServiceVirtualNetworkData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworksListResult(value ?? new ChangeTrackingList<HybridContainerServiceVirtualNetworkData>(), nextLink.Value, serializedAdditionalRawData);
+            return new VirtualNetworksListResult(value ?? new ChangeTrackingList<HybridContainerServiceVirtualNetworkData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworksListResult>.Write(ModelReaderWriterOptions options)

@@ -120,17 +120,17 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             SynapseKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceProvisioningState> provisioningState = default;
-            Optional<TimeSpan> softDeletePeriod = default;
-            Optional<TimeSpan> hotCachePeriod = default;
-            Optional<DatabaseStatistics> statistics = default;
-            Optional<bool> isFollowed = default;
+            SystemData systemData = default;
+            ResourceProvisioningState? provisioningState = default;
+            TimeSpan? softDeletePeriod = default;
+            TimeSpan? hotCachePeriod = default;
+            DatabaseStatistics statistics = default;
+            bool? isFollowed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,7 +236,19 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseReadWriteDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, Optional.ToNullable(isFollowed));
+            return new SynapseReadWriteDatabase(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                serializedAdditionalRawData,
+                provisioningState,
+                softDeletePeriod,
+                hotCachePeriod,
+                statistics,
+                isFollowed);
         }
 
         BinaryData IPersistableModel<SynapseReadWriteDatabase>.Write(ModelReaderWriterOptions options)

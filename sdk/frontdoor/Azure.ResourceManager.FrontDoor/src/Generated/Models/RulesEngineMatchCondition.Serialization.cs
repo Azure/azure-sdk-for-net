@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             RulesEngineMatchVariable rulesEngineMatchVariable = default;
-            Optional<string> selector = default;
+            string selector = default;
             RulesEngineOperator rulesEngineOperator = default;
-            Optional<bool> negateCondition = default;
+            bool? negateCondition = default;
             IList<string> rulesEngineMatchValue = default;
             IList<RulesEngineMatchTransform> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -159,7 +159,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulesEngineMatchCondition(rulesEngineMatchVariable, selector.Value, rulesEngineOperator, Optional.ToNullable(negateCondition), rulesEngineMatchValue, transforms ?? new ChangeTrackingList<RulesEngineMatchTransform>(), serializedAdditionalRawData);
+            return new RulesEngineMatchCondition(
+                rulesEngineMatchVariable,
+                selector,
+                rulesEngineOperator,
+                negateCondition,
+                rulesEngineMatchValue,
+                transforms ?? new ChangeTrackingList<RulesEngineMatchTransform>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulesEngineMatchCondition>.Write(ModelReaderWriterOptions options)

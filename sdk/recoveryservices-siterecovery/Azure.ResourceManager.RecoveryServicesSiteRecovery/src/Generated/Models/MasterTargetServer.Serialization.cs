@@ -175,24 +175,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<string> name = default;
-            Optional<string> osType = default;
-            Optional<string> agentVersion = default;
-            Optional<DateTimeOffset> lastHeartbeat = default;
-            Optional<string> versionStatus = default;
+            string id = default;
+            IPAddress ipAddress = default;
+            string name = default;
+            string osType = default;
+            string agentVersion = default;
+            DateTimeOffset? lastHeartbeat = default;
+            string versionStatus = default;
             IReadOnlyList<SiteRecoveryRetentionVolume> retentionVolumes = default;
             IReadOnlyList<SiteRecoveryDataStore> dataStores = default;
             IReadOnlyList<SiteRecoveryHealthError> validationErrors = default;
             IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
-            Optional<int> diskCount = default;
-            Optional<string> osVersion = default;
-            Optional<DateTimeOffset> agentExpireOn = default;
-            Optional<string> marsAgentVersion = default;
-            Optional<DateTimeOffset> marsAgentExpireOn = default;
-            Optional<SiteRecoveryVersionDetails> agentVersionDetails = default;
-            Optional<SiteRecoveryVersionDetails> marsAgentVersionDetails = default;
+            int? diskCount = default;
+            string osVersion = default;
+            DateTimeOffset? agentExpireOn = default;
+            string marsAgentVersion = default;
+            DateTimeOffset? marsAgentExpireOn = default;
+            SiteRecoveryVersionDetails agentVersionDetails = default;
+            SiteRecoveryVersionDetails marsAgentVersionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -357,7 +357,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MasterTargetServer(id.Value, ipAddress.Value, name.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, retentionVolumes ?? new ChangeTrackingList<SiteRecoveryRetentionVolume>(), dataStores ?? new ChangeTrackingList<SiteRecoveryDataStore>(), validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), Optional.ToNullable(diskCount), osVersion.Value, Optional.ToNullable(agentExpireOn), marsAgentVersion.Value, Optional.ToNullable(marsAgentExpireOn), agentVersionDetails.Value, marsAgentVersionDetails.Value, serializedAdditionalRawData);
+            return new MasterTargetServer(
+                id,
+                ipAddress,
+                name,
+                osType,
+                agentVersion,
+                lastHeartbeat,
+                versionStatus,
+                retentionVolumes ?? new ChangeTrackingList<SiteRecoveryRetentionVolume>(),
+                dataStores ?? new ChangeTrackingList<SiteRecoveryDataStore>(),
+                validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                diskCount,
+                osVersion,
+                agentExpireOn,
+                marsAgentVersion,
+                marsAgentExpireOn,
+                agentVersionDetails,
+                marsAgentVersionDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MasterTargetServer>.Write(ModelReaderWriterOptions options)

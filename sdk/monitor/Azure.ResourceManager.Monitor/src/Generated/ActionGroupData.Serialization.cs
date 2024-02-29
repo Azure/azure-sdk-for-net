@@ -227,9 +227,9 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupShortName = default;
-            Optional<bool> enabled = default;
+            SystemData systemData = default;
+            string groupShortName = default;
+            bool? enabled = default;
             IList<MonitorEmailReceiver> emailReceivers = default;
             IList<MonitorSmsReceiver> smsReceivers = default;
             IList<MonitorWebhookReceiver> webhookReceivers = default;
@@ -474,7 +474,27 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActionGroupData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, groupShortName.Value, Optional.ToNullable(enabled), emailReceivers ?? new ChangeTrackingList<MonitorEmailReceiver>(), smsReceivers ?? new ChangeTrackingList<MonitorSmsReceiver>(), webhookReceivers ?? new ChangeTrackingList<MonitorWebhookReceiver>(), itsmReceivers ?? new ChangeTrackingList<MonitorItsmReceiver>(), azureAppPushReceivers ?? new ChangeTrackingList<MonitorAzureAppPushReceiver>(), automationRunbookReceivers ?? new ChangeTrackingList<MonitorAutomationRunbookReceiver>(), voiceReceivers ?? new ChangeTrackingList<MonitorVoiceReceiver>(), logicAppReceivers ?? new ChangeTrackingList<MonitorLogicAppReceiver>(), azureFunctionReceivers ?? new ChangeTrackingList<MonitorAzureFunctionReceiver>(), armRoleReceivers ?? new ChangeTrackingList<MonitorArmRoleReceiver>(), eventHubReceivers ?? new ChangeTrackingList<MonitorEventHubReceiver>(), serializedAdditionalRawData);
+            return new ActionGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                groupShortName,
+                enabled,
+                emailReceivers ?? new ChangeTrackingList<MonitorEmailReceiver>(),
+                smsReceivers ?? new ChangeTrackingList<MonitorSmsReceiver>(),
+                webhookReceivers ?? new ChangeTrackingList<MonitorWebhookReceiver>(),
+                itsmReceivers ?? new ChangeTrackingList<MonitorItsmReceiver>(),
+                azureAppPushReceivers ?? new ChangeTrackingList<MonitorAzureAppPushReceiver>(),
+                automationRunbookReceivers ?? new ChangeTrackingList<MonitorAutomationRunbookReceiver>(),
+                voiceReceivers ?? new ChangeTrackingList<MonitorVoiceReceiver>(),
+                logicAppReceivers ?? new ChangeTrackingList<MonitorLogicAppReceiver>(),
+                azureFunctionReceivers ?? new ChangeTrackingList<MonitorAzureFunctionReceiver>(),
+                armRoleReceivers ?? new ChangeTrackingList<MonitorArmRoleReceiver>(),
+                eventHubReceivers ?? new ChangeTrackingList<MonitorEventHubReceiver>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActionGroupData>.Write(ModelReaderWriterOptions options)

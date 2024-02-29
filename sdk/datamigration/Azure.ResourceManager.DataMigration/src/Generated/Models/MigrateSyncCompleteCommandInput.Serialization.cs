@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string databaseName = default;
-            Optional<DateTimeOffset> commitTimeStamp = default;
+            DateTimeOffset? commitTimeStamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSyncCompleteCommandInput(databaseName, Optional.ToNullable(commitTimeStamp), serializedAdditionalRawData);
+            return new MigrateSyncCompleteCommandInput(databaseName, commitTimeStamp, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateSyncCompleteCommandInput>.Write(ModelReaderWriterOptions options)

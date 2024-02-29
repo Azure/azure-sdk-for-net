@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> recoveryPointTime = default;
-            Optional<MigrationRecoveryPointType> recoveryPointType = default;
+            DateTimeOffset? recoveryPointTime = default;
+            MigrationRecoveryPointType? recoveryPointType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrationRecoveryPointProperties(Optional.ToNullable(recoveryPointTime), Optional.ToNullable(recoveryPointType), serializedAdditionalRawData);
+            return new MigrationRecoveryPointProperties(recoveryPointTime, recoveryPointType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrationRecoveryPointProperties>.Write(ModelReaderWriterOptions options)

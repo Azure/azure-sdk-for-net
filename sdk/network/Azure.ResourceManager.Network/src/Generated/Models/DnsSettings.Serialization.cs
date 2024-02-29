@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IList<string> servers = default;
-            Optional<bool> enableProxy = default;
-            Optional<bool?> requireProxyForNetworkRules = default;
+            bool? enableProxy = default;
+            bool? requireProxyForNetworkRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsSettings(servers ?? new ChangeTrackingList<string>(), Optional.ToNullable(enableProxy), Optional.ToNullable(requireProxyForNetworkRules), serializedAdditionalRawData);
+            return new DnsSettings(servers ?? new ChangeTrackingList<string>(), enableProxy, requireProxyForNetworkRules, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsSettings>.Write(ModelReaderWriterOptions options)

@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<NetAppVolumeGroupMetadata> groupMetaData = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            NetAppVolumeGroupMetadata groupMetaData = default;
             IList<NetAppVolumeGroupVolume> volumes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeGroupData(id, name, type, systemData.Value, Optional.ToNullable(location), provisioningState.Value, groupMetaData.Value, volumes ?? new ChangeTrackingList<NetAppVolumeGroupVolume>(), serializedAdditionalRawData);
+            return new NetAppVolumeGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                provisioningState,
+                groupMetaData,
+                volumes ?? new ChangeTrackingList<NetAppVolumeGroupVolume>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeGroupData>.Write(ModelReaderWriterOptions options)

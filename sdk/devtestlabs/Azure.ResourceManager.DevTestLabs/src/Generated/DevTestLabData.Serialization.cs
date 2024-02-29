@@ -223,27 +223,27 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> defaultStorageAccount = default;
-            Optional<string> defaultPremiumStorageAccount = default;
-            Optional<string> artifactsStorageAccount = default;
-            Optional<string> premiumDataDiskStorageAccount = default;
-            Optional<string> vaultName = default;
-            Optional<DevTestLabStorageType> labStorageType = default;
+            SystemData systemData = default;
+            string defaultStorageAccount = default;
+            string defaultPremiumStorageAccount = default;
+            string artifactsStorageAccount = default;
+            string premiumDataDiskStorageAccount = default;
+            string vaultName = default;
+            DevTestLabStorageType? labStorageType = default;
             IList<string> mandatoryArtifactsResourceIdsLinux = default;
             IList<string> mandatoryArtifactsResourceIdsWindows = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<DevTestLabPremiumDataDisk> premiumDataDisks = default;
-            Optional<DevTestLabEnvironmentPermission> environmentPermission = default;
-            Optional<DevTestLabAnnouncement> announcement = default;
-            Optional<DevTestLabSupport> support = default;
-            Optional<string> vmCreationResourceGroup = default;
-            Optional<string> publicIPId = default;
-            Optional<string> loadBalancerId = default;
-            Optional<string> networkSecurityGroupId = default;
+            DateTimeOffset? createdDate = default;
+            DevTestLabPremiumDataDisk? premiumDataDisks = default;
+            DevTestLabEnvironmentPermission? environmentPermission = default;
+            DevTestLabAnnouncement announcement = default;
+            DevTestLabSupport support = default;
+            string vmCreationResourceGroup = default;
+            string publicIPId = default;
+            string loadBalancerId = default;
+            string networkSecurityGroupId = default;
             IDictionary<string, string> extendedProperties = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -464,7 +464,34 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, defaultStorageAccount.Value, defaultPremiumStorageAccount.Value, artifactsStorageAccount.Value, premiumDataDiskStorageAccount.Value, vaultName.Value, Optional.ToNullable(labStorageType), mandatoryArtifactsResourceIdsLinux ?? new ChangeTrackingList<string>(), mandatoryArtifactsResourceIdsWindows ?? new ChangeTrackingList<string>(), Optional.ToNullable(createdDate), Optional.ToNullable(premiumDataDisks), Optional.ToNullable(environmentPermission), announcement.Value, support.Value, vmCreationResourceGroup.Value, publicIPId.Value, loadBalancerId.Value, networkSecurityGroupId.Value, extendedProperties ?? new ChangeTrackingDictionary<string, string>(), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                defaultStorageAccount,
+                defaultPremiumStorageAccount,
+                artifactsStorageAccount,
+                premiumDataDiskStorageAccount,
+                vaultName,
+                labStorageType,
+                mandatoryArtifactsResourceIdsLinux ?? new ChangeTrackingList<string>(),
+                mandatoryArtifactsResourceIdsWindows ?? new ChangeTrackingList<string>(),
+                createdDate,
+                premiumDataDisks,
+                environmentPermission,
+                announcement,
+                support,
+                vmCreationResourceGroup,
+                publicIPId,
+                loadBalancerId,
+                networkSecurityGroupId,
+                extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabData>.Write(ModelReaderWriterOptions options)

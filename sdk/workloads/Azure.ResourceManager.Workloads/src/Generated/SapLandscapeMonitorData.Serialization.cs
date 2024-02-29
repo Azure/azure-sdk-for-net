@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.Workloads
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SapLandscapeMonitorProvisioningState> provisioningState = default;
-            Optional<SapLandscapeMonitorPropertiesGrouping> grouping = default;
+            SystemData systemData = default;
+            SapLandscapeMonitorProvisioningState? provisioningState = default;
+            SapLandscapeMonitorPropertiesGrouping grouping = default;
             IList<SapLandscapeMonitorMetricThresholds> topMetricsThresholds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -194,7 +194,15 @@ namespace Azure.ResourceManager.Workloads
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapLandscapeMonitorData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), grouping.Value, topMetricsThresholds ?? new ChangeTrackingList<SapLandscapeMonitorMetricThresholds>(), serializedAdditionalRawData);
+            return new SapLandscapeMonitorData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                grouping,
+                topMetricsThresholds ?? new ChangeTrackingList<SapLandscapeMonitorMetricThresholds>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapLandscapeMonitorData>.Write(ModelReaderWriterOptions options)

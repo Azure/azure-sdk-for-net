@@ -210,21 +210,21 @@ namespace Azure.ResourceManager.Logic
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> name0 = default;
+            SystemData systemData = default;
+            string name0 = default;
             IReadOnlyDictionary<string, BinaryData> connectionParameters = default;
-            Optional<LogicApiResourceMetadata> metadata = default;
+            LogicApiResourceMetadata metadata = default;
             IReadOnlyList<Uri> runtimeUrls = default;
-            Optional<LogicApiResourceGeneralInformation> generalInformation = default;
+            LogicApiResourceGeneralInformation generalInformation = default;
             IReadOnlyList<string> capabilities = default;
-            Optional<LogicApiResourceBackendService> backendService = default;
-            Optional<LogicApiResourcePolicies> policies = default;
-            Optional<Uri> apiDefinitionUrl = default;
-            Optional<LogicApiResourceDefinitions> apiDefinitions = default;
-            Optional<LogicResourceReference> integrationServiceEnvironment = default;
-            Optional<LogicWorkflowProvisioningState> provisioningState = default;
-            Optional<LogicApiTier> category = default;
-            Optional<IntegrationServiceEnvironmentManagedApiDeploymentParameters> deploymentParameters = default;
+            LogicApiResourceBackendService backendService = default;
+            LogicApiResourcePolicies policies = default;
+            Uri apiDefinitionUrl = default;
+            LogicApiResourceDefinitions apiDefinitions = default;
+            LogicResourceReference integrationServiceEnvironment = default;
+            LogicWorkflowProvisioningState? provisioningState = default;
+            LogicApiTier? category = default;
+            IntegrationServiceEnvironmentManagedApiDeploymentParameters deploymentParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -441,7 +441,28 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentManagedApiData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, name0.Value, connectionParameters ?? new ChangeTrackingDictionary<string, BinaryData>(), metadata.Value, runtimeUrls ?? new ChangeTrackingList<Uri>(), generalInformation.Value, capabilities ?? new ChangeTrackingList<string>(), backendService.Value, policies.Value, apiDefinitionUrl.Value, apiDefinitions.Value, integrationServiceEnvironment.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(category), deploymentParameters.Value, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentManagedApiData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                name0,
+                connectionParameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                metadata,
+                runtimeUrls ?? new ChangeTrackingList<Uri>(),
+                generalInformation,
+                capabilities ?? new ChangeTrackingList<string>(),
+                backendService,
+                policies,
+                apiDefinitionUrl,
+                apiDefinitions,
+                integrationServiceEnvironment,
+                provisioningState,
+                category,
+                deploymentParameters,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentManagedApiData>.Write(ModelReaderWriterOptions options)

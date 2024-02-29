@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> serviceBusNamespace = default;
-            Optional<string> sharedAccessPolicyName = default;
-            Optional<string> sharedAccessPolicyKey = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
-            Optional<string> queueName = default;
+            string serviceBusNamespace = default;
+            string sharedAccessPolicyName = default;
+            string sharedAccessPolicyKey = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
+            string queueName = default;
             IList<string> propertyColumns = default;
             IDictionary<string, string> systemPropertyColumns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -207,7 +207,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusQueueOutputDataSource(type, serializedAdditionalRawData, serviceBusNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, Optional.ToNullable(authenticationMode), queueName.Value, propertyColumns ?? new ChangeTrackingList<string>(), systemPropertyColumns ?? new ChangeTrackingDictionary<string, string>());
+            return new ServiceBusQueueOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                serviceBusNamespace,
+                sharedAccessPolicyName,
+                sharedAccessPolicyKey,
+                authenticationMode,
+                queueName,
+                propertyColumns ?? new ChangeTrackingList<string>(),
+                systemPropertyColumns ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<ServiceBusQueueOutputDataSource>.Write(ModelReaderWriterOptions options)

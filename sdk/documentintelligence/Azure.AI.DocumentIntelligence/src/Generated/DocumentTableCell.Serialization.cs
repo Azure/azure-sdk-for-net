@@ -113,11 +113,11 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Optional<DocumentTableCellKind> kind = default;
+            DocumentTableCellKind? kind = default;
             int rowIndex = default;
             int columnIndex = default;
-            Optional<int> rowSpan = default;
-            Optional<int> columnSpan = default;
+            int? rowSpan = default;
+            int? columnSpan = default;
             string content = default;
             IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
@@ -212,7 +212,17 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentTableCell(Optional.ToNullable(kind), rowIndex, columnIndex, Optional.ToNullable(rowSpan), Optional.ToNullable(columnSpan), content, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans, elements ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DocumentTableCell(
+                kind,
+                rowIndex,
+                columnIndex,
+                rowSpan,
+                columnSpan,
+                content,
+                boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
+                spans,
+                elements ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentTableCell>.Write(ModelReaderWriterOptions options)

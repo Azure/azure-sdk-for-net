@@ -153,23 +153,23 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> kind = default;
+            AzureLocation? location = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> aliasName = default;
-            Optional<DataMaskingRuleState> ruleState = default;
-            Optional<string> schemaName = default;
-            Optional<string> tableName = default;
-            Optional<string> columnName = default;
-            Optional<DataMaskingFunction> maskingFunction = default;
-            Optional<string> numberFrom = default;
-            Optional<string> numberTo = default;
-            Optional<string> prefixSize = default;
-            Optional<string> suffixSize = default;
-            Optional<string> replacementString = default;
+            SystemData systemData = default;
+            string aliasName = default;
+            DataMaskingRuleState? ruleState = default;
+            string schemaName = default;
+            string tableName = default;
+            string columnName = default;
+            DataMaskingFunction? maskingFunction = default;
+            string numberFrom = default;
+            string numberTo = default;
+            string prefixSize = default;
+            string suffixSize = default;
+            string replacementString = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -293,7 +293,25 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataMaskingRule(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, aliasName.Value, Optional.ToNullable(ruleState), schemaName.Value, tableName.Value, columnName.Value, Optional.ToNullable(maskingFunction), numberFrom.Value, numberTo.Value, prefixSize.Value, suffixSize.Value, replacementString.Value, serializedAdditionalRawData);
+            return new DataMaskingRule(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                aliasName,
+                ruleState,
+                schemaName,
+                tableName,
+                columnName,
+                maskingFunction,
+                numberFrom,
+                numberTo,
+                prefixSize,
+                suffixSize,
+                replacementString,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataMaskingRule>.Write(ModelReaderWriterOptions options)

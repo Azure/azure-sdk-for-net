@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<DataBoxEdgeDownloadPhase> downloadPhase = default;
-            Optional<int> percentComplete = default;
-            Optional<double> totalBytesToDownload = default;
-            Optional<double> totalBytesDownloaded = default;
-            Optional<int> numberOfUpdatesToDownload = default;
-            Optional<int> numberOfUpdatesDownloaded = default;
+            DataBoxEdgeDownloadPhase? downloadPhase = default;
+            int? percentComplete = default;
+            double? totalBytesToDownload = default;
+            double? totalBytesDownloaded = default;
+            int? numberOfUpdatesToDownload = default;
+            int? numberOfUpdatesDownloaded = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateDownloadProgress(Optional.ToNullable(downloadPhase), Optional.ToNullable(percentComplete), Optional.ToNullable(totalBytesToDownload), Optional.ToNullable(totalBytesDownloaded), Optional.ToNullable(numberOfUpdatesToDownload), Optional.ToNullable(numberOfUpdatesDownloaded), serializedAdditionalRawData);
+            return new UpdateDownloadProgress(
+                downloadPhase,
+                percentComplete,
+                totalBytesToDownload,
+                totalBytesDownloaded,
+                numberOfUpdatesToDownload,
+                numberOfUpdatesDownloaded,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateDownloadProgress>.Write(ModelReaderWriterOptions options)

@@ -87,10 +87,10 @@ namespace Azure.Health.Insights.ClinicalMatching
                 return null;
             }
             DocumentType type = default;
-            Optional<ClinicalDocumentType> clinicalType = default;
+            ClinicalDocumentType? clinicalType = default;
             string id = default;
-            Optional<string> language = default;
-            Optional<DateTimeOffset> createdDateTime = default;
+            string language = default;
+            DateTimeOffset? createdDateTime = default;
             DocumentContent content = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +140,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatientDocument(type, Optional.ToNullable(clinicalType), id, language.Value, Optional.ToNullable(createdDateTime), content, serializedAdditionalRawData);
+            return new PatientDocument(
+                type,
+                clinicalType,
+                id,
+                language,
+                createdDateTime,
+                content,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatientDocument>.Write(ModelReaderWriterOptions options)

@@ -162,22 +162,22 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<SupportedOperatingSystemType> osType = default;
-            Optional<OperatingSystemStateType> osState = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<GalleryImageIdentifier> identifier = default;
-            Optional<RecommendedMachineConfiguration> recommended = default;
-            Optional<Disallowed> disallowed = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
+            string name = default;
+            AzureLocation? location = default;
+            SupportedOperatingSystemType? osType = default;
+            OperatingSystemStateType? osState = default;
+            DateTimeOffset? endOfLifeDate = default;
+            GalleryImageIdentifier identifier = default;
+            RecommendedMachineConfiguration recommended = default;
+            Disallowed disallowed = default;
+            HyperVGeneration? hyperVGeneration = default;
             IReadOnlyList<GalleryImageFeature> features = default;
-            Optional<ImagePurchasePlan> purchasePlan = default;
-            Optional<ArchitectureType> architecture = default;
-            Optional<Uri> privacyStatementUri = default;
-            Optional<string> eula = default;
+            ImagePurchasePlan purchasePlan = default;
+            ArchitectureType? architecture = default;
+            Uri privacyStatementUri = default;
+            string eula = default;
             IReadOnlyDictionary<string, string> artifactTags = default;
-            Optional<string> uniqueId = default;
+            string uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -354,7 +354,24 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedGalleryImageData(name.Value, Optional.ToNullable(location), serializedAdditionalRawData, uniqueId.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), features ?? new ChangeTrackingList<GalleryImageFeature>(), purchasePlan.Value, Optional.ToNullable(architecture), privacyStatementUri.Value, eula.Value, artifactTags ?? new ChangeTrackingDictionary<string, string>());
+            return new SharedGalleryImageData(
+                name,
+                location,
+                serializedAdditionalRawData,
+                uniqueId,
+                osType,
+                osState,
+                endOfLifeDate,
+                identifier,
+                recommended,
+                disallowed,
+                hyperVGeneration,
+                features ?? new ChangeTrackingList<GalleryImageFeature>(),
+                purchasePlan,
+                architecture,
+                privacyStatementUri,
+                eula,
+                artifactTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<SharedGalleryImageData>.Write(ModelReaderWriterOptions options)

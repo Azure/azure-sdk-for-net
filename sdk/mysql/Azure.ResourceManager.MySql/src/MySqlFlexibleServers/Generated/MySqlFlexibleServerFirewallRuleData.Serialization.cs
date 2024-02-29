@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IPAddress startIPAddress = default;
             IPAddress endIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerFirewallRuleData(id, name, type, systemData.Value, startIPAddress, endIPAddress, serializedAdditionalRawData);
+            return new MySqlFlexibleServerFirewallRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                startIPAddress,
+                endIPAddress,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerFirewallRuleData>.Write(ModelReaderWriterOptions options)

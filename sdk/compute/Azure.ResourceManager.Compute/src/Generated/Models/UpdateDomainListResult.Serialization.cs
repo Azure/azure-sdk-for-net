@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IReadOnlyList<UpdateDomainIdentifier> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateDomainListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new UpdateDomainListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateDomainListResult>.Write(ModelReaderWriterOptions options)

@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> value = default;
+            SystemData systemData = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.Batch
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountDetectorData(id, name, type, systemData.Value, value.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new BatchAccountDetectorData(
+                id,
+                name,
+                type,
+                systemData,
+                value,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountDetectorData>.Write(ModelReaderWriterOptions options)

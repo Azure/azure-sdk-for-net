@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<BatchAccountAutoStorageBaseConfiguration> autoStorage = default;
-            Optional<BatchAccountEncryptionConfiguration> encryption = default;
+            ManagedServiceIdentity identity = default;
+            BatchAccountAutoStorageBaseConfiguration autoStorage = default;
+            BatchAccountEncryptionConfiguration encryption = default;
             IList<BatchAuthenticationMode> allowedAuthenticationModes = default;
-            Optional<BatchPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<BatchNetworkProfile> networkProfile = default;
+            BatchPublicNetworkAccess? publicNetworkAccess = default;
+            BatchNetworkProfile networkProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,15 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, autoStorage.Value, encryption.Value, allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(), Optional.ToNullable(publicNetworkAccess), networkProfile.Value, serializedAdditionalRawData);
+            return new BatchAccountPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                autoStorage,
+                encryption,
+                allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(),
+                publicNetworkAccess,
+                networkProfile,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountPatch>.Write(ModelReaderWriterOptions options)

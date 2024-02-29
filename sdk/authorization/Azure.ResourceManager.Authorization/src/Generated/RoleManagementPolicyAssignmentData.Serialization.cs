@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> scope = default;
-            Optional<ResourceIdentifier> roleDefinitionId = default;
-            Optional<ResourceIdentifier> policyId = default;
+            SystemData systemData = default;
+            string scope = default;
+            ResourceIdentifier roleDefinitionId = default;
+            ResourceIdentifier policyId = default;
             IReadOnlyList<RoleManagementPolicyRule> effectiveRules = default;
-            Optional<PolicyAssignmentProperties> policyAssignmentProperties = default;
+            PolicyAssignmentProperties policyAssignmentProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,17 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyAssignmentData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, policyId.Value, effectiveRules ?? new ChangeTrackingList<RoleManagementPolicyRule>(), policyAssignmentProperties.Value, serializedAdditionalRawData);
+            return new RoleManagementPolicyAssignmentData(
+                id,
+                name,
+                type,
+                systemData,
+                scope,
+                roleDefinitionId,
+                policyId,
+                effectiveRules ?? new ChangeTrackingList<RoleManagementPolicyRule>(),
+                policyAssignmentProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyAssignmentData>.Write(ModelReaderWriterOptions options)

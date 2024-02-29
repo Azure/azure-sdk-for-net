@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> provisioningState = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;
+            string provisioningState = default;
+            SubResource privateEndpoint = default;
+            PrivateLinkConnectionState privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryPrivateEndpointConnectionProperties(provisioningState.Value, privateEndpoint, privateLinkServiceConnectionState.Value, serializedAdditionalRawData);
+            return new DataFactoryPrivateEndpointConnectionProperties(provisioningState, privateEndpoint, privateLinkServiceConnectionState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryPrivateEndpointConnectionProperties>.Write(ModelReaderWriterOptions options)

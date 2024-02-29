@@ -147,13 +147,13 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             long collectionInterval = default;
-            Optional<ClusterMetricsConfigurationDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
+            ClusterMetricsConfigurationDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
             IReadOnlyList<string> disabledMetrics = default;
             IList<string> enabledMetrics = default;
-            Optional<ClusterMetricsConfigurationProvisioningState> provisioningState = default;
+            ClusterMetricsConfigurationProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -280,7 +280,21 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudClusterMetricsConfigurationData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, collectionInterval, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, disabledMetrics ?? new ChangeTrackingList<string>(), enabledMetrics ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkCloudClusterMetricsConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                collectionInterval,
+                detailedStatus,
+                detailedStatusMessage,
+                disabledMetrics ?? new ChangeTrackingList<string>(),
+                enabledMetrics ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudClusterMetricsConfigurationData>.Write(ModelReaderWriterOptions options)

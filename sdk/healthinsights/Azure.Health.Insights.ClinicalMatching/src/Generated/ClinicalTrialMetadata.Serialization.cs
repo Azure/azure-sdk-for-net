@@ -123,8 +123,8 @@ namespace Azure.Health.Insights.ClinicalMatching
                 return null;
             }
             IList<ClinicalTrialPhase> phases = default;
-            Optional<ClinicalTrialStudyType> studyType = default;
-            Optional<ClinicalTrialRecruitmentStatus> recruitmentStatus = default;
+            ClinicalTrialStudyType? studyType = default;
+            ClinicalTrialRecruitmentStatus? recruitmentStatus = default;
             IList<string> conditions = default;
             IList<string> sponsors = default;
             IList<ContactDetails> contacts = default;
@@ -223,7 +223,15 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClinicalTrialMetadata(phases ?? new ChangeTrackingList<ClinicalTrialPhase>(), Optional.ToNullable(studyType), Optional.ToNullable(recruitmentStatus), conditions, sponsors ?? new ChangeTrackingList<string>(), contacts ?? new ChangeTrackingList<ContactDetails>(), facilities ?? new ChangeTrackingList<ClinicalTrialResearchFacility>(), serializedAdditionalRawData);
+            return new ClinicalTrialMetadata(
+                phases ?? new ChangeTrackingList<ClinicalTrialPhase>(),
+                studyType,
+                recruitmentStatus,
+                conditions,
+                sponsors ?? new ChangeTrackingList<string>(),
+                contacts ?? new ChangeTrackingList<ContactDetails>(),
+                facilities ?? new ChangeTrackingList<ClinicalTrialResearchFacility>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClinicalTrialMetadata>.Write(ModelReaderWriterOptions options)

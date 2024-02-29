@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, MachineLearningJobInput> inputs = default;
             IList<CustomMetricThreshold> metricThresholds = default;
             MonitoringWorkspaceConnection workspaceConnection = default;
-            Optional<MonitoringNotificationMode> mode = default;
+            MonitoringNotificationMode? mode = default;
             IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -233,7 +233,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomMonitoringSignal(Optional.ToNullable(mode), properties ?? new ChangeTrackingDictionary<string, string>(), signalType, serializedAdditionalRawData, componentId, inputAssets ?? new ChangeTrackingDictionary<string, MonitoringInputDataBase>(), inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(), metricThresholds, workspaceConnection);
+            return new CustomMonitoringSignal(
+                mode,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                componentId,
+                inputAssets ?? new ChangeTrackingDictionary<string, MonitoringInputDataBase>(),
+                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
+                metricThresholds,
+                workspaceConnection);
         }
 
         BinaryData IPersistableModel<CustomMonitoringSignal>.Write(ModelReaderWriterOptions options)

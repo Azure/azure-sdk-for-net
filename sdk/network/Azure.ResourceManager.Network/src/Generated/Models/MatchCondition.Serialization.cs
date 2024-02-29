@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             IList<MatchVariable> matchVariables = default;
             WebApplicationFirewallOperator @operator = default;
-            Optional<bool> negationConditon = default;
+            bool? negationConditon = default;
             IList<string> matchValues = default;
             IList<WebApplicationFirewallTransform> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -158,7 +158,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MatchCondition(matchVariables, @operator, Optional.ToNullable(negationConditon), matchValues, transforms ?? new ChangeTrackingList<WebApplicationFirewallTransform>(), serializedAdditionalRawData);
+            return new MatchCondition(
+                matchVariables,
+                @operator,
+                negationConditon,
+                matchValues,
+                transforms ?? new ChangeTrackingList<WebApplicationFirewallTransform>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MatchCondition>.Write(ModelReaderWriterOptions options)

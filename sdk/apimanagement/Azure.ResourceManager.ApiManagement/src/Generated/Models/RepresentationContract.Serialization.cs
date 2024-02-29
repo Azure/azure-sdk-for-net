@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             string contentType = default;
-            Optional<string> schemaId = default;
-            Optional<string> typeName = default;
+            string schemaId = default;
+            string typeName = default;
             IList<ParameterContract> formParameters = default;
             IDictionary<string, ParameterExampleContract> examples = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RepresentationContract(contentType, schemaId.Value, typeName.Value, formParameters ?? new ChangeTrackingList<ParameterContract>(), examples ?? new ChangeTrackingDictionary<string, ParameterExampleContract>(), serializedAdditionalRawData);
+            return new RepresentationContract(
+                contentType,
+                schemaId,
+                typeName,
+                formParameters ?? new ChangeTrackingList<ParameterContract>(),
+                examples ?? new ChangeTrackingDictionary<string, ParameterExampleContract>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RepresentationContract>.Write(ModelReaderWriterOptions options)

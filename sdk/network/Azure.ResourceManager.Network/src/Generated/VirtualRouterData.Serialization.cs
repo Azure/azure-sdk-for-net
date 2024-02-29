@@ -146,18 +146,18 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<long> virtualRouterAsn = default;
+            long? virtualRouterAsn = default;
             IList<string> virtualRouterIPs = default;
-            Optional<WritableSubResource> hostedSubnet = default;
-            Optional<WritableSubResource> hostedGateway = default;
+            WritableSubResource hostedSubnet = default;
+            WritableSubResource hostedGateway = default;
             IReadOnlyList<WritableSubResource> peerings = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -299,7 +299,20 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualRouterData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(virtualRouterAsn), virtualRouterIPs ?? new ChangeTrackingList<string>(), hostedSubnet, hostedGateway, peerings ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(provisioningState));
+            return new VirtualRouterData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                virtualRouterAsn,
+                virtualRouterIPs ?? new ChangeTrackingList<string>(),
+                hostedSubnet,
+                hostedGateway,
+                peerings ?? new ChangeTrackingList<WritableSubResource>(),
+                provisioningState);
         }
 
         BinaryData IPersistableModel<VirtualRouterData>.Write(ModelReaderWriterOptions options)

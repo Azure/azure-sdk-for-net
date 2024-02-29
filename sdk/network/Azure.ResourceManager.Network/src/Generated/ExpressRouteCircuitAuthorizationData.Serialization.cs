@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> authorizationKey = default;
-            Optional<AuthorizationUseStatus> authorizationUseStatus = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string authorizationKey = default;
+            AuthorizationUseStatus? authorizationUseStatus = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,15 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitAuthorizationData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), authorizationKey.Value, Optional.ToNullable(authorizationUseStatus), Optional.ToNullable(provisioningState));
+            return new ExpressRouteCircuitAuthorizationData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                authorizationKey,
+                authorizationUseStatus,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitAuthorizationData>.Write(ModelReaderWriterOptions options)

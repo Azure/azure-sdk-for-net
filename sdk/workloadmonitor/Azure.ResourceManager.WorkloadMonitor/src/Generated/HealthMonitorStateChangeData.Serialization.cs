@@ -151,16 +151,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> monitorName = default;
-            Optional<string> monitorType = default;
-            Optional<string> monitoredObject = default;
-            Optional<string> evaluationTimestamp = default;
-            Optional<string> currentStateFirstObservedTimestamp = default;
-            Optional<HealthState> previousMonitorState = default;
-            Optional<HealthState> currentMonitorState = default;
-            Optional<BinaryData> evidence = default;
-            Optional<BinaryData> monitorConfiguration = default;
+            SystemData systemData = default;
+            string monitorName = default;
+            string monitorType = default;
+            string monitoredObject = default;
+            string evaluationTimestamp = default;
+            string currentStateFirstObservedTimestamp = default;
+            HealthState? previousMonitorState = default;
+            HealthState? currentMonitorState = default;
+            BinaryData evidence = default;
+            BinaryData monitorConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -268,7 +268,21 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthMonitorStateChangeData(id, name, type, systemData.Value, monitorName.Value, monitorType.Value, monitoredObject.Value, evaluationTimestamp.Value, currentStateFirstObservedTimestamp.Value, Optional.ToNullable(previousMonitorState), Optional.ToNullable(currentMonitorState), evidence.Value, monitorConfiguration.Value, serializedAdditionalRawData);
+            return new HealthMonitorStateChangeData(
+                id,
+                name,
+                type,
+                systemData,
+                monitorName,
+                monitorType,
+                monitoredObject,
+                evaluationTimestamp,
+                currentStateFirstObservedTimestamp,
+                previousMonitorState,
+                currentMonitorState,
+                evidence,
+                monitorConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthMonitorStateChangeData>.Write(ModelReaderWriterOptions options)

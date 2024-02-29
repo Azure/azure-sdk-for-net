@@ -162,18 +162,18 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<Uri> uri = default;
-            Optional<DevTestLabSourceControlType> sourceType = default;
-            Optional<string> folderPath = default;
-            Optional<string> armTemplateFolderPath = default;
-            Optional<string> branchRef = default;
-            Optional<string> securityToken = default;
-            Optional<DevTestLabEnableStatus> status = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            SystemData systemData = default;
+            string displayName = default;
+            Uri uri = default;
+            DevTestLabSourceControlType? sourceType = default;
+            string folderPath = default;
+            string armTemplateFolderPath = default;
+            string branchRef = default;
+            string securityToken = default;
+            DevTestLabEnableStatus? status = default;
+            DateTimeOffset? createdDate = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -314,7 +314,25 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabArtifactSourceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, displayName.Value, uri.Value, Optional.ToNullable(sourceType), folderPath.Value, armTemplateFolderPath.Value, branchRef.Value, securityToken.Value, Optional.ToNullable(status), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabArtifactSourceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                displayName,
+                uri,
+                sourceType,
+                folderPath,
+                armTemplateFolderPath,
+                branchRef,
+                securityToken,
+                status,
+                createdDate,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabArtifactSourceData>.Write(ModelReaderWriterOptions options)

@@ -154,17 +154,17 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> recommendationName = default;
-            Optional<string> recommendationDisplayName = default;
-            Optional<string> description = default;
-            Optional<string> recommendationTypeId = default;
-            Optional<string> detectedBy = default;
-            Optional<string> remediationSteps = default;
-            Optional<ReportedSeverity> reportedSeverity = default;
-            Optional<long> healthyDevices = default;
-            Optional<long> unhealthyDeviceCount = default;
-            Optional<string> logAnalyticsQuery = default;
+            SystemData systemData = default;
+            string recommendationName = default;
+            string recommendationDisplayName = default;
+            string description = default;
+            string recommendationTypeId = default;
+            string detectedBy = default;
+            string remediationSteps = default;
+            ReportedSeverity? reportedSeverity = default;
+            long? healthyDevices = default;
+            long? unhealthyDeviceCount = default;
+            string logAnalyticsQuery = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -287,7 +287,23 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecurityAggregatedRecommendationData(id, name, type, systemData.Value, recommendationName.Value, recommendationDisplayName.Value, description.Value, recommendationTypeId.Value, detectedBy.Value, remediationSteps.Value, Optional.ToNullable(reportedSeverity), Optional.ToNullable(healthyDevices), Optional.ToNullable(unhealthyDeviceCount), logAnalyticsQuery.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new IotSecurityAggregatedRecommendationData(
+                id,
+                name,
+                type,
+                systemData,
+                recommendationName,
+                recommendationDisplayName,
+                description,
+                recommendationTypeId,
+                detectedBy,
+                remediationSteps,
+                reportedSeverity,
+                healthyDevices,
+                unhealthyDeviceCount,
+                logAnalyticsQuery,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotSecurityAggregatedRecommendationData>.Write(ModelReaderWriterOptions options)

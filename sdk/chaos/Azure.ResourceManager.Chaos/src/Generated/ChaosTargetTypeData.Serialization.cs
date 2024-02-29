@@ -118,14 +118,14 @@ namespace Azure.ResourceManager.Chaos
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> propertiesSchema = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            string propertiesSchema = default;
             IReadOnlyList<string> resourceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -211,7 +211,17 @@ namespace Azure.ResourceManager.Chaos
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosTargetTypeData(id, name, type, systemData.Value, Optional.ToNullable(location), displayName.Value, description.Value, propertiesSchema.Value, resourceTypes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ChaosTargetTypeData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                displayName,
+                description,
+                propertiesSchema,
+                resourceTypes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosTargetTypeData>.Write(ModelReaderWriterOptions options)

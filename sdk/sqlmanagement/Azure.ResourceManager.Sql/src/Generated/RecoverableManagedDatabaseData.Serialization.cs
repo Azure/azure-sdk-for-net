@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> lastAvailableBackupDate = default;
+            SystemData systemData = default;
+            string lastAvailableBackupDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoverableManagedDatabaseData(id, name, type, systemData.Value, lastAvailableBackupDate.Value, serializedAdditionalRawData);
+            return new RecoverableManagedDatabaseData(
+                id,
+                name,
+                type,
+                systemData,
+                lastAvailableBackupDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoverableManagedDatabaseData>.Write(ModelReaderWriterOptions options)

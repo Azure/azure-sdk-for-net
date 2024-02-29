@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string policyName = default;
-            Optional<int> recoveryPointHistory = default;
-            Optional<int> crashConsistentFrequencyInMinutes = default;
-            Optional<int> appConsistentFrequencyInMinutes = default;
+            int? recoveryPointHistory = default;
+            int? crashConsistentFrequencyInMinutes = default;
+            int? appConsistentFrequencyInMinutes = default;
             SetMultiVmSyncStatus multiVmSyncStatus = default;
             string resourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -143,7 +143,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewProtectionProfile(resourceType, serializedAdditionalRawData, policyName, Optional.ToNullable(recoveryPointHistory), Optional.ToNullable(crashConsistentFrequencyInMinutes), Optional.ToNullable(appConsistentFrequencyInMinutes), multiVmSyncStatus);
+            return new NewProtectionProfile(
+                resourceType,
+                serializedAdditionalRawData,
+                policyName,
+                recoveryPointHistory,
+                crashConsistentFrequencyInMinutes,
+                appConsistentFrequencyInMinutes,
+                multiVmSyncStatus);
         }
 
         BinaryData IPersistableModel<NewProtectionProfile>.Write(ModelReaderWriterOptions options)

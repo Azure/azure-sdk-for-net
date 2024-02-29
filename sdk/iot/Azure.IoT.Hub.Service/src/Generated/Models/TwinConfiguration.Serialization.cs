@@ -87,17 +87,17 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> schemaVersion = default;
+            string id = default;
+            string schemaVersion = default;
             IDictionary<string, string> labels = default;
-            Optional<ConfigurationContent> content = default;
-            Optional<string> targetCondition = default;
-            Optional<DateTimeOffset> createdTimeUtc = default;
-            Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
-            Optional<int> priority = default;
-            Optional<ConfigurationMetrics> systemMetrics = default;
-            Optional<ConfigurationMetrics> metrics = default;
-            Optional<string> etag = default;
+            ConfigurationContent content = default;
+            string targetCondition = default;
+            DateTimeOffset? createdTimeUtc = default;
+            DateTimeOffset? lastUpdatedTimeUtc = default;
+            int? priority = default;
+            ConfigurationMetrics systemMetrics = default;
+            ConfigurationMetrics metrics = default;
+            string etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -189,7 +189,18 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new TwinConfiguration(id.Value, schemaVersion.Value, labels ?? new ChangeTrackingDictionary<string, string>(), content.Value, targetCondition.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToNullable(priority), systemMetrics.Value, metrics.Value, etag.Value);
+            return new TwinConfiguration(
+                id,
+                schemaVersion,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                content,
+                targetCondition,
+                createdTimeUtc,
+                lastUpdatedTimeUtc,
+                priority,
+                systemMetrics,
+                metrics,
+                etag);
         }
     }
 }

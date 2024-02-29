@@ -170,16 +170,16 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> phoneNumber = default;
-            Optional<string> acsEndpoint = default;
-            Optional<string> acsSecret = default;
-            Optional<ResourceIdentifier> acsResourceId = default;
-            Optional<string> cognitiveServiceSubscriptionKey = default;
-            Optional<string> cognitiveServiceRegion = default;
-            Optional<ResourceIdentifier> cognitiveServiceResourceId = default;
-            Optional<string> defaultLocale = default;
-            Optional<string> offerType = default;
+            string id = default;
+            string phoneNumber = default;
+            string acsEndpoint = default;
+            string acsSecret = default;
+            ResourceIdentifier acsResourceId = default;
+            string cognitiveServiceSubscriptionKey = default;
+            string cognitiveServiceRegion = default;
+            ResourceIdentifier cognitiveServiceResourceId = default;
+            string defaultLocale = default;
+            string offerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -280,7 +280,18 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TelephonyPhoneNumbers(id.Value, phoneNumber.Value, acsEndpoint.Value, acsSecret.Value, acsResourceId.Value, cognitiveServiceSubscriptionKey.Value, cognitiveServiceRegion.Value, cognitiveServiceResourceId.Value, defaultLocale.Value, offerType.Value, serializedAdditionalRawData);
+            return new TelephonyPhoneNumbers(
+                id,
+                phoneNumber,
+                acsEndpoint,
+                acsSecret,
+                acsResourceId,
+                cognitiveServiceSubscriptionKey,
+                cognitiveServiceRegion,
+                cognitiveServiceResourceId,
+                defaultLocale,
+                offerType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TelephonyPhoneNumbers>.Write(ModelReaderWriterOptions options)

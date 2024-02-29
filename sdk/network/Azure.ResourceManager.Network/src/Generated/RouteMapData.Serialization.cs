@@ -130,15 +130,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<string> associatedInboundConnections = default;
             IList<string> associatedOutboundConnections = default;
             IList<RouteMapRule> rules = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,7 +245,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteMapData(id, name, type, systemData.Value, Optional.ToNullable(etag), associatedInboundConnections ?? new ChangeTrackingList<string>(), associatedOutboundConnections ?? new ChangeTrackingList<string>(), rules ?? new ChangeTrackingList<RouteMapRule>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new RouteMapData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                associatedInboundConnections ?? new ChangeTrackingList<string>(),
+                associatedOutboundConnections ?? new ChangeTrackingList<string>(),
+                rules ?? new ChangeTrackingList<RouteMapRule>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteMapData>.Write(ModelReaderWriterOptions options)

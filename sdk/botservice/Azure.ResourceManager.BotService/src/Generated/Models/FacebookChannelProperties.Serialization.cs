@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> verifyToken = default;
+            string verifyToken = default;
             IList<FacebookPage> pages = default;
             string appId = default;
-            Optional<string> appSecret = default;
-            Optional<Uri> callbackUrl = default;
+            string appSecret = default;
+            Uri callbackUrl = default;
             bool isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FacebookChannelProperties(verifyToken.Value, pages ?? new ChangeTrackingList<FacebookPage>(), appId, appSecret.Value, callbackUrl.Value, isEnabled, serializedAdditionalRawData);
+            return new FacebookChannelProperties(
+                verifyToken,
+                pages ?? new ChangeTrackingList<FacebookPage>(),
+                appId,
+                appSecret,
+                callbackUrl,
+                isEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FacebookChannelProperties>.Write(ModelReaderWriterOptions options)

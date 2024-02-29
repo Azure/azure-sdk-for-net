@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupWorkloadType> workLoadType = default;
-            Optional<BackupCommonSettings> settings = default;
+            BackupWorkloadType? workLoadType = default;
+            BackupCommonSettings settings = default;
             IList<SubProtectionPolicy> subProtectionPolicy = default;
-            Optional<bool> makePolicyConsistent = default;
-            Optional<int> protectedItemsCount = default;
+            bool? makePolicyConsistent = default;
+            int? protectedItemsCount = default;
             string backupManagementType = default;
             IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -192,7 +192,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmWorkloadProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, Optional.ToNullable(workLoadType), settings.Value, subProtectionPolicy ?? new ChangeTrackingList<SubProtectionPolicy>(), Optional.ToNullable(makePolicyConsistent));
+            return new VmWorkloadProtectionPolicy(
+                protectedItemsCount,
+                backupManagementType,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                workLoadType,
+                settings,
+                subProtectionPolicy ?? new ChangeTrackingList<SubProtectionPolicy>(),
+                makePolicyConsistent);
         }
 
         BinaryData IPersistableModel<VmWorkloadProtectionPolicy>.Write(ModelReaderWriterOptions options)

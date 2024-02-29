@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 return null;
             }
-            Optional<long> expirationTime = default;
-            Optional<string> hybridConnectionName = default;
-            Optional<string> relay = default;
-            Optional<string> token = default;
+            long? expirationTime = default;
+            string hybridConnectionName = default;
+            string relay = default;
+            string token = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridConnectionConfig(Optional.ToNullable(expirationTime), hybridConnectionName.Value, relay.Value, token.Value, serializedAdditionalRawData);
+            return new HybridConnectionConfig(expirationTime, hybridConnectionName, relay, token, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridConnectionConfig>.Write(ModelReaderWriterOptions options)

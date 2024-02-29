@@ -199,31 +199,31 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> extensionId = default;
-            Optional<string> title = default;
-            Optional<SiteExtensionType> extensionType = default;
-            Optional<string> summary = default;
-            Optional<string> description = default;
-            Optional<string> version = default;
-            Optional<Uri> extensionUrl = default;
-            Optional<Uri> projectUrl = default;
-            Optional<Uri> iconUrl = default;
-            Optional<Uri> licenseUrl = default;
-            Optional<Uri> feedUrl = default;
+            SystemData systemData = default;
+            string extensionId = default;
+            string title = default;
+            SiteExtensionType? extensionType = default;
+            string summary = default;
+            string description = default;
+            string version = default;
+            Uri extensionUrl = default;
+            Uri projectUrl = default;
+            Uri iconUrl = default;
+            Uri licenseUrl = default;
+            Uri feedUrl = default;
             IList<string> authors = default;
-            Optional<string> installerCommandLineParams = default;
-            Optional<DateTimeOffset> publishedDateTime = default;
-            Optional<int> downloadCount = default;
-            Optional<bool> localIsLatestVersion = default;
-            Optional<string> localPath = default;
-            Optional<DateTimeOffset> installedDateTime = default;
-            Optional<string> provisioningState = default;
-            Optional<string> comment = default;
+            string installerCommandLineParams = default;
+            DateTimeOffset? publishedDateTime = default;
+            int? downloadCount = default;
+            bool? localIsLatestVersion = default;
+            string localPath = default;
+            DateTimeOffset? installedDateTime = default;
+            string provisioningState = default;
+            string comment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -424,7 +424,33 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteExtensionInfoData(id, name, type, systemData.Value, extensionId.Value, title.Value, Optional.ToNullable(extensionType), summary.Value, description.Value, version.Value, extensionUrl.Value, projectUrl.Value, iconUrl.Value, licenseUrl.Value, feedUrl.Value, authors ?? new ChangeTrackingList<string>(), installerCommandLineParams.Value, Optional.ToNullable(publishedDateTime), Optional.ToNullable(downloadCount), Optional.ToNullable(localIsLatestVersion), localPath.Value, Optional.ToNullable(installedDateTime), provisioningState.Value, comment.Value, kind.Value, serializedAdditionalRawData);
+            return new SiteExtensionInfoData(
+                id,
+                name,
+                type,
+                systemData,
+                extensionId,
+                title,
+                extensionType,
+                summary,
+                description,
+                version,
+                extensionUrl,
+                projectUrl,
+                iconUrl,
+                licenseUrl,
+                feedUrl,
+                authors ?? new ChangeTrackingList<string>(),
+                installerCommandLineParams,
+                publishedDateTime,
+                downloadCount,
+                localIsLatestVersion,
+                localPath,
+                installedDateTime,
+                provisioningState,
+                comment,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteExtensionInfoData>.Write(ModelReaderWriterOptions options)

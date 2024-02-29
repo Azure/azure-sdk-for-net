@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<AcceptOwnershipRequestProperties> properties = default;
+            AcceptOwnershipRequestProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AcceptOwnershipContent(properties.Value, serializedAdditionalRawData);
+            return new AcceptOwnershipContent(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcceptOwnershipContent>.Write(ModelReaderWriterOptions options)

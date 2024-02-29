@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<string> trackingId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> cloud = default;
-            Optional<ResourceHealthEventSeverityLevel> severity = default;
-            Optional<ResourceHealthEventStageValue> stage = default;
-            Optional<bool> published = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
+            string title = default;
+            string description = default;
+            string trackingId = default;
+            DateTimeOffset? startTime = default;
+            string cloud = default;
+            ResourceHealthEventSeverityLevel? severity = default;
+            ResourceHealthEventStageValue? stage = default;
+            bool? published = default;
+            DateTimeOffset? lastModifiedTime = default;
             IReadOnlyList<EmergingIssueImpact> impacts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -218,7 +218,18 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmergingIssueActiveEventType(title.Value, description.Value, trackingId.Value, Optional.ToNullable(startTime), cloud.Value, Optional.ToNullable(severity), Optional.ToNullable(stage), Optional.ToNullable(published), Optional.ToNullable(lastModifiedTime), impacts ?? new ChangeTrackingList<EmergingIssueImpact>(), serializedAdditionalRawData);
+            return new EmergingIssueActiveEventType(
+                title,
+                description,
+                trackingId,
+                startTime,
+                cloud,
+                severity,
+                stage,
+                published,
+                lastModifiedTime,
+                impacts ?? new ChangeTrackingList<EmergingIssueImpact>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmergingIssueActiveEventType>.Write(ModelReaderWriterOptions options)

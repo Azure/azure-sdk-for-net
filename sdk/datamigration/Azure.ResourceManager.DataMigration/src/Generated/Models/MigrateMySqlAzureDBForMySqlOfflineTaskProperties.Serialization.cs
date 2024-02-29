@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<MigrateMySqlAzureDBForMySqlOfflineTaskInput> input = default;
+            MigrateMySqlAzureDBForMySqlOfflineTaskInput input = default;
             IReadOnlyList<MigrateMySqlAzureDBForMySqlOfflineTaskOutput> output = default;
-            Optional<bool> isCloneable = default;
-            Optional<string> taskId = default;
+            bool? isCloneable = default;
+            string taskId = default;
             TaskType taskType = default;
             IReadOnlyList<ODataError> errors = default;
-            Optional<TaskState> state = default;
+            TaskState? state = default;
             IReadOnlyList<CommandProperties> commands = default;
             IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -239,7 +239,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMySqlAzureDBForMySqlOfflineTaskProperties(taskType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), commands ?? new ChangeTrackingList<CommandProperties>(), clientData ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, input.Value, output ?? new ChangeTrackingList<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>(), Optional.ToNullable(isCloneable), taskId.Value);
+            return new MigrateMySqlAzureDBForMySqlOfflineTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                state,
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input,
+                output ?? new ChangeTrackingList<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>(),
+                isCloneable,
+                taskId);
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskProperties>.Write(ModelReaderWriterOptions options)

@@ -180,27 +180,27 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> reservationOrderId = default;
-            Optional<string> reservationId = default;
-            Optional<string> skuName = default;
-            Optional<decimal> reservedHours = default;
-            Optional<DateTimeOffset> usageDate = default;
-            Optional<decimal> usedHours = default;
-            Optional<decimal> minUtilizationPercentage = default;
-            Optional<decimal> avgUtilizationPercentage = default;
-            Optional<decimal> maxUtilizationPercentage = default;
-            Optional<string> kind = default;
-            Optional<decimal> purchasedQuantity = default;
-            Optional<decimal> remainingQuantity = default;
-            Optional<decimal> totalReservedQuantity = default;
-            Optional<decimal> usedQuantity = default;
-            Optional<decimal> utilizedPercentage = default;
+            SystemData systemData = default;
+            string reservationOrderId = default;
+            string reservationId = default;
+            string skuName = default;
+            decimal? reservedHours = default;
+            DateTimeOffset? usageDate = default;
+            decimal? usedHours = default;
+            decimal? minUtilizationPercentage = default;
+            decimal? avgUtilizationPercentage = default;
+            decimal? maxUtilizationPercentage = default;
+            string kind = default;
+            decimal? purchasedQuantity = default;
+            decimal? remainingQuantity = default;
+            decimal? totalReservedQuantity = default;
+            decimal? usedQuantity = default;
+            decimal? utilizedPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -389,7 +389,29 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionReservationSummary(id, name, type, systemData.Value, reservationOrderId.Value, reservationId.Value, skuName.Value, Optional.ToNullable(reservedHours), Optional.ToNullable(usageDate), Optional.ToNullable(usedHours), Optional.ToNullable(minUtilizationPercentage), Optional.ToNullable(avgUtilizationPercentage), Optional.ToNullable(maxUtilizationPercentage), kind.Value, Optional.ToNullable(purchasedQuantity), Optional.ToNullable(remainingQuantity), Optional.ToNullable(totalReservedQuantity), Optional.ToNullable(usedQuantity), Optional.ToNullable(utilizedPercentage), Optional.ToNullable(etag), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new ConsumptionReservationSummary(
+                id,
+                name,
+                type,
+                systemData,
+                reservationOrderId,
+                reservationId,
+                skuName,
+                reservedHours,
+                usageDate,
+                usedHours,
+                minUtilizationPercentage,
+                avgUtilizationPercentage,
+                maxUtilizationPercentage,
+                kind,
+                purchasedQuantity,
+                remainingQuantity,
+                totalReservedQuantity,
+                usedQuantity,
+                utilizedPercentage,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionReservationSummary>.Write(ModelReaderWriterOptions options)

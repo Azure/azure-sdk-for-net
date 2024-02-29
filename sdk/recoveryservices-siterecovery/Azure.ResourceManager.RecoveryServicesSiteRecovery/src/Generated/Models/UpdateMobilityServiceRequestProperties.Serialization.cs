@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> runAsAccountId = default;
+            string runAsAccountId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateMobilityServiceRequestProperties(runAsAccountId.Value, serializedAdditionalRawData);
+            return new UpdateMobilityServiceRequestProperties(runAsAccountId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateMobilityServiceRequestProperties>.Write(ModelReaderWriterOptions options)

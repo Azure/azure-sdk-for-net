@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AadSolutionProperties> properties = default;
+            AadSolutionProperties properties = default;
             ExternalSecuritySolutionKind? kind = default;
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AadExternalSecuritySolution(id, name, type, systemData.Value, kind, Optional.ToNullable(location), serializedAdditionalRawData, properties.Value);
+            return new AadExternalSecuritySolution(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                location,
+                serializedAdditionalRawData,
+                properties);
         }
 
         BinaryData IPersistableModel<AadExternalSecuritySolution>.Write(ModelReaderWriterOptions options)

@@ -182,20 +182,20 @@ namespace Azure.ResourceManager.HybridCompute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MachineRunCommandScriptSource> source = default;
+            SystemData systemData = default;
+            MachineRunCommandScriptSource source = default;
             IList<RunCommandInputParameter> parameters = default;
             IList<RunCommandInputParameter> protectedParameters = default;
-            Optional<bool> asyncExecution = default;
-            Optional<string> runAsUser = default;
-            Optional<string> runAsPassword = default;
-            Optional<int> timeoutInSeconds = default;
-            Optional<Uri> outputBlobUri = default;
-            Optional<Uri> errorBlobUri = default;
-            Optional<RunCommandManagedIdentity> outputBlobManagedIdentity = default;
-            Optional<RunCommandManagedIdentity> errorBlobManagedIdentity = default;
-            Optional<string> provisioningState = default;
-            Optional<MachineRunCommandInstanceView> instanceView = default;
+            bool? asyncExecution = default;
+            string runAsUser = default;
+            string runAsPassword = default;
+            int? timeoutInSeconds = default;
+            Uri outputBlobUri = default;
+            Uri errorBlobUri = default;
+            RunCommandManagedIdentity outputBlobManagedIdentity = default;
+            RunCommandManagedIdentity errorBlobManagedIdentity = default;
+            string provisioningState = default;
+            MachineRunCommandInstanceView instanceView = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -376,7 +376,27 @@ namespace Azure.ResourceManager.HybridCompute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineRunCommandData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, source.Value, parameters ?? new ChangeTrackingList<RunCommandInputParameter>(), protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(), Optional.ToNullable(asyncExecution), runAsUser.Value, runAsPassword.Value, Optional.ToNullable(timeoutInSeconds), outputBlobUri.Value, errorBlobUri.Value, outputBlobManagedIdentity.Value, errorBlobManagedIdentity.Value, provisioningState.Value, instanceView.Value, serializedAdditionalRawData);
+            return new MachineRunCommandData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                source,
+                parameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                asyncExecution,
+                runAsUser,
+                runAsPassword,
+                timeoutInSeconds,
+                outputBlobUri,
+                errorBlobUri,
+                outputBlobManagedIdentity,
+                errorBlobManagedIdentity,
+                provisioningState,
+                instanceView,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineRunCommandData>.Write(ModelReaderWriterOptions options)

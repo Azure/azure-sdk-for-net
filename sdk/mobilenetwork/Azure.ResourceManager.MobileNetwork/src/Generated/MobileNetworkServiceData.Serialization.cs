@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.MobileNetwork
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            MobileNetworkProvisioningState? provisioningState = default;
             int servicePrecedence = default;
-            Optional<MobileNetworkQosPolicy> serviceQosPolicy = default;
+            MobileNetworkQosPolicy serviceQosPolicy = default;
             IList<PccRuleConfiguration> pccRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -229,7 +229,18 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkServiceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), servicePrecedence, serviceQosPolicy.Value, pccRules, serializedAdditionalRawData);
+            return new MobileNetworkServiceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                servicePrecedence,
+                serviceQosPolicy,
+                pccRules,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkServiceData>.Write(ModelReaderWriterOptions options)

@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<bool> isExpirationRequired = default;
-            Optional<TimeSpan> maximumDuration = default;
-            Optional<string> id = default;
+            bool? isExpirationRequired = default;
+            TimeSpan? maximumDuration = default;
+            string id = default;
             RoleManagementPolicyRuleType ruleType = default;
-            Optional<RoleManagementPolicyRuleTarget> target = default;
+            RoleManagementPolicyRuleTarget target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyExpirationRule(id.Value, ruleType, target.Value, serializedAdditionalRawData, Optional.ToNullable(isExpirationRequired), Optional.ToNullable(maximumDuration));
+            return new RoleManagementPolicyExpirationRule(
+                id,
+                ruleType,
+                target,
+                serializedAdditionalRawData,
+                isExpirationRequired,
+                maximumDuration);
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyExpirationRule>.Write(ModelReaderWriterOptions options)

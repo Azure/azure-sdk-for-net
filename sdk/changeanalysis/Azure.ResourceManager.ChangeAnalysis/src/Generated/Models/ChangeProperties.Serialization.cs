@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<DateTimeOffset> timeStamp = default;
+            ResourceIdentifier resourceId = default;
+            DateTimeOffset? timeStamp = default;
             IReadOnlyList<string> initiatedByList = default;
-            Optional<ChangeType> changeType = default;
+            ChangeType? changeType = default;
             IReadOnlyList<PropertyChange> propertyChanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -169,7 +169,13 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChangeProperties(resourceId.Value, Optional.ToNullable(timeStamp), initiatedByList ?? new ChangeTrackingList<string>(), Optional.ToNullable(changeType), propertyChanges ?? new ChangeTrackingList<PropertyChange>(), serializedAdditionalRawData);
+            return new ChangeProperties(
+                resourceId,
+                timeStamp,
+                initiatedByList ?? new ChangeTrackingList<string>(),
+                changeType,
+                propertyChanges ?? new ChangeTrackingList<PropertyChange>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChangeProperties>.Write(ModelReaderWriterOptions options)

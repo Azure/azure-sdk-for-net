@@ -107,13 +107,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             DataConnectorKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> tenantId = default;
-            Optional<SecurityInsightsAlertsDataTypeOfDataConnector> dataTypes = default;
+            SystemData systemData = default;
+            Guid? tenantId = default;
+            SecurityInsightsAlertsDataTypeOfDataConnector dataTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,7 +192,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAatpDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, Optional.ToNullable(tenantId), dataTypes.Value);
+            return new SecurityInsightsAatpDataConnector(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                etag,
+                serializedAdditionalRawData,
+                tenantId,
+                dataTypes);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAatpDataConnector>.Write(ModelReaderWriterOptions options)

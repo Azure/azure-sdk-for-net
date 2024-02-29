@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> impactedRegion = default;
-            Optional<ResourceHealthEventStatusValue> status = default;
+            string impactedRegion = default;
+            ResourceHealthEventStatusValue? status = default;
             IReadOnlyList<string> impactedSubscriptions = default;
             IReadOnlyList<string> impactedTenants = default;
-            Optional<DateTimeOffset> lastUpdateTime = default;
+            DateTimeOffset? lastUpdateTime = default;
             IReadOnlyList<ResourceHealthEventUpdate> updates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -190,7 +190,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventImpactedServiceRegion(impactedRegion.Value, Optional.ToNullable(status), impactedSubscriptions ?? new ChangeTrackingList<string>(), impactedTenants ?? new ChangeTrackingList<string>(), Optional.ToNullable(lastUpdateTime), updates ?? new ChangeTrackingList<ResourceHealthEventUpdate>(), serializedAdditionalRawData);
+            return new ResourceHealthEventImpactedServiceRegion(
+                impactedRegion,
+                status,
+                impactedSubscriptions ?? new ChangeTrackingList<string>(),
+                impactedTenants ?? new ChangeTrackingList<string>(),
+                lastUpdateTime,
+                updates ?? new ChangeTrackingList<ResourceHealthEventUpdate>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventImpactedServiceRegion>.Write(ModelReaderWriterOptions options)

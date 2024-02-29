@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.DataShare
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
-            Optional<string> userEmail = default;
-            Optional<string> userName = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdAt = default;
+            DataShareProvisioningState? provisioningState = default;
+            string userEmail = default;
+            string userName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -233,7 +233,19 @@ namespace Azure.ResourceManager.DataShare
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataShareAccountData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, Optional.ToNullable(createdAt), Optional.ToNullable(provisioningState), userEmail.Value, userName.Value, serializedAdditionalRawData);
+            return new DataShareAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                createdAt,
+                provisioningState,
+                userEmail,
+                userName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataShareAccountData>.Write(ModelReaderWriterOptions options)

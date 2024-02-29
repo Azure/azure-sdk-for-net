@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> replicationProtectedItemName = default;
-            Optional<SwitchProtectionProviderSpecificContent> providerSpecificDetails = default;
+            string replicationProtectedItemName = default;
+            SwitchProtectionProviderSpecificContent providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwitchProtectionProperties(replicationProtectedItemName.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new SwitchProtectionProperties(replicationProtectedItemName, providerSpecificDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwitchProtectionProperties>.Write(ModelReaderWriterOptions options)

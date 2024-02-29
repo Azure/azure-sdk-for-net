@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AwsOrganizationalInfo> organizationalData = default;
+            AwsOrganizationalInfo organizationalData = default;
             IList<string> regions = default;
-            Optional<string> accountName = default;
-            Optional<long> scanInterval = default;
+            string accountName = default;
+            long? scanInterval = default;
             EnvironmentType environmentType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AwsEnvironment(environmentType, serializedAdditionalRawData, organizationalData.Value, regions ?? new ChangeTrackingList<string>(), accountName.Value, Optional.ToNullable(scanInterval));
+            return new AwsEnvironment(
+                environmentType,
+                serializedAdditionalRawData,
+                organizationalData,
+                regions ?? new ChangeTrackingList<string>(),
+                accountName,
+                scanInterval);
         }
 
         BinaryData IPersistableModel<AwsEnvironment>.Write(ModelReaderWriterOptions options)

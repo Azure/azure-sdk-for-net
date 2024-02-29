@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> keyVaultId = default;
-            Optional<Uri> keyVaultUri = default;
+            ResourceIdentifier keyVaultId = default;
+            Uri keyVaultUri = default;
             ResourceIdentifier storageAccountId = default;
-            Optional<string> storageAccountSasSecretName = default;
-            Optional<string> serviceBusConnectionStringSecretName = default;
+            string storageAccountSasSecretName = default;
+            string serviceBusConnectionStringSecretName = default;
             string targetLocation = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -150,7 +150,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtContainerMappingContent(instanceType, serializedAdditionalRawData, keyVaultId.Value, keyVaultUri.Value, storageAccountId, storageAccountSasSecretName.Value, serviceBusConnectionStringSecretName.Value, targetLocation);
+            return new VMwareCbtContainerMappingContent(
+                instanceType,
+                serializedAdditionalRawData,
+                keyVaultId,
+                keyVaultUri,
+                storageAccountId,
+                storageAccountSasSecretName,
+                serviceBusConnectionStringSecretName,
+                targetLocation);
         }
 
         BinaryData IPersistableModel<VMwareCbtContainerMappingContent>.Write(ModelReaderWriterOptions options)

@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<ServerTrustGroupServerInfo> groupMembers = default;
             IList<ServerTrustGroupPropertiesTrustScopesItem> trustScopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -189,7 +189,14 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerTrustGroupData(id, name, type, systemData.Value, groupMembers ?? new ChangeTrackingList<ServerTrustGroupServerInfo>(), trustScopes ?? new ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem>(), serializedAdditionalRawData);
+            return new SqlServerTrustGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                groupMembers ?? new ChangeTrackingList<ServerTrustGroupServerInfo>(),
+                trustScopes ?? new ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerTrustGroupData>.Write(ModelReaderWriterOptions options)

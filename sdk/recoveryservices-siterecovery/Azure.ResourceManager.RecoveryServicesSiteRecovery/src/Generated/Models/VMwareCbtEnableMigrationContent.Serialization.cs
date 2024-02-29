@@ -204,25 +204,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             ResourceIdentifier vmwareMachineId = default;
             IList<VMwareCbtDiskContent> disksToInclude = default;
-            Optional<SiteRecoveryLicenseType> licenseType = default;
-            Optional<SiteRecoverySqlServerLicenseType> sqlServerLicenseType = default;
-            Optional<string> performSqlBulkRegistration = default;
+            SiteRecoveryLicenseType? licenseType = default;
+            SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
+            string performSqlBulkRegistration = default;
             ResourceIdentifier dataMoverRunAsAccountId = default;
             ResourceIdentifier snapshotRunAsAccountId = default;
-            Optional<string> targetVmName = default;
-            Optional<string> targetVmSize = default;
+            string targetVmName = default;
+            string targetVmSize = default;
             ResourceIdentifier targetResourceGroupId = default;
             ResourceIdentifier targetNetworkId = default;
-            Optional<ResourceIdentifier> testNetworkId = default;
-            Optional<string> targetSubnetName = default;
-            Optional<string> testSubnetName = default;
-            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
-            Optional<string> targetAvailabilityZone = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<ResourceIdentifier> confidentialVmKeyVaultId = default;
-            Optional<VMwareCbtSecurityProfileProperties> targetVmSecurityProfile = default;
-            Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
-            Optional<string> performAutoResync = default;
+            ResourceIdentifier testNetworkId = default;
+            string targetSubnetName = default;
+            string testSubnetName = default;
+            ResourceIdentifier targetAvailabilitySetId = default;
+            string targetAvailabilityZone = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            ResourceIdentifier confidentialVmKeyVaultId = default;
+            VMwareCbtSecurityProfileProperties targetVmSecurityProfile = default;
+            ResourceIdentifier targetBootDiagnosticsStorageAccountId = default;
+            string performAutoResync = default;
             IDictionary<string, string> targetVmTags = default;
             IDictionary<string, string> seedDiskTags = default;
             IDictionary<string, string> targetDiskTags = default;
@@ -441,7 +441,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtEnableMigrationContent(instanceType, serializedAdditionalRawData, vmwareMachineId, disksToInclude, Optional.ToNullable(licenseType), Optional.ToNullable(sqlServerLicenseType), performSqlBulkRegistration.Value, dataMoverRunAsAccountId, snapshotRunAsAccountId, targetVmName.Value, targetVmSize.Value, targetResourceGroupId, targetNetworkId, testNetworkId.Value, targetSubnetName.Value, testSubnetName.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, confidentialVmKeyVaultId.Value, targetVmSecurityProfile.Value, targetBootDiagnosticsStorageAccountId.Value, performAutoResync.Value, targetVmTags ?? new ChangeTrackingDictionary<string, string>(), seedDiskTags ?? new ChangeTrackingDictionary<string, string>(), targetDiskTags ?? new ChangeTrackingDictionary<string, string>(), targetNicTags ?? new ChangeTrackingDictionary<string, string>());
+            return new VMwareCbtEnableMigrationContent(
+                instanceType,
+                serializedAdditionalRawData,
+                vmwareMachineId,
+                disksToInclude,
+                licenseType,
+                sqlServerLicenseType,
+                performSqlBulkRegistration,
+                dataMoverRunAsAccountId,
+                snapshotRunAsAccountId,
+                targetVmName,
+                targetVmSize,
+                targetResourceGroupId,
+                targetNetworkId,
+                testNetworkId,
+                targetSubnetName,
+                testSubnetName,
+                targetAvailabilitySetId,
+                targetAvailabilityZone,
+                targetProximityPlacementGroupId,
+                confidentialVmKeyVaultId,
+                targetVmSecurityProfile,
+                targetBootDiagnosticsStorageAccountId,
+                performAutoResync,
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                seedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<VMwareCbtEnableMigrationContent>.Write(ModelReaderWriterOptions options)

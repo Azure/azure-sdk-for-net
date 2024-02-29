@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IReadOnlyList<SqlMigrationServiceData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlMigrationListResult(value ?? new ChangeTrackingList<SqlMigrationServiceData>(), nextLink.Value, serializedAdditionalRawData);
+            return new SqlMigrationListResult(value ?? new ChangeTrackingList<SqlMigrationServiceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlMigrationListResult>.Write(ModelReaderWriterOptions options)

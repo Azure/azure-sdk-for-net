@@ -228,24 +228,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalData = default;
-            Optional<string> friendlyName = default;
+            string friendlyName = default;
             IReadOnlyList<string> networkMessageIds = default;
-            Optional<BinaryData> countByDeliveryStatus = default;
-            Optional<BinaryData> countByThreatType = default;
-            Optional<BinaryData> countByProtectionStatus = default;
+            BinaryData countByDeliveryStatus = default;
+            BinaryData countByThreatType = default;
+            BinaryData countByProtectionStatus = default;
             IReadOnlyList<string> threats = default;
-            Optional<string> query = default;
-            Optional<DateTimeOffset> queryTime = default;
-            Optional<int> mailCount = default;
-            Optional<bool> isVolumeAnomaly = default;
-            Optional<string> source = default;
-            Optional<string> clusterSourceIdentifier = default;
-            Optional<string> clusterSourceType = default;
-            Optional<DateTimeOffset> clusterQueryStartTime = default;
-            Optional<DateTimeOffset> clusterQueryEndTime = default;
-            Optional<string> clusterGroup = default;
+            string query = default;
+            DateTimeOffset? queryTime = default;
+            int? mailCount = default;
+            bool? isVolumeAnomaly = default;
+            string source = default;
+            string clusterSourceIdentifier = default;
+            string clusterSourceType = default;
+            DateTimeOffset? clusterQueryStartTime = default;
+            DateTimeOffset? clusterQueryEndTime = default;
+            string clusterGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -448,7 +448,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsMailClusterEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName.Value, networkMessageIds ?? new ChangeTrackingList<string>(), countByDeliveryStatus.Value, countByThreatType.Value, countByProtectionStatus.Value, threats ?? new ChangeTrackingList<string>(), query.Value, Optional.ToNullable(queryTime), Optional.ToNullable(mailCount), Optional.ToNullable(isVolumeAnomaly), source.Value, clusterSourceIdentifier.Value, clusterSourceType.Value, Optional.ToNullable(clusterQueryStartTime), Optional.ToNullable(clusterQueryEndTime), clusterGroup.Value);
+            return new SecurityInsightsMailClusterEntity(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName,
+                networkMessageIds ?? new ChangeTrackingList<string>(),
+                countByDeliveryStatus,
+                countByThreatType,
+                countByProtectionStatus,
+                threats ?? new ChangeTrackingList<string>(),
+                query,
+                queryTime,
+                mailCount,
+                isVolumeAnomaly,
+                source,
+                clusterSourceIdentifier,
+                clusterSourceType,
+                clusterQueryStartTime,
+                clusterQueryEndTime,
+                clusterGroup);
         }
 
         BinaryData IPersistableModel<SecurityInsightsMailClusterEntity>.Write(ModelReaderWriterOptions options)

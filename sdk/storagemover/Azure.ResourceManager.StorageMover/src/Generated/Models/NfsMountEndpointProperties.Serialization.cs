@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.StorageMover.Models
                 return null;
             }
             string host = default;
-            Optional<NfsVersion> nfsVersion = default;
+            NfsVersion? nfsVersion = default;
             string export = default;
             EndpointType endpointType = default;
-            Optional<string> description = default;
-            Optional<StorageMoverProvisioningState> provisioningState = default;
+            string description = default;
+            StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,14 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NfsMountEndpointProperties(endpointType, description.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData, host, Optional.ToNullable(nfsVersion), export);
+            return new NfsMountEndpointProperties(
+                endpointType,
+                description,
+                provisioningState,
+                serializedAdditionalRawData,
+                host,
+                nfsVersion,
+                export);
         }
 
         BinaryData IPersistableModel<NfsMountEndpointProperties>.Write(ModelReaderWriterOptions options)

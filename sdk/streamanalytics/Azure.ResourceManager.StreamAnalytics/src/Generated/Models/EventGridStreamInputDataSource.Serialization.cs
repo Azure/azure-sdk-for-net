@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<EventHubV2StreamInputDataSource> subscriber = default;
-            Optional<EventGridEventSchemaType> schema = default;
+            EventHubV2StreamInputDataSource subscriber = default;
+            EventGridEventSchemaType? schema = default;
             IList<StreamAnalyticsStorageAccount> storageAccounts = default;
             IList<string> eventTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridStreamInputDataSource(type, serializedAdditionalRawData, subscriber.Value, Optional.ToNullable(schema), storageAccounts ?? new ChangeTrackingList<StreamAnalyticsStorageAccount>(), eventTypes ?? new ChangeTrackingList<string>());
+            return new EventGridStreamInputDataSource(
+                type,
+                serializedAdditionalRawData,
+                subscriber,
+                schema,
+                storageAccounts ?? new ChangeTrackingList<StreamAnalyticsStorageAccount>(),
+                eventTypes ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<EventGridStreamInputDataSource>.Write(ModelReaderWriterOptions options)

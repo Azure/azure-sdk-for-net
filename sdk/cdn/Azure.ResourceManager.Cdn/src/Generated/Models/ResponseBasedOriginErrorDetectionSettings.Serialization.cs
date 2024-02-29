@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<ResponseBasedDetectedErrorType> responseBasedDetectedErrorTypes = default;
-            Optional<int> responseBasedFailoverThresholdPercentage = default;
+            ResponseBasedDetectedErrorType? responseBasedDetectedErrorTypes = default;
+            int? responseBasedFailoverThresholdPercentage = default;
             IList<HttpErrorRange> httpErrorRanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResponseBasedOriginErrorDetectionSettings(Optional.ToNullable(responseBasedDetectedErrorTypes), Optional.ToNullable(responseBasedFailoverThresholdPercentage), httpErrorRanges ?? new ChangeTrackingList<HttpErrorRange>(), serializedAdditionalRawData);
+            return new ResponseBasedOriginErrorDetectionSettings(responseBasedDetectedErrorTypes, responseBasedFailoverThresholdPercentage, httpErrorRanges ?? new ChangeTrackingList<HttpErrorRange>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResponseBasedOriginErrorDetectionSettings>.Write(ModelReaderWriterOptions options)

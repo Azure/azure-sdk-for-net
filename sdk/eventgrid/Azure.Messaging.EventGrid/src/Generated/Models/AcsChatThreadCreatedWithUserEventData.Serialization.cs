@@ -22,15 +22,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<CommunicationIdentifierModel> createdByCommunicationIdentifier = default;
+            CommunicationIdentifierModel createdByCommunicationIdentifier = default;
             IReadOnlyDictionary<string, object> properties = default;
             IReadOnlyDictionary<string, string> metadata = default;
             IReadOnlyList<AcsChatThreadParticipantProperties> participants = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<long> version = default;
-            Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
-            Optional<string> transactionId = default;
-            Optional<string> threadId = default;
+            DateTimeOffset? createTime = default;
+            long? version = default;
+            CommunicationIdentifierModel recipientCommunicationIdentifier = default;
+            string transactionId = default;
+            string threadId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdByCommunicationIdentifier"u8))
@@ -129,7 +129,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), createdByCommunicationIdentifier.Value, properties ?? new ChangeTrackingDictionary<string, object>(), metadata ?? new ChangeTrackingDictionary<string, string>(), participants ?? new ChangeTrackingList<AcsChatThreadParticipantProperties>());
+            return new AcsChatThreadCreatedWithUserEventData(
+                recipientCommunicationIdentifier,
+                transactionId,
+                threadId,
+                createTime,
+                version,
+                createdByCommunicationIdentifier,
+                properties ?? new ChangeTrackingDictionary<string, object>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                participants ?? new ChangeTrackingList<AcsChatThreadParticipantProperties>());
         }
 
         internal partial class AcsChatThreadCreatedWithUserEventDataConverter : JsonConverter<AcsChatThreadCreatedWithUserEventData>

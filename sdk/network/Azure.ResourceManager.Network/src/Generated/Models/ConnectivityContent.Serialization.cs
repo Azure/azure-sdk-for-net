@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.Network.Models
             }
             ConnectivitySource source = default;
             ConnectivityDestination destination = default;
-            Optional<NetworkWatcherProtocol> protocol = default;
-            Optional<ProtocolConfiguration> protocolConfiguration = default;
-            Optional<NetworkIPVersion> preferredIPVersion = default;
+            NetworkWatcherProtocol? protocol = default;
+            ProtocolConfiguration protocolConfiguration = default;
+            NetworkIPVersion? preferredIPVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityContent(source, destination, Optional.ToNullable(protocol), protocolConfiguration.Value, Optional.ToNullable(preferredIPVersion), serializedAdditionalRawData);
+            return new ConnectivityContent(
+                source,
+                destination,
+                protocol,
+                protocolConfiguration,
+                preferredIPVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityContent>.Write(ModelReaderWriterOptions options)

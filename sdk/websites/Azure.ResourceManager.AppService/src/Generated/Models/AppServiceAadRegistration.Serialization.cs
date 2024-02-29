@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> openIdIssuer = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecretSettingName = default;
-            Optional<string> clientSecretCertificateThumbprint = default;
-            Optional<string> clientSecretCertificateSubjectAlternativeName = default;
-            Optional<string> clientSecretCertificateIssuer = default;
+            string openIdIssuer = default;
+            string clientId = default;
+            string clientSecretSettingName = default;
+            string clientSecretCertificateThumbprint = default;
+            string clientSecretCertificateSubjectAlternativeName = default;
+            string clientSecretCertificateIssuer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceAadRegistration(openIdIssuer.Value, clientId.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, clientSecretCertificateSubjectAlternativeName.Value, clientSecretCertificateIssuer.Value, serializedAdditionalRawData);
+            return new AppServiceAadRegistration(
+                openIdIssuer,
+                clientId,
+                clientSecretSettingName,
+                clientSecretCertificateThumbprint,
+                clientSecretCertificateSubjectAlternativeName,
+                clientSecretCertificateIssuer,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceAadRegistration>.Write(ModelReaderWriterOptions options)

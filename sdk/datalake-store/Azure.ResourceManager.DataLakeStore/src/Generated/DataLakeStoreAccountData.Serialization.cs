@@ -215,31 +215,31 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<AzureLocation> location = default;
+            ManagedServiceIdentity identity = default;
+            AzureLocation? location = default;
             IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> accountId = default;
-            Optional<DataLakeStoreAccountStatus> provisioningState = default;
-            Optional<DataLakeStoreAccountState> state = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> endpoint = default;
-            Optional<string> defaultGroup = default;
-            Optional<DataLakeStoreAccountEncryptionConfig> encryptionConfig = default;
-            Optional<DataLakeStoreEncryptionState> encryptionState = default;
-            Optional<DataLakeStoreEncryptionProvisioningState> encryptionProvisioningState = default;
+            SystemData systemData = default;
+            Guid? accountId = default;
+            DataLakeStoreAccountStatus? provisioningState = default;
+            DataLakeStoreAccountState? state = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string endpoint = default;
+            string defaultGroup = default;
+            DataLakeStoreAccountEncryptionConfig encryptionConfig = default;
+            DataLakeStoreEncryptionState? encryptionState = default;
+            DataLakeStoreEncryptionProvisioningState? encryptionProvisioningState = default;
             IReadOnlyList<DataLakeStoreFirewallRuleData> firewallRules = default;
             IReadOnlyList<DataLakeStoreVirtualNetworkRuleData> virtualNetworkRules = default;
-            Optional<DataLakeStoreFirewallState> firewallState = default;
-            Optional<DataLakeStoreFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
+            DataLakeStoreFirewallState? firewallState = default;
+            DataLakeStoreFirewallAllowAzureIPsState? firewallAllowAzureIPs = default;
             IReadOnlyList<DataLakeStoreTrustedIdProviderData> trustedIdProviders = default;
-            Optional<DataLakeStoreTrustedIdProviderState> trustedIdProviderState = default;
-            Optional<DataLakeStoreCommitmentTierType> newTier = default;
-            Optional<DataLakeStoreCommitmentTierType> currentTier = default;
+            DataLakeStoreTrustedIdProviderState? trustedIdProviderState = default;
+            DataLakeStoreCommitmentTierType? newTier = default;
+            DataLakeStoreCommitmentTierType? currentTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -487,7 +487,33 @@ namespace Azure.ResourceManager.DataLakeStore
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreAccountData(id, name, type, systemData.Value, identity, Optional.ToNullable(accountId), Optional.ToNullable(provisioningState), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), endpoint.Value, defaultGroup.Value, encryptionConfig.Value, Optional.ToNullable(encryptionState), Optional.ToNullable(encryptionProvisioningState), firewallRules ?? new ChangeTrackingList<DataLakeStoreFirewallRuleData>(), virtualNetworkRules ?? new ChangeTrackingList<DataLakeStoreVirtualNetworkRuleData>(), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), trustedIdProviders ?? new ChangeTrackingList<DataLakeStoreTrustedIdProviderData>(), Optional.ToNullable(trustedIdProviderState), Optional.ToNullable(newTier), Optional.ToNullable(currentTier), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new DataLakeStoreAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                identity,
+                accountId,
+                provisioningState,
+                state,
+                creationTime,
+                lastModifiedTime,
+                endpoint,
+                defaultGroup,
+                encryptionConfig,
+                encryptionState,
+                encryptionProvisioningState,
+                firewallRules ?? new ChangeTrackingList<DataLakeStoreFirewallRuleData>(),
+                virtualNetworkRules ?? new ChangeTrackingList<DataLakeStoreVirtualNetworkRuleData>(),
+                firewallState,
+                firewallAllowAzureIPs,
+                trustedIdProviders ?? new ChangeTrackingList<DataLakeStoreTrustedIdProviderData>(),
+                trustedIdProviderState,
+                newTier,
+                currentTier,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreAccountData>.Write(ModelReaderWriterOptions options)

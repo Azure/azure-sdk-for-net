@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<EventSubscriptionIdentity> identity = default;
-            Optional<EventSubscriptionDestination> destination = default;
+            EventSubscriptionIdentity identity = default;
+            EventSubscriptionDestination destination = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeliveryWithResourceIdentity(identity.Value, destination.Value, serializedAdditionalRawData);
+            return new DeliveryWithResourceIdentity(identity, destination, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeliveryWithResourceIdentity>.Write(ModelReaderWriterOptions options)

@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<int> durationInSeconds = default;
-            Optional<int> numberOfPacketsToCapture = default;
-            Optional<Uri> sasUrl = default;
-            Optional<string> fileName = default;
-            Optional<AzureFirewallNetworkRuleProtocol> protocol = default;
+            ResourceIdentifier id = default;
+            int? durationInSeconds = default;
+            int? numberOfPacketsToCapture = default;
+            Uri sasUrl = default;
+            string fileName = default;
+            AzureFirewallNetworkRuleProtocol? protocol = default;
             IList<AzureFirewallPacketCaptureFlags> flags = default;
             IList<AzureFirewallPacketCaptureRule> filters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -225,7 +225,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPacketCaptureContent(id.Value, serializedAdditionalRawData, Optional.ToNullable(durationInSeconds), Optional.ToNullable(numberOfPacketsToCapture), sasUrl.Value, fileName.Value, Optional.ToNullable(protocol), flags ?? new ChangeTrackingList<AzureFirewallPacketCaptureFlags>(), filters ?? new ChangeTrackingList<AzureFirewallPacketCaptureRule>());
+            return new FirewallPacketCaptureContent(
+                id,
+                serializedAdditionalRawData,
+                durationInSeconds,
+                numberOfPacketsToCapture,
+                sasUrl,
+                fileName,
+                protocol,
+                flags ?? new ChangeTrackingList<AzureFirewallPacketCaptureFlags>(),
+                filters ?? new ChangeTrackingList<AzureFirewallPacketCaptureRule>());
         }
 
         BinaryData IPersistableModel<FirewallPacketCaptureContent>.Write(ModelReaderWriterOptions options)

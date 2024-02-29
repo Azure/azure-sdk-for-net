@@ -191,26 +191,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            Optional<DataFactoryElement<string>> server = default;
-            Optional<DataFactoryElement<string>> systemNumber = default;
-            Optional<DataFactoryElement<string>> clientId = default;
-            Optional<DataFactoryElement<string>> language = default;
-            Optional<DataFactoryElement<string>> systemId = default;
-            Optional<DataFactoryElement<string>> userName = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<DataFactoryElement<string>> messageServer = default;
-            Optional<DataFactoryElement<string>> messageServerService = default;
-            Optional<DataFactoryElement<string>> sncMode = default;
-            Optional<DataFactoryElement<string>> sncMyName = default;
-            Optional<DataFactoryElement<string>> sncPartnerName = default;
-            Optional<DataFactoryElement<string>> sncLibraryPath = default;
-            Optional<DataFactoryElement<string>> sncQop = default;
-            Optional<DataFactoryElement<string>> logonGroup = default;
-            Optional<string> encryptedCredential = default;
+            DataFactoryElement<string> server = default;
+            DataFactoryElement<string> systemNumber = default;
+            DataFactoryElement<string> clientId = default;
+            DataFactoryElement<string> language = default;
+            DataFactoryElement<string> systemId = default;
+            DataFactoryElement<string> userName = default;
+            DataFactorySecretBaseDefinition password = default;
+            DataFactoryElement<string> messageServer = default;
+            DataFactoryElement<string> messageServerService = default;
+            DataFactoryElement<string> sncMode = default;
+            DataFactoryElement<string> sncMyName = default;
+            DataFactoryElement<string> sncPartnerName = default;
+            DataFactoryElement<string> sncLibraryPath = default;
+            DataFactoryElement<string> sncQop = default;
+            DataFactoryElement<string> logonGroup = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -424,7 +424,29 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapTableLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, server.Value, systemNumber.Value, clientId.Value, language.Value, systemId.Value, userName.Value, password, messageServer.Value, messageServerService.Value, sncMode.Value, sncMyName.Value, sncPartnerName.Value, sncLibraryPath.Value, sncQop.Value, logonGroup.Value, encryptedCredential.Value);
+            return new SapTableLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                server,
+                systemNumber,
+                clientId,
+                language,
+                systemId,
+                userName,
+                password,
+                messageServer,
+                messageServerService,
+                sncMode,
+                sncMyName,
+                sncPartnerName,
+                sncLibraryPath,
+                sncQop,
+                logonGroup,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<SapTableLinkedService>.Write(ModelReaderWriterOptions options)

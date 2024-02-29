@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             IList<string> owners = default;
-            Optional<string> purviewAccount = default;
-            Optional<string> purviewCollection = default;
-            Optional<DataProductControlState> privateLinksEnabled = default;
-            Optional<string> currentMinorVersion = default;
+            string purviewAccount = default;
+            string purviewCollection = default;
+            DataProductControlState? privateLinksEnabled = default;
+            string currentMinorVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,15 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProductPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), owners ?? new ChangeTrackingList<string>(), purviewAccount.Value, purviewCollection.Value, Optional.ToNullable(privateLinksEnabled), currentMinorVersion.Value, serializedAdditionalRawData);
+            return new DataProductPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                owners ?? new ChangeTrackingList<string>(),
+                purviewAccount,
+                purviewCollection,
+                privateLinksEnabled,
+                currentMinorVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProductPatch>.Write(ModelReaderWriterOptions options)

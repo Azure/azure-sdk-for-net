@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             string name = default;
-            Optional<bool> isEnabled = default;
-            Optional<Uri> uri = default;
-            Optional<DateTimeOffset> expiryTime = default;
+            bool? isEnabled = default;
+            Uri uri = default;
+            DateTimeOffset? expiryTime = default;
             IDictionary<string, string> parameters = default;
-            Optional<RunbookAssociationProperty> runbook = default;
-            Optional<string> runOn = default;
+            RunbookAssociationProperty runbook = default;
+            string runOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationWebhookCreateOrUpdateContent(name, Optional.ToNullable(isEnabled), uri.Value, Optional.ToNullable(expiryTime), parameters ?? new ChangeTrackingDictionary<string, string>(), runbook.Value, runOn.Value, serializedAdditionalRawData);
+            return new AutomationWebhookCreateOrUpdateContent(
+                name,
+                isEnabled,
+                uri,
+                expiryTime,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                runbook,
+                runOn,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationWebhookCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

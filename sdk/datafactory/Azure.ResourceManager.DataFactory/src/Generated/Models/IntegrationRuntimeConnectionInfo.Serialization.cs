@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> serviceToken = default;
-            Optional<string> identityCertThumbprint = default;
-            Optional<Uri> hostServiceUri = default;
-            Optional<string> version = default;
-            Optional<string> publicKey = default;
-            Optional<bool> isIdentityCertExprired = default;
+            string serviceToken = default;
+            string identityCertThumbprint = default;
+            Uri hostServiceUri = default;
+            string version = default;
+            string publicKey = default;
+            bool? isIdentityCertExprired = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeConnectionInfo(serviceToken.Value, identityCertThumbprint.Value, hostServiceUri.Value, version.Value, publicKey.Value, Optional.ToNullable(isIdentityCertExprired), additionalProperties);
+            return new IntegrationRuntimeConnectionInfo(
+                serviceToken,
+                identityCertThumbprint,
+                hostServiceUri,
+                version,
+                publicKey,
+                isIdentityCertExprired,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeConnectionInfo>.Write(ModelReaderWriterOptions options)

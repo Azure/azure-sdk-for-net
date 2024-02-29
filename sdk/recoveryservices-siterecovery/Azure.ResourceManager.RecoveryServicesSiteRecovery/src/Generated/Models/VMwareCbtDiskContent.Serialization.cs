@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string diskId = default;
-            Optional<SiteRecoveryDiskAccountType> diskType = default;
+            SiteRecoveryDiskAccountType? diskType = default;
             string isOSDisk = default;
             ResourceIdentifier logStorageAccountId = default;
             string logStorageAccountSasSecretName = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
+            ResourceIdentifier diskEncryptionSetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtDiskContent(diskId, Optional.ToNullable(diskType), isOSDisk, logStorageAccountId, logStorageAccountSasSecretName, diskEncryptionSetId.Value, serializedAdditionalRawData);
+            return new VMwareCbtDiskContent(
+                diskId,
+                diskType,
+                isOSDisk,
+                logStorageAccountId,
+                logStorageAccountSasSecretName,
+                diskEncryptionSetId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareCbtDiskContent>.Write(ModelReaderWriterOptions options)

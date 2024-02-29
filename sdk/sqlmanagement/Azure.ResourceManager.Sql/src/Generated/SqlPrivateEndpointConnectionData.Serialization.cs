@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> privateEndpoint = default;
+            SystemData systemData = default;
+            WritableSubResource privateEndpoint = default;
             IReadOnlyList<string> groupIds = default;
-            Optional<SqlPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
-            Optional<SqlPrivateEndpointProvisioningState> provisioningState = default;
+            SqlPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default;
+            SqlPrivateEndpointProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,7 +210,16 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, groupIds ?? new ChangeTrackingList<string>(), privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SqlPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                privateEndpoint,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateLinkServiceConnectionState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

@@ -122,16 +122,16 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> keyVaultId = default;
-            Optional<string> keyVaultSecretName = default;
-            Optional<KeyVaultSecretStatus> provisioningState = default;
+            SystemData systemData = default;
+            ResourceIdentifier keyVaultId = default;
+            string keyVaultSecretName = default;
+            KeyVaultSecretStatus? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +225,18 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceCertificateData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(provisioningState), kind.Value, serializedAdditionalRawData);
+            return new AppServiceCertificateData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                keyVaultId,
+                keyVaultSecretName,
+                provisioningState,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceCertificateData>.Write(ModelReaderWriterOptions options)

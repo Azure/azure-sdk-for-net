@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> diskSerialNumber = default;
-            Optional<string> bitLockerKey = default;
+            string diskSerialNumber = default;
+            string bitLockerKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxDiskSecret(diskSerialNumber.Value, bitLockerKey.Value, serializedAdditionalRawData);
+            return new DataBoxDiskSecret(diskSerialNumber, bitLockerKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxDiskSecret>.Write(ModelReaderWriterOptions options)

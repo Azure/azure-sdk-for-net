@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string description = default;
             IList<string> fqdnList = default;
-            Optional<ETag> etag = default;
-            Optional<string> auditComment = default;
-            Optional<FirewallProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            string auditComment = default;
+            FirewallProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,7 +210,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocalRulestackFqdnData(id, name, type, systemData.Value, description.Value, fqdnList, Optional.ToNullable(etag), auditComment.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new LocalRulestackFqdnData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                fqdnList,
+                etag,
+                auditComment,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LocalRulestackFqdnData>.Write(ModelReaderWriterOptions options)

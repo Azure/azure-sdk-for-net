@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             string name = default;
-            Optional<string> displayName = default;
-            Optional<string> category = default;
-            Optional<string> description = default;
-            Optional<string> additionalMetadataId = default;
+            string displayName = default;
+            string category = default;
+            string description = default;
+            string additionalMetadataId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyDefinitionGroup(name, displayName.Value, category.Value, description.Value, additionalMetadataId.Value, serializedAdditionalRawData);
+            return new PolicyDefinitionGroup(
+                name,
+                displayName,
+                category,
+                description,
+                additionalMetadataId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyDefinitionGroup>.Write(ModelReaderWriterOptions options)

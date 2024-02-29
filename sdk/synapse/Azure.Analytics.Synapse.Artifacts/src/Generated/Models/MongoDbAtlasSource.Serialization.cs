@@ -75,15 +75,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> filter = default;
-            Optional<MongoDbCursorMethodsProperties> cursorMethods = default;
-            Optional<object> batchSize = default;
-            Optional<object> queryTimeout = default;
-            Optional<object> additionalColumns = default;
+            object filter = default;
+            MongoDbCursorMethodsProperties cursorMethods = default;
+            object batchSize = default;
+            object queryTimeout = default;
+            object additionalColumns = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object sourceRetryCount = default;
+            object sourceRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MongoDbAtlasSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, filter.Value, cursorMethods.Value, batchSize.Value, queryTimeout.Value, additionalColumns.Value);
+            return new MongoDbAtlasSource(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                filter,
+                cursorMethods,
+                batchSize,
+                queryTimeout,
+                additionalColumns);
         }
 
         internal partial class MongoDbAtlasSourceConverter : JsonConverter<MongoDbAtlasSource>

@@ -185,17 +185,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<string> targetResourceId = default;
-            Optional<GuestConfigurationNavigation> guestConfiguration = default;
-            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
-            Optional<DateTimeOffset?> lastComplianceStatusChecked = default;
-            Optional<ResourceIdentifier> latestReportId = default;
-            Optional<string> parameterHash = default;
-            Optional<GuestConfigurationAssignmentReportInfo> latestAssignmentReport = default;
-            Optional<string> context = default;
-            Optional<string> assignmentHash = default;
-            Optional<GuestConfigurationProvisioningState?> provisioningState = default;
-            Optional<string> resourceType = default;
+            string targetResourceId = default;
+            GuestConfigurationNavigation guestConfiguration = default;
+            AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
+            DateTimeOffset? lastComplianceStatusChecked = default;
+            ResourceIdentifier latestReportId = default;
+            string parameterHash = default;
+            GuestConfigurationAssignmentReportInfo latestAssignmentReport = default;
+            string context = default;
+            string assignmentHash = default;
+            GuestConfigurationProvisioningState? provisioningState = default;
+            string resourceType = default;
             IList<GuestConfigurationVmssVmInfo> vmssVmList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -324,7 +324,20 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationAssignmentProperties(targetResourceId.Value, guestConfiguration.Value, Optional.ToNullable(complianceStatus), Optional.ToNullable(lastComplianceStatusChecked), latestReportId.Value, parameterHash.Value, latestAssignmentReport.Value, context.Value, assignmentHash.Value, Optional.ToNullable(provisioningState), resourceType.Value, vmssVmList ?? new ChangeTrackingList<GuestConfigurationVmssVmInfo>(), serializedAdditionalRawData);
+            return new GuestConfigurationAssignmentProperties(
+                targetResourceId,
+                guestConfiguration,
+                complianceStatus,
+                lastComplianceStatusChecked,
+                latestReportId,
+                parameterHash,
+                latestAssignmentReport,
+                context,
+                assignmentHash,
+                provisioningState,
+                resourceType,
+                vmssVmList ?? new ChangeTrackingList<GuestConfigurationVmssVmInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestConfigurationAssignmentProperties>.Write(ModelReaderWriterOptions options)

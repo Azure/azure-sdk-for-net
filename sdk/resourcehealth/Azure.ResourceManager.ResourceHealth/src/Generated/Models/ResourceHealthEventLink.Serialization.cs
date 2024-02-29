@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<ResourceHealthEventLinkTypeValue> type = default;
-            Optional<ResourceHealthEventLinkDisplayText> displayText = default;
-            Optional<string> extensionName = default;
-            Optional<string> bladeName = default;
-            Optional<BinaryData> parameters = default;
+            ResourceHealthEventLinkTypeValue? type = default;
+            ResourceHealthEventLinkDisplayText displayText = default;
+            string extensionName = default;
+            string bladeName = default;
+            BinaryData parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventLink(Optional.ToNullable(type), displayText.Value, extensionName.Value, bladeName.Value, parameters.Value, serializedAdditionalRawData);
+            return new ResourceHealthEventLink(
+                type,
+                displayText,
+                extensionName,
+                bladeName,
+                parameters,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventLink>.Write(ModelReaderWriterOptions options)

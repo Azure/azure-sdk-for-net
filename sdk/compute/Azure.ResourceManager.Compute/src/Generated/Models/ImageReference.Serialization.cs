@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> publisher = default;
-            Optional<string> offer = default;
-            Optional<string> sku = default;
-            Optional<string> version = default;
-            Optional<string> exactVersion = default;
-            Optional<string> sharedGalleryImageId = default;
-            Optional<string> communityGalleryImageId = default;
-            Optional<ResourceIdentifier> id = default;
+            string publisher = default;
+            string offer = default;
+            string sku = default;
+            string version = default;
+            string exactVersion = default;
+            string sharedGalleryImageId = default;
+            string communityGalleryImageId = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageReference(id.Value, serializedAdditionalRawData, publisher.Value, offer.Value, sku.Value, version.Value, exactVersion.Value, sharedGalleryImageId.Value, communityGalleryImageId.Value);
+            return new ImageReference(
+                id,
+                serializedAdditionalRawData,
+                publisher,
+                offer,
+                sku,
+                version,
+                exactVersion,
+                sharedGalleryImageId,
+                communityGalleryImageId);
         }
 
         BinaryData IPersistableModel<ImageReference>.Write(ModelReaderWriterOptions options)

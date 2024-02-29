@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             string name = default;
             ResourceType type = default;
-            Optional<bool> nameAvailable = default;
-            Optional<PostgreSqlMigrationNameUnavailableReason> reason = default;
-            Optional<string> message = default;
+            bool? nameAvailable = default;
+            PostgreSqlMigrationNameUnavailableReason? reason = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlCheckMigrationNameAvailabilityContent(name, type, Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value, serializedAdditionalRawData);
+            return new PostgreSqlCheckMigrationNameAvailabilityContent(
+                name,
+                type,
+                nameAvailable,
+                reason,
+                message,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlCheckMigrationNameAvailabilityContent>.Write(ModelReaderWriterOptions options)

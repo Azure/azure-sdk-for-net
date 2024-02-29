@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ResourceIdentifier> deploymentTargetId = default;
-            Optional<EnvironmentTypeEnableStatus> status = default;
-            Optional<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment> creatorRoleAssignment = default;
+            ManagedServiceIdentity identity = default;
+            ResourceIdentifier deploymentTargetId = default;
+            EnvironmentTypeEnableStatus? status = default;
+            ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment creatorRoleAssignment = default;
             IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -202,7 +202,14 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterProjectEnvironmentPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, deploymentTargetId.Value, Optional.ToNullable(status), creatorRoleAssignment.Value, userRoleAssignments ?? new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>(), serializedAdditionalRawData);
+            return new DevCenterProjectEnvironmentPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                deploymentTargetId,
+                status,
+                creatorRoleAssignment,
+                userRoleAssignments ?? new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterProjectEnvironmentPatch>.Write(ModelReaderWriterOptions options)

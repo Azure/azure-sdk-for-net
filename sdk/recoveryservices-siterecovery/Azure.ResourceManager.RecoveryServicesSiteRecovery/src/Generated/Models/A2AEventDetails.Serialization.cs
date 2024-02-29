@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> protectedItemName = default;
-            Optional<ResourceIdentifier> fabricObjectId = default;
-            Optional<string> fabricName = default;
-            Optional<AzureLocation> fabricLocation = default;
-            Optional<string> remoteFabricName = default;
-            Optional<AzureLocation> remoteFabricLocation = default;
+            string protectedItemName = default;
+            ResourceIdentifier fabricObjectId = default;
+            string fabricName = default;
+            AzureLocation? fabricLocation = default;
+            string remoteFabricName = default;
+            AzureLocation? remoteFabricLocation = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,7 +160,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AEventDetails(instanceType, serializedAdditionalRawData, protectedItemName.Value, fabricObjectId.Value, fabricName.Value, Optional.ToNullable(fabricLocation), remoteFabricName.Value, Optional.ToNullable(remoteFabricLocation));
+            return new A2AEventDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                protectedItemName,
+                fabricObjectId,
+                fabricName,
+                fabricLocation,
+                remoteFabricName,
+                remoteFabricLocation);
         }
 
         BinaryData IPersistableModel<A2AEventDetails>.Write(ModelReaderWriterOptions options)

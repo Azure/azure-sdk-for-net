@@ -55,9 +55,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<string> stopwords = default;
-            Optional<StopwordsList> stopwordsList = default;
-            Optional<bool> ignoreCase = default;
-            Optional<bool> removeTrailing = default;
+            StopwordsList? stopwordsList = default;
+            bool? ignoreCase = default;
+            bool? removeTrailing = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new StopwordsTokenFilter(odataType, name, stopwords ?? new ChangeTrackingList<string>(), Optional.ToNullable(stopwordsList), Optional.ToNullable(ignoreCase), Optional.ToNullable(removeTrailing));
+            return new StopwordsTokenFilter(
+                odataType,
+                name,
+                stopwords ?? new ChangeTrackingList<string>(),
+                stopwordsList,
+                ignoreCase,
+                removeTrailing);
         }
     }
 }

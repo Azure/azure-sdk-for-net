@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ConnectionTypeAssociationProperty> connectionType = default;
+            SystemData systemData = default;
+            ConnectionTypeAssociationProperty connectionType = default;
             IReadOnlyDictionary<string, string> fieldDefinitionValues = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> description = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,17 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationConnectionData(id, name, type, systemData.Value, connectionType.Value, fieldDefinitionValues ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
+            return new AutomationConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                connectionType,
+                fieldDefinitionValues ?? new ChangeTrackingDictionary<string, string>(),
+                creationTime,
+                lastModifiedTime,
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationConnectionData>.Write(ModelReaderWriterOptions options)

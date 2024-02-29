@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningDataType dataType = default;
-            Optional<bool> isArchived = default;
-            Optional<string> latestVersion = default;
-            Optional<string> nextVersion = default;
-            Optional<string> description = default;
+            bool? isArchived = default;
+            string latestVersion = default;
+            string nextVersion = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -234,7 +234,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningDataContainerProperties(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(isArchived), latestVersion.Value, nextVersion.Value, dataType);
+            return new MachineLearningDataContainerProperties(
+                description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                isArchived,
+                latestVersion,
+                nextVersion,
+                dataType);
         }
 
         BinaryData IPersistableModel<MachineLearningDataContainerProperties>.Write(ModelReaderWriterOptions options)
