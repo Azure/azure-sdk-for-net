@@ -134,7 +134,7 @@
 /sdk/attestation/Azure.Security.Attestation                        @anilba06 @gkostal @Azure/azure-sdk-write-attestation
 
 # ServiceLabel: %Attestation
-/sdk/attestation/                                                  @anilba06 @gkostal
+# ServiceOwners:                                                   @anilba06 @gkostal
 
 # ServiceLabel: %Authorization
 # ServiceOwners:                                                   @darshanhs90 @AshishGargMicrosoft
