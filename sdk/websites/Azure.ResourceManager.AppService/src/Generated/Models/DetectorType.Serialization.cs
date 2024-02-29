@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
             DetectorType.Detector => "Detector",
             DetectorType.Analysis => "Analysis",
             DetectorType.CategoryOverview => "CategoryOverview",
+            DetectorType.WorkflowNode => "WorkflowNode",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DetectorType value.")
         };
 
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Detector")) return DetectorType.Detector;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Analysis")) return DetectorType.Analysis;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "CategoryOverview")) return DetectorType.CategoryOverview;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WorkflowNode")) return DetectorType.WorkflowNode;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DetectorType value.");
         }
     }

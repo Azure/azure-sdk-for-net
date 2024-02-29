@@ -820,6 +820,35 @@ directive:
     transform: >
         $["format"] = "duration";
         $["x-ms-format"] = "duration-constant";
+  - from: CommonDefinitions.json
+    where: $.definitions.DetectorInfo.properties
+    transform: >
+        $["analysisTypes"] = {
+          "description": "Analysis Types for which this detector should apply to.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true
+        }
+  - from: CommonDefinitions.json
+    where: $.definitions.DetectorInfo.properties
+    transform: >
+        $["type"] = {
+          "description": "Whether this detector is an Analysis Detector or not.",
+          "enum": [
+            "Detector",
+            "Analysis",
+            "CategoryOverview",
+            "WorkflowNode"
+          ],
+          "type": "string",
+          "readOnly": true,
+          "x-ms-enum": {
+            "name": "DetectorType",
+            "modelAsString": false
+          }
+        }
   - from: WebApps.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/syncfunctiontriggers'].post
     transform: >

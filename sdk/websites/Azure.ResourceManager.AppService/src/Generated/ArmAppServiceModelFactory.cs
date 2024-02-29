@@ -391,11 +391,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="analysisType"> Analysis Types for which this detector should apply to. </param>
         /// <param name="detectorType"> Whether this detector is an Analysis Detector or not. </param>
         /// <param name="score"> Defines score of a detector to power ML based matching. </param>
+        /// <param name="analysisTypes"> Analysis Types for which this detector should apply to. </param>
         /// <returns> A new <see cref="Models.DetectorInfo"/> instance for mocking. </returns>
-        public static DetectorInfo DetectorInfo(string id = null, string name = null, string description = null, string author = null, string category = null, IEnumerable<DetectorSupportTopic> supportTopicList = null, IEnumerable<string> analysisType = null, DetectorType? detectorType = null, float? score = null)
+        public static DetectorInfo DetectorInfo(string id = null, string name = null, string description = null, string author = null, string category = null, IEnumerable<DetectorSupportTopic> supportTopicList = null, IEnumerable<string> analysisType = null, DetectorType? detectorType = null, float? score = null, IEnumerable<string> analysisTypes = null)
         {
             supportTopicList ??= new List<DetectorSupportTopic>();
             analysisType ??= new List<string>();
+            analysisTypes ??= new List<string>();
 
             return new DetectorInfo(
                 id,
@@ -407,6 +409,7 @@ namespace Azure.ResourceManager.AppService.Models
                 analysisType?.ToList(),
                 detectorType,
                 score,
+                analysisTypes?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
