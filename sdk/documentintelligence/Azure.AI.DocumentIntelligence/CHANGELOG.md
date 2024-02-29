@@ -3,8 +3,16 @@
 ## 1.0.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added property `BaseClassifierId` to `BuildDocumentClassifierContent`.
+- Added property `BaseClassifierId` to `DocumentClassifierDetails`.
+- Added property `Warnings` to `DocumentModelDetails`.
+- Added property `Warnings` to `DocumentClassifierDetails`.
+- Added property `SelectionGroup` to `DocumentFieldType`.
+- Added property `ValueSelectionGroup` to `DocumentField`.
+- Added member `Completed` to `OperationDetails`.
 
 ### Breaking Changes
+- `DocumentIntelligenceClient` and `DocumentIntelligenceAdministrationClient` now target service API version `2024-02-29-preview`. Support for `2023-10-31-preview` has been removed.
 
 ### Bugs Fixed
 

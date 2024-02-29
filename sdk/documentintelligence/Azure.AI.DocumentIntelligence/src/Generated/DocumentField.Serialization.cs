@@ -110,12 +110,22 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("valueBoolean"u8);
                 writer.WriteBooleanValue(ValueBoolean.Value);
             }
+            if (!(ValueSelectionGroup is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            {
+                writer.WritePropertyName("valueSelectionGroup"u8);
+                writer.WriteStartArray();
+                foreach (var item in ValueSelectionGroup)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection1 && collection1.IsUndefined))
+            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
@@ -125,7 +135,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (!(Spans is ChangeTrackingList<DocumentSpan> collection2 && collection2.IsUndefined))
+            if (!(Spans is ChangeTrackingList<DocumentSpan> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("spans"u8);
                 writer.WriteStartArray();
@@ -193,6 +203,7 @@ namespace Azure.AI.DocumentIntelligence
             CurrencyValue valueCurrency = default;
             AddressValue valueAddress = default;
             bool? valueBoolean = default;
+            IReadOnlyList<string> valueSelectionGroup = default;
             string content = default;
             IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
@@ -330,6 +341,20 @@ namespace Azure.AI.DocumentIntelligence
                     valueBoolean = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("valueSelectionGroup"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    valueSelectionGroup = array;
+                    continue;
+                }
                 if (property.NameEquals("content"u8))
                 {
                     content = property.Value.GetString();
@@ -394,6 +419,7 @@ namespace Azure.AI.DocumentIntelligence
                 valueCurrency,
                 valueAddress,
                 valueBoolean,
+                valueSelectionGroup ?? new ChangeTrackingList<string>(),
                 content,
                 boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
                 spans ?? new ChangeTrackingList<DocumentSpan>(),

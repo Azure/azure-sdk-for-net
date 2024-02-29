@@ -61,6 +61,7 @@ namespace Azure.AI.DocumentIntelligence
             CreatedDateTime = createdDateTime;
             Tags = new ChangeTrackingDictionary<string, string>();
             DocTypes = new ChangeTrackingDictionary<string, DocumentTypeDetails>();
+            Warnings = new ChangeTrackingList<DocumentIntelligenceWarning>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentModelDetails"/>. </summary>
@@ -80,8 +81,9 @@ namespace Azure.AI.DocumentIntelligence
         /// azureBlobSource or azureBlobFileListSource must be specified.
         /// </param>
         /// <param name="docTypes"> Supported document types. </param>
+        /// <param name="warnings"> List of warnings encountered while building the model. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentModelDetails(string modelId, string description, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentBuildMode? buildMode, AzureBlobContentSource azureBlobSource, AzureBlobFileListContentSource azureBlobFileListSource, IReadOnlyDictionary<string, DocumentTypeDetails> docTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentModelDetails(string modelId, string description, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentBuildMode? buildMode, AzureBlobContentSource azureBlobSource, AzureBlobFileListContentSource azureBlobFileListSource, IReadOnlyDictionary<string, DocumentTypeDetails> docTypes, IReadOnlyList<DocumentIntelligenceWarning> warnings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelId = modelId;
             Description = description;
@@ -93,6 +95,7 @@ namespace Azure.AI.DocumentIntelligence
             AzureBlobSource = azureBlobSource;
             AzureBlobFileListSource = azureBlobFileListSource;
             DocTypes = docTypes;
+            Warnings = warnings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -127,5 +130,7 @@ namespace Azure.AI.DocumentIntelligence
         public AzureBlobFileListContentSource AzureBlobFileListSource { get; }
         /// <summary> Supported document types. </summary>
         public IReadOnlyDictionary<string, DocumentTypeDetails> DocTypes { get; }
+        /// <summary> List of warnings encountered while building the model. </summary>
+        public IReadOnlyList<DocumentIntelligenceWarning> Warnings { get; }
     }
 }

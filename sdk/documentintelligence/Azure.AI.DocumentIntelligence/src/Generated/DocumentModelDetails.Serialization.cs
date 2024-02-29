@@ -83,6 +83,16 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndObject();
             }
+            if (!(Warnings is ChangeTrackingList<DocumentIntelligenceWarning> collection1 && collection1.IsUndefined))
+            {
+                writer.WritePropertyName("warnings"u8);
+                writer.WriteStartArray();
+                foreach (var item in Warnings)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -131,6 +141,7 @@ namespace Azure.AI.DocumentIntelligence
             AzureBlobContentSource azureBlobSource = default;
             AzureBlobFileListContentSource azureBlobFileListSource = default;
             IReadOnlyDictionary<string, DocumentTypeDetails> docTypes = default;
+            IReadOnlyList<DocumentIntelligenceWarning> warnings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,6 +230,20 @@ namespace Azure.AI.DocumentIntelligence
                     docTypes = dictionary;
                     continue;
                 }
+                if (property.NameEquals("warnings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DocumentIntelligenceWarning> array = new List<DocumentIntelligenceWarning>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentIntelligenceWarning.DeserializeDocumentIntelligenceWarning(item, options));
+                    }
+                    warnings = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -236,6 +261,7 @@ namespace Azure.AI.DocumentIntelligence
                 azureBlobSource,
                 azureBlobFileListSource,
                 docTypes ?? new ChangeTrackingDictionary<string, DocumentTypeDetails>(),
+                warnings ?? new ChangeTrackingList<DocumentIntelligenceWarning>(),
                 serializedAdditionalRawData);
         }
 
