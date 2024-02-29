@@ -57,7 +57,6 @@ assetUpdateRequest.State = AssetUpdateState.Confirmed;
 client.UpdateAssets(monitorFilter, assetUpdateRequest);
 ```
 
-
 ## Update Filter if Needed
 
 Should your needs change, the filter can be updated with no need to update the scripts it's used in. Simply submit a new `SavedFiltersPut` request to replace the old description and filter with a new set.
