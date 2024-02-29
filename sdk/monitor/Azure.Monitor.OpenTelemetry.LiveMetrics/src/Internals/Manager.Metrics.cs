@@ -173,6 +173,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
         /// <summary>
         /// Calcualte the CPU usage as the diff between two ticks divided by the period of time, and then divided by the number of processors.
+        /// <code>((change in ticks / period) / number of processes)</code>
         /// </summary>
         private bool TryCalculateCPUCounter(Process process, out double normalizedValue)
         {
@@ -225,8 +226,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 calculatedValue: calculatedValue,
                 processorCount: processorCount,
                 normalizedValue: normalizedValue);
-            // TryCalculateCPUCounter period: 10313304 diff: 64062500 calculatedValue: 621.1636930318354 processorCount: 8 normalizedValue: 77.64546162897942
-            Debug.WriteLine($"{nameof(TryCalculateCPUCounter)} period: {period} diff: {diff} calculatedValue: {calculatedValue} processorCount: {processorCount} normalizedValue: {normalizedValue}");
             return true;
         }
     }
