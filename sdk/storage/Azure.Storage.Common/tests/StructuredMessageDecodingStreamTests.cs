@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers.Binary;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -40,40 +42,63 @@ namespace Azure.Storage.Tests
             Method = method;
         }
 
-        private async ValueTask CopyStream(Stream source, Stream destination, int bufferSize = 81920) // number default for CopyTo impl
+        private class CopyStreamException : Exception
+        {
+            public long TotalCopied { get; }
+
+            public CopyStreamException(Exception inner, long totalCopied)
+                : base($"Failed read after {totalCopied}-many bytes.", inner)
+            {
+                TotalCopied = totalCopied;
+            }
+        }
+        private async ValueTask<long> CopyStream(Stream source, Stream destination, int bufferSize = 81920) // number default for CopyTo impl
         {
             byte[] buf = new byte[bufferSize];
             int read;
-            switch (Method)
+            long totalRead = 0;
+            try
             {
-                case ReadMethod.SyncArray:
-                    while ((read = source.Read(buf, 0, bufferSize)) > 0)
-                    {
-                        destination.Write(buf, 0, read);
-                    }
-                    break;
-                case ReadMethod.AsyncArray:
-                    while ((read = await source.ReadAsync(buf, 0, bufferSize)) > 0)
-                    {
-                        await destination.WriteAsync(buf, 0, read);
-                    }
-                    break;
+                switch (Method)
+                {
+                    case ReadMethod.SyncArray:
+                        while ((read = source.Read(buf, 0, bufferSize)) > 0)
+                        {
+                            totalRead += read;
+                            destination.Write(buf, 0, read);
+                        }
+                        break;
+                    case ReadMethod.AsyncArray:
+                        while ((read = await source.ReadAsync(buf, 0, bufferSize)) > 0)
+                        {
+                            totalRead += read;
+                            await destination.WriteAsync(buf, 0, read);
+                        }
+                        break;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
-                case ReadMethod.SyncSpan:
-                    while ((read = source.Read(new Span<byte>(buf))) > 0)
-                    {
-                        destination.Write(new Span<byte>(buf, 0, read));
-                    }
-                    break;
-                case ReadMethod.AsyncMemory:
-                    while ((read = await source.ReadAsync(new Memory<byte>(buf))) > 0)
-                    {
-                        await destination.WriteAsync(new Memory<byte>(buf, 0, read));
-                    }
-                    break;
+                    case ReadMethod.SyncSpan:
+                        while ((read = source.Read(new Span<byte>(buf))) > 0)
+                        {
+                            totalRead += read;
+                            destination.Write(new Span<byte>(buf, 0, read));
+                        }
+                        break;
+                    case ReadMethod.AsyncMemory:
+                        while ((read = await source.ReadAsync(new Memory<byte>(buf))) > 0)
+                        {
+                            totalRead += read;
+                            await destination.WriteAsync(new Memory<byte>(buf, 0, read));
+                        }
+                        break;
 #endif
+                }
+                destination.Flush();
             }
-            destination.Flush();
+            catch (Exception ex)
+            {
+                throw new CopyStreamException(ex, totalRead);
+            }
+            return totalRead;
         }
 
         [Test]
@@ -100,6 +125,120 @@ namespace Azure.Storage.Tests
             }
 
             Assert.That(new Span<byte>(decodedData).SequenceEqual(originalData));
+        }
+
+        [Test]
+        public void BadStreamBadVersion()
+        {
+            byte[] originalData = new byte[1024];
+            new Random().NextBytes(originalData);
+            byte[] encodedData = StructuredMessageHelper.MakeEncodedData(originalData, 256, Flags.StorageCrc64);
+
+            encodedData[0] = byte.MaxValue;
+
+            Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(encodedData));
+            Assert.That(async () => await CopyStream(decodingStream, Stream.Null), Throws.InnerException.TypeOf<InvalidDataException>());
+        }
+
+        [Test]
+        public async Task BadSegmentCrcThrows()
+        {
+            const int segmentLength = 256;
+            Random r = new();
+
+            byte[] originalData = new byte[2048];
+            r.NextBytes(originalData);
+            byte[] encodedData = StructuredMessageHelper.MakeEncodedData(originalData, segmentLength, Flags.StorageCrc64);
+
+            const int badBytePos = 1024;
+            encodedData[badBytePos] = (byte)~encodedData[badBytePos];
+
+            MemoryStream encodedDataStream = new(encodedData);
+            Stream decodingStream = new StructuredMessageDecodingStream(encodedDataStream);
+
+            // manual try/catch to validate the proccess failed mid-stream rather than the end
+            const int copyBufferSize = 4;
+            bool caught = false;
+            try
+            {
+                await CopyStream(decodingStream, Stream.Null, copyBufferSize);
+            }
+            catch (CopyStreamException ex)
+            {
+                caught = true;
+                Assert.That(ex.TotalCopied, Is.LessThanOrEqualTo(badBytePos));
+            }
+            Assert.That(caught);
+        }
+
+        [Test]
+        public void BadStreamCrcThrows()
+        {
+            const int segmentLength = 256;
+            Random r = new();
+
+            byte[] originalData = new byte[2048];
+            r.NextBytes(originalData);
+            byte[] encodedData = StructuredMessageHelper.MakeEncodedData(originalData, segmentLength, Flags.StorageCrc64);
+
+            encodedData[originalData.Length - 1] = (byte)~encodedData[originalData.Length - 1];
+
+            Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(encodedData));
+            Assert.That(async () => await CopyStream(decodingStream, Stream.Null), Throws.InnerException.TypeOf<InvalidDataException>());
+        }
+
+        [Test]
+        public void BadStreamWrongContentLength()
+        {
+            byte[] originalData = new byte[1024];
+            new Random().NextBytes(originalData);
+            byte[] encodedData = StructuredMessageHelper.MakeEncodedData(originalData, 256, Flags.StorageCrc64);
+
+            BinaryPrimitives.WriteInt64LittleEndian(new Span<byte>(encodedData, V1_0.StreamHeaderMessageLengthOffset, 8), 123456789L);
+
+            Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(encodedData));
+            Assert.That(async () => await CopyStream(decodingStream, Stream.Null), Throws.InnerException.TypeOf<InvalidDataException>());
+        }
+
+        [Test]
+        public void BadStreamWrongSegmentCount()
+        {
+            byte[] originalData = new byte[1024];
+            new Random().NextBytes(originalData);
+            byte[] encodedData = StructuredMessageHelper.MakeEncodedData(originalData, 256, Flags.StorageCrc64);
+
+            BinaryPrimitives.WriteInt16LittleEndian(new Span<byte>(encodedData, V1_0.StreamHeaderSegmentCountOffset, 2), 123);
+
+            Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(encodedData));
+            Assert.That(async () => await CopyStream(decodingStream, Stream.Null), Throws.InnerException.TypeOf<InvalidDataException>());
+        }
+
+        [Test]
+        public void BadStreamWrongSegmentNum()
+        {
+            byte[] originalData = new byte[1024];
+            new Random().NextBytes(originalData);
+            byte[] encodedData = StructuredMessageHelper.MakeEncodedData(originalData, 256, Flags.StorageCrc64);
+
+            BinaryPrimitives.WriteInt16LittleEndian(
+                new Span<byte>(encodedData, V1_0.StreamHeaderLength + V1_0.SegmentHeaderNumOffset, 2), 123);
+
+            Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(encodedData));
+            Assert.That(async () => await CopyStream(decodingStream, Stream.Null), Throws.InnerException.TypeOf<InvalidDataException>());
+        }
+
+        [Test]
+        public void BadStreamMissingExpectedStreamFooter()
+        {
+            byte[] originalData = new byte[1024];
+            new Random().NextBytes(originalData);
+            byte[] encodedData = StructuredMessageHelper.MakeEncodedData(originalData, 256, Flags.StorageCrc64);
+
+            byte[] brokenData = new byte[encodedData.Length - Crc64Length];
+            new Span<byte>(encodedData, 0, encodedData.Length - Crc64Length).CopyTo(brokenData);
+
+            Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(brokenData));
+            Assert.That(async () => await CopyStream(decodingStream, Stream.Null), Throws.InnerException.TypeOf<InvalidDataException>());
         }
 
         [Test]
