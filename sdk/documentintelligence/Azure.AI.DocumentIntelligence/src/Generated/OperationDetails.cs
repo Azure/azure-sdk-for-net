@@ -107,6 +107,9 @@ namespace Azure.AI.DocumentIntelligence
         internal OperationDetails()
         {
         }
+
+        /// <summary> Operation ID. </summary>
+        public string OperationId { get; }
         /// <summary> Operation status.  notStarted, running, completed, or failed. </summary>
         public OperationStatus Status { get; }
         /// <summary> Operation progress (0-100). </summary>

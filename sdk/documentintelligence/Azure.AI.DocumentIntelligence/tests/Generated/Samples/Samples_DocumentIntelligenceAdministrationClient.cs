@@ -505,7 +505,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            Response response = client.GetOperation("<operationId>", (RequestContext)null);
+            Response response = client.GetOperation("<operationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -524,7 +524,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            Response response = await client.GetOperationAsync("<operationId>", (RequestContext)null);
+            Response response = await client.GetOperationAsync("<operationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -565,7 +565,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            Response response = client.GetOperation("<operationId>", (RequestContext)null);
+            Response response = client.GetOperation("<operationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -592,7 +592,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            Response response = await client.GetOperationAsync("<operationId>", (RequestContext)null);
+            Response response = await client.GetOperationAsync("<operationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("operationId").ToString());
