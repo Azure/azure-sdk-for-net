@@ -28,7 +28,7 @@ namespace Azure.Analytics.Purview.DataMap.Tests
             var options = new DataMapClientOptions { Transport = new HttpClientTransport(httpHandler) };
             var env = new PurviewDataMapTestEnvironment();
             Uri endpoint = env.Endpoint;
-            TokenCredential credential = new DefaultAzureCredential();
+            TokenCredential credential = new ClientSecretCredential(env.tenantId, env.clientId, env.clientSecret);
             var client = InstrumentClient(
                 //new DataMapClient(TestEnvironment.Endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
                 new DataMapClient(endpoint, credential));

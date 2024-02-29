@@ -14,11 +14,11 @@ namespace Azure.Analytics.Purview.DataMap.Tests
 {
     public class DataMapClientTest : DataMapClientTestBase
     {
-        public DataMapClientTest(bool isAsync) : base(isAsync)
+        public DataMapClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
-        [Test]
+        [RecordedTest]
         public void Search()
         {
             DataMapClient client = GetDataMapClient();
@@ -26,26 +26,25 @@ namespace Azure.Analytics.Purview.DataMap.Tests
             sg.Keywords = "Glossary";
             sg.Limit = 1;
             Response<QueryResult> result = client.GetDiscoveryClient().Query(sg);
-            Assert.AreNotEqual("200", result.GetRawResponse().Status);
+            Assert.AreEqual(200, result.GetRawResponse().Status);
         }
 
-        [Test]
+        [RecordedTest]
         public void GetGlossary()
         {
             var client = GetDataMapClient().GetGlossaryClient();
             Response fetchResponse = client.BatchGet(1, null, null, true, new RequestContext());
-            Console.WriteLine(fetchResponse.ToString());
+            Console.WriteLine(fetchResponse);
             Assert.AreEqual(200, fetchResponse.Status);
         }
 
-        private static BinaryData GetContentFromResponse(Response r)
+        [RecordedTest]
+        public void GetTypes()
         {
-            // Workaround azure/azure-sdk-for-net#21048, which prevents .Content from working when dealing with responses
-            // from the playback system.
-
-            MemoryStream ms = new MemoryStream();
-            r.ContentStream.CopyTo(ms);
-            return new BinaryData(ms.ToArray());
+            var client = GetDataMapClient().GetTypeDefinitionClient();
+            Response<AtlasTypeDef> response = client.GetByName("AtlasGlossary");
+            Console.WriteLine(response);
+            Assert.AreEqual(200, response.GetRawResponse().Status);
         }
     }
 }
