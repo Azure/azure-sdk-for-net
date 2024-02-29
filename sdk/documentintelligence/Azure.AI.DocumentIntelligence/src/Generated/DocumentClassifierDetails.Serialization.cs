@@ -43,6 +43,11 @@ namespace Azure.AI.DocumentIntelligence
             }
             writer.WritePropertyName("apiVersion"u8);
             writer.WriteStringValue(ApiVersion);
+            if (BaseClassifierId != null)
+            {
+                writer.WritePropertyName("baseClassifierId"u8);
+                writer.WriteStringValue(BaseClassifierId);
+            }
             writer.WritePropertyName("docTypes"u8);
             writer.WriteStartObject();
             foreach (var item in DocTypes)
@@ -51,6 +56,16 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
+            if (!(Warnings is ChangeTrackingList<DocumentIntelligenceWarning> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("warnings"u8);
+                writer.WriteStartArray();
+                foreach (var item in Warnings)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -94,7 +109,9 @@ namespace Azure.AI.DocumentIntelligence
             DateTimeOffset createdDateTime = default;
             DateTimeOffset? expirationDateTime = default;
             string apiVersion = default;
+            string baseClassifierId = default;
             IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes = default;
+            IReadOnlyList<DocumentIntelligenceWarning> warnings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,6 +145,11 @@ namespace Azure.AI.DocumentIntelligence
                     apiVersion = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("baseClassifierId"u8))
+                {
+                    baseClassifierId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("docTypes"u8))
                 {
                     Dictionary<string, ClassifierDocumentTypeDetails> dictionary = new Dictionary<string, ClassifierDocumentTypeDetails>();
@@ -136,6 +158,20 @@ namespace Azure.AI.DocumentIntelligence
                         dictionary.Add(property0.Name, ClassifierDocumentTypeDetails.DeserializeClassifierDocumentTypeDetails(property0.Value, options));
                     }
                     docTypes = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("warnings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DocumentIntelligenceWarning> array = new List<DocumentIntelligenceWarning>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentIntelligenceWarning.DeserializeDocumentIntelligenceWarning(item, options));
+                    }
+                    warnings = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +186,9 @@ namespace Azure.AI.DocumentIntelligence
                 createdDateTime,
                 expirationDateTime,
                 apiVersion,
+                baseClassifierId,
                 docTypes,
+                warnings ?? new ChangeTrackingList<DocumentIntelligenceWarning>(),
                 serializedAdditionalRawData);
         }
 

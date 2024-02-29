@@ -52,7 +52,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Initializes a new instance of <see cref="OperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
-        /// <param name="status"> Operation status. </param>
+        /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
@@ -78,7 +78,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Initializes a new instance of <see cref="OperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
-        /// <param name="status"> Operation status. </param>
+        /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
@@ -107,7 +107,7 @@ namespace Azure.AI.DocumentIntelligence
         internal OperationDetails()
         {
         }
-        /// <summary> Operation status. </summary>
+        /// <summary> Operation status.  notStarted, running, completed, or failed. </summary>
         public OperationStatus Status { get; }
         /// <summary> Operation progress (0-100). </summary>
         public int? PercentCompleted { get; }

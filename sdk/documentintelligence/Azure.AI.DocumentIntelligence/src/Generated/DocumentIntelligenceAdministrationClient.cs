@@ -1295,22 +1295,6 @@ namespace Azure.AI.DocumentIntelligence
             return message;
         }
 
-        internal HttpMessage CreateGetOperationRequest(Guid operationId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/documentintelligence", false);
-            uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         internal HttpMessage CreateGetOperationsRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);

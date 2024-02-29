@@ -36,6 +36,7 @@ namespace Azure.AI.DocumentIntelligence
         private const string CurrencyValue = "currency";
         private const string AddressValue = "address";
         private const string BooleanValue = "boolean";
+        private const string SelectionGroupValue = "selectionGroup";
 
         /// <summary> Plain text. </summary>
         public static DocumentFieldType String { get; } = new DocumentFieldType(StringValue);
@@ -65,6 +66,8 @@ namespace Azure.AI.DocumentIntelligence
         public static DocumentFieldType Address { get; } = new DocumentFieldType(AddressValue);
         /// <summary> Boolean value, normalized to true or false. </summary>
         public static DocumentFieldType Boolean { get; } = new DocumentFieldType(BooleanValue);
+        /// <summary> Array of selected string values. </summary>
+        public static DocumentFieldType SelectionGroup { get; } = new DocumentFieldType(SelectionGroupValue);
         /// <summary> Determines if two <see cref="DocumentFieldType"/> values are the same. </summary>
         public static bool operator ==(DocumentFieldType left, DocumentFieldType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentFieldType"/> values are not the same. </summary>
