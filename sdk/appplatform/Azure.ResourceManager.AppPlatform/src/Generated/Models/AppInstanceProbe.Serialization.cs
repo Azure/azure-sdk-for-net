@@ -96,13 +96,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppInstanceProbeAction> probeAction = default;
+            AppInstanceProbeAction probeAction = default;
             bool disableProbe = default;
-            Optional<int> initialDelaySeconds = default;
-            Optional<int> periodSeconds = default;
-            Optional<int> timeoutSeconds = default;
-            Optional<int> failureThreshold = default;
-            Optional<int> successThreshold = default;
+            int? initialDelaySeconds = default;
+            int? periodSeconds = default;
+            int? timeoutSeconds = default;
+            int? failureThreshold = default;
+            int? successThreshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,13 +173,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppInstanceProbe(
-                probeAction.Value,
+                probeAction,
                 disableProbe,
-                Optional.ToNullable(initialDelaySeconds),
-                Optional.ToNullable(periodSeconds),
-                Optional.ToNullable(timeoutSeconds),
-                Optional.ToNullable(failureThreshold),
-                Optional.ToNullable(successThreshold),
+                initialDelaySeconds,
+                periodSeconds,
+                timeoutSeconds,
+                failureThreshold,
+                successThreshold,
                 serializedAdditionalRawData);
         }
 

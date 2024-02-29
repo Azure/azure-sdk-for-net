@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> privateBlob = default;
-            Optional<string> certPassword = default;
+            SystemData systemData = default;
+            string privateBlob = default;
+            string certPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.Sql.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                privateBlob.Value,
-                certPassword.Value,
+                systemData,
+                privateBlob,
+                certPassword,
                 serializedAdditionalRawData);
         }
 

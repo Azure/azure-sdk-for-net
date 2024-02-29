@@ -174,19 +174,19 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> alertType = default;
-            Optional<string> alertDisplayName = default;
-            Optional<DateTimeOffset> aggregatedDateUtc = default;
-            Optional<string> vendorName = default;
-            Optional<ReportedSeverity> reportedSeverity = default;
-            Optional<string> remediationSteps = default;
-            Optional<string> description = default;
-            Optional<long> count = default;
-            Optional<string> effectedResourceType = default;
-            Optional<string> systemSource = default;
-            Optional<string> actionTaken = default;
-            Optional<string> logAnalyticsQuery = default;
+            SystemData systemData = default;
+            string alertType = default;
+            string alertDisplayName = default;
+            DateTimeOffset? aggregatedDateUtc = default;
+            string vendorName = default;
+            ReportedSeverity? reportedSeverity = default;
+            string remediationSteps = default;
+            string description = default;
+            long? count = default;
+            string effectedResourceType = default;
+            string systemSource = default;
+            string actionTaken = default;
+            string logAnalyticsQuery = default;
             IReadOnlyList<IotSecurityAggregatedAlertTopDevice> topDevicesList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -338,19 +338,19 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                alertType.Value,
-                alertDisplayName.Value,
-                Optional.ToNullable(aggregatedDateUtc),
-                vendorName.Value,
-                Optional.ToNullable(reportedSeverity),
-                remediationSteps.Value,
-                description.Value,
-                Optional.ToNullable(count),
-                effectedResourceType.Value,
-                systemSource.Value,
-                actionTaken.Value,
-                logAnalyticsQuery.Value,
+                systemData,
+                alertType,
+                alertDisplayName,
+                aggregatedDateUtc,
+                vendorName,
+                reportedSeverity,
+                remediationSteps,
+                description,
+                count,
+                effectedResourceType,
+                systemSource,
+                actionTaken,
+                logAnalyticsQuery,
                 topDevicesList ?? new ChangeTrackingList<IotSecurityAggregatedAlertTopDevice>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);

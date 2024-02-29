@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<int> id = default;
+            int? id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -31,7 +30,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new PointOfInterestCategorySet(Optional.ToNullable(id));
+            return new PointOfInterestCategorySet(id);
         }
     }
 }

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationLinkedWorkspace(id.Value, serializedAdditionalRawData);
+            return new AutomationLinkedWorkspace(id, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationLinkedWorkspace>.Write(ModelReaderWriterOptions options)

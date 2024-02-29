@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> dtcEnabled = default;
-            Optional<ManagedInstanceDtcSecuritySettings> securitySettings = default;
+            SystemData systemData = default;
+            bool? dtcEnabled = default;
+            ManagedInstanceDtcSecuritySettings securitySettings = default;
             IList<string> externalDnsSuffixSearchList = default;
-            Optional<string> dtcHostNameDnsSuffix = default;
-            Optional<JobExecutionProvisioningState> provisioningState = default;
+            string dtcHostNameDnsSuffix = default;
+            JobExecutionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,12 +224,12 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(dtcEnabled),
-                securitySettings.Value,
+                systemData,
+                dtcEnabled,
+                securitySettings,
                 externalDnsSuffixSearchList ?? new ChangeTrackingList<string>(),
-                dtcHostNameDnsSuffix.Value,
-                Optional.ToNullable(provisioningState),
+                dtcHostNameDnsSuffix,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

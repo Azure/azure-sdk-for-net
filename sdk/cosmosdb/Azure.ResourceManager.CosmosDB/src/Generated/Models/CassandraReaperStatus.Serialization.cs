@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<bool> healthy = default;
+            bool? healthy = default;
             IReadOnlyDictionary<string, string> repairRunIds = default;
             IReadOnlyDictionary<string, string> repairSchedules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraReaperStatus(Optional.ToNullable(healthy), repairRunIds ?? new ChangeTrackingDictionary<string, string>(), repairSchedules ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new CassandraReaperStatus(healthy, repairRunIds ?? new ChangeTrackingDictionary<string, string>(), repairSchedules ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraReaperStatus>.Write(ModelReaderWriterOptions options)

@@ -135,17 +135,17 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<LoadTestingProvisioningState> provisioningState = default;
-            Optional<string> dataPlaneUri = default;
-            Optional<LoadTestingCmkEncryptionProperties> encryption = default;
+            SystemData systemData = default;
+            string description = default;
+            LoadTestingProvisioningState? provisioningState = default;
+            string dataPlaneUri = default;
+            LoadTestingCmkEncryptionProperties encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,14 +254,14 @@ namespace Azure.ResourceManager.LoadTesting
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                description.Value,
-                Optional.ToNullable(provisioningState),
-                dataPlaneUri.Value,
-                encryption.Value,
+                description,
+                provisioningState,
+                dataPlaneUri,
+                encryption,
                 serializedAdditionalRawData);
         }
 

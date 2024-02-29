@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 return null;
             }
             IReadOnlyList<LabVirtualMachineData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PagedVirtualMachines(value ?? new ChangeTrackingList<LabVirtualMachineData>(), nextLink.Value, serializedAdditionalRawData);
+            return new PagedVirtualMachines(value ?? new ChangeTrackingList<LabVirtualMachineData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PagedVirtualMachines>.Write(ModelReaderWriterOptions options)

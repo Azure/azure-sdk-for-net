@@ -123,16 +123,16 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<string> kind = default;
-            Optional<CognitiveServicesSku> sku = default;
+            ETag? etag = default;
+            string kind = default;
+            CognitiveServicesSku sku = default;
             IDictionary<string, string> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<CommitmentPlanProperties> properties = default;
+            AzureLocation? location = default;
+            CommitmentPlanProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,13 +226,13 @@ namespace Azure.ResourceManager.CognitiveServices
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(etag),
-                kind.Value,
-                sku.Value,
+                systemData,
+                etag,
+                kind,
+                sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(location),
-                properties.Value,
+                location,
+                properties,
                 serializedAdditionalRawData);
         }
 

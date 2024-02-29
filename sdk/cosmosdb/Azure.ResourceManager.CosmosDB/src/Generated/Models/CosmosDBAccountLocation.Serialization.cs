@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<AzureLocation> locationName = default;
-            Optional<string> documentEndpoint = default;
-            Optional<string> provisioningState = default;
-            Optional<int> failoverPriority = default;
-            Optional<bool> isZoneRedundant = default;
+            string id = default;
+            AzureLocation? locationName = default;
+            string documentEndpoint = default;
+            string provisioningState = default;
+            int? failoverPriority = default;
+            bool? isZoneRedundant = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +153,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CosmosDBAccountLocation(
-                id.Value,
-                Optional.ToNullable(locationName),
-                documentEndpoint.Value,
-                provisioningState.Value,
-                Optional.ToNullable(failoverPriority),
-                Optional.ToNullable(isZoneRedundant),
+                id,
+                locationName,
+                documentEndpoint,
+                provisioningState,
+                failoverPriority,
+                isZoneRedundant,
                 serializedAdditionalRawData);
         }
 

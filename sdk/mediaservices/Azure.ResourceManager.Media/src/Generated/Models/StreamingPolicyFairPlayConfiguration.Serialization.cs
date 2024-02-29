@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> customLicenseAcquisitionUriTemplate = default;
+            string customLicenseAcquisitionUriTemplate = default;
             bool allowPersistentLicense = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingPolicyFairPlayConfiguration(customLicenseAcquisitionUriTemplate.Value, allowPersistentLicense, serializedAdditionalRawData);
+            return new StreamingPolicyFairPlayConfiguration(customLicenseAcquisitionUriTemplate, allowPersistentLicense, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingPolicyFairPlayConfiguration>.Write(ModelReaderWriterOptions options)

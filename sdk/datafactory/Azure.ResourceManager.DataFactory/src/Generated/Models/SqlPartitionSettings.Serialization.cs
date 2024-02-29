@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> partitionColumnName = default;
-            Optional<DataFactoryElement<string>> partitionUpperBound = default;
-            Optional<DataFactoryElement<string>> partitionLowerBound = default;
+            DataFactoryElement<string> partitionColumnName = default;
+            DataFactoryElement<string> partitionUpperBound = default;
+            DataFactoryElement<string> partitionLowerBound = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlPartitionSettings(partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value, serializedAdditionalRawData);
+            return new SqlPartitionSettings(partitionColumnName, partitionUpperBound, partitionLowerBound, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlPartitionSettings>.Write(ModelReaderWriterOptions options)

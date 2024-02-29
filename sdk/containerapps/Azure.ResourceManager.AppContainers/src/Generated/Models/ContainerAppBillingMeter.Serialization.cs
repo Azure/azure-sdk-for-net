@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<ContainerAppBillingMeterProperties> properties = default;
+            AzureLocation? location = default;
+            ContainerAppBillingMeterProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,9 +157,9 @@ namespace Azure.ResourceManager.AppContainers.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                properties.Value,
+                systemData,
+                location,
+                properties,
                 serializedAdditionalRawData);
         }
 

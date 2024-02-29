@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<StreamingJobOutputDataSource> datasource = default;
-            Optional<TimeSpan> timeWindow = default;
-            Optional<float> sizeWindow = default;
-            Optional<StreamAnalyticsDataSerialization> serialization = default;
-            Optional<StreamingJobDiagnostics> diagnostics = default;
-            Optional<ETag> etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            StreamingJobOutputDataSource datasource = default;
+            TimeSpan? timeWindow = default;
+            float? sizeWindow = default;
+            StreamAnalyticsDataSerialization serialization = default;
+            StreamingJobDiagnostics diagnostics = default;
+            ETag? etag = default;
             IReadOnlyList<LastOutputEventTimestamp> lastOutputEventTimestamps = default;
-            Optional<StreamingJobOutputWatermarkProperties> watermarkSettings = default;
+            StreamingJobOutputWatermarkProperties watermarkSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,18 +263,18 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StreamingJobOutputData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                datasource.Value,
-                Optional.ToNullable(timeWindow),
-                Optional.ToNullable(sizeWindow),
-                serialization.Value,
-                diagnostics.Value,
-                Optional.ToNullable(etag),
+                datasource,
+                timeWindow,
+                sizeWindow,
+                serialization,
+                diagnostics,
+                etag,
                 lastOutputEventTimestamps ?? new ChangeTrackingList<LastOutputEventTimestamp>(),
-                watermarkSettings.Value);
+                watermarkSettings);
         }
 
         BinaryData IPersistableModel<StreamingJobOutputData>.Write(ModelReaderWriterOptions options)

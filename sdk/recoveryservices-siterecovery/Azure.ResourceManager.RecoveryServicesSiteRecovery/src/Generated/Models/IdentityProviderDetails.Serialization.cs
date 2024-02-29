@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> applicationId = default;
-            Optional<string> objectId = default;
-            Optional<string> audience = default;
-            Optional<string> aadAuthority = default;
+            Guid? tenantId = default;
+            string applicationId = default;
+            string objectId = default;
+            string audience = default;
+            string aadAuthority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IdentityProviderDetails(
-                Optional.ToNullable(tenantId),
-                applicationId.Value,
-                objectId.Value,
-                audience.Value,
-                aadAuthority.Value,
+                tenantId,
+                applicationId,
+                objectId,
+                audience,
+                aadAuthority,
                 serializedAdditionalRawData);
         }
 

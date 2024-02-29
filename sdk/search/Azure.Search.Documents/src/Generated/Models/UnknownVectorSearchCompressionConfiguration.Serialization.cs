@@ -48,8 +48,8 @@ namespace Azure.Search.Documents.Models
             }
             string name = default;
             VectorSearchCompressionKind kind = "Unknown";
-            Optional<bool> rerankWithOriginalVectors = default;
-            Optional<double?> defaultOversampling = default;
+            bool? rerankWithOriginalVectors = default;
+            double? defaultOversampling = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -82,7 +82,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new UnknownVectorSearchCompressionConfiguration(name, kind, Optional.ToNullable(rerankWithOriginalVectors), Optional.ToNullable(defaultOversampling));
+            return new UnknownVectorSearchCompressionConfiguration(name, kind, rerankWithOriginalVectors, defaultOversampling);
         }
     }
 }

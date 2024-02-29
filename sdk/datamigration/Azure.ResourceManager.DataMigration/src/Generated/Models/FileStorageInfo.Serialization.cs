@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<Uri> uri = default;
+            Uri uri = default;
             IReadOnlyDictionary<string, string> headers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileStorageInfo(uri.Value, headers ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new FileStorageInfo(uri, headers ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FileStorageInfo>.Write(ModelReaderWriterOptions options)

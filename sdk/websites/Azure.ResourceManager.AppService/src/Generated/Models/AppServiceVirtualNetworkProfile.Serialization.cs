@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> subnet = default;
+            string name = default;
+            ResourceType? type = default;
+            string subnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceVirtualNetworkProfile(id, name.Value, Optional.ToNullable(type), subnet.Value, serializedAdditionalRawData);
+            return new AppServiceVirtualNetworkProfile(id, name, type, subnet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceVirtualNetworkProfile>.Write(ModelReaderWriterOptions options)

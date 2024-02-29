@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<NetworkCloudClusterData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterList(nextLink.Value, value ?? new ChangeTrackingList<NetworkCloudClusterData>(), serializedAdditionalRawData);
+            return new ClusterList(nextLink, value ?? new ChangeTrackingList<NetworkCloudClusterData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterList>.Write(ModelReaderWriterOptions options)

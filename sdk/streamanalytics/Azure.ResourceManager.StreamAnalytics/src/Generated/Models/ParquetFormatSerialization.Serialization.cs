@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<BinaryData> properties = default;
+            BinaryData properties = default;
             EventSerializationType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ParquetFormatSerialization(type, serializedAdditionalRawData, properties.Value);
+            return new ParquetFormatSerialization(type, serializedAdditionalRawData, properties);
         }
 
         BinaryData IPersistableModel<ParquetFormatSerialization>.Write(ModelReaderWriterOptions options)

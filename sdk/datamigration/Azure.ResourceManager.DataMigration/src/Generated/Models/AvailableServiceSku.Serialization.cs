@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<AvailableServiceSkuSku> sku = default;
-            Optional<AvailableServiceSkuCapacity> capacity = default;
+            string resourceType = default;
+            AvailableServiceSkuSku sku = default;
+            AvailableServiceSkuCapacity capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableServiceSku(resourceType.Value, sku.Value, capacity.Value, serializedAdditionalRawData);
+            return new AvailableServiceSku(resourceType, sku, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableServiceSku>.Write(ModelReaderWriterOptions options)

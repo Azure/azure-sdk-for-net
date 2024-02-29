@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             SqlConnectionInfo sourceConnectionInfo = default;
-            Optional<ServerLevelPermissionsGroup> checkPermissionsGroup = default;
-            Optional<bool> collectDatabases = default;
-            Optional<bool> collectLogins = default;
-            Optional<bool> collectAgentJobs = default;
-            Optional<bool> collectTdeCertificateInfo = default;
-            Optional<bool> validateSsisCatalogOnly = default;
-            Optional<string> encryptedKeyForSecureFields = default;
+            ServerLevelPermissionsGroup? checkPermissionsGroup = default;
+            bool? collectDatabases = default;
+            bool? collectLogins = default;
+            bool? collectAgentJobs = default;
+            bool? collectTdeCertificateInfo = default;
+            bool? validateSsisCatalogOnly = default;
+            string encryptedKeyForSecureFields = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,13 +185,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConnectToSourceSqlServerTaskInput(
                 sourceConnectionInfo,
-                Optional.ToNullable(checkPermissionsGroup),
-                Optional.ToNullable(collectDatabases),
-                Optional.ToNullable(collectLogins),
-                Optional.ToNullable(collectAgentJobs),
-                Optional.ToNullable(collectTdeCertificateInfo),
-                Optional.ToNullable(validateSsisCatalogOnly),
-                encryptedKeyForSecureFields.Value,
+                checkPermissionsGroup,
+                collectDatabases,
+                collectLogins,
+                collectAgentJobs,
+                collectTdeCertificateInfo,
+                validateSsisCatalogOnly,
+                encryptedKeyForSecureFields,
                 serializedAdditionalRawData);
         }
 

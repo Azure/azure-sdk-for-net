@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<AppServiceSkuCapacity> capacity = default;
+            string name = default;
+            string tier = default;
+            string size = default;
+            string family = default;
+            AppServiceSkuCapacity capacity = default;
             IReadOnlyList<AzureLocation> locations = default;
             IReadOnlyList<AppServiceSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -184,11 +184,11 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new GlobalCsmSkuDescription(
-                name.Value,
-                tier.Value,
-                size.Value,
-                family.Value,
-                capacity.Value,
+                name,
+                tier,
+                size,
+                family,
+                capacity,
                 locations ?? new ChangeTrackingList<AzureLocation>(),
                 capabilities ?? new ChangeTrackingList<AppServiceSkuCapability>(),
                 serializedAdditionalRawData);

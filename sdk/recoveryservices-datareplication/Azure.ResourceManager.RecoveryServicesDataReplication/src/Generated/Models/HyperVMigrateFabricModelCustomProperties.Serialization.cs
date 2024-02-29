@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             ResourceIdentifier hyperVSiteId = default;
-            Optional<ResourceIdentifier> fabricResourceId = default;
-            Optional<string> fabricContainerId = default;
+            ResourceIdentifier fabricResourceId = default;
+            string fabricContainerId = default;
             ResourceIdentifier migrationSolutionId = default;
-            Optional<Uri> migrationHubUri = default;
+            Uri migrationHubUri = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 instanceType,
                 serializedAdditionalRawData,
                 hyperVSiteId,
-                fabricResourceId.Value,
-                fabricContainerId.Value,
+                fabricResourceId,
+                fabricContainerId,
                 migrationSolutionId,
-                migrationHubUri.Value);
+                migrationHubUri);
         }
 
         BinaryData IPersistableModel<HyperVMigrateFabricModelCustomProperties>.Write(ModelReaderWriterOptions options)

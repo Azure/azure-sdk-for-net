@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<AzureOpenAIParameters> azureOpenAIParameters = default;
+            AzureOpenAIParameters azureOpenAIParameters = default;
             string name = default;
             VectorSearchVectorizerKind kind = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new AzureOpenAIVectorizer(name, kind, azureOpenAIParameters.Value);
+            return new AzureOpenAIVectorizer(name, kind, azureOpenAIParameters);
         }
     }
 }

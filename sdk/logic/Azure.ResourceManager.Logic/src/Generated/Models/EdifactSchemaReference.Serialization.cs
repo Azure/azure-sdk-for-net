@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.Logic.Models
             string messageId = default;
             string messageVersion = default;
             string messageRelease = default;
-            Optional<string> senderApplicationId = default;
-            Optional<string> senderApplicationQualifier = default;
-            Optional<string> associationAssignedCode = default;
+            string senderApplicationId = default;
+            string senderApplicationQualifier = default;
+            string associationAssignedCode = default;
             string schemaName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.Logic.Models
                 messageId,
                 messageVersion,
                 messageRelease,
-                senderApplicationId.Value,
-                senderApplicationQualifier.Value,
-                associationAssignedCode.Value,
+                senderApplicationId,
+                senderApplicationQualifier,
+                associationAssignedCode,
                 schemaName,
                 serializedAdditionalRawData);
         }

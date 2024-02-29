@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> lun = default;
-            Optional<DevTestLabStorageType> storageType = default;
+            string lun = default;
+            DevTestLabStorageType? storageType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabDataDiskStorageTypeInfo(lun.Value, Optional.ToNullable(storageType), serializedAdditionalRawData);
+            return new DevTestLabDataDiskStorageTypeInfo(lun, storageType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabDataDiskStorageTypeInfo>.Write(ModelReaderWriterOptions options)

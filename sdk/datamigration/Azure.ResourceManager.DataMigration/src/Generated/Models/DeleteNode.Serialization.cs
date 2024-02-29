@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> nodeName = default;
-            Optional<string> integrationRuntimeName = default;
+            string nodeName = default;
+            string integrationRuntimeName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeleteNode(nodeName.Value, integrationRuntimeName.Value, serializedAdditionalRawData);
+            return new DeleteNode(nodeName, integrationRuntimeName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeleteNode>.Write(ModelReaderWriterOptions options)

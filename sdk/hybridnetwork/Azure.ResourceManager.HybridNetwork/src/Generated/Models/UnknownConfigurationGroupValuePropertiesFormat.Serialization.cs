@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> publisherName = default;
-            Optional<PublisherScope> publisherScope = default;
-            Optional<string> configurationGroupSchemaName = default;
-            Optional<string> configurationGroupSchemaOfferingLocation = default;
-            Optional<DeploymentResourceIdReference> configurationGroupSchemaResourceReference = default;
+            ProvisioningState? provisioningState = default;
+            string publisherName = default;
+            PublisherScope? publisherScope = default;
+            string configurationGroupSchemaName = default;
+            string configurationGroupSchemaOfferingLocation = default;
+            DeploymentResourceIdReference configurationGroupSchemaResourceReference = default;
             ConfigurationGroupValueConfigurationType configurationType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -161,12 +161,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UnknownConfigurationGroupValuePropertiesFormat(
-                Optional.ToNullable(provisioningState),
-                publisherName.Value,
-                Optional.ToNullable(publisherScope),
-                configurationGroupSchemaName.Value,
-                configurationGroupSchemaOfferingLocation.Value,
-                configurationGroupSchemaResourceReference.Value,
+                provisioningState,
+                publisherName,
+                publisherScope,
+                configurationGroupSchemaName,
+                configurationGroupSchemaOfferingLocation,
+                configurationGroupSchemaResourceReference,
                 configurationType,
                 serializedAdditionalRawData);
         }

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> region = default;
-            Optional<RegionalReplicationState> state = default;
-            Optional<string> details = default;
-            Optional<int> progress = default;
+            string region = default;
+            RegionalReplicationState? state = default;
+            string details = default;
+            int? progress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegionalReplicationStatus(region.Value, Optional.ToNullable(state), details.Value, Optional.ToNullable(progress), serializedAdditionalRawData);
+            return new RegionalReplicationStatus(region, state, details, progress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionalReplicationStatus>.Write(ModelReaderWriterOptions options)

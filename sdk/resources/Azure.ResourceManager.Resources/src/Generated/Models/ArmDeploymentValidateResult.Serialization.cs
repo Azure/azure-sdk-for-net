@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ResponseError> error = default;
-            Optional<ArmDeploymentPropertiesExtended> properties = default;
+            ResponseError error = default;
+            ArmDeploymentPropertiesExtended properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentValidateResult(error.Value, properties.Value, serializedAdditionalRawData);
+            return new ArmDeploymentValidateResult(error, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentValidateResult>.Write(ModelReaderWriterOptions options)

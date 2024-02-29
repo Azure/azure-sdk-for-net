@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<ProductDescriptionType> descriptionType = default;
-            Optional<string> shortDescription = default;
-            Optional<string> longDescription = default;
+            ProductDescriptionType? descriptionType = default;
+            string shortDescription = default;
+            string longDescription = default;
             IReadOnlyList<string> keywords = default;
             IReadOnlyList<string> attributes = default;
             IReadOnlyList<ProductLink> links = default;
@@ -187,9 +187,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ProductDescription(
-                Optional.ToNullable(descriptionType),
-                shortDescription.Value,
-                longDescription.Value,
+                descriptionType,
+                shortDescription,
+                longDescription,
                 keywords ?? new ChangeTrackingList<string>(),
                 attributes ?? new ChangeTrackingList<string>(),
                 links ?? new ChangeTrackingList<ProductLink>(),

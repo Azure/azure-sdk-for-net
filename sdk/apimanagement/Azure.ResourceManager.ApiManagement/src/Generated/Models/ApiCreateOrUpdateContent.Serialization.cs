@@ -197,31 +197,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<AuthenticationSettingsContract> authenticationSettings = default;
-            Optional<SubscriptionKeyParameterNamesContract> subscriptionKeyParameterNames = default;
-            Optional<ApiType> type = default;
-            Optional<string> apiRevision = default;
-            Optional<string> apiVersion = default;
-            Optional<bool> isCurrent = default;
-            Optional<bool> isOnline = default;
-            Optional<string> apiRevisionDescription = default;
-            Optional<string> apiVersionDescription = default;
-            Optional<ResourceIdentifier> apiVersionSetId = default;
-            Optional<bool> subscriptionRequired = default;
-            Optional<Uri> termsOfServiceUri = default;
-            Optional<ApiContactInformation> contact = default;
-            Optional<ApiLicenseInformation> license = default;
-            Optional<ResourceIdentifier> sourceApiId = default;
-            Optional<string> displayName = default;
-            Optional<Uri> serviceUri = default;
-            Optional<string> path = default;
+            string description = default;
+            AuthenticationSettingsContract authenticationSettings = default;
+            SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default;
+            ApiType? type = default;
+            string apiRevision = default;
+            string apiVersion = default;
+            bool? isCurrent = default;
+            bool? isOnline = default;
+            string apiRevisionDescription = default;
+            string apiVersionDescription = default;
+            ResourceIdentifier apiVersionSetId = default;
+            bool? subscriptionRequired = default;
+            Uri termsOfServiceUri = default;
+            ApiContactInformation contact = default;
+            ApiLicenseInformation license = default;
+            ResourceIdentifier sourceApiId = default;
+            string displayName = default;
+            Uri serviceUri = default;
+            string path = default;
             IList<ApiOperationInvokableProtocol> protocols = default;
-            Optional<ApiVersionSetContractDetails> apiVersionSet = default;
-            Optional<string> value = default;
-            Optional<ContentFormat> format = default;
-            Optional<ApiCreateOrUpdatePropertiesWsdlSelector> wsdlSelector = default;
-            Optional<SoapApiType> apiType = default;
+            ApiVersionSetContractDetails apiVersionSet = default;
+            string value = default;
+            ContentFormat? format = default;
+            ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = default;
+            SoapApiType? apiType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -443,31 +443,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApiCreateOrUpdateContent(
-                description.Value,
-                authenticationSettings.Value,
-                subscriptionKeyParameterNames.Value,
-                Optional.ToNullable(type),
-                apiRevision.Value,
-                apiVersion.Value,
-                Optional.ToNullable(isCurrent),
-                Optional.ToNullable(isOnline),
-                apiRevisionDescription.Value,
-                apiVersionDescription.Value,
-                apiVersionSetId.Value,
-                Optional.ToNullable(subscriptionRequired),
-                termsOfServiceUri.Value,
-                contact.Value,
-                license.Value,
-                sourceApiId.Value,
-                displayName.Value,
-                serviceUri.Value,
-                path.Value,
+                description,
+                authenticationSettings,
+                subscriptionKeyParameterNames,
+                type,
+                apiRevision,
+                apiVersion,
+                isCurrent,
+                isOnline,
+                apiRevisionDescription,
+                apiVersionDescription,
+                apiVersionSetId,
+                subscriptionRequired,
+                termsOfServiceUri,
+                contact,
+                license,
+                sourceApiId,
+                displayName,
+                serviceUri,
+                path,
                 protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>(),
-                apiVersionSet.Value,
-                value.Value,
-                Optional.ToNullable(format),
-                wsdlSelector.Value,
-                Optional.ToNullable(apiType),
+                apiVersionSet,
+                value,
+                format,
+                wsdlSelector,
+                apiType,
                 serializedAdditionalRawData);
         }
 

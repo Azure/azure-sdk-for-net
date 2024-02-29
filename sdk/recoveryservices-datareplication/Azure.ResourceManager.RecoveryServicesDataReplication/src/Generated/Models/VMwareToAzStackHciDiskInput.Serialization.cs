@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             string diskId = default;
-            Optional<string> storageContainerId = default;
-            Optional<bool> isDynamic = default;
+            string storageContainerId = default;
+            bool? isDynamic = default;
             long diskSizeGB = default;
             string diskFileFormat = default;
             bool isOSDisk = default;
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VMwareToAzStackHciDiskInput(
                 diskId,
-                storageContainerId.Value,
-                Optional.ToNullable(isDynamic),
+                storageContainerId,
+                isDynamic,
                 diskSizeGB,
                 diskFileFormat,
                 isOSDisk,

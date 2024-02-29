@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<DesiredInstallationState> desiredState = default;
-            Optional<MobileNetworkInstallationState> state = default;
-            Optional<MobileNetworkReinstallRequired> reinstallRequired = default;
+            DesiredInstallationState? desiredState = default;
+            MobileNetworkInstallationState? state = default;
+            MobileNetworkReinstallRequired? reinstallRequired = default;
             IReadOnlyList<MobileNetworkInstallationReason> reasons = default;
-            Optional<SubResource> operation = default;
+            SubResource operation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MobileNetworkInstallation(
-                Optional.ToNullable(desiredState),
-                Optional.ToNullable(state),
-                Optional.ToNullable(reinstallRequired),
+                desiredState,
+                state,
+                reinstallRequired,
                 reasons ?? new ChangeTrackingList<MobileNetworkInstallationReason>(),
                 operation,
                 serializedAdditionalRawData);

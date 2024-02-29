@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<Guid> resourceGuid = default;
+            SystemData systemData = default;
+            string description = default;
+            NetworkProvisioningState? provisioningState = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,11 +200,11 @@ namespace Azure.ResourceManager.Network
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(resourceGuid),
-                Optional.ToNullable(etag),
+                systemData,
+                description,
+                provisioningState,
+                resourceGuid,
+                etag,
                 serializedAdditionalRawData);
         }
 

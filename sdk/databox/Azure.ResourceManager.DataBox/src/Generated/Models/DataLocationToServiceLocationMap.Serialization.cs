@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<AzureLocation> dataLocation = default;
-            Optional<AzureLocation> serviceLocation = default;
+            AzureLocation? dataLocation = default;
+            AzureLocation? serviceLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLocationToServiceLocationMap(Optional.ToNullable(dataLocation), Optional.ToNullable(serviceLocation), serializedAdditionalRawData);
+            return new DataLocationToServiceLocationMap(dataLocation, serviceLocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLocationToServiceLocationMap>.Write(ModelReaderWriterOptions options)

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 return null;
             }
             IReadOnlyList<BillingBenefitsSavingsPlanOrderData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanOrderModelList(value ?? new ChangeTrackingList<BillingBenefitsSavingsPlanOrderData>(), nextLink.Value, serializedAdditionalRawData);
+            return new SavingsPlanOrderModelList(value ?? new ChangeTrackingList<BillingBenefitsSavingsPlanOrderData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanOrderModelList>.Write(ModelReaderWriterOptions options)

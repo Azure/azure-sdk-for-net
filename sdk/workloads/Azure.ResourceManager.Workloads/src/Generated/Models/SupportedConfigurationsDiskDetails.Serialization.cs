@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<SapDiskSku> sku = default;
-            Optional<long> sizeGB = default;
-            Optional<long> minimumSupportedDiskCount = default;
-            Optional<long> maximumSupportedDiskCount = default;
-            Optional<long> iopsReadWrite = default;
-            Optional<long> mbpsReadWrite = default;
-            Optional<string> diskTier = default;
+            SapDiskSku sku = default;
+            long? sizeGB = default;
+            long? minimumSupportedDiskCount = default;
+            long? maximumSupportedDiskCount = default;
+            long? iopsReadWrite = default;
+            long? mbpsReadWrite = default;
+            string diskTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,13 +176,13 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SupportedConfigurationsDiskDetails(
-                sku.Value,
-                Optional.ToNullable(sizeGB),
-                Optional.ToNullable(minimumSupportedDiskCount),
-                Optional.ToNullable(maximumSupportedDiskCount),
-                Optional.ToNullable(iopsReadWrite),
-                Optional.ToNullable(mbpsReadWrite),
-                diskTier.Value,
+                sku,
+                sizeGB,
+                minimumSupportedDiskCount,
+                maximumSupportedDiskCount,
+                iopsReadWrite,
+                mbpsReadWrite,
+                diskTier,
                 serializedAdditionalRawData);
         }
 

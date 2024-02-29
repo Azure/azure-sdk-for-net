@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<double> maxPrice = default;
+            double? maxPrice = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingProfile(Optional.ToNullable(maxPrice), serializedAdditionalRawData);
+            return new BillingProfile(maxPrice, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingProfile>.Write(ModelReaderWriterOptions options)

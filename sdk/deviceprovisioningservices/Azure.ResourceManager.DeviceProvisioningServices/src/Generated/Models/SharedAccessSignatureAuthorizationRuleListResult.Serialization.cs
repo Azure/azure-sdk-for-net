@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 return null;
             }
             IReadOnlyList<DeviceProvisioningServicesSharedAccessKey> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedAccessSignatureAuthorizationRuleListResult(value ?? new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>(), nextLink.Value, serializedAdditionalRawData);
+            return new SharedAccessSignatureAuthorizationRuleListResult(value ?? new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedAccessSignatureAuthorizationRuleListResult>.Write(ModelReaderWriterOptions options)

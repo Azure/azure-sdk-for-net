@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.MySql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> queryId = default;
-            Optional<string> queryText = default;
+            SystemData systemData = default;
+            string queryId = default;
+            string queryText = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.MySql
                 id,
                 name,
                 type,
-                systemData.Value,
-                queryId.Value,
-                queryText.Value,
+                systemData,
+                queryId,
+                queryText,
                 serializedAdditionalRawData);
         }
 

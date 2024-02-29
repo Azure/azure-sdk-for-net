@@ -128,18 +128,18 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<string> scope = default;
+            string scope = default;
             ResourceIdentifier roleDefinitionId = default;
             Guid principalId = default;
-            Optional<RoleManagementPrincipalType> principalType = default;
-            Optional<string> description = default;
-            Optional<string> condition = default;
-            Optional<string> conditionVersion = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> updatedOn = default;
-            Optional<string> createdBy = default;
-            Optional<string> updatedBy = default;
-            Optional<ResourceIdentifier> delegatedManagedIdentityResourceId = default;
+            RoleManagementPrincipalType? principalType = default;
+            string description = default;
+            string condition = default;
+            string conditionVersion = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
+            string createdBy = default;
+            string updatedBy = default;
+            ResourceIdentifier delegatedManagedIdentityResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,18 +240,18 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RoleAssignmentCreateOrUpdateContent(
-                scope.Value,
+                scope,
                 roleDefinitionId,
                 principalId,
-                Optional.ToNullable(principalType),
-                description.Value,
-                condition.Value,
-                conditionVersion.Value,
-                Optional.ToNullable(createdOn),
-                Optional.ToNullable(updatedOn),
-                createdBy.Value,
-                updatedBy.Value,
-                delegatedManagedIdentityResourceId.Value,
+                principalType,
+                description,
+                condition,
+                conditionVersion,
+                createdOn,
+                updatedOn,
+                createdBy,
+                updatedBy,
+                delegatedManagedIdentityResourceId,
                 serializedAdditionalRawData);
         }
 

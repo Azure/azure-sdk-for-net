@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<SslConfiguration> ssl = default;
-            Optional<ServiceAuthConfiguration> serviceAuth = default;
-            Optional<AutoScaleConfiguration> autoScale = default;
+            ETag? etag = default;
+            SslConfiguration ssl = default;
+            ServiceAuthConfiguration serviceAuth = default;
+            AutoScaleConfiguration autoScale = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GlobalServiceConfiguration(Optional.ToNullable(etag), ssl.Value, serviceAuth.Value, autoScale.Value, additionalProperties);
+            return new GlobalServiceConfiguration(etag, ssl, serviceAuth, autoScale, additionalProperties);
         }
 
         BinaryData IPersistableModel<GlobalServiceConfiguration>.Write(ModelReaderWriterOptions options)

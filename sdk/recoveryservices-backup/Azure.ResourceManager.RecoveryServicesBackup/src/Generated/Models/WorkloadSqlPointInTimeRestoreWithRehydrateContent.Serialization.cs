@@ -147,20 +147,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<RecoveryPointRehydrationInfo> recoveryPointRehydrationInfo = default;
-            Optional<DateTimeOffset> pointInTime = default;
-            Optional<bool> shouldUseAlternateTargetLocation = default;
-            Optional<bool> isNonRecoverable = default;
+            RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default;
+            DateTimeOffset? pointInTime = default;
+            bool? shouldUseAlternateTargetLocation = default;
+            bool? isNonRecoverable = default;
             IList<SqlDataDirectoryMapping> alternateDirectoryPaths = default;
-            Optional<FileShareRecoveryType> recoveryType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
+            FileShareRecoveryType? recoveryType = default;
+            ResourceIdentifier sourceResourceId = default;
             IDictionary<string, string> propertyBag = default;
-            Optional<TargetRestoreInfo> targetInfo = default;
-            Optional<RecoveryMode> recoveryMode = default;
-            Optional<string> targetResourceGroupName = default;
-            Optional<UserAssignedManagedIdentityDetails> userAssignedManagedIdentityDetails = default;
-            Optional<SnapshotRestoreContent> snapshotRestoreParameters = default;
-            Optional<ResourceIdentifier> targetVirtualMachineId = default;
+            TargetRestoreInfo targetInfo = default;
+            RecoveryMode? recoveryMode = default;
+            string targetResourceGroupName = default;
+            UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default;
+            SnapshotRestoreContent snapshotRestoreParameters = default;
+            ResourceIdentifier targetVirtualMachineId = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -312,20 +312,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new WorkloadSqlPointInTimeRestoreWithRehydrateContent(
                 objectType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(recoveryType),
-                sourceResourceId.Value,
+                recoveryType,
+                sourceResourceId,
                 propertyBag ?? new ChangeTrackingDictionary<string, string>(),
-                targetInfo.Value,
-                Optional.ToNullable(recoveryMode),
-                targetResourceGroupName.Value,
-                userAssignedManagedIdentityDetails.Value,
-                snapshotRestoreParameters.Value,
-                targetVirtualMachineId.Value,
-                Optional.ToNullable(shouldUseAlternateTargetLocation),
-                Optional.ToNullable(isNonRecoverable),
+                targetInfo,
+                recoveryMode,
+                targetResourceGroupName,
+                userAssignedManagedIdentityDetails,
+                snapshotRestoreParameters,
+                targetVirtualMachineId,
+                shouldUseAlternateTargetLocation,
+                isNonRecoverable,
                 alternateDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectoryMapping>(),
-                Optional.ToNullable(pointInTime),
-                recoveryPointRehydrationInfo.Value);
+                pointInTime,
+                recoveryPointRehydrationInfo);
         }
 
         BinaryData IPersistableModel<WorkloadSqlPointInTimeRestoreWithRehydrateContent>.Write(ModelReaderWriterOptions options)

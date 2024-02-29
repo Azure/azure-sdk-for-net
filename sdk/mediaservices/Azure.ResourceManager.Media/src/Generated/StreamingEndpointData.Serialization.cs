@@ -213,29 +213,29 @@ namespace Azure.ResourceManager.Media
             {
                 return null;
             }
-            Optional<StreamingEndpointCurrentSku> sku = default;
+            StreamingEndpointCurrentSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<int> scaleUnits = default;
-            Optional<string> availabilitySetName = default;
-            Optional<StreamingEndpointAccessControl> accessControl = default;
-            Optional<long?> maxCacheAge = default;
+            SystemData systemData = default;
+            string description = default;
+            int? scaleUnits = default;
+            string availabilitySetName = default;
+            StreamingEndpointAccessControl accessControl = default;
+            long? maxCacheAge = default;
             IList<string> customHostNames = default;
-            Optional<string> hostName = default;
-            Optional<bool> cdnEnabled = default;
-            Optional<string> cdnProvider = default;
-            Optional<string> cdnProfile = default;
-            Optional<string> provisioningState = default;
-            Optional<StreamingEndpointResourceState> resourceState = default;
-            Optional<CrossSiteAccessPolicies> crossSiteAccessPolicies = default;
-            Optional<DateTimeOffset> freeTrialEndTime = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
+            string hostName = default;
+            bool? cdnEnabled = default;
+            string cdnProvider = default;
+            string cdnProfile = default;
+            string provisioningState = default;
+            StreamingEndpointResourceState? resourceState = default;
+            CrossSiteAccessPolicies crossSiteAccessPolicies = default;
+            DateTimeOffset? freeTrialEndTime = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? lastModified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -442,26 +442,26 @@ namespace Azure.ResourceManager.Media
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku.Value,
-                description.Value,
-                Optional.ToNullable(scaleUnits),
-                availabilitySetName.Value,
-                accessControl.Value,
-                Optional.ToNullable(maxCacheAge),
+                sku,
+                description,
+                scaleUnits,
+                availabilitySetName,
+                accessControl,
+                maxCacheAge,
                 customHostNames ?? new ChangeTrackingList<string>(),
-                hostName.Value,
-                Optional.ToNullable(cdnEnabled),
-                cdnProvider.Value,
-                cdnProfile.Value,
-                provisioningState.Value,
-                Optional.ToNullable(resourceState),
-                crossSiteAccessPolicies.Value,
-                Optional.ToNullable(freeTrialEndTime),
-                Optional.ToNullable(created),
-                Optional.ToNullable(lastModified),
+                hostName,
+                cdnEnabled,
+                cdnProvider,
+                cdnProfile,
+                provisioningState,
+                resourceState,
+                crossSiteAccessPolicies,
+                freeTrialEndTime,
+                created,
+                lastModified,
                 serializedAdditionalRawData);
         }
 

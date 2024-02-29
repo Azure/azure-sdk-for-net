@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<ContainerExec> exec = default;
-            Optional<ContainerHttpGet> httpGet = default;
-            Optional<int> initialDelaySeconds = default;
-            Optional<int> periodSeconds = default;
-            Optional<int> failureThreshold = default;
-            Optional<int> successThreshold = default;
-            Optional<int> timeoutSeconds = default;
+            ContainerExec exec = default;
+            ContainerHttpGet httpGet = default;
+            int? initialDelaySeconds = default;
+            int? periodSeconds = default;
+            int? failureThreshold = default;
+            int? successThreshold = default;
+            int? timeoutSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,13 +180,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerProbe(
-                exec.Value,
-                httpGet.Value,
-                Optional.ToNullable(initialDelaySeconds),
-                Optional.ToNullable(periodSeconds),
-                Optional.ToNullable(failureThreshold),
-                Optional.ToNullable(successThreshold),
-                Optional.ToNullable(timeoutSeconds),
+                exec,
+                httpGet,
+                initialDelaySeconds,
+                periodSeconds,
+                failureThreshold,
+                successThreshold,
+                timeoutSeconds,
                 serializedAdditionalRawData);
         }
 

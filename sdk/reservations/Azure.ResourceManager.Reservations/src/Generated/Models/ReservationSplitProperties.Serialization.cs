@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 return null;
             }
             IReadOnlyList<string> splitDestinations = default;
-            Optional<string> splitSource = default;
+            string splitSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationSplitProperties(splitDestinations ?? new ChangeTrackingList<string>(), splitSource.Value, serializedAdditionalRawData);
+            return new ReservationSplitProperties(splitDestinations ?? new ChangeTrackingList<string>(), splitSource, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationSplitProperties>.Write(ModelReaderWriterOptions options)

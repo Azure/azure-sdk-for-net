@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<string> authority = default;
+            string authority = default;
             IReadOnlyList<string> audiences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DicomServiceAuthenticationConfiguration(authority.Value, audiences ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DicomServiceAuthenticationConfiguration(authority, audiences ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DicomServiceAuthenticationConfiguration>.Write(ModelReaderWriterOptions options)

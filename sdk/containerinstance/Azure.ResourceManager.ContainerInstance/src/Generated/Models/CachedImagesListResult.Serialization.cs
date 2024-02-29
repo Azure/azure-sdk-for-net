@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             IReadOnlyList<CachedImages> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CachedImagesListResult(value ?? new ChangeTrackingList<CachedImages>(), nextLink.Value, serializedAdditionalRawData);
+            return new CachedImagesListResult(value ?? new ChangeTrackingList<CachedImages>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CachedImagesListResult>.Write(ModelReaderWriterOptions options)

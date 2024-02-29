@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             IReadOnlyList<DataBoxSkuInformation> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableSkusResult(value ?? new ChangeTrackingList<DataBoxSkuInformation>(), nextLink.Value, serializedAdditionalRawData);
+            return new AvailableSkusResult(value ?? new ChangeTrackingList<DataBoxSkuInformation>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableSkusResult>.Write(ModelReaderWriterOptions options)

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<Multichannel> multichannel = default;
-            Optional<string> versions = default;
-            Optional<string> authenticationMethods = default;
-            Optional<string> kerberosTicketEncryption = default;
-            Optional<string> channelEncryption = default;
+            Multichannel multichannel = default;
+            string versions = default;
+            string authenticationMethods = default;
+            string kerberosTicketEncryption = default;
+            string channelEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.Storage.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SmbSetting(
-                multichannel.Value,
-                versions.Value,
-                authenticationMethods.Value,
-                kerberosTicketEncryption.Value,
-                channelEncryption.Value,
+                multichannel,
+                versions,
+                authenticationMethods,
+                kerberosTicketEncryption,
+                channelEncryption,
                 serializedAdditionalRawData);
         }
 

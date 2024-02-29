@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<int> vCpusAvailable = default;
-            Optional<int> vCpusPerCore = default;
+            int? vCpusAvailable = default;
+            int? vCpusPerCore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineSizeProperties(Optional.ToNullable(vCpusAvailable), Optional.ToNullable(vCpusPerCore), serializedAdditionalRawData);
+            return new VirtualMachineSizeProperties(vCpusAvailable, vCpusPerCore, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineSizeProperties>.Write(ModelReaderWriterOptions options)

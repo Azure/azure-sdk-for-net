@@ -88,15 +88,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object siteUrl = default;
             object tenantId = default;
             object servicePrincipalId = default;
             SecretBase servicePrincipalKey = default;
-            Optional<object> encryptedCredential = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -201,8 +201,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SharePointOnlineListLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
@@ -210,7 +210,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 tenantId,
                 servicePrincipalId,
                 servicePrincipalKey,
-                encryptedCredential.Value);
+                encryptedCredential);
         }
 
         internal partial class SharePointOnlineListLinkedServiceConverter : JsonConverter<SharePointOnlineListLinkedService>

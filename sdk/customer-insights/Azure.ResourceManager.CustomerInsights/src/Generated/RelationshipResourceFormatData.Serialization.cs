@@ -174,19 +174,19 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<CardinalityType> cardinality = default;
+            SystemData systemData = default;
+            CardinalityType? cardinality = default;
             IDictionary<string, string> displayName = default;
             IDictionary<string, string> description = default;
-            Optional<DateTimeOffset> expiryDateTimeUtc = default;
+            DateTimeOffset? expiryDateTimeUtc = default;
             IList<PropertyDefinition> fields = default;
             IList<RelationshipTypeMapping> lookupMappings = default;
-            Optional<string> profileType = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> relationshipName = default;
-            Optional<string> relatedProfileType = default;
-            Optional<string> relationshipGuidId = default;
-            Optional<Guid> tenantId = default;
+            string profileType = default;
+            ProvisioningState? provisioningState = default;
+            string relationshipName = default;
+            string relatedProfileType = default;
+            string relationshipGuidId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -349,19 +349,19 @@ namespace Azure.ResourceManager.CustomerInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(cardinality),
+                systemData,
+                cardinality,
                 displayName ?? new ChangeTrackingDictionary<string, string>(),
                 description ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(expiryDateTimeUtc),
+                expiryDateTimeUtc,
                 fields ?? new ChangeTrackingList<PropertyDefinition>(),
                 lookupMappings ?? new ChangeTrackingList<RelationshipTypeMapping>(),
-                profileType.Value,
-                Optional.ToNullable(provisioningState),
-                relationshipName.Value,
-                relatedProfileType.Value,
-                relationshipGuidId.Value,
-                Optional.ToNullable(tenantId),
+                profileType,
+                provisioningState,
+                relationshipName,
+                relatedProfileType,
+                relationshipGuidId,
+                tenantId,
                 serializedAdditionalRawData);
         }
 

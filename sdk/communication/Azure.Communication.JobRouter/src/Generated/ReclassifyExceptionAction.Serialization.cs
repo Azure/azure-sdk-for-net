@@ -100,9 +100,9 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<string> classificationPolicyId = default;
+            string classificationPolicyId = default;
             IDictionary<string, BinaryData> labelsToUpsert = default;
-            Optional<string> id = default;
+            string id = default;
             ExceptionActionKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReclassifyExceptionAction(id.Value, kind, serializedAdditionalRawData, classificationPolicyId.Value, labelsToUpsert ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new ReclassifyExceptionAction(id, kind, serializedAdditionalRawData, classificationPolicyId, labelsToUpsert ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<ReclassifyExceptionAction>.Write(ModelReaderWriterOptions options)

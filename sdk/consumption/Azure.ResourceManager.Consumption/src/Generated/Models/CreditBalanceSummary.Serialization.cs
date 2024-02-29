@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ConsumptionAmount> estimatedBalance = default;
-            Optional<ConsumptionAmount> currentBalance = default;
-            Optional<ConsumptionAmountWithExchangeRate> estimatedBalanceInBillingCurrency = default;
+            ConsumptionAmount estimatedBalance = default;
+            ConsumptionAmount currentBalance = default;
+            ConsumptionAmountWithExchangeRate estimatedBalanceInBillingCurrency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CreditBalanceSummary(estimatedBalance.Value, currentBalance.Value, estimatedBalanceInBillingCurrency.Value, serializedAdditionalRawData);
+            return new CreditBalanceSummary(estimatedBalance, currentBalance, estimatedBalanceInBillingCurrency, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CreditBalanceSummary>.Write(ModelReaderWriterOptions options)

@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<string> code = default;
-            Optional<string> message = default;
+            string status = default;
+            string code = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsResourceTestStatus(status.Value, code.Value, message.Value, serializedAdditionalRawData);
+            return new StreamAnalyticsResourceTestStatus(status, code, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsResourceTestStatus>.Write(ModelReaderWriterOptions options)

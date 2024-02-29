@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> customLocationReference = default;
-            Optional<string> name = default;
+            WritableSubResource customLocationReference = default;
+            string name = default;
             NfviType nfviType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureOperatorNexusClusterNfviDetails(name.Value, nfviType, serializedAdditionalRawData, customLocationReference);
+            return new AzureOperatorNexusClusterNfviDetails(name, nfviType, serializedAdditionalRawData, customLocationReference);
         }
 
         BinaryData IPersistableModel<AzureOperatorNexusClusterNfviDetails>.Write(ModelReaderWriterOptions options)

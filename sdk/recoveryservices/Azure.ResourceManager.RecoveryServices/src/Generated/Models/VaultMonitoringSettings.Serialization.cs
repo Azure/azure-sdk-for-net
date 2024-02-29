@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<AzureMonitorAlertSettings> azureMonitorAlertSettings = default;
-            Optional<ClassicAlertSettings> classicAlertSettings = default;
+            AzureMonitorAlertSettings azureMonitorAlertSettings = default;
+            ClassicAlertSettings classicAlertSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultMonitoringSettings(azureMonitorAlertSettings.Value, classicAlertSettings.Value, serializedAdditionalRawData);
+            return new VaultMonitoringSettings(azureMonitorAlertSettings, classicAlertSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultMonitoringSettings>.Write(ModelReaderWriterOptions options)

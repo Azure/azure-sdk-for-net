@@ -103,13 +103,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> functionName = default;
-            Optional<FunctionTriggerType> triggerType = default;
+            SystemData systemData = default;
+            string functionName = default;
+            FunctionTriggerType? triggerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                functionName.Value,
-                Optional.ToNullable(triggerType),
-                kind.Value,
+                systemData,
+                functionName,
+                triggerType,
+                kind,
                 serializedAdditionalRawData);
         }
 

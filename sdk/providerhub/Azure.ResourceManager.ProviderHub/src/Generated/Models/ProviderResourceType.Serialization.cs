@@ -251,30 +251,30 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceRoutingType> routingType = default;
-            Optional<ResourceValidation> resourceValidation = default;
+            string name = default;
+            ResourceRoutingType? routingType = default;
+            ResourceValidation? resourceValidation = default;
             IReadOnlyList<string> allowedUnauthorizedActions = default;
             IReadOnlyList<AuthorizationActionMapping> authorizationActionMappings = default;
             IReadOnlyList<LinkedAccessCheck> linkedAccessChecks = default;
-            Optional<string> defaultApiVersion = default;
+            string defaultApiVersion = default;
             IReadOnlyList<LoggingRule> loggingRules = default;
             IReadOnlyList<ThrottlingRule> throttlingRules = default;
             IReadOnlyList<ResourceProviderEndpoint> endpoints = default;
-            Optional<MarketplaceType> marketplaceType = default;
-            Optional<IdentityManagement> identityManagement = default;
-            Optional<BinaryData> metadata = default;
+            MarketplaceType? marketplaceType = default;
+            IdentityManagement identityManagement = default;
+            BinaryData metadata = default;
             IReadOnlyList<string> requiredFeatures = default;
-            Optional<FeaturesRule> featuresRule = default;
+            FeaturesRule featuresRule = default;
             IReadOnlyList<ProviderSubscriptionStateRule> subscriptionStateRules = default;
             IReadOnlyList<ServiceTreeInfo> serviceTreeInfos = default;
-            Optional<RequestHeaderOptions> requestHeaderOptions = default;
-            Optional<string> skuLink = default;
+            RequestHeaderOptions requestHeaderOptions = default;
+            string skuLink = default;
             IReadOnlyList<string> disallowedActionVerbs = default;
-            Optional<TemplateDeploymentPolicy> templateDeploymentPolicy = default;
+            TemplateDeploymentPolicy templateDeploymentPolicy = default;
             IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations = default;
             IReadOnlyList<LinkedOperationRule> linkedOperationRules = default;
-            Optional<ManifestResourceDeletionPolicy> resourceDeletionPolicy = default;
+            ManifestResourceDeletionPolicy? resourceDeletionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -550,30 +550,30 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ProviderResourceType(
-                name.Value,
-                Optional.ToNullable(routingType),
-                Optional.ToNullable(resourceValidation),
+                name,
+                routingType,
+                resourceValidation,
                 allowedUnauthorizedActions ?? new ChangeTrackingList<string>(),
                 authorizationActionMappings ?? new ChangeTrackingList<AuthorizationActionMapping>(),
                 linkedAccessChecks ?? new ChangeTrackingList<LinkedAccessCheck>(),
-                defaultApiVersion.Value,
+                defaultApiVersion,
                 loggingRules ?? new ChangeTrackingList<LoggingRule>(),
                 throttlingRules ?? new ChangeTrackingList<ThrottlingRule>(),
                 endpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>(),
-                Optional.ToNullable(marketplaceType),
-                identityManagement.Value,
-                metadata.Value,
+                marketplaceType,
+                identityManagement,
+                metadata,
                 requiredFeatures ?? new ChangeTrackingList<string>(),
-                featuresRule.Value,
+                featuresRule,
                 subscriptionStateRules ?? new ChangeTrackingList<ProviderSubscriptionStateRule>(),
                 serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
-                requestHeaderOptions.Value,
-                skuLink.Value,
+                requestHeaderOptions,
+                skuLink,
                 disallowedActionVerbs ?? new ChangeTrackingList<string>(),
-                templateDeploymentPolicy.Value,
+                templateDeploymentPolicy,
                 extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>(),
                 linkedOperationRules ?? new ChangeTrackingList<LinkedOperationRule>(),
-                Optional.ToNullable(resourceDeletionPolicy),
+                resourceDeletionPolicy,
                 serializedAdditionalRawData);
         }
 

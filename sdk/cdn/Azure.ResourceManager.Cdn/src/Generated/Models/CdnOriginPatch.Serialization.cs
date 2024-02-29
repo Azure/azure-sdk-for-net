@@ -157,17 +157,17 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> hostName = default;
-            Optional<int?> httpPort = default;
-            Optional<int?> httpsPort = default;
-            Optional<string> originHostHeader = default;
-            Optional<int?> priority = default;
-            Optional<int?> weight = default;
-            Optional<bool> enabled = default;
-            Optional<string> privateLinkAlias = default;
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<string> privateLinkLocation = default;
-            Optional<string> privateLinkApprovalMessage = default;
+            string hostName = default;
+            int? httpPort = default;
+            int? httpsPort = default;
+            string originHostHeader = default;
+            int? priority = default;
+            int? weight = default;
+            bool? enabled = default;
+            string privateLinkAlias = default;
+            ResourceIdentifier privateLinkResourceId = default;
+            string privateLinkLocation = default;
+            string privateLinkApprovalMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -275,17 +275,17 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CdnOriginPatch(
-                hostName.Value,
-                Optional.ToNullable(httpPort),
-                Optional.ToNullable(httpsPort),
-                originHostHeader.Value,
-                Optional.ToNullable(priority),
-                Optional.ToNullable(weight),
-                Optional.ToNullable(enabled),
-                privateLinkAlias.Value,
-                privateLinkResourceId.Value,
-                privateLinkLocation.Value,
-                privateLinkApprovalMessage.Value,
+                hostName,
+                httpPort,
+                httpsPort,
+                originHostHeader,
+                priority,
+                weight,
+                enabled,
+                privateLinkAlias,
+                privateLinkResourceId,
+                privateLinkLocation,
+                privateLinkApprovalMessage,
                 serializedAdditionalRawData);
         }
 

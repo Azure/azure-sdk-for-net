@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> cpu = default;
-            Optional<string> memory = default;
+            string cpu = default;
+            string memory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayResourceRequirements(cpu.Value, memory.Value, serializedAdditionalRawData);
+            return new AppPlatformGatewayResourceRequirements(cpu, memory, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayResourceRequirements>.Write(ModelReaderWriterOptions options)

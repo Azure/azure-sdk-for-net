@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<SphereOSFeedType> osFeedType = default;
-            Optional<SphereUpdatePolicy> updatePolicy = default;
-            Optional<SphereAllowCrashDumpCollectionStatus> allowCrashDumpsCollection = default;
-            Optional<RegionalDataBoundary> regionalDataBoundary = default;
+            string description = default;
+            SphereOSFeedType? osFeedType = default;
+            SphereUpdatePolicy? updatePolicy = default;
+            SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection = default;
+            RegionalDataBoundary? regionalDataBoundary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.Sphere.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SphereDeviceGroupPatch(
-                description.Value,
-                Optional.ToNullable(osFeedType),
-                Optional.ToNullable(updatePolicy),
-                Optional.ToNullable(allowCrashDumpsCollection),
-                Optional.ToNullable(regionalDataBoundary),
+                description,
+                osFeedType,
+                updatePolicy,
+                allowCrashDumpsCollection,
+                regionalDataBoundary,
                 serializedAdditionalRawData);
         }
 

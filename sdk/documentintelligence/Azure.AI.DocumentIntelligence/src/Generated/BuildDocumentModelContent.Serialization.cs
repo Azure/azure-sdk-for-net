@@ -96,10 +96,10 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             string modelId = default;
-            Optional<string> description = default;
+            string description = default;
             DocumentBuildMode buildMode = default;
-            Optional<AzureBlobContentSource> azureBlobSource = default;
-            Optional<AzureBlobFileListContentSource> azureBlobFileListSource = default;
+            AzureBlobContentSource azureBlobSource = default;
+            AzureBlobFileListContentSource azureBlobFileListSource = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,10 +160,10 @@ namespace Azure.AI.DocumentIntelligence
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BuildDocumentModelContent(
                 modelId,
-                description.Value,
+                description,
                 buildMode,
-                azureBlobSource.Value,
-                azureBlobFileListSource.Value,
+                azureBlobSource,
+                azureBlobFileListSource,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

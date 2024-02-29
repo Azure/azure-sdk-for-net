@@ -115,12 +115,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> codeId = default;
+            ResourceIdentifier codeId = default;
             string command = default;
-            Optional<MachineLearningDistributionConfiguration> distribution = default;
+            MachineLearningDistributionConfiguration distribution = default;
             ResourceIdentifier environmentId = default;
             IDictionary<string, string> environmentVariables = default;
-            Optional<MachineLearningJobResourceConfiguration> resources = default;
+            MachineLearningJobResourceConfiguration resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,12 +186,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningTrialComponent(
-                codeId.Value,
+                codeId,
                 command,
-                distribution.Value,
+                distribution,
                 environmentId,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                resources.Value,
+                resources,
                 serializedAdditionalRawData);
         }
 

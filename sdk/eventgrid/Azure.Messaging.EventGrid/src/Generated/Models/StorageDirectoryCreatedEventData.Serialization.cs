@@ -21,14 +21,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> api = default;
-            Optional<string> clientRequestId = default;
-            Optional<string> requestId = default;
-            Optional<string> eTag = default;
-            Optional<string> url = default;
-            Optional<string> sequencer = default;
-            Optional<string> identity = default;
-            Optional<object> storageDiagnostics = default;
+            string api = default;
+            string clientRequestId = default;
+            string requestId = default;
+            string eTag = default;
+            string url = default;
+            string sequencer = default;
+            string identity = default;
+            object storageDiagnostics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("api"u8))
@@ -77,14 +77,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new StorageDirectoryCreatedEventData(
-                api.Value,
-                clientRequestId.Value,
-                requestId.Value,
-                eTag.Value,
-                url.Value,
-                sequencer.Value,
-                identity.Value,
-                storageDiagnostics.Value);
+                api,
+                clientRequestId,
+                requestId,
+                eTag,
+                url,
+                sequencer,
+                identity,
+                storageDiagnostics);
         }
 
         internal partial class StorageDirectoryCreatedEventDataConverter : JsonConverter<StorageDirectoryCreatedEventData>

@@ -70,7 +70,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> description = default;
+            string description = default;
             IList<ParameterDeclaration> parameters = default;
             IList<SourceNodeBase> sources = default;
             IList<ProcessorNodeBase> processors = default;
@@ -139,7 +139,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new PipelineTopologyProperties(description.Value, parameters ?? new ChangeTrackingList<ParameterDeclaration>(), sources ?? new ChangeTrackingList<SourceNodeBase>(), processors ?? new ChangeTrackingList<ProcessorNodeBase>(), sinks ?? new ChangeTrackingList<SinkNodeBase>());
+            return new PipelineTopologyProperties(description, parameters ?? new ChangeTrackingList<ParameterDeclaration>(), sources ?? new ChangeTrackingList<SourceNodeBase>(), processors ?? new ChangeTrackingList<ProcessorNodeBase>(), sinks ?? new ChangeTrackingList<SinkNodeBase>());
         }
     }
 }

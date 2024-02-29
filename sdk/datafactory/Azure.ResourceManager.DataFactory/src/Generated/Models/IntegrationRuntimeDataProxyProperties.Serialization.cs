@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<EntityReference> connectVia = default;
-            Optional<EntityReference> stagingLinkedService = default;
-            Optional<string> path = default;
+            EntityReference connectVia = default;
+            EntityReference stagingLinkedService = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationRuntimeDataProxyProperties(connectVia.Value, stagingLinkedService.Value, path.Value, serializedAdditionalRawData);
+            return new IntegrationRuntimeDataProxyProperties(connectVia, stagingLinkedService, path, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeDataProxyProperties>.Write(ModelReaderWriterOptions options)

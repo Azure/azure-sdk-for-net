@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> metricName = default;
+            string metricName = default;
             string odataType = default;
-            Optional<ResourceIdentifier> resourceUri = default;
-            Optional<ResourceIdentifier> legacyResourceId = default;
-            Optional<string> resourceLocation = default;
-            Optional<string> metricNamespace = default;
+            ResourceIdentifier resourceUri = default;
+            ResourceIdentifier legacyResourceId = default;
+            string resourceLocation = default;
+            string metricNamespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,12 +147,12 @@ namespace Azure.ResourceManager.Monitor.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RuleMetricDataSource(
                 odataType,
-                resourceUri.Value,
-                legacyResourceId.Value,
-                resourceLocation.Value,
-                metricNamespace.Value,
+                resourceUri,
+                legacyResourceId,
+                resourceLocation,
+                metricNamespace,
                 serializedAdditionalRawData,
-                metricName.Value);
+                metricName);
         }
 
         BinaryData IPersistableModel<RuleMetricDataSource>.Write(ModelReaderWriterOptions options)

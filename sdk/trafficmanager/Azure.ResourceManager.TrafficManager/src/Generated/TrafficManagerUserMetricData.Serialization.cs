@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> key = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.TrafficManager
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerUserMetricData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, key.Value);
+            return new TrafficManagerUserMetricData(id, name, type, serializedAdditionalRawData, key);
         }
 
         BinaryData IPersistableModel<TrafficManagerUserMetricData>.Write(ModelReaderWriterOptions options)

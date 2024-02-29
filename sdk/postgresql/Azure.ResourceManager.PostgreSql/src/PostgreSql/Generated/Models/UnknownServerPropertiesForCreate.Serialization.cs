@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<PostgreSqlServerVersion> version = default;
-            Optional<PostgreSqlSslEnforcementEnum> sslEnforcement = default;
-            Optional<PostgreSqlMinimalTlsVersionEnum> minimalTlsVersion = default;
-            Optional<PostgreSqlInfrastructureEncryption> infrastructureEncryption = default;
-            Optional<PostgreSqlPublicNetworkAccessEnum> publicNetworkAccess = default;
-            Optional<PostgreSqlStorageProfile> storageProfile = default;
+            PostgreSqlServerVersion? version = default;
+            PostgreSqlSslEnforcementEnum? sslEnforcement = default;
+            PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion = default;
+            PostgreSqlInfrastructureEncryption? infrastructureEncryption = default;
+            PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess = default;
+            PostgreSqlStorageProfile storageProfile = default;
             PostgreSqlCreateMode createMode = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UnknownServerPropertiesForCreate(
-                Optional.ToNullable(version),
-                Optional.ToNullable(sslEnforcement),
-                Optional.ToNullable(minimalTlsVersion),
-                Optional.ToNullable(infrastructureEncryption),
-                Optional.ToNullable(publicNetworkAccess),
-                storageProfile.Value,
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                infrastructureEncryption,
+                publicNetworkAccess,
+                storageProfile,
                 createMode,
                 serializedAdditionalRawData);
         }

@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
             IList<string> scopes = default;
             IList<AlertProcessingRuleCondition> conditions = default;
-            Optional<AlertProcessingRuleSchedule> schedule = default;
+            AlertProcessingRuleSchedule schedule = default;
             IList<AlertProcessingRuleAction> actions = default;
-            Optional<string> description = default;
-            Optional<bool> enabled = default;
+            string description = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new AlertProcessingRuleProperties(
                 scopes,
                 conditions ?? new ChangeTrackingList<AlertProcessingRuleCondition>(),
-                schedule.Value,
+                schedule,
                 actions,
-                description.Value,
-                Optional.ToNullable(enabled),
+                description,
+                enabled,
                 serializedAdditionalRawData);
         }
 

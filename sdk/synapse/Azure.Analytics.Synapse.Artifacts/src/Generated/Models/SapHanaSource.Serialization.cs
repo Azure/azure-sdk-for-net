@@ -80,16 +80,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> query = default;
-            Optional<object> packetSize = default;
-            Optional<object> partitionOption = default;
-            Optional<SapHanaPartitionSettings> partitionSettings = default;
-            Optional<object> queryTimeout = default;
-            Optional<object> additionalColumns = default;
+            object query = default;
+            object packetSize = default;
+            object partitionOption = default;
+            SapHanaPartitionSettings partitionSettings = default;
+            object queryTimeout = default;
+            object additionalColumns = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object sourceRetryCount = default;
+            object sourceRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -185,16 +185,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SapHanaSource(
                 type,
-                sourceRetryCount.Value,
-                sourceRetryWait.Value,
-                maxConcurrentConnections.Value,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
                 additionalProperties,
-                queryTimeout.Value,
-                additionalColumns.Value,
-                query.Value,
-                packetSize.Value,
-                partitionOption.Value,
-                partitionSettings.Value);
+                queryTimeout,
+                additionalColumns,
+                query,
+                packetSize,
+                partitionOption,
+                partitionSettings);
         }
 
         internal partial class SapHanaSourceConverter : JsonConverter<SapHanaSource>

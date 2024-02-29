@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<NamespaceSku> sku = default;
-            Optional<UpdateTopicSpacesConfigurationInfo> topicSpacesConfiguration = default;
-            Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
+            ManagedServiceIdentity identity = default;
+            NamespaceSku sku = default;
+            UpdateTopicSpacesConfigurationInfo topicSpacesConfiguration = default;
+            EventGridPublicNetworkAccess? publicNetworkAccess = default;
             IList<EventGridInboundIPRule> inboundIPRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new EventGridNamespacePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
-                sku.Value,
-                topicSpacesConfiguration.Value,
-                Optional.ToNullable(publicNetworkAccess),
+                sku,
+                topicSpacesConfiguration,
+                publicNetworkAccess,
                 inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
                 serializedAdditionalRawData);
         }

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Logic.Models
             string headerVersion = default;
             string senderApplicationId = default;
             string receiverApplicationId = default;
-            Optional<string> functionalIdentifierCode = default;
+            string functionalIdentifierCode = default;
             X12DateFormat dateFormat = default;
             X12TimeFormat timeFormat = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Logic.Models
                 headerVersion,
                 senderApplicationId,
                 receiverApplicationId,
-                functionalIdentifierCode.Value,
+                functionalIdentifierCode,
                 dateFormat,
                 timeFormat,
                 serializedAdditionalRawData);

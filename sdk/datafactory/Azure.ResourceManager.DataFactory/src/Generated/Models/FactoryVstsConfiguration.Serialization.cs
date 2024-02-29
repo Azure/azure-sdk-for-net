@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string projectName = default;
-            Optional<Guid> tenantId = default;
+            Guid? tenantId = default;
             string type = default;
             string accountName = default;
             string repositoryName = default;
             string collaborationBranch = default;
             string rootFolder = default;
-            Optional<string> lastCommitId = default;
-            Optional<bool> disablePublish = default;
+            string lastCommitId = default;
+            bool? disablePublish = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 repositoryName,
                 collaborationBranch,
                 rootFolder,
-                lastCommitId.Value,
-                Optional.ToNullable(disablePublish),
+                lastCommitId,
+                disablePublish,
                 serializedAdditionalRawData,
                 projectName,
-                Optional.ToNullable(tenantId));
+                tenantId);
         }
 
         BinaryData IPersistableModel<FactoryVstsConfiguration>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> objectType = default;
+            string objectType = default;
             IList<string> excludedRPList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPointsRecommendedForMoveContent(objectType.Value, excludedRPList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new RecoveryPointsRecommendedForMoveContent(objectType, excludedRPList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryPointsRecommendedForMoveContent>.Write(ModelReaderWriterOptions options)

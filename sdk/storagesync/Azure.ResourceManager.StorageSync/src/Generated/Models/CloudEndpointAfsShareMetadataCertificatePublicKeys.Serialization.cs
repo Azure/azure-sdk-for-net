@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<string> firstKey = default;
-            Optional<string> secondKey = default;
+            string firstKey = default;
+            string secondKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudEndpointAfsShareMetadataCertificatePublicKeys(firstKey.Value, secondKey.Value, serializedAdditionalRawData);
+            return new CloudEndpointAfsShareMetadataCertificatePublicKeys(firstKey, secondKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>.Write(ModelReaderWriterOptions options)

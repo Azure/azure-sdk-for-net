@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 return null;
             }
             IReadOnlyList<DynatraceMonitoredResourceDetails> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitoredResourceListResponse(value ?? new ChangeTrackingList<DynatraceMonitoredResourceDetails>(), nextLink.Value, serializedAdditionalRawData);
+            return new MonitoredResourceListResponse(value ?? new ChangeTrackingList<DynatraceMonitoredResourceDetails>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoredResourceListResponse>.Write(ModelReaderWriterOptions options)

@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<MonitorNamespaceClassification> classification = default;
-            Optional<MetricNamespaceName> properties = default;
+            MonitorNamespaceClassification? classification = default;
+            MetricNamespaceName properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,9 +157,9 @@ namespace Azure.ResourceManager.Monitor.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(classification),
-                properties.Value,
+                systemData,
+                classification,
+                properties,
                 serializedAdditionalRawData);
         }
 

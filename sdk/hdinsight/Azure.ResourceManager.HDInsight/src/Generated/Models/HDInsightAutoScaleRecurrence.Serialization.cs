@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> timeZone = default;
+            string timeZone = default;
             IList<HDInsightAutoScaleSchedule> schedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightAutoScaleRecurrence(timeZone.Value, schedule ?? new ChangeTrackingList<HDInsightAutoScaleSchedule>(), serializedAdditionalRawData);
+            return new HDInsightAutoScaleRecurrence(timeZone, schedule ?? new ChangeTrackingList<HDInsightAutoScaleSchedule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightAutoScaleRecurrence>.Write(ModelReaderWriterOptions options)

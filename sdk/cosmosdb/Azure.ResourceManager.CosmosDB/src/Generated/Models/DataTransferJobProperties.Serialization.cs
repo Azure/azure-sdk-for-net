@@ -103,15 +103,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> jobName = default;
+            string jobName = default;
             DataTransferDataSourceSink source = default;
             DataTransferDataSourceSink destination = default;
-            Optional<string> status = default;
-            Optional<long> processedCount = default;
-            Optional<long> totalCount = default;
-            Optional<DateTimeOffset> lastUpdatedUtcTime = default;
-            Optional<int> workerCount = default;
-            Optional<ErrorResponse> error = default;
+            string status = default;
+            long? processedCount = default;
+            long? totalCount = default;
+            DateTimeOffset? lastUpdatedUtcTime = default;
+            int? workerCount = default;
+            ErrorResponse error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,15 +188,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataTransferJobProperties(
-                jobName.Value,
+                jobName,
                 source,
                 destination,
-                status.Value,
-                Optional.ToNullable(processedCount),
-                Optional.ToNullable(totalCount),
-                Optional.ToNullable(lastUpdatedUtcTime),
-                Optional.ToNullable(workerCount),
-                error.Value,
+                status,
+                processedCount,
+                totalCount,
+                lastUpdatedUtcTime,
+                workerCount,
+                error,
                 serializedAdditionalRawData);
         }
 

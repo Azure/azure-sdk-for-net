@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> ultraSsdEnabled = default;
+            bool? ultraSsdEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedHostGroupPropertiesAdditionalCapabilities(Optional.ToNullable(ultraSsdEnabled), serializedAdditionalRawData);
+            return new DedicatedHostGroupPropertiesAdditionalCapabilities(ultraSsdEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DedicatedHostGroupPropertiesAdditionalCapabilities>.Write(ModelReaderWriterOptions options)

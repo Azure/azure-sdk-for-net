@@ -155,17 +155,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<ComputeProfile> computeProfile = default;
+            ComputeProfile computeProfile = default;
             IList<RuntimeScriptAction> installScriptActions = default;
             IList<RuntimeScriptAction> uninstallScriptActions = default;
             IList<HDInsightApplicationHttpsEndpoint> httpsEndpoints = default;
             IList<HDInsightApplicationEndpoint> sshEndpoints = default;
-            Optional<string> provisioningState = default;
-            Optional<string> applicationType = default;
-            Optional<string> applicationState = default;
+            string provisioningState = default;
+            string applicationType = default;
+            string applicationState = default;
             IList<ResponseError> errors = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> marketplaceIdentifier = default;
+            DateTimeOffset? createdDate = default;
+            string marketplaceIdentifier = default;
             IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -300,17 +300,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HDInsightApplicationProperties(
-                computeProfile.Value,
+                computeProfile,
                 installScriptActions ?? new ChangeTrackingList<RuntimeScriptAction>(),
                 uninstallScriptActions ?? new ChangeTrackingList<RuntimeScriptAction>(),
                 httpsEndpoints ?? new ChangeTrackingList<HDInsightApplicationHttpsEndpoint>(),
                 sshEndpoints ?? new ChangeTrackingList<HDInsightApplicationEndpoint>(),
-                provisioningState.Value,
-                applicationType.Value,
-                applicationState.Value,
+                provisioningState,
+                applicationType,
+                applicationState,
                 errors ?? new ChangeTrackingList<ResponseError>(),
-                Optional.ToNullable(createdDate),
-                marketplaceIdentifier.Value,
+                createdDate,
+                marketplaceIdentifier,
                 privateLinkConfigurations ?? new ChangeTrackingList<HDInsightPrivateLinkConfiguration>(),
                 serializedAdditionalRawData);
         }

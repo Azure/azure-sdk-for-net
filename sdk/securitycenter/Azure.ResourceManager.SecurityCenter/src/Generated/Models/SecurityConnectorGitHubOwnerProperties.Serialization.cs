@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> provisioningStatusMessage = default;
-            Optional<DateTimeOffset> provisioningStatusUpdateTimeUtc = default;
-            Optional<DevOpsProvisioningState> provisioningState = default;
-            Optional<Uri> ownerUrl = default;
-            Optional<string> gitHubInternalId = default;
-            Optional<ResourceOnboardingState> onboardingState = default;
+            string provisioningStatusMessage = default;
+            DateTimeOffset? provisioningStatusUpdateTimeUtc = default;
+            DevOpsProvisioningState? provisioningState = default;
+            Uri ownerUrl = default;
+            string gitHubInternalId = default;
+            ResourceOnboardingState? onboardingState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecurityConnectorGitHubOwnerProperties(
-                provisioningStatusMessage.Value,
-                Optional.ToNullable(provisioningStatusUpdateTimeUtc),
-                Optional.ToNullable(provisioningState),
-                ownerUrl.Value,
-                gitHubInternalId.Value,
-                Optional.ToNullable(onboardingState),
+                provisioningStatusMessage,
+                provisioningStatusUpdateTimeUtc,
+                provisioningState,
+                ownerUrl,
+                gitHubInternalId,
+                onboardingState,
                 serializedAdditionalRawData);
         }
 

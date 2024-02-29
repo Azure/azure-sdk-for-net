@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IReadOnlyList<SqlServerVersionCapability> supportedServerVersions = default;
             IReadOnlyList<ManagedInstanceVersionCapability> supportedManagedInstanceVersions = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,11 +162,11 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SqlLocationCapabilities(
-                name.Value,
+                name,
                 supportedServerVersions ?? new ChangeTrackingList<SqlServerVersionCapability>(),
                 supportedManagedInstanceVersions ?? new ChangeTrackingList<ManagedInstanceVersionCapability>(),
-                Optional.ToNullable(status),
-                reason.Value,
+                status,
+                reason,
                 serializedAdditionalRawData);
         }
 

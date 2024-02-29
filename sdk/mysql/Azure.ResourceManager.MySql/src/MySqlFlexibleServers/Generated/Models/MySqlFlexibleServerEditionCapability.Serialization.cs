@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IReadOnlyList<MySqlFlexibleServerStorageEditionCapability> supportedStorageEditions = default;
             IReadOnlyList<MySqlFlexibleServerServerVersionCapability> supportedServerVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerEditionCapability(name.Value, supportedStorageEditions ?? new ChangeTrackingList<MySqlFlexibleServerStorageEditionCapability>(), supportedServerVersions ?? new ChangeTrackingList<MySqlFlexibleServerServerVersionCapability>(), serializedAdditionalRawData);
+            return new MySqlFlexibleServerEditionCapability(name, supportedStorageEditions ?? new ChangeTrackingList<MySqlFlexibleServerStorageEditionCapability>(), supportedServerVersions ?? new ChangeTrackingList<MySqlFlexibleServerServerVersionCapability>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerEditionCapability>.Write(ModelReaderWriterOptions options)

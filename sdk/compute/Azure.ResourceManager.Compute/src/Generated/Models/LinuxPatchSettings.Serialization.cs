@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<LinuxVmGuestPatchMode> patchMode = default;
-            Optional<LinuxPatchAssessmentMode> assessmentMode = default;
-            Optional<LinuxVmGuestPatchAutomaticByPlatformSettings> automaticByPlatformSettings = default;
+            LinuxVmGuestPatchMode? patchMode = default;
+            LinuxPatchAssessmentMode? assessmentMode = default;
+            LinuxVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinuxPatchSettings(Optional.ToNullable(patchMode), Optional.ToNullable(assessmentMode), automaticByPlatformSettings.Value, serializedAdditionalRawData);
+            return new LinuxPatchSettings(patchMode, assessmentMode, automaticByPlatformSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinuxPatchSettings>.Write(ModelReaderWriterOptions options)

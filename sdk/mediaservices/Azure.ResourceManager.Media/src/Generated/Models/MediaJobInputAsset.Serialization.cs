@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.Media.Models
             }
             string assetName = default;
             IList<string> files = default;
-            Optional<ClipTime> start = default;
-            Optional<ClipTime> end = default;
-            Optional<string> label = default;
+            ClipTime start = default;
+            ClipTime end = default;
+            string label = default;
             IList<MediaJobInputDefinition> inputDefinitions = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -185,9 +185,9 @@ namespace Azure.ResourceManager.Media.Models
                 odataType,
                 serializedAdditionalRawData,
                 files ?? new ChangeTrackingList<string>(),
-                start.Value,
-                end.Value,
-                label.Value,
+                start,
+                end,
+                label,
                 inputDefinitions ?? new ChangeTrackingList<MediaJobInputDefinition>(),
                 assetName);
         }

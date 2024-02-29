@@ -115,14 +115,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<CognitiveServicesAccountDeploymentProvisioningState> provisioningState = default;
-            Optional<CognitiveServicesAccountDeploymentModel> model = default;
-            Optional<CognitiveServicesAccountDeploymentScaleSettings> scaleSettings = default;
+            CognitiveServicesAccountDeploymentProvisioningState? provisioningState = default;
+            CognitiveServicesAccountDeploymentModel model = default;
+            CognitiveServicesAccountDeploymentScaleSettings scaleSettings = default;
             IReadOnlyDictionary<string, string> capabilities = default;
-            Optional<string> raiPolicyName = default;
-            Optional<ServiceAccountCallRateLimit> callRateLimit = default;
+            string raiPolicyName = default;
+            ServiceAccountCallRateLimit callRateLimit = default;
             IReadOnlyList<ServiceAccountThrottlingRule> rateLimits = default;
-            Optional<DeploymentModelVersionUpgradeOption> versionUpgradeOption = default;
+            DeploymentModelVersionUpgradeOption? versionUpgradeOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,14 +212,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CognitiveServicesAccountDeploymentProperties(
-                Optional.ToNullable(provisioningState),
-                model.Value,
-                scaleSettings.Value,
+                provisioningState,
+                model,
+                scaleSettings,
                 capabilities ?? new ChangeTrackingDictionary<string, string>(),
-                raiPolicyName.Value,
-                callRateLimit.Value,
+                raiPolicyName,
+                callRateLimit,
                 rateLimits ?? new ChangeTrackingList<ServiceAccountThrottlingRule>(),
-                Optional.ToNullable(versionUpgradeOption),
+                versionUpgradeOption,
                 serializedAdditionalRawData);
         }
 

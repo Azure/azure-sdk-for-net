@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AtaSolutionProperties> properties = default;
+            AtaSolutionProperties properties = default;
             ExternalSecuritySolutionKind? kind = default;
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
-                Optional.ToNullable(location),
+                location,
                 serializedAdditionalRawData,
-                properties.Value);
+                properties);
         }
 
         BinaryData IPersistableModel<AtaExternalSecuritySolution>.Write(ModelReaderWriterOptions options)

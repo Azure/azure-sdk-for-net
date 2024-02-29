@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<InstanceViewStatus> status = default;
+            string type = default;
+            string typeHandlerVersion = default;
+            InstanceViewStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineExtensionHandlerInstanceView(type.Value, typeHandlerVersion.Value, status.Value, serializedAdditionalRawData);
+            return new VirtualMachineExtensionHandlerInstanceView(type, typeHandlerVersion, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineExtensionHandlerInstanceView>.Write(ModelReaderWriterOptions options)

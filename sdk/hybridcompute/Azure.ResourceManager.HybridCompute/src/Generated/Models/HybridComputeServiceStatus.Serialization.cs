@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<string> startupType = default;
+            string status = default;
+            string startupType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeServiceStatus(status.Value, startupType.Value, serializedAdditionalRawData);
+            return new HybridComputeServiceStatus(status, startupType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeServiceStatus>.Write(ModelReaderWriterOptions options)

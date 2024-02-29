@@ -135,20 +135,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> nicId = default;
-            Optional<string> isPrimaryNic = default;
-            Optional<IPAddress> sourceIPAddress = default;
-            Optional<SiteRecoveryEthernetAddressType> sourceIPAddressType = default;
-            Optional<ResourceIdentifier> sourceNetworkId = default;
-            Optional<IPAddress> targetIPAddress = default;
-            Optional<SiteRecoveryEthernetAddressType> targetIPAddressType = default;
-            Optional<string> targetSubnetName = default;
-            Optional<ResourceIdentifier> testNetworkId = default;
-            Optional<string> testSubnetName = default;
-            Optional<IPAddress> testIPAddress = default;
-            Optional<SiteRecoveryEthernetAddressType> testIPAddressType = default;
-            Optional<string> targetNicName = default;
-            Optional<string> isSelectedForMigration = default;
+            string nicId = default;
+            string isPrimaryNic = default;
+            IPAddress sourceIPAddress = default;
+            SiteRecoveryEthernetAddressType? sourceIPAddressType = default;
+            ResourceIdentifier sourceNetworkId = default;
+            IPAddress targetIPAddress = default;
+            SiteRecoveryEthernetAddressType? targetIPAddressType = default;
+            string targetSubnetName = default;
+            ResourceIdentifier testNetworkId = default;
+            string testSubnetName = default;
+            IPAddress testIPAddress = default;
+            SiteRecoveryEthernetAddressType? testIPAddressType = default;
+            string targetNicName = default;
+            string isSelectedForMigration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -262,20 +262,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VMwareCbtNicDetails(
-                nicId.Value,
-                isPrimaryNic.Value,
-                sourceIPAddress.Value,
-                Optional.ToNullable(sourceIPAddressType),
-                sourceNetworkId.Value,
-                targetIPAddress.Value,
-                Optional.ToNullable(targetIPAddressType),
-                targetSubnetName.Value,
-                testNetworkId.Value,
-                testSubnetName.Value,
-                testIPAddress.Value,
-                Optional.ToNullable(testIPAddressType),
-                targetNicName.Value,
-                isSelectedForMigration.Value,
+                nicId,
+                isPrimaryNic,
+                sourceIPAddress,
+                sourceIPAddressType,
+                sourceNetworkId,
+                targetIPAddress,
+                targetIPAddressType,
+                targetSubnetName,
+                testNetworkId,
+                testSubnetName,
+                testIPAddress,
+                testIPAddressType,
+                targetNicName,
+                isSelectedForMigration,
                 serializedAdditionalRawData);
         }
 

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 return null;
             }
             IReadOnlyList<AvailableLabServicesSku> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PagedLabServicesSkus(value ?? new ChangeTrackingList<AvailableLabServicesSku>(), nextLink.Value, serializedAdditionalRawData);
+            return new PagedLabServicesSkus(value ?? new ChangeTrackingList<AvailableLabServicesSku>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PagedLabServicesSkus>.Write(ModelReaderWriterOptions options)

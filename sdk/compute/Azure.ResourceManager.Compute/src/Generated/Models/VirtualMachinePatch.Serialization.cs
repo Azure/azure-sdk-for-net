@@ -230,36 +230,36 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ComputePlan> plan = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            ComputePlan plan = default;
+            ManagedServiceIdentity identity = default;
             IList<string> zones = default;
             IDictionary<string, string> tags = default;
-            Optional<VirtualMachineHardwareProfile> hardwareProfile = default;
-            Optional<VirtualMachineStorageProfile> storageProfile = default;
-            Optional<AdditionalCapabilities> additionalCapabilities = default;
-            Optional<VirtualMachineOSProfile> osProfile = default;
-            Optional<VirtualMachineNetworkProfile> networkProfile = default;
-            Optional<SecurityProfile> securityProfile = default;
-            Optional<DiagnosticsProfile> diagnosticsProfile = default;
-            Optional<WritableSubResource> availabilitySet = default;
-            Optional<WritableSubResource> virtualMachineScaleSet = default;
-            Optional<WritableSubResource> proximityPlacementGroup = default;
-            Optional<VirtualMachinePriorityType> priority = default;
-            Optional<VirtualMachineEvictionPolicyType> evictionPolicy = default;
-            Optional<BillingProfile> billingProfile = default;
-            Optional<WritableSubResource> host = default;
-            Optional<WritableSubResource> hostGroup = default;
-            Optional<string> provisioningState = default;
-            Optional<VirtualMachineInstanceView> instanceView = default;
-            Optional<string> licenseType = default;
-            Optional<string> vmId = default;
-            Optional<string> extensionsTimeBudget = default;
-            Optional<int> platformFaultDomain = default;
-            Optional<ComputeScheduledEventsProfile> scheduledEventsProfile = default;
-            Optional<string> userData = default;
-            Optional<CapacityReservationProfile> capacityReservation = default;
-            Optional<ApplicationProfile> applicationProfile = default;
-            Optional<DateTimeOffset> timeCreated = default;
+            VirtualMachineHardwareProfile hardwareProfile = default;
+            VirtualMachineStorageProfile storageProfile = default;
+            AdditionalCapabilities additionalCapabilities = default;
+            VirtualMachineOSProfile osProfile = default;
+            VirtualMachineNetworkProfile networkProfile = default;
+            SecurityProfile securityProfile = default;
+            DiagnosticsProfile diagnosticsProfile = default;
+            WritableSubResource availabilitySet = default;
+            WritableSubResource virtualMachineScaleSet = default;
+            WritableSubResource proximityPlacementGroup = default;
+            VirtualMachinePriorityType? priority = default;
+            VirtualMachineEvictionPolicyType? evictionPolicy = default;
+            BillingProfile billingProfile = default;
+            WritableSubResource host = default;
+            WritableSubResource hostGroup = default;
+            string provisioningState = default;
+            VirtualMachineInstanceView instanceView = default;
+            string licenseType = default;
+            string vmId = default;
+            string extensionsTimeBudget = default;
+            int? platformFaultDomain = default;
+            ComputeScheduledEventsProfile scheduledEventsProfile = default;
+            string userData = default;
+            CapacityReservationProfile capacityReservation = default;
+            ApplicationProfile applicationProfile = default;
+            DateTimeOffset? timeCreated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -545,35 +545,35 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachinePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                plan.Value,
+                plan,
                 identity,
                 zones ?? new ChangeTrackingList<string>(),
-                hardwareProfile.Value,
-                storageProfile.Value,
-                additionalCapabilities.Value,
-                osProfile.Value,
-                networkProfile.Value,
-                securityProfile.Value,
-                diagnosticsProfile.Value,
+                hardwareProfile,
+                storageProfile,
+                additionalCapabilities,
+                osProfile,
+                networkProfile,
+                securityProfile,
+                diagnosticsProfile,
                 availabilitySet,
                 virtualMachineScaleSet,
                 proximityPlacementGroup,
-                Optional.ToNullable(priority),
-                Optional.ToNullable(evictionPolicy),
-                billingProfile.Value,
+                priority,
+                evictionPolicy,
+                billingProfile,
                 host,
                 hostGroup,
-                provisioningState.Value,
-                instanceView.Value,
-                licenseType.Value,
-                vmId.Value,
-                extensionsTimeBudget.Value,
-                Optional.ToNullable(platformFaultDomain),
-                scheduledEventsProfile.Value,
-                userData.Value,
-                capacityReservation.Value,
-                applicationProfile.Value,
-                Optional.ToNullable(timeCreated));
+                provisioningState,
+                instanceView,
+                licenseType,
+                vmId,
+                extensionsTimeBudget,
+                platformFaultDomain,
+                scheduledEventsProfile,
+                userData,
+                capacityReservation,
+                applicationProfile,
+                timeCreated);
         }
 
         BinaryData IPersistableModel<VirtualMachinePatch>.Write(ModelReaderWriterOptions options)

@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<float> numberOfParallelDatabaseMigrations = default;
+            float? numberOfParallelDatabaseMigrations = default;
             IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = default;
-            Optional<FileShare> backupFileShare = default;
+            FileShare backupFileShare = default;
             string storageResourceId = default;
             SqlConnectionInfo sourceConnectionInfo = default;
             MISqlConnectionInfo targetConnectionInfo = default;
@@ -156,13 +156,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MigrateSqlServerSqlMISyncTaskInput(
                 selectedDatabases,
-                backupFileShare.Value,
+                backupFileShare,
                 storageResourceId,
                 sourceConnectionInfo,
                 targetConnectionInfo,
                 azureApp,
                 serializedAdditionalRawData,
-                Optional.ToNullable(numberOfParallelDatabaseMigrations));
+                numberOfParallelDatabaseMigrations);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMISyncTaskInput>.Write(ModelReaderWriterOptions options)

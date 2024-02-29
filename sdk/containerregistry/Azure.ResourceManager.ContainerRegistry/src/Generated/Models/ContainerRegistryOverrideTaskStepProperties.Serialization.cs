@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> contextPath = default;
-            Optional<string> file = default;
+            string contextPath = default;
+            string file = default;
             IList<ContainerRegistryRunArgument> arguments = default;
-            Optional<string> target = default;
+            string target = default;
             IList<ContainerRegistryTaskOverridableValue> values = default;
-            Optional<string> updateTriggerToken = default;
+            string updateTriggerToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,12 +169,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerRegistryOverrideTaskStepProperties(
-                contextPath.Value,
-                file.Value,
+                contextPath,
+                file,
                 arguments ?? new ChangeTrackingList<ContainerRegistryRunArgument>(),
-                target.Value,
+                target,
                 values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>(),
-                updateTriggerToken.Value,
+                updateTriggerToken,
                 serializedAdditionalRawData);
         }
 

@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             string taskFilePath = default;
-            Optional<string> valuesFilePath = default;
+            string valuesFilePath = default;
             IList<ContainerRegistryTaskOverridableValue> values = default;
-            Optional<int> timeout = default;
+            int? timeout = default;
             ContainerRegistryPlatformProperties platform = default;
-            Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
-            Optional<string> sourceLocation = default;
-            Optional<ContainerRegistryCredentials> credentials = default;
+            ContainerRegistryAgentProperties agentConfiguration = default;
+            string sourceLocation = default;
+            ContainerRegistryCredentials credentials = default;
             string type = default;
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> agentPoolName = default;
-            Optional<string> logTemplate = default;
+            bool? isArchiveEnabled = default;
+            string agentPoolName = default;
+            string logTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,18 +229,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerRegistryFileTaskRunContent(
                 type,
-                Optional.ToNullable(isArchiveEnabled),
-                agentPoolName.Value,
-                logTemplate.Value,
+                isArchiveEnabled,
+                agentPoolName,
+                logTemplate,
                 serializedAdditionalRawData,
                 taskFilePath,
-                valuesFilePath.Value,
+                valuesFilePath,
                 values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>(),
-                Optional.ToNullable(timeout),
+                timeout,
                 platform,
-                agentConfiguration.Value,
-                sourceLocation.Value,
-                credentials.Value);
+                agentConfiguration,
+                sourceLocation,
+                credentials);
         }
 
         BinaryData IPersistableModel<ContainerRegistryFileTaskRunContent>.Write(ModelReaderWriterOptions options)

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string id = default;
-            Optional<double> throughput = default;
+            double? throughput = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PhysicalPartitionThroughputInfoResource(id, Optional.ToNullable(throughput), serializedAdditionalRawData);
+            return new PhysicalPartitionThroughputInfoResource(id, throughput, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PhysicalPartitionThroughputInfoResource>.Write(ModelReaderWriterOptions options)

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<string> size = default;
+            string size = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmSize(size.Value, serializedAdditionalRawData);
+            return new VmSize(size, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmSize>.Write(ModelReaderWriterOptions options)

@@ -75,8 +75,8 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            Optional<string> toolCallId = default;
-            Optional<string> output = default;
+            string toolCallId = default;
+            string output = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ToolOutput(toolCallId.Value, output.Value, serializedAdditionalRawData);
+            return new ToolOutput(toolCallId, output, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ToolOutput>.Write(ModelReaderWriterOptions options)

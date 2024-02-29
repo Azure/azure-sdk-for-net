@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<SecurityAlertNotificationByRoleState> state = default;
+            SecurityAlertNotificationByRoleState? state = default;
             IList<SecurityAlertReceivingRole> roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityContactPropertiesNotificationsByRole(Optional.ToNullable(state), roles ?? new ChangeTrackingList<SecurityAlertReceivingRole>(), serializedAdditionalRawData);
+            return new SecurityContactPropertiesNotificationsByRole(state, roles ?? new ChangeTrackingList<SecurityAlertReceivingRole>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityContactPropertiesNotificationsByRole>.Write(ModelReaderWriterOptions options)

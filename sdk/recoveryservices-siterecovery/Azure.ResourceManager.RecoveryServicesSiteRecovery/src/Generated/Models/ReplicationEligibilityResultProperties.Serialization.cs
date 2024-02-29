@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> clientRequestId = default;
+            string clientRequestId = default;
             IReadOnlyList<ReplicationEligibilityResultErrorInfo> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationEligibilityResultProperties(clientRequestId.Value, errors ?? new ChangeTrackingList<ReplicationEligibilityResultErrorInfo>(), serializedAdditionalRawData);
+            return new ReplicationEligibilityResultProperties(clientRequestId, errors ?? new ChangeTrackingList<ReplicationEligibilityResultErrorInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationEligibilityResultProperties>.Write(ModelReaderWriterOptions options)

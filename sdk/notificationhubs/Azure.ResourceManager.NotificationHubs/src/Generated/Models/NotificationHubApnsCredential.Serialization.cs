@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<string> apnsCertificate = default;
-            Optional<string> certificateKey = default;
-            Optional<Uri> endpoint = default;
-            Optional<string> thumbprint = default;
-            Optional<string> keyId = default;
-            Optional<string> appName = default;
-            Optional<string> appId = default;
-            Optional<string> token = default;
+            string apnsCertificate = default;
+            string certificateKey = default;
+            Uri endpoint = default;
+            string thumbprint = default;
+            string keyId = default;
+            string appName = default;
+            string appId = default;
+            string token = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,14 +182,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NotificationHubApnsCredential(
-                apnsCertificate.Value,
-                certificateKey.Value,
-                endpoint.Value,
-                thumbprint.Value,
-                keyId.Value,
-                appName.Value,
-                appId.Value,
-                token.Value,
+                apnsCertificate,
+                certificateKey,
+                endpoint,
+                thumbprint,
+                keyId,
+                appName,
+                appId,
+                token,
                 serializedAdditionalRawData);
         }
 

@@ -189,25 +189,25 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<DateTimeOffset> commitTime = default;
-            Optional<string> region = default;
-            Optional<string> configurationDescription = default;
-            Optional<string> ruleCollectionDescription = default;
+            string id = default;
+            DateTimeOffset? commitTime = default;
+            string region = default;
+            string configurationDescription = default;
+            string ruleCollectionDescription = default;
             IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = default;
             IReadOnlyList<NetworkConfigurationGroup> ruleGroups = default;
             EffectiveAdminRuleKind kind = default;
-            Optional<string> description = default;
-            Optional<SecurityConfigurationRuleProtocol> protocol = default;
+            string description = default;
+            SecurityConfigurationRuleProtocol? protocol = default;
             IReadOnlyList<AddressPrefixItem> sources = default;
             IReadOnlyList<AddressPrefixItem> destinations = default;
             IReadOnlyList<string> sourcePortRanges = default;
             IReadOnlyList<string> destinationPortRanges = default;
-            Optional<SecurityConfigurationRuleAccess> access = default;
-            Optional<int> priority = default;
-            Optional<SecurityConfigurationRuleDirection> direction = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<Guid> resourceGuid = default;
+            SecurityConfigurationRuleAccess? access = default;
+            int? priority = default;
+            SecurityConfigurationRuleDirection? direction = default;
+            NetworkProvisioningState? provisioningState = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -408,26 +408,26 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ActiveSecurityAdminRule(
-                id.Value,
-                Optional.ToNullable(commitTime),
-                region.Value,
-                configurationDescription.Value,
-                ruleCollectionDescription.Value,
+                id,
+                commitTime,
+                region,
+                configurationDescription,
+                ruleCollectionDescription,
                 ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>(),
                 ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
                 kind,
                 serializedAdditionalRawData,
-                description.Value,
-                Optional.ToNullable(protocol),
+                description,
+                protocol,
                 sources ?? new ChangeTrackingList<AddressPrefixItem>(),
                 destinations ?? new ChangeTrackingList<AddressPrefixItem>(),
                 sourcePortRanges ?? new ChangeTrackingList<string>(),
                 destinationPortRanges ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(access),
-                Optional.ToNullable(priority),
-                Optional.ToNullable(direction),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(resourceGuid));
+                access,
+                priority,
+                direction,
+                provisioningState,
+                resourceGuid);
         }
 
         BinaryData IPersistableModel<ActiveSecurityAdminRule>.Write(ModelReaderWriterOptions options)

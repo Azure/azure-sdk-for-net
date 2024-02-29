@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             ResourceIdentifier targetResourceId = default;
-            Optional<TrafficAnalyticsProperties> flowAnalyticsConfiguration = default;
+            TrafficAnalyticsProperties flowAnalyticsConfiguration = default;
             ResourceIdentifier storageId = default;
             bool enabled = default;
-            Optional<RetentionPolicyParameters> retentionPolicy = default;
-            Optional<FlowLogProperties> format = default;
+            RetentionPolicyParameters retentionPolicy = default;
+            FlowLogProperties format = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,11 +160,11 @@ namespace Azure.ResourceManager.Network.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FlowLogInformation(
                 targetResourceId,
-                flowAnalyticsConfiguration.Value,
+                flowAnalyticsConfiguration,
                 storageId,
                 enabled,
-                retentionPolicy.Value,
-                format.Value,
+                retentionPolicy,
+                format,
                 serializedAdditionalRawData);
         }
 

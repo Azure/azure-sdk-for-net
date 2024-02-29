@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> provisioningStatusMessage = default;
-            Optional<DateTimeOffset> provisioningStatusUpdateTimeUtc = default;
-            Optional<DevOpsProvisioningState> provisioningState = default;
-            Optional<DevOpsAuthorization> authorization = default;
-            Optional<DevOpsAutoDiscovery> autoDiscovery = default;
+            string provisioningStatusMessage = default;
+            DateTimeOffset? provisioningStatusUpdateTimeUtc = default;
+            DevOpsProvisioningState? provisioningState = default;
+            DevOpsAuthorization authorization = default;
+            DevOpsAutoDiscovery? autoDiscovery = default;
             IList<string> topLevelInventoryList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevOpsConfigurationProperties(
-                provisioningStatusMessage.Value,
-                Optional.ToNullable(provisioningStatusUpdateTimeUtc),
-                Optional.ToNullable(provisioningState),
-                authorization.Value,
-                Optional.ToNullable(autoDiscovery),
+                provisioningStatusMessage,
+                provisioningStatusUpdateTimeUtc,
+                provisioningState,
+                authorization,
+                autoDiscovery,
                 topLevelInventoryList ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

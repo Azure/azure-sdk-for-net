@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> interval = default;
-            Optional<DateTimeOffset> scheduleWindowStartTime = default;
-            Optional<int> scheduleWindowDuration = default;
+            int? interval = default;
+            DateTimeOffset? scheduleWindowStartTime = default;
+            int? scheduleWindowDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupHourlySchedule(Optional.ToNullable(interval), Optional.ToNullable(scheduleWindowStartTime), Optional.ToNullable(scheduleWindowDuration), serializedAdditionalRawData);
+            return new BackupHourlySchedule(interval, scheduleWindowStartTime, scheduleWindowDuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupHourlySchedule>.Write(ModelReaderWriterOptions options)

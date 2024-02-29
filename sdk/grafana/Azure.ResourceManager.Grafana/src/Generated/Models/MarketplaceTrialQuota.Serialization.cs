@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<AvailablePromotion> availablePromotion = default;
-            Optional<ResourceIdentifier> grafanaResourceId = default;
-            Optional<DateTimeOffset> trialStartAt = default;
-            Optional<DateTimeOffset> trialEndAt = default;
+            AvailablePromotion? availablePromotion = default;
+            ResourceIdentifier grafanaResourceId = default;
+            DateTimeOffset? trialStartAt = default;
+            DateTimeOffset? trialEndAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceTrialQuota(Optional.ToNullable(availablePromotion), grafanaResourceId.Value, Optional.ToNullable(trialStartAt), Optional.ToNullable(trialEndAt), serializedAdditionalRawData);
+            return new MarketplaceTrialQuota(availablePromotion, grafanaResourceId, trialStartAt, trialEndAt, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceTrialQuota>.Write(ModelReaderWriterOptions options)

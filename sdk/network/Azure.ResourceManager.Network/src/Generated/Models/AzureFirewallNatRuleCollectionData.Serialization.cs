@@ -113,14 +113,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<int> priority = default;
-            Optional<AzureFirewallNatRCAction> action = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            int? priority = default;
+            AzureFirewallNatRCAction action = default;
             IList<AzureFirewallNatRule> rules = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,15 +217,15 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AzureFirewallNatRuleCollectionData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(priority),
-                action.Value,
+                etag,
+                priority,
+                action,
                 rules ?? new ChangeTrackingList<AzureFirewallNatRule>(),
-                Optional.ToNullable(provisioningState));
+                provisioningState);
         }
 
         BinaryData IPersistableModel<AzureFirewallNatRuleCollectionData>.Write(ModelReaderWriterOptions options)

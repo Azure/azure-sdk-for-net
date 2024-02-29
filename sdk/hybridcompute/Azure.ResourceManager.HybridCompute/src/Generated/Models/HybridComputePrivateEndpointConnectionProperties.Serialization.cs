@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<HybridComputePrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
-            Optional<string> provisioningState = default;
+            WritableSubResource privateEndpoint = default;
+            HybridComputePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default;
+            string provisioningState = default;
             IReadOnlyList<string> groupIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState.Value, provisioningState.Value, groupIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new HybridComputePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState, provisioningState, groupIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputePrivateEndpointConnectionProperties>.Write(ModelReaderWriterOptions options)

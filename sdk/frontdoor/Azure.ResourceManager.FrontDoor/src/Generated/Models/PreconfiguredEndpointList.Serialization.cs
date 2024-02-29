@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             IReadOnlyList<PreconfiguredEndpoint> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PreconfiguredEndpointList(value ?? new ChangeTrackingList<PreconfiguredEndpoint>(), nextLink.Value, serializedAdditionalRawData);
+            return new PreconfiguredEndpointList(value ?? new ChangeTrackingList<PreconfiguredEndpoint>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PreconfiguredEndpointList>.Write(ModelReaderWriterOptions options)

@@ -215,15 +215,15 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid?> tenantId = default;
-            Optional<string> displayName = default;
-            Optional<SubResource> parent = default;
-            Optional<EntityPermission?> permissions = default;
-            Optional<EntityPermission?> inheritedPermissions = default;
-            Optional<int?> numberOfDescendants = default;
-            Optional<int?> numberOfChildren = default;
-            Optional<int?> numberOfChildGroups = default;
+            SystemData systemData = default;
+            Guid? tenantId = default;
+            string displayName = default;
+            SubResource parent = default;
+            EntityPermission? permissions = default;
+            EntityPermission? inheritedPermissions = default;
+            int? numberOfDescendants = default;
+            int? numberOfChildren = default;
+            int? numberOfChildGroups = default;
             IReadOnlyList<string> parentDisplayNameChain = default;
             IReadOnlyList<string> parentNameChain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -385,15 +385,15 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(tenantId),
-                displayName.Value,
+                systemData,
+                tenantId,
+                displayName,
                 parent,
-                Optional.ToNullable(permissions),
-                Optional.ToNullable(inheritedPermissions),
-                Optional.ToNullable(numberOfDescendants),
-                Optional.ToNullable(numberOfChildren),
-                Optional.ToNullable(numberOfChildGroups),
+                permissions,
+                inheritedPermissions,
+                numberOfDescendants,
+                numberOfChildren,
+                numberOfChildGroups,
                 parentDisplayNameChain ?? new ChangeTrackingList<string>(),
                 parentNameChain ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> primaryPeerAddressPrefix = default;
-            Optional<string> secondaryPeerAddressPrefix = default;
-            Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;
-            Optional<WritableSubResource> routeFilter = default;
-            Optional<ExpressRouteCircuitPeeringState> state = default;
+            string primaryPeerAddressPrefix = default;
+            string secondaryPeerAddressPrefix = default;
+            ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default;
+            WritableSubResource routeFilter = default;
+            ExpressRouteCircuitPeeringState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IPv6ExpressRouteCircuitPeeringConfig(
-                primaryPeerAddressPrefix.Value,
-                secondaryPeerAddressPrefix.Value,
-                microsoftPeeringConfig.Value,
+                primaryPeerAddressPrefix,
+                secondaryPeerAddressPrefix,
+                microsoftPeeringConfig,
                 routeFilter,
-                Optional.ToNullable(state),
+                state,
                 serializedAdditionalRawData);
         }
 

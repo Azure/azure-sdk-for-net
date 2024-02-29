@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<IncomingTrafficPolicy> incomingTrafficPolicy = default;
+            IncomingTrafficPolicy? incomingTrafficPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncServicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(incomingTrafficPolicy), serializedAdditionalRawData);
+            return new StorageSyncServicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), incomingTrafficPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncServicePatch>.Write(ModelReaderWriterOptions options)

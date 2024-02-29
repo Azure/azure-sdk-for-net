@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ExpressRouteAuthorizationProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> expressRouteAuthorizationId = default;
-            Optional<string> expressRouteAuthorizationKey = default;
-            Optional<ResourceIdentifier> expressRouteId = default;
+            SystemData systemData = default;
+            ExpressRouteAuthorizationProvisioningState? provisioningState = default;
+            ResourceIdentifier expressRouteAuthorizationId = default;
+            string expressRouteAuthorizationKey = default;
+            ResourceIdentifier expressRouteId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,11 +199,11 @@ namespace Azure.ResourceManager.Avs
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                expressRouteAuthorizationId.Value,
-                expressRouteAuthorizationKey.Value,
-                expressRouteId.Value,
+                systemData,
+                provisioningState,
+                expressRouteAuthorizationId,
+                expressRouteAuthorizationKey,
+                expressRouteId,
                 serializedAdditionalRawData);
         }
 

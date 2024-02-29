@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -22,10 +21,10 @@ namespace Azure.AI.TextAnalytics.Legacy
             string name = default;
             IReadOnlyList<Match> matches = default;
             string language = default;
-            Optional<string> id = default;
+            string id = default;
             string url = default;
             string dataSource = default;
-            Optional<string> bingId = default;
+            string bingId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -73,10 +72,10 @@ namespace Azure.AI.TextAnalytics.Legacy
                 name,
                 matches,
                 language,
-                id.Value,
+                id,
                 url,
                 dataSource,
-                bingId.Value);
+                bingId);
         }
     }
 }

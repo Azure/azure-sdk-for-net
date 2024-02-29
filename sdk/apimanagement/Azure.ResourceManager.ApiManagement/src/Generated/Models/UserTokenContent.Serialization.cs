@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<TokenGenerationUsedKeyType> keyType = default;
-            Optional<DateTimeOffset> expiry = default;
+            TokenGenerationUsedKeyType? keyType = default;
+            DateTimeOffset? expiry = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserTokenContent(Optional.ToNullable(keyType), Optional.ToNullable(expiry), serializedAdditionalRawData);
+            return new UserTokenContent(keyType, expiry, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserTokenContent>.Write(ModelReaderWriterOptions options)

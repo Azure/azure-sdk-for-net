@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 return null;
             }
             IReadOnlyList<LoadTestingResourceData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestResourcePageList(value ?? new ChangeTrackingList<LoadTestingResourceData>(), nextLink.Value, serializedAdditionalRawData);
+            return new LoadTestResourcePageList(value ?? new ChangeTrackingList<LoadTestingResourceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestResourcePageList>.Write(ModelReaderWriterOptions options)

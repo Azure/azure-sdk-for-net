@@ -94,8 +94,8 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<DocumentBuildMode> buildMode = default;
+            string description = default;
+            DocumentBuildMode? buildMode = default;
             IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema = default;
             IReadOnlyDictionary<string, float> fieldConfidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -146,7 +146,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentTypeDetails(description.Value, Optional.ToNullable(buildMode), fieldSchema, fieldConfidence ?? new ChangeTrackingDictionary<string, float>(), serializedAdditionalRawData);
+            return new DocumentTypeDetails(description, buildMode, fieldSchema, fieldConfidence ?? new ChangeTrackingDictionary<string, float>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentTypeDetails>.Write(ModelReaderWriterOptions options)

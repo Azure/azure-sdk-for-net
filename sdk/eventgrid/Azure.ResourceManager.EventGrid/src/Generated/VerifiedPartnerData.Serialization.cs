@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> partnerRegistrationImmutableId = default;
-            Optional<string> organizationName = default;
-            Optional<string> partnerDisplayName = default;
-            Optional<PartnerDetails> partnerTopicDetails = default;
-            Optional<PartnerDetails> partnerDestinationDetails = default;
-            Optional<VerifiedPartnerProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            Guid? partnerRegistrationImmutableId = default;
+            string organizationName = default;
+            string partnerDisplayName = default;
+            PartnerDetails partnerTopicDetails = default;
+            PartnerDetails partnerDestinationDetails = default;
+            VerifiedPartnerProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,13 +225,13 @@ namespace Azure.ResourceManager.EventGrid
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(partnerRegistrationImmutableId),
-                organizationName.Value,
-                partnerDisplayName.Value,
-                partnerTopicDetails.Value,
-                partnerDestinationDetails.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                partnerRegistrationImmutableId,
+                organizationName,
+                partnerDisplayName,
+                partnerTopicDetails,
+                partnerDestinationDetails,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

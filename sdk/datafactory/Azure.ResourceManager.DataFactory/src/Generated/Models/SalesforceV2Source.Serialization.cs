@@ -111,15 +111,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> soqlQuery = default;
-            Optional<DataFactoryElement<bool>> includeDeletedObjects = default;
-            Optional<DataFactoryElement<string>> queryTimeout = default;
-            Optional<BinaryData> additionalColumns = default;
+            DataFactoryElement<string> soqlQuery = default;
+            DataFactoryElement<bool> includeDeletedObjects = default;
+            DataFactoryElement<string> queryTimeout = default;
+            BinaryData additionalColumns = default;
             string type = default;
-            Optional<DataFactoryElement<int>> sourceRetryCount = default;
-            Optional<DataFactoryElement<string>> sourceRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> sourceRetryCount = default;
+            DataFactoryElement<string> sourceRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,15 +206,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SalesforceV2Source(
                 type,
-                sourceRetryCount.Value,
-                sourceRetryWait.Value,
-                maxConcurrentConnections.Value,
-                disableMetricsCollection.Value,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
                 additionalProperties,
-                queryTimeout.Value,
-                additionalColumns.Value,
-                soqlQuery.Value,
-                includeDeletedObjects.Value);
+                queryTimeout,
+                additionalColumns,
+                soqlQuery,
+                includeDeletedObjects);
         }
 
         BinaryData IPersistableModel<SalesforceV2Source>.Write(ModelReaderWriterOptions options)
