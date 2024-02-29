@@ -1,13 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Easm client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>Azure SDK Code Generation Easm for Azure Data Plane</AssemblyTitle>
+    <AssemblyTitle>Microsoft Defender EASM Client Library</AssemblyTitle>
+    <Description>This client library provides access to the Microsoft Defender EASM (External Attack Surface Management) API. With this SDK, developers can leverage the capabilities of Defener EASM to enhance the security posture of their applications and infrastructure.</Description>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>Azure Easm</PackageTags>
+    <PackageTags>Azure Easm; Microsoft Defender EASM; EASM API; External Attack Surface Management; REST HTTPclient;</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <!--Suppress XML comments warnings-->
-    <NoWarn>$(NoWarn);MSB4025</NoWarn>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->

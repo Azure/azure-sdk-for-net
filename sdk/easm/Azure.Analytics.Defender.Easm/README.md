@@ -6,8 +6,6 @@ Microsoft Defender External Attack Surface Management (Defender EASM)\* continuo
 
 ### Install the package
 
-First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `dotnet add package package-name`, but should enable a developer to successfully install the package from NuGet, npm, or even cloning a GitHub repository.
-
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
@@ -15,7 +13,7 @@ dotnet add package Azure.Analytics.Defender.Easm --prerelease
 ```
 
 ### Prerequisites
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [EASM workspace](https://learn.microsoft.com/azure/external-attack-surface-management/deploying-the-defender-easm-azure-resource). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK using a language version of `preview`.
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [EASM workspace](https://learn.microsoft.com/azure/external-attack-surface-management/deploying-the-defender-easm-azure-resource).
 
 ### Authenticate the client
 
