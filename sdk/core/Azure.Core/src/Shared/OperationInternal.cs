@@ -51,16 +51,14 @@ namespace Azure.Core
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final successful state.
         /// </summary>
         /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
-        /// <param name="requestMethod">The Http request method</param>
-        public static OperationInternal Succeeded(Response rawResponse, RequestMethod? requestMethod = null) => new(OperationState.Success(rawResponse), requestMethod);
+        public static OperationInternal Succeeded(Response rawResponse) => new(OperationState.Success(rawResponse));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final failed state.
         /// </summary>
         /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
         /// <param name="operationFailedException">The exception that will be thrown by <c>UpdateStatusAsync</c>.</param>
-        /// <param name="requestMethod">The Http request method</param>
-        public static OperationInternal Failed(Response rawResponse, RequestFailedException operationFailedException, RequestMethod? requestMethod = null) => new(OperationState.Failure(rawResponse, operationFailedException), requestMethod);
+        public static OperationInternal Failed(Response rawResponse, RequestFailedException operationFailedException) => new(OperationState.Failure(rawResponse, operationFailedException));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class.
@@ -98,12 +96,12 @@ namespace Azure.Core
             _internalOperation = new OperationInternal<VoidValue>(new OperationToOperationOfTProxy(operation), clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy, requestMethod);
         }
 
-        private OperationInternal(OperationState finalState, RequestMethod? requestMethod)
-            : base(finalState.RawResponse, requestMethod)
+        private OperationInternal(OperationState finalState)
+            : base(finalState.RawResponse)
         {
             _internalOperation = finalState.HasSucceeded
-                ? OperationInternal<VoidValue>.Succeeded(finalState.RawResponse, default, requestMethod)
-                : OperationInternal<VoidValue>.Failed(finalState.RawResponse, finalState.OperationFailedException!, requestMethod);
+                ? OperationInternal<VoidValue>.Succeeded(finalState.RawResponse, default)
+                : OperationInternal<VoidValue>.Failed(finalState.RawResponse, finalState.OperationFailedException!);
         }
 
         public override Response RawResponse => _internalOperation.RawResponse;

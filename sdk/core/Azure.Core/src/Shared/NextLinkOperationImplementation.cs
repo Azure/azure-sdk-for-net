@@ -71,6 +71,11 @@ namespace Azure.Core
             return new OperationToOperationOfT<T>(operationSource, operation);
         }
 
+        public static IOperation<T> Create<T>(
+            IOperationSource<T> operationSource,
+            IOperation operation)
+            => new OperationToOperationOfT<T>(operationSource, operation);
+
         public static IOperation Create(
             HttpPipeline pipeline,
             RehydrationToken? rehydrationToken,
@@ -117,13 +122,6 @@ namespace Azure.Core
             return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr);
         }
 
-        public static IOperation<T> Create<T>(
-            IOperationSource<T> operationSource,
-            HttpPipeline pipeline,
-            RehydrationToken? rehydrationToken,
-            string? apiVersionOverride = null)
-            => new OperationToOperationOfT<T>(operationSource, Create(pipeline, rehydrationToken, apiVersionOverride));
-
         private NextLinkOperationImplementation(
             HttpPipeline pipeline,
             RequestMethod requestMethod,
@@ -150,6 +148,9 @@ namespace Azure.Core
             _pipeline = pipeline;
             _apiVersion = apiVersion;
         }
+
+        public RehydrationToken GetRehydrationToken()
+            => GetRehydrationToken(_requestMethod, _startRequestUri, _nextRequestUri, _headerSource.ToString(), _lastKnownLocation, _finalStateVia.ToString());
 
         public static RehydrationToken GetRehydrationToken(
             RequestMethod requestMethod,
