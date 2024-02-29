@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -31,6 +32,7 @@ namespace Azure
             set => base.ErrorOptions = ToResponseErrorOptions(value);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static ErrorOptions FromResponseErrorOptions(ClientErrorBehaviors options)
             => options switch
             {
@@ -39,6 +41,7 @@ namespace Azure
                 _ => throw new NotSupportedException(),
             };
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static ClientErrorBehaviors ToResponseErrorOptions(ErrorOptions options)
             => options switch
             {
