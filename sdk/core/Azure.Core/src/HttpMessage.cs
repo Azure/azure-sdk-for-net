@@ -69,7 +69,12 @@ namespace Azure.Core
         /// </summary>
         public new ResponseClassifier ResponseClassifier
         {
-            get => (ResponseClassifier)base.ResponseClassifier;
+            get => base.ResponseClassifier switch
+            {
+                ResponseClassifier responseClassifier => responseClassifier,
+                PipelineMessageClassifier messageClassifier => new ResponseClassifier.PipelineMessageClassifierAdapter(messageClassifier)
+            };
+
             set => base.ResponseClassifier = value;
         }
 

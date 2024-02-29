@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -380,7 +381,21 @@ namespace Azure.Core.Tests
             Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
         }
 
+        [Test]
+        public void SettingBaseClassifierSetsHttpMessageClassifier()
+        {
+            MockRequest request = new();
+            HttpMessage message = new(request, ResponseClassifier.Shared);
+            message.Response = new MockResponse(400);
+
+            PipelineMessage pipelineMessage = message;
+            pipelineMessage.ResponseClassifier = PipelineMessageClassifier.Default;
+
+            Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
+        }
+
         #region Helpers
+
         private class StatusCodeHandler : ResponseClassificationHandler
         {
             private readonly int _statusCode;

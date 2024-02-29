@@ -93,5 +93,45 @@ namespace Azure.Core
 
             return true;
         }
+
+        internal sealed class PipelineMessageClassifierAdapter : ResponseClassifier
+        {
+            private readonly PipelineMessageClassifier _classifier;
+
+            public PipelineMessageClassifierAdapter(PipelineMessageClassifier classifier)
+            {
+                _classifier = classifier;
+            }
+
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                bool classified = _classifier.TryClassify(message, out bool isError);
+
+                Debug.Assert(classified);
+
+                return isError;
+            }
+
+            public override bool IsRetriable(HttpMessage message, Exception exception)
+            {
+                bool classified = _classifier.TryClassify(message, exception, out bool isRetriable);
+
+                Debug.Assert(classified);
+
+                return isRetriable;
+            }
+
+            public override bool IsRetriableException(Exception exception)
+                => base.IsRetriableException(exception);
+
+            public override bool IsRetriableResponse(HttpMessage message)
+            {
+                bool classified = _classifier.TryClassify(message, exception: default, out bool isRetriable);
+
+                Debug.Assert(classified);
+
+                return isRetriable;
+            }
+        }
     }
 }
