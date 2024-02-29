@@ -25,7 +25,14 @@ internal static class StructuredMessage
         public const byte MessageVersionByte = 1;
 
         public const int StreamHeaderLength = 13;
+        public const int StreamHeaderVersionOffset = 0;
+        public const int StreamHeaderMessageLengthOffset = 1;
+        public const int StreamHeaderFlagsOffset = 9;
+        public const int StreamHeaderSegmentCountOffset = 11;
+
         public const int SegmentHeaderLength = 10;
+        public const int SegmentHeaderNumOffset = 0;
+        public const int SegmentHeaderContentLengthOffset = 2;
 
         #region Stream Header
         public static void ReadStreamHeader(
@@ -35,13 +42,13 @@ internal static class StructuredMessage
             out int totalSegments)
         {
             Errors.AssertBufferExactSize(buffer, 13, nameof(buffer));
-            if (buffer[0] != 1)
+            if (buffer[StreamHeaderVersionOffset] != 1)
             {
                 throw new InvalidDataException("Unrecognized version of structured message.");
             }
-            messageLength = (long)BinaryPrimitives.ReadUInt64LittleEndian(buffer.Slice(1, 8));
-            flags = (Flags)BinaryPrimitives.ReadUInt16LittleEndian(buffer.Slice(9, 2));
-            totalSegments = BinaryPrimitives.ReadUInt16LittleEndian(buffer.Slice(11, 2));
+            messageLength = (long)BinaryPrimitives.ReadUInt64LittleEndian(buffer.Slice(StreamHeaderMessageLengthOffset, 8));
+            flags = (Flags)BinaryPrimitives.ReadUInt16LittleEndian(buffer.Slice(StreamHeaderFlagsOffset, 2));
+            totalSegments = BinaryPrimitives.ReadUInt16LittleEndian(buffer.Slice(StreamHeaderSegmentCountOffset, 2));
         }
 
         public static int WriteStreamHeader(

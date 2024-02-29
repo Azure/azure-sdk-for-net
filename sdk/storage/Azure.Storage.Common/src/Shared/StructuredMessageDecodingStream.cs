@@ -38,6 +38,15 @@ namespace Azure.Storage.Shared;
 /// </remarks>
 internal class StructuredMessageDecodingStream : Stream
 {
+    private enum SMRegion
+    {
+        StreamHeader,
+        StreamFooter,
+        SegmentHeader,
+        SegmentFooter,
+        SegmentContent,
+    }
+
     private readonly Stream _innerBufferedStream;
 
     private byte[] _metadataBuffer = ArrayPool<byte>.Shared.Rent(Constants.KB);
@@ -48,9 +57,12 @@ internal class StructuredMessageDecodingStream : Stream
     private int _streamFooterLength;
     private int _segmentHeaderLength;
     private int _segmentFooterLength;
+
     private int _totalSegments;
+    private long _innerStreamLength;
 
     private StructuredMessage.Flags _flags;
+    private bool _processedFooter = false;
     private bool _disposed;
 
     private StorageCrc64HashAlgorithm _totalContentCrc;
@@ -75,19 +87,6 @@ internal class StructuredMessageDecodingStream : Stream
         get => throw new NotSupportedException();
         set => throw new NotSupportedException();
     }
-
-    #region Position
-    private long _innerStreamLength;
-
-    private enum SMRegion
-    {
-        StreamHeader,
-        StreamFooter,
-        SegmentHeader,
-        SegmentFooter,
-        SegmentContent,
-    }
-    #endregion
 
     public StructuredMessageDecodingStream(
         Stream innerStream)
@@ -116,8 +115,14 @@ internal class StructuredMessageDecodingStream : Stream
         do
         {
             read = _innerBufferedStream.Read(buf, offset, count);
+            _innerStreamConsumed += read;
             decodedRead = Decode(new Span<byte>(buf, offset, read));
         } while (decodedRead <= 0 && read > 0);
+
+        if (read <= 0)
+        {
+            AssertDecodeFinished();
+        }
 
         return decodedRead;
     }
@@ -129,8 +134,14 @@ internal class StructuredMessageDecodingStream : Stream
         do
         {
             read = await _innerBufferedStream.ReadAsync(buf, offset, count, cancellationToken).ConfigureAwait(false);
+            _innerStreamConsumed += read;
             decodedRead = Decode(new Span<byte>(buf, offset, read));
         } while (decodedRead <= 0 && read > 0);
+
+        if (read <= 0)
+        {
+            AssertDecodeFinished();
+        }
 
         return decodedRead;
     }
@@ -143,8 +154,14 @@ internal class StructuredMessageDecodingStream : Stream
         do
         {
             read = _innerBufferedStream.Read(buf);
+            _innerStreamConsumed += read;
             decodedRead = Decode(buf.Slice(0, read));
         } while (decodedRead <= 0 && read > 0);
+
+        if (read <= 0)
+        {
+            AssertDecodeFinished();
+        }
 
         return decodedRead;
     }
@@ -156,15 +173,31 @@ internal class StructuredMessageDecodingStream : Stream
         do
         {
             read = await _innerBufferedStream.ReadAsync(buf).ConfigureAwait(false);
+            _innerStreamConsumed += read;
             decodedRead = Decode(buf.Slice(0, read).Span);
         } while (decodedRead <= 0 && read > 0);
+
+        if (read <= 0)
+        {
+            AssertDecodeFinished();
+        }
 
         return decodedRead;
     }
 #endif
 
-    private SMRegion _currentRegion;
-    private int _currentSegmentNum;
+    private void AssertDecodeFinished()
+    {
+        if (_streamFooterLength > 0 && !_processedFooter)
+        {
+            throw Errors.InvalidStructuredMessage("Missing or incomplete trailer.");
+        }
+        _processedFooter = true;
+    }
+
+    private long _innerStreamConsumed = 0;
+    private SMRegion _currentRegion = SMRegion.StreamHeader;
+    private int _currentSegmentNum = 0;
     private long _currentSegmentContentLength;
     private long _currentSegmentContentRemaining;
     private long CurrentRegionLength => _currentRegion switch
@@ -363,6 +396,17 @@ internal class StructuredMessageDecodingStream : Stream
                 }
             }
         }
+
+        if (_innerStreamConsumed != _innerStreamLength)
+        {
+            throw Errors.InvalidStructuredMessage("Unexpected message size.");
+        }
+        if (_currentSegmentNum != _totalSegments)
+        {
+            throw Errors.InvalidStructuredMessage("Missing expected message segments.");
+        }
+
+        _processedFooter = true;
         return totalProcessed;
     }
 
@@ -375,7 +419,7 @@ internal class StructuredMessageDecodingStream : Stream
         _currentSegmentContentRemaining = _currentSegmentContentLength;
         if (newSegNum != _currentSegmentNum + 1)
         {
-            throw new InvalidDataException("Unexpected segment number in structured message.");
+            throw Errors.InvalidStructuredMessage("Unexpected segment number in structured message.");
         }
         _currentSegmentNum = newSegNum;
         _currentRegion = SMRegion.SegmentContent;
