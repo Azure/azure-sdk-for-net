@@ -199,6 +199,7 @@ rename-mapping:
   Apple.enabled: IsEnabled
   BackupRequest.properties.enabled: IsEnabled
   BackupSchedule.keepAtLeastOneBackup: ShouldKeepAtLeastOneBackup
+  DetectorInfo.analysisType: AnalysisTypeString
   BackupSchedule.lastExecutionTime: LastExecutedOn
   BillingMeter.properties.meterId: -|uuid
   SiteConfig.properties.httpLoggingEnabled: IsHttpLoggingEnabled
@@ -820,6 +821,25 @@ directive:
     transform: >
         $["format"] = "duration";
         $["x-ms-format"] = "duration-constant";
+  - from: CommonDefinitions.json
+    where: $.definitions.DetectorInfo.properties
+    transform: >
+        $["analysisType"] = {
+          "description": "Analysis Types for which this detector should apply to.",
+          "type": "string",
+          "readOnly": true
+        }
+  - from: CommonDefinitions.json
+    where: $.definitions.DetectorInfo.properties
+    transform: >
+        $["analysisTypes"] = {
+          "description": "Analysis Types for which this detector should apply to.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true
+        }
   - from: WebApps.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/syncfunctiontriggers'].post
     transform: >

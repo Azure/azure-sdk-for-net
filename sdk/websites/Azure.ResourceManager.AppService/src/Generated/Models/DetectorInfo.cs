@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
         public DetectorInfo()
         {
             SupportTopicList = new ChangeTrackingList<DetectorSupportTopic>();
-            AnalysisType = new ChangeTrackingList<string>();
+            AnalysisTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DetectorInfo"/>. </summary>
@@ -60,11 +60,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="author"> Author of the detector. </param>
         /// <param name="category"> Problem category. This serves for organizing group for detectors. </param>
         /// <param name="supportTopicList"> List of Support Topics for which this detector is enabled. </param>
-        /// <param name="analysisType"> Analysis Types for which this detector should apply to. </param>
+        /// <param name="analysisTypeString"> Analysis Types for which this detector should apply to. </param>
         /// <param name="detectorType"> Whether this detector is an Analysis Detector or not. </param>
         /// <param name="score"> Defines score of a detector to power ML based matching. </param>
+        /// <param name="analysisTypes"> Analysis Types for which this detector should apply to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DetectorInfo(string id, string name, string description, string author, string category, IReadOnlyList<DetectorSupportTopic> supportTopicList, IReadOnlyList<string> analysisType, DetectorType? detectorType, float? score, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DetectorInfo(string id, string name, string description, string author, string category, IReadOnlyList<DetectorSupportTopic> supportTopicList, string analysisTypeString, DetectorType? detectorType, float? score, IReadOnlyList<string> analysisTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -72,9 +73,10 @@ namespace Azure.ResourceManager.AppService.Models
             Author = author;
             Category = category;
             SupportTopicList = supportTopicList;
-            AnalysisType = analysisType;
+            AnalysisTypeString = analysisTypeString;
             DetectorType = detectorType;
             Score = score;
+            AnalysisTypes = analysisTypes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -91,10 +93,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> List of Support Topics for which this detector is enabled. </summary>
         public IReadOnlyList<DetectorSupportTopic> SupportTopicList { get; }
         /// <summary> Analysis Types for which this detector should apply to. </summary>
-        public IReadOnlyList<string> AnalysisType { get; }
+        public string AnalysisTypeString { get; }
         /// <summary> Whether this detector is an Analysis Detector or not. </summary>
         public DetectorType? DetectorType { get; }
         /// <summary> Defines score of a detector to power ML based matching. </summary>
         public float? Score { get; }
+        /// <summary> Analysis Types for which this detector should apply to. </summary>
+        public IReadOnlyList<string> AnalysisTypes { get; }
     }
 }
