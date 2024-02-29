@@ -24,7 +24,7 @@ public class ClientLoggingPolicy : PipelinePolicy
     /// <param name="maxLength"></param>
     /// <param name="sanitizer"></param>
     /// <param name="assemblyName"></param>
-    public ClientLoggingPolicy(bool logContent, int maxLength, PipelineMessageSanitizer sanitizer, string? assemblyName)
+    internal ClientLoggingPolicy(bool logContent, int maxLength, PipelineMessageSanitizer sanitizer, string? assemblyName)
     {
         _sanitizer = sanitizer;
         _logContent = logContent;
@@ -72,9 +72,9 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         Encoding? requestTextEncoding = null;
 
-        if (request.Headers.TryGetValue("Content-Type", out var contentType))
+        if (request.Headers.TryGetValue("Content-Type", out string? contentType))
         {
-            ContentTypeUtilities.TryGetTextEncoding(contentType, out requestTextEncoding);
+            ContentTypeUtilities.TryGetTextEncoding(contentType!, out requestTextEncoding);
         }
 
         var logWrapper = new ContentEventSourceWrapper(s_eventSource, _logContent, _maxLength, message.CancellationToken);
@@ -105,7 +105,8 @@ public class ClientLoggingPolicy : PipelinePolicy
         PipelineResponse response = message.Response!;
         bool isError = response.IsError;
 
-        ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out Encoding? responseTextEncoding);
+        response.Headers.TryGetValue("Content-Type", out string? responseContentType);
+        ContentTypeUtilities.TryGetTextEncoding(responseContentType!, out Encoding? responseTextEncoding);
 
         bool wrapResponseContent = response.ContentStream != null &&
                                    response.ContentStream?.CanSeek == false &&
@@ -137,7 +138,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         }
     }
 
-    private class LoggingStream : ReadOnlyStream
+    private class LoggingStream : Stream
     {
         private readonly string _requestId;
 
@@ -232,6 +233,23 @@ public class ClientLoggingPolicy : PipelinePolicy
             var left = Math.Min(count, _maxLoggedBytes);
             count = left;
             _maxLoggedBytes -= count;
+        }
+
+        public override bool CanWrite => false;
+
+        public override void Write(byte[] buffer, int offset, int count)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override void SetLength(long value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override void Flush()
+        {
+            // Flush is allowed on read-only stream
         }
     }
 
