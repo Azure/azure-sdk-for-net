@@ -28,23 +28,23 @@ stages:
           runOnce:
             deploy:
               steps:
-                - checkout: azure-sdk-build-tools
-                  path: azure-sdk-build-tools
-                # 1es templates require credscan path at eng/CredScanSuppression.json
+                # 1es templates require credscan path to be at eng/CredScanSuppression.json
+                # Check out this file and ensure devops multi-checkout doesn't change
+                # the default checkout path
                 - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
                   parameters:
                     SkipCheckoutNone: true
+                - checkout: azure-sdk-build-tools
+                  path: $(Agent.TempDirectory)/azure-sdk-build-tools
 
                 - download: current
                   artifact: ${{parameters.ArtifactName}}
                   timeoutInMinutes: 5
 
-                - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
-
                 - template: pipelines/steps/net-signing.yml@azure-sdk-build-tools
                   parameters:
                     PackagesPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}
-                    BuildToolsPath: $(Pipeline.Workspace)/azure-sdk-build-tools
+                    BuildToolsPath: $(Agent.TempDirectory)/azure-sdk-build-tools
 
                 - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
                   parameters:
