@@ -35,7 +35,7 @@ namespace Azure.Provisioning.Storage
         {
             if (scope.Configuration?.UsePromptMode == true)
             {
-                AssignProperty(Properties, "Name", $"toLower(take(concat('{name}', uniqueString(resourceGroup().id)), 24))");
+                AssignProperty(data => data.Name, $"toLower(take(concat('{name}', uniqueString(resourceGroup().id)), 24))");
             }
         }
 

@@ -18,11 +18,11 @@ namespace Azure.Provisioning.Storage
         /// <param name="kind">The kind.</param>
         /// <param name="sku">The sku.</param>
         /// <param name="parent">The parent.</param>
-        /// <param name="name">The name.</param>
+        /// <param name="prefix">The prefix for the storage account name.</param>
         /// <returns></returns>
-        public static StorageAccount AddStorageAccount(this IConstruct scope, StorageKind kind, StorageSkuName sku, ResourceGroup? parent = null, string name = "sa")
+        public static StorageAccount AddStorageAccount(this IConstruct scope, StorageKind kind, StorageSkuName sku, ResourceGroup? parent = null, string prefix = "sa")
         {
-            return new StorageAccount(scope, kind, sku, parent, name);
+            return new StorageAccount(scope, kind, sku, parent, prefix);
         }
 
         /// <summary>
