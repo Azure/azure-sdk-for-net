@@ -5,7 +5,6 @@ using System;
 using Azure.Core;
 using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Authorization.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.Provisioning.Authorization
 {
@@ -21,30 +20,27 @@ namespace Azure.Provisioning.Authorization
         /// </summary>
         /// <param name="scope">The scope.</param>
         /// <param name="resource"></param>
-        /// <param name="roleDefinitionId"></param>
+        /// <param name="roleDefinition"></param>
         /// <param name="principalId"></param>
         /// <param name="principalType"></param>
-        /// <param name="delegatedManagedIdentityResourceId"></param>
         internal RoleAssignment(
             IConstruct scope,
             Resource resource,
-            ResourceIdentifier roleDefinitionId,
+            RoleDefinition roleDefinition,
             Guid? principalId,
-            RoleManagementPrincipalType principalType,
-            ResourceIdentifier? delegatedManagedIdentityResourceId = default)
+            RoleManagementPrincipalType principalType)
             : base(
                 scope,
                 resource,
                 // TODO use guid bicep function?
-                $"{resource.Name}-{principalId}-{roleDefinitionId}",
+                $"{resource.Name}{principalId}{roleDefinition}",
                 ResourceType,
                 "2022-04-01",
                 (name) => ArmAuthorizationModelFactory.RoleAssignmentData(
                     name: name,
-                    roleDefinitionId: roleDefinitionId,
+                    roleDefinitionId: ResourceIdentifier.Parse($"/providers/Microsoft.Authorization/roleDefinitions/{roleDefinition}"),
                     principalId: principalId,
-                    principalType: principalType,
-                    delegatedManagedIdentityResourceId: delegatedManagedIdentityResourceId))
+                    principalType: principalType))
         {
         }
     }

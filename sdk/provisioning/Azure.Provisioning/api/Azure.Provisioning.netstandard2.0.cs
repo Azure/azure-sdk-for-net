@@ -90,6 +90,7 @@ namespace Azure.Provisioning
         public Azure.Provisioning.Resource? Parent { get { throw null; } }
         public Azure.Provisioning.IConstruct Scope { get { throw null; } }
         public string Version { get { throw null; } }
+        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.Authorization.RoleDefinition roleDefinition, System.Guid principalId) { throw null; }
         protected virtual Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         protected virtual string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
         Azure.Provisioning.Resource System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -149,6 +150,30 @@ namespace Azure.Provisioning.AppService
     {
         Node = 0,
         Dotnetcore = 1,
+    }
+}
+namespace Azure.Provisioning.Authorization
+{
+    public partial class RoleAssignment : Azure.Provisioning.Resource<Azure.ResourceManager.Authorization.RoleAssignmentData>
+    {
+        internal RoleAssignment() : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Authorization.RoleAssignmentData>)) { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RoleDefinition : System.IEquatable<Azure.Provisioning.Authorization.RoleDefinition>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RoleDefinition(string value) { throw null; }
+        public static Azure.Provisioning.Authorization.RoleDefinition StorageBlobDataContributor { get { throw null; } }
+        public static Azure.Provisioning.Authorization.RoleDefinition StorageQueueDataContributor { get { throw null; } }
+        public static Azure.Provisioning.Authorization.RoleDefinition StorageTableDataContributor { get { throw null; } }
+        public bool Equals(Azure.Provisioning.Authorization.RoleDefinition other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static implicit operator Azure.Provisioning.Authorization.RoleDefinition (string value) { throw null; }
+        public override string ToString() { throw null; }
     }
 }
 namespace Azure.Provisioning.KeyVaults
