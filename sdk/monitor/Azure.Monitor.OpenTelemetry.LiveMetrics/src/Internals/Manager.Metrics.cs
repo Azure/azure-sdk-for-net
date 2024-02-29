@@ -92,7 +92,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 dataPoint.Metrics.Add(metricPoint);
             }
 
-            foreach (var metricPoint in CollectPerfCounters())
+            foreach (var metricPoint in CollectProcessMetrics())
             {
                 dataPoint.Metrics.Add(metricPoint);
             }
@@ -101,7 +101,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         }
 
         /// <summary>
-        /// Collect Perf Counters for the current process.
+        /// Collect metrics for the current process.
         /// </summary>
         /// <remarks>
         /// For Memory:
@@ -112,7 +112,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         /// <see href="https://learn.microsoft.com/dotnet/api/system.diagnostics.process.totalprocessortime"/>.
         /// "A TimeSpan that indicates the amount of time that the associated process has spent utilizing the CPU. This value is the sum of the UserProcessorTime and the PrivilegedProcessorTime.".
         /// </remarks>
-        public IEnumerable<Models.MetricPoint> CollectPerfCounters()
+        public IEnumerable<Models.MetricPoint> CollectProcessMetrics()
         {
             var process = Process.GetCurrentProcess();
 
