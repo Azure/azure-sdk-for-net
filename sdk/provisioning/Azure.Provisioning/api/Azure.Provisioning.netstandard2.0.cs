@@ -8,7 +8,7 @@ namespace Azure.Provisioning
     public partial class Configuration
     {
         public Configuration() { }
-        public bool UsePromptMode { get { throw null; } set { } }
+        public bool UseInteractiveMode { get { throw null; } set { } }
     }
     public abstract partial class Construct : Azure.Provisioning.IConstruct
     {
@@ -92,6 +92,8 @@ namespace Azure.Provisioning
         public string Version { get { throw null; } }
         protected virtual Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         protected virtual string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
+        protected virtual bool NeedsParent() { throw null; }
+        protected virtual bool NeedsScope() { throw null; }
         Azure.Provisioning.Resource System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -151,6 +153,36 @@ namespace Azure.Provisioning.AppService
         Dotnetcore = 1,
     }
 }
+namespace Azure.Provisioning.Authorization
+{
+    public static partial class AuthorizationExtensions
+    {
+        public static Azure.Provisioning.Authorization.RoleAssignment AssignRole(this Azure.Provisioning.Resource resource, Azure.Provisioning.Authorization.RoleDefinition roleDefinition, System.Guid? principalId = default(System.Guid?)) { throw null; }
+    }
+    public partial class RoleAssignment : Azure.Provisioning.Resource<Azure.ResourceManager.Authorization.RoleAssignmentData>
+    {
+        internal RoleAssignment() : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Authorization.RoleAssignmentData>)) { }
+        protected override bool NeedsParent() { throw null; }
+        protected override bool NeedsScope() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RoleDefinition : System.IEquatable<Azure.Provisioning.Authorization.RoleDefinition>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RoleDefinition(string value) { throw null; }
+        public static Azure.Provisioning.Authorization.RoleDefinition StorageBlobDataContributor { get { throw null; } }
+        public static Azure.Provisioning.Authorization.RoleDefinition StorageQueueDataContributor { get { throw null; } }
+        public static Azure.Provisioning.Authorization.RoleDefinition StorageTableDataContributor { get { throw null; } }
+        public bool Equals(Azure.Provisioning.Authorization.RoleDefinition other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static implicit operator Azure.Provisioning.Authorization.RoleDefinition (string value) { throw null; }
+        public override string ToString() { throw null; }
+    }
+}
 namespace Azure.Provisioning.KeyVaults
 {
     public partial class KeyVault : Azure.Provisioning.Resource<Azure.ResourceManager.KeyVault.KeyVaultData>
@@ -193,7 +225,7 @@ namespace Azure.Provisioning.ResourceManager
     public partial class Tenant : Azure.Provisioning.Resource<Azure.ResourceManager.Resources.TenantData>
     {
         public Tenant(Azure.Provisioning.IConstruct scope, System.Guid? tenantId = default(System.Guid?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Resources.TenantData>)) { }
-        protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
+        protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string? resourceName) { throw null; }
     }
 }
 namespace Azure.Provisioning.Resources

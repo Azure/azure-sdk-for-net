@@ -7,8 +7,8 @@ namespace Azure.Provisioning.Tests
 {
     internal class TestInfrastructure : Infrastructure
     {
-        public TestInfrastructure(Guid? subscriptionId = null, ConstructScope scope = ConstructScope.Subscription, Configuration? configuration = null)
-            : base(scope, Guid.Empty, subscriptionId, "TEST", configuration)
+        public TestInfrastructure(ConstructScope scope = ConstructScope.Subscription, Configuration? configuration = null)
+            : base(scope, Guid.Empty, Guid.Empty, "TEST", configuration)
         {
         }
     }

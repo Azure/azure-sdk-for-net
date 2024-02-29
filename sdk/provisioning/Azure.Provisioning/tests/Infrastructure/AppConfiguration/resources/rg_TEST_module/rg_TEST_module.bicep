@@ -1,5 +1,5 @@
 
-resource appConfigurationStore_kRqdpAmmZ 'Microsoft.AppConfiguration/configurationStores@2023-03-01' = {
+resource appConfigurationStore_sgecYnln3 'Microsoft.AppConfiguration/configurationStores@2023-03-01' = {
   name: 'store-TEST'
   location: 'westus'
   sku: {
@@ -9,4 +9,4 @@ resource appConfigurationStore_kRqdpAmmZ 'Microsoft.AppConfiguration/configurati
   }
 }
 
-output appConfigurationStore_kRqdpAmmZ_endpoint string = appConfigurationStore_kRqdpAmmZ.properties.endpoint
+output appConfigurationStore_sgecYnln3_endpoint string = appConfigurationStore_sgecYnln3.properties.endpoint

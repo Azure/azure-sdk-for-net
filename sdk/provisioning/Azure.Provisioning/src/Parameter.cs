@@ -86,7 +86,7 @@ namespace Azure.Provisioning
         /// <param name="defaultValue">The parameter defaultValue.</param>
         /// <param name="isSecure">Is the parameter secure.</param>
         /// <param name="isExpression">Is the parameter an expression.</param>
-        internal Parameter(string name, string? description = default, object? defaultValue = default, bool isSecure = false, bool isExpression = false)
+        internal Parameter(string name, string? description, object? defaultValue = default, bool isSecure = false, bool isExpression = false)
         : this (name, description, defaultValue, isSecure)
         {
             IsExpression = isExpression;

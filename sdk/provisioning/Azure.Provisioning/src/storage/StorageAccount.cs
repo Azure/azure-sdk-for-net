@@ -33,10 +33,7 @@ namespace Azure.Provisioning.Storage
                 sku: new StorageSku(sku),
                 kind: StorageKind.StorageV2))
         {
-            if (scope.Configuration?.UsePromptMode == true)
-            {
-                AssignProperty(data => data.Name, $"toLower(take(concat('{name}', uniqueString(resourceGroup().id)), 24))");
-            }
+            AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
 
         /// <inheritdoc/>
@@ -53,27 +50,7 @@ namespace Azure.Provisioning.Storage
         /// <inheritdoc/>
         protected override string GetAzureName(IConstruct scope, string resourceName)
         {
-            var span = resourceName.AsSpan();
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < span.Length; i++)
-            {
-                char c = span[i];
-                if (!char.IsLetterOrDigit(c))
-                {
-                    continue;
-                }
-                if (char.IsLetter(c))
-                {
-                    stringBuilder.Append(char.ToLowerInvariant(c));
-                }
-                else
-                {
-                    stringBuilder.Append(c);
-                }
-            }
-            stringBuilder.Append(Guid.NewGuid().ToString("N"));
-
-            return stringBuilder.ToString(0, Math.Min(stringBuilder.Length, 24));
+            return $"toLower(take(concat('{resourceName}', uniqueString(resourceGroup().id)), 24))";
         }
     }
 }

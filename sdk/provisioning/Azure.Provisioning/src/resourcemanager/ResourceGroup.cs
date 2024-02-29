@@ -48,7 +48,7 @@ namespace Azure.Provisioning.ResourceManager
         /// <inheritdoc/>
         protected override string GetAzureName(IConstruct scope, string resourceName)
         {
-            return resourceName == AnonymousResourceGroupName ? resourceName : base.GetAzureName(scope, resourceName);
+            return scope.Configuration?.UseInteractiveMode == true ? AnonymousResourceGroupName : base.GetAzureName(scope, resourceName);
         }
     }
 }

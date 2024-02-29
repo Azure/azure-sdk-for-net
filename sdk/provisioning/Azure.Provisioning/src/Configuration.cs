@@ -13,6 +13,6 @@ namespace Azure.Provisioning
         /// <summary>
         /// Whether to use prompt mode.
         /// </summary>
-        public bool UsePromptMode { get; set; }
+        public bool UseInteractiveMode { get; set; }
     }
 }

@@ -10,9 +10,11 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Azure.Core;
+using Azure.Provisioning.Authorization;
 using Azure.Provisioning.ResourceManager;
 using Azure.Provisioning.Resources;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.Provisioning
@@ -246,7 +248,7 @@ namespace Azure.Provisioning
 
             stream.WriteLine($"resource {Name} '{ResourceType}@{Version}' = {{");
 
-            if (this.IsChildResource() && this is not DeploymentScript && this is not Subscription)
+            if (NeedsParent())
             {
                 stream.WriteLine($"  parent: {Parent!.Name}");
             }
@@ -298,7 +300,20 @@ namespace Azure.Provisioning
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
-        private bool NeedsScope()
+        /// <summary>
+        /// Determines whether the resource needs a parent declaration.
+        /// </summary>
+        /// <returns>Whether the resource needs a parent.</returns>
+        protected virtual bool NeedsParent()
+        {
+            return this is not Subscription && Parent is not null && Parent is not (ResourceGroup or Subscription);
+        }
+
+        /// <summary>
+        /// Determines whether the resource needs a scope declaration.
+        /// </summary>
+        /// <returns>Whether the resource needs a scope.</returns>
+        protected virtual bool NeedsScope()
         {
             Debug.Assert(ModuleScope != null, "ModuleScope should not be null");
 
