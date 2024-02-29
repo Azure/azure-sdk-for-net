@@ -2,7 +2,7 @@
 param STORAGE_PRINCIPAL_ID string
 
 
-resource webSite_otUunDMEJ 'Microsoft.Web/sites@2021-02-01' = {
+resource webSite_S0mUvi9H7 'Microsoft.Web/sites@2021-02-01' = {
   name: 'frontEnd-TEST'
   location: 'westus'
   identity: {
@@ -10,7 +10,7 @@ resource webSite_otUunDMEJ 'Microsoft.Web/sites@2021-02-01' = {
   }
   kind: 'app,linux'
   properties: {
-    serverFarmId: '/subscriptions/subscription()/resourceGroups/rg1-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
+    serverFarmId: '/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg1-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
     siteConfig: {
       linuxFxVersion: 'node|18-lts'
       alwaysOn: true
@@ -28,7 +28,7 @@ resource webSite_otUunDMEJ 'Microsoft.Web/sites@2021-02-01' = {
   }
 }
 
-resource applicationSettingsResource_ou87c8ivP 'Microsoft.Web/sites/config@2021-02-01' = {
-  parent: webSite_otUunDMEJ
+resource applicationSettingsResource_qs0foLrMk 'Microsoft.Web/sites/config@2021-02-01' = {
+  parent: webSite_S0mUvi9H7
   name: 'appsettings'
 }

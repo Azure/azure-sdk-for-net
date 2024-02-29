@@ -13,7 +13,10 @@ namespace Azure.Provisioning.Authorization
     /// </summary>
     public class RoleAssignment : Resource<RoleAssignmentData>
     {
-        internal static readonly ResourceType ResourceType = "Microsoft.Resources/roleAssignments";
+        private static readonly ResourceType ResourceType = "Microsoft.Resources/roleAssignments";
+        private static readonly ResourceType RoleDefinitionResourceType = "Microsoft.Authorization/roleDefinitions";
+
+        private const string SubscriptionResourceIdFunction = "subscriptionResourceId";
 
         internal RoleAssignment(
             Resource resource,
@@ -37,13 +40,18 @@ namespace Azure.Provisioning.Authorization
             if (principalId == null)
             {
                 AssignParameter(data => data.PrincipalId, new Parameter("principalId"));
-                AssignProperty(data => data.Name, $"guid('{resource.Name}', principalId, '{roleDefinition}')");
             }
-            else
-            {
-                AssignProperty(data => data.Name, $"guid('{resource.Name}', '{principalId}', '{roleDefinition}')");
-            }
-            AssignProperty(data => data.RoleDefinitionId, $"subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '{roleDefinition}')");
+
+            AssignProperty(
+                data => data.Name,
+                $"guid('{resource.Name}', {(principalId == null ? "principalId" : "'" + principalId + "'")}," +
+                $" {SubscriptionResourceIdFunction}({(resource.Scope.Configuration?.UseInteractiveMode != true ? "'" + Id.SubscriptionId + "', ": string.Empty)}" +
+                $"'{RoleDefinitionResourceType}', '{roleDefinition}'))");
+
+            AssignProperty(
+                data => data.RoleDefinitionId,
+                $"{SubscriptionResourceIdFunction}({(resource.Scope.Configuration?.UseInteractiveMode != true ? "'"+ Id.SubscriptionId + "', ": string.Empty)}" +
+                $"'{RoleDefinitionResourceType}', '{roleDefinition}')");
         }
 
         /// <inheritdoc />

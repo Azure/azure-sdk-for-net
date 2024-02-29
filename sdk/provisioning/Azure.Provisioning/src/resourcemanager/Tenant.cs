@@ -28,9 +28,13 @@ namespace Azure.Provisioning.ResourceManager
         }
 
         /// <inheritdoc/>
-        protected override string GetAzureName(IConstruct scope, string resourceName)
+        protected override string GetAzureName(IConstruct scope, string? resourceName)
         {
-            return resourceName is not null ? resourceName : Environment.GetEnvironmentVariable("AZURE_TENANT_ID") ?? throw new InvalidOperationException("No environment variable named 'AZURE_TENANT_ID' found");
+            if (scope.Configuration?.UseInteractiveMode == true)
+            {
+                return "tenant()";
+            }
+            return resourceName ?? Environment.GetEnvironmentVariable("AZURE_TENANT_ID") ?? throw new InvalidOperationException("No environment variable named 'AZURE_TENANT_ID' found");
         }
     }
 }

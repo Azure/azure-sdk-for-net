@@ -6,7 +6,7 @@ param enableSoftDelete string = 'True'
 param SERVICE_API_IDENTITY_PRINCIPAL_ID string
 
 
-resource appServicePlan_7ufAVFULu 'Microsoft.Web/serverfarms@2021-02-01' = {
+resource appServicePlan_9KdpMkrui 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'appServicePlan-TEST'
   location: 'westus'
   sku: {
@@ -17,12 +17,12 @@ resource appServicePlan_7ufAVFULu 'Microsoft.Web/serverfarms@2021-02-01' = {
   }
 }
 
-resource webSite_7VDxFxfHl 'Microsoft.Web/sites@2021-02-01' = {
+resource webSite_SSM1v738n 'Microsoft.Web/sites@2021-02-01' = {
   name: 'frontEnd-TEST'
   location: 'westus'
   kind: 'app,linux'
   properties: {
-    serverFarmId: '/subscriptions/subscription()/resourceGroups/rg1-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
+    serverFarmId: '/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg1-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
     siteConfig: {
       linuxFxVersion: 'node|18-lts'
       alwaysOn: true
@@ -40,12 +40,12 @@ resource webSite_7VDxFxfHl 'Microsoft.Web/sites@2021-02-01' = {
   }
 }
 
-resource applicationSettingsResource_MbDOVsFgO 'Microsoft.Web/sites/config@2021-02-01' = {
-  parent: webSite_7VDxFxfHl
+resource applicationSettingsResource_p8nYwST6O 'Microsoft.Web/sites/config@2021-02-01' = {
+  parent: webSite_SSM1v738n
   name: 'appsettings'
 }
 
-resource keyVault_j1ww9730M 'Microsoft.KeyVault/vaults@2023-02-01' = {
+resource keyVault_OqtTDSECw 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: 'kv-TEST'
   location: 'westus'
   properties: {
@@ -59,8 +59,8 @@ resource keyVault_j1ww9730M 'Microsoft.KeyVault/vaults@2023-02-01' = {
   }
 }
 
-resource keyVaultAddAccessPolicy_Jv1vsDkxL 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
-  parent: keyVault_j1ww9730M
+resource keyVaultAddAccessPolicy_G5bnl7Xqn 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
+  parent: keyVault_OqtTDSECw
   name: 'add'
   properties: {
     accessPolicies: [
@@ -78,6 +78,6 @@ resource keyVaultAddAccessPolicy_Jv1vsDkxL 'Microsoft.KeyVault/vaults/accessPoli
   }
 }
 
-output STORAGE_PRINCIPAL_ID string = webSite_7VDxFxfHl.identity.principalId
-output LOCATION string = webSite_7VDxFxfHl.location
-output vaultUri string = keyVault_j1ww9730M.properties.vaultUri
+output STORAGE_PRINCIPAL_ID string = webSite_SSM1v738n.identity.principalId
+output LOCATION string = webSite_SSM1v738n.location
+output vaultUri string = keyVault_OqtTDSECw.properties.vaultUri

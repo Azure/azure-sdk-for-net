@@ -1,5 +1,5 @@
 
-resource storageAccount_0KMvPm04J 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+resource storageAccount_yIvt1zzus 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: toLower(take(concat('photoAcct', uniqueString(resourceGroup().id)), 24))
   location: 'westus'
   sku: {
@@ -10,8 +10,8 @@ resource storageAccount_0KMvPm04J 'Microsoft.Storage/storageAccounts@2022-09-01'
   }
 }
 
-resource blobService_pCgUv484K 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
-  parent: storageAccount_0KMvPm04J
+resource blobService_ElroYO5Uz 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
+  parent: storageAccount_yIvt1zzus
   name: 'default'
   properties: {
     deleteRetentionPolicy: {

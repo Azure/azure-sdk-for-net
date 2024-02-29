@@ -4,7 +4,7 @@ targetScope = 'subscription'
 param enableSoftDelete string = 'True'
 
 
-resource resourceGroup_g8nI7jPJ2 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+resource resourceGroup_601b9OXIs 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   name: 'rg1-TEST'
   location: 'westus'
   tags: {
@@ -12,7 +12,7 @@ resource resourceGroup_g8nI7jPJ2 'Microsoft.Resources/resourceGroups@2023-07-01'
   }
 }
 
-resource resourceGroup_azggXhH7X 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+resource resourceGroup_pziZsS8EC 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   name: 'rg2-TEST'
   location: 'westus'
   tags: {
@@ -20,7 +20,7 @@ resource resourceGroup_azggXhH7X 'Microsoft.Resources/resourceGroups@2023-07-01'
   }
 }
 
-resource resourceGroup_9Y3rUN36f 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+resource resourceGroup_rl3Hejsnb 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   name: 'rg3-TEST'
   location: 'westus'
   tags: {
@@ -30,7 +30,7 @@ resource resourceGroup_9Y3rUN36f 'Microsoft.Resources/resourceGroups@2023-07-01'
 
 module rg1_TEST_module './resources/rg1_TEST_module/rg1_TEST_module.bicep' = {
   name: 'rg1_TEST_module'
-  scope: resourceGroup_g8nI7jPJ2
+  scope: resourceGroup_601b9OXIs
   params: {
     enableSoftDelete: enableSoftDelete
     SERVICE_API_IDENTITY_PRINCIPAL_ID: rg3_TEST_module.outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID
@@ -39,7 +39,7 @@ module rg1_TEST_module './resources/rg1_TEST_module/rg1_TEST_module.bicep' = {
 
 module rg2_TEST_module './resources/rg2_TEST_module/rg2_TEST_module.bicep' = {
   name: 'rg2_TEST_module'
-  scope: resourceGroup_azggXhH7X
+  scope: resourceGroup_pziZsS8EC
   params: {
     STORAGE_PRINCIPAL_ID: rg1_TEST_module.outputs.STORAGE_PRINCIPAL_ID
   }
@@ -47,7 +47,7 @@ module rg2_TEST_module './resources/rg2_TEST_module/rg2_TEST_module.bicep' = {
 
 module rg3_TEST_module './resources/rg3_TEST_module/rg3_TEST_module.bicep' = {
   name: 'rg3_TEST_module'
-  scope: resourceGroup_9Y3rUN36f
+  scope: resourceGroup_rl3Hejsnb
 }
 
 output STORAGE_PRINCIPAL_ID string = rg1_TEST_module.outputs.STORAGE_PRINCIPAL_ID
