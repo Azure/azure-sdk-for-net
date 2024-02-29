@@ -481,6 +481,9 @@
 # PRLabel: %EASM
 /sdk/easm/Azure.Analytics.Defender.Easm                            @thang-bit
 
+# ServiceLabel: %EASM
+# ServiceOwners:                                                   @thang-bit
+
 # PRLabel: %Event Grid
 /sdk/eventgrid/                                                    @Kishp01 @ahamad-MS @jfggdl @JoshLove-msft
 
