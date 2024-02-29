@@ -168,10 +168,10 @@ namespace Azure.Provisioning
         /// Assigns a role to the resource.
         /// </summary>
         /// <param name="roleDefinitionId"></param>
-        public RoleAssignment AssignRole(ResourceIdentifier roleDefinitionId)
+        /// <param name="principalId"></param>
+        public RoleAssignment AssignRole(ResourceIdentifier roleDefinitionId, Guid principalId)
         {
-            var managedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
-            return new RoleAssignment(Scope, this, roleDefinitionId, managedIdentity.PrincipalId, RoleManagementPrincipalType.ServicePrincipal);
+            return new RoleAssignment(Scope, this, roleDefinitionId, principalId, RoleManagementPrincipalType.ServicePrincipal);
         }
 
         /// <summary>

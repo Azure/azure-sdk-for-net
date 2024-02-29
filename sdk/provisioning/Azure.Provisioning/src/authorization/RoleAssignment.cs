@@ -36,7 +36,7 @@ namespace Azure.Provisioning.Authorization
                 scope,
                 resource,
                 // TODO use guid bicep function?
-                $"{resource.Id.Name}-{principalId}-{roleDefinitionId}",
+                $"{resource.Name}-{principalId}-{roleDefinitionId}",
                 ResourceType,
                 "2022-04-01",
                 (name) => ArmAuthorizationModelFactory.RoleAssignmentData(

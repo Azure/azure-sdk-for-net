@@ -179,7 +179,7 @@ namespace Azure.Provisioning.Tests
             var infra = new TestInfrastructure();
             var storageAccount = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             infra.AddBlobService();
-            storageAccount.AssignRole(new ResourceIdentifier("/providers/Microsoft.Authorization/roleDefinitions/b7e6dc6d-f1e8-4753-8033-0f276bb0955b"));
+            storageAccount.AssignRole(new ResourceIdentifier("/providers/Microsoft.Authorization/roleDefinitions/b7e6dc6d-f1e8-4753-8033-0f276bb0955b"), Guid.Empty);
 
             infra.Build(GetOutputPath());
 
