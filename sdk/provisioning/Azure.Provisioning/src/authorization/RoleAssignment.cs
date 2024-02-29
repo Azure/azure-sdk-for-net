@@ -40,7 +40,7 @@ namespace Azure.Provisioning.Authorization
         {
             if (scope.Configuration?.UseInteractiveMode != true && principalId == null)
             {
-                throw new InvalidOperationException("PrincipalId must be specified when in not in interactive mode.");
+                throw new InvalidOperationException("PrincipalId must be specified when not in interactive mode.");
             }
 
             if (principalId == null)
