@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    internal partial class InternalOpenAIPageableListOfAssistantFile : IUtf8JsonSerializable, IJsonModel<InternalOpenAIPageableListOfAssistantFile>
+    internal partial class OpenAIPageableListOf : IUtf8JsonSerializable, IJsonModel<OpenAIPageableListOf>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalOpenAIPageableListOfAssistantFile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OpenAIPageableListOf>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<InternalOpenAIPageableListOfAssistantFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OpenAIPageableListOf>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalOpenAIPageableListOfAssistantFile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OpenAIPageableListOf>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalOpenAIPageableListOfAssistantFile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenAIPageableListOf)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,19 +60,19 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteEndObject();
         }
 
-        InternalOpenAIPageableListOfAssistantFile IJsonModel<InternalOpenAIPageableListOfAssistantFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        OpenAIPageableListOf IJsonModel<OpenAIPageableListOf>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalOpenAIPageableListOfAssistantFile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OpenAIPageableListOf>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalOpenAIPageableListOfAssistantFile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenAIPageableListOf)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalOpenAIPageableListOfAssistantFile(document.RootElement, options);
+            return DeserializeOpenAIPageableListOf(document.RootElement, options);
         }
 
-        internal static InternalOpenAIPageableListOfAssistantFile DeserializeInternalOpenAIPageableListOfAssistantFile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static OpenAIPageableListOf DeserializeOpenAIPageableListOf(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -80,8 +80,8 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            OpenAIPageableListOfAssistantFileObject @object = default;
-            IReadOnlyList<AssistantFile> data = default;
+            OpenAIPageableListOfObject @object = default;
+            IReadOnlyList<Assistant> data = default;
             string firstId = default;
             string lastId = default;
             bool hasMore = default;
@@ -91,15 +91,15 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new OpenAIPageableListOfAssistantFileObject(property.Value.GetString());
+                    @object = new OpenAIPageableListOfObject(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("data"u8))
                 {
-                    List<AssistantFile> array = new List<AssistantFile>();
+                    List<Assistant> array = new List<Assistant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssistantFile.DeserializeAssistantFile(item, options));
+                        array.Add(Assistant.DeserializeAssistant(item, options));
                     }
                     data = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InternalOpenAIPageableListOfAssistantFile(
+            return new OpenAIPageableListOf(
                 @object,
                 data,
                 firstId,
@@ -134,43 +134,43 @@ namespace Azure.AI.OpenAI.Assistants
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<InternalOpenAIPageableListOfAssistantFile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<OpenAIPageableListOf>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalOpenAIPageableListOfAssistantFile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OpenAIPageableListOf>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InternalOpenAIPageableListOfAssistantFile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenAIPageableListOf)} does not support '{options.Format}' format.");
             }
         }
 
-        InternalOpenAIPageableListOfAssistantFile IPersistableModel<InternalOpenAIPageableListOfAssistantFile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        OpenAIPageableListOf IPersistableModel<OpenAIPageableListOf>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalOpenAIPageableListOfAssistantFile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OpenAIPageableListOf>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeInternalOpenAIPageableListOfAssistantFile(document.RootElement, options);
+                        return DeserializeOpenAIPageableListOf(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalOpenAIPageableListOfAssistantFile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenAIPageableListOf)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<InternalOpenAIPageableListOfAssistantFile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OpenAIPageableListOf>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static InternalOpenAIPageableListOfAssistantFile FromResponse(Response response)
+        internal static OpenAIPageableListOf FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeInternalOpenAIPageableListOfAssistantFile(document.RootElement);
+            return DeserializeOpenAIPageableListOf(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

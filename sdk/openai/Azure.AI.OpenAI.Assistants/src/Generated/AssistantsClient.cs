@@ -150,11 +150,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<InternalOpenAIPageableListOfAssistant>> InternalGetAssistantsAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<OpenAIPageableListOf>> InternalGetAssistantsAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalGetAssistantsAsync(limit, order?.ToString(), after, before, context).ConfigureAwait(false);
-            return Response.FromValue(InternalOpenAIPageableListOfAssistant.FromResponse(response), response);
+            return Response.FromValue(OpenAIPageableListOf.FromResponse(response), response);
         }
 
         /// <summary> Gets a list of assistants that were previously created. </summary>
@@ -163,11 +163,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<InternalOpenAIPageableListOfAssistant> InternalGetAssistants(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual Response<OpenAIPageableListOf> InternalGetAssistants(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalGetAssistants(limit, order?.ToString(), after, before, context);
-            return Response.FromValue(InternalOpenAIPageableListOfAssistant.FromResponse(response), response);
+            return Response.FromValue(OpenAIPageableListOf.FromResponse(response), response);
         }
 
         /// <summary>
@@ -805,7 +805,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<InternalOpenAIPageableListOfAssistantFile>> InternalGetAssistantFilesAsync(string assistantId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<OpenAIPageableListOf>> InternalGetAssistantFilesAsync(string assistantId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             if (assistantId == null)
             {
@@ -818,7 +818,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalGetAssistantFilesAsync(assistantId, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
-            return Response.FromValue(InternalOpenAIPageableListOfAssistantFile.FromResponse(response), response);
+            return Response.FromValue(OpenAIPageableListOf.FromResponse(response), response);
         }
 
         /// <summary> Gets a list of files attached to a specific assistant, as used by tools that can read files. </summary>
@@ -830,7 +830,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<InternalOpenAIPageableListOfAssistantFile> InternalGetAssistantFiles(string assistantId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual Response<OpenAIPageableListOf> InternalGetAssistantFiles(string assistantId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             if (assistantId == null)
             {
@@ -843,7 +843,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalGetAssistantFiles(assistantId, limit, order?.ToString(), after, before, context);
-            return Response.FromValue(InternalOpenAIPageableListOfAssistantFile.FromResponse(response), response);
+            return Response.FromValue(OpenAIPageableListOf.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1975,7 +1975,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<InternalOpenAIPageableListOfThreadMessage>> InternalGetMessagesAsync(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<OpenAIPageableListOf>> InternalGetMessagesAsync(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             if (threadId == null)
             {
@@ -1988,7 +1988,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalGetMessagesAsync(threadId, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
-            return Response.FromValue(InternalOpenAIPageableListOfThreadMessage.FromResponse(response), response);
+            return Response.FromValue(OpenAIPageableListOf.FromResponse(response), response);
         }
 
         /// <summary> Gets a list of messages that exist on a thread. </summary>
@@ -2000,7 +2000,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<InternalOpenAIPageableListOfThreadMessage> InternalGetMessages(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual Response<OpenAIPageableListOf> InternalGetMessages(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             if (threadId == null)
             {
@@ -2013,7 +2013,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalGetMessages(threadId, limit, order?.ToString(), after, before, context);
-            return Response.FromValue(InternalOpenAIPageableListOfThreadMessage.FromResponse(response), response);
+            return Response.FromValue(OpenAIPageableListOf.FromResponse(response), response);
         }
 
         /// <summary>
@@ -2466,7 +2466,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<InternalOpenAIPageableListOfMessageFile>> InternalGetMessageFilesAsync(string threadId, string messageId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<OpenAIPageableListOf>> InternalGetMessageFilesAsync(string threadId, string messageId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             if (threadId == null)
             {
@@ -2487,7 +2487,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalGetMessageFilesAsync(threadId, messageId, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
-            return Response.FromValue(InternalOpenAIPageableListOfMessageFile.FromResponse(response), response);
+            return Response.FromValue(OpenAIPageableListOf.FromResponse(response), response);
         }
 
         /// <summary> Gets a list of previously uploaded files associated with a message from a thread. </summary>
@@ -2500,7 +2500,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<InternalOpenAIPageableListOfMessageFile> InternalGetMessageFiles(string threadId, string messageId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual Response<OpenAIPageableListOf> InternalGetMessageFiles(string threadId, string messageId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             if (threadId == null)
             {
@@ -2521,7 +2521,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalGetMessageFiles(threadId, messageId, limit, order?.ToString(), after, before, context);
-            return Response.FromValue(InternalOpenAIPageableListOfMessageFile.FromResponse(response), response);
+            return Response.FromValue(OpenAIPageableListOf.FromResponse(response), response);
         }
 
         /// <summary>
@@ -2993,7 +2993,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<InternalOpenAIPageableListOfThreadRun>> InternalGetRunsAsync(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<OpenAIPageableListOf>> InternalGetRunsAsync(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             if (threadId == null)
             {
@@ -3006,7 +3006,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalGetRunsAsync(threadId, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
-            return Response.FromValue(InternalOpenAIPageableListOfThreadRun.FromResponse(response), response);
+            return Response.FromValue(OpenAIPageableListOf.FromResponse(response), response);
         }
 
         /// <summary> Gets a list of runs for a specified thread. </summary>
@@ -3018,7 +3018,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<InternalOpenAIPageableListOfThreadRun> InternalGetRuns(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual Response<OpenAIPageableListOf> InternalGetRuns(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             if (threadId == null)
             {
@@ -3031,7 +3031,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalGetRuns(threadId, limit, order?.ToString(), after, before, context);
-            return Response.FromValue(InternalOpenAIPageableListOfThreadRun.FromResponse(response), response);
+            return Response.FromValue(OpenAIPageableListOf.FromResponse(response), response);
         }
 
         /// <summary>
@@ -4128,7 +4128,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<InternalOpenAIPageableListOfRunStep>> InternalGetRunStepsAsync(string threadId, string runId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<OpenAIPageableListOf>> InternalGetRunStepsAsync(string threadId, string runId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             if (threadId == null)
             {
@@ -4149,7 +4149,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalGetRunStepsAsync(threadId, runId, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
-            return Response.FromValue(InternalOpenAIPageableListOfRunStep.FromResponse(response), response);
+            return Response.FromValue(OpenAIPageableListOf.FromResponse(response), response);
         }
 
         /// <summary> Gets a list of run steps from a thread run. </summary>
@@ -4162,7 +4162,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<InternalOpenAIPageableListOfRunStep> InternalGetRunSteps(string threadId, string runId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual Response<OpenAIPageableListOf> InternalGetRunSteps(string threadId, string runId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             if (threadId == null)
             {
@@ -4183,7 +4183,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalGetRunSteps(threadId, runId, limit, order?.ToString(), after, before, context);
-            return Response.FromValue(InternalOpenAIPageableListOfRunStep.FromResponse(response), response);
+            return Response.FromValue(OpenAIPageableListOf.FromResponse(response), response);
         }
 
         /// <summary>
