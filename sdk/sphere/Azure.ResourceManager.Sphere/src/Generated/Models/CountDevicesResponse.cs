@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Sphere.Models
 {
     /// <summary> Response to the action call for count devices in a catalog. </summary>
-    public partial class CountDeviceResult : CountElementsResult
+    public partial class CountDevicesResponse : CountElementsResult
     {
-        /// <summary> Initializes a new instance of <see cref="CountDeviceResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CountDevicesResponse"/>. </summary>
         /// <param name="value"> Number of children resources in parent resource. </param>
-        internal CountDeviceResult(int value) : base(value)
+        internal CountDevicesResponse(int value) : base(value)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CountDeviceResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CountDevicesResponse"/>. </summary>
         /// <param name="value"> Number of children resources in parent resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CountDeviceResult(int value, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(value, serializedAdditionalRawData)
+        internal CountDevicesResponse(int value, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(value, serializedAdditionalRawData)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CountDeviceResult"/> for deserialization. </summary>
-        internal CountDeviceResult()
+        /// <summary> Initializes a new instance of <see cref="CountDevicesResponse"/> for deserialization. </summary>
+        internal CountDevicesResponse()
         {
         }
     }
