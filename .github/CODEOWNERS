@@ -130,6 +130,12 @@
 # ServiceLabel: %App Services
 # ServiceOwners:                                                   @antcp @AzureAppServiceCLI
 
+# PRLabel: %Astronomer
+/sdk/deviceregistry/Azure.ResourceManager.Astro/                   @gauravbang @mavarsh
+
+# ServiceLabel: %Astronomer
+# ServiceOwners:                                                   @gauravbang @mavarsh
+
 # PRLabel: %Attestation
 /sdk/attestation/Azure.Security.Attestation                        @anilba06 @gkostal @Azure/azure-sdk-write-attestation
 
