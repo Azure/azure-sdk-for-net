@@ -41,6 +41,7 @@ EasmClient client = new EasmClient(new System.Uri(endpoint),
 ## Key concepts
 
 ### [Assets][assets_documentation]
+
 Defender EASM includes the discovery of the following kinds of assets:
 -   Domains
 -   Hosts
