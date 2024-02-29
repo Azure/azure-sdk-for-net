@@ -112,9 +112,9 @@ namespace Azure.Core.Pipeline
             Request request = CreateRequest();
             HttpMessage message = new(request, classifier ?? ResponseClassifier);
 
-            if (context != null)
+            if (context is not null)
             {
-                message.ApplyRequestContext(context, classifier);
+                message.Apply(context);
             }
 
             return message;

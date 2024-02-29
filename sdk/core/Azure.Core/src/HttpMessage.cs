@@ -94,24 +94,6 @@ namespace Azure.Core
         /// </summary>
         public MessageProcessingContext ProcessingContext => new(this);
 
-        internal void ApplyRequestContext(RequestContext context, ResponseClassifier? classifier)
-        {
-            context.Freeze();
-
-            if (context.Policies?.Count > 0)
-            {
-                Policies ??= new(context.Policies.Count);
-                Policies.AddRange(context.Policies);
-            }
-
-            if (classifier != null)
-            {
-                ResponseClassifier = context.Apply(classifier);
-            }
-
-            Apply(context);
-        }
-
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
 
         internal static HttpMessage GetHttpMessage(PipelineMessage message)
