@@ -6,6 +6,8 @@
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
+- Enable Azure quantum api key and connection string to access quantum workspaces.
+
 ### Breaking Changes
 
 ### Bugs Fixed
