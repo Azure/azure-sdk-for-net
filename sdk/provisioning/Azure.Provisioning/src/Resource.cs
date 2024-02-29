@@ -10,9 +10,12 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Azure.Core;
+using Azure.Provisioning.Authorization;
 using Azure.Provisioning.ResourceManager;
 using Azure.Provisioning.Resources;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Authorization.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.Provisioning
 {
@@ -162,6 +165,16 @@ namespace Azure.Provisioning
         }
 
         /// <summary>
+        /// Assigns a role to the resource.
+        /// </summary>
+        /// <param name="roleDefinitionId"></param>
+        public RoleAssignment AssignRole(ResourceIdentifier roleDefinitionId)
+        {
+            var managedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
+            return new RoleAssignment(Scope, this, roleDefinitionId, managedIdentity.PrincipalId, RoleManagementPrincipalType.ServicePrincipal);
+        }
+
+        /// <summary>
         /// Adds an output to the resource.
         /// </summary>
         /// <param name="name">The name of the output.</param>
@@ -216,7 +229,7 @@ namespace Azure.Provisioning
 
             stream.WriteLine($"resource {Name} '{ResourceType}@{Version}' = {{");
 
-            if (this.IsChildResource() && this is not DeploymentScript && this is not Subscription)
+            if (NeedsParent())
             {
                 stream.WriteLine($"  parent: {Parent!.Name}");
             }
@@ -256,9 +269,20 @@ namespace Azure.Provisioning
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
+        private bool NeedsParent()
+        {
+            return this is not (Subscription or RoleAssignment) &&
+                   Parent is not null && Parent is not (ResourceGroup or Subscription or RoleAssignment);
+        }
+
         private bool NeedsScope()
         {
             Debug.Assert(ModuleScope != null, "ModuleScope should not be null");
+
+            if (this is RoleAssignment)
+            {
+                return true;
+            }
 
             switch (Parent)
             {

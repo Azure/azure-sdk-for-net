@@ -8,6 +8,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.TestFramework;
 using Azure.Identity;
@@ -17,7 +18,9 @@ using Azure.Provisioning.Sql;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.AppConfiguration;
+using Azure.Provisioning.Authorization;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -174,8 +177,10 @@ namespace Azure.Provisioning.Tests
         public async Task StorageBlobDefaults()
         {
             var infra = new TestInfrastructure();
-            infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            var storageAccount = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             infra.AddBlobService();
+            storageAccount.AssignRole(new ResourceIdentifier("/providers/Microsoft.Authorization/roleDefinitions/b7e6dc6d-f1e8-4753-8033-0f276bb0955b"));
+
             infra.Build(GetOutputPath());
 
             await ValidateBicepAsync();
