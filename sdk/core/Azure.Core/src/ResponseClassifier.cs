@@ -94,6 +94,12 @@ namespace Azure.Core
             return true;
         }
 
+        /// <summary>
+        /// This adapter adapts the System.ClientModel
+        /// <see cref="PipelineMessageClassifier"/> type to the Azure.Core
+        /// <see cref="ResponseClassifier"/> interface, so that it can be used
+        /// as though it were a ResponseClassifier in Azure.Core.
+        /// </summary>
         internal sealed class PipelineMessageClassifierAdapter : ResponseClassifier
         {
             private readonly PipelineMessageClassifier _classifier;
