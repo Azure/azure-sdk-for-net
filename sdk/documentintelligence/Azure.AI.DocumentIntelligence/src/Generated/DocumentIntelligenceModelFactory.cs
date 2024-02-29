@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class AIDocumentIntelligenceModelFactory
+    public static partial class DocumentIntelligenceModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentIntelligenceError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
@@ -477,7 +477,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentStyle"/> instance for mocking. </returns>
-        public static DocumentStyle DocumentStyle(bool? isHandwritten = null, string similarFontFamily = null, FontStyle? fontStyle = null, FontWeight? fontWeight = null, string color = null, string backgroundColor = null, IEnumerable<DocumentSpan> spans = null, float confidence = default)
+        public static DocumentStyle DocumentStyle(bool? isHandwritten = null, string similarFontFamily = null, DocumentFontStyle? fontStyle = null, DocumentFontWeight? fontWeight = null, string color = null, string backgroundColor = null, IEnumerable<DocumentSpan> spans = null, float confidence = default)
         {
             spans ??= new List<DocumentSpan>();
 
@@ -539,13 +539,13 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="valueDate"> Date value in YYYY-MM-DD format (ISO 8601). </param>
         /// <param name="valueTime"> Time value in hh:mm:ss format (ISO 8601). </param>
         /// <param name="valuePhoneNumber"> Phone number value in E.164 format (ex. +19876543210). </param>
-        /// <param name="valueNumber"> Floating point value. </param>
-        /// <param name="valueInteger"> Integer value. </param>
+        /// <param name="valueDouble"> Floating point value. </param>
+        /// <param name="valueLong"> Integer value. </param>
         /// <param name="valueSelectionMark"> Selection mark value. </param>
         /// <param name="valueSignature"> Presence of signature. </param>
         /// <param name="valueCountryRegion"> 3-letter country code value (ISO 3166-1 alpha-3). </param>
-        /// <param name="valueArray"> Array of field values. </param>
-        /// <param name="valueObject"> Dictionary of named field values. </param>
+        /// <param name="valueList"> Array of field values. </param>
+        /// <param name="valueDictionary"> Dictionary of named field values. </param>
         /// <param name="valueCurrency"> Currency value. </param>
         /// <param name="valueAddress"> Address value. </param>
         /// <param name="valueBoolean"> Boolean value. </param>
@@ -555,10 +555,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the field in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the field. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentField"/> instance for mocking. </returns>
-        public static DocumentField DocumentField(DocumentFieldType type = default, string valueString = null, DateTimeOffset? valueDate = null, TimeSpan? valueTime = null, string valuePhoneNumber = null, double? valueNumber = null, long? valueInteger = null, DocumentSelectionMarkState? valueSelectionMark = null, DocumentSignatureType? valueSignature = null, string valueCountryRegion = null, IEnumerable<DocumentField> valueArray = null, IReadOnlyDictionary<string, DocumentField> valueObject = null, CurrencyValue valueCurrency = null, AddressValue valueAddress = null, bool? valueBoolean = null, IEnumerable<string> valueSelectionGroup = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, float? confidence = null)
+        public static DocumentField DocumentField(DocumentFieldType type = default, string valueString = null, DateTimeOffset? valueDate = null, TimeSpan? valueTime = null, string valuePhoneNumber = null, double? valueDouble = null, long? valueLong = null, DocumentSelectionMarkState? valueSelectionMark = null, DocumentSignatureType? valueSignature = null, string valueCountryRegion = null, IEnumerable<DocumentField> valueList = null, IReadOnlyDictionary<string, DocumentField> valueDictionary = null, CurrencyValue valueCurrency = null, AddressValue valueAddress = null, bool? valueBoolean = null, IEnumerable<string> valueSelectionGroup = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, float? confidence = null)
         {
-            valueArray ??= new List<DocumentField>();
-            valueObject ??= new Dictionary<string, DocumentField>();
+            valueList ??= new List<DocumentField>();
+            valueDictionary ??= new Dictionary<string, DocumentField>();
             valueSelectionGroup ??= new List<string>();
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
@@ -569,13 +569,13 @@ namespace Azure.AI.DocumentIntelligence
                 valueDate,
                 valueTime,
                 valuePhoneNumber,
-                valueNumber,
-                valueInteger,
+                valueDouble,
+                valueLong,
                 valueSelectionMark,
                 valueSignature,
                 valueCountryRegion,
-                valueArray?.ToList(),
-                valueObject,
+                valueList?.ToList(),
+                valueDictionary,
                 valueCurrency,
                 valueAddress,
                 valueBoolean,
@@ -668,15 +668,15 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <param name="apiVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <returns> A new <see cref="DocumentIntelligence.OperationDetails"/> instance for mocking. </returns>
-        public static OperationDetails OperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, string kind = "Unknown", Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null)
+        public static OperationDetails OperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, string kind = "Unknown", Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -684,8 +684,8 @@ namespace Azure.AI.DocumentIntelligence
                 operationId,
                 status,
                 percentCompleted,
-                createdDateTime,
-                lastUpdatedDateTime,
+                createdOn,
+                lastUpdatedOn,
                 kind,
                 resourceLocation,
                 apiVersion,
@@ -698,15 +698,15 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <param name="apiVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelBuildOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
+        public static DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -714,8 +714,8 @@ namespace Azure.AI.DocumentIntelligence
                 operationId,
                 status,
                 percentCompleted,
-                createdDateTime,
-                lastUpdatedDateTime,
+                createdOn,
+                lastUpdatedOn,
                 OperationKind.DocumentModelBuild,
                 resourceLocation,
                 apiVersion,
@@ -728,8 +728,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelDetails"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the document model was created. </param>
-        /// <param name="expirationDateTime"> Date and time (UTC) when the document model will expire. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the document model was created. </param>
+        /// <param name="expiresOn"> Date and time (UTC) when the document model will expire. </param>
         /// <param name="apiVersion"> API version used to create this document model. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="buildMode"> Custom document model build mode. </param>
@@ -744,7 +744,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="docTypes"> Supported document types. </param>
         /// <param name="warnings"> List of warnings encountered while building the model. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelDetails"/> instance for mocking. </returns>
-        public static DocumentModelDetails DocumentModelDetails(string modelId = null, string description = null, DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentBuildMode? buildMode = null, AzureBlobContentSource azureBlobSource = null, AzureBlobFileListContentSource azureBlobFileListSource = null, IReadOnlyDictionary<string, DocumentTypeDetails> docTypes = null, IEnumerable<DocumentIntelligenceWarning> warnings = null)
+        public static DocumentModelDetails DocumentModelDetails(string modelId = null, string description = null, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentBuildMode? buildMode = null, AzureBlobContentSource azureBlobSource = null, AzureBlobFileListContentSource azureBlobFileListSource = null, IReadOnlyDictionary<string, DocumentTypeDetails> docTypes = null, IEnumerable<DocumentIntelligenceWarning> warnings = null)
         {
             tags ??= new Dictionary<string, string>();
             docTypes ??= new Dictionary<string, DocumentTypeDetails>();
@@ -753,8 +753,8 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentModelDetails(
                 modelId,
                 description,
-                createdDateTime,
-                expirationDateTime,
+                createdOn,
+                expiresOn,
                 apiVersion,
                 tags,
                 buildMode,
@@ -827,15 +827,15 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <param name="apiVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelComposeOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelComposeOperationDetails DocumentModelComposeOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
+        public static DocumentModelComposeOperationDetails DocumentModelComposeOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -843,8 +843,8 @@ namespace Azure.AI.DocumentIntelligence
                 operationId,
                 status,
                 percentCompleted,
-                createdDateTime,
-                lastUpdatedDateTime,
+                createdOn,
+                lastUpdatedOn,
                 OperationKind.DocumentModelCompose,
                 resourceLocation,
                 apiVersion,
@@ -870,15 +870,15 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <param name="apiVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelCopyToOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelCopyToOperationDetails DocumentModelCopyToOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
+        public static DocumentModelCopyToOperationDetails DocumentModelCopyToOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -886,8 +886,8 @@ namespace Azure.AI.DocumentIntelligence
                 operationId,
                 status,
                 percentCompleted,
-                createdDateTime,
-                lastUpdatedDateTime,
+                createdOn,
+                lastUpdatedOn,
                 OperationKind.DocumentModelCopyTo,
                 resourceLocation,
                 apiVersion,
@@ -918,11 +918,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.QuotaDetails"/>. </summary>
         /// <param name="used"> Amount of the resource quota used. </param>
         /// <param name="quota"> Resource quota limit. </param>
-        /// <param name="quotaResetDateTime"> Date/time when the resource quota usage will be reset. </param>
+        /// <param name="quotaResetsOn"> Date/time when the resource quota usage will be reset. </param>
         /// <returns> A new <see cref="DocumentIntelligence.QuotaDetails"/> instance for mocking. </returns>
-        public static QuotaDetails QuotaDetails(int used = default, int quota = default, DateTimeOffset quotaResetDateTime = default)
+        public static QuotaDetails QuotaDetails(int used = default, int quota = default, DateTimeOffset quotaResetsOn = default)
         {
-            return new QuotaDetails(used, quota, quotaResetDateTime, serializedAdditionalRawData: null);
+            return new QuotaDetails(used, quota, quotaResetsOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.BuildDocumentClassifierContent"/>. </summary>
@@ -942,15 +942,15 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <param name="apiVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierBuildOperationDetails"/> instance for mocking. </returns>
-        public static DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentClassifierDetails result = null)
+        public static DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentClassifierDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -958,8 +958,8 @@ namespace Azure.AI.DocumentIntelligence
                 operationId,
                 status,
                 percentCompleted,
-                createdDateTime,
-                lastUpdatedDateTime,
+                createdOn,
+                lastUpdatedOn,
                 OperationKind.DocumentClassifierBuild,
                 resourceLocation,
                 apiVersion,
@@ -972,14 +972,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentClassifierDetails"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="description"> Document classifier description. </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the document classifier was created. </param>
-        /// <param name="expirationDateTime"> Date and time (UTC) when the document classifier will expire. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
+        /// <param name="expiresOn"> Date and time (UTC) when the document classifier will expire. </param>
         /// <param name="apiVersion"> API version used to create this document classifier. </param>
         /// <param name="baseClassifierId"> Base classifierId on top of which the classifier was trained. </param>
         /// <param name="docTypes"> List of document types to classify against. </param>
         /// <param name="warnings"> List of warnings encountered while building the classifier. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierDetails"/> instance for mocking. </returns>
-        public static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string apiVersion = null, string baseClassifierId = null, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes = null, IEnumerable<DocumentIntelligenceWarning> warnings = null)
+        public static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = null, string apiVersion = null, string baseClassifierId = null, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes = null, IEnumerable<DocumentIntelligenceWarning> warnings = null)
         {
             docTypes ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
             warnings ??= new List<DocumentIntelligenceWarning>();
@@ -987,8 +987,8 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentClassifierDetails(
                 classifierId,
                 description,
-                createdDateTime,
-                expirationDateTime,
+                createdOn,
+                expiresOn,
                 apiVersion,
                 baseClassifierId,
                 docTypes,

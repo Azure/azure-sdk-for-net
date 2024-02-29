@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Client options for Azure.AI.DocumentIntelligence library clients. </summary>
-    public partial class AzureAIDocumentIntelligenceClientOptions : ClientOptions
+    public partial class DocumentIntelligenceClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_02_29_Preview;
 
@@ -24,8 +24,8 @@ namespace Azure.AI.DocumentIntelligence
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of AzureAIDocumentIntelligenceClientOptions. </summary>
-        public AzureAIDocumentIntelligenceClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of DocumentIntelligenceClientOptions. </summary>
+        public DocumentIntelligenceClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

@@ -43,7 +43,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceAdministrationClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AzureAIDocumentIntelligenceClientOptions())
+        public DocumentIntelligenceAdministrationClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
         {
         }
 
@@ -51,7 +51,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureAIDocumentIntelligenceClientOptions())
+        public DocumentIntelligenceAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
         {
         }
 
@@ -60,7 +60,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceAdministrationClient(Uri endpoint, AzureKeyCredential credential, AzureAIDocumentIntelligenceClientOptions options)
+        public DocumentIntelligenceAdministrationClient(Uri endpoint, AzureKeyCredential credential, DocumentIntelligenceClientOptions options)
         {
             if (endpoint == null)
             {
@@ -70,7 +70,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-            options ??= new AzureAIDocumentIntelligenceClientOptions();
+            options ??= new DocumentIntelligenceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
@@ -84,7 +84,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceAdministrationClient(Uri endpoint, TokenCredential credential, AzureAIDocumentIntelligenceClientOptions options)
+        public DocumentIntelligenceAdministrationClient(Uri endpoint, TokenCredential credential, DocumentIntelligenceClientOptions options)
         {
             if (endpoint == null)
             {
@@ -94,7 +94,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-            options ??= new AzureAIDocumentIntelligenceClientOptions();
+            options ??= new DocumentIntelligenceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;

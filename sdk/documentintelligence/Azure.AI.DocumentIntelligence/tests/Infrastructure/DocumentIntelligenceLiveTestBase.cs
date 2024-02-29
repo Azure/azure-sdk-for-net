@@ -24,7 +24,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         protected DocumentIntelligenceClient CreateDocumentIntelligenceClient(bool useTokenCredential = false)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            var options = InstrumentClientOptions(new AzureAIDocumentIntelligenceClientOptions());
+            var options = InstrumentClientOptions(new DocumentIntelligenceClientOptions());
 
             DocumentIntelligenceClient nonInstrumentedClient;
 
@@ -44,7 +44,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         protected DocumentIntelligenceAdministrationClient CreateDocumentIntelligenceAdministrationClient(bool useTokenCredential = false)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            var options = InstrumentClientOptions(new AzureAIDocumentIntelligenceClientOptions());
+            var options = InstrumentClientOptions(new DocumentIntelligenceClientOptions());
 
             DocumentIntelligenceAdministrationClient nonInstrumentedClient;
 

@@ -49,15 +49,15 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("valuePhoneNumber"u8);
                 writer.WriteStringValue(ValuePhoneNumber);
             }
-            if (ValueNumber.HasValue)
+            if (ValueDouble.HasValue)
             {
                 writer.WritePropertyName("valueNumber"u8);
-                writer.WriteNumberValue(ValueNumber.Value);
+                writer.WriteNumberValue(ValueDouble.Value);
             }
-            if (ValueInteger.HasValue)
+            if (ValueLong.HasValue)
             {
                 writer.WritePropertyName("valueInteger"u8);
-                writer.WriteNumberValue(ValueInteger.Value);
+                writer.WriteNumberValue(ValueLong.Value);
             }
             if (ValueSelectionMark.HasValue)
             {
@@ -74,21 +74,21 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("valueCountryRegion"u8);
                 writer.WriteStringValue(ValueCountryRegion);
             }
-            if (!(ValueArray is ChangeTrackingList<DocumentField> collection && collection.IsUndefined))
+            if (!(ValueList is ChangeTrackingList<DocumentField> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("valueArray"u8);
                 writer.WriteStartArray();
-                foreach (var item in ValueArray)
+                foreach (var item in ValueList)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ValueObject is ChangeTrackingDictionary<string, DocumentField> collection0 && collection0.IsUndefined))
+            if (!(ValueDictionary is ChangeTrackingDictionary<string, DocumentField> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("valueObject"u8);
                 writer.WriteStartObject();
-                foreach (var item in ValueObject)
+                foreach (var item in ValueDictionary)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteObjectValue(item.Value);
