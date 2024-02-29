@@ -152,6 +152,7 @@ foreach (DiscoveryGroup discoGroup in response)
 
 
 ## Troubleshooting
+
 ### Enabling Logging
 Azure SDKs for .NET offer a consistent logging story to help aid in troubleshooting application errors and expedite
 their resolution. The logs produced will capture the flow of an application before reaching the terminal state to help
