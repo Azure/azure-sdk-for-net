@@ -126,7 +126,23 @@ namespace Azure
             _handlers[0] = classifier;
         }
 
-        internal ResponseClassifier Apply(ResponseClassifier classifier)
+        /// <inheritdoc/>
+        protected override void Apply(PipelineMessage message)
+        {
+            base.Apply(message);
+
+            HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
+
+            if (Policies?.Count > 0)
+            {
+                httpMessage.Policies ??= new(Policies.Count);
+                httpMessage.Policies.AddRange(Policies);
+            }
+
+            httpMessage.ResponseClassifier = ApplyClassifier(httpMessage.ResponseClassifier);
+        }
+
+        private ResponseClassifier ApplyClassifier(ResponseClassifier classifier)
         {
             if (_statusCodes == null && _handlers == null)
             {
