@@ -32,7 +32,7 @@ namespace Azure.Core.Pipeline
             /// <inheritdoc />
             protected override void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest)
             {
-                HttpMessage httpMessage = HttpMessage.AssertHttpMessage(message);
+                HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
                 HttpClientTransportRequest.AddAzureProperties(httpMessage, httpRequest);
                 httpMessage.ClearResponse();
             }
@@ -40,7 +40,7 @@ namespace Azure.Core.Pipeline
             /// <inheritdoc />
             protected override void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
             {
-                HttpMessage httpMessage = HttpMessage.AssertHttpMessage(message);
+                HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
                 string clientRequestId = httpMessage.Request.ClientRequestId;
                 PipelineResponse pipelineResponse = message.Response!;
                 httpMessage.Response = new HttpClientTransportResponse(clientRequestId, pipelineResponse);

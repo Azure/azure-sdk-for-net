@@ -26,13 +26,13 @@ public partial class HttpPipelineTransport
 
         protected override void ProcessCore(PipelineMessage message)
         {
-            HttpMessage httpMessage = HttpMessage.AssertHttpMessage(message);
+            HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
             _transport.Process(httpMessage);
         }
 
         protected override async ValueTask ProcessCoreAsync(PipelineMessage message)
         {
-            HttpMessage httpMessage = HttpMessage.AssertHttpMessage(message);
+            HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
             await _transport.ProcessAsync(httpMessage).ConfigureAwait(false);
         }
     }

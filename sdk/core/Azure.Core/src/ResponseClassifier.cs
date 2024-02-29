@@ -43,8 +43,14 @@ namespace Azure.Core
         /// </summary>
         public virtual bool IsRetriable(HttpMessage message, Exception exception)
         {
-            // Azure.Core cannot use default logic in this case to support end-user overrides
-            // of virtual IsRetriableException method.
+            if (exception is null)
+            {
+                return IsErrorResponse(message);
+            }
+
+            // In order to allow users to override IsRetriableException logic,
+            // we must call through to that rather than using the base type
+            // default implementation.
 
             return IsRetriableException(exception) ||
                 // Retry non-user initiated cancellations
@@ -64,45 +70,74 @@ namespace Azure.Core
             return isError;
         }
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="isError"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        // TODO: Add a test that breaks if we unseal this to prevent that from happening
-        // Note: this is sealed to force the base type to call through to any overridden virtual methods
-        // on a subtype of ResponseClassifier.
         public sealed override bool TryClassify(PipelineMessage message, out bool isError)
         {
-            HttpMessage httpMessage = HttpMessage.AssertHttpMessage(message);
+            HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
 
             isError = IsErrorResponse(httpMessage);
 
             return true;
         }
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="exception"></param>
-        /// <param name="isRetriable"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        // TODO: Add a test that breaks if we unseal this to prevent that from happening
-        // Note: this is sealed to force the base type to call through to any overridden virtual methods
-        // on a subtype of ResponseClassifier.
         public sealed override bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
         {
-            HttpMessage httpMessage = HttpMessage.AssertHttpMessage(message);
+            HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
 
             isRetriable = exception is null ?
                 IsRetriableResponse(httpMessage) :
                 IsRetriable(httpMessage, exception);
 
             return true;
+        }
+
+        /// <summary>
+        /// This adapter adapts the System.ClientModel
+        /// <see cref="PipelineMessageClassifier"/> type to the Azure.Core
+        /// <see cref="ResponseClassifier"/> interface, so that it can be used
+        /// as though it were a ResponseClassifier in Azure.Core.
+        /// </summary>
+        internal sealed class PipelineMessageClassifierAdapter : ResponseClassifier
+        {
+            private readonly PipelineMessageClassifier _classifier;
+
+            public PipelineMessageClassifierAdapter(PipelineMessageClassifier classifier)
+            {
+                _classifier = classifier;
+            }
+
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                bool classified = _classifier.TryClassify(message, out bool isError);
+
+                Debug.Assert(classified);
+
+                return isError;
+            }
+
+            public override bool IsRetriable(HttpMessage message, Exception exception)
+            {
+                bool classified = _classifier.TryClassify(message, exception, out bool isRetriable);
+
+                Debug.Assert(classified);
+
+                return isRetriable;
+            }
+
+            public override bool IsRetriableException(Exception exception)
+                => base.IsRetriableException(exception);
+
+            public override bool IsRetriableResponse(HttpMessage message)
+            {
+                bool classified = _classifier.TryClassify(message, exception: default, out bool isRetriable);
+
+                Debug.Assert(classified);
+
+                return isRetriable;
+            }
         }
     }
 }

@@ -48,7 +48,9 @@ namespace Azure.Core
                     throw new InvalidOperationException($"{nameof(Response)} is not set on this message. "
                         + "This is may be because the message was not sent via pipeline.Send, "
                         + "the pipeline transport did not populate the response, or because "
-                        + $"{nameof(ExtractResponse)} was called.");
+                        + $"{nameof(ExtractResponse)} was called. You can check the {nameof(HasResponse)} "
+                        + "property to test whether the message has a response value before "
+                        + $"accessing the {nameof(Response)} property.");
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
                 return (Response)base.Response;
@@ -69,7 +71,12 @@ namespace Azure.Core
         /// </summary>
         public new ResponseClassifier ResponseClassifier
         {
-            get => (ResponseClassifier)base.ResponseClassifier;
+            get => base.ResponseClassifier switch
+            {
+                ResponseClassifier responseClassifier => responseClassifier,
+                PipelineMessageClassifier messageClassifier => new ResponseClassifier.PipelineMessageClassifierAdapter(messageClassifier)
+            };
+
             set => base.ResponseClassifier = value;
         }
 
@@ -89,7 +96,6 @@ namespace Azure.Core
         {
             context.Freeze();
 
-            // Azure-specific extensibility piece
             if (context.Policies?.Count > 0)
             {
                 Policies ??= new(context.Policies.Count);
@@ -106,7 +112,7 @@ namespace Azure.Core
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
 
-        internal static HttpMessage AssertHttpMessage(PipelineMessage message)
+        internal static HttpMessage GetHttpMessage(PipelineMessage message)
         {
             if (message is not HttpMessage httpMessage)
             {
@@ -172,12 +178,7 @@ namespace Azure.Core
         /// did not have content set.</returns>
         public Stream? ExtractResponseContent()
         {
-            if (!HasResponse)
-            {
-                return null;
-            }
-
-            switch (Response.ContentStream)
+            switch (Response?.ContentStream)
             {
                 case ResponseShouldNotBeUsedStream responseContent:
                     return responseContent.Original;
@@ -196,7 +197,8 @@ namespace Azure.Core
         /// null and the caller will be responsible for disposing the returned
         /// value, which may hold a live network stream.
         /// </summary>
-        public new Response? ExtractResponse() => (Response?)base.ExtractResponse();
+        public new Response? ExtractResponse()
+            => (Response?)base.ExtractResponse();
 
         private class ResponseShouldNotBeUsedStream : Stream
         {

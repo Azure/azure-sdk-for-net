@@ -35,19 +35,19 @@ public partial class RetryPolicy
         {
             _beforeProcess = Stopwatch.GetTimestamp();
 
-            _pipelinePolicy.OnSendingRequest(HttpMessage.AssertHttpMessage(message));
+            _pipelinePolicy.OnSendingRequest(HttpMessage.GetHttpMessage(message));
         }
 
         protected override async ValueTask OnSendingRequestAsync(PipelineMessage message)
         {
             _beforeProcess = Stopwatch.GetTimestamp();
 
-            await _pipelinePolicy.OnSendingRequestAsync(HttpMessage.AssertHttpMessage(message)).ConfigureAwait(false);
+            await _pipelinePolicy.OnSendingRequestAsync(HttpMessage.GetHttpMessage(message)).ConfigureAwait(false);
         }
 
         protected override void OnRequestSent(PipelineMessage message)
         {
-            _pipelinePolicy.OnRequestSent(HttpMessage.AssertHttpMessage(message));
+            _pipelinePolicy.OnRequestSent(HttpMessage.GetHttpMessage(message));
 
             _afterProcess = Stopwatch.GetTimestamp();
             _elapsedTime = (_afterProcess - _beforeProcess) / (double)Stopwatch.Frequency;
@@ -55,21 +55,21 @@ public partial class RetryPolicy
 
         protected override async ValueTask OnRequestSentAsync(PipelineMessage message)
         {
-            await _pipelinePolicy.OnRequestSentAsync(HttpMessage.AssertHttpMessage(message)).ConfigureAwait(false);
+            await _pipelinePolicy.OnRequestSentAsync(HttpMessage.GetHttpMessage(message)).ConfigureAwait(false);
 
             _afterProcess = Stopwatch.GetTimestamp();
             _elapsedTime = (_afterProcess - _beforeProcess) / (double)Stopwatch.Frequency;
         }
 
         protected override bool ShouldRetry(PipelineMessage message, Exception? exception)
-            => _pipelinePolicy.ShouldRetry(HttpMessage.AssertHttpMessage(message), exception);
+            => _pipelinePolicy.ShouldRetry(HttpMessage.GetHttpMessage(message), exception);
 
         protected override async ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
-            => await _pipelinePolicy.ShouldRetryAsync(HttpMessage.AssertHttpMessage(message), exception).ConfigureAwait(false);
+            => await _pipelinePolicy.ShouldRetryAsync(HttpMessage.GetHttpMessage(message), exception).ConfigureAwait(false);
 
         protected override void OnTryComplete(PipelineMessage message)
         {
-            HttpMessage httpMessage = HttpMessage.AssertHttpMessage(message);
+            HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
             httpMessage.RetryNumber++;
 
             AzureCoreEventSource.Singleton.RequestRetrying(httpMessage.Request.ClientRequestId, httpMessage.RetryNumber, _elapsedTime);
@@ -82,7 +82,7 @@ public partial class RetryPolicy
 
         protected override TimeSpan GetNextDelay(PipelineMessage message, int tryCount)
         {
-            HttpMessage httpMessage = HttpMessage.AssertHttpMessage(message);
+            HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
 
             Debug.Assert(tryCount == httpMessage.RetryNumber);
 

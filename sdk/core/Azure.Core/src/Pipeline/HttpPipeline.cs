@@ -195,23 +195,17 @@ namespace Azure.Core.Pipeline
             }
             else
             {
-                Send(message);
-            }
-        }
-
-        private void Send(HttpMessage message)
-        {
-            int length = _pipeline.Length + message.Policies!.Count;
-            HttpPipelinePolicy[] policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
-
-            try
-            {
-                ReadOnlyMemory<HttpPipelinePolicy> pipeline = CreateRequestPipeline(policies, message.Policies);
-                pipeline.Span[0].Process(message, pipeline.Slice(1));
-            }
-            finally
-            {
-                ArrayPool<HttpPipelinePolicy>.Shared.Return(policies);
+                int length = _pipeline.Length + message.Policies.Count;
+                HttpPipelinePolicy[] policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+                try
+                {
+                    ReadOnlyMemory<HttpPipelinePolicy> pipeline = CreateRequestPipeline(policies, message.Policies);
+                    pipeline.Span[0].Process(message, pipeline.Slice(1));
+                }
+                finally
+                {
+                    ArrayPool<HttpPipelinePolicy>.Shared.Return(policies);
+                }
             }
         }
 

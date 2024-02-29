@@ -7,6 +7,7 @@ using System;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.ClientModel.Primitives;
 
 namespace Azure.Core.Tests
 {
@@ -380,6 +381,19 @@ namespace Azure.Core.Tests
             Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
 
             message.Response = new MockResponse(500);
+            Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
+        }
+
+        [Test]
+        public void SettingBaseClassifierSetsHttpMessageClassifier()
+        {
+            MockRequest request = new();
+            HttpMessage message = new(request, ResponseClassifier.Shared);
+            message.Response = new MockResponse(400);
+
+            PipelineMessage pipelineMessage = message;
+            pipelineMessage.ResponseClassifier = PipelineMessageClassifier.Default;
+
             Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
         }
 
