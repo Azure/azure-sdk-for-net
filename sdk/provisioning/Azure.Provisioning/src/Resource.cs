@@ -298,17 +298,6 @@ namespace Azure.Provisioning
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
-        private void AddToOverrides(BicepModelReaderWriterOptions bicepOptions, object instance, string propertyName, string propertyValue)
-        {
-            if (!bicepOptions.ParameterOverrides.TryGetValue(instance, out IDictionary<string, string>? instanceOverrides))
-            {
-                instanceOverrides = new Dictionary<string, string>();
-                bicepOptions.ParameterOverrides[instance] = instanceOverrides;
-            }
-
-            instanceOverrides[propertyName] = propertyValue;
-        }
-
         private bool NeedsScope()
         {
             Debug.Assert(ModuleScope != null, "ModuleScope should not be null");
