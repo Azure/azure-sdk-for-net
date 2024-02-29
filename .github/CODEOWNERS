@@ -478,6 +478,9 @@
 # ServiceLabel: %TimeSeriesInsights
 # ServiceOwners:                                                   @yeskarthik @rasidhan @dmdenmsft
 
+# PRLabel: %EASM
+/sdk/easm/Azure.Analytics.Defender.Easm                            @thang-bit
+
 # PRLabel: %Event Grid
 /sdk/eventgrid/                                                    @Kishp01 @ahamad-MS @jfggdl @JoshLove-msft
 
@@ -941,9 +944,6 @@
 
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
-
-# PRLabel: %EASM
-/sdk/easm/                                                         @thang-bit
 
 # Reviewers to double check any API changes
 /sdk/**/api/                                                       @KrzysztofCwalina @tg-msft
