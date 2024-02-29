@@ -9,7 +9,7 @@ using Azure.ResourceManager.AppService.Tests;
 using Azure.ResourceManager.AppService.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.AppService.Test.TestsCase
+namespace Azure.ResourceManager.AppService.Tests.TestsCase
 {
     public class SiteDetectorTest : AppServiceTestBase
     {
