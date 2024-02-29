@@ -479,7 +479,7 @@
 # ServiceOwners:                                                   @yeskarthik @rasidhan @dmdenmsft
 
 # PRLabel: %Defender EASM
-/sdk/easm/Azure.Analytics.Defender.Easm                            @thang-bit
+/sdk/easm/Azure.Analytics.Defender.Easm/                           @thang-bit
 
 # ServiceLabel: %Defender EASM
 # ServiceOwners:                                                   @thang-bit
