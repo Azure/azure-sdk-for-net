@@ -211,11 +211,20 @@ namespace Azure.Provisioning.Tests
         public async Task StorageBlobDefaultsInPromptMode()
         {
             var infra = new TestInfrastructure(configuration: new Configuration { UsePromptMode = true });
-            infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            var sa = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             infra.AddBlobService();
             infra.Build(GetOutputPath());
 
             await ValidateBicepAsync(promptMode: true);
+        }
+
+        [Test]
+        public void LocationParameterCannotBeAddedInPromptMode()
+        {
+            var infra = new TestInfrastructure(configuration: new Configuration { UsePromptMode = true });
+            var sa = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            Assert.Throws<InvalidOperationException>(() =>
+                sa.AssignParameter(d => d.Location, new Parameter("myLocationParam")));
         }
 
         [Test]

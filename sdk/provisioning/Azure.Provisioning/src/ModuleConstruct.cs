@@ -206,7 +206,10 @@ namespace Azure.Provisioning
                 {
                     continue;
                 }
-                string defaultValue = parameter.DefaultValue is null ? string.Empty : $" = '{parameter.DefaultValue}'";
+                string defaultValue =
+                    parameter.DefaultValue is null ?
+                        string.Empty :
+                        parameter.IsExpression ? $" = {parameter.DefaultValue}" : $" = '{parameter.DefaultValue}'";
 
                 if (parameter.IsSecure)
                     stream.WriteLine($"@secure()");

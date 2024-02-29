@@ -1,9 +1,12 @@
 targetScope = 'resourceGroup'
 
+@description('')
+param location string = resourceGroup().location
 
-resource storageAccount_Ls2Cd9uGu 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+
+resource storageAccount_1JetI2q6o 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: toLower(take(concat('photoAcct', uniqueString(resourceGroup().id)), 24))
-  location: resourceGroup().location
+  location: location
   sku: {
     name: 'Premium_LRS'
   }
@@ -12,8 +15,8 @@ resource storageAccount_Ls2Cd9uGu 'Microsoft.Storage/storageAccounts@2022-09-01'
   }
 }
 
-resource blobService_OdYIZd2T2 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
-  parent: storageAccount_Ls2Cd9uGu
+resource blobService_vupTLRqwy 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
+  parent: storageAccount_1JetI2q6o
   name: 'default'
   properties: {
   }

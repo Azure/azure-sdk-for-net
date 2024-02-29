@@ -145,7 +145,6 @@ resource sqlServer_RgHXTrwDE 'Microsoft.Sql/servers@2022-08-01-preview' = {
 resource sqlDatabase_6M6mjEKjO 'Microsoft.Sql/servers/databases@2022-08-01-preview' = {
   parent: sqlServer_RgHXTrwDE
   name: 'db-TEST'
-  location: 'westus'
   properties: {
   }
 }

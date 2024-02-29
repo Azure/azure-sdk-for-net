@@ -29,6 +29,10 @@ namespace Azure.Provisioning
         /// Gets a value indicating whether the parameter is secure.
         /// </summary>
         public bool IsSecure { get; }
+        /// <summary>
+        /// Gets a value indicating whether the parameter is an expression.
+        /// </summary>
+        public bool IsExpression { get; }
 
         internal bool IsFromOutput => Output != null;
         internal bool IsLiteral => Output?.IsLiteral ?? false;
@@ -67,14 +71,15 @@ namespace Azure.Provisioning
         /// <param name="description">The parameter description.</param>
         /// <param name="defaultValue">The parameter defaultValue.</param>
         /// <param name="isSecure">Is the parameter secure.</param>
-        public Parameter(string name, string? description = default, object? defaultValue = default, bool isSecure = false)
+        /// <param name="isExpression">Is the parameter an expression.</param>
+        public Parameter(string name, string? description = default, object? defaultValue = default, bool isSecure = false, bool isExpression = false)
         {
             Name = name;
             Description = description;
             DefaultValue = defaultValue;
             IsSecure = isSecure;
+            IsExpression = isExpression;
         }
-
         internal string GetParameterString(IConstruct parentScope)
         {
             // If the parameter is not from an output, use the parameter name.
