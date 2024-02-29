@@ -13,8 +13,6 @@ namespace Azure.Core
     /// </summary>
     public abstract class ClientOptions
     {
-        internal static readonly TimeSpan DefaultNetworkTimeout = TimeSpan.FromSeconds(100);
-
         private HttpPipelineTransport _transport;
         internal bool IsCustomTransportSet { get; private set; }
 
