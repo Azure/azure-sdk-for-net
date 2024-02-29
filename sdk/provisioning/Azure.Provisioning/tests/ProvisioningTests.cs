@@ -20,7 +20,6 @@ using Azure.Provisioning.Storage;
 using Azure.Provisioning.AppConfiguration;
 using Azure.Provisioning.Authorization;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -47,7 +46,8 @@ namespace Azure.Provisioning.Tests
             AppServicePlan appServicePlan = infra.AddAppServicePlan();
 
             WebSite frontEnd = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts");
-            Assert.AreEqual(Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID"), frontEnd.Properties.AppServicePlanId.SubscriptionId);
+
+            Assert.AreEqual(Guid.Empty.ToString(), frontEnd.Properties.AppServicePlanId.SubscriptionId);
 
             var frontEndPrincipalId = frontEnd.AddOutput(
                 website => website.Identity.PrincipalId, //Identity.PrincipalId
@@ -110,7 +110,8 @@ namespace Azure.Provisioning.Tests
         {
             var infra = new TestInfrastructure();
             infra.AddFrontEndWebSite();
-            Assert.AreEqual(Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID"), infra.GetSingleResourceInScope<WebSite>()!.Properties.AppServicePlanId.SubscriptionId);
+
+            Assert.AreEqual(Guid.Empty.ToString(), infra.GetSingleResourceInScope<WebSite>()!.Properties.AppServicePlanId.SubscriptionId);
 
             infra.AddCommonSqlDatabase();
             infra.AddBackEndWebSite();
@@ -135,10 +136,9 @@ namespace Azure.Provisioning.Tests
             infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
             infra.GetSingleResourceInScope<KeyVault>()!.Properties.Tags.Add("key", "value");
 
-            var subscriptionId = Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID");
             foreach (var website in infra.GetResources().Where(r => r is WebSite))
             {
-                Assert.AreEqual(subscriptionId, ((WebSite)website).Properties.AppServicePlanId.SubscriptionId);
+                Assert.AreEqual(Guid.Empty.ToString(), ((WebSite)website).Properties.AppServicePlanId.SubscriptionId);
             }
 
             infra.Build(GetOutputPath());
@@ -154,7 +154,7 @@ namespace Azure.Provisioning.Tests
         [Test]
         public async Task WebSiteUsingL3SpecificSubscription()
         {
-            var infra = new TestInfrastructure(Guid.Empty);
+            var infra = new TestInfrastructure();
             infra.AddWebSiteWithSqlBackEnd();
 
             infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
