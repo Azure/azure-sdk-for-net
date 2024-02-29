@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> The list of enabled rules. </summary>
+        [WirePath("enabledRules")]
         public IList<RoleAssignmentEnablementRuleType> EnablementRules { get; }
     }
 }

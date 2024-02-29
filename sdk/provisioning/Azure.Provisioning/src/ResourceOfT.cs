@@ -5,6 +5,8 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using Azure.Core;
+using Azure.Provisioning.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.Provisioning
 {
@@ -33,10 +35,24 @@ namespace Azure.Provisioning
         /// <param name="resourceType">The resourceType.</param>
         /// <param name="version">The version.</param>
         /// <param name="createProperties">Lambda to create the ARM properties.</param>
-        protected Resource(IConstruct scope, Resource? parent, string resourceName, ResourceType resourceType, string version, Func<string, T> createProperties)
-            : base(scope, parent, resourceName, resourceType, version, (name) => createProperties(name))
+        protected Resource(
+            IConstruct scope,
+            Resource? parent,
+            string resourceName,
+            ResourceType resourceType,
+            string version,
+            Func<string, T> createProperties)
+            : base(scope, parent, resourceName, resourceType, version, name => createProperties(name))
         {
             Properties = (T)ResourceData;
+
+            // Resources that have a non-RG parent do not require a location value
+            if (scope.Configuration?.UsePromptMode == true && Parent is ResourceGroup)
+            {
+                // We can't use the lambda overload because not all of the T's will inherit from TrackedResourceData
+                // TODO we may need to add a protected LocationSelector property in the future if there are exceptions to the rule
+                AssignParameter(Properties, "Location", new Parameter("location", defaultValue: $"{ResourceGroup.AnonymousResourceGroupName}.location", isExpression: true));
+            }
         }
 
         /// <summary>
@@ -49,6 +65,18 @@ namespace Azure.Provisioning
         {
             (object instance, string name, string expression) = EvaluateLambda(propertySelector);
             AssignParameter(instance, name, parameter);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="propertySelector"></param>
+        /// <param name="propertyValue"></param>
+        /// <exception cref="NotSupportedException"></exception>
+        public void AssignProperty(Expression<Func<T, object?>> propertySelector, string propertyValue)
+        {
+            (object instance, string name, string expression) = EvaluateLambda(propertySelector);
+            AssignProperty(instance, name, propertyValue);
         }
 
         /// <summary>
@@ -112,6 +140,8 @@ namespace Azure.Provisioning
                     {
                         GetBicepExpression(memberExpression.Expression, ref result);
                     }
+                    break;
+                case UnaryExpression unaryExpression:
                     break;
                 case MethodCallExpression methodCallExpression:
                     break; // skip

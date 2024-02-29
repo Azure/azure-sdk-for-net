@@ -2,12 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Azure.Provisioning.ResourceManager;
-using Microsoft.Extensions.Azure;
 
 namespace Azure.Provisioning
 {
@@ -15,7 +12,7 @@ namespace Azure.Provisioning
     /// Basic building block of a set of resources in Azure.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Construct : IConstruct, IPersistableModel<Construct>
+    public abstract class Construct : IConstruct
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         private List<Parameter> _parameters;
@@ -39,6 +36,19 @@ namespace Azure.Provisioning
         public Tenant Root { get; }
         /// <inheritdoc/>
         public ConstructScope ConstructScope { get; }
+        /// <inheritdoc/>
+        public Configuration? Configuration
+        {
+            get
+            {
+                return Scope == null ? _configuration : Scope.Configuration;
+            }
+            internal set
+            {
+                _configuration = value;
+            }
+        }
+        private Configuration? _configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Construct"/> class.
@@ -67,11 +77,6 @@ namespace Azure.Provisioning
             Subscription? subscription = default,
             ResourceGroup? resourceGroup = default)
         {
-            if (scope is null && constructScope == ConstructScope.ResourceGroup)
-            {
-                throw new ArgumentException($"Scope cannot be null if construct scope is is {nameof(ConstructScope.ResourceGroup)}");
-            }
-
             Scope = scope;
             Scope?.AddConstruct(this);
             _resources = new List<Resource>();
@@ -84,7 +89,7 @@ namespace Azure.Provisioning
             ConstructScope = constructScope;
             if (constructScope == ConstructScope.ResourceGroup)
             {
-                ResourceGroup = resourceGroup ?? scope!.ResourceGroup ?? scope.GetOrAddResourceGroup();
+                ResourceGroup = resourceGroup ?? scope?.ResourceGroup ?? scope?.GetOrAddResourceGroup();
             }
             if (constructScope == ConstructScope.Subscription)
             {
@@ -120,6 +125,16 @@ namespace Azure.Provisioning
             if (recursive)
             {
                 result = result.Concat(GetConstructs(false).SelectMany(c => c.GetResources(true)));
+            }
+            return result;
+        }
+
+        internal IEnumerable<Resource> GetExistingResources(bool recursive = true)
+        {
+            IEnumerable<Resource> result = _existingResources;
+            if (recursive)
+            {
+                result = result.Concat(GetConstructs(false).SelectMany(c => ((Construct)c).GetExistingResources(true)));
             }
             return result;
         }
@@ -180,219 +195,5 @@ namespace Azure.Provisioning
         {
             _outputs.Add(output);
         }
-
-        private string GetScopeName()
-        {
-            return ResourceGroup?.Name ?? (Subscription != null ? $"subscription('{Subscription.Name}')" : "tenant()");
-        }
-
-        private BinaryData SerializeModuleReference(ModelReaderWriterOptions options)
-        {
-            using var stream = new MemoryStream();
-            stream.WriteLine($"module {Name} './resources/{Name}/{Name}.bicep' = {{");
-            stream.WriteLine($"  name: '{Name}'");
-            stream.WriteLine($"  scope: {GetScopeName()}");
-
-            var parametersToWrite = new HashSet<Parameter>();
-            var outputs = new HashSet<Output>(GetOutputs());
-            foreach (var p in GetParameters(false))
-            {
-                if (!ShouldExposeParameter(p, outputs))
-                {
-                    continue;
-                }
-                parametersToWrite.Add(p);
-            }
-            if (parametersToWrite.Count > 0)
-            {
-                stream.WriteLine($"  params: {{");
-                foreach (var parameter in parametersToWrite)
-                {
-                    stream.WriteLine($"    {parameter.Name}: {parameter.GetParameterString(Scope!)}");
-                }
-                stream.WriteLine($"  }}");
-            }
-            stream.WriteLine($"}}");
-
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
-        }
-
-        private BinaryData SerializeModule(ModelReaderWriterOptions options)
-        {
-            using var stream = new MemoryStream();
-
-            WriteScopeLine(stream);
-
-            WriteParameters(stream);
-
-            WriteExistingResources(stream);
-
-            foreach (var resource in GetResources(false))
-            {
-                if (resource is Tenant)
-                {
-                    continue;
-                }
-                stream.WriteLine();
-                WriteLines(0, ModelReaderWriter.Write(resource, options), stream, resource);
-            }
-
-            foreach (var construct in GetConstructs(false))
-            {
-                stream.WriteLine();
-                stream.Write(ModelReaderWriter.Write(construct, new ModelReaderWriterOptions("bicep-module")).ToArray());
-            }
-
-            WriteOutputs(stream);
-
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
-        }
-
-        private void WriteExistingResources(MemoryStream stream)
-        {
-            foreach (var resource in _existingResources)
-            {
-                stream.WriteLine();
-                stream.WriteLine($"resource {resource.Name} '{resource.Id.ResourceType}@{resource.Version}' existing = {{");
-                stream.WriteLine($"  name: '{resource.Name}'");
-                stream.WriteLine($"}}");
-            }
-        }
-
-        private void WriteScopeLine(MemoryStream stream)
-        {
-            if (ConstructScope != ConstructScope.ResourceGroup)
-            {
-                stream.WriteLine($"targetScope = '{ConstructScope.ToString().ToCamelCase()}'{Environment.NewLine}");
-            }
-        }
-
-        internal void WriteOutputs(MemoryStream stream)
-        {
-            if (GetOutputs().Any())
-            {
-                stream.WriteLine();
-            }
-
-            var outputsToWrite = new HashSet<Output>();
-            GetAllOutputsRecursive(this, outputsToWrite, false);
-            foreach (var output in outputsToWrite)
-            {
-                string value;
-                if (output.IsLiteral || ReferenceEquals(this, output.Resource.ModuleScope))
-                {
-                    value = output.IsLiteral ? $"'{output.Value}'" : output.Value;
-                }
-                else
-                {
-                    value = $"{output.Resource.ModuleScope!.Name}.outputs.{output.Name}";
-                }
-                string name = output.Name;
-                stream.WriteLine($"output {name} string = {value}");
-            }
-        }
-
-        private void GetAllOutputsRecursive(IConstruct construct, HashSet<Output> visited, bool isChild)
-        {
-            if (!isChild)
-            {
-                foreach (var output in construct.GetOutputs())
-                {
-                    if (!visited.Contains(output))
-                    {
-                        visited.Add(output);
-                    }
-                }
-            }
-        }
-
-        private void WriteParameters(MemoryStream stream)
-        {
-            var parametersToWrite = new HashSet<Parameter>();
-            GetAllParametersRecursive(this, parametersToWrite, false);
-            var outputs = new HashSet<Output>(GetOutputs());
-            foreach (var parameter in parametersToWrite)
-            {
-                if (!ShouldExposeParameter(parameter, outputs))
-                {
-                    continue;
-                }
-                string defaultValue = parameter.DefaultValue is null ? string.Empty : $" = '{parameter.DefaultValue}'";
-
-                if (parameter.IsSecure)
-                    stream.WriteLine($"@secure()");
-
-                stream.WriteLine($"@description('{parameter.Description}')");
-                stream.WriteLine($"param {parameter.Name} string{defaultValue}{Environment.NewLine}");
-            }
-        }
-
-        private bool ShouldExposeParameter(Parameter parameter, HashSet<Output> outputs)
-        {
-            // Don't expose the parameter if the output that was used to create the parameter is already in scope.
-            return parameter.Output == null || !outputs.Contains(parameter.Output);
-        }
-
-        private void GetAllParametersRecursive(IConstruct construct, HashSet<Parameter> visited, bool isChild)
-        {
-            if (!isChild)
-            {
-                foreach (var parameter in construct.GetParameters())
-                {
-                    if (!visited.Contains(parameter))
-                    {
-                        visited.Add(parameter);
-                    }
-                }
-                foreach (var child in construct.GetConstructs(false))
-                {
-                    GetAllParametersRecursive(child, visited, isChild);
-                }
-            }
-        }
-
-        private static void WriteLines(int depth, BinaryData data, MemoryStream stream, Resource resource)
-        {
-            string indent = new string(' ', depth * 2);
-            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string lineToWrite = lines[i];
-
-                ReadOnlySpan<char> line = lines[i].AsSpan();
-                int start = 0;
-                while (line.Length > start && line[start] == ' ')
-                {
-                    start++;
-                }
-                line = line.Slice(start);
-                int end = line.IndexOf(':');
-                if (end > 0)
-                {
-                    // foo: 1
-                    // foo: 'something.url'
-                    string name = line.Slice(0, end).ToString();
-                    if (resource.ParameterOverrides.TryGetValue(name, out var value))
-                    {
-                        lineToWrite = $"{new string(' ', start)}{name}: {value}";
-                    }
-                }
-                stream.WriteLine($"{indent}{lineToWrite}");
-            }
-        }
-
-        BinaryData IPersistableModel<Construct>.Write(ModelReaderWriterOptions options) => (options.Format) switch
-        {
-            "bicep" => SerializeModule(options),
-            "bicep-module" => SerializeModuleReference(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
-
-        Construct IPersistableModel<Construct>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        string IPersistableModel<Construct>.GetFormatFromOptions(ModelReaderWriterOptions options) => "bicep";
     }
 }

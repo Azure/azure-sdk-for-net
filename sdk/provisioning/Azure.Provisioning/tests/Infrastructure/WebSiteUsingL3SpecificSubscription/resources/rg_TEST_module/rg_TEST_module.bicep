@@ -25,7 +25,7 @@ resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' = {
     'key': 'value'
   }
   properties: {
-    tenantId: '00000000-0000-0000-0000-000000000000'
+    tenantId: tenant()
     sku: {
       name: 'standard'
       family: 'A'
@@ -145,7 +145,6 @@ resource sqlServer_zjdvvB2wl 'Microsoft.Sql/servers@2022-08-01-preview' = {
 resource sqlDatabase_U7NzorRJT 'Microsoft.Sql/servers/databases@2022-08-01-preview' = {
   parent: sqlServer_zjdvvB2wl
   name: 'db-TEST'
-  location: 'westus'
   properties: {
   }
 }

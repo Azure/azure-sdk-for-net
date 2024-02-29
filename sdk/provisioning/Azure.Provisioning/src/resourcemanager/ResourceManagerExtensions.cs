@@ -23,11 +23,11 @@ namespace Azure.Provisioning.ResourceManager
                 throw new InvalidOperationException("ResourceGroup already exists on the construct");
             }
 
-            return new ResourceGroup(construct, name: "rg");
+            return new ResourceGroup(construct, name: construct.Configuration?.UsePromptMode == true ? ResourceGroup.AnonymousResourceGroupName : "rg");
         }
 
         /// <summary>
-        /// Gets or adds a resource group to the construct.
+        /// Gets or adds the resource group of the construct.
         /// </summary>
         /// <param name="construct">The construct.</param>
         /// <returns>The see <see cref="ResourceGroup"/>.</returns>

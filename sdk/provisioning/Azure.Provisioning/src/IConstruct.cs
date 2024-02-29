@@ -41,6 +41,11 @@ namespace Azure.Provisioning
         public Subscription? Subscription { get; }
 
         /// <summary>
+        /// Gets the configuration for the construct.
+        /// </summary>
+        public Configuration? Configuration { get; }
+
+        /// <summary>
         /// Gets the parent of the construct.
         /// </summary>
         public IConstruct? Scope { get; }

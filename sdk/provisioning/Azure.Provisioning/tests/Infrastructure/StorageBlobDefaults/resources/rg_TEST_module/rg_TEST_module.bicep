@@ -1,6 +1,6 @@
 
-resource storageAccount_jg6L4pK91 'Microsoft.Storage/storageAccounts@2022-09-01' = {
-  name: 'photoacct5287f60ab516425'
+resource storageAccount_rJRF56wLn 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+  name: 'photoacctdbd29b86eb654ef'
   location: 'westus'
   sku: {
     name: 'Premium_LRS'
@@ -10,19 +10,9 @@ resource storageAccount_jg6L4pK91 'Microsoft.Storage/storageAccounts@2022-09-01'
   }
 }
 
-resource blobService_nIjctIF1e 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
-  parent: storageAccount_jg6L4pK91
+resource blobService_wGH0Fapvd 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
+  parent: storageAccount_rJRF56wLn
   name: 'default'
   properties: {
-  }
-}
-
-resource roleAssignment_VNneMsL48 'Microsoft.Resources/roleAssignments@2022-04-01' = {
-  scope: storageAccount_jg6L4pK91
-  name: 'storageAccountjg6L4pK91-'
-  properties: {
-    roleDefinitionId: '/providers/Microsoft.Authorization/roleDefinitions/b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
-    principalId: '00000000-0000-0000-0000-000000000000'
-    principalType: 'ServicePrincipal'
   }
 }

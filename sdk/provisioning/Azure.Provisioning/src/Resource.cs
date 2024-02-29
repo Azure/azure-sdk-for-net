@@ -28,6 +28,8 @@ namespace Azure.Provisioning
     {
         internal Dictionary<object, Dictionary<string, Parameter>> ParameterOverrides { get; }
 
+        private Dictionary<object, Dictionary<string, string>> PropertyOverrides { get; }
+
         private IList<Resource> Dependencies { get; }
 
         internal void AddDependency(Resource resource)
@@ -88,6 +90,7 @@ namespace Azure.Provisioning
             ResourceData = createProperties(azureName);
             Version = version;
             ParameterOverrides = new Dictionary<object, Dictionary<string, Parameter>>();
+            PropertyOverrides = new Dictionary<object, Dictionary<string, string>>();
             Dependencies = new List<Resource>();
             ResourceType = resourceType;
             Id = Parent is null
@@ -150,6 +153,7 @@ namespace Azure.Provisioning
         /// <param name="parameter">The <see cref="Parameter"/> to assign.</param>
         private protected void AssignParameter(object instance, string propertyName, Parameter parameter)
         {
+            ValidateOverrideCanBeAdded(instance, propertyName);
             if (ParameterOverrides.TryGetValue(instance, out var overrides))
             {
                 overrides[propertyName] = parameter;
@@ -162,6 +166,31 @@ namespace Azure.Provisioning
             //TODO: We should not need this instead a parameter should have a reference to the resource it is associated with but belong to the construct only.
             //https://github.com/Azure/azure-sdk-for-net/issues/42066
             Parameters.Add(parameter);
+        }
+
+        private protected void AssignProperty(object instance, string propertyName, string propertyValue)
+        {
+            ValidateOverrideCanBeAdded(instance, propertyName);
+            if (PropertyOverrides.TryGetValue(instance, out var overrides))
+            {
+                overrides[propertyName] = propertyValue;
+            }
+            else
+            {
+                PropertyOverrides.Add(instance, new Dictionary<string, string> {  { propertyName, propertyValue } });
+            }
+        }
+
+        private void ValidateOverrideCanBeAdded(object instance, string name)
+        {
+            if ((PropertyOverrides.TryGetValue(instance, out var instancePropertyOverrides) &&
+                 instancePropertyOverrides.ContainsKey(name)) ||
+                (ParameterOverrides.TryGetValue(instance, out var instanceParameterOverrides) &&
+                 instanceParameterOverrides.ContainsKey(name)))
+            {
+                throw new InvalidOperationException(
+                    $"A parameter or property override was already defined for property {name} in type {instance.GetType()}");
+            }
         }
 
         /// <summary>
@@ -257,6 +286,18 @@ namespace Azure.Provisioning
                     dict.Add(kvp.Key, kvp.Value.GetParameterString(ModuleScope!));
                 }
                 bicepOptions.ParameterOverrides.Add(parameter.Key, dict);
+            }
+            foreach (var propertyOverride in PropertyOverrides)
+            {
+                if (!bicepOptions.ParameterOverrides.TryGetValue(propertyOverride.Key, out var dict))
+                {
+                    dict = new Dictionary<string, string>();
+                    bicepOptions.ParameterOverrides.Add(propertyOverride.Key, dict);
+                }
+                foreach (var kvp in propertyOverride.Value)
+                {
+                    dict.Add(kvp.Key, kvp.Value);
+                }
             }
             var data = ModelReaderWriter.Write(ResourceData, bicepOptions).ToMemory();
 
