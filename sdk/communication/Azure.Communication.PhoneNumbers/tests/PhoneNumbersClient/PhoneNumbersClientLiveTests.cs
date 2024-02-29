@@ -728,7 +728,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             if (areaCodesCount >= 2)
             {
-                expectedPageSize = areaCodesCount / 2;
+                expectedPageSize = (int)Math.Ceiling(areaCodesCount / 2.0);
             }
             var pages = client.GetAvailableAreaCodesTollFreeAsync("US").AsPages(pageSizeHint: expectedPageSize);
             var actual = 0;
@@ -765,7 +765,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             if (areaCodesCount >= 2)
             {
-                expectedPageSize = areaCodesCount / 2;
+                expectedPageSize = (int)Math.Ceiling(areaCodesCount / 2.0);
             }
             var pages = client.GetAvailableAreaCodesTollFree("US").AsPages(pageSizeHint: expectedPageSize);
             var actual = 0;
