@@ -193,14 +193,14 @@ namespace Azure.Provisioning.Tests
                 {
                     sqlAdminPassword = new { value = "password" },
                     appUserPassword = new { value = "password" }
-                }), anonymousResourceGroup: true);
+                }), promptMode: true);
         }
 
         [Test]
         public async Task StorageBlobDefaults()
         {
             var infra = new TestInfrastructure();
-            infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            infra.AddStorageAccount(prefix: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             infra.AddBlobService();
             infra.Build(GetOutputPath());
 
@@ -208,10 +208,21 @@ namespace Azure.Provisioning.Tests
         }
 
         [Test]
+        public async Task StorageBlobDefaultsInPromptMode()
+        {
+            var infra = new TestInfrastructure(configuration: new Configuration { UsePromptMode = true });
+            infra.AddStorageAccount(prefix: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            infra.AddBlobService();
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync(promptMode: true);
+        }
+
+        [Test]
         public async Task StorageBlobDropDown()
         {
             var infra = new TestInfrastructure();
-            infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            infra.AddStorageAccount(prefix: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             var blob = infra.AddBlobService();
             blob.Properties.DeleteRetentionPolicy = new DeleteRetentionPolicy()
             {
@@ -280,7 +291,7 @@ namespace Azure.Provisioning.Tests
             await ValidateBicepAsync();
         }
 
-        public async Task ValidateBicepAsync(BinaryData? parameters = null, bool anonymousResourceGroup = false)
+        public async Task ValidateBicepAsync(BinaryData? parameters = null, bool promptMode = false)
         {
             if (TestEnvironment.GlobalIsRunningInCI)
             {
@@ -317,7 +328,7 @@ namespace Azure.Provisioning.Tests
                 }
 
                 ResourceIdentifier scope;
-                if (anonymousResourceGroup)
+                if (promptMode)
                 {
                     var rgs = subscription.GetResourceGroups();
                     var data = new ResourceGroupData("westus");
@@ -337,7 +348,7 @@ namespace Azure.Provisioning.Tests
                         Template = new BinaryData(File.ReadAllText(Path.Combine(testPath, "main.json"))),
                         Parameters = parameters
                     });
-                if (!anonymousResourceGroup)
+                if (!promptMode)
                 {
                     content.Location = "westus";
                 }
