@@ -20,7 +20,9 @@ The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK with in
   * **SQL Client Instrumentation** Provides automatic tracing for SQL queries executed using the [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient) and [System.Data.SqlClient](https://www.nuget.org/packages/System.Data.SqlClient) packages. (While the OpenTelemetry SqlClient instrumentation remains in its beta phase, we have taken the step to vendor it and include it in our Distro)
 
 * Metrics
-  * Provides automatic collection of Application Insights Standard metrics.
+  * **Application Insights Standard Metrics**: Provides automatic collection of Application Insights Standard metrics.
+  * **ASP.NET Core Instrumentation**: Provides automatic collection of ASP.NET Core metrics. For a detailed list of metrics produced, refer to the [ASP.NET Core Instrumentation documentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.AspNetCore/README.md).
+  * **HTTP Client Instrumentation**: Provides automatic collection of HTTP metrics related to outgoing HTTP requests. For a detailed list of metrics produced, refer to the [HTTP Client Instrumentation documentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.Http/README.md).
 
 * [Logs](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/logs/getting-started-console)
 
@@ -261,6 +263,24 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
     o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
     o.EnableLiveMetrics = false;
 });
+```
+
+#### Drop a Metrics Instrument
+
+If you want to exclude specific instruments from being collected in your application's telemetry, such as metrics from the distro or custom metrics, use the following code snippet. 
+
+```C#
+builder.Services.ConfigureOpenTelemetryMeterProvider(
+    (sp, builder) => builder.AddView((instrument) =>
+    {
+        if (instrument.Meter.Name == "OpenTelemetry.Instrumentation.AspNetCore" &&
+            instrument.Name == "http.client.open_connections")
+        {
+            return MetricStreamConfiguration.Drop;
+        }
+
+        return null;
+    }));
 ```
 
 ## Key concepts
