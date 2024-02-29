@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {

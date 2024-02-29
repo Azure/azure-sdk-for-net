@@ -12,6 +12,7 @@ using System.Net;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models

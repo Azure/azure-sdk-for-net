@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Quantum.Jobs;
 
 namespace Azure.Quantum.Jobs.Models
 {

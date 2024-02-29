@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 

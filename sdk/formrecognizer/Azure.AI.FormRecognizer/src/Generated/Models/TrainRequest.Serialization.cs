@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.FormRecognizer;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models

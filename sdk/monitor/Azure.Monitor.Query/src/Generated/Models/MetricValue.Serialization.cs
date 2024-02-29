@@ -7,7 +7,7 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {

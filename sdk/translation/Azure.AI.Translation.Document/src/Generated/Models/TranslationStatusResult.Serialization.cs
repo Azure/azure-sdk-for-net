@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using Azure.AI.Translation.Document.Models;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {

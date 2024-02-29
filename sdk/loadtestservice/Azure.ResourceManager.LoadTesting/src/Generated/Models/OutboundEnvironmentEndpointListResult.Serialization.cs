@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LoadTesting;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
