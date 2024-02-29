@@ -39,6 +39,8 @@ namespace Azure.ResourceManager.Quantum
 
         private readonly ClientDiagnostics _quantumWorkspaceWorkspacesClientDiagnostics;
         private readonly WorkspacesRestOperations _quantumWorkspaceWorkspacesRestClient;
+        private readonly ClientDiagnostics _workspaceClientDiagnostics;
+        private readonly WorkspaceRestOperations _workspaceRestClient;
         private readonly QuantumWorkspaceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -66,6 +68,8 @@ namespace Azure.ResourceManager.Quantum
             _quantumWorkspaceWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quantum", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string quantumWorkspaceWorkspacesApiVersion);
             _quantumWorkspaceWorkspacesRestClient = new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, quantumWorkspaceWorkspacesApiVersion);
+            _workspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quantum", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _workspaceRestClient = new WorkspaceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -105,7 +109,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -145,7 +149,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -185,7 +189,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -227,7 +231,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -269,7 +273,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -314,7 +318,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -347,6 +351,156 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary>
+        /// Get the keys to use with the Quantum APIs. A key is used to authenticate and authorize access to the Quantum REST APIs. Only one key is needed at a time; two are given to provide seamless key regeneration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/listKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspace_ListKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ListKeysResult>> GetKeysWorkspaceAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _workspaceClientDiagnostics.CreateScope("QuantumWorkspaceResource.GetKeysWorkspace");
+            scope.Start();
+            try
+            {
+                var response = await _workspaceRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the keys to use with the Quantum APIs. A key is used to authenticate and authorize access to the Quantum REST APIs. Only one key is needed at a time; two are given to provide seamless key regeneration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/listKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspace_ListKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ListKeysResult> GetKeysWorkspace(CancellationToken cancellationToken = default)
+        {
+            using var scope = _workspaceClientDiagnostics.CreateScope("QuantumWorkspaceResource.GetKeysWorkspace");
+            scope.Start();
+            try
+            {
+                var response = _workspaceRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerate either the primary or secondary key for use with the Quantum APIs. The old key will stop working immediately.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/regenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspace_RegenerateKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="keySpecification"> Which key to regenerate:  primary or secondary. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keySpecification"/> is null. </exception>
+        public virtual async Task<Response> RegenerateKeysWorkspaceAsync(APIKeys keySpecification, CancellationToken cancellationToken = default)
+        {
+            if (keySpecification == null)
+            {
+                throw new ArgumentNullException(nameof(keySpecification));
+            }
+
+            using var scope = _workspaceClientDiagnostics.CreateScope("QuantumWorkspaceResource.RegenerateKeysWorkspace");
+            scope.Start();
+            try
+            {
+                var response = await _workspaceRestClient.RegenerateKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keySpecification, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerate either the primary or secondary key for use with the Quantum APIs. The old key will stop working immediately.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/regenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspace_RegenerateKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="keySpecification"> Which key to regenerate:  primary or secondary. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keySpecification"/> is null. </exception>
+        public virtual Response RegenerateKeysWorkspace(APIKeys keySpecification, CancellationToken cancellationToken = default)
+        {
+            if (keySpecification == null)
+            {
+                throw new ArgumentNullException(nameof(keySpecification));
+            }
+
+            using var scope = _workspaceClientDiagnostics.CreateScope("QuantumWorkspaceResource.RegenerateKeysWorkspace");
+            scope.Start();
+            try
+            {
+                var response = _workspaceRestClient.RegenerateKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keySpecification, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -359,7 +513,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -427,7 +581,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -495,7 +649,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -555,7 +709,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -615,7 +769,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -678,7 +832,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

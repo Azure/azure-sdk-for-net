@@ -30,8 +30,9 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="provisioningState"> Provisioning status field. </param>
         /// <param name="storageAccount"> ARM Resource Id of the storage account associated with this workspace. </param>
         /// <param name="endpointUri"> The URI of the workspace endpoint. </param>
+        /// <param name="apiKeyEnabled"> Indicator of enablement of the Quantum workspace Api keys. </param>
         /// <returns> A new <see cref="Quantum.QuantumWorkspaceData"/> instance for mocking. </returns>
-        public static QuantumWorkspaceData QuantumWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, IEnumerable<Provider> providers = null, UsableStatus? usable = null, ProvisioningStatus? provisioningState = null, string storageAccount = null, Uri endpointUri = null)
+        public static QuantumWorkspaceData QuantumWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, IEnumerable<Provider> providers = null, UsableStatus? usable = null, ProvisioningStatus? provisioningState = null, string storageAccount = null, Uri endpointUri = null, bool? apiKeyEnabled = null)
         {
             tags ??= new Dictionary<string, string>();
             providers ??= new List<Provider>();
@@ -49,13 +50,14 @@ namespace Azure.ResourceManager.Quantum.Models
                 provisioningState,
                 storageAccount,
                 endpointUri,
+                apiKeyEnabled,
                 serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProviderDescription"/>. </summary>
         /// <param name="id"> Unique provider's id. </param>
         /// <param name="name"> Provider's display name. </param>
-        /// <param name="properties"> A list of provider-specific properties. </param>
+        /// <param name="properties"> Provider properties. </param>
         /// <returns> A new <see cref="Models.ProviderDescription"/> instance for mocking. </returns>
         public static ProviderDescription ProviderDescription(string id = null, string name = null, ProviderProperties properties = null)
         {
@@ -214,6 +216,33 @@ namespace Azure.ResourceManager.Quantum.Models
         public static CheckNameAvailabilityResult CheckNameAvailabilityResult(bool? nameAvailable = null, string reason = null, string message = null)
         {
             return new CheckNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ListKeysResult"/>. </summary>
+        /// <param name="apiKeyEnabled"> Indicator of enablement of the Quantum workspace Api keys. </param>
+        /// <param name="primaryKey"> The quantum workspace primary api key. </param>
+        /// <param name="secondaryKey"> The quantum workspace secondary api key. </param>
+        /// <param name="primaryConnectionString"> The connection string of the primary api key. </param>
+        /// <param name="secondaryConnectionString"> The connection string of the secondary api key. </param>
+        /// <returns> A new <see cref="Models.ListKeysResult"/> instance for mocking. </returns>
+        public static ListKeysResult ListKeysResult(bool? apiKeyEnabled = null, ApiKey primaryKey = null, ApiKey secondaryKey = null, string primaryConnectionString = null, string secondaryConnectionString = null)
+        {
+            return new ListKeysResult(
+                apiKeyEnabled,
+                primaryKey,
+                secondaryKey,
+                primaryConnectionString,
+                secondaryConnectionString,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApiKey"/>. </summary>
+        /// <param name="createdOn"> The creation time of the api key. </param>
+        /// <param name="key"> The Api key. </param>
+        /// <returns> A new <see cref="Models.ApiKey"/> instance for mocking. </returns>
+        public static ApiKey ApiKey(DateTimeOffset? createdOn = null, string key = null)
+        {
+            return new ApiKey(createdOn, key, serializedAdditionalRawData: null);
         }
     }
 }

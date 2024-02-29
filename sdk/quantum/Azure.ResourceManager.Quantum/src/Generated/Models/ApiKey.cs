@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    /// <summary> Information about an offering. A provider offering is an entity that offers Targets to run Azure Quantum Jobs. </summary>
-    public partial class ProviderDescription
+    /// <summary> Azure quantum workspace Api key details. </summary>
+    public partial class ApiKey
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,25 @@ namespace Azure.ResourceManager.Quantum.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProviderDescription"/>. </summary>
-        internal ProviderDescription()
+        /// <summary> Initializes a new instance of <see cref="ApiKey"/>. </summary>
+        internal ApiKey()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProviderDescription"/>. </summary>
-        /// <param name="id"> Unique provider's id. </param>
-        /// <param name="name"> Provider's display name. </param>
-        /// <param name="properties"> Provider properties. </param>
+        /// <summary> Initializes a new instance of <see cref="ApiKey"/>. </summary>
+        /// <param name="createdOn"> The creation time of the api key. </param>
+        /// <param name="key"> The Api key. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderDescription(string id, string name, ProviderProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiKey(DateTimeOffset? createdOn, string key, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            Name = name;
-            Properties = properties;
+            CreatedOn = createdOn;
+            Key = key;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Unique provider's id. </summary>
-        public string Id { get; }
-        /// <summary> Provider's display name. </summary>
-        public string Name { get; }
-        /// <summary> Provider properties. </summary>
-        public ProviderProperties Properties { get; }
+        /// <summary> The creation time of the api key. </summary>
+        public DateTimeOffset? CreatedOn { get; }
+        /// <summary> The Api key. </summary>
+        public string Key { get; }
     }
 }

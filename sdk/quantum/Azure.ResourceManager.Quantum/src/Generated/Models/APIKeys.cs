@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    /// <summary> Information about an offering. A provider offering is an entity that offers Targets to run Azure Quantum Jobs. </summary>
-    public partial class ProviderDescription
+    /// <summary> List of api keys to be generated. </summary>
+    public partial class APIKeys
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +46,22 @@ namespace Azure.ResourceManager.Quantum.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProviderDescription"/>. </summary>
-        internal ProviderDescription()
+        /// <summary> Initializes a new instance of <see cref="APIKeys"/>. </summary>
+        public APIKeys()
         {
+            Keys = new ChangeTrackingList<KeyType>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProviderDescription"/>. </summary>
-        /// <param name="id"> Unique provider's id. </param>
-        /// <param name="name"> Provider's display name. </param>
-        /// <param name="properties"> Provider properties. </param>
+        /// <summary> Initializes a new instance of <see cref="APIKeys"/>. </summary>
+        /// <param name="keys"> A list of api key names. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderDescription(string id, string name, ProviderProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal APIKeys(IList<KeyType> keys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            Name = name;
-            Properties = properties;
+            Keys = keys;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Unique provider's id. </summary>
-        public string Id { get; }
-        /// <summary> Provider's display name. </summary>
-        public string Name { get; }
-        /// <summary> Provider properties. </summary>
-        public ProviderProperties Properties { get; }
+        /// <summary> A list of api key names. </summary>
+        public IList<KeyType> Keys { get; }
     }
 }

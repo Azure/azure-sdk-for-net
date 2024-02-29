@@ -71,8 +71,9 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="provisioningState"> Provisioning status field. </param>
         /// <param name="storageAccount"> ARM Resource Id of the storage account associated with this workspace. </param>
         /// <param name="endpointUri"> The URI of the workspace endpoint. </param>
+        /// <param name="apiKeyEnabled"> Indicator of enablement of the Quantum workspace Api keys. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuantumWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IList<Provider> providers, UsableStatus? usable, ProvisioningStatus? provisioningState, string storageAccount, Uri endpointUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal QuantumWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IList<Provider> providers, UsableStatus? usable, ProvisioningStatus? provisioningState, string storageAccount, Uri endpointUri, bool? apiKeyEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Providers = providers;
@@ -80,6 +81,7 @@ namespace Azure.ResourceManager.Quantum
             ProvisioningState = provisioningState;
             StorageAccount = storageAccount;
             EndpointUri = endpointUri;
+            ApiKeyEnabled = apiKeyEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -100,5 +102,7 @@ namespace Azure.ResourceManager.Quantum
         public string StorageAccount { get; set; }
         /// <summary> The URI of the workspace endpoint. </summary>
         public Uri EndpointUri { get; }
+        /// <summary> Indicator of enablement of the Quantum workspace Api keys. </summary>
+        public bool? ApiKeyEnabled { get; set; }
     }
 }

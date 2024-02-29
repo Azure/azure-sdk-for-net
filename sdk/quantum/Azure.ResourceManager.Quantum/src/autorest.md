@@ -9,7 +9,7 @@ csharp: true
 library-name: Quantum
 namespace: Azure.ResourceManager.Quantum
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/34ba022add0034e30462b76e1548ce5a7e053e33/specification/quantum/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d6fcc46341f274b8af42a4cdcfa14e1f8d472619/specification/quantum/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:

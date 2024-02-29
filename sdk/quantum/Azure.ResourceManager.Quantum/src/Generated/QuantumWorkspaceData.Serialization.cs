@@ -98,6 +98,11 @@ namespace Azure.ResourceManager.Quantum
                 writer.WritePropertyName("endpointUri"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);
             }
+            if (ApiKeyEnabled.HasValue)
+            {
+                writer.WritePropertyName("apiKeyEnabled"u8);
+                writer.WriteBooleanValue(ApiKeyEnabled.Value);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -149,6 +154,7 @@ namespace Azure.ResourceManager.Quantum
             Optional<ProvisioningStatus> provisioningState = default;
             Optional<string> storageAccount = default;
             Optional<Uri> endpointUri = default;
+            Optional<bool> apiKeyEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,6 +266,15 @@ namespace Azure.ResourceManager.Quantum
                             endpointUri = new Uri(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("apiKeyEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            apiKeyEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -282,6 +297,7 @@ namespace Azure.ResourceManager.Quantum
                 Optional.ToNullable(provisioningState),
                 storageAccount.Value,
                 endpointUri.Value,
+                Optional.ToNullable(apiKeyEnabled),
                 serializedAdditionalRawData);
         }
 
