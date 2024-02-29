@@ -145,5 +145,4 @@ extends:
             ArtifactName: packages
             TargetDocRepoOwner: ${{ parameters.TargetDocRepoOwner }}
             TargetDocRepoName: ${{ parameters.TargetDocRepoName }}
-            Environment: 'nuget-break-glass-approvers'
 
