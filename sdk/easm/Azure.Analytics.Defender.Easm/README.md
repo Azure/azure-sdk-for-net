@@ -55,7 +55,8 @@ These asset types comprise your attack surface inventory in Defender EASM. This 
 ### [Discovery][discovery_documentation]
 Microsoft Defender External Attack Surface Management (Defender EASM) relies on our proprietary discovery technology to continuously define your organization’s unique Internet-exposed attack surface. Discovery scans known assets owned by your organization to uncover previously unknown and unmonitored properties. Discovered assets are indexed in a customer’s inventory, providing a dynamic system of record of web applications, third party dependencies, and web infrastructure under the organization’s management through a single pane of glass.
 
-#### [Discovery Groups][discovery_groups_documentation]
+#### [Discovery groups][discovery_groups_documentation]
+
 Custom discoveries are organized into Discovery Groups. They are independent seed clusters that comprise a single discovery run and operate on their own recurrence schedules. Users can elect to organize their Discovery Groups to delineate assets in whatever way best benefits their company and workflows. Common options include organizing by responsible team/business unit, brands or subsidiaries.
 
 ### Thread safety
