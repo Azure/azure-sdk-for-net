@@ -51,7 +51,7 @@ namespace Azure.Provisioning
             {
                 // We can't use the lambda overload because not all of the T's will inherit from TrackedResourceData
                 // TODO we may need to add a protected LocationSelector property in the future if there are exceptions to the rule
-                AssignProperty(Properties, "Location", $"{ResourceGroup.AnonymousResourceGroupName}.location");
+                AssignParameter(Properties, "Location", new Parameter("location", defaultValue: $"{ResourceGroup.AnonymousResourceGroupName}.location", isExpression: true));
             }
         }
 

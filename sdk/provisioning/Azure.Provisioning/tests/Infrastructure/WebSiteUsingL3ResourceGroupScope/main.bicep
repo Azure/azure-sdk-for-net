@@ -1,5 +1,8 @@
 targetScope = 'resourceGroup'
 
+@description('')
+param location string = resourceGroup().location
+
 @secure()
 @description('SQL Server administrator password')
 param sqlAdminPassword string
@@ -11,7 +14,7 @@ param appUserPassword string
 
 resource appServicePlan_PxkuWnuWL 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'appServicePlan-TEST'
-  location: resourceGroup().location
+  location: location
   sku: {
     name: 'B1'
   }
@@ -22,7 +25,7 @@ resource appServicePlan_PxkuWnuWL 'Microsoft.Web/serverfarms@2021-02-01' = {
 
 resource keyVault_zomsD2kWf 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: 'kv-TEST'
-  location: resourceGroup().location
+  location: location
   tags: {
     'key': 'value'
   }
@@ -81,7 +84,7 @@ resource keyVaultSecret_YNErVycWe 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
 
 resource webSite_IGuzwfciS 'Microsoft.Web/sites@2021-02-01' = {
   name: 'frontEnd-TEST'
-  location: resourceGroup().location
+  location: location
   kind: 'app,linux'
   properties: {
     serverFarmId: '/subscriptions/subscription()/resourceGroups/resourceGroup()/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
@@ -134,7 +137,7 @@ resource webSiteConfigLogs_GwVSHGFxS 'Microsoft.Web/sites/config@2021-02-01' = {
 
 resource sqlServer_2CRay8gJr 'Microsoft.Sql/servers@2022-08-01-preview' = {
   name: 'sqlserver-TEST'
-  location: resourceGroup().location
+  location: location
   properties: {
     administratorLogin: 'sqladmin'
     administratorLoginPassword: sqlAdminPassword
@@ -162,7 +165,7 @@ resource sqlFirewallRule_MTg5B9jZr 'Microsoft.Sql/servers/firewallRules@2020-11-
 
 resource deploymentScript_qloqQ8wU0 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   name: 'cliScript-TEST'
-  location: resourceGroup().location
+  location: location
   kind: 'AzureCLI'
   properties: {
     cleanupPreference: 'OnSuccess'
@@ -212,7 +215,7 @@ SCRIPT_END
 
 resource webSite_TR8bo87ZZ 'Microsoft.Web/sites@2021-02-01' = {
   name: 'backEnd-TEST'
-  location: resourceGroup().location
+  location: location
   kind: 'app,linux'
   properties: {
     serverFarmId: '/subscriptions/subscription()/resourceGroups/resourceGroup()/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
