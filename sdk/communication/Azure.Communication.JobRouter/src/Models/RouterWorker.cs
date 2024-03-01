@@ -45,6 +45,9 @@ namespace Azure.Communication.JobRouter
         /// <summary> A flag indicating whether this worker is open to receive offers or not. </summary>
         public bool? AvailableForOffers { get; set; }
 
+        /// <summary> If this is set, the worker will only receive up to this many new offers at a time. </summary>
+        public int? MaxConcurrentOffers { get; set; }
+
         [CodeGenMember("Labels")]
         internal IDictionary<string, BinaryData> _labels
         {

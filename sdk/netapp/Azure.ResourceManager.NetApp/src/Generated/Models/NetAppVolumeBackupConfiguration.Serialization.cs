@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> backupPolicyId = default;
-            Optional<bool> policyEnforced = default;
-            Optional<bool> backupEnabled = default;
-            Optional<ResourceIdentifier> backupVaultId = default;
+            ResourceIdentifier backupPolicyId = default;
+            bool? policyEnforced = default;
+            bool? backupEnabled = default;
+            ResourceIdentifier backupVaultId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeBackupConfiguration(backupPolicyId.Value, Optional.ToNullable(policyEnforced), Optional.ToNullable(backupEnabled), backupVaultId.Value, serializedAdditionalRawData);
+            return new NetAppVolumeBackupConfiguration(backupPolicyId, policyEnforced, backupEnabled, backupVaultId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeBackupConfiguration>.Write(ModelReaderWriterOptions options)
