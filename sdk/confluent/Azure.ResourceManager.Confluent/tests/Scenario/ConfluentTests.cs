@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
         }
         [RecordedTest]
         [TestCase]
+        [Ignore("This test is failing due to rpaas rollout currently")]
         public async Task CreateorUpdateConfluentOrg()
         {
             var confluentOrgCollection = GetConfluentOrganizationCollectionAsync();
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
 
         [RecordedTest]
         [TestCase]
+        [Ignore("This test is failing due to rpaas rollout currently")]
         public async Task ListConfluentOrgsInSubscription()
         {
             int count = 0;
@@ -59,6 +61,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
 
         [RecordedTest]
         [TestCase]
+        [Ignore("This test is failing due to rpaas rollout currently")]
         public async Task GetEnvironmentsInOrg()
         {
             await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
@@ -77,6 +80,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
 
         [RecordedTest]
         [TestCase]
+        [Ignore("This test is failing due to rpaas rollout currently")]
         public async Task GetClustersByIdInOrgForAnEnvironment()
         {
             await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
@@ -92,6 +96,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
 
         [RecordedTest]
         [TestCase]
+        [Ignore("This test is failing due to rpaas rollout currently")]
         public async Task GetClustersInOrgForAnEnvironment()
         {
             try
@@ -114,6 +119,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
 
         [RecordedTest]
         [TestCase]
+        [Ignore("This test is failing due to rpaas rollout currently")]
         public async Task GetSchemaRegistryClustersOrgForAnEnvironment()
         {
             await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
@@ -129,6 +135,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
 
         [RecordedTest]
         [TestCase]
+        [Ignore("This test is failing due to rpaas rollout currently")]
         public async Task GetSchemaRegistryClustersByIdOrgForAnEnvironment()
         {
             await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
@@ -145,6 +152,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
 
         [RecordedTest]
         [TestCase]
+        [Ignore("This test is failing due to rpaas rollout currently")]
         public async Task GetClustersByIdOrgForAnEnvironment()
         {
             await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
@@ -169,6 +177,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
 
         [RecordedTest]
         [TestCase]
+        [Ignore("This test is failing due to rpaas rollout currently")]
         public async Task DeleteAPIKey()
         {
             await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
@@ -184,6 +193,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
 
         [RecordedTest]
         [TestCase]
+        [Ignore("This test is failing due to rpaas rollout currently")]
         public async Task CreateAPIKey()
         {
             await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
@@ -202,6 +212,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
 
         [RecordedTest]
         [TestCase]
+        [Ignore("This test is failing due to rpaas rollout currently")]
         public async Task DeleteConfluentOrg()
         {
             await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
