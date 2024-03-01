@@ -143,6 +143,11 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("availableForOffers"u8);
                 writer.WriteBooleanValue(AvailableForOffers.Value);
             }
+            if (MaxConcurrentOffers.HasValue)
+            {
+                writer.WritePropertyName("maxConcurrentOffers"u8);
+                writer.WriteNumberValue(MaxConcurrentOffers.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -193,6 +198,7 @@ namespace Azure.Communication.JobRouter
             IReadOnlyList<RouterWorkerAssignment> assignedJobs = default;
             double? loadRatio = default;
             bool? availableForOffers = default;
+            int? maxConcurrentOffers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -341,6 +347,15 @@ namespace Azure.Communication.JobRouter
                     availableForOffers = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("maxConcurrentOffers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxConcurrentOffers = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -360,6 +375,7 @@ namespace Azure.Communication.JobRouter
                 assignedJobs ?? new ChangeTrackingList<RouterWorkerAssignment>(),
                 loadRatio,
                 availableForOffers,
+                maxConcurrentOffers,
                 serializedAdditionalRawData);
         }
 
