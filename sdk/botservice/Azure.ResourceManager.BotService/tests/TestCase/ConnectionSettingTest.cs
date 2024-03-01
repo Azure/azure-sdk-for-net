@@ -35,19 +35,8 @@ namespace Azure.ResourceManager.BotService.Tests
             var collection = botResource.GetBotConnectionSettings();
             var providers = await DefaultSubscription.GetBotConnectionServiceProvidersAsync().ToEnumerableAsync();
             var providerId = providers.ElementAt(1).Properties.Id;
-            var clientId = Environment.GetEnvironmentVariable("CLIENT_ID");
-            string clientSecret;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                clientSecret = "ABCD~1234~1234567~ABCDEFGHIJKLMNOPQRST";
-            }
-            else
-            {
-                using (Recording.DisableRecording())
-                {
-                    clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
-                }
-            }
+            var clientId = Recording.Random.NewGuid().ToString();
+            string clientSecret = Recording.Random.NewGuid().ToString();
             var input = ResourceDataHelpers.GetBotConnectionSettingData(clientId, clientSecret, providerId);
             var resource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, settingName, input)).Value;
             Assert.AreEqual(botName + "/" + settingName, resource.Data.Name);
@@ -106,19 +95,8 @@ namespace Azure.ResourceManager.BotService.Tests
             var collection = botResource.GetBotConnectionSettings();
             var providers = await DefaultSubscription.GetBotConnectionServiceProvidersAsync().ToEnumerableAsync();
             var providerId = providers.ElementAt(1).Properties.Id;
-            var clientId = Environment.GetEnvironmentVariable("CLIENT_ID");
-            string clientSecret;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                clientSecret = "ABCD~1234~1234567~ABCDEFGHIJKLMNOPQRST";
-            }
-            else
-            {
-                using (Recording.DisableRecording())
-                {
-                    clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
-                }
-            }
+            var clientId = Recording.Random.NewGuid().ToString();
+            string clientSecret = Recording.Random.NewGuid().ToString();
             var input = ResourceDataHelpers.GetBotConnectionSettingData(clientId, clientSecret, providerId);
             var resource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, settingName, input)).Value;
             //3.GetAll
