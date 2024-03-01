@@ -14,7 +14,7 @@
 
 ### Bugs Fixed
 
-- Changeg the private ctor `OperationStatusResult` to protected.
+- Changed the private ctor `OperationStatusResult` to protected.
 
 ## 1.10.0 (2024-01-12)
 
@@ -272,11 +272,11 @@ Minor changes since the public beta release:
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
-    - Supported MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
-    - Supported [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
+    - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
+    - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
     - HTTP pipeline with custom policies.
     - Better error-handling.
-    - Supported uniform telemetry across all languages.
+    - Support uniform telemetry across all languages.
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
