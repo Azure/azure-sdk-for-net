@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.ManagementGroups
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Tenant))
+            if (Tenant != null)
             {
                 writer.WritePropertyName("tenant"u8);
                 writer.WriteStringValue(Tenant);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Parent))
+            if (Parent != null)
             {
                 if (Parent != null)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ManagementGroups
                     writer.WriteNull("parent");
                 }
             }
-            if (Optional.IsDefined(State))
+            if (State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.ManagementGroups
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> tenant = default;
-            Optional<string> displayName = default;
-            Optional<DescendantParentGroupInfo> parent = default;
-            Optional<string> state = default;
+            SystemData systemData = default;
+            string tenant = default;
+            string displayName = default;
+            DescendantParentGroupInfo parent = default;
+            string state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ManagementGroups
                                 parent = null;
                                 continue;
                             }
-                            parent = DescendantParentGroupInfo.DeserializeDescendantParentGroupInfo(property0.Value);
+                            parent = DescendantParentGroupInfo.DeserializeDescendantParentGroupInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("state"u8))
@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.ManagementGroups
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementGroupSubscriptionData(id, name, type, systemData.Value, tenant.Value, displayName.Value, parent.Value, state.Value, serializedAdditionalRawData);
+            return new ManagementGroupSubscriptionData(
+                id,
+                name,
+                type,
+                systemData,
+                tenant,
+                displayName,
+                parent,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementGroupSubscriptionData>.Write(ModelReaderWriterOptions options)

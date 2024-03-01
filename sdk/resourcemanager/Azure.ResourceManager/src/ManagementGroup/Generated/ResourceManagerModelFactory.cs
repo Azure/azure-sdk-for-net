@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.Models
         /// <returns> A new <see cref="ManagementGroups.ManagementGroupSubscriptionData"/> instance for mocking. </returns>
         public static ManagementGroupSubscriptionData ManagementGroupSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string tenant = null, string displayName = null, ResourceIdentifier parentId = null, string state = null)
         {
-            return new ManagementGroupSubscriptionData(id, name, resourceType, systemData, tenant, displayName, parentId != null ? new DescendantParentGroupInfo(parentId, serializedAdditionalRawData: null) : null, state, serializedAdditionalRawData: null);
+            return new ManagementGroupSubscriptionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tenant,
+                displayName,
+                parentId != null ? new DescendantParentGroupInfo(parentId, serializedAdditionalRawData: null) : null,
+                state,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupNameAvailabilityResult"/>. </summary>
