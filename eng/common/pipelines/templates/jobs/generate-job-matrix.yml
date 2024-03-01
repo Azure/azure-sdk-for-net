@@ -27,10 +27,10 @@ parameters:
   default: []
 - name: Pool
   type: string
-  default: azsdk-pool-mms-ubuntu-2204-general
+  default: $(LINUXPOOL)
 - name: OsVmImage
   type: string
-  default: ubuntu-22.04
+  default: $(LINUXVMIMAGE)
 - name: Os
   type: string
   default: linux
