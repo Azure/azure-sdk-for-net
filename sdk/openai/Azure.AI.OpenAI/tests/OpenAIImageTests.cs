@@ -56,7 +56,7 @@ namespace Azure.AI.OpenAI.Tests
             {
                 foreach (ImageGenerationData data in imageGenerations.Data)
                 {
-                    Assert.That(data.ContentFilterResults, Is.Null.Or.Empty);
+                    Assert.That(data.ContentFilterResults, Is.Not.Null.Or.Empty);
                     Assert.That(data.PromptFilterResults, Is.Not.Null.Or.Empty);
                 }
             }
