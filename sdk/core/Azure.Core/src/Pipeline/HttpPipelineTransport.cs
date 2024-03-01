@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading;
+using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
@@ -9,7 +9,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represents an HTTP pipeline transport used to send HTTP requests and receive responses.
     /// </summary>
-    public abstract class HttpPipelineTransport
+    public abstract class HttpPipelineTransport : PipelineTransport
     {
         /// <summary>
         /// Sends the request contained by the <paramref name="message"/> and sets the <see cref="HttpMessage.Response"/> property to received response synchronously.
@@ -29,6 +29,24 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <returns></returns>
         public abstract Request CreateRequest();
+
+        /// <inheritdoc/>
+        protected sealed override PipelineMessage CreateMessageCore()
+            => new HttpMessage(CreateRequest(), ResponseClassifier.Shared);
+
+        /// <inheritdoc/>
+        protected sealed override void ProcessCore(PipelineMessage message)
+        {
+            HttpMessage httpMessage = HttpMessage.GetHttpMessage(message, "The provided message was created by a different transport.");
+            Process(httpMessage);
+        }
+
+        /// <inheritdoc/>
+        protected sealed override async ValueTask ProcessCoreAsync(PipelineMessage message)
+        {
+            HttpMessage httpMessage = HttpMessage.GetHttpMessage(message, "The provided message was created by a different transport.");
+            await ProcessAsync(httpMessage).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Creates the default <see cref="HttpPipelineTransport"/> based on the current environment and configuration.

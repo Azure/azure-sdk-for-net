@@ -97,7 +97,7 @@ namespace Azure.Core.Pipeline
             ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out Encoding? responseTextEncoding);
 
             bool wrapResponseContent = response.ContentStream != null &&
-                                       response.ContentStream?.CanSeek == false &&
+                                       message.BufferResponse == false &&
                                        logWrapper.IsEnabled(isError);
 
             double elapsed = (after - before) / (double)Stopwatch.Frequency;
