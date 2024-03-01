@@ -2,20 +2,24 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline
 {
     /// <summary>
     /// Represents a policy that can be overriden to customize whether or not a request will be retried and how long to wait before retrying.
     /// </summary>
-    public partial class RetryPolicy : HttpPipelinePolicy
+    public class RetryPolicy : HttpPipelinePolicy
     {
         private readonly int _maxRetries;
         private readonly DelayStrategy _delayStrategy;
-        private readonly AzureCoreRetryPolicy _policy;
+
+        private readonly RetryPolicyAdapter _clientModelPolicy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
@@ -27,7 +31,7 @@ namespace Azure.Core.Pipeline
             _maxRetries = maxRetries;
             _delayStrategy = delayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy();
 
-            _policy = new AzureCoreRetryPolicy(maxRetries, _delayStrategy, this);
+            _clientModelPolicy = new RetryPolicyAdapter(maxRetries, _delayStrategy, this);
         }
 
         /// <summary>
@@ -59,28 +63,28 @@ namespace Azure.Core.Pipeline
             {
                 if (async)
                 {
-                    await _policy.ProcessAsync(message, httpPipeline, -1).ConfigureAwait(false);
+                    await _clientModelPolicy.ProcessAsync(message, httpPipeline, -1).ConfigureAwait(false);
                 }
                 else
                 {
-                    _policy.Process(message, httpPipeline, -1);
+                    _clientModelPolicy.Process(message, httpPipeline, -1);
                 }
             }
-            catch (AggregateException e)
+            catch (ClientResultException e)
             {
-                if (e.Message.StartsWith("Retry failed after"))
+                if (!message.HasResponse)
                 {
-                    string exceptionMessage = e.Message +
-                        $"Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}" +
-                        $" or by configuring a custom retry policy in {nameof(ClientOptions)}.{nameof(ClientOptions.RetryPolicy)}.";
-
-                    // Create a new exception from the thrown exception to keep the
-                    // collection of inner exceptions at the same level as the one
-                    // thrown by the ClientModel policy.
-                    throw new AggregateException(exceptionMessage, e.InnerExceptions);
+                    throw new RequestFailedException(e.Message, e.InnerException);
                 }
 
-                throw e;
+                if (async)
+                {
+                    throw await RequestFailedException.CreateAsync(message.Response, innerException: e.InnerException).ConfigureAwait(false);
+                }
+                else
+                {
+                    throw new RequestFailedException(message.Response, e.InnerException);
+                }
             }
         }
 
@@ -152,6 +156,125 @@ namespace Azure.Core.Pipeline
         internal virtual void Wait(TimeSpan time, CancellationToken cancellationToken)
         {
             cancellationToken.WaitHandle.WaitOne(time);
+        }
+
+        /// <summary>
+        /// This type implements a System.ClientModel
+        /// <see cref="ClientRetryPolicy"/> and adds the Azure.Core-specific
+        /// feature of creating an EventSource event with the elapsed time to
+        /// process the message on each try.
+        ///
+        /// It also adapts the Azure.Core <see cref="RetryPolicy"/> that holds
+        /// it as a member. This is needed so that, if a user has implemented a
+        /// type derived from Azure.Core <see cref="RetryPolicy"/> and
+        /// overridden one or more of its virtual methods, when a virtual method
+        /// is called on the <see cref="ClientRetryPolicy"/> base type from a
+        /// System.ClientModel context, it will call through to the overridden
+        /// method on the derived type.
+        /// </summary>
+        private sealed class RetryPolicyAdapter : ClientRetryPolicy
+        {
+            private readonly RetryPolicy _azureCorePolicy;
+            private readonly DelayStrategy _delayStrategy;
+
+            public RetryPolicyAdapter(int maxRetries, DelayStrategy delay, RetryPolicy policy)
+                : base(maxRetries)
+            {
+                _delayStrategy = delay;
+                _azureCorePolicy = policy;
+            }
+
+            protected override void OnSendingRequest(PipelineMessage message)
+            {
+                message.SetProperty(typeof(BeforeTimestamp), Stopwatch.GetTimestamp());
+
+                _azureCorePolicy.OnSendingRequest(HttpMessage.GetHttpMessage(message));
+            }
+
+            protected override async ValueTask OnSendingRequestAsync(PipelineMessage message)
+            {
+                message.SetProperty(typeof(BeforeTimestamp), Stopwatch.GetTimestamp());
+
+                await _azureCorePolicy.OnSendingRequestAsync(HttpMessage.GetHttpMessage(message)).ConfigureAwait(false);
+            }
+
+            protected override void OnRequestSent(PipelineMessage message)
+            {
+                _azureCorePolicy.OnRequestSent(HttpMessage.GetHttpMessage(message));
+
+                if (!message.TryGetProperty(typeof(BeforeTimestamp), out object? beforeTimestamp) ||
+                    beforeTimestamp is not long before)
+                {
+                    throw new InvalidOperationException("'BeforeProcessTimestamp' was not set on message by RetryPolicy.");
+                }
+
+                long after = Stopwatch.GetTimestamp();
+                double elapsed = (after - before) / (double)Stopwatch.Frequency;
+
+                message.SetProperty(typeof(ElapsedTime), elapsed);
+            }
+
+            protected override async ValueTask OnRequestSentAsync(PipelineMessage message)
+            {
+                await _azureCorePolicy.OnRequestSentAsync(HttpMessage.GetHttpMessage(message)).ConfigureAwait(false);
+
+                if (!message.TryGetProperty(typeof(BeforeTimestamp), out object? beforeTimestamp) ||
+                    beforeTimestamp is not long before)
+                {
+                    throw new InvalidOperationException("'BeforeProcessTimestamp' was not set on message by RetryPolicy.");
+                }
+
+                long after = Stopwatch.GetTimestamp();
+                double elapsed = (after - before) / (double)Stopwatch.Frequency;
+
+                message.SetProperty(typeof(ElapsedTime), elapsed);
+            }
+
+            protected override bool ShouldRetry(PipelineMessage message, Exception? exception)
+                => _azureCorePolicy.ShouldRetry(HttpMessage.GetHttpMessage(message), exception);
+
+            protected override async ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
+                => await _azureCorePolicy.ShouldRetryAsync(HttpMessage.GetHttpMessage(message), exception).ConfigureAwait(false);
+
+            protected override void OnTryComplete(PipelineMessage message)
+            {
+                HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
+                httpMessage.RetryNumber++;
+
+                if (!message.TryGetProperty(typeof(ElapsedTime), out object? elapsedTime) ||
+                    elapsedTime is not double elapsed)
+                {
+                    throw new InvalidOperationException("'ElapsedTime' was not set on message by RetryPolicy.");
+                }
+
+                // This logic can move into System.ClientModel's ClientRetryPolicy
+                // once we enable EventSource logging there.
+                AzureCoreEventSource.Singleton.RequestRetrying(httpMessage.Request.ClientRequestId, httpMessage.RetryNumber, elapsed);
+
+                // Reset stopwatch values
+                message.SetProperty(typeof(BeforeTimestamp), null);
+                message.SetProperty(typeof(ElapsedTime), null);
+            }
+
+            protected override TimeSpan GetNextDelay(PipelineMessage message, int tryCount)
+            {
+                HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
+
+                Debug.Assert(tryCount == httpMessage.RetryNumber);
+
+                Response? response = httpMessage.HasResponse ? httpMessage.Response : default;
+                return _delayStrategy.GetNextDelay(response, tryCount + 1);
+            }
+
+            protected override async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
+                => await _azureCorePolicy.WaitAsync(time, cancellationToken).ConfigureAwait(false);
+
+            protected override void Wait(TimeSpan time, CancellationToken cancellationToken)
+                => _azureCorePolicy.Wait(time, cancellationToken);
+
+            private class BeforeTimestamp { }
+
+            private class ElapsedTime { }
         }
     }
 }
