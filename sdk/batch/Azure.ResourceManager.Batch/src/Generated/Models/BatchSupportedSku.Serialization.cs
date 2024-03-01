@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(BatchSupportEndOfLife))
+            if (options.Format != "W" && BatchSupportEndOfLife.HasValue)
             {
                 writer.WritePropertyName("batchSupportEndOfLife"u8);
                 writer.WriteStringValue(BatchSupportEndOfLife.Value, "O");
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Batch.Models
             string name = default;
             string familyName = default;
             IReadOnlyList<BatchSkuCapability> capabilities = default;
-            DateTimeOffset batchSupportEndOfLife = default;
+            DateTimeOffset? batchSupportEndOfLife = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

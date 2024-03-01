@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToSerialString());
-            if (Optional.IsDefined(AutomaticOSUpgradePolicy))
+            if (AutomaticOSUpgradePolicy != null)
             {
                 writer.WritePropertyName("automaticOSUpgradePolicy"u8);
                 writer.WriteObjectValue(AutomaticOSUpgradePolicy);
             }
-            if (Optional.IsDefined(RollingUpgradePolicy))
+            if (RollingUpgradePolicy != null)
             {
                 writer.WritePropertyName("rollingUpgradePolicy"u8);
                 writer.WriteObjectValue(RollingUpgradePolicy);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             UpgradeMode mode = default;
-            Optional<AutomaticOSUpgradePolicy> automaticOSUpgradePolicy = default;
-            Optional<RollingUpgradePolicy> rollingUpgradePolicy = default;
+            AutomaticOSUpgradePolicy automaticOSUpgradePolicy = default;
+            RollingUpgradePolicy rollingUpgradePolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    automaticOSUpgradePolicy = AutomaticOSUpgradePolicy.DeserializeAutomaticOSUpgradePolicy(property.Value);
+                    automaticOSUpgradePolicy = AutomaticOSUpgradePolicy.DeserializeAutomaticOSUpgradePolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rollingUpgradePolicy"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    rollingUpgradePolicy = RollingUpgradePolicy.DeserializeRollingUpgradePolicy(property.Value);
+                    rollingUpgradePolicy = RollingUpgradePolicy.DeserializeRollingUpgradePolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpgradePolicy(mode, automaticOSUpgradePolicy.Value, rollingUpgradePolicy.Value, serializedAdditionalRawData);
+            return new UpgradePolicy(mode, automaticOSUpgradePolicy, rollingUpgradePolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpgradePolicy>.Write(ModelReaderWriterOptions options)

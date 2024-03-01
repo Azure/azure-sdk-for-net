@@ -233,12 +233,11 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteNull("currentNodeCommunicationMode");
                 }
             }
-            if (Optional.IsDefined(UpgradePolicy))
+            if (UpgradePolicy != null)
             {
                 writer.WritePropertyName("upgradePolicy"u8);
                 writer.WriteObjectValue(UpgradePolicy);
             }
- 
             if (!(ResourceTags is ChangeTrackingDictionary<string, string> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("resourceTags"u8);
@@ -651,7 +650,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            upgradePolicy = UpgradePolicy.DeserializeUpgradePolicy(property0.Value);
+                            upgradePolicy = UpgradePolicy.DeserializeUpgradePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceTags"u8))

@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableCrossZoneUpgrade))
+            if (EnableCrossZoneUpgrade.HasValue)
             {
                 writer.WritePropertyName("enableCrossZoneUpgrade"u8);
                 writer.WriteBooleanValue(EnableCrossZoneUpgrade.Value);
             }
-            if (Optional.IsDefined(MaxBatchInstancePercent))
+            if (MaxBatchInstancePercent.HasValue)
             {
                 writer.WritePropertyName("maxBatchInstancePercent"u8);
                 writer.WriteNumberValue(MaxBatchInstancePercent.Value);
             }
-            if (Optional.IsDefined(MaxUnhealthyInstancePercent))
+            if (MaxUnhealthyInstancePercent.HasValue)
             {
                 writer.WritePropertyName("maxUnhealthyInstancePercent"u8);
                 writer.WriteNumberValue(MaxUnhealthyInstancePercent.Value);
             }
-            if (Optional.IsDefined(MaxUnhealthyUpgradedInstancePercent))
+            if (MaxUnhealthyUpgradedInstancePercent.HasValue)
             {
                 writer.WritePropertyName("maxUnhealthyUpgradedInstancePercent"u8);
                 writer.WriteNumberValue(MaxUnhealthyUpgradedInstancePercent.Value);
             }
-            if (Optional.IsDefined(PauseTimeBetweenBatches))
+            if (PauseTimeBetweenBatches != null)
             {
                 writer.WritePropertyName("pauseTimeBetweenBatches"u8);
                 writer.WriteStringValue(PauseTimeBetweenBatches);
             }
-            if (Optional.IsDefined(PrioritizeUnhealthyInstances))
+            if (PrioritizeUnhealthyInstances.HasValue)
             {
                 writer.WritePropertyName("prioritizeUnhealthyInstances"u8);
                 writer.WriteBooleanValue(PrioritizeUnhealthyInstances.Value);
             }
-            if (Optional.IsDefined(RollbackFailedInstancesOnPolicyBreach))
+            if (RollbackFailedInstancesOnPolicyBreach.HasValue)
             {
                 writer.WritePropertyName("rollbackFailedInstancesOnPolicyBreach"u8);
                 writer.WriteBooleanValue(RollbackFailedInstancesOnPolicyBreach.Value);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<bool> enableCrossZoneUpgrade = default;
-            Optional<int> maxBatchInstancePercent = default;
-            Optional<int> maxUnhealthyInstancePercent = default;
-            Optional<int> maxUnhealthyUpgradedInstancePercent = default;
-            Optional<string> pauseTimeBetweenBatches = default;
-            Optional<bool> prioritizeUnhealthyInstances = default;
-            Optional<bool> rollbackFailedInstancesOnPolicyBreach = default;
+            bool? enableCrossZoneUpgrade = default;
+            int? maxBatchInstancePercent = default;
+            int? maxUnhealthyInstancePercent = default;
+            int? maxUnhealthyUpgradedInstancePercent = default;
+            string pauseTimeBetweenBatches = default;
+            bool? prioritizeUnhealthyInstances = default;
+            bool? rollbackFailedInstancesOnPolicyBreach = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RollingUpgradePolicy(Optional.ToNullable(enableCrossZoneUpgrade), Optional.ToNullable(maxBatchInstancePercent), Optional.ToNullable(maxUnhealthyInstancePercent), Optional.ToNullable(maxUnhealthyUpgradedInstancePercent), pauseTimeBetweenBatches.Value, Optional.ToNullable(prioritizeUnhealthyInstances), Optional.ToNullable(rollbackFailedInstancesOnPolicyBreach), serializedAdditionalRawData);
+            return new RollingUpgradePolicy(
+                enableCrossZoneUpgrade,
+                maxBatchInstancePercent,
+                maxUnhealthyInstancePercent,
+                maxUnhealthyUpgradedInstancePercent,
+                pauseTimeBetweenBatches,
+                prioritizeUnhealthyInstances,
+                rollbackFailedInstancesOnPolicyBreach,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RollingUpgradePolicy>.Write(ModelReaderWriterOptions options)
