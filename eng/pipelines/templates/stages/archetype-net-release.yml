@@ -38,7 +38,7 @@ stages:
                     New-Item -ItemType Directory -Force eng
                     $req = Invoke-WebRequest https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/eng/CredScanSuppression.json
                     $req.RawContent | Out-File eng/CredScanSuppression.json
-                  workingDirectory: $(Pipeline.Workspace)
+                  workingDirectory: $(Pipeline.Workspace)/azure-sdk-build-tools
                   displayName: Set credscan suppression file
 
                 - download: current
