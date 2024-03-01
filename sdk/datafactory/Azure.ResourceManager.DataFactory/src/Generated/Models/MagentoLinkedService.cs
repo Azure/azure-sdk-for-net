@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public MagentoLinkedService(DataFactoryElement<string> host)
         {
-            Argument.AssertNotNull(host, nameof(host));
+            if (host == null)
+            {
+                throw new ArgumentNullException(nameof(host));
+            }
 
             Host = host;
             LinkedServiceType = "Magento";
@@ -48,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             UsePeerVerification = usePeerVerification;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Magento";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MagentoLinkedService"/> for deserialization. </summary>
+        internal MagentoLinkedService()
+        {
         }
 
         /// <summary> The URL of the Magento instance. (i.e. 192.168.222.110/magento3). </summary>

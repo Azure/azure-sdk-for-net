@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AutomationPrivateLinkResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationPrivateLinkResource>> value = default;
+            IReadOnlyList<AutomationPrivateLinkResource> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationPrivateLinkResource> array = new List<AutomationPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationPrivateLinkResource.DeserializeAutomationPrivateLinkResource(item));
+                        array.Add(AutomationPrivateLinkResource.DeserializeAutomationPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationPrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new AutomationPrivateLinkResourceListResult(value ?? new ChangeTrackingList<AutomationPrivateLinkResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageType))
+            if (StorageType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(StorageType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(AccountName))
+            if (AccountName != null)
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Optional.IsDefined(ShareName))
+            if (ShareName != null)
             {
                 writer.WritePropertyName("shareName"u8);
                 writer.WriteStringValue(ShareName);
             }
-            if (Optional.IsDefined(AccessKey))
+            if (AccessKey != null)
             {
                 writer.WritePropertyName("accessKey"u8);
                 writer.WriteStringValue(AccessKey);
             }
-            if (Optional.IsDefined(MountPath))
+            if (MountPath != null)
             {
                 writer.WritePropertyName("mountPath"u8);
                 writer.WriteStringValue(MountPath);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<AppServiceStorageType> type = default;
-            Optional<string> accountName = default;
-            Optional<string> shareName = default;
-            Optional<string> accessKey = default;
-            Optional<string> mountPath = default;
-            Optional<AppServiceStorageAccountState> state = default;
+            AppServiceStorageType? type = default;
+            string accountName = default;
+            string shareName = default;
+            string accessKey = default;
+            string mountPath = default;
+            AppServiceStorageAccountState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceStorageAccessInfo(Optional.ToNullable(type), accountName.Value, shareName.Value, accessKey.Value, mountPath.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new AppServiceStorageAccessInfo(
+                type,
+                accountName,
+                shareName,
+                accessKey,
+                mountPath,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceStorageAccessInfo>.Write(ModelReaderWriterOptions options)

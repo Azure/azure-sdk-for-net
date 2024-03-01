@@ -136,7 +136,10 @@ namespace Azure.ResourceManager.DevSpaces.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="containerHostMapping"/> is null. </exception>
         public virtual async Task<Response<ContainerHostMapping>> GetContainerHostMappingContainerHostMappingAsync(AzureLocation location, ContainerHostMapping containerHostMapping, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(containerHostMapping, nameof(containerHostMapping));
+            if (containerHostMapping == null)
+            {
+                throw new ArgumentNullException(nameof(containerHostMapping));
+            }
 
             using var scope = ContainerHostMappingsClientDiagnostics.CreateScope("MockableDevSpacesResourceGroupResource.GetContainerHostMappingContainerHostMapping");
             scope.Start();
@@ -175,7 +178,10 @@ namespace Azure.ResourceManager.DevSpaces.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="containerHostMapping"/> is null. </exception>
         public virtual Response<ContainerHostMapping> GetContainerHostMappingContainerHostMapping(AzureLocation location, ContainerHostMapping containerHostMapping, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(containerHostMapping, nameof(containerHostMapping));
+            if (containerHostMapping == null)
+            {
+                throw new ArgumentNullException(nameof(containerHostMapping));
+            }
 
             using var scope = ContainerHostMappingsClientDiagnostics.CreateScope("MockableDevSpacesResourceGroupResource.GetContainerHostMappingContainerHostMapping");
             scope.Start();

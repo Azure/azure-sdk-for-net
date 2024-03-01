@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserAssignedIdentity))
+            if (UserAssignedIdentity != null)
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<string> userAssignedIdentity = default;
+            string userAssignedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserAssignedIdentityProperties(userAssignedIdentity.Value, serializedAdditionalRawData);
+            return new UserAssignedIdentityProperties(userAssignedIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserAssignedIdentityProperties>.Write(ModelReaderWriterOptions options)

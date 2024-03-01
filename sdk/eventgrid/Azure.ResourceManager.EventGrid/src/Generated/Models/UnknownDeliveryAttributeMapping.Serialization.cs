@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDeliveryAttributeMapping(document.RootElement, options);
+            return DeserializeDeliveryAttributeMapping(document.RootElement, options);
         }
 
         internal static UnknownDeliveryAttributeMapping DeserializeUnknownDeliveryAttributeMapping(JsonElement element, ModelReaderWriterOptions options = null)
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             DeliveryAttributeMappingType type = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDeliveryAttributeMapping(name.Value, type, serializedAdditionalRawData);
+            return new UnknownDeliveryAttributeMapping(name, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeliveryAttributeMapping>.Write(ModelReaderWriterOptions options)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDeliveryAttributeMapping(document.RootElement, options);
+                        return DeserializeDeliveryAttributeMapping(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DeliveryAttributeMapping)} does not support '{options.Format}' format.");

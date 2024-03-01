@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsRelocationRequested))
+            if (IsRelocationRequested.HasValue)
             {
                 writer.WritePropertyName("relocationRequested"u8);
                 writer.WriteBooleanValue(IsRelocationRequested.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsReadyToBeFinalized))
+            if (options.Format != "W" && IsReadyToBeFinalized.HasValue)
             {
                 writer.WritePropertyName("readyToBeFinalized"u8);
                 writer.WriteBooleanValue(IsReadyToBeFinalized.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<bool> relocationRequested = default;
-            Optional<bool> readyToBeFinalized = default;
+            bool? relocationRequested = default;
+            bool? readyToBeFinalized = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeRelocationProperties(Optional.ToNullable(relocationRequested), Optional.ToNullable(readyToBeFinalized), serializedAdditionalRawData);
+            return new NetAppVolumeRelocationProperties(relocationRequested, readyToBeFinalized, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeRelocationProperties>.Write(ModelReaderWriterOptions options)

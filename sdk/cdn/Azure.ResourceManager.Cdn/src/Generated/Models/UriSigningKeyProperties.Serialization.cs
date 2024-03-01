@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(KeyId);
             writer.WritePropertyName("secretSource"u8);
             JsonSerializer.Serialize(writer, SecretSource);
-            if (Optional.IsDefined(SecretVersion))
+            if (SecretVersion != null)
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             string keyId = default;
             WritableSubResource secretSource = default;
-            Optional<string> secretVersion = default;
+            string secretVersion = default;
             SecretType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UriSigningKeyProperties(type, serializedAdditionalRawData, keyId, secretSource, secretVersion.Value);
+            return new UriSigningKeyProperties(type, serializedAdditionalRawData, keyId, secretSource, secretVersion);
         }
 
         BinaryData IPersistableModel<UriSigningKeyProperties>.Write(ModelReaderWriterOptions options)

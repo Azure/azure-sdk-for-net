@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
         public AzureDatabricksDeltaLakeLinkedService(DataFactoryElement<string> domain)
         {
-            Argument.AssertNotNull(domain, nameof(domain));
+            if (domain == null)
+            {
+                throw new ArgumentNullException(nameof(domain));
+            }
 
             Domain = domain;
             LinkedServiceType = "AzureDatabricksDeltaLake";
@@ -48,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Credential = credential;
             WorkspaceResourceId = workspaceResourceId;
             LinkedServiceType = linkedServiceType ?? "AzureDatabricksDeltaLake";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksDeltaLakeLinkedService"/> for deserialization. </summary>
+        internal AzureDatabricksDeltaLakeLinkedService()
+        {
         }
 
         /// <summary> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </summary>

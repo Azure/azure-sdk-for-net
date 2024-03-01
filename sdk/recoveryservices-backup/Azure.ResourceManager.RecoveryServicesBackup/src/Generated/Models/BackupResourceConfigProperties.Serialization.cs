@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageModelType))
+            if (StorageModelType.HasValue)
             {
                 writer.WritePropertyName("storageModelType"u8);
                 writer.WriteStringValue(StorageModelType.Value.ToString());
             }
-            if (Optional.IsDefined(StorageType))
+            if (StorageType.HasValue)
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
-            if (Optional.IsDefined(StorageTypeState))
+            if (StorageTypeState.HasValue)
             {
                 writer.WritePropertyName("storageTypeState"u8);
                 writer.WriteStringValue(StorageTypeState.Value.ToString());
             }
-            if (Optional.IsDefined(EnableCrossRegionRestore))
+            if (EnableCrossRegionRestore.HasValue)
             {
                 writer.WritePropertyName("crossRegionRestoreFlag"u8);
                 writer.WriteBooleanValue(EnableCrossRegionRestore.Value);
             }
-            if (Optional.IsDefined(DedupState))
+            if (DedupState.HasValue)
             {
                 writer.WritePropertyName("dedupState"u8);
                 writer.WriteStringValue(DedupState.Value.ToString());
             }
-            if (Optional.IsDefined(XcoolState))
+            if (XcoolState.HasValue)
             {
                 writer.WritePropertyName("xcoolState"u8);
                 writer.WriteStringValue(XcoolState.Value.ToString());
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupStorageType> storageModelType = default;
-            Optional<BackupStorageType> storageType = default;
-            Optional<BackupStorageTypeState> storageTypeState = default;
-            Optional<bool> crossRegionRestoreFlag = default;
-            Optional<VaultDedupState> dedupState = default;
-            Optional<VaultXcoolState> xcoolState = default;
+            BackupStorageType? storageModelType = default;
+            BackupStorageType? storageType = default;
+            BackupStorageTypeState? storageTypeState = default;
+            bool? crossRegionRestoreFlag = default;
+            VaultDedupState? dedupState = default;
+            VaultXcoolState? xcoolState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupResourceConfigProperties(Optional.ToNullable(storageModelType), Optional.ToNullable(storageType), Optional.ToNullable(storageTypeState), Optional.ToNullable(crossRegionRestoreFlag), Optional.ToNullable(dedupState), Optional.ToNullable(xcoolState), serializedAdditionalRawData);
+            return new BackupResourceConfigProperties(
+                storageModelType,
+                storageType,
+                storageTypeState,
+                crossRegionRestoreFlag,
+                dedupState,
+                xcoolState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupResourceConfigProperties>.Write(ModelReaderWriterOptions options)

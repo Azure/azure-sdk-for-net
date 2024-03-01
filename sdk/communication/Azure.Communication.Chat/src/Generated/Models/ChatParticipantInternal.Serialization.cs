@@ -19,12 +19,12 @@ namespace Azure.Communication.Chat
             writer.WriteStartObject();
             writer.WritePropertyName("communicationIdentifier"u8);
             writer.WriteObjectValue(CommunicationIdentifier);
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(ShareHistoryTime))
+            if (ShareHistoryTime.HasValue)
             {
                 writer.WritePropertyName("shareHistoryTime"u8);
                 writer.WriteStringValue(ShareHistoryTime.Value, "O");
@@ -39,8 +39,8 @@ namespace Azure.Communication.Chat
                 return null;
             }
             CommunicationIdentifierModel communicationIdentifier = default;
-            Optional<string> displayName = default;
-            Optional<DateTimeOffset> shareHistoryTime = default;
+            string displayName = default;
+            DateTimeOffset? shareHistoryTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("communicationIdentifier"u8))
@@ -63,7 +63,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatParticipantInternal(communicationIdentifier, displayName.Value, Optional.ToNullable(shareHistoryTime));
+            return new ChatParticipantInternal(communicationIdentifier, displayName, shareHistoryTime);
         }
     }
 }

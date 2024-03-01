@@ -25,24 +25,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(InstanceSize))
+            if (InstanceSize.HasValue)
             {
                 writer.WritePropertyName("instanceSize"u8);
                 writer.WriteStringValue(InstanceSize.Value.ToString());
             }
-            if (Optional.IsDefined(InstanceCount))
+            if (InstanceCount.HasValue)
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
             writer.WritePropertyName("serviceType"u8);
             writer.WriteStringValue(ServiceType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -86,13 +86,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DataTransfer": return DataTransferServiceProperties.DeserializeDataTransferServiceProperties(element);
-                    case "GraphAPICompute": return GraphApiComputeServiceProperties.DeserializeGraphApiComputeServiceProperties(element);
-                    case "MaterializedViewsBuilder": return MaterializedViewsBuilderServiceProperties.DeserializeMaterializedViewsBuilderServiceProperties(element);
-                    case "SqlDedicatedGateway": return SqlDedicatedGatewayServiceProperties.DeserializeSqlDedicatedGatewayServiceProperties(element);
+                    case "DataTransfer": return DataTransferServiceProperties.DeserializeDataTransferServiceProperties(element, options);
+                    case "GraphAPICompute": return GraphApiComputeServiceProperties.DeserializeGraphApiComputeServiceProperties(element, options);
+                    case "MaterializedViewsBuilder": return MaterializedViewsBuilderServiceProperties.DeserializeMaterializedViewsBuilderServiceProperties(element, options);
+                    case "SqlDedicatedGateway": return SqlDedicatedGatewayServiceProperties.DeserializeSqlDedicatedGatewayServiceProperties(element, options);
                 }
             }
-            return UnknownServiceResourceProperties.DeserializeUnknownServiceResourceProperties(element);
+            return UnknownServiceResourceProperties.DeserializeUnknownServiceResourceProperties(element, options);
         }
 
         BinaryData IPersistableModel<CosmosDBServiceProperties>.Write(ModelReaderWriterOptions options)

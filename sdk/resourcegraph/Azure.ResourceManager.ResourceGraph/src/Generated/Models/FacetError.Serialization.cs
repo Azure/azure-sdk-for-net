@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     List<FacetErrorDetails> array = new List<FacetErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FacetErrorDetails.DeserializeFacetErrorDetails(item));
+                        array.Add(FacetErrorDetails.DeserializeFacetErrorDetails(item, options));
                     }
                     errors = array;
                     continue;

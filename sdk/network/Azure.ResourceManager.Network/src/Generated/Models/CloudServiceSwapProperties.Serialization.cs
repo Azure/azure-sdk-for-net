@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SlotType))
+            if (SlotType.HasValue)
             {
                 writer.WritePropertyName("slotType"u8);
                 writer.WriteStringValue(SlotType.Value.ToSerialString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<SwapSlotType> slotType = default;
+            SwapSlotType? slotType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceSwapProperties(Optional.ToNullable(slotType), serializedAdditionalRawData);
+            return new CloudServiceSwapProperties(slotType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceSwapProperties>.Write(ModelReaderWriterOptions options)

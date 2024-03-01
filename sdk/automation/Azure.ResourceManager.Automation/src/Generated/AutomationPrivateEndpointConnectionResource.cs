@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomationPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, AutomationPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _automationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("AutomationPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AutomationPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, AutomationPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _automationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("AutomationPrivateEndpointConnectionResource.Update");
             scope.Start();

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourcePoolId))
+            if (ResourcePoolId != null)
             {
                 writer.WritePropertyName("resourcePoolId"u8);
                 writer.WriteStringValue(ResourcePoolId);
             }
-            if (Optional.IsDefined(ClusterId))
+            if (ClusterId != null)
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
-            if (Optional.IsDefined(HostId))
+            if (HostId != null)
             {
                 writer.WritePropertyName("hostId"u8);
                 writer.WriteStringValue(HostId);
             }
-            if (Optional.IsDefined(DatastoreId))
+            if (DatastoreId != null)
             {
                 writer.WritePropertyName("datastoreId"u8);
                 writer.WriteStringValue(DatastoreId);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> resourcePoolId = default;
-            Optional<string> clusterId = default;
-            Optional<string> hostId = default;
-            Optional<string> datastoreId = default;
+            string resourcePoolId = default;
+            string clusterId = default;
+            string hostId = default;
+            string datastoreId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlacementProfile(resourcePoolId.Value, clusterId.Value, hostId.Value, datastoreId.Value, serializedAdditionalRawData);
+            return new PlacementProfile(resourcePoolId, clusterId, hostId, datastoreId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlacementProfile>.Write(ModelReaderWriterOptions options)

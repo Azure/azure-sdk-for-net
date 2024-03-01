@@ -8,14 +8,14 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class PassThroughWorkerSelectorAttachment : IUtf8JsonSerializable
+    [CodeGenSerialization(nameof(ExpiresAfter), SerializationValueHook = nameof(WriteExpiresAfter), DeserializationValueHook = nameof(ReadExpiresAfter))]
+    public partial class PassThroughWorkerSelectorAttachment
     {
         /// <summary> Describes how the value of the label is compared to the value passed through. </summary>
         public LabelOperator LabelOperator { get; }
 
         /// <summary> Describes how long the attached worker selector is valid. </summary>
         [CodeGenMember("ExpiresAfterSeconds")]
-        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteExpiresAfter), DeserializationValueHook = nameof(ReadExpiresAfter))]
         public TimeSpan? ExpiresAfter { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -25,7 +25,7 @@ namespace Azure.Communication.JobRouter
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void ReadExpiresAfter(JsonProperty property, ref Optional<TimeSpan> expiresAfter)
+        internal static void ReadExpiresAfter(JsonProperty property, ref TimeSpan? expiresAfter)
         {
             if (property.Value.ValueKind == JsonValueKind.Null)
             {
@@ -41,26 +41,13 @@ namespace Azure.Communication.JobRouter
         /// <param name="expiresAfter"> Describes how long the attached worker selector is valid. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public PassThroughWorkerSelectorAttachment(string key, LabelOperator labelOperator, TimeSpan? expiresAfter = default)
-            : this(WorkerSelectorAttachmentKind.PassThrough, key, labelOperator, expiresAfter)
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
-        }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("key"u8);
-            writer.WriteStringValue(Key);
-            writer.WritePropertyName("labelOperator"u8);
-            writer.WriteStringValue(LabelOperator.ToString());
-            if (Optional.IsDefined(ExpiresAfter))
-            {
-                writer.WritePropertyName("expiresAfterSeconds"u8);
-                WriteExpiresAfter(writer);
-            }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            writer.WriteEndObject();
+            Kind = WorkerSelectorAttachmentKind.PassThrough;
+            Key = key;
+            LabelOperator = labelOperator;
+            ExpiresAfter = expiresAfter;
         }
     }
 }

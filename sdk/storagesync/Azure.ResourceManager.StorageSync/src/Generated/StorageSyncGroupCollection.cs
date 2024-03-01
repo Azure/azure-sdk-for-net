@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<StorageSyncGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string syncGroupName, StorageSyncGroupCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (syncGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(syncGroupName));
+            }
+            if (syncGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _storageSyncGroupSyncGroupsClientDiagnostics.CreateScope("StorageSyncGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<StorageSyncGroupResource> CreateOrUpdate(WaitUntil waitUntil, string syncGroupName, StorageSyncGroupCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (syncGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(syncGroupName));
+            }
+            if (syncGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _storageSyncGroupSyncGroupsClientDiagnostics.CreateScope("StorageSyncGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
         public virtual async Task<Response<StorageSyncGroupResource>> GetAsync(string syncGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            if (syncGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(syncGroupName));
+            }
+            if (syncGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
+            }
 
             using var scope = _storageSyncGroupSyncGroupsClientDiagnostics.CreateScope("StorageSyncGroupCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
         public virtual Response<StorageSyncGroupResource> Get(string syncGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            if (syncGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(syncGroupName));
+            }
+            if (syncGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
+            }
 
             using var scope = _storageSyncGroupSyncGroupsClientDiagnostics.CreateScope("StorageSyncGroupCollection.Get");
             scope.Start();
@@ -327,7 +361,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string syncGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            if (syncGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(syncGroupName));
+            }
+            if (syncGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
+            }
 
             using var scope = _storageSyncGroupSyncGroupsClientDiagnostics.CreateScope("StorageSyncGroupCollection.Exists");
             scope.Start();
@@ -370,7 +411,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string syncGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            if (syncGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(syncGroupName));
+            }
+            if (syncGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
+            }
 
             using var scope = _storageSyncGroupSyncGroupsClientDiagnostics.CreateScope("StorageSyncGroupCollection.Exists");
             scope.Start();
@@ -413,7 +461,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<StorageSyncGroupResource>> GetIfExistsAsync(string syncGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            if (syncGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(syncGroupName));
+            }
+            if (syncGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
+            }
 
             using var scope = _storageSyncGroupSyncGroupsClientDiagnostics.CreateScope("StorageSyncGroupCollection.GetIfExists");
             scope.Start();
@@ -458,7 +513,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
         public virtual NullableResponse<StorageSyncGroupResource> GetIfExists(string syncGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            if (syncGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(syncGroupName));
+            }
+            if (syncGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
+            }
 
             using var scope = _storageSyncGroupSyncGroupsClientDiagnostics.CreateScope("StorageSyncGroupCollection.GetIfExists");
             scope.Start();

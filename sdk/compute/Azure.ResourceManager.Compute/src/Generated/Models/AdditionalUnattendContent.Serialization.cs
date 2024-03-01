@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PassName))
+            if (PassName.HasValue)
             {
                 writer.WritePropertyName("passName"u8);
                 writer.WriteStringValue(PassName.Value.ToString());
             }
-            if (Optional.IsDefined(ComponentName))
+            if (ComponentName.HasValue)
             {
                 writer.WritePropertyName("componentName"u8);
                 writer.WriteStringValue(ComponentName.Value.ToString());
             }
-            if (Optional.IsDefined(SettingName))
+            if (SettingName.HasValue)
             {
                 writer.WritePropertyName("settingName"u8);
                 writer.WriteStringValue(SettingName.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<PassName> passName = default;
-            Optional<ComponentName> componentName = default;
-            Optional<SettingName> settingName = default;
-            Optional<string> content = default;
+            PassName? passName = default;
+            ComponentName? componentName = default;
+            SettingName? settingName = default;
+            string content = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdditionalUnattendContent(Optional.ToNullable(passName), Optional.ToNullable(componentName), Optional.ToNullable(settingName), content.Value, serializedAdditionalRawData);
+            return new AdditionalUnattendContent(passName, componentName, settingName, content, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdditionalUnattendContent>.Write(ModelReaderWriterOptions options)

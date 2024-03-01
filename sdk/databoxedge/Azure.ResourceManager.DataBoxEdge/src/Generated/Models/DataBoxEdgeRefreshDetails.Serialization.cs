@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InProgressRefreshJobId))
+            if (InProgressRefreshJobId != null)
             {
                 writer.WritePropertyName("inProgressRefreshJobId"u8);
                 writer.WriteStringValue(InProgressRefreshJobId);
             }
-            if (Optional.IsDefined(LastCompletedRefreshJobTimeInUtc))
+            if (LastCompletedRefreshJobTimeInUtc.HasValue)
             {
                 writer.WritePropertyName("lastCompletedRefreshJobTimeInUTC"u8);
                 writer.WriteStringValue(LastCompletedRefreshJobTimeInUtc.Value, "O");
             }
-            if (Optional.IsDefined(ErrorManifestFile))
+            if (ErrorManifestFile != null)
             {
                 writer.WritePropertyName("errorManifestFile"u8);
                 writer.WriteStringValue(ErrorManifestFile);
             }
-            if (Optional.IsDefined(LastJob))
+            if (LastJob != null)
             {
                 writer.WritePropertyName("lastJob"u8);
                 writer.WriteStringValue(LastJob);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> inProgressRefreshJobId = default;
-            Optional<DateTimeOffset> lastCompletedRefreshJobTimeInUtc = default;
-            Optional<string> errorManifestFile = default;
-            Optional<string> lastJob = default;
+            ResourceIdentifier inProgressRefreshJobId = default;
+            DateTimeOffset? lastCompletedRefreshJobTimeInUtc = default;
+            string errorManifestFile = default;
+            string lastJob = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeRefreshDetails(inProgressRefreshJobId.Value, Optional.ToNullable(lastCompletedRefreshJobTimeInUtc), errorManifestFile.Value, lastJob.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeRefreshDetails(inProgressRefreshJobId, lastCompletedRefreshJobTimeInUtc, errorManifestFile, lastJob, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeRefreshDetails>.Write(ModelReaderWriterOptions options)

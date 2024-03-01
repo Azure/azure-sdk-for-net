@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(ConnectVia))
+            if (ConnectVia != null)
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -61,47 +61,47 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
             writer.WriteObjectValue(Host);
-            if (Optional.IsDefined(UserId))
+            if (UserId != null)
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteObjectValue(UserId);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
-            if (Optional.IsDefined(ConnectionString))
+            if (ConnectionString != null)
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteObjectValue(ConnectionString);
             }
-            if (Optional.IsDefined(AccountKey))
+            if (AccountKey != null)
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteObjectValue(AccountKey);
             }
-            if (Optional.IsDefined(SasUri))
+            if (SasUri != null)
             {
                 writer.WritePropertyName("sasUri"u8);
                 writer.WriteObjectValue(SasUri);
             }
-            if (Optional.IsDefined(SasToken))
+            if (SasToken != null)
             {
                 writer.WritePropertyName("sasToken"u8);
                 writer.WriteObjectValue(SasToken);
             }
-            if (Optional.IsDefined(FileShare))
+            if (FileShare != null)
             {
                 writer.WritePropertyName("fileShare"u8);
                 writer.WriteObjectValue(FileShare);
             }
-            if (Optional.IsDefined(Snapshot))
+            if (Snapshot != null)
             {
                 writer.WritePropertyName("snapshot"u8);
                 writer.WriteObjectValue(Snapshot);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (EncryptedCredential != null)
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);
@@ -122,20 +122,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object host = default;
-            Optional<object> userId = default;
-            Optional<SecretBase> password = default;
-            Optional<object> connectionString = default;
-            Optional<AzureKeyVaultSecretReference> accountKey = default;
-            Optional<object> sasUri = default;
-            Optional<AzureKeyVaultSecretReference> sasToken = default;
-            Optional<object> fileShare = default;
-            Optional<object> snapshot = default;
-            Optional<object> encryptedCredential = default;
+            object userId = default;
+            SecretBase password = default;
+            object connectionString = default;
+            AzureKeyVaultSecretReference accountKey = default;
+            object sasUri = default;
+            AzureKeyVaultSecretReference sasToken = default;
+            object fileShare = default;
+            object snapshot = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -295,7 +295,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureFileStorageLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, userId.Value, password.Value, connectionString.Value, accountKey.Value, sasUri.Value, sasToken.Value, fileShare.Value, snapshot.Value, encryptedCredential.Value);
+            return new AzureFileStorageLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                host,
+                userId,
+                password,
+                connectionString,
+                accountKey,
+                sasUri,
+                sasToken,
+                fileShare,
+                snapshot,
+                encryptedCredential);
         }
 
         internal partial class AzureFileStorageLinkedServiceConverter : JsonConverter<AzureFileStorageLinkedService>

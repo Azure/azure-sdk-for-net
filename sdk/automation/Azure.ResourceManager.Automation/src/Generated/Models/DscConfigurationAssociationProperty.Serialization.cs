@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConfigurationName))
+            if (ConfigurationName != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(ConfigurationName);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscConfigurationAssociationProperty(name.Value, serializedAdditionalRawData);
+            return new DscConfigurationAssociationProperty(name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscConfigurationAssociationProperty>.Write(ModelReaderWriterOptions options)

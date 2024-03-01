@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> is null. </exception>
         public VMwareCbtUpdateDiskContent(string diskId)
         {
-            Argument.AssertNotNull(diskId, nameof(diskId));
+            if (diskId == null)
+            {
+                throw new ArgumentNullException(nameof(diskId));
+            }
 
             DiskId = diskId;
         }

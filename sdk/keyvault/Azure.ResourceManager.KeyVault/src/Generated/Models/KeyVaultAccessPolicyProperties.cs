@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicies"/> is null. </exception>
         public KeyVaultAccessPolicyProperties(IEnumerable<KeyVaultAccessPolicy> accessPolicies)
         {
-            Argument.AssertNotNull(accessPolicies, nameof(accessPolicies));
+            if (accessPolicies == null)
+            {
+                throw new ArgumentNullException(nameof(accessPolicies));
+            }
 
             AccessPolicies = accessPolicies.ToList();
         }

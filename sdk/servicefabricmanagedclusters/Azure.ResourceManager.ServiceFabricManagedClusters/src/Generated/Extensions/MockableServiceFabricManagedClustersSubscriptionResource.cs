@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,7 +137,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedClusterVersion>> GetManagedClusterVersionAsync(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
+            if (clusterVersion == null)
+            {
+                throw new ArgumentNullException(nameof(clusterVersion));
+            }
+            if (clusterVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterVersion));
+            }
 
             using var scope = ManagedClusterVersionClientDiagnostics.CreateScope("MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersion");
             scope.Start();
@@ -166,7 +173,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +184,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
         public virtual Response<ServiceFabricManagedClusterVersion> GetManagedClusterVersion(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
+            if (clusterVersion == null)
+            {
+                throw new ArgumentNullException(nameof(clusterVersion));
+            }
+            if (clusterVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterVersion));
+            }
 
             using var scope = ManagedClusterVersionClientDiagnostics.CreateScope("MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersion");
             scope.Start();
@@ -206,7 +220,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,7 +232,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedClusterVersion>> GetManagedClusterVersionByEnvironmentAsync(AzureLocation location, ManagedClusterVersionEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
+            if (clusterVersion == null)
+            {
+                throw new ArgumentNullException(nameof(clusterVersion));
+            }
+            if (clusterVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterVersion));
+            }
 
             using var scope = ManagedClusterVersionClientDiagnostics.CreateScope("MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersionByEnvironment");
             scope.Start();
@@ -247,7 +268,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -259,7 +280,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
         public virtual Response<ServiceFabricManagedClusterVersion> GetManagedClusterVersionByEnvironment(AzureLocation location, ManagedClusterVersionEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
+            if (clusterVersion == null)
+            {
+                throw new ArgumentNullException(nameof(clusterVersion));
+            }
+            if (clusterVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterVersion));
+            }
 
             using var scope = ManagedClusterVersionClientDiagnostics.CreateScope("MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersionByEnvironment");
             scope.Start();
@@ -288,7 +316,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,7 +342,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +368,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -367,7 +395,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -394,7 +422,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -421,7 +449,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -448,7 +476,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,7 +487,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedUnsupportedVmSize>> GetManagedUnsupportedVmSizeAsync(AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
+            if (vmSize == null)
+            {
+                throw new ArgumentNullException(nameof(vmSize));
+            }
+            if (vmSize.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmSize));
+            }
 
             using var scope = managedUnsupportedVMSizesClientDiagnostics.CreateScope("MockableServiceFabricManagedClustersSubscriptionResource.GetManagedUnsupportedVmSize");
             scope.Start();
@@ -488,7 +523,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -499,7 +534,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
         public virtual Response<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSize(AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
+            if (vmSize == null)
+            {
+                throw new ArgumentNullException(nameof(vmSize));
+            }
+            if (vmSize.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmSize));
+            }
 
             using var scope = managedUnsupportedVMSizesClientDiagnostics.CreateScope("MockableServiceFabricManagedClustersSubscriptionResource.GetManagedUnsupportedVmSize");
             scope.Start();

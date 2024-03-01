@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsCustomerInitiatedMaintenanceAllowed))
+            if (IsCustomerInitiatedMaintenanceAllowed.HasValue)
             {
                 writer.WritePropertyName("isCustomerInitiatedMaintenanceAllowed"u8);
                 writer.WriteBooleanValue(IsCustomerInitiatedMaintenanceAllowed.Value);
             }
-            if (Optional.IsDefined(PreMaintenanceWindowStartOn))
+            if (PreMaintenanceWindowStartOn.HasValue)
             {
                 writer.WritePropertyName("preMaintenanceWindowStartTime"u8);
                 writer.WriteStringValue(PreMaintenanceWindowStartOn.Value, "O");
             }
-            if (Optional.IsDefined(PreMaintenanceWindowEndOn))
+            if (PreMaintenanceWindowEndOn.HasValue)
             {
                 writer.WritePropertyName("preMaintenanceWindowEndTime"u8);
                 writer.WriteStringValue(PreMaintenanceWindowEndOn.Value, "O");
             }
-            if (Optional.IsDefined(MaintenanceWindowStartOn))
+            if (MaintenanceWindowStartOn.HasValue)
             {
                 writer.WritePropertyName("maintenanceWindowStartTime"u8);
                 writer.WriteStringValue(MaintenanceWindowStartOn.Value, "O");
             }
-            if (Optional.IsDefined(MaintenanceWindowEndOn))
+            if (MaintenanceWindowEndOn.HasValue)
             {
                 writer.WritePropertyName("maintenanceWindowEndTime"u8);
                 writer.WriteStringValue(MaintenanceWindowEndOn.Value, "O");
             }
-            if (Optional.IsDefined(LastOperationResultCode))
+            if (LastOperationResultCode.HasValue)
             {
                 writer.WritePropertyName("lastOperationResultCode"u8);
                 writer.WriteStringValue(LastOperationResultCode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(LastOperationMessage))
+            if (LastOperationMessage != null)
             {
                 writer.WritePropertyName("lastOperationMessage"u8);
                 writer.WriteStringValue(LastOperationMessage);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> isCustomerInitiatedMaintenanceAllowed = default;
-            Optional<DateTimeOffset> preMaintenanceWindowStartTime = default;
-            Optional<DateTimeOffset> preMaintenanceWindowEndTime = default;
-            Optional<DateTimeOffset> maintenanceWindowStartTime = default;
-            Optional<DateTimeOffset> maintenanceWindowEndTime = default;
-            Optional<MaintenanceOperationResultCodeType> lastOperationResultCode = default;
-            Optional<string> lastOperationMessage = default;
+            bool? isCustomerInitiatedMaintenanceAllowed = default;
+            DateTimeOffset? preMaintenanceWindowStartTime = default;
+            DateTimeOffset? preMaintenanceWindowEndTime = default;
+            DateTimeOffset? maintenanceWindowStartTime = default;
+            DateTimeOffset? maintenanceWindowEndTime = default;
+            MaintenanceOperationResultCodeType? lastOperationResultCode = default;
+            string lastOperationMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceRedeployStatus(Optional.ToNullable(isCustomerInitiatedMaintenanceAllowed), Optional.ToNullable(preMaintenanceWindowStartTime), Optional.ToNullable(preMaintenanceWindowEndTime), Optional.ToNullable(maintenanceWindowStartTime), Optional.ToNullable(maintenanceWindowEndTime), Optional.ToNullable(lastOperationResultCode), lastOperationMessage.Value, serializedAdditionalRawData);
+            return new MaintenanceRedeployStatus(
+                isCustomerInitiatedMaintenanceAllowed,
+                preMaintenanceWindowStartTime,
+                preMaintenanceWindowEndTime,
+                maintenanceWindowStartTime,
+                maintenanceWindowEndTime,
+                lastOperationResultCode,
+                lastOperationMessage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceRedeployStatus>.Write(ModelReaderWriterOptions options)

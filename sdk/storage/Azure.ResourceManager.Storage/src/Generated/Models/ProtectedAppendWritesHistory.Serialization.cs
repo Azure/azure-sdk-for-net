@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowProtectedAppendWritesAll))
+            if (AllowProtectedAppendWritesAll.HasValue)
             {
                 writer.WritePropertyName("allowProtectedAppendWritesAll"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWritesAll.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Timestamp.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<bool> allowProtectedAppendWritesAll = default;
-            Optional<DateTimeOffset> timestamp = default;
+            bool? allowProtectedAppendWritesAll = default;
+            DateTimeOffset? timestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProtectedAppendWritesHistory(Optional.ToNullable(allowProtectedAppendWritesAll), Optional.ToNullable(timestamp), serializedAdditionalRawData);
+            return new ProtectedAppendWritesHistory(allowProtectedAppendWritesAll, timestamp, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProtectedAppendWritesHistory>.Write(ModelReaderWriterOptions options)

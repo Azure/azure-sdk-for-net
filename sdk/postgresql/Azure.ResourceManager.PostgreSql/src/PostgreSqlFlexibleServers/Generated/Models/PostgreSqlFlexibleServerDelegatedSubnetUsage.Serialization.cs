@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SubnetName))
+            if (options.Format != "W" && SubnetName != null)
             {
                 writer.WritePropertyName("subnetName"u8);
                 writer.WriteStringValue(SubnetName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Usage))
+            if (options.Format != "W" && Usage.HasValue)
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteNumberValue(Usage.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> subnetName = default;
-            Optional<long> usage = default;
+            string subnetName = default;
+            long? usage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerDelegatedSubnetUsage(subnetName.Value, Optional.ToNullable(usage), serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerDelegatedSubnetUsage(subnetName, usage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerDelegatedSubnetUsage>.Write(ModelReaderWriterOptions options)

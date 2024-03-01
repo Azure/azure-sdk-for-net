@@ -63,7 +63,13 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new SentenceTarget(sentiment, confidenceScores, offset, length, text, relations);
+            return new SentenceTarget(
+                sentiment,
+                confidenceScores,
+                offset,
+                length,
+                text,
+                relations);
         }
     }
 }

@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DataFactoryScriptActivity(string name) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Scripts = new ChangeTrackingList<ScriptActivityScriptBlock>();
             ActivityType = "Script";
@@ -46,6 +49,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Scripts = scripts;
             LogSettings = logSettings;
             ActivityType = activityType ?? "Script";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryScriptActivity"/> for deserialization. </summary>
+        internal DataFactoryScriptActivity()
+        {
         }
 
         /// <summary> ScriptBlock execution timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>

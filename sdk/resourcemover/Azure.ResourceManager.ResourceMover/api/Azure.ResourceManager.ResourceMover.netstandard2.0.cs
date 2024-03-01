@@ -171,7 +171,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static Azure.ResourceManager.ResourceMover.Models.MoverOperationStatus MoverOperationStatus(Azure.Core.ResourceIdentifier id = null, string name = null, string status = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.ResourceMover.Models.MoverOperationStatusError error = null, System.BinaryData properties = null) { throw null; }
         public static Azure.ResourceManager.ResourceMover.Models.MoverOperationStatusError MoverOperationStatusError(string code = null, string message = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceMover.Models.MoverOperationStatusError> details = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceMover.Models.MoverOperationErrorAdditionalInfo> additionalInfo = null) { throw null; }
         public static Azure.ResourceManager.ResourceMover.MoverResourceData MoverResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResourceMover.Models.MoverResourceProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ResourceMover.Models.MoverResourceDependency MoverResourceDependency(Azure.Core.ResourceIdentifier id = null, string resolutionStatus = null, Azure.ResourceManager.ResourceMover.Models.MoverResourceResolutionType? resolutionType = default(Azure.ResourceManager.ResourceMover.Models.MoverResourceResolutionType?), Azure.ResourceManager.ResourceMover.Models.MoverDependencyType? dependencyType = default(Azure.ResourceManager.ResourceMover.Models.MoverDependencyType?), Azure.Core.ResourceIdentifier manualResolutionTargetId = null, Azure.Core.ResourceIdentifier automaticResolutionResourceId = null, bool? isOptional = default(bool?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.ResourceMover.Models.MoverResourceDependency MoverResourceDependency(Azure.Core.ResourceIdentifier id, string resolutionStatus, Azure.ResourceManager.ResourceMover.Models.MoverResourceResolutionType? resolutionType, Azure.ResourceManager.ResourceMover.Models.MoverDependencyType? dependencyType, Azure.Core.ResourceIdentifier manualResolutionTargetId, Azure.Core.ResourceIdentifier automaticResolutionResourceId, bool? isOptional) { throw null; }
+        public static Azure.ResourceManager.ResourceMover.Models.MoverResourceDependency MoverResourceDependency(Azure.Core.ResourceIdentifier id = null, string resolutionStatus = null, Azure.ResourceManager.ResourceMover.Models.MoverResourceResolutionType? resolutionType = default(Azure.ResourceManager.ResourceMover.Models.MoverResourceResolutionType?), Azure.ResourceManager.ResourceMover.Models.MoverDependencyType? dependencyType = default(Azure.ResourceManager.ResourceMover.Models.MoverDependencyType?), Azure.Core.ResourceIdentifier manualResolutionTargetId = null, Azure.Core.ResourceIdentifier automaticResolutionResourceId = null, string isDependencyOptional = null) { throw null; }
         public static Azure.ResourceManager.ResourceMover.Models.MoverResourceJobStatus MoverResourceJobStatus(Azure.ResourceManager.ResourceMover.Models.MoverResourceJobName? jobName = default(Azure.ResourceManager.ResourceMover.Models.MoverResourceJobName?), string jobProgress = null) { throw null; }
         public static Azure.ResourceManager.ResourceMover.Models.MoverResourceProperties MoverResourceProperties(Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState? provisioningState = default(Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState?), Azure.Core.ResourceIdentifier sourceId = null, Azure.Core.ResourceIdentifier targetId = null, Azure.Core.ResourceIdentifier existingTargetId = null, Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings resourceSettings = null, Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings sourceResourceSettings = null, Azure.ResourceManager.ResourceMover.Models.MoverResourcePropertiesMoveStatus moveStatus = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceMover.Models.MoverResourceDependency> dependsOn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceMover.Models.MoverResourceDependencyOverride> dependsOnOverrides = null, bool? isResolveRequired = default(bool?), Azure.ResponseError errorsProperties = null) { throw null; }
         public static Azure.ResourceManager.ResourceMover.Models.MoverResourcePropertiesMoveStatus MoverResourcePropertiesMoveStatus(Azure.ResourceManager.ResourceMover.Models.MoverResourceMoveState? moveState = default(Azure.ResourceManager.ResourceMover.Models.MoverResourceMoveState?), Azure.ResourceManager.ResourceMover.Models.MoverResourceJobStatus jobStatus = null, Azure.ResponseError errorsProperties = null) { throw null; }
@@ -226,7 +228,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         public LoadBalancerFrontendIPConfigurationResourceSettings() { }
         public string Name { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
+        public string PrivateIPAddressStringValue { get { throw null; } set { } }
         public string PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceMover.Models.SubnetReferenceInfo Subnet { get { throw null; } set { } }
         public string Zones { get { throw null; } set { } }
@@ -452,6 +456,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public Azure.Core.ResourceIdentifier AutomaticResolutionResourceId { get { throw null; } }
         public Azure.ResourceManager.ResourceMover.Models.MoverDependencyType? DependencyType { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public string IsDependencyOptional { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? IsOptional { get { throw null; } }
         public Azure.Core.ResourceIdentifier ManualResolutionTargetId { get { throw null; } }
         public string ResolutionStatus { get { throw null; } }
@@ -794,7 +800,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.LoadBalancerBackendAddressPoolReferenceInfo> LoadBalancerBackendAddressPools { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.LoadBalancerNatRuleReferenceInfo> LoadBalancerNatRules { get { throw null; } }
         public string Name { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
+        public string PrivateIPAddressStringValue { get { throw null; } set { } }
         public string PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PublicIPSourceArmResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceMover.Models.SubnetReferenceInfo Subnet { get { throw null; } set { } }

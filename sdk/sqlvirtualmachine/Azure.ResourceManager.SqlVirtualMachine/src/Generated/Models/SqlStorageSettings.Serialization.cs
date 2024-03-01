@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Luns))
+            if (!(Luns is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultFilePath))
+            if (DefaultFilePath != null)
             {
                 writer.WritePropertyName("defaultFilePath"u8);
                 writer.WriteStringValue(DefaultFilePath);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<IList<int>> luns = default;
-            Optional<string> defaultFilePath = default;
+            IList<int> luns = default;
+            string defaultFilePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlStorageSettings(Optional.ToList(luns), defaultFilePath.Value, serializedAdditionalRawData);
+            return new SqlStorageSettings(luns ?? new ChangeTrackingList<int>(), defaultFilePath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlStorageSettings>.Write(ModelReaderWriterOptions options)

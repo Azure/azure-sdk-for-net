@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IsDataAction))
+            if (IsDataAction.HasValue)
             {
                 writer.WritePropertyName("isDataAction"u8);
                 writer.WriteBooleanValue(IsDataAction.Value);
             }
-            if (Optional.IsDefined(Display))
+            if (Display != null)
             {
                 writer.WritePropertyName("display"u8);
                 writer.WriteObjectValue(Display);
             }
-            if (Optional.IsDefined(Origin))
+            if (Origin != null)
             {
                 writer.WritePropertyName("origin"u8);
                 writer.WriteStringValue(Origin);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> isDataAction = default;
-            Optional<MoverDisplayInfo> display = default;
-            Optional<string> origin = default;
-            Optional<BinaryData> properties = default;
+            string name = default;
+            bool? isDataAction = default;
+            MoverDisplayInfo display = default;
+            string origin = default;
+            BinaryData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    display = MoverDisplayInfo.DeserializeMoverDisplayInfo(property.Value);
+                    display = MoverDisplayInfo.DeserializeMoverDisplayInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("origin"u8))
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverOperationsDiscovery(name.Value, Optional.ToNullable(isDataAction), display.Value, origin.Value, properties.Value, serializedAdditionalRawData);
+            return new MoverOperationsDiscovery(
+                name,
+                isDataAction,
+                display,
+                origin,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverOperationsDiscovery>.Write(ModelReaderWriterOptions options)

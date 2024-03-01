@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PolicyErrors))
+            if (!(PolicyErrors is ChangeTrackingList<ExchangePolicyError> collection && collection.IsUndefined))
             {
                 if (PolicyErrors != null)
                 {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExchangePolicyError>> policyErrors = default;
+            IReadOnlyList<ExchangePolicyError> policyErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ExchangePolicyError> array = new List<ExchangePolicyError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExchangePolicyError.DeserializeExchangePolicyError(item));
+                        array.Add(ExchangePolicyError.DeserializeExchangePolicyError(item, options));
                     }
                     policyErrors = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExchangePolicyErrors(Optional.ToList(policyErrors), serializedAdditionalRawData);
+            return new ExchangePolicyErrors(policyErrors ?? new ChangeTrackingList<ExchangePolicyError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExchangePolicyErrors>.Write(ModelReaderWriterOptions options)

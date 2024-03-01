@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Type != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteObjectValue(Type);
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> name = default;
-            Optional<object> type = default;
+            object name = default;
+            object type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DatasetDataElement(name.Value, type.Value);
+            return new DatasetDataElement(name, type);
         }
 
         internal partial class DatasetDataElementConverter : JsonConverter<DatasetDataElement>

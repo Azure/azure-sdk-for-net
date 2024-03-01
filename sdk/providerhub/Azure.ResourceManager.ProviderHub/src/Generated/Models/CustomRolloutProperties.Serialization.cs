@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("specification"u8);
             writer.WriteObjectValue(Specification);
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<ProviderHubProvisioningState> provisioningState = default;
+            ProviderHubProvisioningState? provisioningState = default;
             CustomRolloutSpecification specification = default;
-            Optional<CustomRolloutStatus> status = default;
+            CustomRolloutStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (property.NameEquals("specification"u8))
                 {
-                    specification = CustomRolloutSpecification.DeserializeCustomRolloutSpecification(property.Value);
+                    specification = CustomRolloutSpecification.DeserializeCustomRolloutSpecification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    status = CustomRolloutStatus.DeserializeCustomRolloutStatus(property.Value);
+                    status = CustomRolloutStatus.DeserializeCustomRolloutStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomRolloutProperties(Optional.ToNullable(provisioningState), specification, status.Value, serializedAdditionalRawData);
+            return new CustomRolloutProperties(provisioningState, specification, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomRolloutProperties>.Write(ModelReaderWriterOptions options)

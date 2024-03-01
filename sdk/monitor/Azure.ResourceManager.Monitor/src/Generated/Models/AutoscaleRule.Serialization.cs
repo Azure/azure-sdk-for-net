@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (property.NameEquals("metricTrigger"u8))
                 {
-                    metricTrigger = MetricTrigger.DeserializeMetricTrigger(property.Value);
+                    metricTrigger = MetricTrigger.DeserializeMetricTrigger(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scaleAction"u8))
                 {
-                    scaleAction = MonitorScaleAction.DeserializeMonitorScaleAction(property.Value);
+                    scaleAction = MonitorScaleAction.DeserializeMonitorScaleAction(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReplicaCompletionCount))
+            if (ReplicaCompletionCount.HasValue)
             {
                 writer.WritePropertyName("replicaCompletionCount"u8);
                 writer.WriteNumberValue(ReplicaCompletionCount.Value);
             }
-            if (Optional.IsDefined(Parallelism))
+            if (Parallelism.HasValue)
             {
                 writer.WritePropertyName("parallelism"u8);
                 writer.WriteNumberValue(Parallelism.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<int> replicaCompletionCount = default;
-            Optional<int> parallelism = default;
+            int? replicaCompletionCount = default;
+            int? parallelism = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobConfigurationManualTriggerConfig(Optional.ToNullable(replicaCompletionCount), Optional.ToNullable(parallelism), serializedAdditionalRawData);
+            return new JobConfigurationManualTriggerConfig(replicaCompletionCount, parallelism, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobConfigurationManualTriggerConfig>.Write(ModelReaderWriterOptions options)

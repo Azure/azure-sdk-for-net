@@ -24,12 +24,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             StringIndexType stringIndexType = default;
             string content = default;
             IReadOnlyList<DocumentPage> pages = default;
-            Optional<IReadOnlyList<DocumentParagraph>> paragraphs = default;
-            Optional<IReadOnlyList<DocumentTable>> tables = default;
-            Optional<IReadOnlyList<DocumentKeyValuePair>> keyValuePairs = default;
-            Optional<IReadOnlyList<DocumentStyle>> styles = default;
-            Optional<IReadOnlyList<DocumentLanguage>> languages = default;
-            Optional<IReadOnlyList<AnalyzedDocument>> documents = default;
+            IReadOnlyList<DocumentParagraph> paragraphs = default;
+            IReadOnlyList<DocumentTable> tables = default;
+            IReadOnlyList<DocumentKeyValuePair> keyValuePairs = default;
+            IReadOnlyList<DocumentStyle> styles = default;
+            IReadOnlyList<DocumentLanguage> languages = default;
+            IReadOnlyList<AnalyzedDocument> documents = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiVersion"u8))
@@ -147,7 +147,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new AnalyzeResult(apiVersion, modelId, stringIndexType, content, pages, Optional.ToList(paragraphs), Optional.ToList(tables), Optional.ToList(keyValuePairs), Optional.ToList(styles), Optional.ToList(languages), Optional.ToList(documents));
+            return new AnalyzeResult(
+                apiVersion,
+                modelId,
+                stringIndexType,
+                content,
+                pages,
+                paragraphs ?? new ChangeTrackingList<DocumentParagraph>(),
+                tables ?? new ChangeTrackingList<DocumentTable>(),
+                keyValuePairs ?? new ChangeTrackingList<DocumentKeyValuePair>(),
+                styles ?? new ChangeTrackingList<DocumentStyle>(),
+                languages ?? new ChangeTrackingList<DocumentLanguage>(),
+                documents ?? new ChangeTrackingList<AnalyzedDocument>());
         }
     }
 }

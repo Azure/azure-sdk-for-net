@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("networkGroupId"u8);
             writer.WriteStringValue(NetworkGroupId);
-            if (Optional.IsDefined(UseHubGateway))
+            if (UseHubGateway.HasValue)
             {
                 writer.WritePropertyName("useHubGateway"u8);
                 writer.WriteStringValue(UseHubGateway.Value.ToString());
             }
-            if (Optional.IsDefined(IsGlobal))
+            if (IsGlobal.HasValue)
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteStringValue(IsGlobal.Value.ToString());
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string networkGroupId = default;
-            Optional<HubGatewayUsageFlag> useHubGateway = default;
-            Optional<GlobalMeshSupportFlag> isGlobal = default;
+            HubGatewayUsageFlag? useHubGateway = default;
+            GlobalMeshSupportFlag? isGlobal = default;
             GroupConnectivity groupConnectivity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityGroupItem(networkGroupId, Optional.ToNullable(useHubGateway), Optional.ToNullable(isGlobal), groupConnectivity, serializedAdditionalRawData);
+            return new ConnectivityGroupItem(networkGroupId, useHubGateway, isGlobal, groupConnectivity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityGroupItem>.Write(ModelReaderWriterOptions options)

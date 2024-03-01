@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Region))
+            if (Region.HasValue)
             {
                 writer.WritePropertyName("regionName"u8);
                 writer.WriteStringValue(Region.Value);
             }
-            if (Optional.IsDefined(CoresUsed))
+            if (CoresUsed.HasValue)
             {
                 writer.WritePropertyName("coresUsed"u8);
                 writer.WriteNumberValue(CoresUsed.Value);
             }
-            if (Optional.IsDefined(CoresAvailable))
+            if (CoresAvailable.HasValue)
             {
                 writer.WritePropertyName("coresAvailable"u8);
                 writer.WriteNumberValue(CoresAvailable.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<AzureLocation> regionName = default;
-            Optional<long> coresUsed = default;
-            Optional<long> coresAvailable = default;
+            AzureLocation? regionName = default;
+            long? coresUsed = default;
+            long? coresAvailable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegionalQuotaCapability(Optional.ToNullable(regionName), Optional.ToNullable(coresUsed), Optional.ToNullable(coresAvailable), serializedAdditionalRawData);
+            return new RegionalQuotaCapability(regionName, coresUsed, coresAvailable, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionalQuotaCapability>.Write(ModelReaderWriterOptions options)

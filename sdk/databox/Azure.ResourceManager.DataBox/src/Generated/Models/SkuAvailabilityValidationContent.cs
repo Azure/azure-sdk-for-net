@@ -22,7 +22,10 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="country"/> is null. </exception>
         public SkuAvailabilityValidationContent(DataBoxSkuName deviceType, DataBoxJobTransferType transferType, string country, AzureLocation location)
         {
-            Argument.AssertNotNull(country, nameof(country));
+            if (country == null)
+            {
+                throw new ArgumentNullException(nameof(country));
+            }
 
             DeviceType = deviceType;
             TransferType = transferType;

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 return null;
             }
             IReadOnlyList<NewRelicObservabilityAppServiceInfo> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     List<NewRelicObservabilityAppServiceInfo> array = new List<NewRelicObservabilityAppServiceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicObservabilityAppServiceInfo.DeserializeNewRelicObservabilityAppServiceInfo(item));
+                        array.Add(NewRelicObservabilityAppServiceInfo.DeserializeNewRelicObservabilityAppServiceInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicAppServicesListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new NewRelicAppServicesListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicAppServicesListResult>.Write(ModelReaderWriterOptions options)

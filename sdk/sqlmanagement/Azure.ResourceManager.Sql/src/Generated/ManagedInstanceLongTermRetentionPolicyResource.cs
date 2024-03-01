@@ -199,7 +199,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedInstanceLongTermRetentionPolicyResource>> UpdateAsync(WaitUntil waitUntil, ManagedInstanceLongTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateScope("ManagedInstanceLongTermRetentionPolicyResource.Update");
             scope.Start();
@@ -245,7 +248,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedInstanceLongTermRetentionPolicyResource> Update(WaitUntil waitUntil, ManagedInstanceLongTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateScope("ManagedInstanceLongTermRetentionPolicyResource.Update");
             scope.Start();

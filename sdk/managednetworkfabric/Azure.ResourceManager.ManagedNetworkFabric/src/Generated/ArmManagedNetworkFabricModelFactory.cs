@@ -44,7 +44,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             matchConfigurations ??= new List<AccessControlListMatchConfiguration>();
             dynamicMatchConfigurations ??= new List<CommonDynamicMatchConfiguration>();
 
-            return new NetworkFabricAccessControlListData(id, name, resourceType, systemData, tags, location, annotation, configurationType, aclsUri, defaultAction, matchConfigurations?.ToList(), dynamicMatchConfigurations?.ToList(), lastSyncedOn, configurationState, provisioningState, administrativeState, serializedAdditionalRawData: null);
+            return new NetworkFabricAccessControlListData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                annotation,
+                configurationType,
+                aclsUri,
+                defaultAction,
+                matchConfigurations?.ToList(),
+                dynamicMatchConfigurations?.ToList(),
+                lastSyncedOn,
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkFabricErrorResult"/>. </summary>
@@ -93,7 +110,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NetworkFabricInternetGatewayData(id, name, resourceType, systemData, tags, location, annotation, internetGatewayRuleId, ipV4Address, port, typePropertiesType, networkFabricControllerId, provisioningState, serializedAdditionalRawData: null);
+            return new NetworkFabricInternetGatewayData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                annotation,
+                internetGatewayRuleId,
+                ipV4Address,
+                port,
+                typePropertiesType,
+                networkFabricControllerId,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData"/>. </summary>
@@ -113,7 +144,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             tags ??= new Dictionary<string, string>();
             internetGatewayIds ??= new List<ResourceIdentifier>();
 
-            return new NetworkFabricInternetGatewayRuleData(id, name, resourceType, systemData, tags, location, annotation, ruleProperties, provisioningState, internetGatewayIds?.ToList(), serializedAdditionalRawData: null);
+            return new NetworkFabricInternetGatewayRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                annotation,
+                ruleProperties,
+                provisioningState,
+                internetGatewayIds?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPCommunityData"/>. </summary>
@@ -134,7 +176,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             tags ??= new Dictionary<string, string>();
             ipCommunityRules ??= new List<IPCommunityRule>();
 
-            return new NetworkFabricIPCommunityData(id, name, resourceType, systemData, tags, location, annotation, ipCommunityRules?.ToList(), configurationState, provisioningState, administrativeState, serializedAdditionalRawData: null);
+            return new NetworkFabricIPCommunityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                annotation,
+                ipCommunityRules?.ToList(),
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData"/>. </summary>
@@ -155,7 +209,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             tags ??= new Dictionary<string, string>();
             ipExtendedCommunityRules ??= new List<IPExtendedCommunityRule>();
 
-            return new NetworkFabricIPExtendedCommunityData(id, name, resourceType, systemData, tags, location, annotation, ipExtendedCommunityRules?.ToList(), configurationState, provisioningState, administrativeState, serializedAdditionalRawData: null);
+            return new NetworkFabricIPExtendedCommunityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                annotation,
+                ipExtendedCommunityRules?.ToList(),
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPPrefixData"/>. </summary>
@@ -176,7 +242,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             tags ??= new Dictionary<string, string>();
             ipPrefixRules ??= new List<IPPrefixRule>();
 
-            return new NetworkFabricIPPrefixData(id, name, resourceType, systemData, tags, location, annotation, ipPrefixRules?.ToList(), configurationState, provisioningState, administrativeState, serializedAdditionalRawData: null);
+            return new NetworkFabricIPPrefixData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                annotation,
+                ipPrefixRules?.ToList(),
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricL2IsolationDomainData"/>. </summary>
@@ -198,7 +276,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NetworkFabricL2IsolationDomainData(id, name, resourceType, systemData, tags, location, annotation, networkFabricId, vlanId, mtu, configurationState, provisioningState, administrativeState, serializedAdditionalRawData: null);
+            return new NetworkFabricL2IsolationDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                annotation,
+                networkFabricId,
+                vlanId,
+                mtu,
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeviceUpdateCommonPostActionResult"/>. </summary>
@@ -236,7 +328,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NetworkFabricL3IsolationDomainData(id, name, resourceType, systemData, tags, location, annotation, redistributeConnectedSubnets, redistributeStaticRoutes, aggregateRouteConfiguration, connectedSubnetRoutePolicy, networkFabricId, configurationState, provisioningState, administrativeState, serializedAdditionalRawData: null);
+            return new NetworkFabricL3IsolationDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                annotation,
+                redistributeConnectedSubnets,
+                redistributeStaticRoutes,
+                aggregateRouteConfiguration,
+                connectedSubnetRoutePolicy,
+                networkFabricId,
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternalNetworkData"/>. </summary>
@@ -268,7 +376,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             connectedIPv4Subnets ??= new List<ConnectedSubnet>();
             connectedIPv6Subnets ??= new List<ConnectedSubnet>();
 
-            return new NetworkFabricInternalNetworkData(id, name, resourceType, systemData, annotation, mtu, connectedIPv4Subnets?.ToList(), connectedIPv6Subnets?.ToList(), importRoutePolicyId, exportRoutePolicyId, importRoutePolicy, exportRoutePolicy, ingressAclId, egressAclId, isMonitoringEnabled, extension, vlanId, bgpConfiguration, staticRouteConfiguration, configurationState, provisioningState, administrativeState, serializedAdditionalRawData: null);
+            return new NetworkFabricInternalNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                annotation,
+                mtu,
+                connectedIPv4Subnets?.ToList(),
+                connectedIPv6Subnets?.ToList(),
+                importRoutePolicyId,
+                exportRoutePolicyId,
+                importRoutePolicy,
+                exportRoutePolicy,
+                ingressAclId,
+                egressAclId,
+                isMonitoringEnabled,
+                extension,
+                vlanId,
+                bgpConfiguration,
+                staticRouteConfiguration,
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InternalNetworkBgpConfiguration"/>. </summary>
@@ -291,7 +422,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ipv4NeighborAddress ??= new List<NeighborAddress>();
             ipv6NeighborAddress ??= new List<NeighborAddress>();
 
-            return new InternalNetworkBgpConfiguration(annotation, serializedAdditionalRawData: null, bfdConfiguration, defaultRouteOriginate, allowAS, allowASOverride, fabricAsn, peerAsn, ipv4ListenRangePrefixes?.ToList(), ipv6ListenRangePrefixes?.ToList(), ipv4NeighborAddress?.ToList(), ipv6NeighborAddress?.ToList());
+            return new InternalNetworkBgpConfiguration(
+                annotation,
+                serializedAdditionalRawData: null,
+                bfdConfiguration,
+                defaultRouteOriginate,
+                allowAS,
+                allowASOverride,
+                fabricAsn,
+                peerAsn,
+                ipv4ListenRangePrefixes?.ToList(),
+                ipv6ListenRangePrefixes?.ToList(),
+                ipv4NeighborAddress?.ToList(),
+                ipv6NeighborAddress?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BgpConfiguration"/>. </summary>
@@ -314,7 +457,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ipv4NeighborAddress ??= new List<NeighborAddress>();
             ipv6NeighborAddress ??= new List<NeighborAddress>();
 
-            return new BgpConfiguration(annotation, serializedAdditionalRawData: null, bfdConfiguration, defaultRouteOriginate, allowAS, allowASOverride, fabricAsn, peerAsn, ipv4ListenRangePrefixes?.ToList(), ipv6ListenRangePrefixes?.ToList(), ipv4NeighborAddress?.ToList(), ipv6NeighborAddress?.ToList());
+            return new BgpConfiguration(
+                annotation,
+                serializedAdditionalRawData: null,
+                bfdConfiguration,
+                defaultRouteOriginate,
+                allowAS,
+                allowASOverride,
+                fabricAsn,
+                peerAsn,
+                ipv4ListenRangePrefixes?.ToList(),
+                ipv6ListenRangePrefixes?.ToList(),
+                ipv4NeighborAddress?.ToList(),
+                ipv6NeighborAddress?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BfdConfiguration"/>. </summary>
@@ -356,7 +511,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricExternalNetworkData"/> instance for mocking. </returns>
         public static NetworkFabricExternalNetworkData NetworkFabricExternalNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string annotation = null, ResourceIdentifier importRoutePolicyId = null, ResourceIdentifier exportRoutePolicyId = null, ImportRoutePolicy importRoutePolicy = null, ExportRoutePolicy exportRoutePolicy = null, ResourceIdentifier networkToNetworkInterconnectId = null, PeeringOption peeringOption = default, L3OptionBProperties optionBProperties = null, ExternalNetworkOptionAProperties optionAProperties = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
         {
-            return new NetworkFabricExternalNetworkData(id, name, resourceType, systemData, annotation, importRoutePolicyId, exportRoutePolicyId, importRoutePolicy, exportRoutePolicy, networkToNetworkInterconnectId, peeringOption, optionBProperties, optionAProperties, configurationState, provisioningState, administrativeState, serializedAdditionalRawData: null);
+            return new NetworkFabricExternalNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                annotation,
+                importRoutePolicyId,
+                exportRoutePolicyId,
+                importRoutePolicy,
+                exportRoutePolicy,
+                networkToNetworkInterconnectId,
+                peeringOption,
+                optionBProperties,
+                optionAProperties,
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExternalNetworkOptionAProperties"/>. </summary>
@@ -374,7 +546,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <returns> A new <see cref="Models.ExternalNetworkOptionAProperties"/> instance for mocking. </returns>
         public static ExternalNetworkOptionAProperties ExternalNetworkOptionAProperties(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, int? mtu = null, int? vlanId = null, long? fabricAsn = null, long? peerAsn = null, BfdConfiguration bfdConfiguration = null, ResourceIdentifier ingressAclId = null, ResourceIdentifier egressAclId = null)
         {
-            return new ExternalNetworkOptionAProperties(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, serializedAdditionalRawData: null, mtu, vlanId, fabricAsn, peerAsn, bfdConfiguration, ingressAclId, egressAclId);
+            return new ExternalNetworkOptionAProperties(
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix,
+                serializedAdditionalRawData: null,
+                mtu,
+                vlanId,
+                fabricAsn,
+                peerAsn,
+                bfdConfiguration,
+                ingressAclId,
+                egressAclId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExternalNetworkPatchOptionAProperties"/>. </summary>
@@ -392,7 +576,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <returns> A new <see cref="Models.ExternalNetworkPatchOptionAProperties"/> instance for mocking. </returns>
         public static ExternalNetworkPatchOptionAProperties ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, int? mtu = null, int? vlanId = null, long? fabricAsn = null, long? peerAsn = null, BfdConfiguration bfdConfiguration = null, ResourceIdentifier ingressAclId = null, ResourceIdentifier egressAclId = null)
         {
-            return new ExternalNetworkPatchOptionAProperties(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, serializedAdditionalRawData: null, mtu, vlanId, fabricAsn, peerAsn, bfdConfiguration, ingressAclId, egressAclId);
+            return new ExternalNetworkPatchOptionAProperties(
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix,
+                serializedAdditionalRawData: null,
+                mtu,
+                vlanId,
+                fabricAsn,
+                peerAsn,
+                bfdConfiguration,
+                ingressAclId,
+                egressAclId);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricNeighborGroupData"/>. </summary>
@@ -414,7 +610,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             networkTapIds ??= new List<ResourceIdentifier>();
             networkTapRuleIds ??= new List<ResourceIdentifier>();
 
-            return new NetworkFabricNeighborGroupData(id, name, resourceType, systemData, tags, location, annotation, destination, networkTapIds?.ToList(), networkTapRuleIds?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new NetworkFabricNeighborGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                annotation,
+                destination,
+                networkTapIds?.ToList(),
+                networkTapRuleIds?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkDeviceSkuData"/>. </summary>
@@ -435,7 +643,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             supportedRoleTypes ??= new List<NetworkDeviceRoleName>();
             interfaces ??= new List<NetworkDeviceInterfaceProperties>();
 
-            return new NetworkDeviceSkuData(id, name, resourceType, systemData, model, manufacturer, supportedVersions?.ToList(), supportedRoleTypes?.ToList(), interfaces?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new NetworkDeviceSkuData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                model,
+                manufacturer,
+                supportedVersions?.ToList(),
+                supportedRoleTypes?.ToList(),
+                interfaces?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkDeviceData"/>. </summary>
@@ -462,7 +681,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NetworkDeviceData(id, name, resourceType, systemData, tags, location, annotation, hostName, serialNumber, version, networkDeviceSku, networkDeviceRole, networkRackId, managementIPv4Address, managementIPv6Address, configurationState, provisioningState, administrativeState, serializedAdditionalRawData: null);
+            return new NetworkDeviceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                annotation,
+                hostName,
+                serialNumber,
+                version,
+                networkDeviceSku,
+                networkDeviceRole,
+                networkRackId,
+                managementIPv4Address,
+                managementIPv6Address,
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkDeviceInterfaceData"/>. </summary>
@@ -481,7 +719,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceInterfaceData"/> instance for mocking. </returns>
         public static NetworkDeviceInterfaceData NetworkDeviceInterfaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string annotation = null, string physicalIdentifier = null, string connectedTo = null, NetworkDeviceInterfaceType? interfaceType = null, IPAddress ipv4Address = null, string ipv6Address = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
         {
-            return new NetworkDeviceInterfaceData(id, name, resourceType, systemData, annotation, physicalIdentifier, connectedTo, interfaceType, ipv4Address, ipv6Address, provisioningState, administrativeState, serializedAdditionalRawData: null);
+            return new NetworkDeviceInterfaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                annotation,
+                physicalIdentifier,
+                connectedTo,
+                interfaceType,
+                ipv4Address,
+                ipv6Address,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricControllerData"/>. </summary>
@@ -514,7 +765,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             networkFabricIds ??= new List<ResourceIdentifier>();
             tenantInternetGatewayIds ??= new List<ResourceIdentifier>();
 
-            return new NetworkFabricControllerData(id, name, resourceType, systemData, tags, location, annotation, infrastructureExpressRouteConnections?.ToList(), workloadExpressRouteConnections?.ToList(), infrastructureServices, workloadServices, managedResourceGroupConfiguration, networkFabricIds?.ToList(), isWorkloadManagementNetwork, isWorkloadManagementNetworkEnabled, tenantInternetGatewayIds?.ToList(), ipv4AddressSpace, ipv6AddressSpace, nfcSku, provisioningState, serializedAdditionalRawData: null);
+            return new NetworkFabricControllerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                annotation,
+                infrastructureExpressRouteConnections?.ToList(),
+                workloadExpressRouteConnections?.ToList(),
+                infrastructureServices,
+                workloadServices,
+                managedResourceGroupConfiguration,
+                networkFabricIds?.ToList(),
+                isWorkloadManagementNetwork,
+                isWorkloadManagementNetworkEnabled,
+                tenantInternetGatewayIds?.ToList(),
+                ipv4AddressSpace,
+                ipv6AddressSpace,
+                nfcSku,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkFabricControllerServices"/>. </summary>
@@ -545,7 +817,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             supportedVersions ??= new List<string>();
 
-            return new NetworkFabricSkuData(id, name, resourceType, systemData, typePropertiesType, maxComputeRacks, maximumServerCount, supportedVersions?.ToList(), details, provisioningState, serializedAdditionalRawData: null);
+            return new NetworkFabricSkuData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                typePropertiesType,
+                maxComputeRacks,
+                maximumServerCount,
+                supportedVersions?.ToList(),
+                details,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricData"/>. </summary>
@@ -582,7 +865,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             l2IsolationDomains ??= new List<string>();
             l3IsolationDomains ??= new List<string>();
 
-            return new NetworkFabricData(id, name, resourceType, systemData, tags, location, annotation, networkFabricSku, fabricVersion, routerIds?.ToList(), networkFabricControllerId, rackCount, serverCountPerRack, ipv4Prefix, ipv6Prefix, fabricAsn, terminalServerConfiguration, managementNetworkConfiguration, racks?.ToList(), l2IsolationDomains?.ToList(), l3IsolationDomains?.ToList(), configurationState, provisioningState, administrativeState, serializedAdditionalRawData: null);
+            return new NetworkFabricData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                annotation,
+                networkFabricSku,
+                fabricVersion,
+                routerIds?.ToList(),
+                networkFabricControllerId,
+                rackCount,
+                serverCountPerRack,
+                ipv4Prefix,
+                ipv6Prefix,
+                fabricAsn,
+                terminalServerConfiguration,
+                managementNetworkConfiguration,
+                racks?.ToList(),
+                l2IsolationDomains?.ToList(),
+                l3IsolationDomains?.ToList(),
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TerminalServerConfiguration"/>. </summary>
@@ -597,7 +905,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <returns> A new <see cref="Models.TerminalServerConfiguration"/> instance for mocking. </returns>
         public static TerminalServerConfiguration TerminalServerConfiguration(string username = null, string password = null, string serialNumber = null, ResourceIdentifier networkDeviceId = null, string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null)
         {
-            return new TerminalServerConfiguration(username, password, serialNumber, serializedAdditionalRawData: null, networkDeviceId, primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix);
+            return new TerminalServerConfiguration(
+                username,
+                password,
+                serialNumber,
+                serializedAdditionalRawData: null,
+                networkDeviceId,
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VpnConfigurationProperties"/>. </summary>
@@ -609,7 +926,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <returns> A new <see cref="Models.VpnConfigurationProperties"/> instance for mocking. </returns>
         public static VpnConfigurationProperties VpnConfigurationProperties(ResourceIdentifier networkToNetworkInterconnectId = null, NetworkFabricAdministrativeState? administrativeState = null, PeeringOption peeringOption = default, OptionBProperties optionBProperties = null, VpnConfigurationOptionAProperties optionAProperties = null)
         {
-            return new VpnConfigurationProperties(networkToNetworkInterconnectId, administrativeState, peeringOption, optionBProperties, optionAProperties, serializedAdditionalRawData: null);
+            return new VpnConfigurationProperties(
+                networkToNetworkInterconnectId,
+                administrativeState,
+                peeringOption,
+                optionBProperties,
+                optionAProperties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkToNetworkInterconnectData"/>. </summary>
@@ -633,7 +956,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkToNetworkInterconnectData"/> instance for mocking. </returns>
         public static NetworkToNetworkInterconnectData NetworkToNetworkInterconnectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NniType? nniType = null, IsManagementType? isManagementType = null, NetworkFabricBooleanValue useOptionB = default, Layer2Configuration layer2Configuration = null, NetworkToNetworkInterconnectOptionBLayer3Configuration optionBLayer3Configuration = null, NpbStaticRouteConfiguration npbStaticRouteConfiguration = null, ImportRoutePolicyInformation importRoutePolicy = null, ExportRoutePolicyInformation exportRoutePolicy = null, ResourceIdentifier egressAclId = null, ResourceIdentifier ingressAclId = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
         {
-            return new NetworkToNetworkInterconnectData(id, name, resourceType, systemData, nniType, isManagementType, useOptionB, layer2Configuration, optionBLayer3Configuration, npbStaticRouteConfiguration, importRoutePolicy, exportRoutePolicy, egressAclId, ingressAclId, configurationState, provisioningState, administrativeState, serializedAdditionalRawData: null);
+            return new NetworkToNetworkInterconnectData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                nniType,
+                isManagementType,
+                useOptionB,
+                layer2Configuration,
+                optionBLayer3Configuration,
+                npbStaticRouteConfiguration,
+                importRoutePolicy,
+                exportRoutePolicy,
+                egressAclId,
+                ingressAclId,
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectOptionBLayer3Configuration"/>. </summary>
@@ -647,7 +988,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <returns> A new <see cref="Models.NetworkToNetworkInterconnectOptionBLayer3Configuration"/> instance for mocking. </returns>
         public static NetworkToNetworkInterconnectOptionBLayer3Configuration NetworkToNetworkInterconnectOptionBLayer3Configuration(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, long? peerAsn = null, int? vlanId = null, long? fabricAsn = null)
         {
-            return new NetworkToNetworkInterconnectOptionBLayer3Configuration(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, serializedAdditionalRawData: null, peerAsn, vlanId, fabricAsn);
+            return new NetworkToNetworkInterconnectOptionBLayer3Configuration(
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix,
+                serializedAdditionalRawData: null,
+                peerAsn,
+                vlanId,
+                fabricAsn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OptionBLayer3Configuration"/>. </summary>
@@ -661,7 +1010,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <returns> A new <see cref="Models.OptionBLayer3Configuration"/> instance for mocking. </returns>
         public static OptionBLayer3Configuration OptionBLayer3Configuration(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, long? peerAsn = null, int? vlanId = null, long? fabricAsn = null)
         {
-            return new OptionBLayer3Configuration(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, serializedAdditionalRawData: null, peerAsn, vlanId, fabricAsn);
+            return new OptionBLayer3Configuration(
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix,
+                serializedAdditionalRawData: null,
+                peerAsn,
+                vlanId,
+                fabricAsn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectPatch"/>. </summary>
@@ -679,7 +1036,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <returns> A new <see cref="Models.NetworkToNetworkInterconnectPatch"/> instance for mocking. </returns>
         public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Layer2Configuration layer2Configuration = null, OptionBLayer3Configuration optionBLayer3Configuration = null, NpbStaticRouteConfiguration npbStaticRouteConfiguration = null, ImportRoutePolicyInformation importRoutePolicy = null, ExportRoutePolicyInformation exportRoutePolicy = null, ResourceIdentifier egressAclId = null, ResourceIdentifier ingressAclId = null)
         {
-            return new NetworkToNetworkInterconnectPatch(id, name, resourceType, systemData, layer2Configuration, optionBLayer3Configuration, npbStaticRouteConfiguration, importRoutePolicy, exportRoutePolicy, egressAclId, ingressAclId, serializedAdditionalRawData: null);
+            return new NetworkToNetworkInterconnectPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                layer2Configuration,
+                optionBLayer3Configuration,
+                npbStaticRouteConfiguration,
+                importRoutePolicy,
+                exportRoutePolicy,
+                egressAclId,
+                ingressAclId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkPacketBrokerData"/>. </summary>
@@ -704,7 +1073,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             networkTapIds ??= new List<ResourceIdentifier>();
             neighborGroupIds ??= new List<ResourceIdentifier>();
 
-            return new NetworkPacketBrokerData(id, name, resourceType, systemData, tags, location, networkFabricId, networkDeviceIds?.ToList(), sourceInterfaceIds?.ToList(), networkTapIds?.ToList(), neighborGroupIds?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new NetworkPacketBrokerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                networkFabricId,
+                networkDeviceIds?.ToList(),
+                sourceInterfaceIds?.ToList(),
+                networkTapIds?.ToList(),
+                neighborGroupIds?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkRackData"/>. </summary>
@@ -725,7 +1107,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             tags ??= new Dictionary<string, string>();
             networkDevices ??= new List<ResourceIdentifier>();
 
-            return new NetworkRackData(id, name, resourceType, systemData, tags, location, annotation, networkRackType, networkFabricId, networkDevices?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new NetworkRackData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                annotation,
+                networkRackType,
+                networkFabricId,
+                networkDevices?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkTapRuleData"/>. </summary>
@@ -753,7 +1147,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             matchConfigurations ??= new List<NetworkTapRuleMatchConfiguration>();
             dynamicMatchConfigurations ??= new List<CommonDynamicMatchConfiguration>();
 
-            return new NetworkTapRuleData(id, name, resourceType, systemData, tags, location, annotation, configurationType, tapRulesUri, matchConfigurations?.ToList(), dynamicMatchConfigurations?.ToList(), networkTapId, pollingIntervalInSeconds, lastSyncedOn, configurationState, provisioningState, administrativeState, serializedAdditionalRawData: null);
+            return new NetworkTapRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                annotation,
+                configurationType,
+                tapRulesUri,
+                matchConfigurations?.ToList(),
+                dynamicMatchConfigurations?.ToList(),
+                networkTapId,
+                pollingIntervalInSeconds,
+                lastSyncedOn,
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkTapData"/>. </summary>
@@ -777,7 +1189,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             tags ??= new Dictionary<string, string>();
             destinations ??= new List<NetworkTapPropertiesDestinationsItem>();
 
-            return new NetworkTapData(id, name, resourceType, systemData, tags, location, annotation, networkPacketBrokerId, sourceTapRuleId, destinations?.ToList(), pollingType, configurationState, provisioningState, administrativeState, serializedAdditionalRawData: null);
+            return new NetworkTapData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                annotation,
+                networkPacketBrokerId,
+                sourceTapRuleId,
+                destinations?.ToList(),
+                pollingType,
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricRoutePolicyData"/>. </summary>
@@ -801,7 +1228,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             tags ??= new Dictionary<string, string>();
             statements ??= new List<RoutePolicyStatementProperties>();
 
-            return new NetworkFabricRoutePolicyData(id, name, resourceType, systemData, tags, location, annotation, defaultAction, statements?.ToList(), networkFabricId, addressFamilyType, configurationState, provisioningState, administrativeState, serializedAdditionalRawData: null);
+            return new NetworkFabricRoutePolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                annotation,
+                defaultAction,
+                statements?.ToList(),
+                networkFabricId,
+                addressFamilyType,
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData: null);
         }
     }
 }

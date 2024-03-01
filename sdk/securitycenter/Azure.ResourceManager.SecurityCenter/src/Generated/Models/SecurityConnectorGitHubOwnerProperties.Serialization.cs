@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusMessage))
+            if (options.Format != "W" && ProvisioningStatusMessage != null)
             {
                 writer.WritePropertyName("provisioningStatusMessage"u8);
                 writer.WriteStringValue(ProvisioningStatusMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdateTimeUtc))
+            if (options.Format != "W" && ProvisioningStatusUpdateTimeUtc.HasValue)
             {
                 writer.WritePropertyName("provisioningStatusUpdateTimeUtc"u8);
                 writer.WriteStringValue(ProvisioningStatusUpdateTimeUtc.Value, "O");
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(OwnerUri))
+            if (options.Format != "W" && OwnerUri != null)
             {
                 writer.WritePropertyName("ownerUrl"u8);
                 writer.WriteStringValue(OwnerUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(GitHubInternalId))
+            if (options.Format != "W" && GitHubInternalId != null)
             {
                 writer.WritePropertyName("gitHubInternalId"u8);
                 writer.WriteStringValue(GitHubInternalId);
             }
-            if (Optional.IsDefined(OnboardingState))
+            if (OnboardingState.HasValue)
             {
                 writer.WritePropertyName("onboardingState"u8);
                 writer.WriteStringValue(OnboardingState.Value.ToString());
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> provisioningStatusMessage = default;
-            Optional<DateTimeOffset> provisioningStatusUpdateTimeUtc = default;
-            Optional<DevOpsProvisioningState> provisioningState = default;
-            Optional<Uri> ownerUrl = default;
-            Optional<string> gitHubInternalId = default;
-            Optional<ResourceOnboardingState> onboardingState = default;
+            string provisioningStatusMessage = default;
+            DateTimeOffset? provisioningStatusUpdateTimeUtc = default;
+            DevOpsProvisioningState? provisioningState = default;
+            Uri ownerUrl = default;
+            string gitHubInternalId = default;
+            ResourceOnboardingState? onboardingState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityConnectorGitHubOwnerProperties(provisioningStatusMessage.Value, Optional.ToNullable(provisioningStatusUpdateTimeUtc), Optional.ToNullable(provisioningState), ownerUrl.Value, gitHubInternalId.Value, Optional.ToNullable(onboardingState), serializedAdditionalRawData);
+            return new SecurityConnectorGitHubOwnerProperties(
+                provisioningStatusMessage,
+                provisioningStatusUpdateTimeUtc,
+                provisioningState,
+                ownerUrl,
+                gitHubInternalId,
+                onboardingState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityConnectorGitHubOwnerProperties>.Write(ModelReaderWriterOptions options)

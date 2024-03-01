@@ -18,22 +18,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PartitionColumnName))
+            if (PartitionColumnName != null)
             {
                 writer.WritePropertyName("partitionColumnName"u8);
                 writer.WriteObjectValue(PartitionColumnName);
             }
-            if (Optional.IsDefined(PartitionUpperBound))
+            if (PartitionUpperBound != null)
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
                 writer.WriteObjectValue(PartitionUpperBound);
             }
-            if (Optional.IsDefined(PartitionLowerBound))
+            if (PartitionLowerBound != null)
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
                 writer.WriteObjectValue(PartitionLowerBound);
             }
-            if (Optional.IsDefined(MaxPartitionsNumber))
+            if (MaxPartitionsNumber != null)
             {
                 writer.WritePropertyName("maxPartitionsNumber"u8);
                 writer.WriteObjectValue(MaxPartitionsNumber);
@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> partitionColumnName = default;
-            Optional<object> partitionUpperBound = default;
-            Optional<object> partitionLowerBound = default;
-            Optional<object> maxPartitionsNumber = default;
+            object partitionColumnName = default;
+            object partitionUpperBound = default;
+            object partitionLowerBound = default;
+            object maxPartitionsNumber = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionColumnName"u8))
@@ -90,7 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SapTablePartitionSettings(partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value, maxPartitionsNumber.Value);
+            return new SapTablePartitionSettings(partitionColumnName, partitionUpperBound, partitionLowerBound, maxPartitionsNumber);
         }
 
         internal partial class SapTablePartitionSettingsConverter : JsonConverter<SapTablePartitionSettings>

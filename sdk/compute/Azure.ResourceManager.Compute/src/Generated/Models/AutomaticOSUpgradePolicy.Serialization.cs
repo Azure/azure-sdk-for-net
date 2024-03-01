@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableAutomaticOSUpgrade))
+            if (EnableAutomaticOSUpgrade.HasValue)
             {
                 writer.WritePropertyName("enableAutomaticOSUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticOSUpgrade.Value);
             }
-            if (Optional.IsDefined(DisableAutomaticRollback))
+            if (DisableAutomaticRollback.HasValue)
             {
                 writer.WritePropertyName("disableAutomaticRollback"u8);
                 writer.WriteBooleanValue(DisableAutomaticRollback.Value);
             }
-            if (Optional.IsDefined(UseRollingUpgradePolicy))
+            if (UseRollingUpgradePolicy.HasValue)
             {
                 writer.WritePropertyName("useRollingUpgradePolicy"u8);
                 writer.WriteBooleanValue(UseRollingUpgradePolicy.Value);
             }
-            if (Optional.IsDefined(OSRollingUpgradeDeferral))
+            if (OSRollingUpgradeDeferral.HasValue)
             {
                 writer.WritePropertyName("osRollingUpgradeDeferral"u8);
                 writer.WriteBooleanValue(OSRollingUpgradeDeferral.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> enableAutomaticOSUpgrade = default;
-            Optional<bool> disableAutomaticRollback = default;
-            Optional<bool> useRollingUpgradePolicy = default;
-            Optional<bool> osRollingUpgradeDeferral = default;
+            bool? enableAutomaticOSUpgrade = default;
+            bool? disableAutomaticRollback = default;
+            bool? useRollingUpgradePolicy = default;
+            bool? osRollingUpgradeDeferral = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomaticOSUpgradePolicy(Optional.ToNullable(enableAutomaticOSUpgrade), Optional.ToNullable(disableAutomaticRollback), Optional.ToNullable(useRollingUpgradePolicy), Optional.ToNullable(osRollingUpgradeDeferral), serializedAdditionalRawData);
+            return new AutomaticOSUpgradePolicy(enableAutomaticOSUpgrade, disableAutomaticRollback, useRollingUpgradePolicy, osRollingUpgradeDeferral, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomaticOSUpgradePolicy>.Write(ModelReaderWriterOptions options)

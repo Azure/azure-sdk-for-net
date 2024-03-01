@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VhdName))
+            if (VhdName != null)
             {
                 writer.WritePropertyName("vhdName"u8);
                 writer.WriteStringValue(VhdName);
             }
-            if (Optional.IsDefined(VhdVersion))
+            if (VhdVersion != null)
             {
                 writer.WritePropertyName("vhdVersion"u8);
                 writer.WriteStringValue(VhdVersion);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> vhdName = default;
-            Optional<string> vhdVersion = default;
+            string vhdName = default;
+            string vhdVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VhdImageArtifactProfile(vhdName.Value, vhdVersion.Value, serializedAdditionalRawData);
+            return new VhdImageArtifactProfile(vhdName, vhdVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VhdImageArtifactProfile>.Write(ModelReaderWriterOptions options)

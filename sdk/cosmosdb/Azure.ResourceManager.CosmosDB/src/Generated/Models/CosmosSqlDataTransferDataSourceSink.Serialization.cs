@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStringValue(DatabaseName);
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (Optional.IsDefined(RemoteAccountName))
+            if (RemoteAccountName != null)
             {
                 writer.WritePropertyName("remoteAccountName"u8);
                 writer.WriteStringValue(RemoteAccountName);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             string databaseName = default;
             string containerName = default;
-            Optional<string> remoteAccountName = default;
+            string remoteAccountName = default;
             DataTransferComponent component = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosSqlDataTransferDataSourceSink(component, serializedAdditionalRawData, databaseName, containerName, remoteAccountName.Value);
+            return new CosmosSqlDataTransferDataSourceSink(component, serializedAdditionalRawData, databaseName, containerName, remoteAccountName);
         }
 
         BinaryData IPersistableModel<CosmosSqlDataTransferDataSourceSink>.Write(ModelReaderWriterOptions options)

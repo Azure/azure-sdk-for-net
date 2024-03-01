@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccountName))
+            if (AccountName != null)
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Optional.IsDefined(AccountKey))
+            if (AccountKey != null)
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
-            if (Optional.IsDefined(AuthenticationMode))
+            if (AuthenticationMode.HasValue)
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> accountKey = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            string accountName = default;
+            string accountKey = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsStorageAccount(accountName.Value, accountKey.Value, Optional.ToNullable(authenticationMode), serializedAdditionalRawData);
+            return new StreamAnalyticsStorageAccount(accountName, accountKey, authenticationMode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsStorageAccount>.Write(ModelReaderWriterOptions options)

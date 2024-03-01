@@ -15,12 +15,12 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SentenceCount))
+            if (SentenceCount.HasValue)
             {
                 writer.WritePropertyName("sentenceCount"u8);
                 writer.WriteNumberValue(SentenceCount.Value);
             }
-            if (Optional.IsDefined(StringIndexType))
+            if (StringIndexType.HasValue)
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<int> sentenceCount = default;
-            Optional<StringIndexType> stringIndexType = default;
+            int? sentenceCount = default;
+            StringIndexType? stringIndexType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sentenceCount"u8))
@@ -57,7 +57,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AbstractiveSummarizationTaskParametersBase(Optional.ToNullable(sentenceCount), Optional.ToNullable(stringIndexType));
+            return new AbstractiveSummarizationTaskParametersBase(sentenceCount, stringIndexType);
         }
     }
 }

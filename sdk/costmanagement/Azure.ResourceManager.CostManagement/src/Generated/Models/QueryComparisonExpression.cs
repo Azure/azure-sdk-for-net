@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -54,8 +53,14 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="values"/> is null. </exception>
         public QueryComparisonExpression(string name, QueryOperatorType @operator, IEnumerable<string> values)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(values, nameof(values));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (values == null)
+            {
+                throw new ArgumentNullException(nameof(values));
+            }
 
             Name = name;
             Operator = @operator;

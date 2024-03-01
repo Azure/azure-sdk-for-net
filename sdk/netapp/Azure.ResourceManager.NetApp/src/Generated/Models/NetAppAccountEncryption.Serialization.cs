@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeySource))
+            if (KeySource.HasValue)
             {
                 writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToString());
             }
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (KeyVaultProperties != null)
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<NetAppKeySource> keySource = default;
-            Optional<NetAppKeyVaultProperties> keyVaultProperties = default;
-            Optional<NetAppEncryptionIdentity> identity = default;
+            NetAppKeySource? keySource = default;
+            NetAppKeyVaultProperties keyVaultProperties = default;
+            NetAppEncryptionIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = NetAppKeyVaultProperties.DeserializeNetAppKeyVaultProperties(property.Value);
+                    keyVaultProperties = NetAppKeyVaultProperties.DeserializeNetAppKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    identity = NetAppEncryptionIdentity.DeserializeNetAppEncryptionIdentity(property.Value);
+                    identity = NetAppEncryptionIdentity.DeserializeNetAppEncryptionIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppAccountEncryption(Optional.ToNullable(keySource), keyVaultProperties.Value, identity.Value, serializedAdditionalRawData);
+            return new NetAppAccountEncryption(keySource, keyVaultProperties, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppAccountEncryption>.Write(ModelReaderWriterOptions options)

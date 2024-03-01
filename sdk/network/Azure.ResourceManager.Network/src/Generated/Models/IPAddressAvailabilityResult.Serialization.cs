@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Available))
+            if (Available.HasValue)
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteBooleanValue(Available.Value);
             }
-            if (Optional.IsCollectionDefined(AvailableIPAddresses))
+            if (!(AvailableIPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availableIPAddresses"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsPlatformReserved))
+            if (IsPlatformReserved.HasValue)
             {
                 writer.WritePropertyName("isPlatformReserved"u8);
                 writer.WriteBooleanValue(IsPlatformReserved.Value);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<bool> available = default;
-            Optional<IReadOnlyList<string>> availableIPAddresses = default;
-            Optional<bool> isPlatformReserved = default;
+            bool? available = default;
+            IReadOnlyList<string> availableIPAddresses = default;
+            bool? isPlatformReserved = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPAddressAvailabilityResult(Optional.ToNullable(available), Optional.ToList(availableIPAddresses), Optional.ToNullable(isPlatformReserved), serializedAdditionalRawData);
+            return new IPAddressAvailabilityResult(available, availableIPAddresses ?? new ChangeTrackingList<string>(), isPlatformReserved, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPAddressAvailabilityResult>.Write(ModelReaderWriterOptions options)

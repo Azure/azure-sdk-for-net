@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(DBPasswordSecretName);
             writer.WritePropertyName("keyVaultId"u8);
             writer.WriteStringValue(KeyVaultId);
-            if (Optional.IsDefined(ThriftUriString))
+            if (ThriftUriString != null)
             {
                 writer.WritePropertyName("thriftUrl"u8);
                 writer.WriteStringValue(ThriftUriString);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             string dbUserName = default;
             string dbPasswordSecretName = default;
             string keyVaultId = default;
-            Optional<string> thriftUrl = default;
+            string thriftUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SparkMetastoreSpec(dbServerHost, dbName, dbUserName, dbPasswordSecretName, keyVaultId, thriftUrl.Value, serializedAdditionalRawData);
+            return new SparkMetastoreSpec(
+                dbServerHost,
+                dbName,
+                dbUserName,
+                dbPasswordSecretName,
+                keyVaultId,
+                thriftUrl,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SparkMetastoreSpec>.Write(ModelReaderWriterOptions options)

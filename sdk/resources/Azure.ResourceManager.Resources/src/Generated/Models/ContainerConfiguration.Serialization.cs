@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContainerGroupName))
+            if (ContainerGroupName != null)
             {
                 writer.WritePropertyName("containerGroupName"u8);
                 writer.WriteStringValue(ContainerGroupName);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> containerGroupName = default;
+            string containerGroupName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerConfiguration(containerGroupName.Value, serializedAdditionalRawData);
+            return new ContainerConfiguration(containerGroupName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerConfiguration>.Write(ModelReaderWriterOptions options)

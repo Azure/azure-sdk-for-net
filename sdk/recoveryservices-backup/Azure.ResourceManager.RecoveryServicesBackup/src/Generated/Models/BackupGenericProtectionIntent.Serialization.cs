@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             writer.WritePropertyName("protectionIntentItemType"u8);
             writer.WriteStringValue(ProtectionIntentItemType.ToString());
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType.HasValue)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Optional.IsDefined(SourceResourceId))
+            if (SourceResourceId != null)
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsDefined(ItemId))
+            if (ItemId != null)
             {
                 writer.WritePropertyName("itemId"u8);
                 writer.WriteStringValue(ItemId);
             }
-            if (Optional.IsDefined(PolicyId))
+            if (PolicyId != null)
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (Optional.IsDefined(ProtectionState))
+            if (ProtectionState.HasValue)
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
@@ -95,14 +95,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureResourceItem": return ResourceProtectionIntent.DeserializeResourceProtectionIntent(element);
-                    case "AzureWorkloadAutoProtectionIntent": return WorkloadAutoProtectionIntent.DeserializeWorkloadAutoProtectionIntent(element);
-                    case "AzureWorkloadContainerAutoProtectionIntent": return WorkloadContainerAutoProtectionIntent.DeserializeWorkloadContainerAutoProtectionIntent(element);
-                    case "AzureWorkloadSQLAutoProtectionIntent": return WorkloadSqlAutoProtectionIntent.DeserializeWorkloadSqlAutoProtectionIntent(element);
-                    case "RecoveryServiceVaultItem": return RecoveryServiceVaultProtectionIntent.DeserializeRecoveryServiceVaultProtectionIntent(element);
+                    case "AzureResourceItem": return ResourceProtectionIntent.DeserializeResourceProtectionIntent(element, options);
+                    case "AzureWorkloadAutoProtectionIntent": return WorkloadAutoProtectionIntent.DeserializeWorkloadAutoProtectionIntent(element, options);
+                    case "AzureWorkloadContainerAutoProtectionIntent": return WorkloadContainerAutoProtectionIntent.DeserializeWorkloadContainerAutoProtectionIntent(element, options);
+                    case "AzureWorkloadSQLAutoProtectionIntent": return WorkloadSqlAutoProtectionIntent.DeserializeWorkloadSqlAutoProtectionIntent(element, options);
+                    case "RecoveryServiceVaultItem": return RecoveryServiceVaultProtectionIntent.DeserializeRecoveryServiceVaultProtectionIntent(element, options);
                 }
             }
-            return UnknownProtectionIntent.DeserializeUnknownProtectionIntent(element);
+            return UnknownProtectionIntent.DeserializeUnknownProtectionIntent(element, options);
         }
 
         BinaryData IPersistableModel<BackupGenericProtectionIntent>.Write(ModelReaderWriterOptions options)

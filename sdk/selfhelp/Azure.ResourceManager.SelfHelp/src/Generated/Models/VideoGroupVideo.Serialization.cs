@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Src))
+            if (Src != null)
             {
                 writer.WritePropertyName("src"u8);
                 writer.WriteStringValue(Src);
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> src = default;
-            Optional<string> title = default;
+            string src = default;
+            string title = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VideoGroupVideo(src.Value, title.Value, serializedAdditionalRawData);
+            return new VideoGroupVideo(src, title, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VideoGroupVideo>.Write(ModelReaderWriterOptions options)

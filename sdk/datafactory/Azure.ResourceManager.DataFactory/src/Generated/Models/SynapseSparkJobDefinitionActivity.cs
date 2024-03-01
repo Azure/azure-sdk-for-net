@@ -21,8 +21,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="sparkJob"/> is null. </exception>
         public SynapseSparkJobDefinitionActivity(string name, SynapseSparkJobReference sparkJob) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(sparkJob, nameof(sparkJob));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (sparkJob == null)
+            {
+                throw new ArgumentNullException(nameof(sparkJob));
+            }
 
             SparkJob = sparkJob;
             Arguments = new ChangeTrackingList<BinaryData>();
@@ -79,6 +85,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             TargetSparkConfiguration = targetSparkConfiguration;
             SparkConfig = sparkConfig;
             ActivityType = activityType ?? "SparkJob";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobDefinitionActivity"/> for deserialization. </summary>
+        internal SynapseSparkJobDefinitionActivity()
+        {
         }
 
         /// <summary> Synapse spark job reference. </summary>

@@ -52,8 +52,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="principalId"/> or <paramref name="principalType"/> is null. </exception>
         public AssignmentPrincipal(string principalId, string principalType)
         {
-            Argument.AssertNotNull(principalId, nameof(principalId));
-            Argument.AssertNotNull(principalType, nameof(principalType));
+            if (principalId == null)
+            {
+                throw new ArgumentNullException(nameof(principalId));
+            }
+            if (principalType == null)
+            {
+                throw new ArgumentNullException(nameof(principalType));
+            }
 
             PrincipalId = principalId;
             PrincipalType = principalType;

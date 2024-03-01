@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("moveResourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> moveResourceId = default;
+            ResourceIdentifier moveResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomaticResolutionProperties(moveResourceId.Value, serializedAdditionalRawData);
+            return new AutomaticResolutionProperties(moveResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomaticResolutionProperties>.Write(ModelReaderWriterOptions options)

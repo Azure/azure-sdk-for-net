@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PackageNameMasksToExclude))
+            if (!(PackageNameMasksToExclude is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("packageNameMasksToExclude"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PackageNameMasksToInclude))
+            if (!(PackageNameMasksToInclude is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("packageNameMasksToInclude"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClassificationsToInclude))
+            if (!(ClassificationsToInclude is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("classificationsToInclude"u8);
                 writer.WriteStartArray();
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<IList<string>> packageNameMasksToExclude = default;
-            Optional<IList<string>> packageNameMasksToInclude = default;
-            Optional<IList<string>> classificationsToInclude = default;
+            IList<string> packageNameMasksToExclude = default;
+            IList<string> packageNameMasksToInclude = default;
+            IList<string> classificationsToInclude = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceLinuxPatchSettings(Optional.ToList(packageNameMasksToExclude), Optional.ToList(packageNameMasksToInclude), Optional.ToList(classificationsToInclude), serializedAdditionalRawData);
+            return new MaintenanceLinuxPatchSettings(packageNameMasksToExclude ?? new ChangeTrackingList<string>(), packageNameMasksToInclude ?? new ChangeTrackingList<string>(), classificationsToInclude ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceLinuxPatchSettings>.Write(ModelReaderWriterOptions options)

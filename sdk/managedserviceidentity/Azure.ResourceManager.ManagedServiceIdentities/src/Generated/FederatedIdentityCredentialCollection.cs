@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FederatedIdentityCredentialResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string federatedIdentityCredentialResourceName, FederatedIdentityCredentialData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (federatedIdentityCredentialResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(federatedIdentityCredentialResourceName));
+            }
+            if (federatedIdentityCredentialResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(federatedIdentityCredentialResourceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FederatedIdentityCredentialResource> CreateOrUpdate(WaitUntil waitUntil, string federatedIdentityCredentialResourceName, FederatedIdentityCredentialData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (federatedIdentityCredentialResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(federatedIdentityCredentialResourceName));
+            }
+            if (federatedIdentityCredentialResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(federatedIdentityCredentialResourceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
         public virtual async Task<Response<FederatedIdentityCredentialResource>> GetAsync(string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
+            if (federatedIdentityCredentialResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(federatedIdentityCredentialResourceName));
+            }
+            if (federatedIdentityCredentialResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(federatedIdentityCredentialResourceName));
+            }
 
             using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
         public virtual Response<FederatedIdentityCredentialResource> Get(string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
+            if (federatedIdentityCredentialResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(federatedIdentityCredentialResourceName));
+            }
+            if (federatedIdentityCredentialResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(federatedIdentityCredentialResourceName));
+            }
 
             using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.Get");
             scope.Start();
@@ -332,7 +366,14 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
+            if (federatedIdentityCredentialResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(federatedIdentityCredentialResourceName));
+            }
+            if (federatedIdentityCredentialResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(federatedIdentityCredentialResourceName));
+            }
 
             using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.Exists");
             scope.Start();
@@ -375,7 +416,14 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
+            if (federatedIdentityCredentialResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(federatedIdentityCredentialResourceName));
+            }
+            if (federatedIdentityCredentialResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(federatedIdentityCredentialResourceName));
+            }
 
             using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.Exists");
             scope.Start();
@@ -418,7 +466,14 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<FederatedIdentityCredentialResource>> GetIfExistsAsync(string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
+            if (federatedIdentityCredentialResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(federatedIdentityCredentialResourceName));
+            }
+            if (federatedIdentityCredentialResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(federatedIdentityCredentialResourceName));
+            }
 
             using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.GetIfExists");
             scope.Start();
@@ -463,7 +518,14 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
         public virtual NullableResponse<FederatedIdentityCredentialResource> GetIfExists(string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
+            if (federatedIdentityCredentialResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(federatedIdentityCredentialResourceName));
+            }
+            if (federatedIdentityCredentialResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(federatedIdentityCredentialResourceName));
+            }
 
             using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.GetIfExists");
             scope.Start();

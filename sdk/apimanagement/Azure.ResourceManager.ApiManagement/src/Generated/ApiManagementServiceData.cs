@@ -61,9 +61,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/>, <paramref name="publisherEmail"/> or <paramref name="publisherName"/> is null. </exception>
         public ApiManagementServiceData(AzureLocation location, ApiManagementServiceSkuProperties sku, string publisherEmail, string publisherName) : base(location)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
-            Argument.AssertNotNull(publisherEmail, nameof(publisherEmail));
-            Argument.AssertNotNull(publisherName, nameof(publisherName));
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (publisherEmail == null)
+            {
+                throw new ArgumentNullException(nameof(publisherEmail));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
 
             Sku = sku;
             Zones = new ChangeTrackingList<string>();

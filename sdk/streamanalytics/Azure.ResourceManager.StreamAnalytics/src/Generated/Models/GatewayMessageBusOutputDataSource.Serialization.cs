@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Topic))
+            if (Topic != null)
             {
                 writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> topic = default;
+            string topic = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayMessageBusOutputDataSource(type, serializedAdditionalRawData, topic.Value);
+            return new GatewayMessageBusOutputDataSource(type, serializedAdditionalRawData, topic);
         }
 
         BinaryData IPersistableModel<GatewayMessageBusOutputDataSource>.Write(ModelReaderWriterOptions options)

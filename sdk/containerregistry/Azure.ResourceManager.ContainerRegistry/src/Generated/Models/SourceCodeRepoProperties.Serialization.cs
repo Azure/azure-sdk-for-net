@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStringValue(SourceControlType.ToString());
             writer.WritePropertyName("repositoryUrl"u8);
             writer.WriteStringValue(RepositoryUri.AbsoluteUri);
-            if (Optional.IsDefined(Branch))
+            if (Branch != null)
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Optional.IsDefined(SourceControlAuthProperties))
+            if (SourceControlAuthProperties != null)
             {
                 writer.WritePropertyName("sourceControlAuthProperties"u8);
                 writer.WriteObjectValue(SourceControlAuthProperties);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             SourceControlType sourceControlType = default;
             Uri repositoryUrl = default;
-            Optional<string> branch = default;
-            Optional<SourceCodeRepoAuthInfo> sourceControlAuthProperties = default;
+            string branch = default;
+            SourceCodeRepoAuthInfo sourceControlAuthProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    sourceControlAuthProperties = SourceCodeRepoAuthInfo.DeserializeSourceCodeRepoAuthInfo(property.Value);
+                    sourceControlAuthProperties = SourceCodeRepoAuthInfo.DeserializeSourceCodeRepoAuthInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceCodeRepoProperties(sourceControlType, repositoryUrl, branch.Value, sourceControlAuthProperties.Value, serializedAdditionalRawData);
+            return new SourceCodeRepoProperties(sourceControlType, repositoryUrl, branch, sourceControlAuthProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceCodeRepoProperties>.Write(ModelReaderWriterOptions options)

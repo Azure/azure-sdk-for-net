@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkToNetworkInterconnectName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkToNetworkInterconnectResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkToNetworkInterconnectName, NetworkToNetworkInterconnectData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (networkToNetworkInterconnectName == null)
+            {
+                throw new ArgumentNullException(nameof(networkToNetworkInterconnectName));
+            }
+            if (networkToNetworkInterconnectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkToNetworkInterconnectName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkToNetworkInterconnectClientDiagnostics.CreateScope("NetworkToNetworkInterconnectCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkToNetworkInterconnectName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkToNetworkInterconnectResource> CreateOrUpdate(WaitUntil waitUntil, string networkToNetworkInterconnectName, NetworkToNetworkInterconnectData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (networkToNetworkInterconnectName == null)
+            {
+                throw new ArgumentNullException(nameof(networkToNetworkInterconnectName));
+            }
+            if (networkToNetworkInterconnectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkToNetworkInterconnectName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkToNetworkInterconnectClientDiagnostics.CreateScope("NetworkToNetworkInterconnectCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
         public virtual async Task<Response<NetworkToNetworkInterconnectResource>> GetAsync(string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            if (networkToNetworkInterconnectName == null)
+            {
+                throw new ArgumentNullException(nameof(networkToNetworkInterconnectName));
+            }
+            if (networkToNetworkInterconnectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkToNetworkInterconnectName));
+            }
 
             using var scope = _networkToNetworkInterconnectClientDiagnostics.CreateScope("NetworkToNetworkInterconnectCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
         public virtual Response<NetworkToNetworkInterconnectResource> Get(string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            if (networkToNetworkInterconnectName == null)
+            {
+                throw new ArgumentNullException(nameof(networkToNetworkInterconnectName));
+            }
+            if (networkToNetworkInterconnectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkToNetworkInterconnectName));
+            }
 
             using var scope = _networkToNetworkInterconnectClientDiagnostics.CreateScope("NetworkToNetworkInterconnectCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            if (networkToNetworkInterconnectName == null)
+            {
+                throw new ArgumentNullException(nameof(networkToNetworkInterconnectName));
+            }
+            if (networkToNetworkInterconnectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkToNetworkInterconnectName));
+            }
 
             using var scope = _networkToNetworkInterconnectClientDiagnostics.CreateScope("NetworkToNetworkInterconnectCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            if (networkToNetworkInterconnectName == null)
+            {
+                throw new ArgumentNullException(nameof(networkToNetworkInterconnectName));
+            }
+            if (networkToNetworkInterconnectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkToNetworkInterconnectName));
+            }
 
             using var scope = _networkToNetworkInterconnectClientDiagnostics.CreateScope("NetworkToNetworkInterconnectCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkToNetworkInterconnectResource>> GetIfExistsAsync(string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            if (networkToNetworkInterconnectName == null)
+            {
+                throw new ArgumentNullException(nameof(networkToNetworkInterconnectName));
+            }
+            if (networkToNetworkInterconnectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkToNetworkInterconnectName));
+            }
 
             using var scope = _networkToNetworkInterconnectClientDiagnostics.CreateScope("NetworkToNetworkInterconnectCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
         public virtual NullableResponse<NetworkToNetworkInterconnectResource> GetIfExists(string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            if (networkToNetworkInterconnectName == null)
+            {
+                throw new ArgumentNullException(nameof(networkToNetworkInterconnectName));
+            }
+            if (networkToNetworkInterconnectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkToNetworkInterconnectName));
+            }
 
             using var scope = _networkToNetworkInterconnectClientDiagnostics.CreateScope("NetworkToNetworkInterconnectCollection.GetIfExists");
             scope.Start();

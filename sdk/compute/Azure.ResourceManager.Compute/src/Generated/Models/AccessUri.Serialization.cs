@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AccessSas))
+            if (options.Format != "W" && AccessSas != null)
             {
                 writer.WritePropertyName("accessSAS"u8);
                 writer.WriteStringValue(AccessSas);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecurityDataAccessSas))
+            if (options.Format != "W" && SecurityDataAccessSas != null)
             {
                 writer.WritePropertyName("securityDataAccessSAS"u8);
                 writer.WriteStringValue(SecurityDataAccessSas);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> accessSas = default;
-            Optional<string> securityDataAccessSas = default;
+            string accessSas = default;
+            string securityDataAccessSas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessUri(accessSas.Value, securityDataAccessSas.Value, serializedAdditionalRawData);
+            return new AccessUri(accessSas, securityDataAccessSas, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccessUri>.Write(ModelReaderWriterOptions options)

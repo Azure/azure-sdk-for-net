@@ -27,97 +27,97 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
+            if (options.Format != "W" && SerialNumber != null)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(CopyStatus))
+            if (options.Format != "W" && CopyStatus.HasValue)
             {
                 writer.WritePropertyName("copyStatus"u8);
                 writer.WriteStringValue(CopyStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageAccountName))
+            if (options.Format != "W" && StorageAccountName != null)
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TransferType))
+            if (options.Format != "W" && TransferType.HasValue)
             {
                 writer.WritePropertyName("transferType"u8);
                 writer.WriteStringValue(TransferType.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DataAccountType))
+            if (options.Format != "W" && DataAccountType.HasValue)
             {
                 writer.WritePropertyName("dataAccountType"u8);
                 writer.WriteStringValue(DataAccountType.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AccountId))
+            if (options.Format != "W" && AccountId != null)
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (options.Format != "W" && Optional.IsDefined(BytesProcessed))
+            if (options.Format != "W" && BytesProcessed.HasValue)
             {
                 writer.WritePropertyName("bytesProcessed"u8);
                 writer.WriteNumberValue(BytesProcessed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalBytesToProcess))
+            if (options.Format != "W" && TotalBytesToProcess.HasValue)
             {
                 writer.WritePropertyName("totalBytesToProcess"u8);
                 writer.WriteNumberValue(TotalBytesToProcess.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FilesProcessed))
+            if (options.Format != "W" && FilesProcessed.HasValue)
             {
                 writer.WritePropertyName("filesProcessed"u8);
                 writer.WriteNumberValue(FilesProcessed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalFilesToProcess))
+            if (options.Format != "W" && TotalFilesToProcess.HasValue)
             {
                 writer.WritePropertyName("totalFilesToProcess"u8);
                 writer.WriteNumberValue(TotalFilesToProcess.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(InvalidFilesProcessed))
+            if (options.Format != "W" && InvalidFilesProcessed.HasValue)
             {
                 writer.WritePropertyName("invalidFilesProcessed"u8);
                 writer.WriteNumberValue(InvalidFilesProcessed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(InvalidFileBytesUploaded))
+            if (options.Format != "W" && InvalidFileBytesUploaded.HasValue)
             {
                 writer.WritePropertyName("invalidFileBytesUploaded"u8);
                 writer.WriteNumberValue(InvalidFileBytesUploaded.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RenamedContainerCount))
+            if (options.Format != "W" && RenamedContainerCount.HasValue)
             {
                 writer.WritePropertyName("renamedContainerCount"u8);
                 writer.WriteNumberValue(RenamedContainerCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FilesErroredOut))
+            if (options.Format != "W" && FilesErroredOut.HasValue)
             {
                 writer.WritePropertyName("filesErroredOut"u8);
                 writer.WriteNumberValue(FilesErroredOut.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DirectoriesErroredOut))
+            if (options.Format != "W" && DirectoriesErroredOut.HasValue)
             {
                 writer.WritePropertyName("directoriesErroredOut"u8);
                 writer.WriteNumberValue(DirectoriesErroredOut.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(InvalidDirectoriesProcessed))
+            if (options.Format != "W" && InvalidDirectoriesProcessed.HasValue)
             {
                 writer.WritePropertyName("invalidDirectoriesProcessed"u8);
                 writer.WriteNumberValue(InvalidDirectoriesProcessed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsEnumerationInProgress))
+            if (options.Format != "W" && IsEnumerationInProgress.HasValue)
             {
                 writer.WritePropertyName("isEnumerationInProgress"u8);
                 writer.WriteBooleanValue(IsEnumerationInProgress.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Actions))
+            if (options.Format != "W" && !(Actions is ChangeTrackingList<CustomerResolutionCode> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -165,25 +165,25 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> serialNumber = default;
-            Optional<DataBoxCopyStatus> copyStatus = default;
-            Optional<string> storageAccountName = default;
-            Optional<DataBoxJobTransferType> transferType = default;
-            Optional<DataAccountType> dataAccountType = default;
-            Optional<ResourceIdentifier> accountId = default;
-            Optional<long> bytesProcessed = default;
-            Optional<long> totalBytesToProcess = default;
-            Optional<long> filesProcessed = default;
-            Optional<long> totalFilesToProcess = default;
-            Optional<long> invalidFilesProcessed = default;
-            Optional<long> invalidFileBytesUploaded = default;
-            Optional<long> renamedContainerCount = default;
-            Optional<long> filesErroredOut = default;
-            Optional<long> directoriesErroredOut = default;
-            Optional<long> invalidDirectoriesProcessed = default;
-            Optional<bool> isEnumerationInProgress = default;
-            Optional<ResponseError> error = default;
-            Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
+            string serialNumber = default;
+            DataBoxCopyStatus? copyStatus = default;
+            string storageAccountName = default;
+            DataBoxJobTransferType? transferType = default;
+            DataAccountType? dataAccountType = default;
+            ResourceIdentifier accountId = default;
+            long? bytesProcessed = default;
+            long? totalBytesToProcess = default;
+            long? filesProcessed = default;
+            long? totalFilesToProcess = default;
+            long? invalidFilesProcessed = default;
+            long? invalidFileBytesUploaded = default;
+            long? renamedContainerCount = default;
+            long? filesErroredOut = default;
+            long? directoriesErroredOut = default;
+            long? invalidDirectoriesProcessed = default;
+            bool? isEnumerationInProgress = default;
+            ResponseError error = default;
+            IReadOnlyList<CustomerResolutionCode> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -362,7 +362,27 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxDiskGranularCopyProgress(storageAccountName.Value, Optional.ToNullable(transferType), Optional.ToNullable(dataAccountType), accountId.Value, Optional.ToNullable(bytesProcessed), Optional.ToNullable(totalBytesToProcess), Optional.ToNullable(filesProcessed), Optional.ToNullable(totalFilesToProcess), Optional.ToNullable(invalidFilesProcessed), Optional.ToNullable(invalidFileBytesUploaded), Optional.ToNullable(renamedContainerCount), Optional.ToNullable(filesErroredOut), Optional.ToNullable(directoriesErroredOut), Optional.ToNullable(invalidDirectoriesProcessed), Optional.ToNullable(isEnumerationInProgress), error.Value, Optional.ToList(actions), serializedAdditionalRawData, serialNumber.Value, Optional.ToNullable(copyStatus));
+            return new DataBoxDiskGranularCopyProgress(
+                storageAccountName,
+                transferType,
+                dataAccountType,
+                accountId,
+                bytesProcessed,
+                totalBytesToProcess,
+                filesProcessed,
+                totalFilesToProcess,
+                invalidFilesProcessed,
+                invalidFileBytesUploaded,
+                renamedContainerCount,
+                filesErroredOut,
+                directoriesErroredOut,
+                invalidDirectoriesProcessed,
+                isEnumerationInProgress,
+                error,
+                actions ?? new ChangeTrackingList<CustomerResolutionCode>(),
+                serializedAdditionalRawData,
+                serialNumber,
+                copyStatus);
         }
 
         BinaryData IPersistableModel<DataBoxDiskGranularCopyProgress>.Write(ModelReaderWriterOptions options)

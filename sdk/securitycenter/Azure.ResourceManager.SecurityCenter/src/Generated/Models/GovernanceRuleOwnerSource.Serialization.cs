@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceType))
+            if (SourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<GovernanceRuleOwnerSourceType> type = default;
-            Optional<string> value = default;
+            GovernanceRuleOwnerSourceType? type = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GovernanceRuleOwnerSource(Optional.ToNullable(type), value.Value, serializedAdditionalRawData);
+            return new GovernanceRuleOwnerSource(type, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GovernanceRuleOwnerSource>.Write(ModelReaderWriterOptions options)

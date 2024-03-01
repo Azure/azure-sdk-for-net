@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -23,11 +22,26 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="videoName"/>, <paramref name="localMediaCachePath"/> or <paramref name="localMediaCacheMaximumSizeMiB"/> is null. </exception>
         public VideoSink(string name, IEnumerable<NodeInput> inputs, string videoName, string localMediaCachePath, string localMediaCacheMaximumSizeMiB) : base(name, inputs)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(videoName, nameof(videoName));
-            Argument.AssertNotNull(localMediaCachePath, nameof(localMediaCachePath));
-            Argument.AssertNotNull(localMediaCacheMaximumSizeMiB, nameof(localMediaCacheMaximumSizeMiB));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (inputs == null)
+            {
+                throw new ArgumentNullException(nameof(inputs));
+            }
+            if (videoName == null)
+            {
+                throw new ArgumentNullException(nameof(videoName));
+            }
+            if (localMediaCachePath == null)
+            {
+                throw new ArgumentNullException(nameof(localMediaCachePath));
+            }
+            if (localMediaCacheMaximumSizeMiB == null)
+            {
+                throw new ArgumentNullException(nameof(localMediaCacheMaximumSizeMiB));
+            }
 
             VideoName = videoName;
             LocalMediaCachePath = localMediaCachePath;

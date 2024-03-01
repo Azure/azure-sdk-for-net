@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingList<MediaJobInputClip> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<MediaJobInputClip>> inputs = default;
+            IList<MediaJobInputClip> inputs = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaJobInputClip> array = new List<MediaJobInputClip>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaJobInputClip.DeserializeMediaJobInputClip(item));
+                        array.Add(MediaJobInputClip.DeserializeMediaJobInputClip(item, options));
                     }
                     inputs = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaJobInputSequence(odataType, serializedAdditionalRawData, Optional.ToList(inputs));
+            return new MediaJobInputSequence(odataType, serializedAdditionalRawData, inputs ?? new ChangeTrackingList<MediaJobInputClip>());
         }
 
         BinaryData IPersistableModel<MediaJobInputSequence>.Write(ModelReaderWriterOptions options)

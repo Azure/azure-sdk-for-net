@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SymbolicName))
+            if (SymbolicName != null)
             {
                 writer.WritePropertyName("symbolicName"u8);
                 writer.WriteStringValue(SymbolicName);
             }
-            if (Optional.IsDefined(Uuid))
+            if (Uuid.HasValue)
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid.Value);
             }
-            if (Optional.IsDefined(Capacity))
+            if (Capacity != null)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteStringValue(Capacity);
             }
-            if (Optional.IsDefined(FreeSpace))
+            if (FreeSpace != null)
             {
                 writer.WritePropertyName("freeSpace"u8);
                 writer.WriteStringValue(FreeSpace);
             }
-            if (Optional.IsDefined(DataStoreType))
+            if (DataStoreType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DataStoreType);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> symbolicName = default;
-            Optional<Guid> uuid = default;
-            Optional<string> capacity = default;
-            Optional<string> freeSpace = default;
-            Optional<string> type = default;
+            string symbolicName = default;
+            Guid? uuid = default;
+            string capacity = default;
+            string freeSpace = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryDataStore(symbolicName.Value, Optional.ToNullable(uuid), capacity.Value, freeSpace.Value, type.Value, serializedAdditionalRawData);
+            return new SiteRecoveryDataStore(
+                symbolicName,
+                uuid,
+                capacity,
+                freeSpace,
+                type,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryDataStore>.Write(ModelReaderWriterOptions options)

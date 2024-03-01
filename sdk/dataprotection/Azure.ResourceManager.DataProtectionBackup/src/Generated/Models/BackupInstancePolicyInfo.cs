@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         public BackupInstancePolicyInfo(ResourceIdentifier policyId)
         {
-            Argument.AssertNotNull(policyId, nameof(policyId));
+            if (policyId == null)
+            {
+                throw new ArgumentNullException(nameof(policyId));
+            }
 
             PolicyId = policyId;
         }

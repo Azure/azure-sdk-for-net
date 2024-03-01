@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SelectedItemValuePath))
+            if (SelectedItemValuePath != null)
             {
                 writer.WritePropertyName("selectedItemValuePath"u8);
                 writer.WriteStringValue(SelectedItemValuePath);
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(ParameterReference))
+            if (ParameterReference != null)
             {
                 writer.WritePropertyName("parameterReference"u8);
                 writer.WriteStringValue(ParameterReference);
             }
-            if (Optional.IsDefined(IsRequired))
+            if (IsRequired.HasValue)
             {
                 writer.WritePropertyName("required"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> selectedItemValuePath = default;
-            Optional<BinaryData> value = default;
-            Optional<string> parameterReference = default;
-            Optional<bool> required = default;
+            string selectedItemValuePath = default;
+            BinaryData value = default;
+            string parameterReference = default;
+            bool? required = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicTreeParameterInfo(selectedItemValuePath.Value, value.Value, parameterReference.Value, Optional.ToNullable(required), serializedAdditionalRawData);
+            return new SwaggerCustomDynamicTreeParameterInfo(selectedItemValuePath, value, parameterReference, required, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicTreeParameterInfo>.Write(ModelReaderWriterOptions options)

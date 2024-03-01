@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Frequency))
+            if (Frequency.HasValue)
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToSerialString());
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<FrequencyType> frequency = default;
+            FrequencyType? frequency = default;
             int interval = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectorMappingAvailability(Optional.ToNullable(frequency), interval, serializedAdditionalRawData);
+            return new ConnectorMappingAvailability(frequency, interval, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectorMappingAvailability>.Write(ModelReaderWriterOptions options)

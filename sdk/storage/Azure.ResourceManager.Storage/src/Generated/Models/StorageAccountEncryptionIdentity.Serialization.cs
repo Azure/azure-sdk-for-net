@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncryptionUserAssignedIdentity))
+            if (EncryptionUserAssignedIdentity != null)
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(EncryptionUserAssignedIdentity);
             }
-            if (Optional.IsDefined(EncryptionFederatedIdentityClientId))
+            if (EncryptionFederatedIdentityClientId != null)
             {
                 writer.WritePropertyName("federatedIdentityClientId"u8);
                 writer.WriteStringValue(EncryptionFederatedIdentityClientId);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<string> userAssignedIdentity = default;
-            Optional<string> federatedIdentityClientId = default;
+            string userAssignedIdentity = default;
+            string federatedIdentityClientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountEncryptionIdentity(userAssignedIdentity.Value, federatedIdentityClientId.Value, serializedAdditionalRawData);
+            return new StorageAccountEncryptionIdentity(userAssignedIdentity, federatedIdentityClientId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountEncryptionIdentity>.Write(ModelReaderWriterOptions options)

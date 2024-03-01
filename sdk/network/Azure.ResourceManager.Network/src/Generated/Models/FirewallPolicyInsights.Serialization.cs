@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(RetentionDays))
+            if (RetentionDays.HasValue)
             {
                 writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
             }
-            if (Optional.IsDefined(LogAnalyticsResources))
+            if (LogAnalyticsResources != null)
             {
                 writer.WritePropertyName("logAnalyticsResources"u8);
                 writer.WriteObjectValue(LogAnalyticsResources);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<bool> isEnabled = default;
-            Optional<int> retentionDays = default;
-            Optional<FirewallPolicyLogAnalyticsResources> logAnalyticsResources = default;
+            bool? isEnabled = default;
+            int? retentionDays = default;
+            FirewallPolicyLogAnalyticsResources logAnalyticsResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    logAnalyticsResources = FirewallPolicyLogAnalyticsResources.DeserializeFirewallPolicyLogAnalyticsResources(property.Value);
+                    logAnalyticsResources = FirewallPolicyLogAnalyticsResources.DeserializeFirewallPolicyLogAnalyticsResources(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyInsights(Optional.ToNullable(isEnabled), Optional.ToNullable(retentionDays), logAnalyticsResources.Value, serializedAdditionalRawData);
+            return new FirewallPolicyInsights(isEnabled, retentionDays, logAnalyticsResources, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyInsights>.Write(ModelReaderWriterOptions options)

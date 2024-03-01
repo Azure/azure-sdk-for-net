@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(UserName))
+            if (options.Format != "W" && UserName != null)
             {
                 if (UserName != null)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("userName");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(UserOrgId))
+            if (options.Format != "W" && UserOrgId != null)
             {
                 writer.WritePropertyName("userOrgId"u8);
                 writer.WriteStringValue(UserOrgId);
             }
-            if (options.Format != "W" && Optional.IsDefined(UserId))
+            if (options.Format != "W" && UserId != null)
             {
                 if (UserId != null)
                 {
@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> userName = default;
-            Optional<string> userOrgId = default;
-            Optional<string> userId = default;
+            string userName = default;
+            string userOrgId = default;
+            string userId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningComputeInstanceCreatedBy(userName.Value, userOrgId.Value, userId.Value, serializedAdditionalRawData);
+            return new MachineLearningComputeInstanceCreatedBy(userName, userOrgId, userId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeInstanceCreatedBy>.Write(ModelReaderWriterOptions options)

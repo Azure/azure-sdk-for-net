@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Name))
+            if (!(Name is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Capabilities))
+            if (!(Capabilities is ChangeTrackingList<ResourceSkuCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<string>> name = default;
-            Optional<IList<ResourceSkuCapability>> capabilities = default;
+            IList<string> name = default;
+            IList<ResourceSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceSkuCapability> array = new List<ResourceSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuCapability.DeserializeResourceSkuCapability(item));
+                        array.Add(ResourceSkuCapability.DeserializeResourceSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeSkuZoneDetail(Optional.ToList(name), Optional.ToList(capabilities), serializedAdditionalRawData);
+            return new ResourceTypeSkuZoneDetail(name ?? new ChangeTrackingList<string>(), capabilities ?? new ChangeTrackingList<ResourceSkuCapability>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeSkuZoneDetail>.Write(ModelReaderWriterOptions options)

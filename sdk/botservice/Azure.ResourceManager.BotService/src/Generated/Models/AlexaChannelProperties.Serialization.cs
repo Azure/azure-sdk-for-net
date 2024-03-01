@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("alexaSkillId"u8);
             writer.WriteStringValue(AlexaSkillId);
-            if (options.Format != "W" && Optional.IsDefined(UriFragment))
+            if (options.Format != "W" && UriFragment != null)
             {
                 writer.WritePropertyName("urlFragment"u8);
                 writer.WriteStringValue(UriFragment);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceEndpointUri))
+            if (options.Format != "W" && ServiceEndpointUri != null)
             {
                 writer.WritePropertyName("serviceEndpointUri"u8);
                 writer.WriteStringValue(ServiceEndpointUri.AbsoluteUri);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             string alexaSkillId = default;
-            Optional<string> urlFragment = default;
-            Optional<Uri> serviceEndpointUri = default;
+            string urlFragment = default;
+            Uri serviceEndpointUri = default;
             bool isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlexaChannelProperties(alexaSkillId, urlFragment.Value, serviceEndpointUri.Value, isEnabled, serializedAdditionalRawData);
+            return new AlexaChannelProperties(alexaSkillId, urlFragment, serviceEndpointUri, isEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlexaChannelProperties>.Write(ModelReaderWriterOptions options)

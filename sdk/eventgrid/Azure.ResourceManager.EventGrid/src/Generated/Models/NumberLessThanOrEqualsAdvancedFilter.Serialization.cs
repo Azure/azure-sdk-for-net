@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value.HasValue)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
             writer.WritePropertyName("operatorType"u8);
             writer.WriteStringValue(OperatorType.ToString());
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<double> value = default;
+            double? value = default;
             AdvancedFilterOperatorType operatorType = default;
-            Optional<string> key = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NumberLessThanOrEqualsAdvancedFilter(operatorType, key.Value, serializedAdditionalRawData, Optional.ToNullable(value));
+            return new NumberLessThanOrEqualsAdvancedFilter(operatorType, key, serializedAdditionalRawData, value);
         }
 
         BinaryData IPersistableModel<NumberLessThanOrEqualsAdvancedFilter>.Write(ModelReaderWriterOptions options)

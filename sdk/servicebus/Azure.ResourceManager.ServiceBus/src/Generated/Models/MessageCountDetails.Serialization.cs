@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ActiveMessageCount))
+            if (options.Format != "W" && ActiveMessageCount.HasValue)
             {
                 writer.WritePropertyName("activeMessageCount"u8);
                 writer.WriteNumberValue(ActiveMessageCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeadLetterMessageCount))
+            if (options.Format != "W" && DeadLetterMessageCount.HasValue)
             {
                 writer.WritePropertyName("deadLetterMessageCount"u8);
                 writer.WriteNumberValue(DeadLetterMessageCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScheduledMessageCount))
+            if (options.Format != "W" && ScheduledMessageCount.HasValue)
             {
                 writer.WritePropertyName("scheduledMessageCount"u8);
                 writer.WriteNumberValue(ScheduledMessageCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TransferMessageCount))
+            if (options.Format != "W" && TransferMessageCount.HasValue)
             {
                 writer.WritePropertyName("transferMessageCount"u8);
                 writer.WriteNumberValue(TransferMessageCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TransferDeadLetterMessageCount))
+            if (options.Format != "W" && TransferDeadLetterMessageCount.HasValue)
             {
                 writer.WritePropertyName("transferDeadLetterMessageCount"u8);
                 writer.WriteNumberValue(TransferDeadLetterMessageCount.Value);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<long> activeMessageCount = default;
-            Optional<long> deadLetterMessageCount = default;
-            Optional<long> scheduledMessageCount = default;
-            Optional<long> transferMessageCount = default;
-            Optional<long> transferDeadLetterMessageCount = default;
+            long? activeMessageCount = default;
+            long? deadLetterMessageCount = default;
+            long? scheduledMessageCount = default;
+            long? transferMessageCount = default;
+            long? transferDeadLetterMessageCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageCountDetails(Optional.ToNullable(activeMessageCount), Optional.ToNullable(deadLetterMessageCount), Optional.ToNullable(scheduledMessageCount), Optional.ToNullable(transferMessageCount), Optional.ToNullable(transferDeadLetterMessageCount), serializedAdditionalRawData);
+            return new MessageCountDetails(
+                activeMessageCount,
+                deadLetterMessageCount,
+                scheduledMessageCount,
+                transferMessageCount,
+                transferDeadLetterMessageCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MessageCountDetails>.Write(ModelReaderWriterOptions options)

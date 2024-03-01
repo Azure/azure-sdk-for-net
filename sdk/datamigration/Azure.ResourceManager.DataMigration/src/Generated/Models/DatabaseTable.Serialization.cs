@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(HasRows))
+            if (options.Format != "W" && HasRows.HasValue)
             {
                 writer.WritePropertyName("hasRows"u8);
                 writer.WriteBooleanValue(HasRows.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<bool> hasRows = default;
-            Optional<string> name = default;
+            bool? hasRows = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseTable(Optional.ToNullable(hasRows), name.Value, serializedAdditionalRawData);
+            return new DatabaseTable(hasRows, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseTable>.Write(ModelReaderWriterOptions options)

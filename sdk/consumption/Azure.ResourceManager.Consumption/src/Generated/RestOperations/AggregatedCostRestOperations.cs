@@ -66,7 +66,14 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConsumptionAggregatedCostResult>> GetByManagementGroupAsync(string managementGroupId, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            if (managementGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(managementGroupId));
+            }
+            if (managementGroupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managementGroupId));
+            }
 
             using var message = CreateGetByManagementGroupRequest(managementGroupId, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -92,7 +99,14 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConsumptionAggregatedCostResult> GetByManagementGroup(string managementGroupId, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            if (managementGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(managementGroupId));
+            }
+            if (managementGroupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managementGroupId));
+            }
 
             using var message = CreateGetByManagementGroupRequest(managementGroupId, filter);
             _pipeline.Send(message, cancellationToken);
@@ -137,8 +151,22 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConsumptionAggregatedCostResult>> GetForBillingPeriodByManagementGroupAsync(string managementGroupId, string billingPeriodName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
+            if (managementGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(managementGroupId));
+            }
+            if (managementGroupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managementGroupId));
+            }
+            if (billingPeriodName == null)
+            {
+                throw new ArgumentNullException(nameof(billingPeriodName));
+            }
+            if (billingPeriodName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingPeriodName));
+            }
 
             using var message = CreateGetForBillingPeriodByManagementGroupRequest(managementGroupId, billingPeriodName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -164,8 +192,22 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConsumptionAggregatedCostResult> GetForBillingPeriodByManagementGroup(string managementGroupId, string billingPeriodName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
+            if (managementGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(managementGroupId));
+            }
+            if (managementGroupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managementGroupId));
+            }
+            if (billingPeriodName == null)
+            {
+                throw new ArgumentNullException(nameof(billingPeriodName));
+            }
+            if (billingPeriodName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingPeriodName));
+            }
 
             using var message = CreateGetForBillingPeriodByManagementGroupRequest(managementGroupId, billingPeriodName);
             _pipeline.Send(message, cancellationToken);

@@ -18,7 +18,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("zone"u8);
             writer.WriteObjectValue(Zone);
-            if (Optional.IsCollectionDefined(Events))
+            if (!(Events is ChangeTrackingList<SpatialAnalysisPersonDistanceEvent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             NamedPolygonBase zone = default;
-            Optional<IList<SpatialAnalysisPersonDistanceEvent>> events = default;
+            IList<SpatialAnalysisPersonDistanceEvent> events = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zone"u8))
@@ -61,7 +61,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SpatialAnalysisPersonDistanceZoneEvents(zone, Optional.ToList(events));
+            return new SpatialAnalysisPersonDistanceZoneEvents(zone, events ?? new ChangeTrackingList<SpatialAnalysisPersonDistanceEvent>());
         }
     }
 }

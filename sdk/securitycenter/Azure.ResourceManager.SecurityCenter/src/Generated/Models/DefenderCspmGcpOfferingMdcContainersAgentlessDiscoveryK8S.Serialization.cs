@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(WorkloadIdentityProviderId))
+            if (WorkloadIdentityProviderId != null)
             {
                 writer.WritePropertyName("workloadIdentityProviderId"u8);
                 writer.WriteStringValue(WorkloadIdentityProviderId);
             }
-            if (Optional.IsDefined(ServiceAccountEmailAddress))
+            if (ServiceAccountEmailAddress != null)
             {
                 writer.WritePropertyName("serviceAccountEmailAddress"u8);
                 writer.WriteStringValue(ServiceAccountEmailAddress);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> workloadIdentityProviderId = default;
-            Optional<string> serviceAccountEmailAddress = default;
+            bool? enabled = default;
+            string workloadIdentityProviderId = default;
+            string serviceAccountEmailAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S(Optional.ToNullable(enabled), workloadIdentityProviderId.Value, serviceAccountEmailAddress.Value, serializedAdditionalRawData);
+            return new DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S(enabled, workloadIdentityProviderId, serviceAccountEmailAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S>.Write(ModelReaderWriterOptions options)

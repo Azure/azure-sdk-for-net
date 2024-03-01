@@ -371,7 +371,10 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ManagementGroupResource>> UpdateAsync(ManagementGroupPatch patch, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.Update");
             scope.Start();
@@ -415,7 +418,10 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ManagementGroupResource> Update(ManagementGroupPatch patch, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.Update");
             scope.Start();

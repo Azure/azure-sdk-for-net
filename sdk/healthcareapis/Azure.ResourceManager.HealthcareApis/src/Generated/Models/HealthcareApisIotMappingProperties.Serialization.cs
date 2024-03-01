@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
 #if NET6_0_OR_GREATER
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<BinaryData> content = default;
+            BinaryData content = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisIotMappingProperties(content.Value, serializedAdditionalRawData);
+            return new HealthcareApisIotMappingProperties(content, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisIotMappingProperties>.Write(ModelReaderWriterOptions options)

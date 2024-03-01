@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Server))
+            if (Server != null)
             {
                 writer.WritePropertyName("server"u8);
                 writer.WriteStringValue(Server);
             }
-            if (Optional.IsDefined(Username))
+            if (Username != null)
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsDefined(PasswordSecretRef))
+            if (PasswordSecretRef != null)
             {
                 writer.WritePropertyName("passwordSecretRef"u8);
                 writer.WriteStringValue(PasswordSecretRef);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> server = default;
-            Optional<string> username = default;
-            Optional<string> passwordSecretRef = default;
-            Optional<string> identity = default;
+            string server = default;
+            string username = default;
+            string passwordSecretRef = default;
+            string identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppRegistryCredentials(server.Value, username.Value, passwordSecretRef.Value, identity.Value, serializedAdditionalRawData);
+            return new ContainerAppRegistryCredentials(server, username, passwordSecretRef, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppRegistryCredentials>.Write(ModelReaderWriterOptions options)

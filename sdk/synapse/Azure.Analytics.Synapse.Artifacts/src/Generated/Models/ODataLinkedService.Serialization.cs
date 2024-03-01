@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(ConnectVia))
+            if (ConnectVia != null)
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -61,62 +61,62 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
             writer.WriteObjectValue(Url);
-            if (Optional.IsDefined(AuthenticationType))
+            if (AuthenticationType.HasValue)
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Optional.IsDefined(UserName))
+            if (UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue(UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
-            if (Optional.IsDefined(Tenant))
+            if (Tenant != null)
             {
                 writer.WritePropertyName("tenant"u8);
                 writer.WriteObjectValue(Tenant);
             }
-            if (Optional.IsDefined(ServicePrincipalId))
+            if (ServicePrincipalId != null)
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
                 writer.WriteObjectValue(ServicePrincipalId);
             }
-            if (Optional.IsDefined(AzureCloudType))
+            if (AzureCloudType != null)
             {
                 writer.WritePropertyName("azureCloudType"u8);
                 writer.WriteObjectValue(AzureCloudType);
             }
-            if (Optional.IsDefined(AadResourceId))
+            if (AadResourceId != null)
             {
                 writer.WritePropertyName("aadResourceId"u8);
                 writer.WriteObjectValue(AadResourceId);
             }
-            if (Optional.IsDefined(AadServicePrincipalCredentialType))
+            if (AadServicePrincipalCredentialType.HasValue)
             {
                 writer.WritePropertyName("aadServicePrincipalCredentialType"u8);
                 writer.WriteStringValue(AadServicePrincipalCredentialType.Value.ToString());
             }
-            if (Optional.IsDefined(ServicePrincipalKey))
+            if (ServicePrincipalKey != null)
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
                 writer.WriteObjectValue(ServicePrincipalKey);
             }
-            if (Optional.IsDefined(ServicePrincipalEmbeddedCert))
+            if (ServicePrincipalEmbeddedCert != null)
             {
                 writer.WritePropertyName("servicePrincipalEmbeddedCert"u8);
                 writer.WriteObjectValue(ServicePrincipalEmbeddedCert);
             }
-            if (Optional.IsDefined(ServicePrincipalEmbeddedCertPassword))
+            if (ServicePrincipalEmbeddedCertPassword != null)
             {
                 writer.WritePropertyName("servicePrincipalEmbeddedCertPassword"u8);
                 writer.WriteObjectValue(ServicePrincipalEmbeddedCertPassword);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (EncryptedCredential != null)
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);
@@ -137,23 +137,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object url = default;
-            Optional<ODataAuthenticationType> authenticationType = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<object> tenant = default;
-            Optional<object> servicePrincipalId = default;
-            Optional<object> azureCloudType = default;
-            Optional<object> aadResourceId = default;
-            Optional<ODataAadServicePrincipalCredentialType> aadServicePrincipalCredentialType = default;
-            Optional<SecretBase> servicePrincipalKey = default;
-            Optional<SecretBase> servicePrincipalEmbeddedCert = default;
-            Optional<SecretBase> servicePrincipalEmbeddedCertPassword = default;
-            Optional<object> encryptedCredential = default;
+            ODataAuthenticationType? authenticationType = default;
+            object userName = default;
+            SecretBase password = default;
+            object tenant = default;
+            object servicePrincipalId = default;
+            object azureCloudType = default;
+            object aadResourceId = default;
+            ODataAadServicePrincipalCredentialType? aadServicePrincipalCredentialType = default;
+            SecretBase servicePrincipalKey = default;
+            SecretBase servicePrincipalEmbeddedCert = default;
+            SecretBase servicePrincipalEmbeddedCertPassword = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -340,7 +340,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ODataLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, Optional.ToNullable(authenticationType), userName.Value, password.Value, tenant.Value, servicePrincipalId.Value, azureCloudType.Value, aadResourceId.Value, Optional.ToNullable(aadServicePrincipalCredentialType), servicePrincipalKey.Value, servicePrincipalEmbeddedCert.Value, servicePrincipalEmbeddedCertPassword.Value, encryptedCredential.Value);
+            return new ODataLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                url,
+                authenticationType,
+                userName,
+                password,
+                tenant,
+                servicePrincipalId,
+                azureCloudType,
+                aadResourceId,
+                aadServicePrincipalCredentialType,
+                servicePrincipalKey,
+                servicePrincipalEmbeddedCert,
+                servicePrincipalEmbeddedCertPassword,
+                encryptedCredential);
         }
 
         internal partial class ODataLinkedServiceConverter : JsonConverter<ODataLinkedService>

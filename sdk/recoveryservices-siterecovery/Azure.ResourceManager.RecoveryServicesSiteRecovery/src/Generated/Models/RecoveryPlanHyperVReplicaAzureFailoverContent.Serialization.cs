@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryKekCertificatePfx))
+            if (PrimaryKekCertificatePfx != null)
             {
                 writer.WritePropertyName("primaryKekCertificatePfx"u8);
                 writer.WriteStringValue(PrimaryKekCertificatePfx);
             }
-            if (Optional.IsDefined(SecondaryKekCertificatePfx))
+            if (SecondaryKekCertificatePfx != null)
             {
                 writer.WritePropertyName("secondaryKekCertificatePfx"u8);
                 writer.WriteStringValue(SecondaryKekCertificatePfx);
             }
-            if (Optional.IsDefined(RecoveryPointType))
+            if (RecoveryPointType.HasValue)
             {
                 writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType.Value.ToString());
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> primaryKekCertificatePfx = default;
-            Optional<string> secondaryKekCertificatePfx = default;
-            Optional<HyperVReplicaAzureRpRecoveryPointType> recoveryPointType = default;
+            string primaryKekCertificatePfx = default;
+            string secondaryKekCertificatePfx = default;
+            HyperVReplicaAzureRpRecoveryPointType? recoveryPointType = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPlanHyperVReplicaAzureFailoverContent(instanceType, serializedAdditionalRawData, primaryKekCertificatePfx.Value, secondaryKekCertificatePfx.Value, Optional.ToNullable(recoveryPointType));
+            return new RecoveryPlanHyperVReplicaAzureFailoverContent(instanceType, serializedAdditionalRawData, primaryKekCertificatePfx, secondaryKekCertificatePfx, recoveryPointType);
         }
 
         BinaryData IPersistableModel<RecoveryPlanHyperVReplicaAzureFailoverContent>.Write(ModelReaderWriterOptions options)

@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="packetCoreDataPlaneName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PacketCoreDataPlaneResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string packetCoreDataPlaneName, PacketCoreDataPlaneData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (packetCoreDataPlaneName == null)
+            {
+                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
+            }
+            if (packetCoreDataPlaneName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _packetCoreDataPlaneClientDiagnostics.CreateScope("PacketCoreDataPlaneCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="packetCoreDataPlaneName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PacketCoreDataPlaneResource> CreateOrUpdate(WaitUntil waitUntil, string packetCoreDataPlaneName, PacketCoreDataPlaneData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (packetCoreDataPlaneName == null)
+            {
+                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
+            }
+            if (packetCoreDataPlaneName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _packetCoreDataPlaneClientDiagnostics.CreateScope("PacketCoreDataPlaneCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="packetCoreDataPlaneName"/> is null. </exception>
         public virtual async Task<Response<PacketCoreDataPlaneResource>> GetAsync(string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
+            if (packetCoreDataPlaneName == null)
+            {
+                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
+            }
+            if (packetCoreDataPlaneName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
+            }
 
             using var scope = _packetCoreDataPlaneClientDiagnostics.CreateScope("PacketCoreDataPlaneCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="packetCoreDataPlaneName"/> is null. </exception>
         public virtual Response<PacketCoreDataPlaneResource> Get(string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
+            if (packetCoreDataPlaneName == null)
+            {
+                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
+            }
+            if (packetCoreDataPlaneName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
+            }
 
             using var scope = _packetCoreDataPlaneClientDiagnostics.CreateScope("PacketCoreDataPlaneCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="packetCoreDataPlaneName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
+            if (packetCoreDataPlaneName == null)
+            {
+                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
+            }
+            if (packetCoreDataPlaneName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
+            }
 
             using var scope = _packetCoreDataPlaneClientDiagnostics.CreateScope("PacketCoreDataPlaneCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="packetCoreDataPlaneName"/> is null. </exception>
         public virtual Response<bool> Exists(string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
+            if (packetCoreDataPlaneName == null)
+            {
+                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
+            }
+            if (packetCoreDataPlaneName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
+            }
 
             using var scope = _packetCoreDataPlaneClientDiagnostics.CreateScope("PacketCoreDataPlaneCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="packetCoreDataPlaneName"/> is null. </exception>
         public virtual async Task<NullableResponse<PacketCoreDataPlaneResource>> GetIfExistsAsync(string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
+            if (packetCoreDataPlaneName == null)
+            {
+                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
+            }
+            if (packetCoreDataPlaneName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
+            }
 
             using var scope = _packetCoreDataPlaneClientDiagnostics.CreateScope("PacketCoreDataPlaneCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="packetCoreDataPlaneName"/> is null. </exception>
         public virtual NullableResponse<PacketCoreDataPlaneResource> GetIfExists(string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
+            if (packetCoreDataPlaneName == null)
+            {
+                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
+            }
+            if (packetCoreDataPlaneName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
+            }
 
             using var scope = _packetCoreDataPlaneClientDiagnostics.CreateScope("PacketCoreDataPlaneCollection.GetIfExists");
             scope.Start();

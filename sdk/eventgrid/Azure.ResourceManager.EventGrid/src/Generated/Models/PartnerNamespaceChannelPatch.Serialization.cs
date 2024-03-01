@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExpireOnIfNotActivated))
+            if (ExpireOnIfNotActivated.HasValue)
             {
                 writer.WritePropertyName("expirationTimeIfNotActivatedUtc"u8);
                 writer.WriteStringValue(ExpireOnIfNotActivated.Value, "O");
             }
-            if (Optional.IsDefined(PartnerDestinationInfo))
+            if (PartnerDestinationInfo != null)
             {
                 writer.WritePropertyName("partnerDestinationInfo"u8);
                 writer.WriteObjectValue(PartnerDestinationInfo);
             }
-            if (Optional.IsDefined(PartnerTopicInfo))
+            if (PartnerTopicInfo != null)
             {
                 writer.WritePropertyName("partnerTopicInfo"u8);
                 writer.WriteObjectValue(PartnerTopicInfo);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> expirationTimeIfNotActivatedUtc = default;
-            Optional<PartnerUpdateDestinationInfo> partnerDestinationInfo = default;
-            Optional<PartnerUpdateTopicInfo> partnerTopicInfo = default;
+            DateTimeOffset? expirationTimeIfNotActivatedUtc = default;
+            PartnerUpdateDestinationInfo partnerDestinationInfo = default;
+            PartnerUpdateTopicInfo partnerTopicInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            partnerDestinationInfo = PartnerUpdateDestinationInfo.DeserializePartnerUpdateDestinationInfo(property0.Value);
+                            partnerDestinationInfo = PartnerUpdateDestinationInfo.DeserializePartnerUpdateDestinationInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("partnerTopicInfo"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            partnerTopicInfo = PartnerUpdateTopicInfo.DeserializePartnerUpdateTopicInfo(property0.Value);
+                            partnerTopicInfo = PartnerUpdateTopicInfo.DeserializePartnerUpdateTopicInfo(property0.Value, options);
                             continue;
                         }
                     }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerNamespaceChannelPatch(Optional.ToNullable(expirationTimeIfNotActivatedUtc), partnerDestinationInfo.Value, partnerTopicInfo.Value, serializedAdditionalRawData);
+            return new PartnerNamespaceChannelPatch(expirationTimeIfNotActivatedUtc, partnerDestinationInfo, partnerTopicInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerNamespaceChannelPatch>.Write(ModelReaderWriterOptions options)

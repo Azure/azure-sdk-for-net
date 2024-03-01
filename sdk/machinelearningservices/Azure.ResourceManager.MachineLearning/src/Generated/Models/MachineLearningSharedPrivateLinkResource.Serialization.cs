@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupId))
+            if (GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsDefined(PrivateLinkResourceId))
+            if (PrivateLinkResourceId != null)
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
-            if (Optional.IsDefined(RequestMessage))
+            if (RequestMessage != null)
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> groupId = default;
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<string> requestMessage = default;
-            Optional<MachineLearningPrivateEndpointServiceConnectionStatus> status = default;
+            string name = default;
+            string groupId = default;
+            ResourceIdentifier privateLinkResourceId = default;
+            string requestMessage = default;
+            MachineLearningPrivateEndpointServiceConnectionStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningSharedPrivateLinkResource(name.Value, groupId.Value, privateLinkResourceId.Value, requestMessage.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new MachineLearningSharedPrivateLinkResource(
+                name,
+                groupId,
+                privateLinkResourceId,
+                requestMessage,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningSharedPrivateLinkResource>.Write(ModelReaderWriterOptions options)

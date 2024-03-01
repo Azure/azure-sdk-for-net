@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual async Task<Response<SynapseSqlPoolTableResource>> GetAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
 
             using var scope = _synapseSqlPoolTableSqlPoolTablesClientDiagnostics.CreateScope("SynapseSqlPoolTableCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<SynapseSqlPoolTableResource> Get(string tableName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
 
             using var scope = _synapseSqlPoolTableSqlPoolTablesClientDiagnostics.CreateScope("SynapseSqlPoolTableCollection.Get");
             scope.Start();
@@ -232,7 +246,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
 
             using var scope = _synapseSqlPoolTableSqlPoolTablesClientDiagnostics.CreateScope("SynapseSqlPoolTableCollection.Exists");
             scope.Start();
@@ -275,7 +296,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<bool> Exists(string tableName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
 
             using var scope = _synapseSqlPoolTableSqlPoolTablesClientDiagnostics.CreateScope("SynapseSqlPoolTableCollection.Exists");
             scope.Start();
@@ -318,7 +346,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual async Task<NullableResponse<SynapseSqlPoolTableResource>> GetIfExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
 
             using var scope = _synapseSqlPoolTableSqlPoolTablesClientDiagnostics.CreateScope("SynapseSqlPoolTableCollection.GetIfExists");
             scope.Start();
@@ -363,7 +398,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual NullableResponse<SynapseSqlPoolTableResource> GetIfExists(string tableName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
 
             using var scope = _synapseSqlPoolTableSqlPoolTablesClientDiagnostics.CreateScope("SynapseSqlPoolTableCollection.GetIfExists");
             scope.Start();

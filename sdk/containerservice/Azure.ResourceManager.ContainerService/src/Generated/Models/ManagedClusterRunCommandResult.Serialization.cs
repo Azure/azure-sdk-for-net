@@ -26,39 +26,39 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExitCode))
+            if (options.Format != "W" && ExitCode.HasValue)
             {
                 writer.WritePropertyName("exitCode"u8);
                 writer.WriteNumberValue(ExitCode.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && StartedOn.HasValue)
             {
                 writer.WritePropertyName("startedAt"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(FinishedOn))
+            if (options.Format != "W" && FinishedOn.HasValue)
             {
                 writer.WritePropertyName("finishedAt"u8);
                 writer.WriteStringValue(FinishedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Logs))
+            if (options.Format != "W" && Logs != null)
             {
                 writer.WritePropertyName("logs"u8);
                 writer.WriteStringValue(Logs);
             }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
+            if (options.Format != "W" && Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> provisioningState = default;
-            Optional<int> exitCode = default;
-            Optional<DateTimeOffset> startedAt = default;
-            Optional<DateTimeOffset> finishedAt = default;
-            Optional<string> logs = default;
-            Optional<string> reason = default;
+            string id = default;
+            string provisioningState = default;
+            int? exitCode = default;
+            DateTimeOffset? startedAt = default;
+            DateTimeOffset? finishedAt = default;
+            string logs = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterRunCommandResult(id.Value, provisioningState.Value, Optional.ToNullable(exitCode), Optional.ToNullable(startedAt), Optional.ToNullable(finishedAt), logs.Value, reason.Value, serializedAdditionalRawData);
+            return new ManagedClusterRunCommandResult(
+                id,
+                provisioningState,
+                exitCode,
+                startedAt,
+                finishedAt,
+                logs,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterRunCommandResult>.Write(ModelReaderWriterOptions options)

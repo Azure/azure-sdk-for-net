@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -53,9 +52,18 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="databases"/>, <paramref name="source"/> or <paramref name="target"/> is null. </exception>
         public MongoDBMigrationSettings(IDictionary<string, MongoDBDatabaseSettings> databases, MongoDBConnectionInfo source, MongoDBConnectionInfo target)
         {
-            Argument.AssertNotNull(databases, nameof(databases));
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(target, nameof(target));
+            if (databases == null)
+            {
+                throw new ArgumentNullException(nameof(databases));
+            }
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
 
             Databases = databases;
             Source = source;

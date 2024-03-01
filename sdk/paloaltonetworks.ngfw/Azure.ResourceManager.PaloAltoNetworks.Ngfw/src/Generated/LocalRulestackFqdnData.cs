@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="fqdnList"/> is null. </exception>
         public LocalRulestackFqdnData(IEnumerable<string> fqdnList)
         {
-            Argument.AssertNotNull(fqdnList, nameof(fqdnList));
+            if (fqdnList == null)
+            {
+                throw new ArgumentNullException(nameof(fqdnList));
+            }
 
             FqdnList = fqdnList.ToList();
         }

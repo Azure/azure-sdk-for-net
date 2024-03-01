@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserAssignedIdentityResourceId))
+            if (UserAssignedIdentityResourceId != null)
             {
                 writer.WritePropertyName("userAssignedIdentityResourceId"u8);
                 writer.WriteStringValue(UserAssignedIdentityResourceId);
             }
-            if (Optional.IsDefined(IdentityType))
+            if (IdentityType.HasValue)
             {
                 writer.WritePropertyName("identityType"u8);
                 writer.WriteStringValue(IdentityType.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> userAssignedIdentityResourceId = default;
-            Optional<RedisEnterpriseCustomerManagedKeyIdentityType> identityType = default;
+            ResourceIdentifier userAssignedIdentityResourceId = default;
+            RedisEnterpriseCustomerManagedKeyIdentityType? identityType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(userAssignedIdentityResourceId.Value, Optional.ToNullable(identityType), serializedAdditionalRawData);
+            return new RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(userAssignedIdentityResourceId, identityType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity>.Write(ModelReaderWriterOptions options)

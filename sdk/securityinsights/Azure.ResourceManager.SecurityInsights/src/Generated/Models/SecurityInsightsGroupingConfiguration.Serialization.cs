@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStringValue(LookbackDuration, "P");
             writer.WritePropertyName("matchingMethod"u8);
             writer.WriteStringValue(MatchingMethod.ToString());
-            if (Optional.IsCollectionDefined(GroupByEntities))
+            if (!(GroupByEntities is ChangeTrackingList<SecurityInsightsAlertRuleEntityMappingType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupByEntities"u8);
                 writer.WriteStartArray();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(GroupByAlertDetails))
+            if (!(GroupByAlertDetails is ChangeTrackingList<SecurityInsightsAlertDetail> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("groupByAlertDetails"u8);
                 writer.WriteStartArray();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(GroupByCustomDetails))
+            if (!(GroupByCustomDetails is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("groupByCustomDetails"u8);
                 writer.WriteStartArray();
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             bool reopenClosedIncident = default;
             TimeSpan lookbackDuration = default;
             SecurityInsightsGroupingMatchingMethod matchingMethod = default;
-            Optional<IList<SecurityInsightsAlertRuleEntityMappingType>> groupByEntities = default;
-            Optional<IList<SecurityInsightsAlertDetail>> groupByAlertDetails = default;
-            Optional<IList<string>> groupByCustomDetails = default;
+            IList<SecurityInsightsAlertRuleEntityMappingType> groupByEntities = default;
+            IList<SecurityInsightsAlertDetail> groupByAlertDetails = default;
+            IList<string> groupByCustomDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsGroupingConfiguration(enabled, reopenClosedIncident, lookbackDuration, matchingMethod, Optional.ToList(groupByEntities), Optional.ToList(groupByAlertDetails), Optional.ToList(groupByCustomDetails), serializedAdditionalRawData);
+            return new SecurityInsightsGroupingConfiguration(
+                enabled,
+                reopenClosedIncident,
+                lookbackDuration,
+                matchingMethod,
+                groupByEntities ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMappingType>(),
+                groupByAlertDetails ?? new ChangeTrackingList<SecurityInsightsAlertDetail>(),
+                groupByCustomDetails ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsGroupingConfiguration>.Write(ModelReaderWriterOptions options)

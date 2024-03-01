@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Blob))
+            if (Blob != null)
             {
                 writer.WritePropertyName("blob"u8);
                 writer.WriteObjectValue(Blob);
             }
-            if (Optional.IsDefined(File))
+            if (File != null)
             {
                 writer.WritePropertyName("file"u8);
                 writer.WriteObjectValue(File);
             }
-            if (Optional.IsDefined(Table))
+            if (Table != null)
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteObjectValue(Table);
             }
-            if (Optional.IsDefined(Queue))
+            if (Queue != null)
             {
                 writer.WritePropertyName("queue"u8);
                 writer.WriteObjectValue(Queue);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<StorageEncryptionService> blob = default;
-            Optional<StorageEncryptionService> file = default;
-            Optional<StorageEncryptionService> table = default;
-            Optional<StorageEncryptionService> queue = default;
+            StorageEncryptionService blob = default;
+            StorageEncryptionService file = default;
+            StorageEncryptionService table = default;
+            StorageEncryptionService queue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    blob = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value);
+                    blob = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("file"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    file = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value);
+                    file = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("table"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    table = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value);
+                    table = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("queue"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    queue = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value);
+                    queue = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountEncryptionServices(blob.Value, file.Value, table.Value, queue.Value, serializedAdditionalRawData);
+            return new StorageAccountEncryptionServices(blob, file, table, queue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountEncryptionServices>.Write(ModelReaderWriterOptions options)

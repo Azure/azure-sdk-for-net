@@ -19,9 +19,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> scope = default;
-            Optional<string> action = default;
-            Optional<IReadOnlyDictionary<string, string>> evidence = default;
+            string scope = default;
+            string action = default;
+            IReadOnlyDictionary<string, string> evidence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"u8))
@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ResourceAuthorization(scope.Value, action.Value, Optional.ToDictionary(evidence));
+            return new ResourceAuthorization(scope, action, evidence ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

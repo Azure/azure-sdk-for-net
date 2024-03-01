@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IngestionKey))
+            if (IngestionKey != null)
             {
                 writer.WritePropertyName("ingestionKey"u8);
                 writer.WriteStringValue(IngestionKey);
             }
-            if (Optional.IsDefined(EnvironmentId))
+            if (EnvironmentId != null)
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<string> ingestionKey = default;
-            Optional<string> environmentId = default;
+            string ingestionKey = default;
+            string environmentId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceVmExtensionPayload(ingestionKey.Value, environmentId.Value, serializedAdditionalRawData);
+            return new DynatraceVmExtensionPayload(ingestionKey, environmentId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceVmExtensionPayload>.Write(ModelReaderWriterOptions options)

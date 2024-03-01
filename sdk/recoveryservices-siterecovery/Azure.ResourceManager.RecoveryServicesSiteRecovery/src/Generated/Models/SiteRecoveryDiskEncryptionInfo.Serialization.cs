@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskEncryptionKeyInfo))
+            if (DiskEncryptionKeyInfo != null)
             {
                 writer.WritePropertyName("diskEncryptionKeyInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionKeyInfo);
             }
-            if (Optional.IsDefined(KeyEncryptionKeyInfo))
+            if (KeyEncryptionKeyInfo != null)
             {
                 writer.WritePropertyName("keyEncryptionKeyInfo"u8);
                 writer.WriteObjectValue(KeyEncryptionKeyInfo);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<SiteRecoveryDiskEncryptionKeyInfo> diskEncryptionKeyInfo = default;
-            Optional<SiteRecoveryKeyEncryptionKeyInfo> keyEncryptionKeyInfo = default;
+            SiteRecoveryDiskEncryptionKeyInfo diskEncryptionKeyInfo = default;
+            SiteRecoveryKeyEncryptionKeyInfo keyEncryptionKeyInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskEncryptionKeyInfo = SiteRecoveryDiskEncryptionKeyInfo.DeserializeSiteRecoveryDiskEncryptionKeyInfo(property.Value);
+                    diskEncryptionKeyInfo = SiteRecoveryDiskEncryptionKeyInfo.DeserializeSiteRecoveryDiskEncryptionKeyInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKeyInfo"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    keyEncryptionKeyInfo = SiteRecoveryKeyEncryptionKeyInfo.DeserializeSiteRecoveryKeyEncryptionKeyInfo(property.Value);
+                    keyEncryptionKeyInfo = SiteRecoveryKeyEncryptionKeyInfo.DeserializeSiteRecoveryKeyEncryptionKeyInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryDiskEncryptionInfo(diskEncryptionKeyInfo.Value, keyEncryptionKeyInfo.Value, serializedAdditionalRawData);
+            return new SiteRecoveryDiskEncryptionInfo(diskEncryptionKeyInfo, keyEncryptionKeyInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryDiskEncryptionInfo>.Write(ModelReaderWriterOptions options)

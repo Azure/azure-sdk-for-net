@@ -14,12 +14,17 @@ internal static class OptionalProperty
     }
 
     public static bool IsCollectionDefined<TKey, TValue>(IReadOnlyDictionary<TKey, TValue> collection)
+        where TKey : notnull
     {
         return !(collection is OptionalDictionary<TKey, TValue> changeTrackingList && changeTrackingList.IsUndefined);
     }
 
-    public static bool IsCollectionDefined<TKey, TValue>(IDictionary<TKey, TValue> collection)
+    public static bool IsCollectionDefined<TKey, TValue>(IDictionary<TKey, TValue>? collection)
+        where TKey : notnull
     {
+        if (collection is null)
+            return false;
+
         return !(collection is OptionalDictionary<TKey, TValue> changeTrackingList && changeTrackingList.IsUndefined);
     }
 
@@ -31,7 +36,7 @@ internal static class OptionalProperty
     {
         return value != null;
     }
-    public static bool IsDefined(string value)
+    public static bool IsDefined(string? value)
     {
         return value != null;
     }
@@ -42,27 +47,30 @@ internal static class OptionalProperty
     }
 
     public static IReadOnlyDictionary<TKey, TValue> ToDictionary<TKey, TValue>(OptionalProperty<IReadOnlyDictionary<TKey, TValue>> optional)
+        where TKey : notnull
     {
         if (optional.HasValue)
         {
-            return optional.Value;
+            return optional.Value!;
         }
         return new OptionalDictionary<TKey, TValue>(optional);
     }
 
     public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(OptionalProperty<IDictionary<TKey, TValue>> optional)
+        where TKey : notnull
     {
         if (optional.HasValue)
         {
-            return optional.Value;
+            return optional.Value!;
         }
         return new OptionalDictionary<TKey, TValue>(optional);
     }
+
     public static IReadOnlyList<T> ToList<T>(OptionalProperty<IReadOnlyList<T>> optional)
     {
         if (optional.HasValue)
         {
-            return optional.Value;
+            return optional.Value!;
         }
         return new OptionalList<T>(optional);
     }
@@ -71,7 +79,7 @@ internal static class OptionalProperty
     {
         if (optional.HasValue)
         {
-            return optional.Value;
+            return optional.Value!;
         }
         return new OptionalList<T>(optional);
     }
@@ -93,15 +101,15 @@ internal static class OptionalProperty
 
 public readonly struct OptionalProperty<T>
 {
-    public OptionalProperty(T value) : this()
+    public OptionalProperty(T? value) : this()
     {
         Value = value;
-        HasValue = true;
+        HasValue = value is not null;
     }
 
-    public T Value { get; }
+    public T? Value { get; }
     public bool HasValue { get; }
 
-    public static implicit operator OptionalProperty<T>(T value) => new OptionalProperty<T>(value);
-    public static implicit operator T(OptionalProperty<T> optional) => optional.Value;
+    public static implicit operator OptionalProperty<T>(T? value) => new OptionalProperty<T>(value);
+    public static implicit operator T?(OptionalProperty<T> optional) => optional.Value;
 }

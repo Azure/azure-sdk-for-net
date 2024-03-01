@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProviderType))
+            if (options.Format != "W" && ProviderType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ProviderType.Value.ToString());
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<Uri> url = default;
-            Optional<VirtualWanSecurityProviderType> type = default;
+            string name = default;
+            Uri url = default;
+            VirtualWanSecurityProviderType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualWanSecurityProvider(name.Value, url.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new VirtualWanSecurityProvider(name, url, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualWanSecurityProvider>.Write(ModelReaderWriterOptions options)

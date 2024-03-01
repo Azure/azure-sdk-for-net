@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(ErrorDetail))
+            if (ErrorDetail != null)
             {
                 writer.WritePropertyName("errorDetail"u8);
                 writer.WriteObjectValue(ErrorDetail);
             }
-            if (options.Format != "W" && Optional.IsDefined(AdditionalDetail))
+            if (options.Format != "W" && AdditionalDetail != null)
             {
                 writer.WritePropertyName("additionalDetail"u8);
                 writer.WriteStringValue(AdditionalDetail);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProtectableItemCount))
+            if (options.Format != "W" && ProtectableItemCount != null)
             {
                 writer.WritePropertyName("protectableItemCount"u8);
 #if NET6_0_OR_GREATER
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<BackupErrorDetail> errorDetail = default;
-            Optional<string> additionalDetail = default;
-            Optional<BinaryData> protectableItemCount = default;
+            string status = default;
+            BackupErrorDetail errorDetail = default;
+            string additionalDetail = default;
+            BinaryData protectableItemCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value);
+                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("additionalDetail"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InquiryValidation(status.Value, errorDetail.Value, additionalDetail.Value, protectableItemCount.Value, serializedAdditionalRawData);
+            return new InquiryValidation(status, errorDetail, additionalDetail, protectableItemCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InquiryValidation>.Write(ModelReaderWriterOptions options)

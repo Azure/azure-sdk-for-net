@@ -26,97 +26,97 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ExportId))
+            if (options.Format != "W" && ExportId != null)
             {
                 writer.WritePropertyName("ExportId"u8);
                 writer.WriteStringValue(ExportId);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstrumentationKey))
+            if (options.Format != "W" && InstrumentationKey != null)
             {
                 writer.WritePropertyName("InstrumentationKey"u8);
                 writer.WriteStringValue(InstrumentationKey);
             }
-            if (Optional.IsDefined(RecordTypes))
+            if (RecordTypes != null)
             {
                 writer.WritePropertyName("RecordTypes"u8);
                 writer.WriteStringValue(RecordTypes);
             }
-            if (options.Format != "W" && Optional.IsDefined(ApplicationName))
+            if (options.Format != "W" && ApplicationName != null)
             {
                 writer.WritePropertyName("ApplicationName"u8);
                 writer.WriteStringValue(ApplicationName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (options.Format != "W" && SubscriptionId != null)
             {
                 writer.WritePropertyName("SubscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
+            if (options.Format != "W" && ResourceGroup != null)
             {
                 writer.WritePropertyName("ResourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(DestinationStorageSubscriptionId))
+            if (options.Format != "W" && DestinationStorageSubscriptionId != null)
             {
                 writer.WritePropertyName("DestinationStorageSubscriptionId"u8);
                 writer.WriteStringValue(DestinationStorageSubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DestinationStorageLocationId))
+            if (options.Format != "W" && DestinationStorageLocationId != null)
             {
                 writer.WritePropertyName("DestinationStorageLocationId"u8);
                 writer.WriteStringValue(DestinationStorageLocationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DestinationAccountId))
+            if (options.Format != "W" && DestinationAccountId != null)
             {
                 writer.WritePropertyName("DestinationAccountId"u8);
                 writer.WriteStringValue(DestinationAccountId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DestinationType))
+            if (options.Format != "W" && DestinationType != null)
             {
                 writer.WritePropertyName("DestinationType"u8);
                 writer.WriteStringValue(DestinationType);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsUserEnabled))
+            if (options.Format != "W" && IsUserEnabled != null)
             {
                 writer.WritePropertyName("IsUserEnabled"u8);
                 writer.WriteStringValue(IsUserEnabled);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUserUpdate))
+            if (options.Format != "W" && LastUserUpdate != null)
             {
                 writer.WritePropertyName("LastUserUpdate"u8);
                 writer.WriteStringValue(LastUserUpdate);
             }
-            if (Optional.IsDefined(NotificationQueueEnabled))
+            if (NotificationQueueEnabled != null)
             {
                 writer.WritePropertyName("NotificationQueueEnabled"u8);
                 writer.WriteStringValue(NotificationQueueEnabled);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExportStatus))
+            if (options.Format != "W" && ExportStatus != null)
             {
                 writer.WritePropertyName("ExportStatus"u8);
                 writer.WriteStringValue(ExportStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSuccessTime))
+            if (options.Format != "W" && LastSuccessTime != null)
             {
                 writer.WritePropertyName("LastSuccessTime"u8);
                 writer.WriteStringValue(LastSuccessTime);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastGapTime))
+            if (options.Format != "W" && LastGapTime != null)
             {
                 writer.WritePropertyName("LastGapTime"u8);
                 writer.WriteStringValue(LastGapTime);
             }
-            if (options.Format != "W" && Optional.IsDefined(PermanentErrorReason))
+            if (options.Format != "W" && PermanentErrorReason != null)
             {
                 writer.WritePropertyName("PermanentErrorReason"u8);
                 writer.WriteStringValue(PermanentErrorReason);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageName))
+            if (options.Format != "W" && StorageName != null)
             {
                 writer.WritePropertyName("StorageName"u8);
                 writer.WriteStringValue(StorageName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ContainerName))
+            if (options.Format != "W" && ContainerName != null)
             {
                 writer.WritePropertyName("ContainerName"u8);
                 writer.WriteStringValue(ContainerName);
@@ -159,25 +159,25 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> exportId = default;
-            Optional<string> instrumentationKey = default;
-            Optional<string> recordTypes = default;
-            Optional<string> applicationName = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> destinationStorageSubscriptionId = default;
-            Optional<string> destinationStorageLocationId = default;
-            Optional<string> destinationAccountId = default;
-            Optional<string> destinationType = default;
-            Optional<string> isUserEnabled = default;
-            Optional<string> lastUserUpdate = default;
-            Optional<string> notificationQueueEnabled = default;
-            Optional<string> exportStatus = default;
-            Optional<string> lastSuccessTime = default;
-            Optional<string> lastGapTime = default;
-            Optional<string> permanentErrorReason = default;
-            Optional<string> storageName = default;
-            Optional<string> containerName = default;
+            string exportId = default;
+            string instrumentationKey = default;
+            string recordTypes = default;
+            string applicationName = default;
+            string subscriptionId = default;
+            string resourceGroup = default;
+            string destinationStorageSubscriptionId = default;
+            string destinationStorageLocationId = default;
+            string destinationAccountId = default;
+            string destinationType = default;
+            string isUserEnabled = default;
+            string lastUserUpdate = default;
+            string notificationQueueEnabled = default;
+            string exportStatus = default;
+            string lastSuccessTime = default;
+            string lastGapTime = default;
+            string permanentErrorReason = default;
+            string storageName = default;
+            string containerName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -283,7 +283,27 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentExportConfiguration(exportId.Value, instrumentationKey.Value, recordTypes.Value, applicationName.Value, subscriptionId.Value, resourceGroup.Value, destinationStorageSubscriptionId.Value, destinationStorageLocationId.Value, destinationAccountId.Value, destinationType.Value, isUserEnabled.Value, lastUserUpdate.Value, notificationQueueEnabled.Value, exportStatus.Value, lastSuccessTime.Value, lastGapTime.Value, permanentErrorReason.Value, storageName.Value, containerName.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentExportConfiguration(
+                exportId,
+                instrumentationKey,
+                recordTypes,
+                applicationName,
+                subscriptionId,
+                resourceGroup,
+                destinationStorageSubscriptionId,
+                destinationStorageLocationId,
+                destinationAccountId,
+                destinationType,
+                isUserEnabled,
+                lastUserUpdate,
+                notificationQueueEnabled,
+                exportStatus,
+                lastSuccessTime,
+                lastGapTime,
+                permanentErrorReason,
+                storageName,
+                containerName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentExportConfiguration>.Write(ModelReaderWriterOptions options)

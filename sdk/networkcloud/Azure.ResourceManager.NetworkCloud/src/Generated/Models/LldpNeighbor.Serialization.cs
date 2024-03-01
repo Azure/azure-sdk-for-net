@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PortDescription))
+            if (options.Format != "W" && PortDescription != null)
             {
                 writer.WritePropertyName("portDescription"u8);
                 writer.WriteStringValue(PortDescription);
             }
-            if (options.Format != "W" && Optional.IsDefined(PortName))
+            if (options.Format != "W" && PortName != null)
             {
                 writer.WritePropertyName("portName"u8);
                 writer.WriteStringValue(PortName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemDescription))
+            if (options.Format != "W" && SystemDescription != null)
             {
                 writer.WritePropertyName("systemDescription"u8);
                 writer.WriteStringValue(SystemDescription);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemName))
+            if (options.Format != "W" && SystemName != null)
             {
                 writer.WritePropertyName("systemName"u8);
                 writer.WriteStringValue(SystemName);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> portDescription = default;
-            Optional<string> portName = default;
-            Optional<string> systemDescription = default;
-            Optional<string> systemName = default;
+            string portDescription = default;
+            string portName = default;
+            string systemDescription = default;
+            string systemName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LldpNeighbor(portDescription.Value, portName.Value, systemDescription.Value, systemName.Value, serializedAdditionalRawData);
+            return new LldpNeighbor(portDescription, portName, systemDescription, systemName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LldpNeighbor>.Write(ModelReaderWriterOptions options)

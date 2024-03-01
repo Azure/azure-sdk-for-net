@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Start))
+            if (Start.HasValue)
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteNumberValue(Start.Value);
             }
-            if (Optional.IsDefined(End))
+            if (End.HasValue)
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteNumberValue(End.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<int> start = default;
-            Optional<int> end = default;
+            int? start = default;
+            int? end = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QosPortRange(Optional.ToNullable(start), Optional.ToNullable(end), serializedAdditionalRawData);
+            return new QosPortRange(start, end, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QosPortRange>.Write(ModelReaderWriterOptions options)

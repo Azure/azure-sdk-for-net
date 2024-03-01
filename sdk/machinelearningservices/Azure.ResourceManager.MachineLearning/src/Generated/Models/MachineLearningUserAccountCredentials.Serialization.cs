@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("adminUserName"u8);
             writer.WriteStringValue(AdminUserName);
-            if (Optional.IsDefined(AdminUserSshPublicKey))
+            if (AdminUserSshPublicKey != null)
             {
                 writer.WritePropertyName("adminUserSshPublicKey"u8);
                 writer.WriteStringValue(AdminUserSshPublicKey);
             }
-            if (Optional.IsDefined(AdminUserPassword))
+            if (AdminUserPassword != null)
             {
                 writer.WritePropertyName("adminUserPassword"u8);
                 writer.WriteStringValue(AdminUserPassword);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string adminUserName = default;
-            Optional<string> adminUserSshPublicKey = default;
-            Optional<string> adminUserPassword = default;
+            string adminUserSshPublicKey = default;
+            string adminUserPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningUserAccountCredentials(adminUserName, adminUserSshPublicKey.Value, adminUserPassword.Value, serializedAdditionalRawData);
+            return new MachineLearningUserAccountCredentials(adminUserName, adminUserSshPublicKey, adminUserPassword, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningUserAccountCredentials>.Write(ModelReaderWriterOptions options)

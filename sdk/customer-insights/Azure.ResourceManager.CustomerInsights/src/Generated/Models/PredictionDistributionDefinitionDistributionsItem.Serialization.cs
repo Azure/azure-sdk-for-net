@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScoreThreshold))
+            if (ScoreThreshold.HasValue)
             {
                 writer.WritePropertyName("scoreThreshold"u8);
                 writer.WriteNumberValue(ScoreThreshold.Value);
             }
-            if (Optional.IsDefined(Positives))
+            if (Positives.HasValue)
             {
                 writer.WritePropertyName("positives"u8);
                 writer.WriteNumberValue(Positives.Value);
             }
-            if (Optional.IsDefined(Negatives))
+            if (Negatives.HasValue)
             {
                 writer.WritePropertyName("negatives"u8);
                 writer.WriteNumberValue(Negatives.Value);
             }
-            if (Optional.IsDefined(PositivesAboveThreshold))
+            if (PositivesAboveThreshold.HasValue)
             {
                 writer.WritePropertyName("positivesAboveThreshold"u8);
                 writer.WriteNumberValue(PositivesAboveThreshold.Value);
             }
-            if (Optional.IsDefined(NegativesAboveThreshold))
+            if (NegativesAboveThreshold.HasValue)
             {
                 writer.WritePropertyName("negativesAboveThreshold"u8);
                 writer.WriteNumberValue(NegativesAboveThreshold.Value);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<int> scoreThreshold = default;
-            Optional<long> positives = default;
-            Optional<long> negatives = default;
-            Optional<long> positivesAboveThreshold = default;
-            Optional<long> negativesAboveThreshold = default;
+            int? scoreThreshold = default;
+            long? positives = default;
+            long? negatives = default;
+            long? positivesAboveThreshold = default;
+            long? negativesAboveThreshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionDistributionDefinitionDistributionsItem(Optional.ToNullable(scoreThreshold), Optional.ToNullable(positives), Optional.ToNullable(negatives), Optional.ToNullable(positivesAboveThreshold), Optional.ToNullable(negativesAboveThreshold), serializedAdditionalRawData);
+            return new PredictionDistributionDefinitionDistributionsItem(
+                scoreThreshold,
+                positives,
+                negatives,
+                positivesAboveThreshold,
+                negativesAboveThreshold,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictionDistributionDefinitionDistributionsItem>.Write(ModelReaderWriterOptions options)

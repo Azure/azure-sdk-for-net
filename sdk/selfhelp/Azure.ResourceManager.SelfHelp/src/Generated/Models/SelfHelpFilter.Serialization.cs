@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Values))
+            if (Values != null)
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStringValue(Values);
             }
-            if (Optional.IsDefined(Operator))
+            if (Operator != null)
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> values = default;
-            Optional<string> @operator = default;
+            string name = default;
+            string values = default;
+            string @operator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpFilter(name.Value, values.Value, @operator.Value, serializedAdditionalRawData);
+            return new SelfHelpFilter(name, values, @operator, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpFilter>.Write(ModelReaderWriterOptions options)

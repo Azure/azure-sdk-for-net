@@ -70,7 +70,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Seasons.xml" path="doc/members/member[@name='GetSeasonAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetSeasonAsync(string seasonId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(seasonId, nameof(seasonId));
+            if (seasonId == null)
+            {
+                throw new ArgumentNullException(nameof(seasonId));
+            }
+            if (seasonId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(seasonId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Seasons.GetSeason");
             scope.Start();
@@ -105,7 +112,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Seasons.xml" path="doc/members/member[@name='GetSeason(string,RequestContext)']/*" />
         public virtual Response GetSeason(string seasonId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(seasonId, nameof(seasonId));
+            if (seasonId == null)
+            {
+                throw new ArgumentNullException(nameof(seasonId));
+            }
+            if (seasonId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(seasonId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Seasons.GetSeason");
             scope.Start();
@@ -141,8 +155,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Seasons.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string seasonId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(seasonId, nameof(seasonId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (seasonId == null)
+            {
+                throw new ArgumentNullException(nameof(seasonId));
+            }
+            if (seasonId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(seasonId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Seasons.CreateOrUpdate");
             scope.Start();
@@ -178,8 +202,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Seasons.xml" path="doc/members/member[@name='CreateOrUpdate(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string seasonId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(seasonId, nameof(seasonId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (seasonId == null)
+            {
+                throw new ArgumentNullException(nameof(seasonId));
+            }
+            if (seasonId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(seasonId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Seasons.CreateOrUpdate");
             scope.Start();
@@ -214,7 +248,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Seasons.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string seasonId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(seasonId, nameof(seasonId));
+            if (seasonId == null)
+            {
+                throw new ArgumentNullException(nameof(seasonId));
+            }
+            if (seasonId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(seasonId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Seasons.Delete");
             scope.Start();
@@ -249,7 +290,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Seasons.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
         public virtual Response Delete(string seasonId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(seasonId, nameof(seasonId));
+            if (seasonId == null)
+            {
+                throw new ArgumentNullException(nameof(seasonId));
+            }
+            if (seasonId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(seasonId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Seasons.Delete");
             scope.Start();
@@ -373,35 +421,35 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxEndDateTime", maxEndDateTime.Value, "O", true);
             }
-            if (years != null && Optional.IsCollectionDefined(years))
+            if (years != null && !(years is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in years)
                 {
                     uri.AppendQuery("years", param, true);
                 }
             }
-            if (seasonIds != null && Optional.IsCollectionDefined(seasonIds))
+            if (seasonIds != null && !(seasonIds is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in seasonIds)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && !(names is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && !(propertyFilters is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 foreach (var param in statuses)
                 {

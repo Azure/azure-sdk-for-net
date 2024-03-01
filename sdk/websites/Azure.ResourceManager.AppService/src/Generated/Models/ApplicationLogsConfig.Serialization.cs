@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FileSystem))
+            if (FileSystem != null)
             {
                 writer.WritePropertyName("fileSystem"u8);
                 writer.WriteObjectValue(FileSystem);
             }
-            if (Optional.IsDefined(AzureTableStorage))
+            if (AzureTableStorage != null)
             {
                 writer.WritePropertyName("azureTableStorage"u8);
                 writer.WriteObjectValue(AzureTableStorage);
             }
-            if (Optional.IsDefined(AzureBlobStorage))
+            if (AzureBlobStorage != null)
             {
                 writer.WritePropertyName("azureBlobStorage"u8);
                 writer.WriteObjectValue(AzureBlobStorage);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<FileSystemApplicationLogsConfig> fileSystem = default;
-            Optional<AppServiceTableStorageApplicationLogsConfig> azureTableStorage = default;
-            Optional<AppServiceBlobStorageApplicationLogsConfig> azureBlobStorage = default;
+            FileSystemApplicationLogsConfig fileSystem = default;
+            AppServiceTableStorageApplicationLogsConfig azureTableStorage = default;
+            AppServiceBlobStorageApplicationLogsConfig azureBlobStorage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    fileSystem = FileSystemApplicationLogsConfig.DeserializeFileSystemApplicationLogsConfig(property.Value);
+                    fileSystem = FileSystemApplicationLogsConfig.DeserializeFileSystemApplicationLogsConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureTableStorage"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureTableStorage = AppServiceTableStorageApplicationLogsConfig.DeserializeAppServiceTableStorageApplicationLogsConfig(property.Value);
+                    azureTableStorage = AppServiceTableStorageApplicationLogsConfig.DeserializeAppServiceTableStorageApplicationLogsConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureBlobStorage"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureBlobStorage = AppServiceBlobStorageApplicationLogsConfig.DeserializeAppServiceBlobStorageApplicationLogsConfig(property.Value);
+                    azureBlobStorage = AppServiceBlobStorageApplicationLogsConfig.DeserializeAppServiceBlobStorageApplicationLogsConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationLogsConfig(fileSystem.Value, azureTableStorage.Value, azureBlobStorage.Value, serializedAdditionalRawData);
+            return new ApplicationLogsConfig(fileSystem, azureTableStorage, azureBlobStorage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationLogsConfig>.Write(ModelReaderWriterOptions options)

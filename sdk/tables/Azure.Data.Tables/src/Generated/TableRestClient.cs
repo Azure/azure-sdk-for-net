@@ -257,7 +257,10 @@ namespace Azure.Data.Tables
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CreateAsync(RequestContent content, string format = null, string responsePreference = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Table.Create");
             scope.Start();
@@ -292,7 +295,10 @@ namespace Azure.Data.Tables
         /// <returns> The response returned from the service. </returns>
         public virtual Response Create(RequestContent content, string format = null, string responsePreference = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Table.Create");
             scope.Start();
@@ -404,7 +410,14 @@ namespace Azure.Data.Tables
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteAsync(string table, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(table, nameof(table));
+            if (table == null)
+            {
+                throw new ArgumentNullException(nameof(table));
+            }
+            if (table.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(table));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Table.Delete");
             scope.Start();
@@ -438,7 +451,14 @@ namespace Azure.Data.Tables
         /// <returns> The response returned from the service. </returns>
         public virtual Response Delete(string table, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(table, nameof(table));
+            if (table == null)
+            {
+                throw new ArgumentNullException(nameof(table));
+            }
+            if (table.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(table));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Table.Delete");
             scope.Start();

@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,17 +20,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> tenantId = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> resourceProvider = default;
-            Optional<string> resourceUri = default;
-            Optional<string> operationName = default;
-            Optional<string> status = default;
-            Optional<JsonElement> authorization = default;
-            Optional<JsonElement> claims = default;
-            Optional<string> correlationId = default;
-            Optional<JsonElement> httpRequest = default;
+            string tenantId = default;
+            string subscriptionId = default;
+            string resourceGroup = default;
+            string resourceProvider = default;
+            string resourceUri = default;
+            string operationName = default;
+            string status = default;
+            JsonElement authorization = default;
+            JsonElement claims = default;
+            string correlationId = default;
+            JsonElement httpRequest = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -90,7 +89,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ResourceDeleteFailureEventData(tenantId.Value, subscriptionId.Value, resourceGroup.Value, resourceProvider.Value, resourceUri.Value, operationName.Value, status.Value, authorization, claims, correlationId.Value, httpRequest);
+            return new ResourceDeleteFailureEventData(
+                tenantId,
+                subscriptionId,
+                resourceGroup,
+                resourceProvider,
+                resourceUri,
+                operationName,
+                status,
+                authorization,
+                claims,
+                correlationId,
+                httpRequest);
         }
 
         internal partial class ResourceDeleteFailureEventDataConverter : JsonConverter<ResourceDeleteFailureEventData>

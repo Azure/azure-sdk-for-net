@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PostgreSqlServerKeyResource>> UpdateAsync(WaitUntil waitUntil, PostgreSqlServerKeyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _postgreSqlServerKeyServerKeysClientDiagnostics.CreateScope("PostgreSqlServerKeyResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PostgreSqlServerKeyResource> Update(WaitUntil waitUntil, PostgreSqlServerKeyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _postgreSqlServerKeyServerKeysClientDiagnostics.CreateScope("PostgreSqlServerKeyResource.Update");
             scope.Start();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Endpoint))
+            if (Endpoint != null)
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<string> endpoint = default;
+            string endpoint = default;
             TargetServiceType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentBootstrapServerInfo(type, serializedAdditionalRawData, endpoint.Value);
+            return new ConfluentBootstrapServerInfo(type, serializedAdditionalRawData, endpoint);
         }
 
         BinaryData IPersistableModel<ConfluentBootstrapServerInfo>.Write(ModelReaderWriterOptions options)

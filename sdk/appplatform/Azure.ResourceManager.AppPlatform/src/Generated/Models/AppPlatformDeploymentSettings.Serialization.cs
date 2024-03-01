@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceRequests))
+            if (ResourceRequests != null)
             {
                 writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
             }
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            if (!(EnvironmentVariables is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(AddonConfigs))
+            if (!(AddonConfigs is ChangeTrackingDictionary<string, IDictionary<string, BinaryData>> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("addonConfigs"u8);
                 writer.WriteStartObject();
@@ -76,27 +76,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(LivenessProbe))
+            if (LivenessProbe != null)
             {
                 writer.WritePropertyName("livenessProbe"u8);
                 writer.WriteObjectValue(LivenessProbe);
             }
-            if (Optional.IsDefined(ReadinessProbe))
+            if (ReadinessProbe != null)
             {
                 writer.WritePropertyName("readinessProbe"u8);
                 writer.WriteObjectValue(ReadinessProbe);
             }
-            if (Optional.IsDefined(StartupProbe))
+            if (StartupProbe != null)
             {
                 writer.WritePropertyName("startupProbe"u8);
                 writer.WriteObjectValue(StartupProbe);
             }
-            if (Optional.IsDefined(TerminationGracePeriodInSeconds))
+            if (TerminationGracePeriodInSeconds.HasValue)
             {
                 writer.WritePropertyName("terminationGracePeriodSeconds"u8);
                 writer.WriteNumberValue(TerminationGracePeriodInSeconds.Value);
             }
-            if (Optional.IsDefined(ContainerProbeSettings))
+            if (ContainerProbeSettings != null)
             {
                 writer.WritePropertyName("containerProbeSettings"u8);
                 writer.WriteObjectValue(ContainerProbeSettings);
@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformDeploymentResourceRequirements> resourceRequests = default;
-            Optional<IDictionary<string, string>> environmentVariables = default;
-            Optional<IDictionary<string, IDictionary<string, BinaryData>>> addonConfigs = default;
-            Optional<AppInstanceProbe> livenessProbe = default;
-            Optional<AppInstanceProbe> readinessProbe = default;
-            Optional<AppInstanceProbe> startupProbe = default;
-            Optional<int> terminationGracePeriodSeconds = default;
-            Optional<ContainerProbeSettings> containerProbeSettings = default;
+            AppPlatformDeploymentResourceRequirements resourceRequests = default;
+            IDictionary<string, string> environmentVariables = default;
+            IDictionary<string, IDictionary<string, BinaryData>> addonConfigs = default;
+            AppInstanceProbe livenessProbe = default;
+            AppInstanceProbe readinessProbe = default;
+            AppInstanceProbe startupProbe = default;
+            int? terminationGracePeriodSeconds = default;
+            ContainerProbeSettings containerProbeSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformDeploymentResourceRequirements.DeserializeAppPlatformDeploymentResourceRequirements(property.Value);
+                    resourceRequests = AppPlatformDeploymentResourceRequirements.DeserializeAppPlatformDeploymentResourceRequirements(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("environmentVariables"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    livenessProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value);
+                    livenessProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("readinessProbe"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    readinessProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value);
+                    readinessProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startupProbe"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    startupProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value);
+                    startupProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("terminationGracePeriodSeconds"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    containerProbeSettings = ContainerProbeSettings.DeserializeContainerProbeSettings(property.Value);
+                    containerProbeSettings = ContainerProbeSettings.DeserializeContainerProbeSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -258,7 +258,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformDeploymentSettings(resourceRequests.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(addonConfigs), livenessProbe.Value, readinessProbe.Value, startupProbe.Value, Optional.ToNullable(terminationGracePeriodSeconds), containerProbeSettings.Value, serializedAdditionalRawData);
+            return new AppPlatformDeploymentSettings(
+                resourceRequests,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                addonConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>(),
+                livenessProbe,
+                readinessProbe,
+                startupProbe,
+                terminationGracePeriodSeconds,
+                containerProbeSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformDeploymentSettings>.Write(ModelReaderWriterOptions options)

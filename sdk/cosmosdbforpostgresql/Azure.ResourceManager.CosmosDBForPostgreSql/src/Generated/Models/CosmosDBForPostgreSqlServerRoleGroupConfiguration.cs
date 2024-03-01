@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CosmosDBForPostgreSqlServerRoleGroupConfiguration(CosmosDBForPostgreSqlServerRole role, string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             Role = role;
             Value = value;

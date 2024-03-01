@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ManagementGroups))
+            if (!(ManagementGroups is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("managementGroups"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Subscriptions))
+            if (!(Subscriptions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CrossTenantScopes))
+            if (options.Format != "W" && !(CrossTenantScopes is ChangeTrackingList<CrossTenantScopes> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("crossTenantScopes"u8);
                 writer.WriteStartArray();
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> managementGroups = default;
-            Optional<IList<string>> subscriptions = default;
-            Optional<IReadOnlyList<CrossTenantScopes>> crossTenantScopes = default;
+            IList<string> managementGroups = default;
+            IList<string> subscriptions = default;
+            IReadOnlyList<CrossTenantScopes> crossTenantScopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<CrossTenantScopes> array = new List<CrossTenantScopes>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.CrossTenantScopes.DeserializeCrossTenantScopes(item));
+                        array.Add(Models.CrossTenantScopes.DeserializeCrossTenantScopes(item, options));
                     }
                     crossTenantScopes = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerPropertiesNetworkManagerScopes(Optional.ToList(managementGroups), Optional.ToList(subscriptions), Optional.ToList(crossTenantScopes), serializedAdditionalRawData);
+            return new NetworkManagerPropertiesNetworkManagerScopes(managementGroups ?? new ChangeTrackingList<string>(), subscriptions ?? new ChangeTrackingList<string>(), crossTenantScopes ?? new ChangeTrackingList<CrossTenantScopes>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkManagerPropertiesNetworkManagerScopes>.Write(ModelReaderWriterOptions options)

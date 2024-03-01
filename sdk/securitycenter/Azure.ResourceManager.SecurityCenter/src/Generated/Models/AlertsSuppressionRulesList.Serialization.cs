@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IReadOnlyList<SecurityAlertsSuppressionRuleData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityAlertsSuppressionRuleData> array = new List<SecurityAlertsSuppressionRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityAlertsSuppressionRuleData.DeserializeSecurityAlertsSuppressionRuleData(item));
+                        array.Add(SecurityAlertsSuppressionRuleData.DeserializeSecurityAlertsSuppressionRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertsSuppressionRulesList(value, nextLink.Value, serializedAdditionalRawData);
+            return new AlertsSuppressionRulesList(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertsSuppressionRulesList>.Write(ModelReaderWriterOptions options)

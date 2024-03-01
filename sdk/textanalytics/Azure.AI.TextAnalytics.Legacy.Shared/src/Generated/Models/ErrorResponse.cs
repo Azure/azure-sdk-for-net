@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -18,7 +17,10 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         internal ErrorResponse(TextAnalyticsError error)
         {
-            Argument.AssertNotNull(error, nameof(error));
+            if (error == null)
+            {
+                throw new ArgumentNullException(nameof(error));
+            }
 
             Error = error;
         }

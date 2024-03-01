@@ -69,10 +69,38 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="peeringName"/> or <paramref name="registeredPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PeeringRegisteredPrefixData>> GetAsync(string subscriptionId, string resourceGroupName, string peeringName, string registeredPrefixName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
-            Argument.AssertNotNullOrEmpty(registeredPrefixName, nameof(registeredPrefixName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (peeringName == null)
+            {
+                throw new ArgumentNullException(nameof(peeringName));
+            }
+            if (peeringName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
+            }
+            if (registeredPrefixName == null)
+            {
+                throw new ArgumentNullException(nameof(registeredPrefixName));
+            }
+            if (registeredPrefixName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registeredPrefixName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, peeringName, registeredPrefixName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -102,10 +130,38 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="peeringName"/> or <paramref name="registeredPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PeeringRegisteredPrefixData> Get(string subscriptionId, string resourceGroupName, string peeringName, string registeredPrefixName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
-            Argument.AssertNotNullOrEmpty(registeredPrefixName, nameof(registeredPrefixName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (peeringName == null)
+            {
+                throw new ArgumentNullException(nameof(peeringName));
+            }
+            if (peeringName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
+            }
+            if (registeredPrefixName == null)
+            {
+                throw new ArgumentNullException(nameof(registeredPrefixName));
+            }
+            if (registeredPrefixName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registeredPrefixName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, peeringName, registeredPrefixName);
             _pipeline.Send(message, cancellationToken);
@@ -162,11 +218,42 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="peeringName"/> or <paramref name="registeredPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PeeringRegisteredPrefixData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string peeringName, string registeredPrefixName, PeeringRegisteredPrefixData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
-            Argument.AssertNotNullOrEmpty(registeredPrefixName, nameof(registeredPrefixName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (peeringName == null)
+            {
+                throw new ArgumentNullException(nameof(peeringName));
+            }
+            if (peeringName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
+            }
+            if (registeredPrefixName == null)
+            {
+                throw new ArgumentNullException(nameof(registeredPrefixName));
+            }
+            if (registeredPrefixName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registeredPrefixName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, peeringName, registeredPrefixName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -196,11 +283,42 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="peeringName"/> or <paramref name="registeredPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PeeringRegisteredPrefixData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string peeringName, string registeredPrefixName, PeeringRegisteredPrefixData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
-            Argument.AssertNotNullOrEmpty(registeredPrefixName, nameof(registeredPrefixName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (peeringName == null)
+            {
+                throw new ArgumentNullException(nameof(peeringName));
+            }
+            if (peeringName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
+            }
+            if (registeredPrefixName == null)
+            {
+                throw new ArgumentNullException(nameof(registeredPrefixName));
+            }
+            if (registeredPrefixName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registeredPrefixName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, peeringName, registeredPrefixName, data);
             _pipeline.Send(message, cancellationToken);
@@ -251,10 +369,38 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="peeringName"/> or <paramref name="registeredPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string peeringName, string registeredPrefixName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
-            Argument.AssertNotNullOrEmpty(registeredPrefixName, nameof(registeredPrefixName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (peeringName == null)
+            {
+                throw new ArgumentNullException(nameof(peeringName));
+            }
+            if (peeringName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
+            }
+            if (registeredPrefixName == null)
+            {
+                throw new ArgumentNullException(nameof(registeredPrefixName));
+            }
+            if (registeredPrefixName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registeredPrefixName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, peeringName, registeredPrefixName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -278,10 +424,38 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="peeringName"/> or <paramref name="registeredPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string peeringName, string registeredPrefixName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
-            Argument.AssertNotNullOrEmpty(registeredPrefixName, nameof(registeredPrefixName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (peeringName == null)
+            {
+                throw new ArgumentNullException(nameof(peeringName));
+            }
+            if (peeringName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
+            }
+            if (registeredPrefixName == null)
+            {
+                throw new ArgumentNullException(nameof(registeredPrefixName));
+            }
+            if (registeredPrefixName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registeredPrefixName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, peeringName, registeredPrefixName);
             _pipeline.Send(message, cancellationToken);
@@ -325,9 +499,30 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PeeringRegisteredPrefixListResult>> ListByPeeringAsync(string subscriptionId, string resourceGroupName, string peeringName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (peeringName == null)
+            {
+                throw new ArgumentNullException(nameof(peeringName));
+            }
+            if (peeringName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
+            }
 
             using var message = CreateListByPeeringRequest(subscriptionId, resourceGroupName, peeringName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -354,9 +549,30 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PeeringRegisteredPrefixListResult> ListByPeering(string subscriptionId, string resourceGroupName, string peeringName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (peeringName == null)
+            {
+                throw new ArgumentNullException(nameof(peeringName));
+            }
+            if (peeringName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
+            }
 
             using var message = CreateListByPeeringRequest(subscriptionId, resourceGroupName, peeringName);
             _pipeline.Send(message, cancellationToken);
@@ -407,10 +623,38 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="peeringName"/> or <paramref name="registeredPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PeeringRegisteredPrefixData>> ValidateAsync(string subscriptionId, string resourceGroupName, string peeringName, string registeredPrefixName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
-            Argument.AssertNotNullOrEmpty(registeredPrefixName, nameof(registeredPrefixName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (peeringName == null)
+            {
+                throw new ArgumentNullException(nameof(peeringName));
+            }
+            if (peeringName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
+            }
+            if (registeredPrefixName == null)
+            {
+                throw new ArgumentNullException(nameof(registeredPrefixName));
+            }
+            if (registeredPrefixName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registeredPrefixName));
+            }
 
             using var message = CreateValidateRequest(subscriptionId, resourceGroupName, peeringName, registeredPrefixName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -438,10 +682,38 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="peeringName"/> or <paramref name="registeredPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PeeringRegisteredPrefixData> Validate(string subscriptionId, string resourceGroupName, string peeringName, string registeredPrefixName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
-            Argument.AssertNotNullOrEmpty(registeredPrefixName, nameof(registeredPrefixName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (peeringName == null)
+            {
+                throw new ArgumentNullException(nameof(peeringName));
+            }
+            if (peeringName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
+            }
+            if (registeredPrefixName == null)
+            {
+                throw new ArgumentNullException(nameof(registeredPrefixName));
+            }
+            if (registeredPrefixName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registeredPrefixName));
+            }
 
             using var message = CreateValidateRequest(subscriptionId, resourceGroupName, peeringName, registeredPrefixName);
             _pipeline.Send(message, cancellationToken);
@@ -483,10 +755,34 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PeeringRegisteredPrefixListResult>> ListByPeeringNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string peeringName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (peeringName == null)
+            {
+                throw new ArgumentNullException(nameof(peeringName));
+            }
+            if (peeringName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
+            }
 
             using var message = CreateListByPeeringNextPageRequest(nextLink, subscriptionId, resourceGroupName, peeringName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -514,10 +810,34 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PeeringRegisteredPrefixListResult> ListByPeeringNextPage(string nextLink, string subscriptionId, string resourceGroupName, string peeringName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (peeringName == null)
+            {
+                throw new ArgumentNullException(nameof(peeringName));
+            }
+            if (peeringName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
+            }
 
             using var message = CreateListByPeeringNextPageRequest(nextLink, subscriptionId, resourceGroupName, peeringName);
             _pipeline.Send(message, cancellationToken);

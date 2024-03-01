@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Suffix))
+            if (Suffix != null)
             {
                 writer.WritePropertyName("suffix"u8);
                 writer.WriteStringValue(Suffix);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 return null;
             }
             string name = default;
-            Optional<string> suffix = default;
+            string suffix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent(name, suffix.Value, serializedAdditionalRawData);
+            return new DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent(name, suffix, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<CalculatePriceResultProperties> properties = default;
+            CalculatePriceResultProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = CalculatePriceResultProperties.DeserializeCalculatePriceResultProperties(property.Value);
+                    properties = CalculatePriceResultProperties.DeserializeCalculatePriceResultProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CalculatePriceResult(properties.Value, serializedAdditionalRawData);
+            return new CalculatePriceResult(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CalculatePriceResult>.Write(ModelReaderWriterOptions options)

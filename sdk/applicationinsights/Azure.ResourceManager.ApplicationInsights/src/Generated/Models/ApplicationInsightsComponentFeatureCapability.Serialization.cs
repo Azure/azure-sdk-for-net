@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("Description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Value != null)
             {
                 writer.WritePropertyName("Value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Unit))
+            if (options.Format != "W" && Unit != null)
             {
                 writer.WritePropertyName("Unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterId))
+            if (options.Format != "W" && MeterId != null)
             {
                 writer.WritePropertyName("MeterId"u8);
                 writer.WriteStringValue(MeterId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterRateFrequency))
+            if (options.Format != "W" && MeterRateFrequency != null)
             {
                 writer.WritePropertyName("MeterRateFrequency"u8);
                 writer.WriteStringValue(MeterRateFrequency);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> value = default;
-            Optional<string> unit = default;
-            Optional<string> meterId = default;
-            Optional<string> meterRateFrequency = default;
+            string name = default;
+            string description = default;
+            string value = default;
+            string unit = default;
+            string meterId = default;
+            string meterRateFrequency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentFeatureCapability(name.Value, description.Value, value.Value, unit.Value, meterId.Value, meterRateFrequency.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentFeatureCapability(
+                name,
+                description,
+                value,
+                unit,
+                meterId,
+                meterRateFrequency,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentFeatureCapability>.Write(ModelReaderWriterOptions options)

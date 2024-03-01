@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Subject))
+            if (options.Format != "W" && Subject != null)
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
+            if (options.Format != "W" && ExpiresOn.HasValue)
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpiresOn.Value, "O");
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> subject = default;
-            Optional<DateTimeOffset> expirationDate = default;
+            string subject = default;
+            DateTimeOffset? expirationDate = default;
             SecretType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedCertificateProperties(type, serializedAdditionalRawData, subject.Value, Optional.ToNullable(expirationDate));
+            return new ManagedCertificateProperties(type, serializedAdditionalRawData, subject, expirationDate);
         }
 
         BinaryData IPersistableModel<ManagedCertificateProperties>.Write(ModelReaderWriterOptions options)

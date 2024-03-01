@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<IntegrationAccountBatchConfigurationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IntegrationAccountBatchConfigurationData>> value = default;
+            IReadOnlyList<IntegrationAccountBatchConfigurationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountBatchConfigurationData> array = new List<IntegrationAccountBatchConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(item));
+                        array.Add(IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchConfigurationCollection(Optional.ToList(value), serializedAdditionalRawData);
+            return new BatchConfigurationCollection(value ?? new ChangeTrackingList<IntegrationAccountBatchConfigurationData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchConfigurationCollection>.Write(ModelReaderWriterOptions options)

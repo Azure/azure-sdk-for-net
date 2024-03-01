@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SmbSetting))
+            if (SmbSetting != null)
             {
                 writer.WritePropertyName("smb"u8);
                 writer.WriteObjectValue(SmbSetting);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<SmbSetting> smb = default;
+            SmbSetting smb = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    smb = SmbSetting.DeserializeSmbSetting(property.Value);
+                    smb = SmbSetting.DeserializeSmbSetting(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProtocolSettings(smb.Value, serializedAdditionalRawData);
+            return new ProtocolSettings(smb, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProtocolSettings>.Write(ModelReaderWriterOptions options)

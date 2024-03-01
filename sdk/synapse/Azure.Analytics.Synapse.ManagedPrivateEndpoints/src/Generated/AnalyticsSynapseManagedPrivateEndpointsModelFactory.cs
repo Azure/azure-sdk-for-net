@@ -38,7 +38,15 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         {
             fqdns ??= new List<string>();
 
-            return new ManagedPrivateEndpointProperties(name, privateLinkResourceId, groupId, provisioningState, connectionState, isReserved, fqdns?.ToList(), isCompliant);
+            return new ManagedPrivateEndpointProperties(
+                name,
+                privateLinkResourceId,
+                groupId,
+                provisioningState,
+                connectionState,
+                isReserved,
+                fqdns?.ToList(),
+                isCompliant);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedPrivateEndpointConnectionState"/>. </summary>

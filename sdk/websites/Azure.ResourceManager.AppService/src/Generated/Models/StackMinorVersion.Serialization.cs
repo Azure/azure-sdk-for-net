@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayVersion))
+            if (DisplayVersion != null)
             {
                 writer.WritePropertyName("displayVersion"u8);
                 writer.WriteStringValue(DisplayVersion);
             }
-            if (Optional.IsDefined(RuntimeVersion))
+            if (RuntimeVersion != null)
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (Optional.IsDefined(IsDefault))
+            if (IsDefault.HasValue)
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (Optional.IsDefined(IsRemoteDebuggingEnabled))
+            if (IsRemoteDebuggingEnabled.HasValue)
             {
                 writer.WritePropertyName("isRemoteDebuggingEnabled"u8);
                 writer.WriteBooleanValue(IsRemoteDebuggingEnabled.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> displayVersion = default;
-            Optional<string> runtimeVersion = default;
-            Optional<bool> isDefault = default;
-            Optional<bool> isRemoteDebuggingEnabled = default;
+            string displayVersion = default;
+            string runtimeVersion = default;
+            bool? isDefault = default;
+            bool? isRemoteDebuggingEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StackMinorVersion(displayVersion.Value, runtimeVersion.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isRemoteDebuggingEnabled), serializedAdditionalRawData);
+            return new StackMinorVersion(displayVersion, runtimeVersion, isDefault, isRemoteDebuggingEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StackMinorVersion>.Write(ModelReaderWriterOptions options)

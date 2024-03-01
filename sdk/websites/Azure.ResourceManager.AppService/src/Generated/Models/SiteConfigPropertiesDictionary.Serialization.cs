@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Use32BitWorkerProcess))
+            if (options.Format != "W" && Use32BitWorkerProcess.HasValue)
             {
                 writer.WritePropertyName("use32BitWorkerProcess"u8);
                 writer.WriteBooleanValue(Use32BitWorkerProcess.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LinuxFxVersion))
+            if (options.Format != "W" && LinuxFxVersion != null)
             {
                 writer.WritePropertyName("linuxFxVersion"u8);
                 writer.WriteStringValue(LinuxFxVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(JavaVersion))
+            if (options.Format != "W" && JavaVersion != null)
             {
                 writer.WritePropertyName("javaVersion"u8);
                 writer.WriteStringValue(JavaVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(PowerShellVersion))
+            if (options.Format != "W" && PowerShellVersion != null)
             {
                 writer.WritePropertyName("powerShellVersion"u8);
                 writer.WriteStringValue(PowerShellVersion);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> use32BitWorkerProcess = default;
-            Optional<string> linuxFxVersion = default;
-            Optional<string> javaVersion = default;
-            Optional<string> powerShellVersion = default;
+            bool? use32BitWorkerProcess = default;
+            string linuxFxVersion = default;
+            string javaVersion = default;
+            string powerShellVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteConfigPropertiesDictionary(Optional.ToNullable(use32BitWorkerProcess), linuxFxVersion.Value, javaVersion.Value, powerShellVersion.Value, serializedAdditionalRawData);
+            return new SiteConfigPropertiesDictionary(use32BitWorkerProcess, linuxFxVersion, javaVersion, powerShellVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteConfigPropertiesDictionary>.Write(ModelReaderWriterOptions options)

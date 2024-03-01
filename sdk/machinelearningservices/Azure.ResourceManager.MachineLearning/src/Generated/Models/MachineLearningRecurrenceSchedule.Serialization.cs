@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(MonthDays))
+            if (!(MonthDays is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 if (MonthDays != null)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("monthDays");
                 }
             }
-            if (Optional.IsCollectionDefined(WeekDays))
+            if (!(WeekDays is ChangeTrackingList<MachineLearningDayOfWeek> collection0 && collection0.IsUndefined))
             {
                 if (WeekDays != null)
                 {
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             IList<int> hours = default;
             IList<int> minutes = default;
-            Optional<IList<int>> monthDays = default;
-            Optional<IList<MachineLearningDayOfWeek>> weekDays = default;
+            IList<int> monthDays = default;
+            IList<MachineLearningDayOfWeek> weekDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningRecurrenceSchedule(hours, minutes, Optional.ToList(monthDays), Optional.ToList(weekDays), serializedAdditionalRawData);
+            return new MachineLearningRecurrenceSchedule(hours, minutes, monthDays ?? new ChangeTrackingList<int>(), weekDays ?? new ChangeTrackingList<MachineLearningDayOfWeek>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningRecurrenceSchedule>.Write(ModelReaderWriterOptions options)

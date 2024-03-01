@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementAuthorizationServerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authsid, ApiManagementAuthorizationServerData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
-            Argument.AssertNotNull(data, nameof(data));
+            if (authsid == null)
+            {
+                throw new ArgumentNullException(nameof(authsid));
+            }
+            if (authsid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authsid));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.CreateOrUpdate");
             scope.Start();
@@ -133,8 +143,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiManagementAuthorizationServerResource> CreateOrUpdate(WaitUntil waitUntil, string authsid, ApiManagementAuthorizationServerData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
-            Argument.AssertNotNull(data, nameof(data));
+            if (authsid == null)
+            {
+                throw new ArgumentNullException(nameof(authsid));
+            }
+            if (authsid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authsid));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.CreateOrUpdate");
             scope.Start();
@@ -180,7 +200,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
         public virtual async Task<Response<ApiManagementAuthorizationServerResource>> GetAsync(string authsid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
+            if (authsid == null)
+            {
+                throw new ArgumentNullException(nameof(authsid));
+            }
+            if (authsid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authsid));
+            }
 
             using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.Get");
             scope.Start();
@@ -225,7 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
         public virtual Response<ApiManagementAuthorizationServerResource> Get(string authsid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
+            if (authsid == null)
+            {
+                throw new ArgumentNullException(nameof(authsid));
+            }
+            if (authsid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authsid));
+            }
 
             using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.Get");
             scope.Start();
@@ -336,7 +370,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string authsid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
+            if (authsid == null)
+            {
+                throw new ArgumentNullException(nameof(authsid));
+            }
+            if (authsid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authsid));
+            }
 
             using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.Exists");
             scope.Start();
@@ -379,7 +420,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
         public virtual Response<bool> Exists(string authsid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
+            if (authsid == null)
+            {
+                throw new ArgumentNullException(nameof(authsid));
+            }
+            if (authsid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authsid));
+            }
 
             using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.Exists");
             scope.Start();
@@ -422,7 +470,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiManagementAuthorizationServerResource>> GetIfExistsAsync(string authsid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
+            if (authsid == null)
+            {
+                throw new ArgumentNullException(nameof(authsid));
+            }
+            if (authsid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authsid));
+            }
 
             using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.GetIfExists");
             scope.Start();
@@ -467,7 +522,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
         public virtual NullableResponse<ApiManagementAuthorizationServerResource> GetIfExists(string authsid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
+            if (authsid == null)
+            {
+                throw new ArgumentNullException(nameof(authsid));
+            }
+            if (authsid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authsid));
+            }
 
             using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.GetIfExists");
             scope.Start();

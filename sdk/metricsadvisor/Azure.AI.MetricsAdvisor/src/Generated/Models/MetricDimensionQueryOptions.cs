@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionName"/> is null. </exception>
         public MetricDimensionQueryOptions(string dimensionName)
         {
-            Argument.AssertNotNull(dimensionName, nameof(dimensionName));
+            if (dimensionName == null)
+            {
+                throw new ArgumentNullException(nameof(dimensionName));
+            }
 
             DimensionName = dimensionName;
         }

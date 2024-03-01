@@ -19,19 +19,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Type))
+            if (Type.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
             writer.WritePropertyName("content"u8);
             writer.WriteObjectValue(Content);
-            if (Optional.IsDefined(Folder))
+            if (Folder != null)
             {
                 if (Folder != null)
                 {
@@ -57,10 +57,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<SqlScriptType> type = default;
+            string description = default;
+            SqlScriptType? type = default;
             SqlScriptContent content = default;
-            Optional<SqlScriptFolder> folder = default;
+            SqlScriptFolder folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlScript(description.Value, Optional.ToNullable(type), content, folder.Value, additionalProperties);
+            return new SqlScript(description, type, content, folder, additionalProperties);
         }
 
         internal partial class SqlScriptConverter : JsonConverter<SqlScript>

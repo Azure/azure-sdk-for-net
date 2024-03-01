@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,8 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> triggerName = default;
-            Optional<EventSubscriptionStatus> status = default;
+            string triggerName = default;
+            EventSubscriptionStatus? status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("triggerName"u8))
@@ -40,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new TriggerSubscriptionOperationStatus(triggerName.Value, Optional.ToNullable(status));
+            return new TriggerSubscriptionOperationStatus(triggerName, status);
         }
 
         internal partial class TriggerSubscriptionOperationStatusConverter : JsonConverter<TriggerSubscriptionOperationStatus>

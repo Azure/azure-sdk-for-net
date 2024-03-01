@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FilesystemSubnetSize))
+            if (FilesystemSubnetSize.HasValue)
             {
                 writer.WritePropertyName("filesystemSubnetSize"u8);
                 writer.WriteNumberValue(FilesystemSubnetSize.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<int> filesystemSubnetSize = default;
+            int? filesystemSubnetSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequiredAmlFileSystemSubnetsSize(Optional.ToNullable(filesystemSubnetSize), serializedAdditionalRawData);
+            return new RequiredAmlFileSystemSubnetsSize(filesystemSubnetSize, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequiredAmlFileSystemSubnetsSize>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(ReservationToReturn))
+            if (ReservationToReturn != null)
             {
                 writer.WritePropertyName("reservationToReturn"u8);
                 writer.WriteObjectValue(ReservationToReturn);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> scope = default;
-            Optional<ReservationToReturn> reservationToReturn = default;
+            string scope = default;
+            ReservationToReturn reservationToReturn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    reservationToReturn = ReservationToReturn.DeserializeReservationToReturn(property.Value);
+                    reservationToReturn = ReservationToReturn.DeserializeReservationToReturn(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationCalculateRefundRequestProperties(scope.Value, reservationToReturn.Value, serializedAdditionalRawData);
+            return new ReservationCalculateRefundRequestProperties(scope, reservationToReturn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationCalculateRefundRequestProperties>.Write(ModelReaderWriterOptions options)

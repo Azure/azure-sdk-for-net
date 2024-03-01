@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Type))
+            if (Type.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Optional.IsDefined(ReferenceName))
+            if (ReferenceName != null)
             {
                 writer.WritePropertyName("referenceName"u8);
                 writer.WriteStringValue(ReferenceName);
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IntegrationRuntimeEntityReferenceType> type = default;
-            Optional<string> referenceName = default;
+            IntegrationRuntimeEntityReferenceType? type = default;
+            string referenceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new EntityReference(Optional.ToNullable(type), referenceName.Value);
+            return new EntityReference(type, referenceName);
         }
 
         internal partial class EntityReferenceConverter : JsonConverter<EntityReference>

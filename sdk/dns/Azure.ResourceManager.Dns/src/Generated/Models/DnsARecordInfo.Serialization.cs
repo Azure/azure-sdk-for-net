@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Dns.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPv4Address))
+            if (IPv4Address != null)
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address.ToString());
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipv4Address = default;
+            IPAddress ipv4Address = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsARecordInfo(ipv4Address.Value, serializedAdditionalRawData);
+            return new DnsARecordInfo(ipv4Address, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsARecordInfo>.Write(ModelReaderWriterOptions options)

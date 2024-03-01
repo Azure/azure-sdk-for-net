@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScopeMapId))
+            if (ScopeMapId != null)
             {
                 writer.WritePropertyName("scopeMapId"u8);
                 writer.WriteStringValue(ScopeMapId);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Credentials))
+            if (Credentials != null)
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> scopeMapId = default;
-            Optional<ContainerRegistryTokenStatus> status = default;
-            Optional<ContainerRegistryTokenCredentials> credentials = default;
+            ResourceIdentifier scopeMapId = default;
+            ContainerRegistryTokenStatus? status = default;
+            ContainerRegistryTokenCredentials credentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            credentials = ContainerRegistryTokenCredentials.DeserializeContainerRegistryTokenCredentials(property0.Value);
+                            credentials = ContainerRegistryTokenCredentials.DeserializeContainerRegistryTokenCredentials(property0.Value, options);
                             continue;
                         }
                     }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTokenPatch(scopeMapId.Value, Optional.ToNullable(status), credentials.Value, serializedAdditionalRawData);
+            return new ContainerRegistryTokenPatch(scopeMapId, status, credentials, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTokenPatch>.Write(ModelReaderWriterOptions options)

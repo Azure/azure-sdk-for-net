@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Certificates))
+            if (!(Certificates is ChangeTrackingDictionary<string, AppServiceCertificateProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartObject();
@@ -65,87 +65,87 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(DistinguishedName))
+            if (DistinguishedName != null)
             {
                 writer.WritePropertyName("distinguishedName"u8);
                 writer.WriteStringValue(DistinguishedName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DomainVerificationToken))
+            if (options.Format != "W" && DomainVerificationToken != null)
             {
                 writer.WritePropertyName("domainVerificationToken"u8);
                 writer.WriteStringValue(DomainVerificationToken);
             }
-            if (Optional.IsDefined(ValidityInYears))
+            if (ValidityInYears.HasValue)
             {
                 writer.WritePropertyName("validityInYears"u8);
                 writer.WriteNumberValue(ValidityInYears.Value);
             }
-            if (Optional.IsDefined(KeySize))
+            if (KeySize.HasValue)
             {
                 writer.WritePropertyName("keySize"u8);
                 writer.WriteNumberValue(KeySize.Value);
             }
-            if (Optional.IsDefined(ProductType))
+            if (ProductType.HasValue)
             {
                 writer.WritePropertyName("productType"u8);
                 writer.WriteStringValue(ProductType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(IsAutoRenew))
+            if (IsAutoRenew.HasValue)
             {
                 writer.WritePropertyName("autoRenew"u8);
                 writer.WriteBooleanValue(IsAutoRenew.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SignedCertificate))
+            if (options.Format != "W" && SignedCertificate != null)
             {
                 writer.WritePropertyName("signedCertificate"u8);
                 writer.WriteObjectValue(SignedCertificate);
             }
-            if (Optional.IsDefined(Csr))
+            if (Csr != null)
             {
                 writer.WritePropertyName("csr"u8);
                 writer.WriteStringValue(Csr);
             }
-            if (options.Format != "W" && Optional.IsDefined(Intermediate))
+            if (options.Format != "W" && Intermediate != null)
             {
                 writer.WritePropertyName("intermediate"u8);
                 writer.WriteObjectValue(Intermediate);
             }
-            if (options.Format != "W" && Optional.IsDefined(Root))
+            if (options.Format != "W" && Root != null)
             {
                 writer.WritePropertyName("root"u8);
                 writer.WriteObjectValue(Root);
             }
-            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
+            if (options.Format != "W" && SerialNumber != null)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastCertificateIssuanceOn))
+            if (options.Format != "W" && LastCertificateIssuanceOn.HasValue)
             {
                 writer.WritePropertyName("lastCertificateIssuanceTime"u8);
                 writer.WriteStringValue(LastCertificateIssuanceOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(IsPrivateKeyExternal))
+            if (options.Format != "W" && IsPrivateKeyExternal.HasValue)
             {
                 writer.WritePropertyName("isPrivateKeyExternal"u8);
                 writer.WriteBooleanValue(IsPrivateKeyExternal.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AppServiceCertificateNotRenewableReasons))
+            if (options.Format != "W" && !(AppServiceCertificateNotRenewableReasons is ChangeTrackingList<AppServiceCertificateNotRenewableReason> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("appServiceCertificateNotRenewableReasons"u8);
                 writer.WriteStartArray();
@@ -155,12 +155,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextAutoRenewalTimeStamp))
+            if (options.Format != "W" && NextAutoRenewalTimeStamp.HasValue)
             {
                 writer.WritePropertyName("nextAutoRenewalTimeStamp"u8);
                 writer.WriteStringValue(NextAutoRenewalTimeStamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Contact))
+            if (options.Format != "W" && Contact != null)
             {
                 writer.WritePropertyName("contact"u8);
                 writer.WriteObjectValue(Contact);
@@ -204,31 +204,31 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, AppServiceCertificateProperties>> certificates = default;
-            Optional<string> distinguishedName = default;
-            Optional<string> domainVerificationToken = default;
-            Optional<int> validityInYears = default;
-            Optional<int> keySize = default;
-            Optional<CertificateProductType> productType = default;
-            Optional<bool> autoRenew = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<CertificateOrderStatus> status = default;
-            Optional<AppServiceCertificateDetails> signedCertificate = default;
-            Optional<string> csr = default;
-            Optional<AppServiceCertificateDetails> intermediate = default;
-            Optional<AppServiceCertificateDetails> root = default;
-            Optional<string> serialNumber = default;
-            Optional<DateTimeOffset> lastCertificateIssuanceTime = default;
-            Optional<DateTimeOffset> expirationTime = default;
-            Optional<bool> isPrivateKeyExternal = default;
-            Optional<IReadOnlyList<AppServiceCertificateNotRenewableReason>> appServiceCertificateNotRenewableReasons = default;
-            Optional<DateTimeOffset> nextAutoRenewalTimeStamp = default;
-            Optional<CertificateOrderContact> contact = default;
+            SystemData systemData = default;
+            IDictionary<string, AppServiceCertificateProperties> certificates = default;
+            string distinguishedName = default;
+            string domainVerificationToken = default;
+            int? validityInYears = default;
+            int? keySize = default;
+            CertificateProductType? productType = default;
+            bool? autoRenew = default;
+            ProvisioningState? provisioningState = default;
+            CertificateOrderStatus? status = default;
+            AppServiceCertificateDetails signedCertificate = default;
+            string csr = default;
+            AppServiceCertificateDetails intermediate = default;
+            AppServiceCertificateDetails root = default;
+            string serialNumber = default;
+            DateTimeOffset? lastCertificateIssuanceTime = default;
+            DateTimeOffset? expirationTime = default;
+            bool? isPrivateKeyExternal = default;
+            IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default;
+            DateTimeOffset? nextAutoRenewalTimeStamp = default;
+            CertificateOrderContact contact = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.AppService.Models
                             Dictionary<string, AppServiceCertificateProperties> dictionary = new Dictionary<string, AppServiceCertificateProperties>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, AppServiceCertificateProperties.DeserializeAppServiceCertificateProperties(property1.Value));
+                                dictionary.Add(property1.Name, AppServiceCertificateProperties.DeserializeAppServiceCertificateProperties(property1.Value, options));
                             }
                             certificates = dictionary;
                             continue;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            signedCertificate = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value);
+                            signedCertificate = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("csr"u8))
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            intermediate = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value);
+                            intermediate = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("root"u8))
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            root = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value);
+                            root = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("serialNumber"u8))
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            contact = CertificateOrderContact.DeserializeCertificateOrderContact(property0.Value);
+                            contact = CertificateOrderContact.DeserializeCertificateOrderContact(property0.Value, options);
                             continue;
                         }
                     }
@@ -454,7 +454,33 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceCertificateOrderPatch(id, name, type, systemData.Value, Optional.ToDictionary(certificates), distinguishedName.Value, domainVerificationToken.Value, Optional.ToNullable(validityInYears), Optional.ToNullable(keySize), Optional.ToNullable(productType), Optional.ToNullable(autoRenew), Optional.ToNullable(provisioningState), Optional.ToNullable(status), signedCertificate.Value, csr.Value, intermediate.Value, root.Value, serialNumber.Value, Optional.ToNullable(lastCertificateIssuanceTime), Optional.ToNullable(expirationTime), Optional.ToNullable(isPrivateKeyExternal), Optional.ToList(appServiceCertificateNotRenewableReasons), Optional.ToNullable(nextAutoRenewalTimeStamp), contact.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceCertificateOrderPatch(
+                id,
+                name,
+                type,
+                systemData,
+                certificates ?? new ChangeTrackingDictionary<string, AppServiceCertificateProperties>(),
+                distinguishedName,
+                domainVerificationToken,
+                validityInYears,
+                keySize,
+                productType,
+                autoRenew,
+                provisioningState,
+                status,
+                signedCertificate,
+                csr,
+                intermediate,
+                root,
+                serialNumber,
+                lastCertificateIssuanceTime,
+                expirationTime,
+                isPrivateKeyExternal,
+                appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>(),
+                nextAutoRenewalTimeStamp,
+                contact,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceCertificateOrderPatch>.Write(ModelReaderWriterOptions options)

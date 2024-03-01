@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccessToken))
+            if (AccessToken != null)
             {
                 writer.WritePropertyName("accessToken"u8);
                 writer.WriteStringValue(AccessToken);
             }
-            if (Optional.IsDefined(RefreshToken))
+            if (RefreshToken != null)
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (Optional.IsDefined(TokenType))
+            if (TokenType.HasValue)
             {
                 writer.WritePropertyName("tokenType"u8);
                 writer.WriteStringValue(TokenType.Value.ToString());
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> accessToken = default;
-            Optional<string> refreshToken = default;
-            Optional<SourceControlTokenType> tokenType = default;
+            string accessToken = default;
+            string refreshToken = default;
+            SourceControlTokenType? tokenType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceControlSecurityTokenProperties(accessToken.Value, refreshToken.Value, Optional.ToNullable(tokenType), serializedAdditionalRawData);
+            return new SourceControlSecurityTokenProperties(accessToken, refreshToken, tokenType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceControlSecurityTokenProperties>.Write(ModelReaderWriterOptions options)

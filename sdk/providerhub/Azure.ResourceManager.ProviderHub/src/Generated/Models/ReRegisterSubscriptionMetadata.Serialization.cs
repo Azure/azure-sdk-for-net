@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Optional.IsDefined(ConcurrencyLimit))
+            if (ConcurrencyLimit.HasValue)
             {
                 writer.WritePropertyName("concurrencyLimit"u8);
                 writer.WriteNumberValue(ConcurrencyLimit.Value);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             bool enabled = default;
-            Optional<int> concurrencyLimit = default;
+            int? concurrencyLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReRegisterSubscriptionMetadata(enabled, Optional.ToNullable(concurrencyLimit), serializedAdditionalRawData);
+            return new ReRegisterSubscriptionMetadata(enabled, concurrencyLimit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReRegisterSubscriptionMetadata>.Write(ModelReaderWriterOptions options)

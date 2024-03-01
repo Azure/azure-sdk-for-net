@@ -6,43 +6,52 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeComputeProperties : IUtf8JsonSerializable
+    public partial class SynapseIntegrationRuntimeComputeProperties : IUtf8JsonSerializable, IJsonModel<SynapseIntegrationRuntimeComputeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseIntegrationRuntimeComputeProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SynapseIntegrationRuntimeComputeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeComputeProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(NodeSize))
+            if (NodeSize != null)
             {
                 writer.WritePropertyName("nodeSize"u8);
                 writer.WriteStringValue(NodeSize);
             }
-            if (Optional.IsDefined(NumberOfNodes))
+            if (NumberOfNodes.HasValue)
             {
                 writer.WritePropertyName("numberOfNodes"u8);
                 writer.WriteNumberValue(NumberOfNodes.Value);
             }
-            if (Optional.IsDefined(MaxParallelExecutionsPerNode))
+            if (MaxParallelExecutionsPerNode.HasValue)
             {
                 writer.WritePropertyName("maxParallelExecutionsPerNode"u8);
                 writer.WriteNumberValue(MaxParallelExecutionsPerNode.Value);
             }
-            if (Optional.IsDefined(DataFlowProperties))
+            if (DataFlowProperties != null)
             {
                 writer.WritePropertyName("dataFlowProperties"u8);
                 writer.WriteObjectValue(DataFlowProperties);
             }
-            if (Optional.IsDefined(VnetProperties))
+            if (VnetProperties != null)
             {
                 writer.WritePropertyName("vNetProperties"u8);
                 writer.WriteObjectValue(VnetProperties);
@@ -62,18 +71,32 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteEndObject();
         }
 
-        internal static SynapseIntegrationRuntimeComputeProperties DeserializeSynapseIntegrationRuntimeComputeProperties(JsonElement element)
+        SynapseIntegrationRuntimeComputeProperties IJsonModel<SynapseIntegrationRuntimeComputeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeComputeProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseIntegrationRuntimeComputeProperties(document.RootElement, options);
+        }
+
+        internal static SynapseIntegrationRuntimeComputeProperties DeserializeSynapseIntegrationRuntimeComputeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> nodeSize = default;
-            Optional<int> numberOfNodes = default;
-            Optional<int> maxParallelExecutionsPerNode = default;
-            Optional<SynapseIntegrationRuntimeDataFlowProperties> dataFlowProperties = default;
-            Optional<SynapseIntegrationRuntimeVnetProperties> vNetProperties = default;
+            AzureLocation? location = default;
+            string nodeSize = default;
+            int? numberOfNodes = default;
+            int? maxParallelExecutionsPerNode = default;
+            SynapseIntegrationRuntimeDataFlowProperties dataFlowProperties = default;
+            SynapseIntegrationRuntimeVnetProperties vNetProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +139,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    dataFlowProperties = SynapseIntegrationRuntimeDataFlowProperties.DeserializeSynapseIntegrationRuntimeDataFlowProperties(property.Value);
+                    dataFlowProperties = SynapseIntegrationRuntimeDataFlowProperties.DeserializeSynapseIntegrationRuntimeDataFlowProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vNetProperties"u8))
@@ -125,13 +148,51 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    vNetProperties = SynapseIntegrationRuntimeVnetProperties.DeserializeSynapseIntegrationRuntimeVnetProperties(property.Value);
+                    vNetProperties = SynapseIntegrationRuntimeVnetProperties.DeserializeSynapseIntegrationRuntimeVnetProperties(property.Value, options);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeComputeProperties(Optional.ToNullable(location), nodeSize.Value, Optional.ToNullable(numberOfNodes), Optional.ToNullable(maxParallelExecutionsPerNode), dataFlowProperties.Value, vNetProperties.Value, additionalProperties);
+            return new SynapseIntegrationRuntimeComputeProperties(
+                location,
+                nodeSize,
+                numberOfNodes,
+                maxParallelExecutionsPerNode,
+                dataFlowProperties,
+                vNetProperties,
+                additionalProperties);
         }
+
+        BinaryData IPersistableModel<SynapseIntegrationRuntimeComputeProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeComputeProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SynapseIntegrationRuntimeComputeProperties IPersistableModel<SynapseIntegrationRuntimeComputeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseIntegrationRuntimeComputeProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeComputeProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseIntegrationRuntimeComputeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsProbeDisabled))
+            if (IsProbeDisabled.HasValue)
             {
                 writer.WritePropertyName("disableProbe"u8);
                 writer.WriteBooleanValue(IsProbeDisabled.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<bool> disableProbe = default;
+            bool? disableProbe = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerProbeSettings(Optional.ToNullable(disableProbe), serializedAdditionalRawData);
+            return new ContainerProbeSettings(disableProbe, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerProbeSettings>.Write(ModelReaderWriterOptions options)

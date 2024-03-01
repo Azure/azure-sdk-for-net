@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TransportProtocol))
+            if (TransportProtocol.HasValue)
             {
                 writer.WritePropertyName("transportProtocol"u8);
                 writer.WriteStringValue(TransportProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(FrontendPort))
+            if (FrontendPort.HasValue)
             {
                 writer.WritePropertyName("frontendPort"u8);
                 writer.WriteNumberValue(FrontendPort.Value);
             }
-            if (Optional.IsDefined(BackendPort))
+            if (BackendPort.HasValue)
             {
                 writer.WritePropertyName("backendPort"u8);
                 writer.WriteNumberValue(BackendPort.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<DevTestLabTransportProtocol> transportProtocol = default;
-            Optional<int> frontendPort = default;
-            Optional<int> backendPort = default;
+            DevTestLabTransportProtocol? transportProtocol = default;
+            int? frontendPort = default;
+            int? backendPort = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabInboundNatRule(Optional.ToNullable(transportProtocol), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), serializedAdditionalRawData);
+            return new DevTestLabInboundNatRule(transportProtocol, frontendPort, backendPort, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabInboundNatRule>.Write(ModelReaderWriterOptions options)

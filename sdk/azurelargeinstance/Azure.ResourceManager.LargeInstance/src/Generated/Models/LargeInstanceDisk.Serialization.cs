@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DiskSizeGB))
+            if (DiskSizeGB.HasValue)
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Lun))
+            if (options.Format != "W" && Lun.HasValue)
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> diskSizeGB = default;
-            Optional<int> lun = default;
+            string name = default;
+            int? diskSizeGB = default;
+            int? lun = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceDisk(name.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(lun), serializedAdditionalRawData);
+            return new LargeInstanceDisk(name, diskSizeGB, lun, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceDisk>.Write(ModelReaderWriterOptions options)

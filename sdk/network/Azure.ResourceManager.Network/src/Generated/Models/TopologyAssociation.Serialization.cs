@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(AssociationType))
+            if (AssociationType.HasValue)
             {
                 writer.WritePropertyName("associationType"u8);
                 writer.WriteStringValue(AssociationType.Value.ToString());
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<AssociationType> associationType = default;
+            string name = default;
+            ResourceIdentifier resourceId = default;
+            AssociationType? associationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopologyAssociation(name.Value, resourceId.Value, Optional.ToNullable(associationType), serializedAdditionalRawData);
+            return new TopologyAssociation(name, resourceId, associationType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopologyAssociation>.Write(ModelReaderWriterOptions options)

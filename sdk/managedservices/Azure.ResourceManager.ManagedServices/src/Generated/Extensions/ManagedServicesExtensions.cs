@@ -36,7 +36,10 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> An object representing collection of ManagedServicesRegistrationResources and their operations over a ManagedServicesRegistrationResource. </returns>
         public static ManagedServicesRegistrationCollection GetManagedServicesRegistrations(this ArmClient client, ResourceIdentifier scope)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableManagedServicesArmClient(client).GetManagedServicesRegistrations(scope);
         }
@@ -75,7 +78,10 @@ namespace Azure.ResourceManager.ManagedServices
         [ForwardsClientCalls]
         public static async Task<Response<ManagedServicesRegistrationResource>> GetManagedServicesRegistrationAsync(this ArmClient client, ResourceIdentifier scope, string registrationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return await GetMockableManagedServicesArmClient(client).GetManagedServicesRegistrationAsync(scope, registrationId, cancellationToken).ConfigureAwait(false);
         }
@@ -114,7 +120,10 @@ namespace Azure.ResourceManager.ManagedServices
         [ForwardsClientCalls]
         public static Response<ManagedServicesRegistrationResource> GetManagedServicesRegistration(this ArmClient client, ResourceIdentifier scope, string registrationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableManagedServicesArmClient(client).GetManagedServicesRegistration(scope, registrationId, cancellationToken);
         }
@@ -132,7 +141,10 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> An object representing collection of ManagedServicesRegistrationAssignmentResources and their operations over a ManagedServicesRegistrationAssignmentResource. </returns>
         public static ManagedServicesRegistrationAssignmentCollection GetManagedServicesRegistrationAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableManagedServicesArmClient(client).GetManagedServicesRegistrationAssignments(scope);
         }
@@ -172,7 +184,10 @@ namespace Azure.ResourceManager.ManagedServices
         [ForwardsClientCalls]
         public static async Task<Response<ManagedServicesRegistrationAssignmentResource>> GetManagedServicesRegistrationAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string registrationAssignmentId, bool? expandRegistrationDefinition = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return await GetMockableManagedServicesArmClient(client).GetManagedServicesRegistrationAssignmentAsync(scope, registrationAssignmentId, expandRegistrationDefinition, cancellationToken).ConfigureAwait(false);
         }
@@ -212,7 +227,10 @@ namespace Azure.ResourceManager.ManagedServices
         [ForwardsClientCalls]
         public static Response<ManagedServicesRegistrationAssignmentResource> GetManagedServicesRegistrationAssignment(this ArmClient client, ResourceIdentifier scope, string registrationAssignmentId, bool? expandRegistrationDefinition = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableManagedServicesArmClient(client).GetManagedServicesRegistrationAssignment(scope, registrationAssignmentId, expandRegistrationDefinition, cancellationToken);
         }
@@ -230,7 +248,10 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> An object representing collection of ManagedServicesMarketplaceRegistrationResources and their operations over a ManagedServicesMarketplaceRegistrationResource. </returns>
         public static ManagedServicesMarketplaceRegistrationCollection GetManagedServicesMarketplaceRegistrations(this ArmClient client, ResourceIdentifier scope)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableManagedServicesArmClient(client).GetManagedServicesMarketplaceRegistrations(scope);
         }
@@ -269,7 +290,10 @@ namespace Azure.ResourceManager.ManagedServices
         [ForwardsClientCalls]
         public static async Task<Response<ManagedServicesMarketplaceRegistrationResource>> GetManagedServicesMarketplaceRegistrationAsync(this ArmClient client, ResourceIdentifier scope, string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return await GetMockableManagedServicesArmClient(client).GetManagedServicesMarketplaceRegistrationAsync(scope, marketplaceIdentifier, cancellationToken).ConfigureAwait(false);
         }
@@ -308,7 +332,10 @@ namespace Azure.ResourceManager.ManagedServices
         [ForwardsClientCalls]
         public static Response<ManagedServicesMarketplaceRegistrationResource> GetManagedServicesMarketplaceRegistration(this ArmClient client, ResourceIdentifier scope, string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableManagedServicesArmClient(client).GetManagedServicesMarketplaceRegistration(scope, marketplaceIdentifier, cancellationToken);
         }
@@ -327,7 +354,10 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> Returns a <see cref="ManagedServicesRegistrationResource"/> object. </returns>
         public static ManagedServicesRegistrationResource GetManagedServicesRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableManagedServicesArmClient(client).GetManagedServicesRegistrationResource(id);
         }
@@ -346,7 +376,10 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> Returns a <see cref="ManagedServicesRegistrationAssignmentResource"/> object. </returns>
         public static ManagedServicesRegistrationAssignmentResource GetManagedServicesRegistrationAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableManagedServicesArmClient(client).GetManagedServicesRegistrationAssignmentResource(id);
         }
@@ -365,7 +398,10 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> Returns a <see cref="ManagedServicesMarketplaceRegistrationResource"/> object. </returns>
         public static ManagedServicesMarketplaceRegistrationResource GetManagedServicesMarketplaceRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableManagedServicesArmClient(client).GetManagedServicesMarketplaceRegistrationResource(id);
         }

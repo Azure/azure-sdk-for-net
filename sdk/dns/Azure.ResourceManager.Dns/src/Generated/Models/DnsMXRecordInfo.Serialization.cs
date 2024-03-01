@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Dns.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Preference))
+            if (Preference.HasValue)
             {
                 writer.WritePropertyName("preference"u8);
                 writer.WriteNumberValue(Preference.Value);
             }
-            if (Optional.IsDefined(Exchange))
+            if (Exchange != null)
             {
                 writer.WritePropertyName("exchange"u8);
                 writer.WriteStringValue(Exchange);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<int> preference = default;
-            Optional<string> exchange = default;
+            int? preference = default;
+            string exchange = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsMXRecordInfo(Optional.ToNullable(preference), exchange.Value, serializedAdditionalRawData);
+            return new DnsMXRecordInfo(preference, exchange, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsMXRecordInfo>.Write(ModelReaderWriterOptions options)

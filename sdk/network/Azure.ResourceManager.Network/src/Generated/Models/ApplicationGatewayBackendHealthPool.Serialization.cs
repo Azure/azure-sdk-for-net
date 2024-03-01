@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackendAddressPool))
+            if (BackendAddressPool != null)
             {
                 writer.WritePropertyName("backendAddressPool"u8);
                 writer.WriteObjectValue(BackendAddressPool);
             }
-            if (Optional.IsCollectionDefined(BackendHttpSettingsCollection))
+            if (!(BackendHttpSettingsCollection is ChangeTrackingList<ApplicationGatewayBackendHealthHttpSettings> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backendHttpSettingsCollection"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ApplicationGatewayBackendAddressPool> backendAddressPool = default;
-            Optional<IReadOnlyList<ApplicationGatewayBackendHealthHttpSettings>> backendHttpSettingsCollection = default;
+            ApplicationGatewayBackendAddressPool backendAddressPool = default;
+            IReadOnlyList<ApplicationGatewayBackendHealthHttpSettings> backendHttpSettingsCollection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    backendAddressPool = ApplicationGatewayBackendAddressPool.DeserializeApplicationGatewayBackendAddressPool(property.Value);
+                    backendAddressPool = ApplicationGatewayBackendAddressPool.DeserializeApplicationGatewayBackendAddressPool(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backendHttpSettingsCollection"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayBackendHealthHttpSettings> array = new List<ApplicationGatewayBackendHealthHttpSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayBackendHealthHttpSettings.DeserializeApplicationGatewayBackendHealthHttpSettings(item));
+                        array.Add(ApplicationGatewayBackendHealthHttpSettings.DeserializeApplicationGatewayBackendHealthHttpSettings(item, options));
                     }
                     backendHttpSettingsCollection = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayBackendHealthPool(backendAddressPool.Value, Optional.ToList(backendHttpSettingsCollection), serializedAdditionalRawData);
+            return new ApplicationGatewayBackendHealthPool(backendAddressPool, backendHttpSettingsCollection ?? new ChangeTrackingList<ApplicationGatewayBackendHealthHttpSettings>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendHealthPool>.Write(ModelReaderWriterOptions options)

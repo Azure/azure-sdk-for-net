@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ColumnName))
+            if (ColumnName != null)
             {
                 writer.WritePropertyName("columnName"u8);
                 writer.WriteObjectValue(ColumnName);
             }
-            if (Optional.IsDefined(DefaultValue))
+            if (DefaultValue != null)
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteObjectValue(DefaultValue);
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> columnName = default;
-            Optional<object> defaultValue = default;
+            object columnName = default;
+            object defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("columnName"u8))
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DWCopyCommandDefaultValue(columnName.Value, defaultValue.Value);
+            return new DWCopyCommandDefaultValue(columnName, defaultValue);
         }
 
         internal partial class DWCopyCommandDefaultValueConverter : JsonConverter<DWCopyCommandDefaultValue>

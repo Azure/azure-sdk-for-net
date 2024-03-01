@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsSafeFailover))
+            if (IsSafeFailover.HasValue)
             {
                 writer.WritePropertyName("IsSafeFailover"u8);
                 writer.WriteBooleanValue(IsSafeFailover.Value);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<bool> isSafeFailover = default;
+            bool? isSafeFailover = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverProperties(Optional.ToNullable(isSafeFailover), serializedAdditionalRawData);
+            return new FailoverProperties(isSafeFailover, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverProperties>.Write(ModelReaderWriterOptions options)

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Communication;
@@ -56,7 +57,22 @@ namespace Azure.ResourceManager.Communication.Models
             tags ??= new Dictionary<string, string>();
             linkedDomains ??= new List<string>();
 
-            return new CommunicationServiceResourceData(id, name, resourceType, systemData, tags, location, identity, provisioningState, hostName, dataLocation, notificationHubId, version, immutableResourceId, linkedDomains?.ToList(), serializedAdditionalRawData: null);
+            return new CommunicationServiceResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                provisioningState,
+                hostName,
+                dataLocation,
+                notificationHubId,
+                version,
+                immutableResourceId,
+                linkedDomains?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CommunicationServiceKeys"/>. </summary>
@@ -90,7 +106,22 @@ namespace Azure.ResourceManager.Communication.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CommunicationDomainResourceData(id, name, resourceType, systemData, tags, location, provisioningState, dataLocation, fromSenderDomain, mailFromSenderDomain, domainManagement, verificationStates, verificationRecords, userEngagementTracking, serializedAdditionalRawData: null);
+            return new CommunicationDomainResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                dataLocation,
+                fromSenderDomain,
+                mailFromSenderDomain,
+                domainManagement,
+                verificationStates,
+                verificationRecords,
+                userEngagementTracking,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DomainPropertiesVerificationStates"/>. </summary>
@@ -102,7 +133,13 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Models.DomainPropertiesVerificationStates"/> instance for mocking. </returns>
         public static DomainPropertiesVerificationStates DomainPropertiesVerificationStates(DomainVerificationStatusRecord domain = null, DomainVerificationStatusRecord spf = null, DomainVerificationStatusRecord dkim = null, DomainVerificationStatusRecord dkim2 = null, DomainVerificationStatusRecord dmarc = null)
         {
-            return new DomainPropertiesVerificationStates(domain, spf, dkim, dkim2, dmarc, serializedAdditionalRawData: null);
+            return new DomainPropertiesVerificationStates(
+                domain,
+                spf,
+                dkim,
+                dkim2,
+                dmarc,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DomainVerificationStatusRecord"/>. </summary>
@@ -123,7 +160,13 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Models.DomainPropertiesVerificationRecords"/> instance for mocking. </returns>
         public static DomainPropertiesVerificationRecords DomainPropertiesVerificationRecords(VerificationDnsRecord domain = null, VerificationDnsRecord spf = null, VerificationDnsRecord dkim = null, VerificationDnsRecord dkim2 = null, VerificationDnsRecord dmarc = null)
         {
-            return new DomainPropertiesVerificationRecords(domain, spf, dkim, dkim2, dmarc, serializedAdditionalRawData: null);
+            return new DomainPropertiesVerificationRecords(
+                domain,
+                spf,
+                dkim,
+                dkim2,
+                dmarc,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VerificationDnsRecord"/>. </summary>
@@ -151,7 +194,16 @@ namespace Azure.ResourceManager.Communication.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EmailServiceResourceData(id, name, resourceType, systemData, tags, location, provisioningState, dataLocation, serializedAdditionalRawData: null);
+            return new EmailServiceResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                dataLocation,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Communication.SenderUsernameResourceData"/>. </summary>
@@ -166,39 +218,16 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Communication.SenderUsernameResourceData"/> instance for mocking. </returns>
         public static SenderUsernameResourceData SenderUsernameResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string dataLocation = null, string username = null, string displayName = null, CommunicationServiceProvisioningState? provisioningState = null)
         {
-            return new SenderUsernameResourceData(id, name, resourceType, systemData, dataLocation, username, displayName, provisioningState, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Communication.SuppressionListResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="listName"> The the name of the suppression list. This value must match one of the valid sender usernames of the sending domain. </param>
-        /// <param name="lastUpdatedTimeStamp"> The date the resource was last updated. </param>
-        /// <param name="createdTimeStamp"> The date the resource was created. </param>
-        /// <param name="dataLocation"> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </param>
-        /// <returns> A new <see cref="Communication.SuppressionListResourceData"/> instance for mocking. </returns>
-        public static SuppressionListResourceData SuppressionListResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string listName = null, DateTimeOffset? lastUpdatedTimeStamp = null, DateTimeOffset? createdTimeStamp = null, string dataLocation = null)
-        {
-            return new SuppressionListResourceData(id, name, resourceType, systemData, listName, lastUpdatedTimeStamp, createdTimeStamp, dataLocation, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Communication.SuppressionListAddressResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="email"> Email address of the recipient. </param>
-        /// <param name="firstName"> The first name of the email recipient. </param>
-        /// <param name="lastName"> The last name of the email recipient. </param>
-        /// <param name="notes"> An optional property to provide contextual notes or a description for an address. </param>
-        /// <param name="lastModified"> The date the address was last updated in a suppression list. </param>
-        /// <param name="dataLocation"> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </param>
-        /// <returns> A new <see cref="Communication.SuppressionListAddressResourceData"/> instance for mocking. </returns>
-        public static SuppressionListAddressResourceData SuppressionListAddressResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string email = null, string firstName = null, string lastName = null, string notes = null, DateTimeOffset? lastModified = null, string dataLocation = null)
-        {
-            return new SuppressionListAddressResourceData(id, name, resourceType, systemData, email, firstName, lastName, notes, lastModified, dataLocation, serializedAdditionalRawData: null);
+            return new SenderUsernameResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                dataLocation,
+                username,
+                displayName,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
     }
 }

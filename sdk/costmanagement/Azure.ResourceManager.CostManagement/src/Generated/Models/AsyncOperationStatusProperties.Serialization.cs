@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReportUri))
+            if (ReportUri.HasValue)
             {
                 writer.WritePropertyName("reportUrl"u8);
                 writer.WriteStringValue(ReportUri.Value.ToString());
             }
-            if (Optional.IsDefined(SecondaryReportUri))
+            if (SecondaryReportUri.HasValue)
             {
                 writer.WritePropertyName("secondaryReportUrl"u8);
                 writer.WriteStringValue(SecondaryReportUri.Value.ToString());
             }
-            if (Optional.IsDefined(ValidUntil))
+            if (ValidUntil.HasValue)
             {
                 writer.WritePropertyName("validUntil"u8);
                 writer.WriteStringValue(ValidUntil.Value, "O");
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<BenefitUtilizationSummaryReportSchema> reportUrl = default;
-            Optional<BenefitUtilizationSummaryReportSchema> secondaryReportUrl = default;
-            Optional<DateTimeOffset> validUntil = default;
+            BenefitUtilizationSummaryReportSchema? reportUrl = default;
+            BenefitUtilizationSummaryReportSchema? secondaryReportUrl = default;
+            DateTimeOffset? validUntil = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AsyncOperationStatusProperties(Optional.ToNullable(reportUrl), Optional.ToNullable(secondaryReportUrl), Optional.ToNullable(validUntil), serializedAdditionalRawData);
+            return new AsyncOperationStatusProperties(reportUrl, secondaryReportUrl, validUntil, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AsyncOperationStatusProperties>.Write(ModelReaderWriterOptions options)

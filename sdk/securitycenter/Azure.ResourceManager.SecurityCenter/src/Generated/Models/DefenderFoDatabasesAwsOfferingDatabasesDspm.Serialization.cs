@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(CloudRoleArn))
+            if (CloudRoleArn != null)
             {
                 writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> cloudRoleArn = default;
+            bool? enabled = default;
+            string cloudRoleArn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderFoDatabasesAwsOfferingDatabasesDspm(Optional.ToNullable(enabled), cloudRoleArn.Value, serializedAdditionalRawData);
+            return new DefenderFoDatabasesAwsOfferingDatabasesDspm(enabled, cloudRoleArn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderFoDatabasesAwsOfferingDatabasesDspm>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
-            if (Optional.IsDefined(Istio))
+            if (Istio != null)
             {
                 writer.WritePropertyName("istio"u8);
                 writer.WriteObjectValue(Istio);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             ServiceMeshMode mode = default;
-            Optional<IstioServiceMesh> istio = default;
+            IstioServiceMesh istio = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    istio = IstioServiceMesh.DeserializeIstioServiceMesh(property.Value);
+                    istio = IstioServiceMesh.DeserializeIstioServiceMesh(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceMeshProfile(mode, istio.Value, serializedAdditionalRawData);
+            return new ServiceMeshProfile(mode, istio, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceMeshProfile>.Write(ModelReaderWriterOptions options)

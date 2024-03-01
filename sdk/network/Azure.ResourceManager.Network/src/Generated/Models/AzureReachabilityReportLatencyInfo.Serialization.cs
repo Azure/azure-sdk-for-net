@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TimeStamp))
+            if (TimeStamp.HasValue)
             {
                 writer.WritePropertyName("timeStamp"u8);
                 writer.WriteStringValue(TimeStamp.Value, "O");
             }
-            if (Optional.IsDefined(Score))
+            if (Score.HasValue)
             {
                 writer.WritePropertyName("score"u8);
                 writer.WriteNumberValue(Score.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timeStamp = default;
-            Optional<int> score = default;
+            DateTimeOffset? timeStamp = default;
+            int? score = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureReachabilityReportLatencyInfo(Optional.ToNullable(timeStamp), Optional.ToNullable(score), serializedAdditionalRawData);
+            return new AzureReachabilityReportLatencyInfo(timeStamp, score, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureReachabilityReportLatencyInfo>.Write(ModelReaderWriterOptions options)

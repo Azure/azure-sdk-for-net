@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Automanage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AutomanageConfigurationProfileAssignmentReportData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Automanage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomanageConfigurationProfileAssignmentReportData>> value = default;
+            IReadOnlyList<AutomanageConfigurationProfileAssignmentReportData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Automanage.Models
                     List<AutomanageConfigurationProfileAssignmentReportData> array = new List<AutomanageConfigurationProfileAssignmentReportData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(item));
+                        array.Add(AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportList(Optional.ToList(value), serializedAdditionalRawData);
+            return new ReportList(value ?? new ChangeTrackingList<AutomanageConfigurationProfileAssignmentReportData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportList>.Write(ModelReaderWriterOptions options)

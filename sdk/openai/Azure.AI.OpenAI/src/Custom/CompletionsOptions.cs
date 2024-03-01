@@ -17,6 +17,7 @@ namespace Azure.AI.OpenAI;
 // parameterized constructor that receives the deployment name as well.
 
 [CodeGenSuppress("CompletionsOptions", typeof(IEnumerable<string>))]
+[CodeGenSerialization(nameof(TokenSelectionBiases), SerializationValueHook = nameof(SerializeTokenSelectionBiases), DeserializationValueHook = nameof(DeserializeTokenSelectionBiases))]
 public partial class CompletionsOptions
 {
     // CUSTOM CODE NOTE:
@@ -195,7 +196,6 @@ public partial class CompletionsOptions
     ///
     ///     <see cref="TokenSelectionBiases"/> is equivalent to 'logit_bias' in the REST request schema.
     /// </remarks>
-    [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeTokenSelectionBiases), DeserializationValueHook = nameof(DeserializeTokenSelectionBiases))]
     public IDictionary<int, int> TokenSelectionBiases { get; }
 
     // CUSTOM CODE NOTE:
@@ -256,7 +256,7 @@ public partial class CompletionsOptions
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void DeserializeTokenSelectionBiases(JsonProperty property, ref Optional<IDictionary<int, int>> tokenSelectionBiases)
+    private static void DeserializeTokenSelectionBiases(JsonProperty property, ref IDictionary<int, int> tokenSelectionBiases)
     {
         if (property.Value.ValueKind == JsonValueKind.Null)
         {

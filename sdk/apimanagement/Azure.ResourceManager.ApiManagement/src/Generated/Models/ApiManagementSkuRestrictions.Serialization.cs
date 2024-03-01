@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RestrictionsType))
+            if (options.Format != "W" && RestrictionsType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RestrictionsType.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Values))
+            if (options.Format != "W" && !(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(RestrictionInfo))
+            if (options.Format != "W" && RestrictionInfo != null)
             {
                 writer.WritePropertyName("restrictionInfo"u8);
                 writer.WriteObjectValue(RestrictionInfo);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReasonCode))
+            if (options.Format != "W" && ReasonCode.HasValue)
             {
                 writer.WritePropertyName("reasonCode"u8);
                 writer.WriteStringValue(ReasonCode.Value.ToSerialString());
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<ApiManagementSkuRestrictionsType> type = default;
-            Optional<IReadOnlyList<string>> values = default;
-            Optional<ApiManagementSkuRestrictionInfo> restrictionInfo = default;
-            Optional<ApiManagementSkuRestrictionsReasonCode> reasonCode = default;
+            ApiManagementSkuRestrictionsType? type = default;
+            IReadOnlyList<string> values = default;
+            ApiManagementSkuRestrictionInfo restrictionInfo = default;
+            ApiManagementSkuRestrictionsReasonCode? reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    restrictionInfo = ApiManagementSkuRestrictionInfo.DeserializeApiManagementSkuRestrictionInfo(property.Value);
+                    restrictionInfo = ApiManagementSkuRestrictionInfo.DeserializeApiManagementSkuRestrictionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reasonCode"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode), serializedAdditionalRawData);
+            return new ApiManagementSkuRestrictions(type, values ?? new ChangeTrackingList<string>(), restrictionInfo, reasonCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementSkuRestrictions>.Write(ModelReaderWriterOptions options)

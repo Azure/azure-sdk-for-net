@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MemoryMB))
+            if (MemoryMB.HasValue)
             {
                 writer.WritePropertyName("memoryMB"u8);
                 writer.WriteNumberValue(MemoryMB.Value);
             }
-            if (Optional.IsDefined(CpuCount))
+            if (CpuCount.HasValue)
             {
                 writer.WritePropertyName("cpuCount"u8);
                 writer.WriteNumberValue(CpuCount.Value);
             }
-            if (Optional.IsDefined(LimitCpuForMigration))
+            if (LimitCpuForMigration.HasValue)
             {
                 writer.WritePropertyName("limitCpuForMigration"u8);
                 writer.WriteStringValue(LimitCpuForMigration.Value.ToString());
             }
-            if (Optional.IsDefined(DynamicMemoryEnabled))
+            if (DynamicMemoryEnabled.HasValue)
             {
                 writer.WritePropertyName("dynamicMemoryEnabled"u8);
                 writer.WriteStringValue(DynamicMemoryEnabled.Value.ToString());
             }
-            if (Optional.IsDefined(DynamicMemoryMaxMB))
+            if (DynamicMemoryMaxMB.HasValue)
             {
                 writer.WritePropertyName("dynamicMemoryMaxMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMaxMB.Value);
             }
-            if (Optional.IsDefined(DynamicMemoryMinMB))
+            if (DynamicMemoryMinMB.HasValue)
             {
                 writer.WritePropertyName("dynamicMemoryMinMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMinMB.Value);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<int> memoryMB = default;
-            Optional<int> cpuCount = default;
-            Optional<LimitCpuForMigration> limitCpuForMigration = default;
-            Optional<DynamicMemoryEnabled> dynamicMemoryEnabled = default;
-            Optional<int> dynamicMemoryMaxMB = default;
-            Optional<int> dynamicMemoryMinMB = default;
+            int? memoryMB = default;
+            int? cpuCount = default;
+            LimitCpuForMigration? limitCpuForMigration = default;
+            DynamicMemoryEnabled? dynamicMemoryEnabled = default;
+            int? dynamicMemoryMaxMB = default;
+            int? dynamicMemoryMinMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HardwareProfileUpdate(Optional.ToNullable(memoryMB), Optional.ToNullable(cpuCount), Optional.ToNullable(limitCpuForMigration), Optional.ToNullable(dynamicMemoryEnabled), Optional.ToNullable(dynamicMemoryMaxMB), Optional.ToNullable(dynamicMemoryMinMB), serializedAdditionalRawData);
+            return new HardwareProfileUpdate(
+                memoryMB,
+                cpuCount,
+                limitCpuForMigration,
+                dynamicMemoryEnabled,
+                dynamicMemoryMaxMB,
+                dynamicMemoryMinMB,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HardwareProfileUpdate>.Write(ModelReaderWriterOptions options)

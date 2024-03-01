@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             string name = default;
-            Optional<string> value = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchEnvironmentSetting(name, value.Value, serializedAdditionalRawData);
+            return new BatchEnvironmentSetting(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchEnvironmentSetting>.Write(ModelReaderWriterOptions options)

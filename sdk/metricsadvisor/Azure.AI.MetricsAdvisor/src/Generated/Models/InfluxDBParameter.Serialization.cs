@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectionString))
+            if (ConnectionString != null)
             {
                 if (ConnectionString != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("connectionString");
                 }
             }
-            if (Optional.IsDefined(Database))
+            if (Database != null)
             {
                 if (Database != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("database");
                 }
             }
-            if (Optional.IsDefined(UserName))
+            if (UserName != null)
             {
                 if (UserName != null)
                 {
@@ -51,7 +51,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("userName");
                 }
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 if (Password != null)
                 {
@@ -81,10 +81,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> connectionString = default;
-            Optional<string> database = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            string connectionString = default;
+            string database = default;
+            string userName = default;
+            string password = default;
             string query = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -139,7 +139,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new InfluxDBParameter(connectionString.Value, database.Value, userName.Value, password.Value, query);
+            return new InfluxDBParameter(connectionString, database, userName, password, query);
         }
     }
 }

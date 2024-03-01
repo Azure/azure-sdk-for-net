@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(StreamingProtocol.ToString());
             writer.WritePropertyName("encryptionScheme"u8);
             writer.WriteStringValue(EncryptionScheme.ToString());
-            if (Optional.IsCollectionDefined(Paths))
+            if (!(Paths is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Media.Models
             }
             StreamingPolicyStreamingProtocol streamingProtocol = default;
             StreamingPathEncryptionScheme encryptionScheme = default;
-            Optional<IReadOnlyList<string>> paths = default;
+            IReadOnlyList<string> paths = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingPath(streamingProtocol, encryptionScheme, Optional.ToList(paths), serializedAdditionalRawData);
+            return new StreamingPath(streamingProtocol, encryptionScheme, paths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingPath>.Write(ModelReaderWriterOptions options)

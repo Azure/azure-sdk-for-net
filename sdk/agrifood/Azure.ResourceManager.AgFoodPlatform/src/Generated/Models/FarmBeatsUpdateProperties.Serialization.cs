@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SensorIntegration))
+            if (SensorIntegration != null)
             {
                 writer.WritePropertyName("sensorIntegration"u8);
                 writer.WriteObjectValue(SensorIntegration);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 return null;
             }
-            Optional<SensorIntegration> sensorIntegration = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            SensorIntegration sensorIntegration = default;
+            PublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     {
                         continue;
                     }
-                    sensorIntegration = SensorIntegration.DeserializeSensorIntegration(property.Value);
+                    sensorIntegration = SensorIntegration.DeserializeSensorIntegration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("publicNetworkAccess"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FarmBeatsUpdateProperties(sensorIntegration.Value, Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new FarmBeatsUpdateProperties(sensorIntegration, publicNetworkAccess, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FarmBeatsUpdateProperties>.Write(ModelReaderWriterOptions options)

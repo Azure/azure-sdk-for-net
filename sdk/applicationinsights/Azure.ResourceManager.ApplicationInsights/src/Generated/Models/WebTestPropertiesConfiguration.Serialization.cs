@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(WebTest))
+            if (WebTest != null)
             {
                 writer.WritePropertyName("WebTest"u8);
                 writer.WriteStringValue(WebTest);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> webTest = default;
+            string webTest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebTestPropertiesConfiguration(webTest.Value, serializedAdditionalRawData);
+            return new WebTestPropertiesConfiguration(webTest, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebTestPropertiesConfiguration>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeploymentType))
+            if (DeploymentType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DeploymentType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DeploymentName))
+            if (DeploymentName != null)
             {
                 writer.WritePropertyName("deploymentName"u8);
                 writer.WriteStringValue(DeploymentName);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ErrorDeploymentType> type = default;
-            Optional<string> deploymentName = default;
+            ErrorDeploymentType? type = default;
+            string deploymentName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ErrorDeployment(Optional.ToNullable(type), deploymentName.Value, serializedAdditionalRawData);
+            return new ErrorDeployment(type, deploymentName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ErrorDeployment>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<SavingsPlanSummaryCount> value = default;
+            string name = default;
+            SavingsPlanSummaryCount value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    value = SavingsPlanSummaryCount.DeserializeSavingsPlanSummaryCount(property.Value);
+                    value = SavingsPlanSummaryCount.DeserializeSavingsPlanSummaryCount(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanSummary(name.Value, value.Value, serializedAdditionalRawData);
+            return new SavingsPlanSummary(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanSummary>.Write(ModelReaderWriterOptions options)

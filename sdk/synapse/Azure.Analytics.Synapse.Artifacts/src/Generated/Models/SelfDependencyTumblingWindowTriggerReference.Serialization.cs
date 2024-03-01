@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("offset"u8);
             writer.WriteStringValue(Offset);
-            if (Optional.IsDefined(Size))
+            if (Size != null)
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string offset = default;
-            Optional<string> size = default;
+            string size = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SelfDependencyTumblingWindowTriggerReference(type, offset, size.Value);
+            return new SelfDependencyTumblingWindowTriggerReference(type, offset, size);
         }
 
         internal partial class SelfDependencyTumblingWindowTriggerReferenceConverter : JsonConverter<SelfDependencyTumblingWindowTriggerReference>

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ApplicationInsights))
+            if (!(ApplicationInsights is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("applicationInsights"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ContainerRegistry))
+            if (!(ContainerRegistry is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("containerRegistry"u8);
                 writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(DnsResolution))
+            if (!(DnsResolution is ChangeTrackingDictionary<string, BinaryData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dnsResolution"u8);
                 writer.WriteStartObject();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(KeyVault))
+            if (!(KeyVault is ChangeTrackingDictionary<string, BinaryData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("keyVault"u8);
                 writer.WriteStartObject();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Nsg))
+            if (!(Nsg is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("nsg"u8);
                 writer.WriteStartObject();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Others))
+            if (!(Others is ChangeTrackingDictionary<string, BinaryData> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("others"u8);
                 writer.WriteStartObject();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ResourceLock))
+            if (!(ResourceLock is ChangeTrackingDictionary<string, BinaryData> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("resourceLock"u8);
                 writer.WriteStartObject();
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(StorageAccount))
+            if (!(StorageAccount is ChangeTrackingDictionary<string, BinaryData> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteStartObject();
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Udr))
+            if (!(Udr is ChangeTrackingDictionary<string, BinaryData> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("udr"u8);
                 writer.WriteStartObject();
@@ -271,15 +271,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, BinaryData>> applicationInsights = default;
-            Optional<IDictionary<string, BinaryData>> containerRegistry = default;
-            Optional<IDictionary<string, BinaryData>> dnsResolution = default;
-            Optional<IDictionary<string, BinaryData>> keyVault = default;
-            Optional<IDictionary<string, BinaryData>> nsg = default;
-            Optional<IDictionary<string, BinaryData>> others = default;
-            Optional<IDictionary<string, BinaryData>> resourceLock = default;
-            Optional<IDictionary<string, BinaryData>> storageAccount = default;
-            Optional<IDictionary<string, BinaryData>> udr = default;
+            IDictionary<string, BinaryData> applicationInsights = default;
+            IDictionary<string, BinaryData> containerRegistry = default;
+            IDictionary<string, BinaryData> dnsResolution = default;
+            IDictionary<string, BinaryData> keyVault = default;
+            IDictionary<string, BinaryData> nsg = default;
+            IDictionary<string, BinaryData> others = default;
+            IDictionary<string, BinaryData> resourceLock = default;
+            IDictionary<string, BinaryData> storageAccount = default;
+            IDictionary<string, BinaryData> udr = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -479,7 +479,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspaceDiagnoseProperties(Optional.ToDictionary(applicationInsights), Optional.ToDictionary(containerRegistry), Optional.ToDictionary(dnsResolution), Optional.ToDictionary(keyVault), Optional.ToDictionary(nsg), Optional.ToDictionary(others), Optional.ToDictionary(resourceLock), Optional.ToDictionary(storageAccount), Optional.ToDictionary(udr), serializedAdditionalRawData);
+            return new MachineLearningWorkspaceDiagnoseProperties(
+                applicationInsights ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                containerRegistry ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                dnsResolution ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                keyVault ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                nsg ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                others ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                resourceLock ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                storageAccount ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                udr ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceDiagnoseProperties>.Write(ModelReaderWriterOptions options)

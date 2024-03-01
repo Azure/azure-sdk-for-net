@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (options.Format != "W" && Code.HasValue)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastAction))
+            if (options.Format != "W" && LastAction.HasValue)
             {
                 writer.WritePropertyName("lastAction"u8);
                 writer.WriteStringValue(LastAction.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastActionOn))
+            if (options.Format != "W" && LastActionOn.HasValue)
             {
                 writer.WritePropertyName("lastActionTime"u8);
                 writer.WriteStringValue(LastActionOn.Value, "O");
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<RollingUpgradeStatusCode> code = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<RollingUpgradeActionType> lastAction = default;
-            Optional<DateTimeOffset> lastActionTime = default;
+            RollingUpgradeStatusCode? code = default;
+            DateTimeOffset? startTime = default;
+            RollingUpgradeActionType? lastAction = default;
+            DateTimeOffset? lastActionTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RollingUpgradeRunningStatus(Optional.ToNullable(code), Optional.ToNullable(startTime), Optional.ToNullable(lastAction), Optional.ToNullable(lastActionTime), serializedAdditionalRawData);
+            return new RollingUpgradeRunningStatus(code, startTime, lastAction, lastActionTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RollingUpgradeRunningStatus>.Write(ModelReaderWriterOptions options)

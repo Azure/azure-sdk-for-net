@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApiVersion))
+            if (ApiVersion != null)
             {
                 writer.WritePropertyName("api-version"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (Optional.IsDefined(Sp))
+            if (Sp != null)
             {
                 writer.WritePropertyName("sp"u8);
                 writer.WriteStringValue(Sp);
             }
-            if (Optional.IsDefined(Sv))
+            if (Sv != null)
             {
                 writer.WritePropertyName("sv"u8);
                 writer.WriteStringValue(Sv);
             }
-            if (Optional.IsDefined(Sig))
+            if (Sig != null)
             {
                 writer.WritePropertyName("sig"u8);
                 writer.WriteStringValue(Sig);
             }
-            if (Optional.IsDefined(Se))
+            if (Se != null)
             {
                 writer.WritePropertyName("se"u8);
                 writer.WriteStringValue(Se);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> apiVersion = default;
-            Optional<string> sp = default;
-            Optional<string> sv = default;
-            Optional<string> sig = default;
-            Optional<string> se = default;
+            string apiVersion = default;
+            string sp = default;
+            string sv = default;
+            string sig = default;
+            string se = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowTriggerCallbackQueryParameterInfo(apiVersion.Value, sp.Value, sv.Value, sig.Value, se.Value, serializedAdditionalRawData);
+            return new LogicWorkflowTriggerCallbackQueryParameterInfo(
+                apiVersion,
+                sp,
+                sv,
+                sig,
+                se,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowTriggerCallbackQueryParameterInfo>.Write(ModelReaderWriterOptions options)

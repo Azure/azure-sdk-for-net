@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Tier))
+            if (Tier.HasValue)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (Optional.IsDefined(Family))
+            if (Family.HasValue)
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family.Value.ToString());
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ExpressRouteCircuitSkuTier> tier = default;
-            Optional<ExpressRouteCircuitSkuFamily> family = default;
+            string name = default;
+            ExpressRouteCircuitSkuTier? tier = default;
+            ExpressRouteCircuitSkuFamily? family = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitSku(name.Value, Optional.ToNullable(tier), Optional.ToNullable(family), serializedAdditionalRawData);
+            return new ExpressRouteCircuitSku(name, tier, family, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitSku>.Write(ModelReaderWriterOptions options)

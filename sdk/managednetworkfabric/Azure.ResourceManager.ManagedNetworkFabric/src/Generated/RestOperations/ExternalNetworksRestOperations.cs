@@ -74,11 +74,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, NetworkFabricExternalNetworkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
-            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (l3IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l3IsolationDomainName));
+            }
+            if (l3IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l3IsolationDomainName));
+            }
+            if (externalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(externalNetworkName));
+            }
+            if (externalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -103,11 +134,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, NetworkFabricExternalNetworkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
-            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (l3IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l3IsolationDomainName));
+            }
+            if (l3IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l3IsolationDomainName));
+            }
+            if (externalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(externalNetworkName));
+            }
+            if (externalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, data);
             _pipeline.Send(message, cancellationToken);
@@ -153,10 +215,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkFabricExternalNetworkData>> GetAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
-            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (l3IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l3IsolationDomainName));
+            }
+            if (l3IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l3IsolationDomainName));
+            }
+            if (externalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(externalNetworkName));
+            }
+            if (externalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -186,10 +276,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkFabricExternalNetworkData> Get(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
-            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (l3IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l3IsolationDomainName));
+            }
+            if (l3IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l3IsolationDomainName));
+            }
+            if (externalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(externalNetworkName));
+            }
+            if (externalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName);
             _pipeline.Send(message, cancellationToken);
@@ -246,11 +364,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, NetworkFabricExternalNetworkPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
-            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (l3IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l3IsolationDomainName));
+            }
+            if (l3IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l3IsolationDomainName));
+            }
+            if (externalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(externalNetworkName));
+            }
+            if (externalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -275,11 +424,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, NetworkFabricExternalNetworkPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
-            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (l3IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l3IsolationDomainName));
+            }
+            if (l3IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l3IsolationDomainName));
+            }
+            if (externalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(externalNetworkName));
+            }
+            if (externalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -325,10 +505,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
-            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (l3IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l3IsolationDomainName));
+            }
+            if (l3IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l3IsolationDomainName));
+            }
+            if (externalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(externalNetworkName));
+            }
+            if (externalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -352,10 +560,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
-            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (l3IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l3IsolationDomainName));
+            }
+            if (l3IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l3IsolationDomainName));
+            }
+            if (externalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(externalNetworkName));
+            }
+            if (externalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName);
             _pipeline.Send(message, cancellationToken);
@@ -399,9 +635,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExternalNetworksList>> ListByL3IsolationDomainAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (l3IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l3IsolationDomainName));
+            }
+            if (l3IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l3IsolationDomainName));
+            }
 
             using var message = CreateListByL3IsolationDomainRequest(subscriptionId, resourceGroupName, l3IsolationDomainName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -428,9 +685,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExternalNetworksList> ListByL3IsolationDomain(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (l3IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l3IsolationDomainName));
+            }
+            if (l3IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l3IsolationDomainName));
+            }
 
             using var message = CreateListByL3IsolationDomainRequest(subscriptionId, resourceGroupName, l3IsolationDomainName);
             _pipeline.Send(message, cancellationToken);
@@ -486,11 +764,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAdministrativeStateAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
-            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (l3IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l3IsolationDomainName));
+            }
+            if (l3IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l3IsolationDomainName));
+            }
+            if (externalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(externalNetworkName));
+            }
+            if (externalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateUpdateAdministrativeStateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -515,11 +824,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateAdministrativeState(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
-            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (l3IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l3IsolationDomainName));
+            }
+            if (l3IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l3IsolationDomainName));
+            }
+            if (externalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(externalNetworkName));
+            }
+            if (externalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateUpdateAdministrativeStateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, content);
             _pipeline.Send(message, cancellationToken);
@@ -571,11 +911,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateStaticRouteBfdAdministrativeStateAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
-            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (l3IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l3IsolationDomainName));
+            }
+            if (l3IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l3IsolationDomainName));
+            }
+            if (externalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(externalNetworkName));
+            }
+            if (externalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateUpdateStaticRouteBfdAdministrativeStateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -600,11 +971,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateStaticRouteBfdAdministrativeState(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
-            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (l3IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l3IsolationDomainName));
+            }
+            if (l3IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l3IsolationDomainName));
+            }
+            if (externalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(externalNetworkName));
+            }
+            if (externalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateUpdateStaticRouteBfdAdministrativeStateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, content);
             _pipeline.Send(message, cancellationToken);
@@ -642,10 +1044,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExternalNetworksList>> ListByL3IsolationDomainNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (l3IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l3IsolationDomainName));
+            }
+            if (l3IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l3IsolationDomainName));
+            }
 
             using var message = CreateListByL3IsolationDomainNextPageRequest(nextLink, subscriptionId, resourceGroupName, l3IsolationDomainName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -673,10 +1099,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExternalNetworksList> ListByL3IsolationDomainNextPage(string nextLink, string subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (l3IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l3IsolationDomainName));
+            }
+            if (l3IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l3IsolationDomainName));
+            }
 
             using var message = CreateListByL3IsolationDomainNextPageRequest(nextLink, subscriptionId, resourceGroupName, l3IsolationDomainName);
             _pipeline.Send(message, cancellationToken);

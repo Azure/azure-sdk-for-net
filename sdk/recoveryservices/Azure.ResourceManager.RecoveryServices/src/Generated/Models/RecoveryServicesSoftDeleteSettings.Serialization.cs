@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SoftDeleteState))
+            if (SoftDeleteState.HasValue)
             {
                 writer.WritePropertyName("softDeleteState"u8);
                 writer.WriteStringValue(SoftDeleteState.Value.ToString());
             }
-            if (Optional.IsDefined(SoftDeleteRetentionPeriodInDays))
+            if (SoftDeleteRetentionPeriodInDays.HasValue)
             {
                 writer.WritePropertyName("softDeleteRetentionPeriodInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionPeriodInDays.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<RecoveryServicesSoftDeleteState> softDeleteState = default;
-            Optional<int> softDeleteRetentionPeriodInDays = default;
+            RecoveryServicesSoftDeleteState? softDeleteState = default;
+            int? softDeleteRetentionPeriodInDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesSoftDeleteSettings(Optional.ToNullable(softDeleteState), Optional.ToNullable(softDeleteRetentionPeriodInDays), serializedAdditionalRawData);
+            return new RecoveryServicesSoftDeleteSettings(softDeleteState, softDeleteRetentionPeriodInDays, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesSoftDeleteSettings>.Write(ModelReaderWriterOptions options)

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureStorageBlobContainer": return AzureStorageBlobContainerEndpointProperties.DeserializeAzureStorageBlobContainerEndpointProperties(element);
-                    case "AzureStorageSmbFileShare": return AzureStorageSmbFileShareEndpointProperties.DeserializeAzureStorageSmbFileShareEndpointProperties(element);
-                    case "NfsMount": return NfsMountEndpointProperties.DeserializeNfsMountEndpointProperties(element);
-                    case "SmbMount": return SmbMountEndpointProperties.DeserializeSmbMountEndpointProperties(element);
+                    case "AzureStorageBlobContainer": return AzureStorageBlobContainerEndpointProperties.DeserializeAzureStorageBlobContainerEndpointProperties(element, options);
+                    case "AzureStorageSmbFileShare": return AzureStorageSmbFileShareEndpointProperties.DeserializeAzureStorageSmbFileShareEndpointProperties(element, options);
+                    case "NfsMount": return NfsMountEndpointProperties.DeserializeNfsMountEndpointProperties(element, options);
+                    case "SmbMount": return SmbMountEndpointProperties.DeserializeSmbMountEndpointProperties(element, options);
                 }
             }
-            return UnknownEndpointBaseProperties.DeserializeUnknownEndpointBaseProperties(element);
+            return UnknownEndpointBaseProperties.DeserializeUnknownEndpointBaseProperties(element, options);
         }
 
         BinaryData IPersistableModel<EndpointBaseProperties>.Write(ModelReaderWriterOptions options)

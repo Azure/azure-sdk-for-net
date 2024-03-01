@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsAvailable))
+            if (options.Format != "W" && IsAvailable.HasValue)
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteBooleanValue(IsAvailable.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
+            if (options.Format != "W" && Reason.HasValue)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> available = default;
-            Optional<SqlNameUnavailableReason> reason = default;
-            Optional<string> message = default;
+            string name = default;
+            bool? available = default;
+            SqlNameUnavailableReason? reason = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlNameAvailabilityResponse(name.Value, Optional.ToNullable(available), Optional.ToNullable(reason), message.Value, serializedAdditionalRawData);
+            return new SqlNameAvailabilityResponse(name, available, reason, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlNameAvailabilityResponse>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Host))
+            if (Host != null)
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Optional.IsCollectionDefined(HttpHeaders))
+            if (!(HttpHeaders is ChangeTrackingList<ContainerAppHttpHeaderInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("httpHeaders"u8);
                 writer.WriteStartArray();
@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
-            if (Optional.IsDefined(Scheme))
+            if (Scheme.HasValue)
             {
                 writer.WritePropertyName("scheme"u8);
                 writer.WriteStringValue(Scheme.Value.ToString());
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> host = default;
-            Optional<IList<ContainerAppHttpHeaderInfo>> httpHeaders = default;
-            Optional<string> path = default;
+            string host = default;
+            IList<ContainerAppHttpHeaderInfo> httpHeaders = default;
+            string path = default;
             int port = default;
-            Optional<ContainerAppHttpScheme> scheme = default;
+            ContainerAppHttpScheme? scheme = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppHttpHeaderInfo> array = new List<ContainerAppHttpHeaderInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppHttpHeaderInfo.DeserializeContainerAppHttpHeaderInfo(item));
+                        array.Add(ContainerAppHttpHeaderInfo.DeserializeContainerAppHttpHeaderInfo(item, options));
                     }
                     httpHeaders = array;
                     continue;
@@ -144,7 +144,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppHttpRequestInfo(host.Value, Optional.ToList(httpHeaders), path.Value, port, Optional.ToNullable(scheme), serializedAdditionalRawData);
+            return new ContainerAppHttpRequestInfo(
+                host,
+                httpHeaders ?? new ChangeTrackingList<ContainerAppHttpHeaderInfo>(),
+                path,
+                port,
+                scheme,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppHttpRequestInfo>.Write(ModelReaderWriterOptions options)

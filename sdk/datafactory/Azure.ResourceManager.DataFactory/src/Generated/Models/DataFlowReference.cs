@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public DataFlowReference(DataFlowReferenceType referenceType, string referenceName)
         {
-            Argument.AssertNotNull(referenceName, nameof(referenceName));
+            if (referenceName == null)
+            {
+                throw new ArgumentNullException(nameof(referenceName));
+            }
 
             ReferenceType = referenceType;
             ReferenceName = referenceName;
@@ -41,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetParameters = datasetParameters;
             Parameters = parameters;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowReference"/> for deserialization. </summary>
+        internal DataFlowReference()
+        {
         }
 
         /// <summary> Data flow reference type. </summary>

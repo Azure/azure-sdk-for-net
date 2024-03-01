@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -55,10 +54,22 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="tokens"/>, <paramref name="tokenLogProbabilities"/>, <paramref name="topLogProbabilities"/> or <paramref name="textOffsets"/> is null. </exception>
         internal CompletionsLogProbabilityModel(IEnumerable<string> tokens, IEnumerable<float?> tokenLogProbabilities, IEnumerable<IDictionary<string, float?>> topLogProbabilities, IEnumerable<int> textOffsets)
         {
-            Argument.AssertNotNull(tokens, nameof(tokens));
-            Argument.AssertNotNull(tokenLogProbabilities, nameof(tokenLogProbabilities));
-            Argument.AssertNotNull(topLogProbabilities, nameof(topLogProbabilities));
-            Argument.AssertNotNull(textOffsets, nameof(textOffsets));
+            if (tokens == null)
+            {
+                throw new ArgumentNullException(nameof(tokens));
+            }
+            if (tokenLogProbabilities == null)
+            {
+                throw new ArgumentNullException(nameof(tokenLogProbabilities));
+            }
+            if (topLogProbabilities == null)
+            {
+                throw new ArgumentNullException(nameof(topLogProbabilities));
+            }
+            if (textOffsets == null)
+            {
+                throw new ArgumentNullException(nameof(textOffsets));
+            }
 
             Tokens = tokens.ToList();
             TokenLogProbabilities = tokenLogProbabilities.ToList();

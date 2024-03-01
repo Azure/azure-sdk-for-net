@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(CertificateSource.ToString());
             writer.WritePropertyName("protocolType"u8);
             writer.WriteStringValue(ProtocolType.ToString());
-            if (Optional.IsDefined(MinimumTlsVersion))
+            if (MinimumTlsVersion.HasValue)
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCustomDomainHttpsParameters(document.RootElement, options);
+            return DeserializeCustomDomainHttpsContent(document.RootElement, options);
         }
 
         internal static UnknownCustomDomainHttpsParameters DeserializeUnknownCustomDomainHttpsParameters(JsonElement element, ModelReaderWriterOptions options = null)
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             CertificateSource certificateSource = "Unknown";
             SecureDeliveryProtocolType protocolType = default;
-            Optional<CdnMinimumTlsVersion> minimumTlsVersion = default;
+            CdnMinimumTlsVersion? minimumTlsVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownCustomDomainHttpsParameters(certificateSource, protocolType, Optional.ToNullable(minimumTlsVersion), serializedAdditionalRawData);
+            return new UnknownCustomDomainHttpsParameters(certificateSource, protocolType, minimumTlsVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomDomainHttpsContent>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCustomDomainHttpsParameters(document.RootElement, options);
+                        return DeserializeCustomDomainHttpsContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support '{options.Format}' format.");

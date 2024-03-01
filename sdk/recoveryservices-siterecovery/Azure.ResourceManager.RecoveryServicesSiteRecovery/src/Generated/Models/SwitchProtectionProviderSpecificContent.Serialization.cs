@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2ASwitchProtectionContent.DeserializeA2ASwitchProtectionContent(element);
+                    case "A2A": return A2ASwitchProtectionContent.DeserializeA2ASwitchProtectionContent(element, options);
                 }
             }
-            return UnknownSwitchProtectionProviderSpecificContent.DeserializeUnknownSwitchProtectionProviderSpecificContent(element);
+            return UnknownSwitchProtectionProviderSpecificContent.DeserializeUnknownSwitchProtectionProviderSpecificContent(element, options);
         }
 
         BinaryData IPersistableModel<SwitchProtectionProviderSpecificContent>.Write(ModelReaderWriterOptions options)

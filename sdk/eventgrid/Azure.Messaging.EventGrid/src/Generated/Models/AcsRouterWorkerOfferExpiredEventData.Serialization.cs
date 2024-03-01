@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,12 +20,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> queueId = default;
-            Optional<string> offerId = default;
-            Optional<string> workerId = default;
-            Optional<string> jobId = default;
-            Optional<string> channelReference = default;
-            Optional<string> channelId = default;
+            string queueId = default;
+            string offerId = default;
+            string workerId = default;
+            string jobId = default;
+            string channelReference = default;
+            string channelId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queueId"u8))
@@ -60,7 +59,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterWorkerOfferExpiredEventData(jobId.Value, channelReference.Value, channelId.Value, workerId.Value, queueId.Value, offerId.Value);
+            return new AcsRouterWorkerOfferExpiredEventData(
+                jobId,
+                channelReference,
+                channelId,
+                workerId,
+                queueId,
+                offerId);
         }
 
         internal partial class AcsRouterWorkerOfferExpiredEventDataConverter : JsonConverter<AcsRouterWorkerOfferExpiredEventData>

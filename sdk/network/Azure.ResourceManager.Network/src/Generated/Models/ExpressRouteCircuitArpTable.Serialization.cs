@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Age))
+            if (Age.HasValue)
             {
                 writer.WritePropertyName("age"u8);
                 writer.WriteNumberValue(Age.Value);
             }
-            if (Optional.IsDefined(Interface))
+            if (Interface != null)
             {
                 writer.WritePropertyName("interface"u8);
                 writer.WriteStringValue(Interface);
             }
-            if (Optional.IsDefined(IPAddress))
+            if (IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (Optional.IsDefined(MacAddress))
+            if (MacAddress != null)
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<int> age = default;
-            Optional<string> @interface = default;
-            Optional<string> ipAddress = default;
-            Optional<string> macAddress = default;
+            int? age = default;
+            string @interface = default;
+            string ipAddress = default;
+            string macAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitArpTable(Optional.ToNullable(age), @interface.Value, ipAddress.Value, macAddress.Value, serializedAdditionalRawData);
+            return new ExpressRouteCircuitArpTable(age, @interface, ipAddress, macAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitArpTable>.Write(ModelReaderWriterOptions options)

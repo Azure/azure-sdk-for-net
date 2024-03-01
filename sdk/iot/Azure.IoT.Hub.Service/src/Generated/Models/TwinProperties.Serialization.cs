@@ -16,7 +16,7 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Desired))
+            if (!(Desired is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("desired"u8);
                 writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.IoT.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Reported))
+            if (!(Reported is ChangeTrackingDictionary<string, object> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("reported"u8);
                 writer.WriteStartObject();
@@ -57,8 +57,8 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, object>> desired = default;
-            Optional<IDictionary<string, object>> reported = default;
+            IDictionary<string, object> desired = default;
+            IDictionary<string, object> reported = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("desired"u8))
@@ -104,7 +104,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new TwinProperties(Optional.ToDictionary(desired), Optional.ToDictionary(reported));
+            return new TwinProperties(desired ?? new ChangeTrackingDictionary<string, object>(), reported ?? new ChangeTrackingDictionary<string, object>());
         }
     }
 }

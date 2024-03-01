@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             }
         }
 
+        [Ignore("Issue: https://github.com/Azure/azure-sdk-for-net/issues/41823")]
         [Test]
         [RecordedTest]
         public async Task CreateSqlServerWithIpv6Enabled()
@@ -76,6 +77,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual("Disabled", SqlServer.Value.Data.IsIPv6Enabled.ToString());
         }
 
+        [Ignore("Issue: https://github.com/Azure/azure-sdk-for-net/issues/41823")]
         [Test]
         [RecordedTest]
         public async Task UpdateSqlServerWithIpv6Enabled()

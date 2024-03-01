@@ -31,7 +31,17 @@ namespace Azure.ResourceManager.HealthBot.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new HealthBotData(id, name, resourceType, systemData, tags, location, skuName.HasValue ? new HealthBotSku(skuName.Value, serializedAdditionalRawData: null) : null, identity, properties, serializedAdditionalRawData: null);
+            return new HealthBotData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                skuName.HasValue ? new HealthBotSku(skuName.Value, serializedAdditionalRawData: null) : null,
+                identity,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HealthBotProperties"/>. </summary>

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CanSelectParentNodes))
+            if (CanSelectParentNodes.HasValue)
             {
                 writer.WritePropertyName("CanSelectParentNodes"u8);
                 writer.WriteBooleanValue(CanSelectParentNodes.Value);
             }
-            if (Optional.IsDefined(CanSelectLeafNodes))
+            if (CanSelectLeafNodes.HasValue)
             {
                 writer.WritePropertyName("CanSelectLeafNodes"u8);
                 writer.WriteBooleanValue(CanSelectLeafNodes.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<bool> canSelectParentNodes = default;
-            Optional<bool> canSelectLeafNodes = default;
+            bool? canSelectParentNodes = default;
+            bool? canSelectLeafNodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicTreeSettings(Optional.ToNullable(canSelectParentNodes), Optional.ToNullable(canSelectLeafNodes), serializedAdditionalRawData);
+            return new SwaggerCustomDynamicTreeSettings(canSelectParentNodes, canSelectLeafNodes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicTreeSettings>.Write(ModelReaderWriterOptions options)

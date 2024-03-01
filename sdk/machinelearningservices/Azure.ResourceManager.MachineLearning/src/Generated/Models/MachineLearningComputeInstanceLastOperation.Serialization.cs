@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationName))
+            if (OperationName.HasValue)
             {
                 writer.WritePropertyName("operationName"u8);
                 writer.WriteStringValue(OperationName.Value.ToString());
             }
-            if (Optional.IsDefined(OperationOn))
+            if (OperationOn.HasValue)
             {
                 writer.WritePropertyName("operationTime"u8);
                 writer.WriteStringValue(OperationOn.Value, "O");
             }
-            if (Optional.IsDefined(OperationStatus))
+            if (OperationStatus.HasValue)
             {
                 writer.WritePropertyName("operationStatus"u8);
                 writer.WriteStringValue(OperationStatus.Value.ToString());
             }
-            if (Optional.IsDefined(OperationTrigger))
+            if (OperationTrigger.HasValue)
             {
                 writer.WritePropertyName("operationTrigger"u8);
                 writer.WriteStringValue(OperationTrigger.Value.ToString());
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningOperationName> operationName = default;
-            Optional<DateTimeOffset> operationTime = default;
-            Optional<MachineLearningOperationStatus> operationStatus = default;
-            Optional<MachineLearningOperationTrigger> operationTrigger = default;
+            MachineLearningOperationName? operationName = default;
+            DateTimeOffset? operationTime = default;
+            MachineLearningOperationStatus? operationStatus = default;
+            MachineLearningOperationTrigger? operationTrigger = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningComputeInstanceLastOperation(Optional.ToNullable(operationName), Optional.ToNullable(operationTime), Optional.ToNullable(operationStatus), Optional.ToNullable(operationTrigger), serializedAdditionalRawData);
+            return new MachineLearningComputeInstanceLastOperation(operationName, operationTime, operationStatus, operationTrigger, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeInstanceLastOperation>.Write(ModelReaderWriterOptions options)

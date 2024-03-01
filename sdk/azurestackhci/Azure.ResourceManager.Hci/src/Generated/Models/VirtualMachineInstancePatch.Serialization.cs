@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<VirtualMachineInstanceUpdateProperties> properties = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            VirtualMachineInstanceUpdateProperties properties = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    properties = VirtualMachineInstanceUpdateProperties.DeserializeVirtualMachineInstanceUpdateProperties(property.Value);
+                    properties = VirtualMachineInstanceUpdateProperties.DeserializeVirtualMachineInstanceUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstancePatch(properties.Value, identity, serializedAdditionalRawData);
+            return new VirtualMachineInstancePatch(properties, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstancePatch>.Write(ModelReaderWriterOptions options)

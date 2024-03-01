@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RuleId))
+            if (RuleId != null)
             {
                 writer.WritePropertyName("ruleId"u8);
                 writer.WriteStringValue(RuleId);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStringValue(SourceContainer);
             writer.WritePropertyName("destinationContainer"u8);
             writer.WriteStringValue(DestinationContainer);
-            if (Optional.IsDefined(Filters))
+            if (Filters != null)
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<string> ruleId = default;
+            string ruleId = default;
             string sourceContainer = default;
             string destinationContainer = default;
-            Optional<ObjectReplicationPolicyFilter> filters = default;
+            ObjectReplicationPolicyFilter filters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    filters = ObjectReplicationPolicyFilter.DeserializeObjectReplicationPolicyFilter(property.Value);
+                    filters = ObjectReplicationPolicyFilter.DeserializeObjectReplicationPolicyFilter(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ObjectReplicationPolicyRule(ruleId.Value, sourceContainer, destinationContainer, filters.Value, serializedAdditionalRawData);
+            return new ObjectReplicationPolicyRule(ruleId, sourceContainer, destinationContainer, filters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ObjectReplicationPolicyRule>.Write(ModelReaderWriterOptions options)

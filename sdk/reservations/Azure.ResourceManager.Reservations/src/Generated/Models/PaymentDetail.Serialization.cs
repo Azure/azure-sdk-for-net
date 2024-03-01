@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DueOn))
+            if (DueOn.HasValue)
             {
                 writer.WritePropertyName("dueDate"u8);
                 writer.WriteStringValue(DueOn.Value, "D");
             }
-            if (Optional.IsDefined(PayOn))
+            if (PayOn.HasValue)
             {
                 writer.WritePropertyName("paymentDate"u8);
                 writer.WriteStringValue(PayOn.Value, "D");
             }
-            if (Optional.IsDefined(PricingCurrencyTotal))
+            if (PricingCurrencyTotal != null)
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
                 writer.WriteObjectValue(PricingCurrencyTotal);
             }
-            if (Optional.IsDefined(BillingCurrencyTotal))
+            if (BillingCurrencyTotal != null)
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
                 writer.WriteObjectValue(BillingCurrencyTotal);
             }
-            if (Optional.IsDefined(BillingAccount))
+            if (BillingAccount != null)
             {
                 writer.WritePropertyName("billingAccount"u8);
                 writer.WriteStringValue(BillingAccount);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(ExtendedStatusInfo))
+            if (ExtendedStatusInfo != null)
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
                 writer.WriteObjectValue(ExtendedStatusInfo);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dueDate = default;
-            Optional<DateTimeOffset> paymentDate = default;
-            Optional<PurchasePrice> pricingCurrencyTotal = default;
-            Optional<PurchasePrice> billingCurrencyTotal = default;
-            Optional<string> billingAccount = default;
-            Optional<PaymentStatus> status = default;
-            Optional<ExtendedStatusInfo> extendedStatusInfo = default;
+            DateTimeOffset? dueDate = default;
+            DateTimeOffset? paymentDate = default;
+            PurchasePrice pricingCurrencyTotal = default;
+            PurchasePrice billingCurrencyTotal = default;
+            string billingAccount = default;
+            PaymentStatus? status = default;
+            ExtendedStatusInfo extendedStatusInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    pricingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    billingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingAccount"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    extendedStatusInfo = ExtendedStatusInfo.DeserializeExtendedStatusInfo(property.Value);
+                    extendedStatusInfo = ExtendedStatusInfo.DeserializeExtendedStatusInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PaymentDetail(Optional.ToNullable(dueDate), Optional.ToNullable(paymentDate), pricingCurrencyTotal.Value, billingCurrencyTotal.Value, billingAccount.Value, Optional.ToNullable(status), extendedStatusInfo.Value, serializedAdditionalRawData);
+            return new PaymentDetail(
+                dueDate,
+                paymentDate,
+                pricingCurrencyTotal,
+                billingCurrencyTotal,
+                billingAccount,
+                status,
+                extendedStatusInfo,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PaymentDetail>.Write(ModelReaderWriterOptions options)

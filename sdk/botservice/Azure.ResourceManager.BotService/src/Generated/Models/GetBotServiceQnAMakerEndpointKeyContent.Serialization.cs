@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Hostname))
+            if (Hostname != null)
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Optional.IsDefined(Authkey))
+            if (Authkey != null)
             {
                 writer.WritePropertyName("authkey"u8);
                 writer.WriteStringValue(Authkey);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> hostname = default;
-            Optional<string> authkey = default;
+            string hostname = default;
+            string authkey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetBotServiceQnAMakerEndpointKeyContent(hostname.Value, authkey.Value, serializedAdditionalRawData);
+            return new GetBotServiceQnAMakerEndpointKeyContent(hostname, authkey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetBotServiceQnAMakerEndpointKeyContent>.Write(ModelReaderWriterOptions options)

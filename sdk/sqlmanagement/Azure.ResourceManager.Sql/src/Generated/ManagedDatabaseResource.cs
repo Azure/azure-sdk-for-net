@@ -891,7 +891,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedDatabaseResource>> UpdateAsync(WaitUntil waitUntil, ManagedDatabasePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.Update");
             scope.Start();
@@ -937,7 +940,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<ManagedDatabaseResource> Update(WaitUntil waitUntil, ManagedDatabasePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.Update");
             scope.Start();
@@ -1049,7 +1055,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
         public virtual async Task<Response<ManagedInstanceQuery>> GetManagedDatabaseQueryAsync(string queryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
+            if (queryId == null)
+            {
+                throw new ArgumentNullException(nameof(queryId));
+            }
+            if (queryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queryId));
+            }
 
             using var scope = _managedDatabaseQueriesClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseQuery");
             scope.Start();
@@ -1088,7 +1101,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
         public virtual Response<ManagedInstanceQuery> GetManagedDatabaseQuery(string queryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
+            if (queryId == null)
+            {
+                throw new ArgumentNullException(nameof(queryId));
+            }
+            if (queryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queryId));
+            }
 
             using var scope = _managedDatabaseQueriesClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseQuery");
             scope.Start();
@@ -1131,7 +1151,14 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="QueryStatistics"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QueryStatistics> GetQueryStatisticsAsync(string queryId, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
+            if (queryId == null)
+            {
+                throw new ArgumentNullException(nameof(queryId));
+            }
+            if (queryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queryId));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseQueriesRestClient.CreateListByQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseQueriesRestClient.CreateListByQueryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval);
@@ -1165,7 +1192,14 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="QueryStatistics"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QueryStatistics> GetQueryStatistics(string queryId, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
+            if (queryId == null)
+            {
+                throw new ArgumentNullException(nameof(queryId));
+            }
+            if (queryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queryId));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseQueriesRestClient.CreateListByQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseQueriesRestClient.CreateListByQueryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval);
@@ -1324,7 +1358,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="sensitivityLabelUpdateList"/> is null. </exception>
         public virtual async Task<Response> UpdateManagedDatabaseSensitivityLabelAsync(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
+            if (sensitivityLabelUpdateList == null)
+            {
+                throw new ArgumentNullException(nameof(sensitivityLabelUpdateList));
+            }
 
             using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.UpdateManagedDatabaseSensitivityLabel");
             scope.Start();
@@ -1366,7 +1403,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="sensitivityLabelUpdateList"/> is null. </exception>
         public virtual Response UpdateManagedDatabaseSensitivityLabel(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
+            if (sensitivityLabelUpdateList == null)
+            {
+                throw new ArgumentNullException(nameof(sensitivityLabelUpdateList));
+            }
 
             using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.UpdateManagedDatabaseSensitivityLabel");
             scope.Start();
@@ -1474,7 +1514,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedSensitivityLabelUpdateList"/> is null. </exception>
         public virtual async Task<Response> UpdateRecommendedManagedDatabaseSensitivityLabelAsync(RecommendedSensitivityLabelUpdateList recommendedSensitivityLabelUpdateList, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(recommendedSensitivityLabelUpdateList, nameof(recommendedSensitivityLabelUpdateList));
+            if (recommendedSensitivityLabelUpdateList == null)
+            {
+                throw new ArgumentNullException(nameof(recommendedSensitivityLabelUpdateList));
+            }
 
             using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.UpdateRecommendedManagedDatabaseSensitivityLabel");
             scope.Start();
@@ -1516,7 +1559,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedSensitivityLabelUpdateList"/> is null. </exception>
         public virtual Response UpdateRecommendedManagedDatabaseSensitivityLabel(RecommendedSensitivityLabelUpdateList recommendedSensitivityLabelUpdateList, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(recommendedSensitivityLabelUpdateList, nameof(recommendedSensitivityLabelUpdateList));
+            if (recommendedSensitivityLabelUpdateList == null)
+            {
+                throw new ArgumentNullException(nameof(recommendedSensitivityLabelUpdateList));
+            }
 
             using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.UpdateRecommendedManagedDatabaseSensitivityLabel");
             scope.Start();
@@ -1559,7 +1605,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="managedDatabaseMoveDefinition"/> is null. </exception>
         public virtual async Task<ArmOperation> CancelMoveAsync(WaitUntil waitUntil, ManagedDatabaseMoveDefinition managedDatabaseMoveDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(managedDatabaseMoveDefinition, nameof(managedDatabaseMoveDefinition));
+            if (managedDatabaseMoveDefinition == null)
+            {
+                throw new ArgumentNullException(nameof(managedDatabaseMoveDefinition));
+            }
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.CancelMove");
             scope.Start();
@@ -1605,7 +1654,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="managedDatabaseMoveDefinition"/> is null. </exception>
         public virtual ArmOperation CancelMove(WaitUntil waitUntil, ManagedDatabaseMoveDefinition managedDatabaseMoveDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(managedDatabaseMoveDefinition, nameof(managedDatabaseMoveDefinition));
+            if (managedDatabaseMoveDefinition == null)
+            {
+                throw new ArgumentNullException(nameof(managedDatabaseMoveDefinition));
+            }
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.CancelMove");
             scope.Start();
@@ -1651,7 +1703,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="managedDatabaseMoveDefinition"/> is null. </exception>
         public virtual async Task<ArmOperation> CompleteMoveAsync(WaitUntil waitUntil, ManagedDatabaseMoveDefinition managedDatabaseMoveDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(managedDatabaseMoveDefinition, nameof(managedDatabaseMoveDefinition));
+            if (managedDatabaseMoveDefinition == null)
+            {
+                throw new ArgumentNullException(nameof(managedDatabaseMoveDefinition));
+            }
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.CompleteMove");
             scope.Start();
@@ -1697,7 +1752,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="managedDatabaseMoveDefinition"/> is null. </exception>
         public virtual ArmOperation CompleteMove(WaitUntil waitUntil, ManagedDatabaseMoveDefinition managedDatabaseMoveDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(managedDatabaseMoveDefinition, nameof(managedDatabaseMoveDefinition));
+            if (managedDatabaseMoveDefinition == null)
+            {
+                throw new ArgumentNullException(nameof(managedDatabaseMoveDefinition));
+            }
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.CompleteMove");
             scope.Start();
@@ -1743,7 +1801,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="completeDatabaseRestoreDefinition"/> is null. </exception>
         public virtual async Task<ArmOperation> CompleteRestoreAsync(WaitUntil waitUntil, CompleteDatabaseRestoreDefinition completeDatabaseRestoreDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(completeDatabaseRestoreDefinition, nameof(completeDatabaseRestoreDefinition));
+            if (completeDatabaseRestoreDefinition == null)
+            {
+                throw new ArgumentNullException(nameof(completeDatabaseRestoreDefinition));
+            }
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.CompleteRestore");
             scope.Start();
@@ -1789,7 +1850,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="completeDatabaseRestoreDefinition"/> is null. </exception>
         public virtual ArmOperation CompleteRestore(WaitUntil waitUntil, CompleteDatabaseRestoreDefinition completeDatabaseRestoreDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(completeDatabaseRestoreDefinition, nameof(completeDatabaseRestoreDefinition));
+            if (completeDatabaseRestoreDefinition == null)
+            {
+                throw new ArgumentNullException(nameof(completeDatabaseRestoreDefinition));
+            }
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.CompleteRestore");
             scope.Start();
@@ -1835,7 +1899,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="managedDatabaseStartMoveDefinition"/> is null. </exception>
         public virtual async Task<ArmOperation> StartMoveAsync(WaitUntil waitUntil, ManagedDatabaseStartMoveDefinition managedDatabaseStartMoveDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(managedDatabaseStartMoveDefinition, nameof(managedDatabaseStartMoveDefinition));
+            if (managedDatabaseStartMoveDefinition == null)
+            {
+                throw new ArgumentNullException(nameof(managedDatabaseStartMoveDefinition));
+            }
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.StartMove");
             scope.Start();
@@ -1881,7 +1948,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="managedDatabaseStartMoveDefinition"/> is null. </exception>
         public virtual ArmOperation StartMove(WaitUntil waitUntil, ManagedDatabaseStartMoveDefinition managedDatabaseStartMoveDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(managedDatabaseStartMoveDefinition, nameof(managedDatabaseStartMoveDefinition));
+            if (managedDatabaseStartMoveDefinition == null)
+            {
+                throw new ArgumentNullException(nameof(managedDatabaseStartMoveDefinition));
+            }
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.StartMove");
             scope.Start();
@@ -1927,8 +1997,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ManagedDatabaseResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.AddTag");
             scope.Start();
@@ -1989,8 +2065,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ManagedDatabaseResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.AddTag");
             scope.Start();
@@ -2050,7 +2132,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ManagedDatabaseResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.SetTags");
             scope.Start();
@@ -2107,7 +2192,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ManagedDatabaseResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.SetTags");
             scope.Start();
@@ -2164,7 +2252,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ManagedDatabaseResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.RemoveTag");
             scope.Start();
@@ -2224,7 +2315,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ManagedDatabaseResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.RemoveTag");
             scope.Start();

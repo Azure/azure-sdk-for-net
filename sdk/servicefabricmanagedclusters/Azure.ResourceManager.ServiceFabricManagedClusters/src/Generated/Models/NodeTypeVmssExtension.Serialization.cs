@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStringValue(VmssExtensionPropertiesType);
             writer.WritePropertyName("typeHandlerVersion"u8);
             writer.WriteStringValue(TypeHandlerVersion);
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (AutoUpgradeMinorVersion.HasValue)
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (Optional.IsDefined(Settings))
+            if (Settings != null)
             {
                 writer.WritePropertyName("settings"u8);
 #if NET6_0_OR_GREATER
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(ProtectedSettings))
+            if (ProtectedSettings != null)
             {
                 writer.WritePropertyName("protectedSettings"u8);
 #if NET6_0_OR_GREATER
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(ForceUpdateTag))
+            if (ForceUpdateTag != null)
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
-            if (Optional.IsCollectionDefined(ProvisionAfterExtensions))
+            if (!(ProvisionAfterExtensions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("provisionAfterExtensions"u8);
                 writer.WriteStartArray();
@@ -80,15 +80,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(IsAutomaticUpgradeEnabled))
+            if (IsAutomaticUpgradeEnabled.HasValue)
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(IsAutomaticUpgradeEnabled.Value);
+            }
+            if (!(SetupOrder is ChangeTrackingList<VmssExtensionSetupOrder> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("setupOrder"u8);
+                writer.WriteStartArray();
+                foreach (var item in SetupOrder)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -133,13 +143,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             string publisher = default;
             string type = default;
             string typeHandlerVersion = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<BinaryData> settings = default;
-            Optional<BinaryData> protectedSettings = default;
-            Optional<string> forceUpdateTag = default;
-            Optional<IList<string>> provisionAfterExtensions = default;
-            Optional<string> provisioningState = default;
-            Optional<bool> enableAutomaticUpgrade = default;
+            bool? autoUpgradeMinorVersion = default;
+            BinaryData settings = default;
+            BinaryData protectedSettings = default;
+            string forceUpdateTag = default;
+            IList<string> provisionAfterExtensions = default;
+            string provisioningState = default;
+            bool? enableAutomaticUpgrade = default;
+            IList<VmssExtensionSetupOrder> setupOrder = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -233,6 +244,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                             enableAutomaticUpgrade = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("setupOrder"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<VmssExtensionSetupOrder> array = new List<VmssExtensionSetupOrder>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new VmssExtensionSetupOrder(item.GetString()));
+                            }
+                            setupOrder = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -242,7 +267,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodeTypeVmssExtension(name, publisher, type, typeHandlerVersion, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, forceUpdateTag.Value, Optional.ToList(provisionAfterExtensions), provisioningState.Value, Optional.ToNullable(enableAutomaticUpgrade), serializedAdditionalRawData);
+            return new NodeTypeVmssExtension(
+                name,
+                publisher,
+                type,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                settings,
+                protectedSettings,
+                forceUpdateTag,
+                provisionAfterExtensions ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                enableAutomaticUpgrade,
+                setupOrder ?? new ChangeTrackingList<VmssExtensionSetupOrder>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodeTypeVmssExtension>.Write(ModelReaderWriterOptions options)

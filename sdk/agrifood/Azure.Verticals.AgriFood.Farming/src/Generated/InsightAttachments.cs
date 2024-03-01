@@ -78,11 +78,46 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,string,string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
-            Argument.AssertNotNullOrEmpty(insightAttachmentId, nameof(insightAttachmentId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+            if (modelId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (resourceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
+            }
+            if (insightAttachmentId == null)
+            {
+                throw new ArgumentNullException(nameof(insightAttachmentId));
+            }
+            if (insightAttachmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(insightAttachmentId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("InsightAttachments.CreateOrUpdate");
             scope.Start();
@@ -125,11 +160,46 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,string,string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
-            Argument.AssertNotNullOrEmpty(insightAttachmentId, nameof(insightAttachmentId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+            if (modelId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (resourceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
+            }
+            if (insightAttachmentId == null)
+            {
+                throw new ArgumentNullException(nameof(insightAttachmentId));
+            }
+            if (insightAttachmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(insightAttachmentId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("InsightAttachments.CreateOrUpdate");
             scope.Start();
@@ -171,11 +241,46 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='GetInsightAttachmentAsync(string,string,string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetInsightAttachmentAsync(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
-            Argument.AssertNotNullOrEmpty(insightAttachmentId, nameof(insightAttachmentId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+            if (modelId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (resourceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
+            }
+            if (insightAttachmentId == null)
+            {
+                throw new ArgumentNullException(nameof(insightAttachmentId));
+            }
+            if (insightAttachmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(insightAttachmentId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("InsightAttachments.GetInsightAttachment");
             scope.Start();
@@ -217,11 +322,46 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='GetInsightAttachment(string,string,string,string,string,RequestContext)']/*" />
         public virtual Response GetInsightAttachment(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
-            Argument.AssertNotNullOrEmpty(insightAttachmentId, nameof(insightAttachmentId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+            if (modelId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (resourceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
+            }
+            if (insightAttachmentId == null)
+            {
+                throw new ArgumentNullException(nameof(insightAttachmentId));
+            }
+            if (insightAttachmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(insightAttachmentId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("InsightAttachments.GetInsightAttachment");
             scope.Start();
@@ -263,11 +403,46 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='DeleteAsync(string,string,string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
-            Argument.AssertNotNullOrEmpty(insightAttachmentId, nameof(insightAttachmentId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+            if (modelId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (resourceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
+            }
+            if (insightAttachmentId == null)
+            {
+                throw new ArgumentNullException(nameof(insightAttachmentId));
+            }
+            if (insightAttachmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(insightAttachmentId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("InsightAttachments.Delete");
             scope.Start();
@@ -309,11 +484,46 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='Delete(string,string,string,string,string,RequestContext)']/*" />
         public virtual Response Delete(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
-            Argument.AssertNotNullOrEmpty(insightAttachmentId, nameof(insightAttachmentId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+            if (modelId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (resourceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
+            }
+            if (insightAttachmentId == null)
+            {
+                throw new ArgumentNullException(nameof(insightAttachmentId));
+            }
+            if (insightAttachmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(insightAttachmentId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("InsightAttachments.Delete");
             scope.Start();
@@ -355,11 +565,46 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='DownloadAsync(string,string,string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> DownloadAsync(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
-            Argument.AssertNotNullOrEmpty(insightAttachmentId, nameof(insightAttachmentId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+            if (modelId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (resourceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
+            }
+            if (insightAttachmentId == null)
+            {
+                throw new ArgumentNullException(nameof(insightAttachmentId));
+            }
+            if (insightAttachmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(insightAttachmentId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("InsightAttachments.Download");
             scope.Start();
@@ -401,11 +646,46 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='Download(string,string,string,string,string,RequestContext)']/*" />
         public virtual Response Download(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
-            Argument.AssertNotNullOrEmpty(insightAttachmentId, nameof(insightAttachmentId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+            if (modelId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (resourceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
+            }
+            if (insightAttachmentId == null)
+            {
+                throw new ArgumentNullException(nameof(insightAttachmentId));
+            }
+            if (insightAttachmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(insightAttachmentId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("InsightAttachments.Download");
             scope.Start();
@@ -460,10 +740,38 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='GetInsightAttachmentsByPartyIdModelIdAndResourceAsync(string,string,string,string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetInsightAttachmentsByPartyIdModelIdAndResourceAsync(string partyId, string modelId, string resourceType, string resourceId, IEnumerable<string> insightIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+            if (modelId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (resourceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetInsightAttachmentsByPartyIdModelIdAndResourceRequest(partyId, modelId, resourceType, resourceId, insightIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetInsightAttachmentsByPartyIdModelIdAndResourceNextPageRequest(nextLink, partyId, modelId, resourceType, resourceId, insightIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -509,10 +817,38 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='GetInsightAttachmentsByPartyIdModelIdAndResource(string,string,string,string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetInsightAttachmentsByPartyIdModelIdAndResource(string partyId, string modelId, string resourceType, string resourceId, IEnumerable<string> insightIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+            if (modelId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (resourceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetInsightAttachmentsByPartyIdModelIdAndResourceRequest(partyId, modelId, resourceType, resourceId, insightIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetInsightAttachmentsByPartyIdModelIdAndResourceNextPageRequest(nextLink, partyId, modelId, resourceType, resourceId, insightIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -535,35 +871,35 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/resources/", false);
             uri.AppendPath(resourceId, true);
             uri.AppendPath("/insight-attachments", false);
-            if (insightIds != null && Optional.IsCollectionDefined(insightIds))
+            if (insightIds != null && !(insightIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in insightIds)
                 {
                     uri.AppendQuery("insightIds", param, true);
                 }
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && !(ids is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && !(names is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && !(propertyFilters is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 foreach (var param in statuses)
                 {

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TemplateParameters))
+            if (TemplateParameters != null)
             {
                 writer.WritePropertyName("templateParameters"u8);
                 writer.WriteStringValue(TemplateParameters);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> templateParameters = default;
+            string templateParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmTemplateMappingRuleProfile(templateParameters.Value, serializedAdditionalRawData);
+            return new ArmTemplateMappingRuleProfile(templateParameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmTemplateMappingRuleProfile>.Write(ModelReaderWriterOptions options)

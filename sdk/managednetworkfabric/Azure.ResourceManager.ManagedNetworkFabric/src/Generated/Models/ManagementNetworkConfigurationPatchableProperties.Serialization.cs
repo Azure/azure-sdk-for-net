@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InfrastructureVpnConfiguration))
+            if (InfrastructureVpnConfiguration != null)
             {
                 writer.WritePropertyName("infrastructureVpnConfiguration"u8);
                 writer.WriteObjectValue(InfrastructureVpnConfiguration);
             }
-            if (Optional.IsDefined(WorkloadVpnConfiguration))
+            if (WorkloadVpnConfiguration != null)
             {
                 writer.WritePropertyName("workloadVpnConfiguration"u8);
                 writer.WriteObjectValue(WorkloadVpnConfiguration);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<VpnConfigurationPatchableProperties> infrastructureVpnConfiguration = default;
-            Optional<VpnConfigurationPatchableProperties> workloadVpnConfiguration = default;
+            VpnConfigurationPatchableProperties infrastructureVpnConfiguration = default;
+            VpnConfigurationPatchableProperties workloadVpnConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    infrastructureVpnConfiguration = VpnConfigurationPatchableProperties.DeserializeVpnConfigurationPatchableProperties(property.Value);
+                    infrastructureVpnConfiguration = VpnConfigurationPatchableProperties.DeserializeVpnConfigurationPatchableProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("workloadVpnConfiguration"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    workloadVpnConfiguration = VpnConfigurationPatchableProperties.DeserializeVpnConfigurationPatchableProperties(property.Value);
+                    workloadVpnConfiguration = VpnConfigurationPatchableProperties.DeserializeVpnConfigurationPatchableProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementNetworkConfigurationPatchableProperties(infrastructureVpnConfiguration.Value, workloadVpnConfiguration.Value, serializedAdditionalRawData);
+            return new ManagementNetworkConfigurationPatchableProperties(infrastructureVpnConfiguration, workloadVpnConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementNetworkConfigurationPatchableProperties>.Write(ModelReaderWriterOptions options)

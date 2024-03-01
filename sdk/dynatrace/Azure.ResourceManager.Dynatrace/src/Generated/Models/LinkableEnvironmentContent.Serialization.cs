@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(UserPrincipal))
+            if (UserPrincipal != null)
             {
                 writer.WritePropertyName("userPrincipal"u8);
                 writer.WriteStringValue(UserPrincipal);
             }
-            if (Optional.IsDefined(Region))
+            if (Region.HasValue)
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> userPrincipal = default;
-            Optional<AzureLocation> region = default;
+            Guid? tenantId = default;
+            string userPrincipal = default;
+            AzureLocation? region = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkableEnvironmentContent(Optional.ToNullable(tenantId), userPrincipal.Value, Optional.ToNullable(region), serializedAdditionalRawData);
+            return new LinkableEnvironmentContent(tenantId, userPrincipal, region, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkableEnvironmentContent>.Write(ModelReaderWriterOptions options)

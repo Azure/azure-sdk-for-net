@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> is null. </exception>
         public virtual async Task<Response<EndpointCertificateResource>> GetAsync(string endpointType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
+            if (endpointType == null)
+            {
+                throw new ArgumentNullException(nameof(endpointType));
+            }
+            if (endpointType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointType));
+            }
 
             using var scope = _endpointCertificateClientDiagnostics.CreateScope("EndpointCertificateCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> is null. </exception>
         public virtual Response<EndpointCertificateResource> Get(string endpointType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
+            if (endpointType == null)
+            {
+                throw new ArgumentNullException(nameof(endpointType));
+            }
+            if (endpointType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointType));
+            }
 
             using var scope = _endpointCertificateClientDiagnostics.CreateScope("EndpointCertificateCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string endpointType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
+            if (endpointType == null)
+            {
+                throw new ArgumentNullException(nameof(endpointType));
+            }
+            if (endpointType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointType));
+            }
 
             using var scope = _endpointCertificateClientDiagnostics.CreateScope("EndpointCertificateCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> is null. </exception>
         public virtual Response<bool> Exists(string endpointType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
+            if (endpointType == null)
+            {
+                throw new ArgumentNullException(nameof(endpointType));
+            }
+            if (endpointType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointType));
+            }
 
             using var scope = _endpointCertificateClientDiagnostics.CreateScope("EndpointCertificateCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> is null. </exception>
         public virtual async Task<NullableResponse<EndpointCertificateResource>> GetIfExistsAsync(string endpointType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
+            if (endpointType == null)
+            {
+                throw new ArgumentNullException(nameof(endpointType));
+            }
+            if (endpointType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointType));
+            }
 
             using var scope = _endpointCertificateClientDiagnostics.CreateScope("EndpointCertificateCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> is null. </exception>
         public virtual NullableResponse<EndpointCertificateResource> GetIfExists(string endpointType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
+            if (endpointType == null)
+            {
+                throw new ArgumentNullException(nameof(endpointType));
+            }
+            if (endpointType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointType));
+            }
 
             using var scope = _endpointCertificateClientDiagnostics.CreateScope("EndpointCertificateCollection.GetIfExists");
             scope.Start();

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fadeColor"/> is null. </exception>
         public FadeOptions(TimeSpan duration, string fadeColor)
         {
-            Argument.AssertNotNull(fadeColor, nameof(fadeColor));
+            if (fadeColor == null)
+            {
+                throw new ArgumentNullException(nameof(fadeColor));
+            }
 
             Duration = duration;
             FadeColor = fadeColor;

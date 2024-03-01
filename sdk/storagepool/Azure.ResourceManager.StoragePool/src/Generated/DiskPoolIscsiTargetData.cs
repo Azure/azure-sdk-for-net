@@ -59,7 +59,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="targetIqn"/> is null. </exception>
         public DiskPoolIscsiTargetData(DiskPoolIscsiTargetAclMode aclMode, string targetIqn, DiskPoolIscsiTargetProvisioningState provisioningState, StoragePoolOperationalStatus status)
         {
-            Argument.AssertNotNull(targetIqn, nameof(targetIqn));
+            if (targetIqn == null)
+            {
+                throw new ArgumentNullException(nameof(targetIqn));
+            }
 
             ManagedByExtended = new ChangeTrackingList<string>();
             AclMode = aclMode;

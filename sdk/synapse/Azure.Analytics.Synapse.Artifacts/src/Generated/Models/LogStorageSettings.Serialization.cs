@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName);
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteObjectValue(Path);
             }
-            if (Optional.IsDefined(LogLevel))
+            if (LogLevel != null)
             {
                 writer.WritePropertyName("logLevel"u8);
                 writer.WriteObjectValue(LogLevel);
             }
-            if (Optional.IsDefined(EnableReliableLogging))
+            if (EnableReliableLogging != null)
             {
                 writer.WritePropertyName("enableReliableLogging"u8);
                 writer.WriteObjectValue(EnableReliableLogging);
@@ -51,9 +51,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             LinkedServiceReference linkedServiceName = default;
-            Optional<object> path = default;
-            Optional<object> logLevel = default;
-            Optional<object> enableReliableLogging = default;
+            object path = default;
+            object logLevel = default;
+            object enableReliableLogging = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new LogStorageSettings(linkedServiceName, path.Value, logLevel.Value, enableReliableLogging.Value, additionalProperties);
+            return new LogStorageSettings(linkedServiceName, path, logLevel, enableReliableLogging, additionalProperties);
         }
 
         internal partial class LogStorageSettingsConverter : JsonConverter<LogStorageSettings>
