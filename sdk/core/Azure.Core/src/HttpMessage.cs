@@ -97,11 +97,11 @@ namespace Azure.Core
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
 
-        internal static HttpMessage GetHttpMessage(PipelineMessage message)
+        internal static HttpMessage GetHttpMessage(PipelineMessage message, string? errorMessage = default)
         {
             if (message is not HttpMessage httpMessage)
             {
-                throw new InvalidOperationException($"Invalid type for PipelineMessage: '{message?.GetType()}'.");
+                throw new InvalidOperationException($"Invalid type for PipelineMessage: '{message?.GetType()}'. {errorMessage}");
             }
 
             return httpMessage;

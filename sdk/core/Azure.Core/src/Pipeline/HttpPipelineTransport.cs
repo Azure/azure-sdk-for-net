@@ -31,20 +31,20 @@ namespace Azure.Core.Pipeline
         public abstract Request CreateRequest();
 
         /// <inheritdoc/>
-        protected override PipelineMessage CreateMessageCore()
+        protected sealed override PipelineMessage CreateMessageCore()
             => new HttpMessage(CreateRequest(), ResponseClassifier.Shared);
 
         /// <inheritdoc/>
-        protected override void ProcessCore(PipelineMessage message)
+        protected sealed override void ProcessCore(PipelineMessage message)
         {
-            HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
+            HttpMessage httpMessage = HttpMessage.GetHttpMessage(message, "The provided message was created by a different transport.");
             Process(httpMessage);
         }
 
         /// <inheritdoc/>
-        protected override async ValueTask ProcessCoreAsync(PipelineMessage message)
+        protected sealed override async ValueTask ProcessCoreAsync(PipelineMessage message)
         {
-            HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
+            HttpMessage httpMessage = HttpMessage.GetHttpMessage(message, "The provided message was created by a different transport.");
             await ProcessAsync(httpMessage).ConfigureAwait(false);
         }
 

@@ -84,8 +84,9 @@ namespace Azure.Core.Pipeline
 
             private static void ResetContentStreamPosition(PipelineResponse response)
             {
-                if (response.ContentStream is MemoryStream stream && response.ContentStream.CanSeek &&
-                    stream.Position != 0)
+                if (response.ContentStream is not null &&
+                    response.ContentStream.CanSeek &&
+                    response.ContentStream.Position != 0)
                 {
                     // Azure.Core Response has a contract that ContentStream can
                     // be read without setting position back to 0.  This means
@@ -95,7 +96,7 @@ namespace Azure.Core.Pipeline
                     // So that the ClientModel response implementations don't
                     // throw, we must set the position back to 0 if Azure.Core
                     // Response BufferContent was called.
-                    stream.Position = 0;
+                    response.ContentStream.Position = 0;
                 }
             }
 

@@ -264,7 +264,7 @@ namespace Azure.Core.Pipeline
             /// <inheritdoc />
             protected override void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest)
             {
-                HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
+                HttpMessage httpMessage = HttpMessage.GetHttpMessage(message, "The provided message was created by a different transport.");
                 HttpClientTransportRequest.AddAzureProperties(httpMessage, httpRequest);
                 httpMessage.ClearResponse();
             }
@@ -272,7 +272,7 @@ namespace Azure.Core.Pipeline
             /// <inheritdoc />
             protected override void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
             {
-                HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
+                HttpMessage httpMessage = HttpMessage.GetHttpMessage(message, "The provided message was created by a different transport.");
                 string clientRequestId = httpMessage.Request.ClientRequestId;
                 PipelineResponse pipelineResponse = message.Response!;
                 httpMessage.Response = new HttpClientTransportResponse(clientRequestId, pipelineResponse);
