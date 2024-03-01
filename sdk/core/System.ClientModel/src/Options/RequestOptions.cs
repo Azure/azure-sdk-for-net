@@ -128,8 +128,13 @@ public class RequestOptions
         }
     }
 
-    // Set options on the message before sending it through the pipeline.
-    internal void Apply(PipelineMessage message)
+    /// <summary>
+    /// Apply the options provided in this <see cref="RequestOptions"/>
+    /// instance to the <paramref name="message"/>.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> to apply the
+    /// options to.</param>
+    protected internal virtual void Apply(PipelineMessage message)
     {
         Freeze();
 
