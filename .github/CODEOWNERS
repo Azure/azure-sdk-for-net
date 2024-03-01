@@ -188,7 +188,7 @@
 /sdk/contentsafety/                                                @bowgong @mengaims @JieZhou000
 
 # ServiceLabel: %Cognitive - Content Safety
-# ServiceOwners:                     	                           @bowgong @mengaims @JieZhou000
+# ServiceOwners:                     	                             @bowgong @mengaims @JieZhou000
 
 # PRLabel: %Cognitive - Custom Vision
 /sdk/cognitiveservices/Vision.CustomVision*/                       @areddish @tburns10
@@ -471,12 +471,6 @@
 
 # ServiceLabel: %Digital Twins
 # ServiceOwners:                                                   @johngallardo @efriesner @abhinav-ghai @Aashish93-stack @sjiherzig @Satya-Kolluri
-
-# PRLabel: %TimeSeriesInsights
-/sdk/timeseriesinsights/                                           @yeskarthik @rasidhan @dmdenmsft
-
-# ServiceLabel: %TimeSeriesInsights
-# ServiceOwners:                                                   @yeskarthik @rasidhan @dmdenmsft
 
 # PRLabel: %Defender EASM
 /sdk/easm/Azure.Analytics.Defender.Easm/                           @thang-bit
@@ -878,11 +872,14 @@
 /sdk/tables/                                                       @christothes
 
 # ServiceLabel: %Tables
-# AzureSdkOwners: @christothes
+# AzureSdkOwners:                                                  @christothes
 # ServiceOwners:                                                   @sakash279, @sivethe, @ThomasWeiss, @PaulCheng
 
-# ServiceLabel: %TimeseriesInsights
-# ServiceOwners:                                                   @Shipra1Mishra
+# PRLabel: %TimeSeriesInsights
+/sdk/timeseriesinsights/                                           @yeskarthik @rasidhan @dmdenmsft
+
+# ServiceLabel: %TimeSeriesInsights
+# ServiceOwners:                                                   @yeskarthik @rasidhan @dmdenmsft @Shipra1Mishra
 
 # PRLabel: %VideoAnalyzer
 /sdk/videoanalyzer/                                                @giakas
