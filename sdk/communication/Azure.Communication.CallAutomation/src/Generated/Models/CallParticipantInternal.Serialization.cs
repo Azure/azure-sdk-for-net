@@ -21,6 +21,7 @@ namespace Azure.Communication.CallAutomation
             }
             Optional<CommunicationIdentifierModel> identifier = default;
             Optional<bool> isMuted = default;
+            Optional<bool> isOnHold = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identifier"u8))
@@ -41,8 +42,17 @@ namespace Azure.Communication.CallAutomation
                     isMuted = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("isOnHold"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isOnHold = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new CallParticipantInternal(identifier.Value, Optional.ToNullable(isMuted));
+            return new CallParticipantInternal(identifier.Value, Optional.ToNullable(isMuted), Optional.ToNullable(isOnHold));
         }
     }
 }
