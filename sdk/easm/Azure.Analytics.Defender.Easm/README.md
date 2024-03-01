@@ -77,7 +77,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/easm/Azure.Analytics.Defender.Easm/samples).
 
-### View Assets
+### View assets
 
 You can call the client's `AssetsList` method to view your assets.
 
@@ -94,7 +94,7 @@ foreach (AssetResource asset in response)
 }
 ```
 
-### Create Discovery Group
+### Create discovery group
  
 You can call the client's `DiscoGroupCreateOrReplace` method to create or replace your disco group
 
@@ -127,7 +127,7 @@ request.Description = discoveryGroupDescription;
 client.CreateOrReplaceDiscoveryGroup(discoveryGroupName, request);
 ```
 
-### Run the Discovery Group
+### Run the discovery group
 
 You can call client's `DiscoGroupRun` method to run a disco group
 
@@ -152,7 +152,7 @@ foreach (DiscoveryGroup discoGroup in response)
 
 ## Troubleshooting
 
-### Enabling Logging
+### Enabling logging
 Azure SDKs for .NET offer a consistent logging story to help aid in troubleshooting application errors and expedite
 their resolution. The logs produced will capture the flow of an application before reaching the terminal state to help
 locate the root issue. View the [logging][logging] wiki for guidance about enabling logging.
