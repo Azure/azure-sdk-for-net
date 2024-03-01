@@ -156,7 +156,6 @@ namespace Azure.Storage.DataMovement
             internal const string ETag = "ETag";
             internal const string LastModified = "LastModified";
             internal const string Metadata = "Metadata";
-            internal const string Tags = "Tags";
         }
     }
 }

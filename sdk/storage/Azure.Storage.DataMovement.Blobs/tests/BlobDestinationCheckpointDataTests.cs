@@ -11,6 +11,8 @@ using System.IO;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 using System.Text;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -28,18 +30,32 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         private static byte[] StringToByteArray(string value) => Encoding.UTF8.GetBytes(value);
 
-        private BlobDestinationCheckpointData CreateDefault()
+        private BlobDestinationCheckpointData CreatePreserveValues()
         {
             return new BlobDestinationCheckpointData(
                 DefaultBlobType,
-                new(DefaultContentType),
-                new(DefaultContentEncoding),
-                new(DefaultContentLanguage),
-                new(DefaultContentDisposition),
-                new(DefaultCacheControl),
-                new(DefaultAccessTier),
-                DefaultMetadata,
-                DefaultTags);
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default);
+        }
+
+        private BlobDestinationCheckpointData CreateSetSampleValues()
+        {
+            return new BlobDestinationCheckpointData(
+                blobType: DefaultBlobType,
+                contentType: new(DefaultContentType),
+                contentEncoding: new(DefaultContentEncoding),
+                contentLanguage: new(DefaultContentLanguage),
+                contentDisposition: new(DefaultContentDisposition),
+                cacheControl: new(DefaultCacheControl),
+                accessTier: new(DefaultAccessTier),
+                metadata: DefaultMetadata,
+                tags: DefaultTags);
         }
 
         private void TestAssertSerializedData(BlobDestinationCheckpointData data)
@@ -61,91 +77,117 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [Test]
         public void Ctor()
         {
-            BlobDestinationCheckpointData data = CreateDefault();
+            BlobDestinationCheckpointData data = CreatePreserveValues();
 
             Assert.AreEqual(DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion, data.Version);
             Assert.AreEqual(DefaultBlobType, data.BlobType);
             Assert.AreEqual(true, data.PreserveContentType);
-            Assert.AreEqual(StringToByteArray(DefaultContentType), data.ContentTypeBytes);
+            Assert.IsEmpty(data.ContentTypeBytes);
             Assert.AreEqual(true, data.PreserveContentEncoding);
-            Assert.AreEqual(StringToByteArray(DefaultContentEncoding), data.ContentEncodingBytes);
+            Assert.IsEmpty(data.ContentEncodingBytes);
             Assert.AreEqual(true, data.PreserveContentLanguage);
-            Assert.AreEqual(StringToByteArray(DefaultContentLanguage), data.ContentLanguageBytes);
+            Assert.IsEmpty(data.ContentLanguageBytes);
             Assert.AreEqual(true, data.PreserveContentDisposition);
-            Assert.AreEqual(StringToByteArray(DefaultContentDisposition), data.ContentDispositionBytes);
+            Assert.IsEmpty(data.ContentDispositionBytes);
             Assert.AreEqual(true, data.PreserveCacheControl);
-            Assert.AreEqual(StringToByteArray(DefaultCacheControl), data.CacheControlBytes);
+            Assert.IsEmpty(data.CacheControlBytes);
             Assert.AreEqual(true, data.PreserveAccessTier);
-            Assert.AreEqual(DefaultAccessTier, data.AccessTier);
+            Assert.IsNull(data.AccessTier);
             Assert.AreEqual(true, data.PreserveMetadata);
-            CollectionAssert.AreEquivalent(DefaultMetadata.Value, data.Metadata.Value);
-            Assert.AreEqual(true, data.PreserveTags);
-            CollectionAssert.AreEquivalent(DefaultTags.Value, data.Tags.Value);
+            Assert.IsNull(data.Metadata);
+            Assert.AreEqual(false, data.PreserveTags);
+            Assert.IsNull(data.Tags);
+        }
+
+        [Test]
+        public void Ctor_SetValues()
+        {
+            BlobDestinationCheckpointData data = CreateSetSampleValues();
+
+            VerifySampleValues(data, DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion);
         }
 
         [Test]
         public void Serialize()
         {
-            BlobDestinationCheckpointData data = CreateDefault();
+            BlobDestinationCheckpointData data = CreateSetSampleValues();
             TestAssertSerializedData(data);
         }
 
         [Test]
-        public void Serialize_NoPreserveContentType()
+        public void Serialize_NoPreserveTags()
         {
-            BlobDestinationCheckpointData data = CreateDefault();
-            data.PreserveContentType = false;
-            data.ContentTypeBytes = default;
+            BlobDestinationCheckpointData data = CreateSetSampleValues();
+            data.Tags = default;
+            data.PreserveTags = true;
+            data.TagsBytes = default;
 
-            TestAssertSerializedData(data);
+            string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.1.bin");
+            using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.OptionalIndexValuesStartIndex))
+            using (FileStream fileStream = File.OpenRead(samplePath))
+            {
+                // Act
+                data.Serialize(dataStream);
+
+                BinaryReader reader = new(fileStream);
+                List<byte> expected = reader.ReadBytes((int)fileStream.Length).ToList();
+                // Change to expected Preserve Tags value - true
+                expected[DataMovementBlobConstants.DestinationCheckpointData.PreserveTagsIndex] = 1;
+                int tagsOffset = expected[DataMovementBlobConstants.DestinationCheckpointData.TagsOffsetIndex];
+                int tagsLength = expected[DataMovementBlobConstants.DestinationCheckpointData.TagsLengthIndex];
+                expected[DataMovementBlobConstants.DestinationCheckpointData.TagsOffsetIndex] = 0;
+                expected[DataMovementBlobConstants.DestinationCheckpointData.TagsLengthIndex] = 0;
+                // Remove the Content Type
+                expected.RemoveRange(tagsOffset, tagsLength);
+
+                // Get serialized data
+                byte[] actual = dataStream.ToArray();
+
+                // Verify
+                CollectionAssert.AreEqual(expected, actual);
+            }
         }
 
         [Test]
-        public void Serialize_NoPreserveContentEncoding()
+        public void Serialize_PreserveAccessTier()
         {
-            BlobDestinationCheckpointData data = CreateDefault();
-            data.PreserveContentEncoding = false;
-            data.ContentEncodingBytes = default;
-            TestAssertSerializedData(data);
-        }
-
-        [Test]
-        public void Serialize_NoPreserveContentLanguage()
-        {
-            BlobDestinationCheckpointData data = CreateDefault();
-            data.PreserveContentLanguage = false;
-            data.ContentLanguageBytes = default;
-            TestAssertSerializedData(data);
-        }
-
-        [Test]
-        public void Serialize_NoPreserveContentDisposition()
-        {
-            BlobDestinationCheckpointData data = CreateDefault();
-            data.PreserveContentDisposition = false;
-            data.ContentDispositionBytes = default;
-            TestAssertSerializedData(data);
-        }
-
-        [Test]
-        public void Serialize_NoPreserveAccessTier()
-        {
-            BlobDestinationCheckpointData data = CreateDefault();
-            data.PreserveAccessTier = false;
+            // Arrange
+            BlobDestinationCheckpointData data = CreateSetSampleValues();
+            data.PreserveAccessTier = true;
             data.AccessTier = default;
-            TestAssertSerializedData(data);
+
+            string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.1.bin");
+            using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.OptionalIndexValuesStartIndex))
+            using (FileStream fileStream = File.OpenRead(samplePath))
+            {
+                // Act
+                data.Serialize(dataStream);
+
+                BinaryReader reader = new(fileStream);
+                List<byte> expected = reader.ReadBytes((int)fileStream.Length).ToList();
+                // Change to expected AccessTier value - true
+                expected[DataMovementBlobConstants.DestinationCheckpointData.PreserveAccessTierIndex] = 1;
+                expected[DataMovementBlobConstants.DestinationCheckpointData.AccessTierValueIndex] = 0;
+
+                // Get serialized data
+                byte[] actual = dataStream.ToArray();
+
+                // Verify
+                CollectionAssert.AreEqual(expected, actual);
+            }
         }
 
         [Test]
         public void Deserialize()
         {
-            BlobDestinationCheckpointData data = CreateDefault();
+            BlobDestinationCheckpointData data = CreateSetSampleValues();
 
             using (Stream stream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.OptionalIndexValuesStartIndex))
             {
                 data.Serialize(stream);
                 stream.Position = 0;
-                DeserializeAndVerify(stream, DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion);
+                BlobDestinationCheckpointData deserialized = BlobDestinationCheckpointData.Deserialize(stream);
+                VerifySampleValues(deserialized, DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion);
             }
         }
 
@@ -156,32 +198,31 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             using (FileStream stream = File.OpenRead(samplePath))
             {
                 stream.Position = 0;
-                DeserializeAndVerify(stream, 1);
+                BlobDestinationCheckpointData deserialized = BlobDestinationCheckpointData.Deserialize(stream);
+                VerifySampleValues(deserialized, 1);
             }
         }
 
-        private void DeserializeAndVerify(Stream stream, int version)
+        private void VerifySampleValues(BlobDestinationCheckpointData data, int version)
         {
-            BlobDestinationCheckpointData deserialized = BlobDestinationCheckpointData.Deserialize(stream);
-
-            Assert.AreEqual(version, deserialized.Version);
-            Assert.AreEqual(DefaultBlobType, deserialized.BlobType);
-            Assert.AreEqual(true, deserialized.PreserveContentType);
-            Assert.AreEqual(StringToByteArray(DefaultContentType), deserialized.ContentTypeBytes);
-            Assert.AreEqual(true, deserialized.PreserveContentEncoding);
-            Assert.AreEqual(StringToByteArray(DefaultContentEncoding), deserialized.ContentEncodingBytes);
-            Assert.AreEqual(true, deserialized.PreserveContentLanguage);
-            Assert.AreEqual(StringToByteArray(DefaultContentLanguage), deserialized.ContentLanguageBytes);
-            Assert.AreEqual(true, deserialized.PreserveContentDisposition);
-            Assert.AreEqual(StringToByteArray(DefaultContentDisposition), deserialized.ContentDispositionBytes);
-            Assert.AreEqual(true, deserialized.PreserveCacheControl);
-            Assert.AreEqual(StringToByteArray(DefaultCacheControl), deserialized.CacheControlBytes);
-            Assert.AreEqual(true, deserialized.PreserveAccessTier);
-            Assert.AreEqual(DefaultAccessTier, deserialized.AccessTier);
-            Assert.AreEqual(true, deserialized.PreserveMetadata);
-            CollectionAssert.AreEquivalent(DefaultMetadata.Value, deserialized.Metadata.Value);
-            Assert.AreEqual(true, deserialized.PreserveTags);
-            CollectionAssert.AreEquivalent(DefaultTags.Value, deserialized.Tags.Value);
+            Assert.AreEqual(version, data.Version);
+            Assert.AreEqual(DefaultBlobType, data.BlobType);
+            Assert.AreEqual(false, data.PreserveContentType);
+            Assert.AreEqual(StringToByteArray(DefaultContentType), data.ContentTypeBytes);
+            Assert.AreEqual(false, data.PreserveContentEncoding);
+            Assert.AreEqual(StringToByteArray(DefaultContentEncoding), data.ContentEncodingBytes);
+            Assert.AreEqual(false, data.PreserveContentLanguage);
+            Assert.AreEqual(StringToByteArray(DefaultContentLanguage), data.ContentLanguageBytes);
+            Assert.AreEqual(false, data.PreserveContentDisposition);
+            Assert.AreEqual(StringToByteArray(DefaultContentDisposition), data.ContentDispositionBytes);
+            Assert.AreEqual(false, data.PreserveCacheControl);
+            Assert.AreEqual(StringToByteArray(DefaultCacheControl), data.CacheControlBytes);
+            Assert.AreEqual(false, data.PreserveAccessTier);
+            Assert.AreEqual(DefaultAccessTier, data.AccessTier.Value);
+            Assert.AreEqual(false, data.PreserveMetadata);
+            CollectionAssert.AreEquivalent(DefaultMetadata.Value, data.Metadata.Value);
+            Assert.AreEqual(false, data.PreserveTags);
+            CollectionAssert.AreEquivalent(DefaultTags.Value, data.Tags.Value);
         }
     }
 }

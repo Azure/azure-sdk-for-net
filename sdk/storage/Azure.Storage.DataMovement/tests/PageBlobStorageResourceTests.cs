@@ -20,6 +20,7 @@ using Azure.Storage.Test;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
 using NUnit.Framework;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -245,27 +246,28 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [Test]
-        public async Task CopyFromStreamAsync_BlobProperties()
+        public async Task CopyFromStreamAsync_PropertiesDefault()
         {
             // Arrange
             Mock<PageBlobClient> mock = new(
-                new Uri("https://storageaccount.blob.core.windows.net/container/blob"),
+                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
                 new BlobClientOptions());
+
             int length = 1024;
             var data = GetRandomBuffer(length);
             using var stream = new MemoryStream(data);
             using var fileContentStream = new MemoryStream();
             mock.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<PageBlobCreateOptions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(
-                    BlobsModelFactory.BlobContentInfo(
-                        eTag: new ETag("eTag"),
-                        lastModified: DateTimeOffset.UtcNow,
-                        contentHash: default,
-                        versionId: "version",
-                        encryptionKeySha256: default,
-                        encryptionScope: default,
-                        blobSequenceNumber: default),
-                    new MockResponse(201))));
+            .Returns(Task.FromResult(Response.FromValue(
+                BlobsModelFactory.BlobContentInfo(
+                    eTag: new ETag("eTag"),
+                    lastModified: DateTimeOffset.UtcNow,
+                    contentHash: default,
+                    versionId: "version",
+                    encryptionKeySha256: default,
+                    encryptionScope: default,
+                    blobSequenceNumber: default),
+                new MockResponse(201))));
             mock.Setup(b => b.UploadPagesAsync(It.IsAny<Stream>(), It.IsAny<long>(), It.IsAny<PageBlobUploadPagesOptions>(), It.IsAny<CancellationToken>()))
                 .Callback<Stream, long, PageBlobUploadPagesOptions, CancellationToken>(
                 async (stream, offset, options, token) =>
@@ -284,7 +286,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         blobSequenceNumber: default),
                     new MockResponse(201))));
 
-            PageBlobStorageResource storageResource = new PageBlobStorageResource(mock.Object);
+            PageBlobStorageResource destinationResource = new PageBlobStorageResource(mock.Object);
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
@@ -292,13 +294,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             Dictionary<string, object> sourceProperties = new()
             {
-                { "ContentType", DefaultContentType },
-                { "ContentEncoding", DefaultContentEncoding },
-                { "ContentLanguage", DefaultContentLanguage },
-                { "ContentDisposition", DefaultContentDisposition },
-                { "CacheControl", DefaultCacheControl },
-                { "Metadata", metadata },
-                { "Tags", tags }
+                { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
+                { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
+                { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
+                { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
+                { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
+                { DataMovementConstants.ResourceProperties.Metadata, metadata }
             };
             StorageResourceWriteToOffsetOptions copyFromStreamOptions = new()
             {
@@ -308,12 +309,115 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
                     properties: sourceProperties)
             };
-            await storageResource.CopyFromStreamInternalAsync(
-                stream: stream,
-                streamLength: length,
-                overwrite: false,
-                options: copyFromStreamOptions,
-                completeLength: length);
+            await destinationResource.CopyFromStreamInternalAsync(
+                stream,
+                length,
+                false,
+                length,
+                copyFromStreamOptions);
+
+            Assert.That(data, Is.EqualTo(fileContentStream.AsBytes().ToArray()));
+            mock.Verify(b => b.CreateAsync(
+                length,
+                It.Is<PageBlobCreateOptions>(
+                    options =>
+                        options.HttpHeaders.ContentType == DefaultContentType &&
+                        options.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                        options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
+                        options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                        options.HttpHeaders.CacheControl == DefaultCacheControl &&
+                        options.Metadata.SequenceEqual(metadata) &&
+                        options.Tags == default),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mock.Verify(b => b.UploadPagesAsync(
+                stream,
+                0,
+                It.IsAny<PageBlobUploadPagesOptions>(),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mock.VerifyNoOtherCalls();
+        }
+
+        [Test]
+        public async Task CopyFromStreamAsync_PropertiesPreserve()
+        {
+            // Arrange
+            Mock<PageBlobClient> mock = new(
+                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                new BlobClientOptions());
+
+            int length = 1024;
+            var data = GetRandomBuffer(length);
+            using var stream = new MemoryStream(data);
+            using var fileContentStream = new MemoryStream();
+            mock.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<PageBlobCreateOptions>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.FromResult(Response.FromValue(
+                BlobsModelFactory.BlobContentInfo(
+                    eTag: new ETag("eTag"),
+                    lastModified: DateTimeOffset.UtcNow,
+                    contentHash: default,
+                    versionId: "version",
+                    encryptionKeySha256: default,
+                    encryptionScope: default,
+                    blobSequenceNumber: default),
+                new MockResponse(201))));
+            mock.Setup(b => b.UploadPagesAsync(It.IsAny<Stream>(), It.IsAny<long>(), It.IsAny<PageBlobUploadPagesOptions>(), It.IsAny<CancellationToken>()))
+                .Callback<Stream, long, PageBlobUploadPagesOptions, CancellationToken>(
+                async (stream, offset, options, token) =>
+                {
+                    await stream.CopyToAsync(fileContentStream).ConfigureAwait(false);
+                    fileContentStream.Position = 0;
+                })
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.PageInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        contentHash: default,
+                        contentCrc64: default,
+                        encryptionKeySha256: default,
+                        encryptionScope: default,
+                        blobSequenceNumber: default),
+                    new MockResponse(201))));
+
+            PageBlobStorageResourceOptions resourceOptions = new()
+            {
+                CacheControl = new(true),
+                ContentDisposition = new(true),
+                ContentLanguage = new(true),
+                ContentEncoding = new(true),
+                ContentType = new(true),
+                Metadata = new(true)
+            };
+            PageBlobStorageResource destinationResource = new PageBlobStorageResource(mock.Object, resourceOptions);
+
+            // Act
+            IDictionary<string, string> metadata = DataProvider.BuildMetadata();
+            IDictionary<string, string> tags = DataProvider.BuildTags();
+
+            Dictionary<string, object> sourceProperties = new()
+            {
+                { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
+                { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
+                { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
+                { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
+                { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
+                { DataMovementConstants.ResourceProperties.Metadata, metadata }
+            };
+            StorageResourceWriteToOffsetOptions copyFromStreamOptions = new()
+            {
+                SourceProperties = new StorageResourceItemProperties(
+                    resourceLength: length,
+                    eTag: new("ETag"),
+                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
+                    properties: sourceProperties)
+            };
+            await destinationResource.CopyFromStreamInternalAsync(
+                stream,
+                length,
+                false,
+                length,
+                copyFromStreamOptions);
 
             Assert.That(data, Is.EqualTo(fileContentStream.AsBytes().ToArray()));
             mock.Verify(b => b.CreateAsync(
@@ -327,6 +431,104 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.HttpHeaders.CacheControl == DefaultCacheControl &&
                         options.Metadata.SequenceEqual(metadata) &&
                         options.Tags.SequenceEqual(tags)),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mock.Verify(b => b.UploadPagesAsync(
+                stream,
+                0,
+                It.IsAny<PageBlobUploadPagesOptions>(),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mock.VerifyNoOtherCalls();
+        }
+
+        [Test]
+        public async Task CopyFromStreamAsync_PropertiesNoPreserve()
+        {
+            // Arrange
+            Mock<PageBlobClient> mock = new(
+                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                new BlobClientOptions());
+
+            int length = 1024;
+            var data = GetRandomBuffer(length);
+            using var stream = new MemoryStream(data);
+            using var fileContentStream = new MemoryStream();
+            mock.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<PageBlobCreateOptions>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.FromResult(Response.FromValue(
+                BlobsModelFactory.BlobContentInfo(
+                    eTag: new ETag("eTag"),
+                    lastModified: DateTimeOffset.UtcNow,
+                    contentHash: default,
+                    versionId: "version",
+                    encryptionKeySha256: default,
+                    encryptionScope: default,
+                    blobSequenceNumber: default),
+                new MockResponse(201))));
+            mock.Setup(b => b.UploadPagesAsync(It.IsAny<Stream>(), It.IsAny<long>(), It.IsAny<PageBlobUploadPagesOptions>(), It.IsAny<CancellationToken>()))
+                .Callback<Stream, long, PageBlobUploadPagesOptions, CancellationToken>(
+                async (stream, offset, options, token) =>
+                {
+                    await stream.CopyToAsync(fileContentStream).ConfigureAwait(false);
+                    fileContentStream.Position = 0;
+                })
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.PageInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        contentHash: default,
+                        contentCrc64: default,
+                        encryptionKeySha256: default,
+                        encryptionScope: default,
+                        blobSequenceNumber: default),
+                    new MockResponse(201))));
+
+            PageBlobStorageResourceOptions resourceOptions = new()
+            {
+                CacheControl = new(false),
+                ContentDisposition = new(false),
+                ContentLanguage = new(false),
+                ContentEncoding = new(false),
+                ContentType = new(false),
+                Metadata = new(false)
+            };
+            PageBlobStorageResource destinationResource = new PageBlobStorageResource(mock.Object, resourceOptions);
+
+            // Act
+            IDictionary<string, string> metadata = DataProvider.BuildMetadata();
+            IDictionary<string, string> tags = DataProvider.BuildTags();
+
+            Dictionary<string, object> sourceProperties = new()
+            {
+                { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
+                { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
+                { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
+                { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
+                { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
+                { DataMovementConstants.ResourceProperties.Metadata, metadata }
+            };
+            StorageResourceWriteToOffsetOptions copyFromStreamOptions = new()
+            {
+                SourceProperties = new StorageResourceItemProperties(
+                    resourceLength: length,
+                    eTag: new("ETag"),
+                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
+                    properties: sourceProperties)
+            };
+            await destinationResource.CopyFromStreamInternalAsync(
+                stream,
+                length,
+                false,
+                length,
+                copyFromStreamOptions);
+
+            Assert.That(data, Is.EqualTo(fileContentStream.AsBytes().ToArray()));
+            mock.Verify(b => b.CreateAsync(
+                length,
+                It.Is<PageBlobCreateOptions>(
+                    options =>
+                        options.Metadata == default &&
+                        options.Tags == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mock.Verify(b => b.UploadPagesAsync(
@@ -461,7 +663,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [Test]
-        public async Task CopyFromUriAsync_BlobProperties()
+        public async Task CopyFromUriAsync_PropertiesDefault()
         {
             // Arrange
             Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
@@ -513,13 +715,122 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             Dictionary<string, object> sourceProperties = new()
             {
-                { "ContentType", DefaultContentType },
-                { "ContentEncoding", DefaultContentEncoding },
-                { "ContentLanguage", DefaultContentLanguage },
-                { "ContentDisposition", DefaultContentDisposition },
-                { "CacheControl", DefaultCacheControl },
-                { "Metadata", metadata },
-                { "Tags", tags }
+                { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
+                { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
+                { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
+                { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
+                { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
+                { DataMovementConstants.ResourceProperties.Metadata, metadata }
+            };
+            StorageResourceCopyFromUriOptions copyFromUriOptions = new()
+            {
+                SourceProperties = new StorageResourceItemProperties(
+                    resourceLength: length,
+                    eTag: new("ETag"),
+                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
+                    properties: sourceProperties)
+            };
+            await destinationResource.CopyFromUriInternalAsync(
+                sourceResource.Object,
+                false,
+                length,
+                copyFromUriOptions);
+
+            Assert.That(data, Is.EqualTo(fileContentStream.AsBytes().ToArray()));
+            mockDestination.Verify(b => b.CreateAsync(
+                length,
+                It.Is<PageBlobCreateOptions>(
+                    options =>
+                        options.HttpHeaders.ContentType == DefaultContentType &&
+                        options.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                        options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
+                        options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                        options.HttpHeaders.CacheControl == DefaultCacheControl &&
+                        options.Metadata.SequenceEqual(metadata) &&
+                        options.Tags == default),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mockDestination.Verify(b => b.UploadPagesFromUriAsync(
+                sourceUri,
+                It.Is<HttpRange>(range =>
+                    range.Offset == 0 &&
+                    range.Length == length),
+                It.Is<HttpRange>(range =>
+                    range.Offset == 0 &&
+                    range.Length == length),
+                It.IsAny<PageBlobUploadPagesFromUriOptions>(),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+        }
+
+        [Test]
+        public async Task CopyFromUriAsync_PropertiesPreserve()
+        {
+            // Arrange
+            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+            Mock<StorageResourceItem> sourceResource = new();
+            sourceResource.Setup(b => b.Uri)
+                .Returns(sourceUri);
+
+            Mock<PageBlobClient> mockDestination = new(
+                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                new BlobClientOptions());
+
+            int length = 1024;
+            var data = GetRandomBuffer(length);
+            using var stream = new MemoryStream(data);
+            using var fileContentStream = new MemoryStream();
+            mockDestination.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<PageBlobCreateOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.BlobContentInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        contentHash: default,
+                        versionId: "version",
+                        encryptionKeySha256: default,
+                        encryptionScope: default,
+                        blobSequenceNumber: default),
+                    new MockResponse(201))));
+            mockDestination.Setup(b => b.UploadPagesFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<PageBlobUploadPagesFromUriOptions>(), It.IsAny<CancellationToken>()))
+                .Callback<Uri, HttpRange, HttpRange, PageBlobUploadPagesFromUriOptions, CancellationToken>(
+                async (uri, sourceRange, destinationRange, options, token) =>
+                {
+                    await stream.CopyToAsync(fileContentStream).ConfigureAwait(false);
+                    fileContentStream.Position = 0;
+                })
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.PageInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        contentHash: default,
+                        contentCrc64: default,
+                        encryptionKeySha256: default,
+                        encryptionScope: default,
+                        blobSequenceNumber: default),
+                    new MockResponse(201))));
+            PageBlobStorageResourceOptions resourceOptions = new()
+            {
+                CacheControl = new(true),
+                ContentDisposition = new(true),
+                ContentLanguage = new(true),
+                ContentEncoding = new(true),
+                ContentType = new(true),
+                Metadata = new(true)
+            };
+            PageBlobStorageResource destinationResource = new PageBlobStorageResource(mockDestination.Object, resourceOptions);
+
+            // Act
+            IDictionary<string, string> metadata = DataProvider.BuildMetadata();
+            IDictionary<string, string> tags = DataProvider.BuildTags();
+
+            Dictionary<string, object> sourceProperties = new()
+            {
+                { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
+                { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
+                { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
+                { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
+                { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
+                { DataMovementConstants.ResourceProperties.Metadata, metadata }
             };
             StorageResourceCopyFromUriOptions copyFromUriOptions = new()
             {
@@ -547,6 +858,112 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.HttpHeaders.CacheControl == DefaultCacheControl &&
                         options.Metadata.SequenceEqual(metadata) &&
                         options.Tags.SequenceEqual(tags)),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mockDestination.Verify(b => b.UploadPagesFromUriAsync(
+                sourceUri,
+                It.Is<HttpRange>(range =>
+                    range.Offset == 0 &&
+                    range.Length == length),
+                It.Is<HttpRange>(range =>
+                    range.Offset == 0 &&
+                    range.Length == length),
+                It.IsAny<PageBlobUploadPagesFromUriOptions>(),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mockDestination.VerifyNoOtherCalls();
+        }
+
+        [Test]
+        public async Task CopyFromUriAsync_PropertiesNoPreserve()
+        {
+            // Arrange
+            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+            Mock<StorageResourceItem> sourceResource = new();
+            sourceResource.Setup(b => b.Uri)
+                .Returns(sourceUri);
+
+            Mock<PageBlobClient> mockDestination = new(
+                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                new BlobClientOptions());
+
+            int length = 1024;
+            var data = GetRandomBuffer(length);
+            using var stream = new MemoryStream(data);
+            using var fileContentStream = new MemoryStream();
+            mockDestination.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<PageBlobCreateOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.BlobContentInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        contentHash: default,
+                        versionId: "version",
+                        encryptionKeySha256: default,
+                        encryptionScope: default,
+                        blobSequenceNumber: default),
+                    new MockResponse(201))));
+            mockDestination.Setup(b => b.UploadPagesFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<PageBlobUploadPagesFromUriOptions>(), It.IsAny<CancellationToken>()))
+                .Callback<Uri, HttpRange, HttpRange, PageBlobUploadPagesFromUriOptions, CancellationToken>(
+                async (uri, sourceRange, destinationRange, options, token) =>
+                {
+                    await stream.CopyToAsync(fileContentStream).ConfigureAwait(false);
+                    fileContentStream.Position = 0;
+                })
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.PageInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        contentHash: default,
+                        contentCrc64: default,
+                        encryptionKeySha256: default,
+                        encryptionScope: default,
+                        blobSequenceNumber: default),
+                    new MockResponse(201))));
+            PageBlobStorageResourceOptions resourceOptions = new()
+            {
+                CacheControl = new(false),
+                ContentDisposition = new(false),
+                ContentLanguage = new(false),
+                ContentEncoding = new(false),
+                ContentType = new(false),
+                Metadata = new(false)
+            };
+            PageBlobStorageResource destinationResource = new PageBlobStorageResource(mockDestination.Object, resourceOptions);
+
+            // Act
+            IDictionary<string, string> metadata = DataProvider.BuildMetadata();
+            IDictionary<string, string> tags = DataProvider.BuildTags();
+
+            Dictionary<string, object> sourceProperties = new()
+            {
+                { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
+                { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
+                { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
+                { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
+                { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
+                { DataMovementConstants.ResourceProperties.Metadata, metadata }
+            };
+            StorageResourceCopyFromUriOptions copyFromUriOptions = new()
+            {
+                SourceProperties = new StorageResourceItemProperties(
+                    resourceLength: length,
+                    eTag: new("ETag"),
+                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
+                    properties: sourceProperties)
+            };
+            await destinationResource.CopyFromUriInternalAsync(
+                sourceResource.Object,
+                false,
+                length,
+                copyFromUriOptions);
+
+            Assert.That(data, Is.EqualTo(fileContentStream.AsBytes().ToArray()));
+            mockDestination.Verify(b => b.CreateAsync(
+                length,
+                It.Is<PageBlobCreateOptions>(
+                    options =>
+                        options.Metadata == default &&
+                        options.Tags == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.UploadPagesFromUriAsync(
@@ -773,7 +1190,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [Test]
-        public async Task CopyBlockFromUriAsync_BlobProperties()
+        public async Task CopyBlockFromUriAsync_PropertiesDefault()
         {
             // Arrange
             Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
@@ -790,16 +1207,16 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             using var stream = new MemoryStream(data);
             using var fileContentStream = new MemoryStream();
             mockDestination.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<PageBlobCreateOptions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(
-                    BlobsModelFactory.BlobContentInfo(
-                        eTag: new ETag("eTag"),
-                        lastModified: DateTimeOffset.UtcNow,
-                        contentHash: default,
-                        versionId: "version",
-                        encryptionKeySha256: default,
-                        encryptionScope: default,
-                        blobSequenceNumber: default),
-                    new MockResponse(201))));
+            .Returns(Task.FromResult(Response.FromValue(
+                BlobsModelFactory.BlobContentInfo(
+                    eTag: new ETag("eTag"),
+                    lastModified: DateTimeOffset.UtcNow,
+                    contentHash: default,
+                    versionId: "version",
+                    encryptionKeySha256: default,
+                    encryptionScope: default,
+                    blobSequenceNumber: default),
+                new MockResponse(201))));
             mockDestination.Setup(b => b.UploadPagesFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<PageBlobUploadPagesFromUriOptions>(), It.IsAny<CancellationToken>()))
                 .Callback<Uri, HttpRange, HttpRange, PageBlobUploadPagesFromUriOptions, CancellationToken>(
                 async (uri, sourceRange, destinationRange, options, token) =>
@@ -825,13 +1242,124 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             Dictionary<string, object> sourceProperties = new()
             {
-                { "ContentType", DefaultContentType },
-                { "ContentEncoding", DefaultContentEncoding },
-                { "ContentLanguage", DefaultContentLanguage },
-                { "ContentDisposition", DefaultContentDisposition },
-                { "CacheControl", DefaultCacheControl },
-                { "Metadata", metadata },
-                { "Tags", tags }
+                { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
+                { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
+                { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
+                { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
+                { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
+                { DataMovementConstants.ResourceProperties.Metadata, metadata }
+            };
+            StorageResourceCopyFromUriOptions copyFromUriOptions = new()
+            {
+                SourceProperties = new StorageResourceItemProperties(
+                    resourceLength: length,
+                    eTag: new("ETag"),
+                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
+                    properties: sourceProperties)
+            };
+            await destinationResource.CopyBlockFromUriInternalAsync(
+                sourceResource.Object,
+                new HttpRange(0, length),
+                false,
+                length,
+                copyFromUriOptions);
+
+            Assert.That(data, Is.EqualTo(fileContentStream.AsBytes().ToArray()));
+            mockDestination.Verify(b => b.CreateAsync(
+                length,
+                It.Is<PageBlobCreateOptions>(
+                    options =>
+                        options.HttpHeaders.ContentType == DefaultContentType &&
+                        options.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                        options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
+                        options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                        options.HttpHeaders.CacheControl == DefaultCacheControl &&
+                        options.Metadata.SequenceEqual(metadata) &&
+                        options.Tags == default),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mockDestination.Verify(b => b.UploadPagesFromUriAsync(
+                sourceUri,
+                It.Is<HttpRange>(range =>
+                    range.Offset == 0 &&
+                    range.Length == length),
+                It.Is<HttpRange>(range =>
+                    range.Offset == 0 &&
+                    range.Length == length),
+                It.IsAny<PageBlobUploadPagesFromUriOptions>(),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mockDestination.VerifyNoOtherCalls();
+        }
+
+        [Test]
+        public async Task CopyBlockFromUriAsync_PropertiesPreserve()
+        {
+            // Arrange
+            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+            Mock<StorageResourceItem> sourceResource = new();
+            sourceResource.Setup(b => b.Uri)
+                .Returns(sourceUri);
+
+            Mock<PageBlobClient> mockDestination = new(
+                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                new BlobClientOptions());
+
+            int length = 1024;
+            var data = GetRandomBuffer(length);
+            using var stream = new MemoryStream(data);
+            using var fileContentStream = new MemoryStream();
+            mockDestination.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<PageBlobCreateOptions>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.FromResult(Response.FromValue(
+                BlobsModelFactory.BlobContentInfo(
+                    eTag: new ETag("eTag"),
+                    lastModified: DateTimeOffset.UtcNow,
+                    contentHash: default,
+                    versionId: "version",
+                    encryptionKeySha256: default,
+                    encryptionScope: default,
+                    blobSequenceNumber: default),
+                new MockResponse(201))));
+            mockDestination.Setup(b => b.UploadPagesFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<PageBlobUploadPagesFromUriOptions>(), It.IsAny<CancellationToken>()))
+                .Callback<Uri, HttpRange, HttpRange, PageBlobUploadPagesFromUriOptions, CancellationToken>(
+                async (uri, sourceRange, destinationRange, options, token) =>
+                {
+                    await stream.CopyToAsync(fileContentStream).ConfigureAwait(false);
+                    fileContentStream.Position = 0;
+                })
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.PageInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        contentHash: default,
+                        contentCrc64: default,
+                        encryptionKeySha256: default,
+                        encryptionScope: default,
+                        blobSequenceNumber: default),
+                    new MockResponse(201))));
+            PageBlobStorageResourceOptions resourceOptions = new()
+            {
+                CacheControl = new(true),
+                ContentDisposition = new(true),
+                ContentLanguage = new(true),
+                ContentEncoding = new(true),
+                ContentType = new(true),
+                Metadata = new(true)
+            };
+            PageBlobStorageResource destinationResource = new PageBlobStorageResource(mockDestination.Object, resourceOptions);
+
+            // Act
+            IDictionary<string, string> metadata = DataProvider.BuildMetadata();
+            IDictionary<string, string> tags = DataProvider.BuildTags();
+
+            Dictionary<string, object> sourceProperties = new()
+            {
+                { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
+                { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
+                { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
+                { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
+                { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
+                { DataMovementConstants.ResourceProperties.Metadata, metadata }
             };
             StorageResourceCopyFromUriOptions copyFromUriOptions = new()
             {
@@ -860,6 +1388,113 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.HttpHeaders.CacheControl == DefaultCacheControl &&
                         options.Metadata.SequenceEqual(metadata) &&
                         options.Tags.SequenceEqual(tags)),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mockDestination.Verify(b => b.UploadPagesFromUriAsync(
+                sourceUri,
+                It.Is<HttpRange>(range =>
+                    range.Offset == 0 &&
+                    range.Length == length),
+                It.Is<HttpRange>(range =>
+                    range.Offset == 0 &&
+                    range.Length == length),
+                It.IsAny<PageBlobUploadPagesFromUriOptions>(),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mockDestination.VerifyNoOtherCalls();
+        }
+
+        [Test]
+        public async Task CopyBlockFromUriAsync_PropertiesNoPreserve()
+        {
+            // Arrange
+            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+            Mock<StorageResourceItem> sourceResource = new();
+            sourceResource.Setup(b => b.Uri)
+                .Returns(sourceUri);
+
+            Mock<PageBlobClient> mockDestination = new(
+                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                new BlobClientOptions());
+
+            int length = 1024;
+            var data = GetRandomBuffer(length);
+            using var stream = new MemoryStream(data);
+            using var fileContentStream = new MemoryStream();
+            mockDestination.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<PageBlobCreateOptions>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.FromResult(Response.FromValue(
+                BlobsModelFactory.BlobContentInfo(
+                    eTag: new ETag("eTag"),
+                    lastModified: DateTimeOffset.UtcNow,
+                    contentHash: default,
+                    versionId: "version",
+                    encryptionKeySha256: default,
+                    encryptionScope: default,
+                    blobSequenceNumber: default),
+                new MockResponse(201))));
+            mockDestination.Setup(b => b.UploadPagesFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<PageBlobUploadPagesFromUriOptions>(), It.IsAny<CancellationToken>()))
+                .Callback<Uri, HttpRange, HttpRange, PageBlobUploadPagesFromUriOptions, CancellationToken>(
+                async (uri, sourceRange, destinationRange, options, token) =>
+                {
+                    await stream.CopyToAsync(fileContentStream).ConfigureAwait(false);
+                    fileContentStream.Position = 0;
+                })
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.PageInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        contentHash: default,
+                        contentCrc64: default,
+                        encryptionKeySha256: default,
+                        encryptionScope: default,
+                        blobSequenceNumber: default),
+                    new MockResponse(201))));
+            PageBlobStorageResourceOptions resourceOptions = new()
+            {
+                CacheControl = new(false),
+                ContentDisposition = new(false),
+                ContentLanguage = new(false),
+                ContentEncoding = new(false),
+                ContentType = new(false),
+                Metadata = new(false)
+            };
+            PageBlobStorageResource destinationResource = new PageBlobStorageResource(mockDestination.Object, resourceOptions);
+
+            // Act
+            IDictionary<string, string> metadata = DataProvider.BuildMetadata();
+            IDictionary<string, string> tags = DataProvider.BuildTags();
+
+            Dictionary<string, object> sourceProperties = new()
+            {
+                { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
+                { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
+                { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
+                { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
+                { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
+                { DataMovementConstants.ResourceProperties.Metadata, metadata }
+            };
+            StorageResourceCopyFromUriOptions copyFromUriOptions = new()
+            {
+                SourceProperties = new StorageResourceItemProperties(
+                    resourceLength: length,
+                    eTag: new("ETag"),
+                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
+                    properties: sourceProperties)
+            };
+            await destinationResource.CopyBlockFromUriInternalAsync(
+                sourceResource.Object,
+                new HttpRange(0, length),
+                false,
+                length,
+                copyFromUriOptions);
+
+            Assert.That(data, Is.EqualTo(fileContentStream.AsBytes().ToArray()));
+            mockDestination.Verify(b => b.CreateAsync(
+                length,
+                It.Is<PageBlobCreateOptions>(
+                    options =>
+                        options.Metadata == default &&
+                        options.Tags == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.UploadPagesFromUriAsync(
@@ -940,6 +1575,104 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 {
                     Assert.AreEqual(e.ErrorCode, "BlobNotFound");
                 });
+        }
+
+        [Test]
+        public async Task GetPropertiesAsync_NotCached()
+        {
+            // Arrange
+            Mock<BlockBlobClient> mock = new(
+                new Uri("https://storageaccount.file.core.windows.net/container/file"),
+                new BlobClientOptions());
+
+            long length = 1024;
+            ETag eTag = new ETag("etag");
+            string source = "https://storageaccount.file.core.windows.net/container/file2";
+            Metadata metadata = DataProvider.BuildMetadata();
+            mock.Setup(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.BlobProperties(
+                        lastModified: DateTime.MinValue,
+                        leaseStatus: LeaseStatus.Unlocked,
+                        contentLength: length,
+                        eTag: eTag,
+                        contentEncoding: DefaultContentEncoding,
+                        contentDisposition: DefaultContentDisposition,
+                        contentLanguage: DefaultContentLanguage,
+                        contentType: DefaultContentType,
+                        cacheControl: DefaultCacheControl,
+                        copySource: new Uri(source),
+                        accessTier: default,
+                        copyCompletedOn: DateTimeOffset.MinValue,
+                        accessTierChangedOn: DateTimeOffset.MinValue,
+                        blobType: BlobType.Block,
+                        metadata: metadata,
+                        tagCount: 5),
+                    new MockResponse(200))));
+
+            BlockBlobStorageResource storageResource = new BlockBlobStorageResource(mock.Object);
+
+            // Act
+            StorageResourceItemProperties result = await storageResource.GetPropertiesInternalAsync();
+            string contentEncodingResult = (string)result.RawProperties[DataMovementConstants.ResourceProperties.ContentEncoding];
+            string contentDispositionResult = (string)result.RawProperties[DataMovementConstants.ResourceProperties.ContentDisposition];
+            string contentLanguageResult = (string)result.RawProperties[DataMovementConstants.ResourceProperties.ContentLanguage];
+            string contentTypeResult = (string)result.RawProperties[DataMovementConstants.ResourceProperties.ContentType];
+            string cacheControlResult = (string)result.RawProperties[DataMovementConstants.ResourceProperties.CacheControl];
+            Metadata metadataResult = (Metadata)result.RawProperties[DataMovementConstants.ResourceProperties.Metadata];
+
+            // Assert
+            Assert.AreEqual(eTag, result.ETag);
+            Assert.AreEqual(length, result.ResourceLength);
+            Assert.AreEqual(contentEncodingResult, DefaultContentEncoding);
+            Assert.AreEqual(contentDispositionResult, DefaultContentDisposition);
+            Assert.AreEqual(contentLanguageResult, DefaultContentLanguage);
+            Assert.AreEqual(contentTypeResult, DefaultContentType);
+            Assert.AreEqual(cacheControlResult, DefaultCacheControl);
+            Assert.That(metadata, Is.EqualTo(metadataResult));
+            mock.Verify(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()),
+                Times.Once());
+            mock.VerifyNoOtherCalls();
+        }
+
+        [Test]
+        public async Task GetPropertiesAsync_Cached()
+        {
+            // Arrange
+            Mock<BlockBlobClient> mock = new(
+                new Uri("https://storageaccount.file.core.windows.net/container/file"),
+                new BlobClientOptions());
+
+            long length = 1024;
+            ETag eTag = new ETag("etag");
+            DateTimeOffset lastModified = DateTimeOffset.UtcNow.AddHours(-1);
+            Metadata metadata = DataProvider.BuildMetadata();
+            Dictionary<string, object> rawProperties = new()
+            {
+                { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
+                { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition},
+                { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage},
+                { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType},
+                { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl},
+                { DataMovementConstants.ResourceProperties.Metadata, metadata },
+            };
+
+            BlockBlobStorageResource storageResource = new BlockBlobStorageResource(
+                mock.Object,
+                new StorageResourceItemProperties(
+                    length,
+                    eTag,
+                    lastModified,
+                    rawProperties));
+
+            // Act
+            StorageResourceItemProperties result = await storageResource.GetPropertiesInternalAsync();
+
+            // Assert
+            Assert.That(rawProperties, Is.EqualTo(result.RawProperties));
+            mock.Verify(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()),
+                Times.Never());
+            mock.VerifyNoOtherCalls();
         }
 
         [RecordedTest]

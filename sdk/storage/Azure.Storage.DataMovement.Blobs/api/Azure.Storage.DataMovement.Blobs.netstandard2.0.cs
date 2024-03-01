@@ -61,7 +61,6 @@ namespace Azure.Storage.DataMovement.Blobs
         public Azure.Storage.DataMovement.DataTransferProperty<string> ContentLanguage { get { throw null; } set { } }
         public Azure.Storage.DataMovement.DataTransferProperty<string> ContentType { get { throw null; } set { } }
         public Azure.Storage.DataMovement.DataTransferProperty<System.Collections.Generic.IDictionary<string, string>> Metadata { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty<System.Collections.Generic.IDictionary<string, string>> Tags { get { throw null; } set { } }
     }
     public partial class BlockBlobStorageResourceOptions : Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions
     {

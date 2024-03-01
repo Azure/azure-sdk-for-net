@@ -1,9 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -45,6 +51,10 @@ namespace Azure.Storage.DataMovement.Blobs
             if (blobProperties.CacheControl != default)
             {
                 properties.Add(DataMovementConstants.ResourceProperties.CacheControl, blobProperties.CacheControl);
+            }
+            if (blobProperties.AccessTier != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.AccessTier, new AccessTier(blobProperties.AccessTier));
             }
 
             return new StorageResourceItemProperties(
@@ -250,7 +260,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 HttpHeaders = GetHttpHeaders(options, sourceProperties?.RawProperties),
                 Metadata = GetMetadata(options, sourceProperties?.RawProperties),
-                Tags = GetTags(options, sourceProperties?.RawProperties),
                 Conditions = new AppendBlobRequestConditions()
                 {
                     IfMatch = options?.DestinationConditions?.IfMatch,
@@ -327,7 +336,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 HttpHeaders = GetHttpHeaders(options, sourceProperties?.RawProperties),
                 Metadata = GetMetadata(options, sourceProperties?.RawProperties),
-                Tags = GetTags(options, sourceProperties?.RawProperties),
                 AccessTier = GetAccessTier(options, sourceProperties?.RawProperties),
                 TransferOptions = new StorageTransferOptions()
                 {
@@ -367,7 +375,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 HttpHeaders = GetHttpHeaders(options, sourceProperties?.RawProperties),
                 Metadata = GetMetadata(options, sourceProperties?.RawProperties),
-                Tags = GetTags(options, sourceProperties?.RawProperties),
                 AccessTier = GetAccessTier(options, sourceProperties?.RawProperties),
                 SourceConditions = new BlobRequestConditions()
                 {
@@ -415,7 +422,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 HttpHeaders = GetHttpHeaders(options, sourceProperties?.RawProperties),
                 Metadata = GetMetadata(options, sourceProperties?.RawProperties),
-                Tags = GetTags(options, sourceProperties?.RawProperties),
                 AccessTier = GetAccessTier(options, sourceProperties?.RawProperties),
                 Conditions = CreateRequestConditions(options?.DestinationConditions, overwrite)
             };
@@ -451,7 +457,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 SequenceNumber = options?.SequenceNumber,
                 HttpHeaders = GetHttpHeaders(options, sourceProperties?.RawProperties),
                 Metadata = GetMetadata(options, sourceProperties?.RawProperties),
-                Tags = GetTags(options, sourceProperties?.RawProperties),
                 Conditions = new PageBlobRequestConditions()
                 {
                     IfMatch = options?.DestinationConditions?.IfMatch,
@@ -517,7 +522,6 @@ namespace Azure.Storage.DataMovement.Blobs
             return new()
             {
                 Metadata = checkpointData.Metadata,
-                Tags = checkpointData.Tags,
                 CacheControl = checkpointData.CacheControl,
                 ContentDisposition = checkpointData.ContentDisposition,
                 ContentEncoding = checkpointData.ContentEncoding,
@@ -569,7 +573,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 BlobOptions = new BlobStorageResourceOptions()
                 {
                     Metadata = options?.BlobOptions?.Metadata,
-                    Tags = options?.BlobOptions?.Tags,
                     CacheControl = options?.BlobOptions?.CacheControl,
                     ContentEncoding = options?.BlobOptions?.ContentEncoding,
                     ContentDisposition = options?.BlobOptions?.ContentDisposition,
@@ -585,10 +588,6 @@ namespace Azure.Storage.DataMovement.Blobs
             if (blobItem.Metadata != default)
             {
                 properties.Add(DataMovementConstants.ResourceProperties.Metadata, blobItem.Metadata);
-            }
-            if (blobItem.Tags != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.Tags, blobItem.Tags);
             }
             if (blobItem.Properties.AccessTier.HasValue)
             {
@@ -630,6 +629,97 @@ namespace Azure.Storage.DataMovement.Blobs
                 properties: properties);
         }
 
+        internal static async Task ClearMetadataIfSet(
+            BlobStorageResourceOptions options,
+            Dictionary<string, object> sourceProperties,
+            BlobBaseClient destinationBlobClient)
+        {
+            // If the metdata does NOT want to be preserved,
+            // and does not contain a value. Clear the metdata.
+            if (!(options?.Metadata?.Preserve ?? true) &&
+                options?.Metadata?.Value == default)
+            {
+                // Only clear the metadata if there's metadata to clear.
+                if (sourceProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Metadata, out object metadataObject) == true)
+                {
+                    await destinationBlobClient.SetMetadataAsync(default).ConfigureAwait(false);
+                }
+            }
+            BlobHttpHeaders headers = GetHttpHeaders(options, sourceProperties);
+            bool callSetHttpHeaders = false;
+            // If the HttpHeaders should NOT be preserved
+            // and does not contain a value to set it to. Clear the respective value.
+            if (!(options?.CacheControl?.Preserve ?? true) &&
+                options?.CacheControl?.Value == default)
+            {
+                // Only clear the cache control if there's cache control to clear.
+                if (sourceProperties?.TryGetValue(DataMovementConstants.ResourceProperties.CacheControl, out object cacheControlObject) == true)
+                {
+                    headers.CacheControl = default;
+                    callSetHttpHeaders = true;
+                }
+            }
+            if (!(options?.ContentDisposition?.Preserve ?? true) &&
+                options?.ContentDisposition?.Value == default)
+            {
+                // Only clear the content disposition if there's cache control to clear.
+                if (sourceProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentDisposition, out object outObject) == true)
+                {
+                    headers.ContentDisposition = default;
+                    callSetHttpHeaders = true;
+                }
+            }
+            if (!(options?.ContentEncoding?.Preserve ?? true) &&
+                options?.ContentEncoding?.Value == default)
+            {
+                // Only clear the cache control if there's cache control to clear.
+                if (sourceProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentEncoding, out object outObject) == true)
+                {
+                    headers.ContentEncoding = default;
+                    callSetHttpHeaders = true;
+                }
+            }
+            if (!(options?.ContentLanguage?.Preserve ?? true) &&
+                options?.ContentLanguage?.Value == default)
+            {
+                // Only clear the cache control if there's cache control to clear.
+                if (sourceProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentLanguage, out object outObject) == true)
+                {
+                    headers.ContentLanguage = default;
+                    callSetHttpHeaders = true;
+                }
+            }
+            if (!(options?.CacheControl?.Preserve ?? true) &&
+                options?.CacheControl?.Value == default)
+            {
+                // Only clear the cache control if there's cache control to clear.
+                if (sourceProperties?.TryGetValue(DataMovementConstants.ResourceProperties.CacheControl, out object outObject) == true)
+                {
+                    headers.CacheControl = default;
+                    callSetHttpHeaders = true;
+                }
+            }
+            if (callSetHttpHeaders)
+            {
+                await destinationBlobClient.SetHttpHeadersAsync(headers).ConfigureAwait(false);
+            }
+
+            // If the Access Tier does NOT want to be preserved,
+            // and does not contain a value. Clear the access tier.
+            if (!(options?.AccessTier?.Preserve ?? true) &&
+                options?.AccessTier?.Value == default)
+            {
+                // Only clear the metadata if there's metadata to clear.
+                if (sourceProperties?.TryGetValue(DataMovementConstants.ResourceProperties.AccessTier, out object accessTierObject) == true)
+                {
+                    if ((AccessTier) accessTierObject != AccessTier.Hot)
+                    {
+                        await destinationBlobClient.SetAccessTierAsync(AccessTier.Hot).ConfigureAwait(false);
+                    }
+                }
+            }
+        }
+
         private static BlobHttpHeaders GetHttpHeaders(
             BlobStorageResourceOptions options,
             Dictionary<string, object> properties)
@@ -662,6 +752,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     : options?.CacheControl?.Value,
             };
 
+        // By default we preserve the access tier
         private static AccessTier? GetAccessTier(
             BlobStorageResourceOptions options,
             Dictionary<string, object> properties)
@@ -671,6 +762,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     : default
                : options?.AccessTier?.Value;
 
+        // By default we preserve the metadata
         private static Metadata GetMetadata(
             BlobStorageResourceOptions options,
             Dictionary<string, object> properties)
@@ -679,14 +771,5 @@ namespace Azure.Storage.DataMovement.Blobs
                     ? (Metadata) metadataObject
                     : default
                : options?.Metadata?.Value;
-
-        private static Tags GetTags(
-            BlobStorageResourceOptions options,
-            Dictionary<string, object> properties)
-            => (options?.Tags?.Preserve ?? true)
-                ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.Tags, out object tagsObject) == true
-                    ? (Tags) tagsObject
-                    : default
-                : options?.Tags?.Value;
     }
 }

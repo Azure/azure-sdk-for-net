@@ -214,6 +214,14 @@ namespace Azure.Storage.DataMovement.Blobs
                     options?.SourceAuthentication,
                     options?.SourceProperties),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
+            // By default, a Copy From URL call will automatically
+            // copy over the source properties to the destination blob.
+            // If the metdata does NOT want to be preserved,
+            // set them to the value specified.
+            await DataMovementBlobsExtensions.ClearMetadataIfSet(
+                _options,
+                options?.SourceProperties?.RawProperties,
+                BlobClient).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -321,6 +329,7 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            // Call commit block list if the blob was uploaded in chunks.
             if (_blocks != null && !_blocks.IsEmpty)
             {
                 IEnumerable<string> blockIds = _blocks.OrderBy(x => x.Key).Select(x => x.Value);
@@ -367,7 +376,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 _options?.ContentType,
                 _options?.AccessTier,
                 _options?.Metadata,
-                _options?.Tags);
+                default /* tags */);
         }
     }
 }

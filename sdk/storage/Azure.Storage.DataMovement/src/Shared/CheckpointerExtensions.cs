@@ -102,10 +102,14 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Writes a boolean plus int32 to represent a nulable int.
         /// </summary>
-        internal static void Write(this BinaryWriter writer, int? value)
+        internal static void Write(
+            this BinaryWriter writer,
+            int? value,
+            ref int currentOffset)
         {
             writer.Write(value.HasValue);
             writer.Write(value ?? 0);
+            currentOffset += (DataMovementConstants.IntSizeInBytes * 2);
         }
 
         /// <summary>
@@ -146,6 +150,17 @@ namespace Azure.Storage.DataMovement
             writer.Write(value.HasValue);
             writer.Write(value?.Ticks ?? 0L);
             writer.Write(value?.Offset.Ticks ?? 0L);
+        }
+
+        /// <summary>
+        /// Writes two int zero values to represent the length and offset of a value
+        /// that is preserved.
+        /// </summary>
+        internal static void WriteEmptyLengthOffset(this BinaryWriter writer, ref int currentOffset)
+        {
+            writer.Write(0);
+            writer.Write(0);
+            currentOffset += (DataMovementConstants.IntSizeInBytes * 2);
         }
 
         /// <summary>

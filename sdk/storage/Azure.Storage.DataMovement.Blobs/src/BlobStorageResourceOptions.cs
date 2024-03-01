@@ -22,7 +22,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal BlobStorageResourceOptions(BlobStorageResourceOptions other)
         {
             Metadata = other?.Metadata;
-            Tags = other?.Tags;
+            CacheControl = other?.CacheControl;
             ContentDisposition = other?.ContentDisposition;
             ContentEncoding = other?.ContentEncoding;
             ContentLanguage = other?.ContentLanguage;
@@ -38,13 +38,6 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Applies to upload and copy transfers.
         /// </summary>
         public DataTransferProperty<Metadata> Metadata { get; set; }
-
-        /// <summary>
-        /// Optional. Defines tags to set on the destination blob.
-        ///
-        /// Applies to upload and copy transfers.
-        /// </summary>
-        public DataTransferProperty<Tags> Tags { get; set; }
 
         /// <summary>
         /// Optional. Sets the Cache Control header which
@@ -110,6 +103,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// By default preserves the Access Tier from the source.
         ///
         /// Applies to upload and copy transfers.
+        /// Also respective Tier Values applies only to Block or Page Blobs.
         /// </summary>
         public DataTransferProperty<AccessTier?> AccessTier { get; set; }
     }

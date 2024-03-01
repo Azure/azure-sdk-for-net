@@ -135,11 +135,12 @@ namespace Azure.Storage.DataMovement.Blobs
             long position = options?.Position != default ? options.Position.Value : 0;
             if (position == 0)
             {
-                await BlobClient.CreateAsync(
-                    DataMovementBlobsExtensions.GetCreateOptions(
+                AppendBlobCreateOptions createOptions = DataMovementBlobsExtensions.GetCreateOptions(
                         _options,
                         overwrite,
-                        options?.SourceProperties),
+                        options?.SourceProperties);
+                await BlobClient.CreateAsync(
+                    createOptions,
                     cancellationToken).ConfigureAwait(false);
             }
             if (streamLength > 0)
@@ -319,7 +320,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 _options?.ContentType,
                 _options?.AccessTier,
                 _options?.Metadata,
-                _options?.Tags);
+                default /* tags */);
         }
     }
 }

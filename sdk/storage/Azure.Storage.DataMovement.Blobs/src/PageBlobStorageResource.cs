@@ -330,7 +330,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 _options?.ContentType,
                 _options?.AccessTier,
                 _options?.Metadata,
-                _options?.Tags);
+                default /* tags */);
         }
     }
 }

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -181,7 +180,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 _options?.BlobOptions?.ContentType,
                 _options?.BlobOptions?.AccessTier,
                 _options?.BlobOptions?.Metadata,
-                _options?.BlobOptions?.Tags);
+                default /* tags */);
         }
 
         private string ApplyOptionalPrefix(string path)
