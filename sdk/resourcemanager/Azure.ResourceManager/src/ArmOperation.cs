@@ -6,6 +6,8 @@
 #nullable enable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -17,17 +19,11 @@ namespace Azure.ResourceManager
     public class ArmOperation : Operation
 {
         private readonly OperationInternal? _operation;
-        private readonly RehydrationToken? _rehydrationToken;
+        private readonly NextLinkOperationImplementation? _nextLinkOperation;
 
         /// <summary> Initializes a new instance of ArmOperation for mocking. </summary>
         protected ArmOperation()
         {
-        }
-
-        internal ArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string? apiVersionOverrideValue = null)
-        {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
-            _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response);
         }
 
         /// <summary> Create an instance of the <see cref="ArmOperation"/> class from rehydration. </summary>
@@ -38,15 +34,25 @@ namespace Azure.ResourceManager
             Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
             Argument.AssertNotNull(client, nameof(client));
 
-            var nextLinkOperation = NextLinkOperationImplementation.Create(client.Pipeline, rehydrationToken);
-            // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
-            var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-            _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, null, rehydrationToken: rehydrationToken);
-            _rehydrationToken = rehydrationToken;
+            _nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(client.Pipeline, rehydrationToken);
+            var clientDiagnostics = new ClientDiagnostics(ClientOptions.Default);
+
+            // RequestMethod is needed to check for fake delete operation
+            _operation = new OperationInternal(_nextLinkOperation, clientDiagnostics, null, requestMethod: GetRequestMethod(rehydrationToken));
+        }
+
+        private RequestMethod? GetRequestMethod(RehydrationToken? rehydrationToken)
+        {
+            if (rehydrationToken is null)
+            {
+                return null;
+            }
+            var lroDetails = ModelReaderWriter.Write(rehydrationToken, new ModelReaderWriterOptions("J")).ToObjectFromJson<Dictionary<string, string>>();
+            return new RequestMethod(lroDetails["requestMethod"]);
         }
 
         /// <inheritdoc />
-        public override RehydrationToken? GetRehydrationToken() => _rehydrationToken;
+        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken();
 
 #pragma warning disable CA1822
         /// <inheritdoc />

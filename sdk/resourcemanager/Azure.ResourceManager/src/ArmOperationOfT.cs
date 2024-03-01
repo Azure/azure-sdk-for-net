@@ -19,7 +19,7 @@ namespace Azure.ResourceManager
     public class ArmOperation<T> : Operation<T> where T : notnull
     {
         private readonly OperationInternal<T>? _operation;
-        private readonly RehydrationToken? _rehydrationToken;
+        private readonly NextLinkOperationImplementation? _nextLinkOperation;
 
         /// <summary> Initializes a new instance of ArmOperation. </summary>
         public ArmOperation(ArmClient client, RehydrationToken? rehydrationToken)
@@ -39,11 +39,10 @@ namespace Azure.ResourceManager
             }
 
             IOperationSource<T> source = new GenericOperationSource<T>(client, isResource);
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, rehydrationToken);
-            // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
-            var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
+            _nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(client.Pipeline, rehydrationToken);
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, _nextLinkOperation);
+            var clientDiagnostics = new ClientDiagnostics(ClientOptions.Default);
             _operation = new OperationInternal<T>(nextLinkOperation!, clientDiagnostics, null);
-            _rehydrationToken = rehydrationToken;
         }
 
         /// <summary> Initializes a new instance of ArmOperation for mocking. </summary>
@@ -51,14 +50,8 @@ namespace Azure.ResourceManager
         {
         }
 
-        internal ArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string? apiVersionOverrideValue = null)
-        {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
-            _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, response);
-        }
-
         /// <inheritdoc />
-        public override RehydrationToken? GetRehydrationToken() => _rehydrationToken;
+        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken();
 
 #pragma warning disable CA1822
         /// <inheritdoc />
