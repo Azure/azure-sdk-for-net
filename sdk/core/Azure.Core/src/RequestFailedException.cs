@@ -23,15 +23,23 @@ namespace Azure
         private const string DefaultMessage = "Service request failed.";
 
         /// <summary>
-        /// TBD.
+        /// Creates an instance of <see cref="RequestFailedException"/> in an
+        /// <c>async</c> context.
         /// </summary>
-        /// <param name="response"></param>
-        /// <param name="parser"></param>
-        /// <param name="innerException"></param>
-        /// <returns></returns>
-        public static async ValueTask<RequestFailedException> CreateAsync(Response response, RequestFailedDetailsParser? parser = default, Exception? innerException = default)
+        /// <param name="response">The <see cref="Response"/> to obtain error
+        /// details from.</param>
+        /// <param name="detailsParser">The parser to use to parse the response
+        /// content.</param>
+        /// <param name="innerException">An inner exception to associate with
+        /// the new <see cref="RequestFailedException"/>.</param>
+        /// <returns>The <see cref="RequestFailedException"/> that was created.
+        /// </returns>
+        public static async ValueTask<RequestFailedException> CreateAsync(
+            Response response,
+            RequestFailedDetailsParser? detailsParser = default,
+            Exception? innerException = default)
         {
-            ErrorDetails details = await CreateExceptionDetailsAsync(response, parser).ConfigureAwait(false);
+            ErrorDetails details = await CreateExceptionDetailsAsync(response, detailsParser).ConfigureAwait(false);
             return new RequestFailedException(response, details, innerException);
         }
 
