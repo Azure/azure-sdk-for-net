@@ -11,19 +11,30 @@ using System.Runtime.InteropServices;
 
 namespace Azure.Core.Pipeline
 {
-    /// <summary>
-    /// An <see cref="HttpPipelineTransport"/> implementation that uses <see cref="HttpClient"/> as the transport.
-    /// </summary>
     public partial class HttpClientTransport : HttpPipelineTransport, IDisposable
     {
+        /// <summary>
+        /// This is a transport-specific implementation of <see cref="Request"/>.
+        ///
+        /// It uses the System.ClientModel HttpClient-based transport
+        /// implementation <see cref="HttpClientPipelineTransport"/> and adapts
+        /// that transport's private nested HttpClientPipelineTransportRequest
+        /// type to the Azure.Core <see cref="Request"/> interface so that it
+        /// can reuse the ClientModel implementation but treat it as an
+        /// Azure.Core Request in Azure.Core-based clients.
+        /// </summary>
         private sealed class HttpClientTransportRequest : Request
         {
             // In this implementation of the abstract Azure.Core.Request type,
-            // we have two fields for each of the public properties -- one on the
-            // Request implementation and one in the PipelineRequest implementation.
-            // The implication of this is that we need to keep both sets of fields
-            // in sync with each other when they are set from either property on
-            // Request or PipelineRequest.
+            // ther are two fields for each of the public properties -- one on
+            // the base Request implementation and one in the adapted
+            // PipelineRequest implementation. Because of this, the
+            // implementation of this type is a bit complex in that we must
+            // keep both sets of fields in sync with each other when they are
+            // set from either property on Request or PipelineRequest, so they
+            // will have the same value regardless of whether they are accessed
+            // from the instance as a Azure.Core Request or as a
+            // System.ClientModel PipelineRequest.
 
             private readonly PipelineRequest _pipelineRequest;
             private string? _clientRequestId;
@@ -32,7 +43,8 @@ namespace Azure.Core.Pipeline
             {
                 _pipelineRequest = request;
 
-                // Initialize duplicated properties on base type from adapted request.
+                // Initialize duplicated fields on the base instance
+                // from the adapted request instance.
                 base.MethodCore = request.Method;
                 base.ContentCore = request.Content;
 
@@ -41,6 +53,8 @@ namespace Azure.Core.Pipeline
                     base.UriCore = request.Uri;
                 }
             }
+
+            #region Implement Azure.Core Request abstract methods
 
             public override string ClientRequestId
             {
@@ -52,7 +66,32 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            #region Adapt PipelineResponse to inherit functional implementation from ClientModel
+            protected internal override void AddHeader(string name, string value)
+                => _pipelineRequest.Headers.Add(name, value);
+
+            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
+                => _pipelineRequest.Headers.TryGetValue(name, out value);
+
+            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
+                => _pipelineRequest.Headers.TryGetValues(name, out values);
+
+            protected internal override bool ContainsHeader(string name)
+                => _pipelineRequest.Headers.TryGetValue(name, out _);
+
+            protected internal override bool RemoveHeader(string name)
+                => _pipelineRequest.Headers.Remove(name);
+
+            protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
+            {
+                foreach (KeyValuePair<string, string> header in _pipelineRequest.Headers)
+                {
+                    yield return new HttpHeader(header.Key, header.Value);
+                }
+            }
+
+            #endregion
+
+            #region Overrides for "Core" methods from the PipelineRequest Template pattern
 
             protected override string MethodCore
             {
@@ -101,34 +140,7 @@ namespace Azure.Core.Pipeline
 
             #endregion
 
-            #region Implement Azure.Core Request abstract methods
-
-            protected internal override void AddHeader(string name, string value)
-                => _pipelineRequest.Headers.Add(name, value);
-
-            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
-                => _pipelineRequest.Headers.TryGetValue(name, out value);
-
-            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
-                => _pipelineRequest.Headers.TryGetValues(name, out values);
-
-            protected internal override bool ContainsHeader(string name)
-                => _pipelineRequest.Headers.TryGetValue(name, out _);
-
-            protected internal override bool RemoveHeader(string name)
-                => _pipelineRequest.Headers.Remove(name);
-
-            protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
-            {
-                foreach (KeyValuePair<string, string> header in _pipelineRequest.Headers)
-                {
-                    yield return new HttpHeader(header.Key, header.Value);
-                }
-            }
-
-            #endregion
-
-            #region Azure.Core extensions of ClientModel functionality
+            #region Azure.Core extensions of ClientModel HttpClientPipelineTransportRequest functionality
 
             private const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
 

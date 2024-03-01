@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -49,14 +50,7 @@ namespace Azure.Core.Pipeline
             pipeline.Span[0].Process(message, pipeline.Slice(1));
         }
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="pipeline"></param>
-        /// <param name="currentIndex"></param>
-        /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <inheritdoc/>
         public sealed override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         {
             if (message is not HttpMessage httpMessage)
@@ -64,24 +58,20 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException($"Invalid type for message: '{message?.GetType()}'");
             }
 
-            if (pipeline is not AzureCorePipelineProcessor processor)
+            if (pipeline is not HttpPipelineAdapter processor)
             {
                 throw new InvalidOperationException($"Invalid type for pipeline: '{pipeline?.GetType()}'");
             }
 
-            // The contract across ClientModel policy and Azure.Core policy is different
-            // so if we're calling Process from a ClientModel policy, we need to pop some
+            // If this method is called, it means this method is being called
+            // from a System.ClientModel PipelinePolicy instance. Since the
+            // contract for the pipeline parameter for Azure.Core and
+            // ClientModel Process methods is different, we need to pop some
             // policies off the stack before calling Process on the Azure.Core policy.
             await ProcessAsync(httpMessage, processor.Policies.Slice(currentIndex + 1)).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="pipeline"></param>
-        /// <param name="currentIndex"></param>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <inheritdoc/>
         public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         {
             if (message is not HttpMessage httpMessage)
@@ -89,12 +79,101 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException($"Invalid type for message: '{message?.GetType()}'");
             }
 
-            if (pipeline is not AzureCorePipelineProcessor processor)
+            if (pipeline is not HttpPipelineAdapter processor)
             {
                 throw new InvalidOperationException($"Invalid type for pipeline: '{pipeline?.GetType()}'");
             }
 
+            // If this method is called, it means this method is being called
+            // from a System.ClientModel PipelinePolicy instance. Since the
+            // contract for the pipeline parameter for Azure.Core and
+            // ClientModel Process methods is different, we need to pop some
+            // policies off the stack before calling Process on the Azure.Core policy.
             Process(httpMessage, processor.Policies.Slice(currentIndex + 1));
+        }
+
+        /// <summary>
+        /// This type adapts the policy collection in Azure.Core's
+        /// <see cref="HttpPipeline"/>, which is of type
+        /// <see cref="ReadOnlyMemory{HttpPipelinePolicy}"/>, to the
+        /// System.ClientModel policy collection, which is of type
+        /// <see cref="IReadOnlyList{PipelinePolicy}"/>.
+        ///
+        /// This allows Azure.Core <see cref="HttpPipelinePolicy"/> instances
+        /// to be called from the System.ClientModel <see cref="ClientPipeline"/>.
+        /// This is because System.ClientModel policies of type
+        /// <see cref="PipelinePolicy"/> will pass the policy collection as an
+        /// instance of <see cref="IReadOnlyList{PipelinePolicy}"/>.  In order for
+        /// Azure.Core policies to pass control to the next policy in the
+        /// collection, they must be able to pass the collection as a
+        /// <see cref="ReadOnlyMemory{HttpPipelinePolicy}"/>.  The underlying
+        /// <see cref="ReadOnlyMemory{HttpPipelinePolicy}"/> used to implement the
+        /// <see cref="IReadOnlyList{PipelinePolicy}"/> is exposed on this type as
+        /// <see cref="Policies"/> property.
+        ///
+        /// In addition, this type also allows Azure.Core policies such as
+        /// <see cref="RetryPolicy"/> to hold System.ClientModel policies as
+        /// private members and call their
+        /// <see cref="PipelinePolicy.Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+        /// methods to use the ClientModel functionality and also continue passing
+        /// control down the chain of policies, across both
+        /// <see cref="HttpPipelinePolicy"/> and <see cref="PipelinePolicy"/> types.
+        /// </summary>
+        internal struct HttpPipelineAdapter : IReadOnlyList<PipelinePolicy>
+        {
+            private readonly ReadOnlyMemory<HttpPipelinePolicy> _policies;
+            private PolicyEnumerator? _enumerator;
+
+            public HttpPipelineAdapter(ReadOnlyMemory<HttpPipelinePolicy> policies)
+            {
+                _policies = policies;
+            }
+
+            public ReadOnlyMemory<HttpPipelinePolicy> Policies
+                => _policies;
+
+            public PipelinePolicy this[int index] => _policies.Span[index];
+
+            public int Count => _policies.Length;
+
+            public IEnumerator<PipelinePolicy> GetEnumerator()
+                => _enumerator ??= new(this);
+
+            IEnumerator IEnumerable.GetEnumerator()
+                => GetEnumerator();
+
+            private class PolicyEnumerator : IEnumerator<PipelinePolicy>
+            {
+                private readonly IReadOnlyList<PipelinePolicy> _policies;
+                private int _current;
+
+                public PolicyEnumerator(IReadOnlyList<PipelinePolicy> policies)
+                {
+                    _policies = policies;
+                    _current = -1;
+                }
+
+                public PipelinePolicy Current
+                {
+                    get
+                    {
+                        if (_current >= 0 && _current < _policies.Count)
+                        {
+                            return _policies[_current];
+                        }
+
+                        return null!;
+                    }
+                }
+
+                object IEnumerator.Current => Current;
+
+                public bool MoveNext() => ++_current < _policies.Count;
+
+                public void Reset() => _current = -1;
+
+                public void Dispose() { }
+            }
         }
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
@@ -14,7 +15,8 @@ using System.Threading.Tasks;
 namespace Azure.Core.Pipeline
 {
     /// <summary>
-    /// An <see cref="HttpPipelineTransport"/> implementation that uses <see cref="HttpClient"/> as the transport.
+    /// An <see cref="HttpPipelineTransport"/> implementation that uses
+    /// <see cref="HttpClient"/> as the transport.
     /// </summary>
     public partial class HttpClientTransport : HttpPipelineTransport, IDisposable
     {
@@ -232,6 +234,49 @@ namespace Azure.Core.Pipeline
             }
 
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Adds Azure.Core features to the System.ClientModel HttpClient-based
+        /// transport.
+        ///
+        /// This type inherits from System.ClientModel's
+        /// <see cref="HttpClientPipelineTransport"/> and overrides its
+        /// extensibility points for
+        /// <see cref="OnSendingRequest(PipelineMessage, HttpRequestMessage)"/>
+        /// and <see cref="OnReceivedResponse(PipelineMessage, HttpResponseMessage)"/>
+        /// to add features specific to Azure, such as
+        /// <see cref="Request.ClientRequestId"/>.
+        /// </summary>
+        private class AzureCoreHttpPipelineTransport : HttpClientPipelineTransport
+        {
+            public AzureCoreHttpPipelineTransport(HttpClient client) : base(client)
+            {
+            }
+
+            protected override PipelineMessage CreateMessageCore()
+            {
+                PipelineMessage message = base.CreateMessageCore();
+                HttpClientTransportRequest request = new(message.Request);
+                return new HttpMessage(request, ResponseClassifier.Shared);
+            }
+
+            /// <inheritdoc />
+            protected override void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest)
+            {
+                HttpMessage httpMessage = HttpMessage.GetHttpMessage(message, "The provided message was created by a different transport.");
+                HttpClientTransportRequest.AddAzureProperties(httpMessage, httpRequest);
+                httpMessage.ClearResponse();
+            }
+
+            /// <inheritdoc />
+            protected override void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
+            {
+                HttpMessage httpMessage = HttpMessage.GetHttpMessage(message, "The provided message was created by a different transport.");
+                string clientRequestId = httpMessage.Request.ClientRequestId;
+                PipelineResponse pipelineResponse = message.Response!;
+                httpMessage.Response = new HttpClientTransportResponse(clientRequestId, pipelineResponse);
+            }
         }
     }
 }
