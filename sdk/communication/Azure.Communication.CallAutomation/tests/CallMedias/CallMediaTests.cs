@@ -819,7 +819,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.HoldAsync(_holdOptions)
+                   callMedia => callMedia.HoldAsync(_holdOptionsNoMusic)
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
