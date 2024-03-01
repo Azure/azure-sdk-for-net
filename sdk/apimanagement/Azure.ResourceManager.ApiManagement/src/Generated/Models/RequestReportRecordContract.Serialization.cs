@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("backendResponseCode"u8))
                 {
-                    backendResponseCode = property.Value.GetString();
+                    DeserializeBackendResponseCodeValue(property, ref backendResponseCode);
                     continue;
                 }
                 if (property.NameEquals("responseCode"u8))

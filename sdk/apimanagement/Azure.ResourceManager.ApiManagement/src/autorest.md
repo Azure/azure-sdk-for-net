@@ -139,7 +139,6 @@ rename-mapping:
   RequestReportRecordContract.subscriptionId: SubscriptionResourceId|arm-id
   RequestReportRecordContract.method: -|request-method
   RequestReportRecordContract.ipAddress: -|ip-address
-  RequestReportRecordContract.backendResponseCode: backendResponseCodeInteger|integer
   ReportRecordContract.subscriptionId: SubscriptionResourceId|arm-id
   SubscriptionsDelegationSettingsProperties: SubscriptionDelegationSettingProperties
   RegistrationDelegationSettingsProperties: RegistrationDelegationSettingProperties
