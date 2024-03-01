@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Tags != null)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     writer.WriteNull("tags");
                 }
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.LoadTesting.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 if (Encryption != null)
                 {
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> description = default;
-            Optional<LoadTestingCmkEncryptionProperties> encryption = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            string description = default;
+            LoadTestingCmkEncryptionProperties encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingResourcePatch(Optional.ToDictionary(tags), identity, description.Value, encryption.Value, serializedAdditionalRawData);
+            return new LoadTestingResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, description, encryption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingResourcePatch>.Write(ModelReaderWriterOptions options)

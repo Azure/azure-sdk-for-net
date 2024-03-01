@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NaptConfiguration))
+            if (NaptConfiguration != null)
             {
                 writer.WritePropertyName("naptConfiguration"u8);
                 writer.WriteObjectValue(NaptConfiguration);
             }
-            if (Optional.IsCollectionDefined(UserEquipmentAddressPoolPrefix))
+            if (!(UserEquipmentAddressPoolPrefix is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userEquipmentAddressPoolPrefix"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserEquipmentStaticAddressPoolPrefix))
+            if (!(UserEquipmentStaticAddressPoolPrefix is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("userEquipmentStaticAddressPoolPrefix"u8);
                 writer.WriteStartArray();
@@ -141,18 +141,18 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            MobileNetworkProvisioningState? provisioningState = default;
             MobileNetworkInterfaceProperties userPlaneDataInterface = default;
             IList<string> dnsAddresses = default;
-            Optional<NaptConfiguration> naptConfiguration = default;
-            Optional<IList<string>> userEquipmentAddressPoolPrefix = default;
-            Optional<IList<string>> userEquipmentStaticAddressPoolPrefix = default;
+            NaptConfiguration naptConfiguration = default;
+            IList<string> userEquipmentAddressPoolPrefix = default;
+            IList<string> userEquipmentStaticAddressPoolPrefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -279,7 +279,20 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileAttachedDataNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), userPlaneDataInterface, dnsAddresses, naptConfiguration.Value, Optional.ToList(userEquipmentAddressPoolPrefix), Optional.ToList(userEquipmentStaticAddressPoolPrefix), serializedAdditionalRawData);
+            return new MobileAttachedDataNetworkData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                userPlaneDataInterface,
+                dnsAddresses,
+                naptConfiguration,
+                userEquipmentAddressPoolPrefix ?? new ChangeTrackingList<string>(),
+                userEquipmentStaticAddressPoolPrefix ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileAttachedDataNetworkData>.Write(ModelReaderWriterOptions options)

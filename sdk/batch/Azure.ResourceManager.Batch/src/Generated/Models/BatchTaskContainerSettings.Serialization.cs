@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContainerRunOptions))
+            if (ContainerRunOptions != null)
             {
                 writer.WritePropertyName("containerRunOptions"u8);
                 writer.WriteStringValue(ContainerRunOptions);
             }
             writer.WritePropertyName("imageName"u8);
             writer.WriteStringValue(ImageName);
-            if (Optional.IsDefined(Registry))
+            if (Registry != null)
             {
                 writer.WritePropertyName("registry"u8);
                 writer.WriteObjectValue(Registry);
             }
-            if (Optional.IsDefined(WorkingDirectory))
+            if (WorkingDirectory.HasValue)
             {
                 writer.WritePropertyName("workingDirectory"u8);
                 writer.WriteStringValue(WorkingDirectory.Value.ToSerialString());
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> containerRunOptions = default;
+            string containerRunOptions = default;
             string imageName = default;
-            Optional<BatchVmContainerRegistry> registry = default;
-            Optional<BatchContainerWorkingDirectory> workingDirectory = default;
+            BatchVmContainerRegistry registry = default;
+            BatchContainerWorkingDirectory? workingDirectory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchTaskContainerSettings(containerRunOptions.Value, imageName, registry.Value, Optional.ToNullable(workingDirectory), serializedAdditionalRawData);
+            return new BatchTaskContainerSettings(containerRunOptions, imageName, registry, workingDirectory, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchTaskContainerSettings>.Write(ModelReaderWriterOptions options)

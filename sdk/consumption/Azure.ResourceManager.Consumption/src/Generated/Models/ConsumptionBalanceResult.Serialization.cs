@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,79 +59,79 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Currency))
+            if (options.Format != "W" && Currency != null)
             {
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
             }
-            if (options.Format != "W" && Optional.IsDefined(BeginningBalance))
+            if (options.Format != "W" && BeginningBalance.HasValue)
             {
                 writer.WritePropertyName("beginningBalance"u8);
                 writer.WriteNumberValue(BeginningBalance.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndingBalance))
+            if (options.Format != "W" && EndingBalance.HasValue)
             {
                 writer.WritePropertyName("endingBalance"u8);
                 writer.WriteNumberValue(EndingBalance.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NewPurchases))
+            if (options.Format != "W" && NewPurchases.HasValue)
             {
                 writer.WritePropertyName("newPurchases"u8);
                 writer.WriteNumberValue(NewPurchases.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Adjustments))
+            if (options.Format != "W" && Adjustments.HasValue)
             {
                 writer.WritePropertyName("adjustments"u8);
                 writer.WriteNumberValue(Adjustments.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Utilized))
+            if (options.Format != "W" && Utilized.HasValue)
             {
                 writer.WritePropertyName("utilized"u8);
                 writer.WriteNumberValue(Utilized.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceOverage))
+            if (options.Format != "W" && ServiceOverage.HasValue)
             {
                 writer.WritePropertyName("serviceOverage"u8);
                 writer.WriteNumberValue(ServiceOverage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ChargesBilledSeparately))
+            if (options.Format != "W" && ChargesBilledSeparately.HasValue)
             {
                 writer.WritePropertyName("chargesBilledSeparately"u8);
                 writer.WriteNumberValue(ChargesBilledSeparately.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalOverage))
+            if (options.Format != "W" && TotalOverage.HasValue)
             {
                 writer.WritePropertyName("totalOverage"u8);
                 writer.WriteNumberValue(TotalOverage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalUsage))
+            if (options.Format != "W" && TotalUsage.HasValue)
             {
                 writer.WritePropertyName("totalUsage"u8);
                 writer.WriteNumberValue(TotalUsage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureMarketplaceServiceCharges))
+            if (options.Format != "W" && AzureMarketplaceServiceCharges.HasValue)
             {
                 writer.WritePropertyName("azureMarketplaceServiceCharges"u8);
                 writer.WriteNumberValue(AzureMarketplaceServiceCharges.Value);
             }
-            if (Optional.IsDefined(BillingFrequency))
+            if (BillingFrequency.HasValue)
             {
                 writer.WritePropertyName("billingFrequency"u8);
                 writer.WriteStringValue(BillingFrequency.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IsPriceHidden))
+            if (options.Format != "W" && IsPriceHidden.HasValue)
             {
                 writer.WritePropertyName("priceHidden"u8);
                 writer.WriteBooleanValue(IsPriceHidden.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NewPurchasesDetails))
+            if (options.Format != "W" && !(NewPurchasesDetails is ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("newPurchasesDetails"u8);
                 writer.WriteStartArray();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdjustmentDetails))
+            if (options.Format != "W" && !(AdjustmentDetails is ChangeTrackingList<ConsumptionBalanceAdjustmentDetail> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("adjustmentDetails"u8);
                 writer.WriteStartArray();
@@ -190,27 +190,27 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> currency = default;
-            Optional<decimal> beginningBalance = default;
-            Optional<decimal> endingBalance = default;
-            Optional<decimal> newPurchases = default;
-            Optional<decimal> adjustments = default;
-            Optional<decimal> utilized = default;
-            Optional<decimal> serviceOverage = default;
-            Optional<decimal> chargesBilledSeparately = default;
-            Optional<decimal> totalOverage = default;
-            Optional<decimal> totalUsage = default;
-            Optional<decimal> azureMarketplaceServiceCharges = default;
-            Optional<ConsumptionBillingFrequency> billingFrequency = default;
-            Optional<bool> priceHidden = default;
-            Optional<IReadOnlyList<ConsumptionBalanceNewPurchasesDetail>> newPurchasesDetails = default;
-            Optional<IReadOnlyList<ConsumptionBalanceAdjustmentDetail>> adjustmentDetails = default;
+            SystemData systemData = default;
+            string currency = default;
+            decimal? beginningBalance = default;
+            decimal? endingBalance = default;
+            decimal? newPurchases = default;
+            decimal? adjustments = default;
+            decimal? utilized = default;
+            decimal? serviceOverage = default;
+            decimal? chargesBilledSeparately = default;
+            decimal? totalOverage = default;
+            decimal? totalUsage = default;
+            decimal? azureMarketplaceServiceCharges = default;
+            ConsumptionBillingFrequency? billingFrequency = default;
+            bool? priceHidden = default;
+            IReadOnlyList<ConsumptionBalanceNewPurchasesDetail> newPurchasesDetails = default;
+            IReadOnlyList<ConsumptionBalanceAdjustmentDetail> adjustmentDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -421,7 +421,29 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionBalanceResult(id, name, type, systemData.Value, currency.Value, Optional.ToNullable(beginningBalance), Optional.ToNullable(endingBalance), Optional.ToNullable(newPurchases), Optional.ToNullable(adjustments), Optional.ToNullable(utilized), Optional.ToNullable(serviceOverage), Optional.ToNullable(chargesBilledSeparately), Optional.ToNullable(totalOverage), Optional.ToNullable(totalUsage), Optional.ToNullable(azureMarketplaceServiceCharges), Optional.ToNullable(billingFrequency), Optional.ToNullable(priceHidden), Optional.ToList(newPurchasesDetails), Optional.ToList(adjustmentDetails), Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ConsumptionBalanceResult(
+                id,
+                name,
+                type,
+                systemData,
+                currency,
+                beginningBalance,
+                endingBalance,
+                newPurchases,
+                adjustments,
+                utilized,
+                serviceOverage,
+                chargesBilledSeparately,
+                totalOverage,
+                totalUsage,
+                azureMarketplaceServiceCharges,
+                billingFrequency,
+                priceHidden,
+                newPurchasesDetails ?? new ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail>(),
+                adjustmentDetails ?? new ChangeTrackingList<ConsumptionBalanceAdjustmentDetail>(),
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionBalanceResult>.Write(ModelReaderWriterOptions options)

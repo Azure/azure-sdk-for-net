@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Orbital
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,44 +62,44 @@ namespace Azure.ResourceManager.Orbital
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(MinimumViableContactDuration))
+            if (MinimumViableContactDuration.HasValue)
             {
                 writer.WritePropertyName("minimumViableContactDuration"u8);
                 writer.WriteStringValue(MinimumViableContactDuration.Value, "P");
             }
-            if (Optional.IsDefined(MinimumElevationDegrees))
+            if (MinimumElevationDegrees.HasValue)
             {
                 writer.WritePropertyName("minimumElevationDegrees"u8);
                 writer.WriteNumberValue(MinimumElevationDegrees.Value);
             }
-            if (Optional.IsDefined(AutoTrackingConfiguration))
+            if (AutoTrackingConfiguration.HasValue)
             {
                 writer.WritePropertyName("autoTrackingConfiguration"u8);
                 writer.WriteStringValue(AutoTrackingConfiguration.Value.ToSerialString());
             }
-            if (Optional.IsDefined(EventHubUri))
+            if (EventHubUri != null)
             {
                 writer.WritePropertyName("eventHubUri"u8);
                 writer.WriteStringValue(EventHubUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(NetworkConfiguration))
+            if (NetworkConfiguration != null)
             {
                 writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
             }
-            if (Optional.IsCollectionDefined(Links))
+            if (!(Links is ChangeTrackingList<OrbitalContactProfileLink> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -148,20 +148,20 @@ namespace Azure.ResourceManager.Orbital
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<OrbitalProvisioningState> provisioningState = default;
-            Optional<TimeSpan> minimumViableContactDuration = default;
-            Optional<float> minimumElevationDegrees = default;
-            Optional<AutoTrackingConfiguration> autoTrackingConfiguration = default;
-            Optional<Uri> eventHubUri = default;
-            Optional<ContactProfilesPropertiesNetworkConfiguration> networkConfiguration = default;
-            Optional<IList<OrbitalContactProfileLink>> links = default;
+            SystemData systemData = default;
+            OrbitalProvisioningState? provisioningState = default;
+            TimeSpan? minimumViableContactDuration = default;
+            float? minimumElevationDegrees = default;
+            AutoTrackingConfiguration? autoTrackingConfiguration = default;
+            Uri eventHubUri = default;
+            ContactProfilesPropertiesNetworkConfiguration networkConfiguration = default;
+            IList<OrbitalContactProfileLink> links = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -304,7 +304,22 @@ namespace Azure.ResourceManager.Orbital
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalContactProfileData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(minimumViableContactDuration), Optional.ToNullable(minimumElevationDegrees), Optional.ToNullable(autoTrackingConfiguration), eventHubUri.Value, networkConfiguration.Value, Optional.ToList(links), serializedAdditionalRawData);
+            return new OrbitalContactProfileData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                provisioningState,
+                minimumViableContactDuration,
+                minimumElevationDegrees,
+                autoTrackingConfiguration,
+                eventHubUri,
+                networkConfiguration,
+                links ?? new ChangeTrackingList<OrbitalContactProfileLink>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalContactProfileData>.Write(ModelReaderWriterOptions options)

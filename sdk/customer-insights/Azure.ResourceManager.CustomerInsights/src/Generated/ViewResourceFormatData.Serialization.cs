@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ViewName))
+            if (options.Format != "W" && ViewName != null)
             {
                 writer.WritePropertyName("viewName"u8);
                 writer.WriteStringValue(ViewName);
             }
-            if (Optional.IsDefined(UserId))
+            if (UserId != null)
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Definition))
+            if (Definition != null)
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteStringValue(Definition);
             }
-            if (options.Format != "W" && Optional.IsDefined(Changed))
+            if (options.Format != "W" && Changed.HasValue)
             {
                 writer.WritePropertyName("changed"u8);
                 writer.WriteStringValue(Changed.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Created))
+            if (options.Format != "W" && Created.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created.Value, "O");
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> viewName = default;
-            Optional<string> userId = default;
-            Optional<Guid> tenantId = default;
-            Optional<IDictionary<string, string>> displayName = default;
-            Optional<string> definition = default;
-            Optional<DateTimeOffset> changed = default;
-            Optional<DateTimeOffset> created = default;
+            SystemData systemData = default;
+            string viewName = default;
+            string userId = default;
+            Guid? tenantId = default;
+            IDictionary<string, string> displayName = default;
+            string definition = default;
+            DateTimeOffset? changed = default;
+            DateTimeOffset? created = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -242,7 +242,19 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ViewResourceFormatData(id, name, type, systemData.Value, viewName.Value, userId.Value, Optional.ToNullable(tenantId), Optional.ToDictionary(displayName), definition.Value, Optional.ToNullable(changed), Optional.ToNullable(created), serializedAdditionalRawData);
+            return new ViewResourceFormatData(
+                id,
+                name,
+                type,
+                systemData,
+                viewName,
+                userId,
+                tenantId,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                definition,
+                changed,
+                created,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ViewResourceFormatData>.Write(ModelReaderWriterOptions options)

@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.DataLakeStore
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Identity))
+            if (options.Format != "W" && Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -64,64 +64,64 @@ namespace Azure.ResourceManager.DataLakeStore
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AccountId))
+            if (options.Format != "W" && AccountId.HasValue)
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Endpoint))
+            if (options.Format != "W" && Endpoint != null)
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultGroup))
+            if (options.Format != "W" && DefaultGroup != null)
             {
                 writer.WritePropertyName("defaultGroup"u8);
                 writer.WriteStringValue(DefaultGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(EncryptionConfig))
+            if (options.Format != "W" && EncryptionConfig != null)
             {
                 writer.WritePropertyName("encryptionConfig"u8);
                 writer.WriteObjectValue(EncryptionConfig);
             }
-            if (options.Format != "W" && Optional.IsDefined(EncryptionState))
+            if (options.Format != "W" && EncryptionState.HasValue)
             {
                 writer.WritePropertyName("encryptionState"u8);
                 writer.WriteStringValue(EncryptionState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(EncryptionProvisioningState))
+            if (options.Format != "W" && EncryptionProvisioningState.HasValue)
             {
                 writer.WritePropertyName("encryptionProvisioningState"u8);
                 writer.WriteStringValue(EncryptionProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FirewallRules))
+            if (options.Format != "W" && !(FirewallRules is ChangeTrackingList<DataLakeStoreFirewallRuleData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("firewallRules"u8);
                 writer.WriteStartArray();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualNetworkRules))
+            if (options.Format != "W" && !(VirtualNetworkRules is ChangeTrackingList<DataLakeStoreVirtualNetworkRuleData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.DataLakeStore
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(FirewallState))
+            if (options.Format != "W" && FirewallState.HasValue)
             {
                 writer.WritePropertyName("firewallState"u8);
                 writer.WriteStringValue(FirewallState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FirewallAllowAzureIPs))
+            if (options.Format != "W" && FirewallAllowAzureIPs.HasValue)
             {
                 writer.WritePropertyName("firewallAllowAzureIps"u8);
                 writer.WriteStringValue(FirewallAllowAzureIPs.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TrustedIdProviders))
+            if (options.Format != "W" && !(TrustedIdProviders is ChangeTrackingList<DataLakeStoreTrustedIdProviderData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("trustedIdProviders"u8);
                 writer.WriteStartArray();
@@ -161,17 +161,17 @@ namespace Azure.ResourceManager.DataLakeStore
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(TrustedIdProviderState))
+            if (options.Format != "W" && TrustedIdProviderState.HasValue)
             {
                 writer.WritePropertyName("trustedIdProviderState"u8);
                 writer.WriteStringValue(TrustedIdProviderState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(NewTier))
+            if (options.Format != "W" && NewTier.HasValue)
             {
                 writer.WritePropertyName("newTier"u8);
                 writer.WriteStringValue(NewTier.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentTier))
+            if (options.Format != "W" && CurrentTier.HasValue)
             {
                 writer.WritePropertyName("currentTier"u8);
                 writer.WriteStringValue(CurrentTier.Value.ToSerialString());
@@ -215,31 +215,31 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            AzureLocation? location = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> accountId = default;
-            Optional<DataLakeStoreAccountStatus> provisioningState = default;
-            Optional<DataLakeStoreAccountState> state = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> endpoint = default;
-            Optional<string> defaultGroup = default;
-            Optional<DataLakeStoreAccountEncryptionConfig> encryptionConfig = default;
-            Optional<DataLakeStoreEncryptionState> encryptionState = default;
-            Optional<DataLakeStoreEncryptionProvisioningState> encryptionProvisioningState = default;
-            Optional<IReadOnlyList<DataLakeStoreFirewallRuleData>> firewallRules = default;
-            Optional<IReadOnlyList<DataLakeStoreVirtualNetworkRuleData>> virtualNetworkRules = default;
-            Optional<DataLakeStoreFirewallState> firewallState = default;
-            Optional<DataLakeStoreFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
-            Optional<IReadOnlyList<DataLakeStoreTrustedIdProviderData>> trustedIdProviders = default;
-            Optional<DataLakeStoreTrustedIdProviderState> trustedIdProviderState = default;
-            Optional<DataLakeStoreCommitmentTierType> newTier = default;
-            Optional<DataLakeStoreCommitmentTierType> currentTier = default;
+            SystemData systemData = default;
+            Guid? accountId = default;
+            DataLakeStoreAccountStatus? provisioningState = default;
+            DataLakeStoreAccountState? state = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string endpoint = default;
+            string defaultGroup = default;
+            DataLakeStoreAccountEncryptionConfig encryptionConfig = default;
+            DataLakeStoreEncryptionState? encryptionState = default;
+            DataLakeStoreEncryptionProvisioningState? encryptionProvisioningState = default;
+            IReadOnlyList<DataLakeStoreFirewallRuleData> firewallRules = default;
+            IReadOnlyList<DataLakeStoreVirtualNetworkRuleData> virtualNetworkRules = default;
+            DataLakeStoreFirewallState? firewallState = default;
+            DataLakeStoreFirewallAllowAzureIPsState? firewallAllowAzureIPs = default;
+            IReadOnlyList<DataLakeStoreTrustedIdProviderData> trustedIdProviders = default;
+            DataLakeStoreTrustedIdProviderState? trustedIdProviderState = default;
+            DataLakeStoreCommitmentTierType? newTier = default;
+            DataLakeStoreCommitmentTierType? currentTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -487,7 +487,33 @@ namespace Azure.ResourceManager.DataLakeStore
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreAccountData(id, name, type, systemData.Value, identity, Optional.ToNullable(accountId), Optional.ToNullable(provisioningState), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), endpoint.Value, defaultGroup.Value, encryptionConfig.Value, Optional.ToNullable(encryptionState), Optional.ToNullable(encryptionProvisioningState), Optional.ToList(firewallRules), Optional.ToList(virtualNetworkRules), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), Optional.ToList(trustedIdProviders), Optional.ToNullable(trustedIdProviderState), Optional.ToNullable(newTier), Optional.ToNullable(currentTier), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new DataLakeStoreAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                identity,
+                accountId,
+                provisioningState,
+                state,
+                creationTime,
+                lastModifiedTime,
+                endpoint,
+                defaultGroup,
+                encryptionConfig,
+                encryptionState,
+                encryptionProvisioningState,
+                firewallRules ?? new ChangeTrackingList<DataLakeStoreFirewallRuleData>(),
+                virtualNetworkRules ?? new ChangeTrackingList<DataLakeStoreVirtualNetworkRuleData>(),
+                firewallState,
+                firewallAllowAzureIPs,
+                trustedIdProviders ?? new ChangeTrackingList<DataLakeStoreTrustedIdProviderData>(),
+                trustedIdProviderState,
+                newTier,
+                currentTier,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreAccountData>.Write(ModelReaderWriterOptions options)

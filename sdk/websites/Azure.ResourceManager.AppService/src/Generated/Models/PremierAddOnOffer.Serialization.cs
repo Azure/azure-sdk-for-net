@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,59 +47,59 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Optional.IsDefined(Product))
+            if (Product != null)
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (Optional.IsDefined(Vendor))
+            if (Vendor != null)
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (Optional.IsDefined(IsPromoCodeRequired))
+            if (IsPromoCodeRequired.HasValue)
             {
                 writer.WritePropertyName("promoCodeRequired"u8);
                 writer.WriteBooleanValue(IsPromoCodeRequired.Value);
             }
-            if (Optional.IsDefined(Quota))
+            if (Quota.HasValue)
             {
                 writer.WritePropertyName("quota"u8);
                 writer.WriteNumberValue(Quota.Value);
             }
-            if (Optional.IsDefined(WebHostingPlanRestrictions))
+            if (WebHostingPlanRestrictions.HasValue)
             {
                 writer.WritePropertyName("webHostingPlanRestrictions"u8);
                 writer.WriteStringValue(WebHostingPlanRestrictions.Value.ToSerialString());
             }
-            if (Optional.IsDefined(PrivacyPolicyUri))
+            if (PrivacyPolicyUri != null)
             {
                 writer.WritePropertyName("privacyPolicyUrl"u8);
                 writer.WriteStringValue(PrivacyPolicyUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(LegalTermsUri))
+            if (LegalTermsUri != null)
             {
                 writer.WritePropertyName("legalTermsUrl"u8);
                 writer.WriteStringValue(LegalTermsUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(MarketplacePublisher))
+            if (MarketplacePublisher != null)
             {
                 writer.WritePropertyName("marketplacePublisher"u8);
                 writer.WriteStringValue(MarketplacePublisher);
             }
-            if (Optional.IsDefined(MarketplaceOffer))
+            if (MarketplaceOffer != null)
             {
                 writer.WritePropertyName("marketplaceOffer"u8);
                 writer.WriteStringValue(MarketplaceOffer);
@@ -143,21 +143,21 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> sku = default;
-            Optional<string> product = default;
-            Optional<string> vendor = default;
-            Optional<bool> promoCodeRequired = default;
-            Optional<int> quota = default;
-            Optional<AppServicePlanRestriction> webHostingPlanRestrictions = default;
-            Optional<Uri> privacyPolicyUrl = default;
-            Optional<Uri> legalTermsUrl = default;
-            Optional<string> marketplacePublisher = default;
-            Optional<string> marketplaceOffer = default;
+            SystemData systemData = default;
+            string sku = default;
+            string product = default;
+            string vendor = default;
+            bool? promoCodeRequired = default;
+            int? quota = default;
+            AppServicePlanRestriction? webHostingPlanRestrictions = default;
+            Uri privacyPolicyUrl = default;
+            Uri legalTermsUrl = default;
+            string marketplacePublisher = default;
+            string marketplaceOffer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -279,7 +279,23 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PremierAddOnOffer(id, name, type, systemData.Value, sku.Value, product.Value, vendor.Value, Optional.ToNullable(promoCodeRequired), Optional.ToNullable(quota), Optional.ToNullable(webHostingPlanRestrictions), privacyPolicyUrl.Value, legalTermsUrl.Value, marketplacePublisher.Value, marketplaceOffer.Value, kind.Value, serializedAdditionalRawData);
+            return new PremierAddOnOffer(
+                id,
+                name,
+                type,
+                systemData,
+                sku,
+                product,
+                vendor,
+                promoCodeRequired,
+                quota,
+                webHostingPlanRestrictions,
+                privacyPolicyUrl,
+                legalTermsUrl,
+                marketplacePublisher,
+                marketplaceOffer,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PremierAddOnOffer>.Write(ModelReaderWriterOptions options)

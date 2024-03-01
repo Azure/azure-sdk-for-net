@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PolicyDefinitionId))
+            if (options.Format != "W" && PolicyDefinitionId != null)
             {
                 writer.WritePropertyName("policyDefinitionId"u8);
                 writer.WriteStringValue(PolicyDefinitionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PolicyAssignmentId))
+            if (options.Format != "W" && PolicyAssignmentId != null)
             {
                 writer.WritePropertyName("policyAssignmentId"u8);
                 writer.WriteStringValue(PolicyAssignmentId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PolicyAssignmentDisplayName))
+            if (options.Format != "W" && PolicyAssignmentDisplayName != null)
             {
                 writer.WritePropertyName("policyAssignmentDisplayName"u8);
                 writer.WriteStringValue(PolicyAssignmentDisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PolicyAssignmentScope))
+            if (options.Format != "W" && PolicyAssignmentScope != null)
             {
                 writer.WritePropertyName("policyAssignmentScope"u8);
                 writer.WriteStringValue(PolicyAssignmentScope);
             }
-            if (options.Format != "W" && Optional.IsDefined(PolicySetDefinitionId))
+            if (options.Format != "W" && PolicySetDefinitionId != null)
             {
                 writer.WritePropertyName("policySetDefinitionId"u8);
                 writer.WriteStringValue(PolicySetDefinitionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PolicyDefinitionReferenceId))
+            if (options.Format != "W" && PolicyDefinitionReferenceId != null)
             {
                 writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> policyDefinitionId = default;
-            Optional<ResourceIdentifier> policyAssignmentId = default;
-            Optional<string> policyAssignmentDisplayName = default;
-            Optional<string> policyAssignmentScope = default;
-            Optional<ResourceIdentifier> policySetDefinitionId = default;
-            Optional<string> policyDefinitionReferenceId = default;
+            ResourceIdentifier policyDefinitionId = default;
+            ResourceIdentifier policyAssignmentId = default;
+            string policyAssignmentDisplayName = default;
+            string policyAssignmentScope = default;
+            ResourceIdentifier policySetDefinitionId = default;
+            string policyDefinitionReferenceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyDetails(policyDefinitionId.Value, policyAssignmentId.Value, policyAssignmentDisplayName.Value, policyAssignmentScope.Value, policySetDefinitionId.Value, policyDefinitionReferenceId.Value, serializedAdditionalRawData);
+            return new PolicyDetails(
+                policyDefinitionId,
+                policyAssignmentId,
+                policyAssignmentDisplayName,
+                policyAssignmentScope,
+                policySetDefinitionId,
+                policyDefinitionReferenceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyDetails>.Write(ModelReaderWriterOptions options)

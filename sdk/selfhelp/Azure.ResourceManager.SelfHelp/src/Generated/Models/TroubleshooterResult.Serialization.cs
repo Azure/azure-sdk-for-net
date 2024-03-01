@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QuestionId))
+            if (QuestionId != null)
             {
                 writer.WritePropertyName("questionId"u8);
                 writer.WriteStringValue(QuestionId);
             }
-            if (Optional.IsDefined(QuestionType))
+            if (QuestionType.HasValue)
             {
                 writer.WritePropertyName("questionType"u8);
                 writer.WriteStringValue(QuestionType.Value.ToString());
             }
-            if (Optional.IsDefined(Response))
+            if (Response != null)
             {
                 writer.WritePropertyName("response"u8);
                 writer.WriteStringValue(Response);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> questionId = default;
-            Optional<QuestionType> questionType = default;
-            Optional<string> response = default;
+            string questionId = default;
+            QuestionType? questionType = default;
+            string response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TroubleshooterResult(questionId.Value, Optional.ToNullable(questionType), response.Value, serializedAdditionalRawData);
+            return new TroubleshooterResult(questionId, questionType, response, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TroubleshooterResult>.Write(ModelReaderWriterOptions options)

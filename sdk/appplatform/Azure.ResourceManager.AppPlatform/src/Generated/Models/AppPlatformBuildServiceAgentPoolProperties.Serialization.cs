@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(PoolSize))
+            if (PoolSize != null)
             {
                 writer.WritePropertyName("poolSize"u8);
                 writer.WriteObjectValue(PoolSize);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> provisioningState = default;
-            Optional<BuildServiceAgentPoolSizeProperties> poolSize = default;
+            string provisioningState = default;
+            BuildServiceAgentPoolSizeProperties poolSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuildServiceAgentPoolProperties(provisioningState.Value, poolSize.Value, serializedAdditionalRawData);
+            return new AppPlatformBuildServiceAgentPoolProperties(provisioningState, poolSize, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformBuildServiceAgentPoolProperties>.Write(ModelReaderWriterOptions options)

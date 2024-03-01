@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppLocation))
+            if (AppLocation.HasValue)
             {
                 writer.WritePropertyName("appLocation"u8);
                 writer.WriteStringValue(AppLocation.Value);
             }
-            if (Optional.IsDefined(InfrastructureConfiguration))
+            if (InfrastructureConfiguration != null)
             {
                 writer.WritePropertyName("infrastructureConfiguration"u8);
                 writer.WriteObjectValue(InfrastructureConfiguration);
             }
-            if (Optional.IsDefined(SoftwareConfiguration))
+            if (SoftwareConfiguration != null)
             {
                 writer.WritePropertyName("softwareConfiguration"u8);
                 writer.WriteObjectValue(SoftwareConfiguration);
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<AzureLocation> appLocation = default;
-            Optional<InfrastructureConfiguration> infrastructureConfiguration = default;
-            Optional<SapSoftwareConfiguration> softwareConfiguration = default;
+            AzureLocation? appLocation = default;
+            InfrastructureConfiguration infrastructureConfiguration = default;
+            SapSoftwareConfiguration softwareConfiguration = default;
             SapConfigurationType configurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeploymentConfiguration(configurationType, serializedAdditionalRawData, Optional.ToNullable(appLocation), infrastructureConfiguration.Value, softwareConfiguration.Value);
+            return new DeploymentConfiguration(configurationType, serializedAdditionalRawData, appLocation, infrastructureConfiguration, softwareConfiguration);
         }
 
         BinaryData IPersistableModel<DeploymentConfiguration>.Write(ModelReaderWriterOptions options)

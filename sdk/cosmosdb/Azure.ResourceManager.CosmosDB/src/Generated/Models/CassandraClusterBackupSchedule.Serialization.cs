@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScheduleName))
+            if (ScheduleName != null)
             {
                 writer.WritePropertyName("scheduleName"u8);
                 writer.WriteStringValue(ScheduleName);
             }
-            if (Optional.IsDefined(CronExpression))
+            if (CronExpression != null)
             {
                 writer.WritePropertyName("cronExpression"u8);
                 writer.WriteStringValue(CronExpression);
             }
-            if (Optional.IsDefined(RetentionInHours))
+            if (RetentionInHours.HasValue)
             {
                 writer.WritePropertyName("retentionInHours"u8);
                 writer.WriteNumberValue(RetentionInHours.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> scheduleName = default;
-            Optional<string> cronExpression = default;
-            Optional<int> retentionInHours = default;
+            string scheduleName = default;
+            string cronExpression = default;
+            int? retentionInHours = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterBackupSchedule(scheduleName.Value, cronExpression.Value, Optional.ToNullable(retentionInHours), serializedAdditionalRawData);
+            return new CassandraClusterBackupSchedule(scheduleName, cronExpression, retentionInHours, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraClusterBackupSchedule>.Write(ModelReaderWriterOptions options)

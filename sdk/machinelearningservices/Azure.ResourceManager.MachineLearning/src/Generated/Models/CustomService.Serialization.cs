@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Image))
+            if (Image != null)
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteObjectValue(Image);
             }
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            if (!(EnvironmentVariables is ChangeTrackingDictionary<string, EnvironmentVariable> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Docker))
+            if (Docker != null)
             {
                 if (Docker != null)
                 {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("docker");
                 }
             }
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<ContainerEndpoint> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Volumes))
+            if (!(Volumes is ChangeTrackingList<VolumeDefinition> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ImageSetting> image = default;
-            Optional<IDictionary<string, EnvironmentVariable>> environmentVariables = default;
-            Optional<DockerSetting> docker = default;
-            Optional<IList<ContainerEndpoint>> endpoints = default;
-            Optional<IList<VolumeDefinition>> volumes = default;
+            string name = default;
+            ImageSetting image = default;
+            IDictionary<string, EnvironmentVariable> environmentVariables = default;
+            DockerSetting docker = default;
+            IList<ContainerEndpoint> endpoints = default;
+            IList<VolumeDefinition> volumes = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,7 +193,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CustomService(name.Value, image.Value, Optional.ToDictionary(environmentVariables), docker.Value, Optional.ToList(endpoints), Optional.ToList(volumes), additionalProperties);
+            return new CustomService(
+                name,
+                image,
+                environmentVariables ?? new ChangeTrackingDictionary<string, EnvironmentVariable>(),
+                docker,
+                endpoints ?? new ChangeTrackingList<ContainerEndpoint>(),
+                volumes ?? new ChangeTrackingList<VolumeDefinition>(),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<CustomService>.Write(ModelReaderWriterOptions options)

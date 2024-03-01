@@ -28,18 +28,18 @@ namespace Azure.ResourceManager.CosmosDB
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,29 +67,29 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(DocumentEndpoint))
+            if (options.Format != "W" && DocumentEndpoint != null)
             {
                 writer.WritePropertyName("documentEndpoint"u8);
                 writer.WriteStringValue(DocumentEndpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseAccountOfferType))
+            if (options.Format != "W" && DatabaseAccountOfferType.HasValue)
             {
                 writer.WritePropertyName("databaseAccountOfferType"u8);
                 writer.WriteStringValue(DatabaseAccountOfferType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IPRules))
+            if (!(IPRules is ChangeTrackingList<CosmosDBIPAddressOrRange> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -99,22 +99,22 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsVirtualNetworkFilterEnabled))
+            if (IsVirtualNetworkFilterEnabled.HasValue)
             {
                 writer.WritePropertyName("isVirtualNetworkFilterEnabled"u8);
                 writer.WriteBooleanValue(IsVirtualNetworkFilterEnabled.Value);
             }
-            if (Optional.IsDefined(EnableAutomaticFailover))
+            if (EnableAutomaticFailover.HasValue)
             {
                 writer.WritePropertyName("enableAutomaticFailover"u8);
                 writer.WriteBooleanValue(EnableAutomaticFailover.Value);
             }
-            if (Optional.IsDefined(ConsistencyPolicy))
+            if (ConsistencyPolicy != null)
             {
                 writer.WritePropertyName("consistencyPolicy"u8);
                 writer.WriteObjectValue(ConsistencyPolicy);
             }
-            if (Optional.IsCollectionDefined(Capabilities))
+            if (!(Capabilities is ChangeTrackingList<CosmosDBAccountCapability> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(WriteLocations))
+            if (options.Format != "W" && !(WriteLocations is ChangeTrackingList<CosmosDBAccountLocation> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("writeLocations"u8);
                 writer.WriteStartArray();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReadLocations))
+            if (options.Format != "W" && !(ReadLocations is ChangeTrackingList<CosmosDBAccountLocation> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("readLocations"u8);
                 writer.WriteStartArray();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<CosmosDBAccountLocation> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FailoverPolicies))
+            if (options.Format != "W" && !(FailoverPolicies is ChangeTrackingList<CosmosDBFailoverPolicy> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("failoverPolicies"u8);
                 writer.WriteStartArray();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VirtualNetworkRules))
+            if (!(VirtualNetworkRules is ChangeTrackingList<CosmosDBVirtualNetworkRule> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<CosmosDBPrivateEndpointConnectionData> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -184,82 +184,82 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableMultipleWriteLocations))
+            if (EnableMultipleWriteLocations.HasValue)
             {
                 writer.WritePropertyName("enableMultipleWriteLocations"u8);
                 writer.WriteBooleanValue(EnableMultipleWriteLocations.Value);
             }
-            if (Optional.IsDefined(EnableCassandraConnector))
+            if (EnableCassandraConnector.HasValue)
             {
                 writer.WritePropertyName("enableCassandraConnector"u8);
                 writer.WriteBooleanValue(EnableCassandraConnector.Value);
             }
-            if (Optional.IsDefined(ConnectorOffer))
+            if (ConnectorOffer.HasValue)
             {
                 writer.WritePropertyName("connectorOffer"u8);
                 writer.WriteStringValue(ConnectorOffer.Value.ToString());
             }
-            if (Optional.IsDefined(DisableKeyBasedMetadataWriteAccess))
+            if (DisableKeyBasedMetadataWriteAccess.HasValue)
             {
                 writer.WritePropertyName("disableKeyBasedMetadataWriteAccess"u8);
                 writer.WriteBooleanValue(DisableKeyBasedMetadataWriteAccess.Value);
             }
-            if (Optional.IsDefined(KeyVaultKeyUri))
+            if (KeyVaultKeyUri != null)
             {
                 writer.WritePropertyName("keyVaultKeyUri"u8);
                 writer.WriteStringValue(KeyVaultKeyUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DefaultIdentity))
+            if (DefaultIdentity != null)
             {
                 writer.WritePropertyName("defaultIdentity"u8);
                 writer.WriteStringValue(DefaultIdentity);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(IsFreeTierEnabled))
+            if (IsFreeTierEnabled.HasValue)
             {
                 writer.WritePropertyName("enableFreeTier"u8);
                 writer.WriteBooleanValue(IsFreeTierEnabled.Value);
             }
-            if (Optional.IsDefined(ApiProperties))
+            if (ApiProperties != null)
             {
                 writer.WritePropertyName("apiProperties"u8);
                 writer.WriteObjectValue(ApiProperties);
             }
-            if (Optional.IsDefined(IsAnalyticalStorageEnabled))
+            if (IsAnalyticalStorageEnabled.HasValue)
             {
                 writer.WritePropertyName("enableAnalyticalStorage"u8);
                 writer.WriteBooleanValue(IsAnalyticalStorageEnabled.Value);
             }
-            if (Optional.IsDefined(AnalyticalStorageConfiguration))
+            if (AnalyticalStorageConfiguration != null)
             {
                 writer.WritePropertyName("analyticalStorageConfiguration"u8);
                 writer.WriteObjectValue(AnalyticalStorageConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceId))
+            if (options.Format != "W" && InstanceId.HasValue)
             {
                 writer.WritePropertyName("instanceId"u8);
                 writer.WriteStringValue(InstanceId.Value);
             }
-            if (Optional.IsDefined(CreateMode))
+            if (CreateMode.HasValue)
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Optional.IsDefined(RestoreParameters))
+            if (RestoreParameters != null)
             {
                 writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters);
             }
-            if (Optional.IsDefined(BackupPolicy))
+            if (BackupPolicy != null)
             {
                 writer.WritePropertyName("backupPolicy"u8);
                 writer.WriteObjectValue(BackupPolicy);
             }
-            if (Optional.IsCollectionDefined(Cors))
+            if (!(Cors is ChangeTrackingList<CosmosDBAccountCorsPolicy> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("cors"u8);
                 writer.WriteStartArray();
@@ -269,12 +269,12 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NetworkAclBypass))
+            if (NetworkAclBypass.HasValue)
             {
                 writer.WritePropertyName("networkAclBypass"u8);
                 writer.WriteStringValue(NetworkAclBypass.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(NetworkAclBypassResourceIds))
+            if (!(NetworkAclBypassResourceIds is ChangeTrackingList<ResourceIdentifier> collection9 && collection9.IsUndefined))
             {
                 writer.WritePropertyName("networkAclBypassResourceIds"u8);
                 writer.WriteStartArray();
@@ -289,57 +289,57 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DiagnosticLogSettings))
+            if (DiagnosticLogSettings != null)
             {
                 writer.WritePropertyName("diagnosticLogSettings"u8);
                 writer.WriteObjectValue(DiagnosticLogSettings);
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (DisableLocalAuth.HasValue)
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (Optional.IsDefined(Capacity))
+            if (Capacity != null)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (Optional.IsDefined(EnableMaterializedViews))
+            if (EnableMaterializedViews.HasValue)
             {
                 writer.WritePropertyName("enableMaterializedViews"u8);
                 writer.WriteBooleanValue(EnableMaterializedViews.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(KeysMetadata))
+            if (options.Format != "W" && KeysMetadata != null)
             {
                 writer.WritePropertyName("keysMetadata"u8);
                 writer.WriteObjectValue(KeysMetadata);
             }
-            if (Optional.IsDefined(EnablePartitionMerge))
+            if (EnablePartitionMerge.HasValue)
             {
                 writer.WritePropertyName("enablePartitionMerge"u8);
                 writer.WriteBooleanValue(EnablePartitionMerge.Value);
             }
-            if (Optional.IsDefined(EnableBurstCapacity))
+            if (EnableBurstCapacity.HasValue)
             {
                 writer.WritePropertyName("enableBurstCapacity"u8);
                 writer.WriteBooleanValue(EnableBurstCapacity.Value);
             }
-            if (Optional.IsDefined(MinimalTlsVersion))
+            if (MinimalTlsVersion.HasValue)
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
             }
-            if (Optional.IsDefined(CustomerManagedKeyStatus))
+            if (CustomerManagedKeyStatus.HasValue)
             {
                 writer.WritePropertyName("customerManagedKeyStatus"u8);
                 writer.WriteStringValue(CustomerManagedKeyStatus.Value.ToString());
             }
-            if (Optional.IsDefined(EnablePriorityBasedExecution))
+            if (EnablePriorityBasedExecution.HasValue)
             {
                 writer.WritePropertyName("enablePriorityBasedExecution"u8);
                 writer.WriteBooleanValue(EnablePriorityBasedExecution.Value);
             }
-            if (Optional.IsDefined(DefaultPriorityLevel))
+            if (DefaultPriorityLevel.HasValue)
             {
                 writer.WritePropertyName("defaultPriorityLevel"u8);
                 writer.WriteStringValue(DefaultPriorityLevel.Value.ToString());
@@ -383,57 +383,57 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return null;
             }
-            Optional<CosmosDBAccountKind> kind = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            CosmosDBAccountKind? kind = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> documentEndpoint = default;
-            Optional<CosmosDBAccountOfferType> databaseAccountOfferType = default;
-            Optional<IList<CosmosDBIPAddressOrRange>> ipRules = default;
-            Optional<bool> isVirtualNetworkFilterEnabled = default;
-            Optional<bool> enableAutomaticFailover = default;
-            Optional<ConsistencyPolicy> consistencyPolicy = default;
-            Optional<IList<CosmosDBAccountCapability>> capabilities = default;
-            Optional<IReadOnlyList<CosmosDBAccountLocation>> writeLocations = default;
-            Optional<IReadOnlyList<CosmosDBAccountLocation>> readLocations = default;
-            Optional<IReadOnlyList<CosmosDBAccountLocation>> locations = default;
-            Optional<IReadOnlyList<CosmosDBFailoverPolicy>> failoverPolicies = default;
-            Optional<IList<CosmosDBVirtualNetworkRule>> virtualNetworkRules = default;
-            Optional<IReadOnlyList<CosmosDBPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<bool> enableMultipleWriteLocations = default;
-            Optional<bool> enableCassandraConnector = default;
-            Optional<ConnectorOffer> connectorOffer = default;
-            Optional<bool> disableKeyBasedMetadataWriteAccess = default;
-            Optional<Uri> keyVaultKeyUri = default;
-            Optional<string> defaultIdentity = default;
-            Optional<CosmosDBPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<bool> enableFreeTier = default;
-            Optional<ApiProperties> apiProperties = default;
-            Optional<bool> enableAnalyticalStorage = default;
-            Optional<AnalyticalStorageConfiguration> analyticalStorageConfiguration = default;
-            Optional<Guid> instanceId = default;
-            Optional<CosmosDBAccountCreateMode> createMode = default;
-            Optional<CosmosDBAccountRestoreParameters> restoreParameters = default;
-            Optional<CosmosDBAccountBackupPolicy> backupPolicy = default;
-            Optional<IList<CosmosDBAccountCorsPolicy>> cors = default;
-            Optional<NetworkAclBypass> networkAclBypass = default;
-            Optional<IList<ResourceIdentifier>> networkAclBypassResourceIds = default;
-            Optional<DiagnosticLogSettings> diagnosticLogSettings = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<CosmosDBAccountCapacity> capacity = default;
-            Optional<bool> enableMaterializedViews = default;
-            Optional<DatabaseAccountKeysMetadata> keysMetadata = default;
-            Optional<bool> enablePartitionMerge = default;
-            Optional<bool> enableBurstCapacity = default;
-            Optional<CosmosDBMinimalTlsVersion> minimalTlsVersion = default;
-            Optional<CustomerManagedKeyStatus> customerManagedKeyStatus = default;
-            Optional<bool> enablePriorityBasedExecution = default;
-            Optional<DefaultPriorityLevel> defaultPriorityLevel = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string documentEndpoint = default;
+            CosmosDBAccountOfferType? databaseAccountOfferType = default;
+            IList<CosmosDBIPAddressOrRange> ipRules = default;
+            bool? isVirtualNetworkFilterEnabled = default;
+            bool? enableAutomaticFailover = default;
+            ConsistencyPolicy consistencyPolicy = default;
+            IList<CosmosDBAccountCapability> capabilities = default;
+            IReadOnlyList<CosmosDBAccountLocation> writeLocations = default;
+            IReadOnlyList<CosmosDBAccountLocation> readLocations = default;
+            IReadOnlyList<CosmosDBAccountLocation> locations = default;
+            IReadOnlyList<CosmosDBFailoverPolicy> failoverPolicies = default;
+            IList<CosmosDBVirtualNetworkRule> virtualNetworkRules = default;
+            IReadOnlyList<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections = default;
+            bool? enableMultipleWriteLocations = default;
+            bool? enableCassandraConnector = default;
+            ConnectorOffer? connectorOffer = default;
+            bool? disableKeyBasedMetadataWriteAccess = default;
+            Uri keyVaultKeyUri = default;
+            string defaultIdentity = default;
+            CosmosDBPublicNetworkAccess? publicNetworkAccess = default;
+            bool? enableFreeTier = default;
+            ApiProperties apiProperties = default;
+            bool? enableAnalyticalStorage = default;
+            AnalyticalStorageConfiguration analyticalStorageConfiguration = default;
+            Guid? instanceId = default;
+            CosmosDBAccountCreateMode? createMode = default;
+            CosmosDBAccountRestoreParameters restoreParameters = default;
+            CosmosDBAccountBackupPolicy backupPolicy = default;
+            IList<CosmosDBAccountCorsPolicy> cors = default;
+            NetworkAclBypass? networkAclBypass = default;
+            IList<ResourceIdentifier> networkAclBypassResourceIds = default;
+            DiagnosticLogSettings diagnosticLogSettings = default;
+            bool? disableLocalAuth = default;
+            CosmosDBAccountCapacity capacity = default;
+            bool? enableMaterializedViews = default;
+            DatabaseAccountKeysMetadata keysMetadata = default;
+            bool? enablePartitionMerge = default;
+            bool? enableBurstCapacity = default;
+            CosmosDBMinimalTlsVersion? minimalTlsVersion = default;
+            CustomerManagedKeyStatus? customerManagedKeyStatus = default;
+            bool? enablePriorityBasedExecution = default;
+            DefaultPriorityLevel? defaultPriorityLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -950,7 +950,59 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), provisioningState.Value, documentEndpoint.Value, Optional.ToNullable(databaseAccountOfferType), Optional.ToList(ipRules), Optional.ToNullable(isVirtualNetworkFilterEnabled), Optional.ToNullable(enableAutomaticFailover), consistencyPolicy.Value, Optional.ToList(capabilities), Optional.ToList(writeLocations), Optional.ToList(readLocations), Optional.ToList(locations), Optional.ToList(failoverPolicies), Optional.ToList(virtualNetworkRules), Optional.ToList(privateEndpointConnections), Optional.ToNullable(enableMultipleWriteLocations), Optional.ToNullable(enableCassandraConnector), Optional.ToNullable(connectorOffer), Optional.ToNullable(disableKeyBasedMetadataWriteAccess), keyVaultKeyUri.Value, defaultIdentity.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enableFreeTier), apiProperties.Value, Optional.ToNullable(enableAnalyticalStorage), analyticalStorageConfiguration.Value, Optional.ToNullable(instanceId), Optional.ToNullable(createMode), restoreParameters.Value, backupPolicy.Value, Optional.ToList(cors), Optional.ToNullable(networkAclBypass), Optional.ToList(networkAclBypassResourceIds), diagnosticLogSettings.Value, Optional.ToNullable(disableLocalAuth), capacity.Value, Optional.ToNullable(enableMaterializedViews), keysMetadata.Value, Optional.ToNullable(enablePartitionMerge), Optional.ToNullable(enableBurstCapacity), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(customerManagedKeyStatus), Optional.ToNullable(enablePriorityBasedExecution), Optional.ToNullable(defaultPriorityLevel), identity, serializedAdditionalRawData);
+            return new CosmosDBAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                kind,
+                provisioningState,
+                documentEndpoint,
+                databaseAccountOfferType,
+                ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>(),
+                isVirtualNetworkFilterEnabled,
+                enableAutomaticFailover,
+                consistencyPolicy,
+                capabilities ?? new ChangeTrackingList<CosmosDBAccountCapability>(),
+                writeLocations ?? new ChangeTrackingList<CosmosDBAccountLocation>(),
+                readLocations ?? new ChangeTrackingList<CosmosDBAccountLocation>(),
+                locations ?? new ChangeTrackingList<CosmosDBAccountLocation>(),
+                failoverPolicies ?? new ChangeTrackingList<CosmosDBFailoverPolicy>(),
+                virtualNetworkRules ?? new ChangeTrackingList<CosmosDBVirtualNetworkRule>(),
+                privateEndpointConnections ?? new ChangeTrackingList<CosmosDBPrivateEndpointConnectionData>(),
+                enableMultipleWriteLocations,
+                enableCassandraConnector,
+                connectorOffer,
+                disableKeyBasedMetadataWriteAccess,
+                keyVaultKeyUri,
+                defaultIdentity,
+                publicNetworkAccess,
+                enableFreeTier,
+                apiProperties,
+                enableAnalyticalStorage,
+                analyticalStorageConfiguration,
+                instanceId,
+                createMode,
+                restoreParameters,
+                backupPolicy,
+                cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>(),
+                networkAclBypass,
+                networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                diagnosticLogSettings,
+                disableLocalAuth,
+                capacity,
+                enableMaterializedViews,
+                keysMetadata,
+                enablePartitionMerge,
+                enableBurstCapacity,
+                minimalTlsVersion,
+                customerManagedKeyStatus,
+                enablePriorityBasedExecution,
+                defaultPriorityLevel,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBAccountData>.Write(ModelReaderWriterOptions options)

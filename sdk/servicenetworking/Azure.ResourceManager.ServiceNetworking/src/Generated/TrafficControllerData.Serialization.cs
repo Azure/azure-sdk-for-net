@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.ServiceNetworking
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(ConfigurationEndpoints))
+            if (options.Format != "W" && !(ConfigurationEndpoints is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("configurationEndpoints"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Frontends))
+            if (options.Format != "W" && !(Frontends is ChangeTrackingList<SubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("frontends"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Associations))
+            if (options.Format != "W" && !(Associations is ChangeTrackingList<SubResource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("associations"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -138,16 +138,16 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<string>> configurationEndpoints = default;
-            Optional<IReadOnlyList<SubResource>> frontends = default;
-            Optional<IReadOnlyList<SubResource>> associations = default;
-            Optional<ProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            IReadOnlyList<string> configurationEndpoints = default;
+            IReadOnlyList<SubResource> frontends = default;
+            IReadOnlyList<SubResource> associations = default;
+            ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,7 +264,18 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficControllerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(configurationEndpoints), Optional.ToList(frontends), Optional.ToList(associations), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new TrafficControllerData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                configurationEndpoints ?? new ChangeTrackingList<string>(),
+                frontends ?? new ChangeTrackingList<SubResource>(),
+                associations ?? new ChangeTrackingList<SubResource>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficControllerData>.Write(ModelReaderWriterOptions options)

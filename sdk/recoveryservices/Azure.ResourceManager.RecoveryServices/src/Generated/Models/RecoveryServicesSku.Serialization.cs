@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Optional.IsDefined(Tier))
+            if (Tier != null)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Optional.IsDefined(Family))
+            if (Family != null)
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Optional.IsDefined(Size))
+            if (Size != null)
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Optional.IsDefined(Capacity))
+            if (Capacity != null)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteStringValue(Capacity);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 return null;
             }
             RecoveryServicesSkuName name = default;
-            Optional<string> tier = default;
-            Optional<string> family = default;
-            Optional<string> size = default;
-            Optional<string> capacity = default;
+            string tier = default;
+            string family = default;
+            string size = default;
+            string capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesSku(name, tier.Value, family.Value, size.Value, capacity.Value, serializedAdditionalRawData);
+            return new RecoveryServicesSku(
+                name,
+                tier,
+                family,
+                size,
+                capacity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesSku>.Write(ModelReaderWriterOptions options)

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Runbook))
+            if (Runbook != null)
             {
                 writer.WritePropertyName("runbook"u8);
                 writer.WriteObjectValue(Runbook);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(RunOn))
+            if (RunOn != null)
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<RunbookAssociationProperty> runbook = default;
-            Optional<IDictionary<string, string>> parameters = default;
-            Optional<string> runOn = default;
+            RunbookAssociationProperty runbook = default;
+            IDictionary<string, string> parameters = default;
+            string runOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobCreateOrUpdateContent(runbook.Value, Optional.ToDictionary(parameters), runOn.Value, serializedAdditionalRawData);
+            return new AutomationJobCreateOrUpdateContent(runbook, parameters ?? new ChangeTrackingDictionary<string, string>(), runOn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

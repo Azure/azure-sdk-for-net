@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 if (EndOn != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endDateTime");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ExportedRowCount))
+            if (options.Format != "W" && ExportedRowCount.HasValue)
             {
                 if (ExportedRowCount != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format.ToString());
-            if (options.Format != "W" && Optional.IsDefined(LabelingJobId))
+            if (options.Format != "W" && LabelingJobId != null)
             {
                 if (LabelingJobId != null)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("labelingJobId");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 if (StartOn != null)
                 {
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset?> endDateTime = default;
-            Optional<long?> exportedRowCount = default;
+            DateTimeOffset? endDateTime = default;
+            long? exportedRowCount = default;
             ExportFormatType format = "Unknown";
-            Optional<string> labelingJobId = default;
-            Optional<DateTimeOffset?> startDateTime = default;
+            string labelingJobId = default;
+            DateTimeOffset? startDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownExportSummary(Optional.ToNullable(endDateTime), Optional.ToNullable(exportedRowCount), format, labelingJobId.Value, Optional.ToNullable(startDateTime), serializedAdditionalRawData);
+            return new UnknownExportSummary(
+                endDateTime,
+                exportedRowCount,
+                format,
+                labelingJobId,
+                startDateTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportSummary>.Write(ModelReaderWriterOptions options)

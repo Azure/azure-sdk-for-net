@@ -28,37 +28,37 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceName))
+            if (ServiceName != null)
             {
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
             }
-            if (Optional.IsDefined(FileName))
+            if (FileName != null)
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsDefined(ComponentName))
+            if (ComponentName != null)
             {
                 writer.WritePropertyName("componentName"u8);
                 writer.WriteStringValue(ComponentName);
             }
-            if (Optional.IsDefined(ServiceConfigListResultPropertiesType))
+            if (ServiceConfigListResultPropertiesType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ServiceConfigListResultPropertiesType);
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsCollectionDefined(CustomKeys))
+            if (!(CustomKeys is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customKeys"u8);
                 writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(DefaultKeys))
+            if (!(DefaultKeys is ChangeTrackingDictionary<string, ClusterServiceConfigValueEntity> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("defaultKeys"u8);
                 writer.WriteStartObject();
@@ -119,14 +119,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<string> serviceName = default;
-            Optional<string> fileName = default;
-            Optional<string> content = default;
-            Optional<string> componentName = default;
-            Optional<string> type = default;
-            Optional<string> path = default;
-            Optional<IReadOnlyDictionary<string, string>> customKeys = default;
-            Optional<IReadOnlyDictionary<string, ClusterServiceConfigValueEntity>> defaultKeys = default;
+            string serviceName = default;
+            string fileName = default;
+            string content = default;
+            string componentName = default;
+            string type = default;
+            string path = default;
+            IReadOnlyDictionary<string, string> customKeys = default;
+            IReadOnlyDictionary<string, ClusterServiceConfigValueEntity> defaultKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +207,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterServiceConfigResult(serviceName.Value, fileName.Value, content.Value, componentName.Value, type.Value, path.Value, Optional.ToDictionary(customKeys), Optional.ToDictionary(defaultKeys), serializedAdditionalRawData);
+            return new ClusterServiceConfigResult(
+                serviceName,
+                fileName,
+                content,
+                componentName,
+                type,
+                path,
+                customKeys ?? new ChangeTrackingDictionary<string, string>(),
+                defaultKeys ?? new ChangeTrackingDictionary<string, ClusterServiceConfigValueEntity>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterServiceConfigResult>.Write(ModelReaderWriterOptions options)

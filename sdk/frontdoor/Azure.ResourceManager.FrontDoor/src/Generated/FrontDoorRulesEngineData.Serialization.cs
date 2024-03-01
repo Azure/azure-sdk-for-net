@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<RulesEngineRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.FrontDoor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<RulesEngineRule>> rules = default;
-            Optional<FrontDoorResourceState> resourceState = default;
+            SystemData systemData = default;
+            IList<RulesEngineRule> rules = default;
+            FrontDoorResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.FrontDoor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorRulesEngineData(id, name, type, systemData.Value, Optional.ToList(rules), Optional.ToNullable(resourceState), serializedAdditionalRawData);
+            return new FrontDoorRulesEngineData(
+                id,
+                name,
+                type,
+                systemData,
+                rules ?? new ChangeTrackingList<RulesEngineRule>(),
+                resourceState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorRulesEngineData>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Template))
+            if (Template != null)
             {
                 writer.WritePropertyName("template"u8);
 #if NET6_0_OR_GREATER
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(TemplateLink))
+            if (TemplateLink != null)
             {
                 writer.WritePropertyName("templateLink"u8);
                 writer.WriteObjectValue(TemplateLink);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -55,24 +55,24 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(ParametersLink))
+            if (ParametersLink != null)
             {
                 writer.WritePropertyName("parametersLink"u8);
                 writer.WriteObjectValue(ParametersLink);
             }
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToSerialString());
-            if (Optional.IsDefined(DebugSetting))
+            if (DebugSetting != null)
             {
                 writer.WritePropertyName("debugSetting"u8);
                 writer.WriteObjectValue(DebugSetting);
             }
-            if (Optional.IsDefined(ErrorDeployment))
+            if (ErrorDeployment != null)
             {
                 writer.WritePropertyName("onErrorDeployment"u8);
                 writer.WriteObjectValue(ErrorDeployment);
             }
-            if (Optional.IsDefined(ExpressionEvaluation))
+            if (ExpressionEvaluation != null)
             {
                 writer.WritePropertyName("expressionEvaluationOptions"u8);
                 writer.WriteObjectValue(ExpressionEvaluation);
@@ -115,14 +115,14 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<BinaryData> template = default;
-            Optional<ArmDeploymentTemplateLink> templateLink = default;
-            Optional<BinaryData> parameters = default;
-            Optional<ArmDeploymentParametersLink> parametersLink = default;
+            BinaryData template = default;
+            ArmDeploymentTemplateLink templateLink = default;
+            BinaryData parameters = default;
+            ArmDeploymentParametersLink parametersLink = default;
             ArmDeploymentMode mode = default;
-            Optional<DebugSetting> debugSetting = default;
-            Optional<ErrorDeployment> onErrorDeployment = default;
-            Optional<ExpressionEvaluationOptions> expressionEvaluationOptions = default;
+            DebugSetting debugSetting = default;
+            ErrorDeployment onErrorDeployment = default;
+            ExpressionEvaluationOptions expressionEvaluationOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentProperties(template.Value, templateLink.Value, parameters.Value, parametersLink.Value, mode, debugSetting.Value, onErrorDeployment.Value, expressionEvaluationOptions.Value, serializedAdditionalRawData);
+            return new ArmDeploymentProperties(
+                template,
+                templateLink,
+                parameters,
+                parametersLink,
+                mode,
+                debugSetting,
+                onErrorDeployment,
+                expressionEvaluationOptions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentProperties>.Write(ModelReaderWriterOptions options)

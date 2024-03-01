@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Version))
+            if (Version.HasValue)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version.Value.ToString());
             }
-            if (Optional.IsDefined(SslEnforcement))
+            if (SslEnforcement.HasValue)
             {
                 writer.WritePropertyName("sslEnforcement"u8);
                 writer.WriteStringValue(SslEnforcement.Value.ToSerialString());
             }
-            if (Optional.IsDefined(MinimalTlsVersion))
+            if (MinimalTlsVersion.HasValue)
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
             }
-            if (Optional.IsDefined(InfrastructureEncryption))
+            if (InfrastructureEncryption.HasValue)
             {
                 writer.WritePropertyName("infrastructureEncryption"u8);
                 writer.WriteStringValue(InfrastructureEncryption.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(StorageProfile))
+            if (StorageProfile != null)
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<PostgreSqlServerVersion> version = default;
-            Optional<PostgreSqlSslEnforcementEnum> sslEnforcement = default;
-            Optional<PostgreSqlMinimalTlsVersionEnum> minimalTlsVersion = default;
-            Optional<PostgreSqlInfrastructureEncryption> infrastructureEncryption = default;
-            Optional<PostgreSqlPublicNetworkAccessEnum> publicNetworkAccess = default;
-            Optional<PostgreSqlStorageProfile> storageProfile = default;
+            PostgreSqlServerVersion? version = default;
+            PostgreSqlSslEnforcementEnum? sslEnforcement = default;
+            PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion = default;
+            PostgreSqlInfrastructureEncryption? infrastructureEncryption = default;
+            PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess = default;
+            PostgreSqlStorageProfile storageProfile = default;
             PostgreSqlCreateMode createMode = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -172,7 +172,15 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownServerPropertiesForCreate(Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(infrastructureEncryption), Optional.ToNullable(publicNetworkAccess), storageProfile.Value, createMode, serializedAdditionalRawData);
+            return new UnknownServerPropertiesForCreate(
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                infrastructureEncryption,
+                publicNetworkAccess,
+                storageProfile,
+                createMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerPropertiesForCreate>.Write(ModelReaderWriterOptions options)

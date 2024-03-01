@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Quantum.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PublisherId))
+            if (options.Format != "W" && PublisherId != null)
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (options.Format != "W" && Optional.IsDefined(OfferId))
+            if (options.Format != "W" && OfferId != null)
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Optional<string> publisherId = default;
-            Optional<string> offerId = default;
+            string publisherId = default;
+            string offerId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderPropertiesManagedApplication(publisherId.Value, offerId.Value, serializedAdditionalRawData);
+            return new ProviderPropertiesManagedApplication(publisherId, offerId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderPropertiesManagedApplication>.Write(ModelReaderWriterOptions options)

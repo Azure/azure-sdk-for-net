@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Title))
+            if (options.Format != "W" && Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (options.Format != "W" && Optional.IsDefined(AlertType))
+            if (options.Format != "W" && AlertType != null)
             {
                 writer.WritePropertyName("alertType"u8);
                 writer.WriteStringValue(AlertType);
             }
-            if (options.Format != "W" && Optional.IsDefined(AppearedOn))
+            if (options.Format != "W" && AppearedOn.HasValue)
             {
                 writer.WritePropertyName("appearedAtDateTime"u8);
                 writer.WriteStringValue(AppearedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Recommendation))
+            if (options.Format != "W" && Recommendation != null)
             {
                 writer.WritePropertyName("recommendation"u8);
                 writer.WriteStringValue(Recommendation);
             }
-            if (options.Format != "W" && Optional.IsDefined(Severity))
+            if (options.Format != "W" && Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
+            if (options.Format != "W" && ErrorDetails != null)
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteObjectValue(ErrorDetails);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DetailedInformation))
+            if (options.Format != "W" && !(DetailedInformation is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("detailedInformation"u8);
                 writer.WriteStartObject();
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> title = default;
-            Optional<string> alertType = default;
-            Optional<DateTimeOffset> appearedAtDateTime = default;
-            Optional<string> recommendation = default;
-            Optional<DataBoxEdgeAlertSeverity> severity = default;
-            Optional<DataBoxEdgeAlertErrorDetails> errorDetails = default;
-            Optional<IReadOnlyDictionary<string, string>> detailedInformation = default;
+            SystemData systemData = default;
+            string title = default;
+            string alertType = default;
+            DateTimeOffset? appearedAtDateTime = default;
+            string recommendation = default;
+            DataBoxEdgeAlertSeverity? severity = default;
+            DataBoxEdgeAlertErrorDetails errorDetails = default;
+            IReadOnlyDictionary<string, string> detailedInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,7 +243,19 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeAlertData(id, name, type, systemData.Value, title.Value, alertType.Value, Optional.ToNullable(appearedAtDateTime), recommendation.Value, Optional.ToNullable(severity), errorDetails.Value, Optional.ToDictionary(detailedInformation), serializedAdditionalRawData);
+            return new DataBoxEdgeAlertData(
+                id,
+                name,
+                type,
+                systemData,
+                title,
+                alertType,
+                appearedAtDateTime,
+                recommendation,
+                severity,
+                errorDetails,
+                detailedInformation ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeAlertData>.Write(ModelReaderWriterOptions options)

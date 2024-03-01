@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Line))
+            if (Line.HasValue)
             {
                 writer.WritePropertyName("line"u8);
                 writer.WriteNumberValue(Line.Value);
             }
-            if (Optional.IsDefined(Column))
+            if (Column.HasValue)
             {
                 writer.WritePropertyName("column"u8);
                 writer.WriteNumberValue(Column.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<int> line = default;
-            Optional<int> column = default;
+            int? line = default;
+            int? column = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteErrorPosition(Optional.ToNullable(line), Optional.ToNullable(column), serializedAdditionalRawData);
+            return new RouteErrorPosition(line, column, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteErrorPosition>.Write(ModelReaderWriterOptions options)

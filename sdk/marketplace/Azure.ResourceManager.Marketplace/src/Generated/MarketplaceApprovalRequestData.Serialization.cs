@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OfferId))
+            if (OfferId != null)
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (options.Format != "W" && Optional.IsDefined(OfferDisplayName))
+            if (options.Format != "W" && OfferDisplayName != null)
             {
                 writer.WritePropertyName("offerDisplayName"u8);
                 writer.WriteStringValue(OfferDisplayName);
             }
-            if (Optional.IsDefined(PublisherId))
+            if (PublisherId != null)
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (Optional.IsCollectionDefined(PlansDetails))
+            if (!(PlansDetails is ChangeTrackingList<PrivateStorePlanDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("plansDetails"u8);
                 writer.WriteStartArray();
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsClosed))
+            if (options.Format != "W" && IsClosed.HasValue)
             {
                 writer.WritePropertyName("isClosed"u8);
                 writer.WriteBooleanValue(IsClosed.Value);
             }
-            if (Optional.IsDefined(MessageCode))
+            if (MessageCode.HasValue)
             {
                 writer.WritePropertyName("messageCode"u8);
                 writer.WriteNumberValue(MessageCode.Value);
@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.Marketplace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> offerId = default;
-            Optional<string> offerDisplayName = default;
-            Optional<string> publisherId = default;
-            Optional<IList<PrivateStorePlanDetails>> plansDetails = default;
-            Optional<bool> isClosed = default;
-            Optional<long> messageCode = default;
+            SystemData systemData = default;
+            string offerId = default;
+            string offerDisplayName = default;
+            string publisherId = default;
+            IList<PrivateStorePlanDetails> plansDetails = default;
+            bool? isClosed = default;
+            long? messageCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -227,7 +227,18 @@ namespace Azure.ResourceManager.Marketplace
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceApprovalRequestData(id, name, type, systemData.Value, offerId.Value, offerDisplayName.Value, publisherId.Value, Optional.ToList(plansDetails), Optional.ToNullable(isClosed), Optional.ToNullable(messageCode), serializedAdditionalRawData);
+            return new MarketplaceApprovalRequestData(
+                id,
+                name,
+                type,
+                systemData,
+                offerId,
+                offerDisplayName,
+                publisherId,
+                plansDetails ?? new ChangeTrackingList<PrivateStorePlanDetails>(),
+                isClosed,
+                messageCode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceApprovalRequestData>.Write(ModelReaderWriterOptions options)

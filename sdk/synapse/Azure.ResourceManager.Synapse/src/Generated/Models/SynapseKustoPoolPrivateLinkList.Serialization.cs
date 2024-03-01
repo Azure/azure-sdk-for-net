@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SynapseKustoPoolPrivateLinkData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseKustoPoolPrivateLinkData>> value = default;
+            IReadOnlyList<SynapseKustoPoolPrivateLinkData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseKustoPoolPrivateLinkList(Optional.ToList(value), serializedAdditionalRawData);
+            return new SynapseKustoPoolPrivateLinkList(value ?? new ChangeTrackingList<SynapseKustoPoolPrivateLinkData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseKustoPoolPrivateLinkList>.Write(ModelReaderWriterOptions options)

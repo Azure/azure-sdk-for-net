@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackupType))
+            if (BackupType.HasValue)
             {
                 writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType.Value.ToString());
             }
-            if (Optional.IsDefined(CompletedOn))
+            if (CompletedOn.HasValue)
             {
                 writer.WritePropertyName("completedTime"u8);
                 writer.WriteStringValue(CompletedOn.Value, "O");
             }
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PostgreSqlFlexibleServerBackupOrigin> backupType = default;
-            Optional<DateTimeOffset> completedTime = default;
-            Optional<string> source = default;
+            SystemData systemData = default;
+            PostgreSqlFlexibleServerBackupOrigin? backupType = default;
+            DateTimeOffset? completedTime = default;
+            string source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +180,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerBackupData(id, name, type, systemData.Value, Optional.ToNullable(backupType), Optional.ToNullable(completedTime), source.Value, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerBackupData(
+                id,
+                name,
+                type,
+                systemData,
+                backupType,
+                completedTime,
+                source,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerBackupData>.Write(ModelReaderWriterOptions options)

@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.SelfHelp
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SolutionId))
+            if (SolutionId != null)
             {
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.SelfHelp
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Steps))
+            if (options.Format != "W" && !(Steps is ChangeTrackingList<SelfHelpStep> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("steps"u8);
                 writer.WriteStartArray();
@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.SelfHelp
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> solutionId = default;
-            Optional<IDictionary<string, string>> parameters = default;
-            Optional<TroubleshooterProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<SelfHelpStep>> steps = default;
+            SystemData systemData = default;
+            string solutionId = default;
+            IDictionary<string, string> parameters = default;
+            TroubleshooterProvisioningState? provisioningState = default;
+            IReadOnlyList<SelfHelpStep> steps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +216,16 @@ namespace Azure.ResourceManager.SelfHelp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TroubleshooterResourceData(id, name, type, systemData.Value, solutionId.Value, Optional.ToDictionary(parameters), Optional.ToNullable(provisioningState), Optional.ToList(steps), serializedAdditionalRawData);
+            return new TroubleshooterResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                solutionId,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                provisioningState,
+                steps ?? new ChangeTrackingList<SelfHelpStep>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TroubleshooterResourceData>.Write(ModelReaderWriterOptions options)

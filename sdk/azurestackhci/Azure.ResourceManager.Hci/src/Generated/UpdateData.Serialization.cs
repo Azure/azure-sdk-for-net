@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Hci
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,34 +48,34 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(InstalledOn))
+            if (InstalledOn.HasValue)
             {
                 writer.WritePropertyName("installedDate"u8);
                 writer.WriteStringValue(InstalledOn.Value, "O");
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Prerequisites))
+            if (!(Prerequisites is ChangeTrackingList<UpdatePrerequisite> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("prerequisites"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ComponentVersions))
+            if (!(ComponentVersions is ChangeTrackingList<HciPackageVersionInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("componentVersions"u8);
                 writer.WriteStartArray();
@@ -95,17 +95,17 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RebootRequired))
+            if (RebootRequired.HasValue)
             {
                 writer.WritePropertyName("rebootRequired"u8);
                 writer.WriteStringValue(RebootRequired.Value.ToString());
             }
-            if (Optional.IsDefined(HealthState))
+            if (HealthState.HasValue)
             {
                 writer.WritePropertyName("healthState"u8);
                 writer.WriteStringValue(HealthState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(HealthCheckResult))
+            if (!(HealthCheckResult is ChangeTrackingList<HciPrecheckResult> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("healthCheckResult"u8);
                 writer.WriteStartArray();
@@ -115,64 +115,64 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(HealthCheckOn))
+            if (HealthCheckOn.HasValue)
             {
                 writer.WritePropertyName("healthCheckDate"u8);
                 writer.WriteStringValue(HealthCheckOn.Value, "O");
             }
-            if (Optional.IsDefined(PackagePath))
+            if (PackagePath != null)
             {
                 writer.WritePropertyName("packagePath"u8);
                 writer.WriteStringValue(PackagePath);
             }
-            if (Optional.IsDefined(PackageSizeInMb))
+            if (PackageSizeInMb.HasValue)
             {
                 writer.WritePropertyName("packageSizeInMb"u8);
                 writer.WriteNumberValue(PackageSizeInMb.Value);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(Publisher))
+            if (Publisher != null)
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(ReleaseLink))
+            if (ReleaseLink != null)
             {
                 writer.WritePropertyName("releaseLink"u8);
                 writer.WriteStringValue(ReleaseLink);
             }
-            if (Optional.IsDefined(AvailabilityType))
+            if (AvailabilityType.HasValue)
             {
                 writer.WritePropertyName("availabilityType"u8);
                 writer.WriteStringValue(AvailabilityType.Value.ToString());
             }
-            if (Optional.IsDefined(PackageType))
+            if (PackageType != null)
             {
                 writer.WritePropertyName("packageType"u8);
                 writer.WriteStringValue(PackageType);
             }
-            if (Optional.IsDefined(AdditionalProperties))
+            if (AdditionalProperties != null)
             {
                 writer.WritePropertyName("additionalProperties"u8);
                 writer.WriteStringValue(AdditionalProperties);
             }
             writer.WritePropertyName("updateStateProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProgressPercentage))
+            if (ProgressPercentage.HasValue)
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
-            if (Optional.IsDefined(NotifyMessage))
+            if (NotifyMessage != null)
             {
                 writer.WritePropertyName("notifyMessage"u8);
                 writer.WriteStringValue(NotifyMessage);
@@ -217,32 +217,32 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HciProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> installedDate = default;
-            Optional<string> description = default;
-            Optional<HciUpdateState> state = default;
-            Optional<IList<UpdatePrerequisite>> prerequisites = default;
-            Optional<IList<HciPackageVersionInfo>> componentVersions = default;
-            Optional<HciNodeRebootRequirement> rebootRequired = default;
-            Optional<HciHealthState> healthState = default;
-            Optional<IList<HciPrecheckResult>> healthCheckResult = default;
-            Optional<DateTimeOffset> healthCheckDate = default;
-            Optional<string> packagePath = default;
-            Optional<float> packageSizeInMb = default;
-            Optional<string> displayName = default;
-            Optional<string> version = default;
-            Optional<string> publisher = default;
-            Optional<string> releaseLink = default;
-            Optional<HciAvailabilityType> availabilityType = default;
-            Optional<string> packageType = default;
-            Optional<string> additionalProperties = default;
-            Optional<float> progressPercentage = default;
-            Optional<string> notifyMessage = default;
+            SystemData systemData = default;
+            HciProvisioningState? provisioningState = default;
+            DateTimeOffset? installedDate = default;
+            string description = default;
+            HciUpdateState? state = default;
+            IList<UpdatePrerequisite> prerequisites = default;
+            IList<HciPackageVersionInfo> componentVersions = default;
+            HciNodeRebootRequirement? rebootRequired = default;
+            HciHealthState? healthState = default;
+            IList<HciPrecheckResult> healthCheckResult = default;
+            DateTimeOffset? healthCheckDate = default;
+            string packagePath = default;
+            float? packageSizeInMb = default;
+            string displayName = default;
+            string version = default;
+            string publisher = default;
+            string releaseLink = default;
+            HciAvailabilityType? availabilityType = default;
+            string packageType = default;
+            string additionalProperties = default;
+            float? progressPercentage = default;
+            string notifyMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -478,7 +478,34 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), Optional.ToNullable(installedDate), description.Value, Optional.ToNullable(state), Optional.ToList(prerequisites), Optional.ToList(componentVersions), Optional.ToNullable(rebootRequired), Optional.ToNullable(healthState), Optional.ToList(healthCheckResult), Optional.ToNullable(healthCheckDate), packagePath.Value, Optional.ToNullable(packageSizeInMb), displayName.Value, version.Value, publisher.Value, releaseLink.Value, Optional.ToNullable(availabilityType), packageType.Value, additionalProperties.Value, Optional.ToNullable(progressPercentage), notifyMessage.Value, serializedAdditionalRawData);
+            return new UpdateData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                provisioningState,
+                installedDate,
+                description,
+                state,
+                prerequisites ?? new ChangeTrackingList<UpdatePrerequisite>(),
+                componentVersions ?? new ChangeTrackingList<HciPackageVersionInfo>(),
+                rebootRequired,
+                healthState,
+                healthCheckResult ?? new ChangeTrackingList<HciPrecheckResult>(),
+                healthCheckDate,
+                packagePath,
+                packageSizeInMb,
+                displayName,
+                version,
+                publisher,
+                releaseLink,
+                availabilityType,
+                packageType,
+                additionalProperties,
+                progressPercentage,
+                notifyMessage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateData>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RelativePath))
+            if (RelativePath != null)
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
-            if (Optional.IsDefined(UploadUri))
+            if (UploadUri != null)
             {
                 writer.WritePropertyName("uploadUrl"u8);
                 writer.WriteStringValue(UploadUri.AbsoluteUri);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> relativePath = default;
-            Optional<Uri> uploadUri = default;
+            string relativePath = default;
+            Uri uploadUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformResourceUploadResult(relativePath.Value, uploadUri.Value, serializedAdditionalRawData);
+            return new AppPlatformResourceUploadResult(relativePath, uploadUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformResourceUploadResult>.Write(ModelReaderWriterOptions options)

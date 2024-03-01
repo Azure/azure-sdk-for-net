@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApplicationHealthPolicy))
+            if (ApplicationHealthPolicy != null)
             {
                 writer.WritePropertyName("applicationHealthPolicy"u8);
                 writer.WriteObjectValue(ApplicationHealthPolicy);
             }
-            if (Optional.IsDefined(ForceRestart))
+            if (ForceRestart.HasValue)
             {
                 writer.WritePropertyName("forceRestart"u8);
                 writer.WriteBooleanValue(ForceRestart.Value);
             }
-            if (Optional.IsDefined(RollingUpgradeMonitoringPolicy))
+            if (RollingUpgradeMonitoringPolicy != null)
             {
                 writer.WritePropertyName("rollingUpgradeMonitoringPolicy"u8);
                 writer.WriteObjectValue(RollingUpgradeMonitoringPolicy);
             }
-            if (Optional.IsDefined(InstanceCloseDelayDurationInSeconds))
+            if (InstanceCloseDelayDurationInSeconds.HasValue)
             {
                 writer.WritePropertyName("instanceCloseDelayDuration"u8);
                 writer.WriteNumberValue(InstanceCloseDelayDurationInSeconds.Value);
             }
-            if (Optional.IsDefined(UpgradeMode))
+            if (UpgradeMode.HasValue)
             {
                 writer.WritePropertyName("upgradeMode"u8);
                 writer.WriteStringValue(UpgradeMode.Value.ToString());
             }
-            if (Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
+            if (UpgradeReplicaSetCheckTimeout.HasValue)
             {
                 writer.WritePropertyName("upgradeReplicaSetCheckTimeout"u8);
                 writer.WriteNumberValue(UpgradeReplicaSetCheckTimeout.Value);
             }
-            if (Optional.IsDefined(RecreateApplication))
+            if (RecreateApplication.HasValue)
             {
                 writer.WritePropertyName("recreateApplication"u8);
                 writer.WriteBooleanValue(RecreateApplication.Value);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<ApplicationHealthPolicy> applicationHealthPolicy = default;
-            Optional<bool> forceRestart = default;
-            Optional<RollingUpgradeMonitoringPolicy> rollingUpgradeMonitoringPolicy = default;
-            Optional<long> instanceCloseDelayDuration = default;
-            Optional<RollingUpgradeMode> upgradeMode = default;
-            Optional<long> upgradeReplicaSetCheckTimeout = default;
-            Optional<bool> recreateApplication = default;
+            ApplicationHealthPolicy applicationHealthPolicy = default;
+            bool? forceRestart = default;
+            RollingUpgradeMonitoringPolicy rollingUpgradeMonitoringPolicy = default;
+            long? instanceCloseDelayDuration = default;
+            RollingUpgradeMode? upgradeMode = default;
+            long? upgradeReplicaSetCheckTimeout = default;
+            bool? recreateApplication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationUpgradePolicy(applicationHealthPolicy.Value, Optional.ToNullable(forceRestart), rollingUpgradeMonitoringPolicy.Value, Optional.ToNullable(instanceCloseDelayDuration), Optional.ToNullable(upgradeMode), Optional.ToNullable(upgradeReplicaSetCheckTimeout), Optional.ToNullable(recreateApplication), serializedAdditionalRawData);
+            return new ApplicationUpgradePolicy(
+                applicationHealthPolicy,
+                forceRestart,
+                rollingUpgradeMonitoringPolicy,
+                instanceCloseDelayDuration,
+                upgradeMode,
+                upgradeReplicaSetCheckTimeout,
+                recreateApplication,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationUpgradePolicy>.Write(ModelReaderWriterOptions options)

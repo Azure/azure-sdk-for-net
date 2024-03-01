@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientGroupInfo))
+            if (ClientGroupInfo != null)
             {
                 writer.WritePropertyName("clientGroupInfo"u8);
                 writer.WriteObjectValue(ClientGroupInfo);
             }
-            if (Optional.IsCollectionDefined(ConfigurationOverride))
+            if (!(ConfigurationOverride is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("configurationOverride"u8);
                 writer.WriteStartObject();
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<ClientGroupInfo> clientGroupInfo = default;
-            Optional<IDictionary<string, string>> configurationOverride = default;
+            ClientGroupInfo clientGroupInfo = default;
+            IDictionary<string, string> configurationOverride = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KafkaRestProperties(clientGroupInfo.Value, Optional.ToDictionary(configurationOverride), serializedAdditionalRawData);
+            return new KafkaRestProperties(clientGroupInfo, configurationOverride ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KafkaRestProperties>.Write(ModelReaderWriterOptions options)

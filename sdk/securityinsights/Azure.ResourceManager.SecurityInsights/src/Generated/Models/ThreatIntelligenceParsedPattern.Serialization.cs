@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PatternTypeKey))
+            if (PatternTypeKey != null)
             {
                 writer.WritePropertyName("patternTypeKey"u8);
                 writer.WriteStringValue(PatternTypeKey);
             }
-            if (Optional.IsCollectionDefined(PatternTypeValues))
+            if (!(PatternTypeValues is ChangeTrackingList<ThreatIntelligenceParsedPatternTypeValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("patternTypeValues"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> patternTypeKey = default;
-            Optional<IList<ThreatIntelligenceParsedPatternTypeValue>> patternTypeValues = default;
+            string patternTypeKey = default;
+            IList<ThreatIntelligenceParsedPatternTypeValue> patternTypeValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreatIntelligenceParsedPattern(patternTypeKey.Value, Optional.ToList(patternTypeValues), serializedAdditionalRawData);
+            return new ThreatIntelligenceParsedPattern(patternTypeKey, patternTypeValues ?? new ChangeTrackingList<ThreatIntelligenceParsedPatternTypeValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreatIntelligenceParsedPattern>.Write(ModelReaderWriterOptions options)

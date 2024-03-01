@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Synapse
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,44 +48,44 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NamePropertiesName))
+            if (NamePropertiesName != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamePropertiesName);
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(ContainerName))
+            if (ContainerName != null)
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (Optional.IsDefined(UploadedOn))
+            if (UploadedOn.HasValue)
             {
                 writer.WritePropertyName("uploadedTimestamp"u8);
                 writer.WriteStringValue(UploadedOn.Value, "O");
             }
-            if (Optional.IsDefined(TypePropertiesType))
+            if (TypePropertiesType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypePropertiesType);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatus))
+            if (options.Format != "W" && ProvisioningStatus != null)
             {
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteStringValue(ProvisioningStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatorId))
+            if (options.Format != "W" && CreatorId != null)
             {
                 writer.WritePropertyName("creatorId"u8);
                 writer.WriteStringValue(CreatorId);
@@ -129,18 +129,18 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> name0 = default;
-            Optional<string> path = default;
-            Optional<string> containerName = default;
-            Optional<DateTimeOffset> uploadedTimestamp = default;
-            Optional<string> type0 = default;
-            Optional<string> provisioningStatus = default;
-            Optional<string> creatorId = default;
+            SystemData systemData = default;
+            string name0 = default;
+            string path = default;
+            string containerName = default;
+            DateTimeOffset? uploadedTimestamp = default;
+            string type0 = default;
+            string provisioningStatus = default;
+            string creatorId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -235,7 +235,20 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseLibraryData(id, name, type, systemData.Value, name0.Value, path.Value, containerName.Value, Optional.ToNullable(uploadedTimestamp), type0.Value, provisioningStatus.Value, creatorId.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SynapseLibraryData(
+                id,
+                name,
+                type,
+                systemData,
+                name0,
+                path,
+                containerName,
+                uploadedTimestamp,
+                type0,
+                provisioningStatus,
+                creatorId,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseLibraryData>.Write(ModelReaderWriterOptions options)

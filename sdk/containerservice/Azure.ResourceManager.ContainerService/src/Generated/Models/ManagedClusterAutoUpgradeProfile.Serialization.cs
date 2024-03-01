@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UpgradeChannel))
+            if (UpgradeChannel.HasValue)
             {
                 writer.WritePropertyName("upgradeChannel"u8);
                 writer.WriteStringValue(UpgradeChannel.Value.ToString());
             }
-            if (Optional.IsDefined(NodeOSUpgradeChannel))
+            if (NodeOSUpgradeChannel.HasValue)
             {
                 writer.WritePropertyName("nodeOSUpgradeChannel"u8);
                 writer.WriteStringValue(NodeOSUpgradeChannel.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<UpgradeChannel> upgradeChannel = default;
-            Optional<ManagedClusterNodeOSUpgradeChannel> nodeOSUpgradeChannel = default;
+            UpgradeChannel? upgradeChannel = default;
+            ManagedClusterNodeOSUpgradeChannel? nodeOSUpgradeChannel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterAutoUpgradeProfile(Optional.ToNullable(upgradeChannel), Optional.ToNullable(nodeOSUpgradeChannel), serializedAdditionalRawData);
+            return new ManagedClusterAutoUpgradeProfile(upgradeChannel, nodeOSUpgradeChannel, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterAutoUpgradeProfile>.Write(ModelReaderWriterOptions options)

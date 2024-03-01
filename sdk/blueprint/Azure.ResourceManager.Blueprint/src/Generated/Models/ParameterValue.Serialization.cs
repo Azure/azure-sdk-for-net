@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Reference))
+            if (Reference != null)
             {
                 writer.WritePropertyName("reference"u8);
                 writer.WriteObjectValue(Reference);
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<BinaryData> value = default;
-            Optional<SecretValueReference> reference = default;
+            BinaryData value = default;
+            SecretValueReference reference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ParameterValue(value.Value, reference.Value, serializedAdditionalRawData);
+            return new ParameterValue(value, reference, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ParameterValue>.Write(ModelReaderWriterOptions options)

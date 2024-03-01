@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.PostgreSql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdministratorType))
+            if (AdministratorType.HasValue)
             {
                 writer.WritePropertyName("administratorType"u8);
                 writer.WriteStringValue(AdministratorType.Value.ToString());
             }
-            if (Optional.IsDefined(LoginAccountName))
+            if (LoginAccountName != null)
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteStringValue(LoginAccountName);
             }
-            if (Optional.IsDefined(SecureId))
+            if (SecureId.HasValue)
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(SecureId.Value);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.PostgreSql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PostgreSqlAdministratorType> administratorType = default;
-            Optional<string> login = default;
-            Optional<Guid> sid = default;
-            Optional<Guid> tenantId = default;
+            SystemData systemData = default;
+            PostgreSqlAdministratorType? administratorType = default;
+            string login = default;
+            Guid? sid = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.PostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerAdministratorData(id, name, type, systemData.Value, Optional.ToNullable(administratorType), login.Value, Optional.ToNullable(sid), Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new PostgreSqlServerAdministratorData(
+                id,
+                name,
+                type,
+                systemData,
+                administratorType,
+                login,
+                sid,
+                tenantId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerAdministratorData>.Write(ModelReaderWriterOptions options)

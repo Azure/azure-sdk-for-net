@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FairPlay))
+            if (FairPlay != null)
             {
                 writer.WritePropertyName("fairPlay"u8);
                 writer.WriteObjectValue(FairPlay);
             }
-            if (Optional.IsDefined(PlayReady))
+            if (PlayReady != null)
             {
                 writer.WritePropertyName("playReady"u8);
                 writer.WriteObjectValue(PlayReady);
             }
-            if (Optional.IsDefined(Widevine))
+            if (Widevine != null)
             {
                 writer.WritePropertyName("widevine"u8);
                 writer.WriteObjectValue(Widevine);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<StreamingPolicyFairPlayConfiguration> fairPlay = default;
-            Optional<StreamingPolicyPlayReadyConfiguration> playReady = default;
-            Optional<StreamingPolicyWidevineConfiguration> widevine = default;
+            StreamingPolicyFairPlayConfiguration fairPlay = default;
+            StreamingPolicyPlayReadyConfiguration playReady = default;
+            StreamingPolicyWidevineConfiguration widevine = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CbcsDrmConfiguration(fairPlay.Value, playReady.Value, widevine.Value, serializedAdditionalRawData);
+            return new CbcsDrmConfiguration(fairPlay, playReady, widevine, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CbcsDrmConfiguration>.Write(ModelReaderWriterOptions options)

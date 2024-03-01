@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Logbase))
+            if (Logbase != null)
             {
                 if (Logbase != null)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("logbase");
                 }
             }
-            if (Optional.IsDefined(Rule))
+            if (Rule.HasValue)
             {
                 writer.WritePropertyName("rule"u8);
                 writer.WriteStringValue(Rule.Value.ToString());
             }
-            if (Optional.IsDefined(Seed))
+            if (Seed.HasValue)
             {
                 if (Seed != null)
                 {
@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> logbase = default;
-            Optional<RandomSamplingAlgorithmRule> rule = default;
-            Optional<int?> seed = default;
+            string logbase = default;
+            RandomSamplingAlgorithmRule? rule = default;
+            int? seed = default;
             SamplingAlgorithmType samplingAlgorithmType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RandomSamplingAlgorithm(samplingAlgorithmType, serializedAdditionalRawData, logbase.Value, Optional.ToNullable(rule), Optional.ToNullable(seed));
+            return new RandomSamplingAlgorithm(samplingAlgorithmType, serializedAdditionalRawData, logbase, rule, seed);
         }
 
         BinaryData IPersistableModel<RandomSamplingAlgorithm>.Write(ModelReaderWriterOptions options)

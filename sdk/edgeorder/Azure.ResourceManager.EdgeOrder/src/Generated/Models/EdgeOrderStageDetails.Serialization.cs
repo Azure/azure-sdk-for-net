@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(StageStatus))
+            if (options.Format != "W" && StageStatus.HasValue)
             {
                 writer.WritePropertyName("stageStatus"u8);
                 writer.WriteStringValue(StageStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StageName))
+            if (options.Format != "W" && StageName.HasValue)
             {
                 writer.WritePropertyName("stageName"u8);
                 writer.WriteStringValue(StageName.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<EdgeOrderStageStatus> stageStatus = default;
-            Optional<EdgeOrderStageName> stageName = default;
-            Optional<string> displayName = default;
-            Optional<DateTimeOffset> startTime = default;
+            EdgeOrderStageStatus? stageStatus = default;
+            EdgeOrderStageName? stageName = default;
+            string displayName = default;
+            DateTimeOffset? startTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderStageDetails(Optional.ToNullable(stageStatus), Optional.ToNullable(stageName), displayName.Value, Optional.ToNullable(startTime), serializedAdditionalRawData);
+            return new EdgeOrderStageDetails(stageStatus, stageName, displayName, startTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderStageDetails>.Write(ModelReaderWriterOptions options)

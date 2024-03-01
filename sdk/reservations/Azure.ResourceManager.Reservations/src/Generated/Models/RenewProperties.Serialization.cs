@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PurchaseProperties))
+            if (PurchaseProperties != null)
             {
                 writer.WritePropertyName("purchaseProperties"u8);
                 writer.WriteObjectValue(PurchaseProperties);
             }
-            if (Optional.IsDefined(PricingCurrencyTotal))
+            if (PricingCurrencyTotal != null)
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
                 writer.WriteObjectValue(PricingCurrencyTotal);
             }
-            if (Optional.IsDefined(BillingCurrencyTotal))
+            if (BillingCurrencyTotal != null)
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
                 writer.WriteObjectValue(BillingCurrencyTotal);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservationPurchaseContent> purchaseProperties = default;
-            Optional<RenewPropertiesPricingCurrencyTotal> pricingCurrencyTotal = default;
-            Optional<RenewPropertiesBillingCurrencyTotal> billingCurrencyTotal = default;
+            ReservationPurchaseContent purchaseProperties = default;
+            RenewPropertiesPricingCurrencyTotal pricingCurrencyTotal = default;
+            RenewPropertiesBillingCurrencyTotal billingCurrencyTotal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RenewProperties(purchaseProperties.Value, pricingCurrencyTotal.Value, billingCurrencyTotal.Value, serializedAdditionalRawData);
+            return new RenewProperties(purchaseProperties, pricingCurrencyTotal, billingCurrencyTotal, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RenewProperties>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultAction))
+            if (DefaultAction.HasValue)
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IotHubNetworkRuleSetDefaultAction> defaultAction = default;
+            IotHubNetworkRuleSetDefaultAction? defaultAction = default;
             bool applyToBuiltInEventHubEndpoint = default;
             IList<IotHubNetworkRuleSetIPRule> ipRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubNetworkRuleSetProperties(Optional.ToNullable(defaultAction), applyToBuiltInEventHubEndpoint, ipRules, serializedAdditionalRawData);
+            return new IotHubNetworkRuleSetProperties(defaultAction, applyToBuiltInEventHubEndpoint, ipRules, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubNetworkRuleSetProperties>.Write(ModelReaderWriterOptions options)

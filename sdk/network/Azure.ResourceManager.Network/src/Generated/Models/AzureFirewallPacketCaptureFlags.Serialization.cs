@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FlagsType))
+            if (FlagsType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(FlagsType.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<AzureFirewallPacketCaptureFlagsType> type = default;
+            AzureFirewallPacketCaptureFlagsType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallPacketCaptureFlags(Optional.ToNullable(type), serializedAdditionalRawData);
+            return new AzureFirewallPacketCaptureFlags(type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureFirewallPacketCaptureFlags>.Write(ModelReaderWriterOptions options)

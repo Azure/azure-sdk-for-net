@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DataLakeStoreUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataLakeStoreUsage>> value = default;
+            IReadOnlyList<DataLakeStoreUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreUsageListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new DataLakeStoreUsageListResult(value ?? new ChangeTrackingList<DataLakeStoreUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreUsageListResult>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeletedSiteId))
+            if (DeletedSiteId != null)
             {
                 writer.WritePropertyName("deletedSiteId"u8);
                 writer.WriteStringValue(DeletedSiteId);
             }
-            if (Optional.IsDefined(RecoverConfiguration))
+            if (RecoverConfiguration.HasValue)
             {
                 writer.WritePropertyName("recoverConfiguration"u8);
                 writer.WriteBooleanValue(RecoverConfiguration.Value);
             }
-            if (Optional.IsDefined(SnapshotTime))
+            if (SnapshotTime != null)
             {
                 writer.WritePropertyName("snapshotTime"u8);
                 writer.WriteStringValue(SnapshotTime);
             }
-            if (Optional.IsDefined(UseDRSecondary))
+            if (UseDRSecondary.HasValue)
             {
                 writer.WritePropertyName("useDRSecondary"u8);
                 writer.WriteBooleanValue(UseDRSecondary.Value);
@@ -113,15 +113,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> deletedSiteId = default;
-            Optional<bool> recoverConfiguration = default;
-            Optional<string> snapshotTime = default;
-            Optional<bool> useDRSecondary = default;
+            SystemData systemData = default;
+            ResourceIdentifier deletedSiteId = default;
+            bool? recoverConfiguration = default;
+            string snapshotTime = default;
+            bool? useDRSecondary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedAppRestoreContent(id, name, type, systemData.Value, deletedSiteId.Value, Optional.ToNullable(recoverConfiguration), snapshotTime.Value, Optional.ToNullable(useDRSecondary), kind.Value, serializedAdditionalRawData);
+            return new DeletedAppRestoreContent(
+                id,
+                name,
+                type,
+                systemData,
+                deletedSiteId,
+                recoverConfiguration,
+                snapshotTime,
+                useDRSecondary,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedAppRestoreContent>.Write(ModelReaderWriterOptions options)

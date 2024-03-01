@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecurityServicesTypeListType))
+            if (SecurityServicesTypeListType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SecurityServicesTypeListType);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<string> type = default;
+            string type = default;
             IReadOnlyList<NameDescriptionObject> entry = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulestackSecurityServiceTypeList(type.Value, entry, serializedAdditionalRawData);
+            return new RulestackSecurityServiceTypeList(type, entry, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulestackSecurityServiceTypeList>.Write(ModelReaderWriterOptions options)

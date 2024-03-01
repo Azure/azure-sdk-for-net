@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Hive))
+            if (Hive != null)
             {
                 writer.WritePropertyName("hive"u8);
                 writer.WriteObjectValue(Hive);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<FlinkHiveCatalogOption> hive = default;
+            FlinkHiveCatalogOption hive = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlinkCatalogOptions(hive.Value, serializedAdditionalRawData);
+            return new FlinkCatalogOptions(hive, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlinkCatalogOptions>.Write(ModelReaderWriterOptions options)

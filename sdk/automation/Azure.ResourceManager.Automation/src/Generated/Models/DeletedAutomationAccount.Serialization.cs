@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutomationAccountResourceId))
+            if (AutomationAccountResourceId != null)
             {
                 writer.WritePropertyName("automationAccountResourceId"u8);
                 writer.WriteStringValue(AutomationAccountResourceId);
             }
-            if (Optional.IsDefined(AutomationAccountId))
+            if (AutomationAccountId != null)
             {
                 writer.WritePropertyName("automationAccountId"u8);
                 writer.WriteStringValue(AutomationAccountId);
             }
-            if (Optional.IsDefined(LocationPropertiesLocation))
+            if (LocationPropertiesLocation != null)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(LocationPropertiesLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
+            if (options.Format != "W" && DeletedOn.HasValue)
             {
                 writer.WritePropertyName("deletionTime"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
@@ -113,15 +113,15 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> automationAccountResourceId = default;
-            Optional<string> automationAccountId = default;
-            Optional<string> location0 = default;
-            Optional<DateTimeOffset> deletionTime = default;
+            SystemData systemData = default;
+            ResourceIdentifier automationAccountResourceId = default;
+            string automationAccountId = default;
+            string location0 = default;
+            DateTimeOffset? deletionTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,17 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedAutomationAccount(id, name, type, systemData.Value, Optional.ToNullable(location), automationAccountResourceId.Value, automationAccountId.Value, location0.Value, Optional.ToNullable(deletionTime), serializedAdditionalRawData);
+            return new DeletedAutomationAccount(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                automationAccountResourceId,
+                automationAccountId,
+                location0,
+                deletionTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedAutomationAccount>.Write(ModelReaderWriterOptions options)

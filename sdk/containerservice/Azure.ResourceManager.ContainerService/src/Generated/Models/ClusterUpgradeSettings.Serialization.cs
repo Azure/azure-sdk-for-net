@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OverrideSettings))
+            if (OverrideSettings != null)
             {
                 writer.WritePropertyName("overrideSettings"u8);
                 writer.WriteObjectValue(OverrideSettings);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<UpgradeOverrideSettings> overrideSettings = default;
+            UpgradeOverrideSettings overrideSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterUpgradeSettings(overrideSettings.Value, serializedAdditionalRawData);
+            return new ClusterUpgradeSettings(overrideSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterUpgradeSettings>.Write(ModelReaderWriterOptions options)

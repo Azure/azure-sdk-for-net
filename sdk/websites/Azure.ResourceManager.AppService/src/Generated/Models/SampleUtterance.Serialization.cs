@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Text))
+            if (Text != null)
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (Optional.IsCollectionDefined(Links))
+            if (!(Links is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Qid))
+            if (Qid != null)
             {
                 writer.WritePropertyName("qid"u8);
                 writer.WriteStringValue(Qid);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> text = default;
-            Optional<IList<string>> links = default;
-            Optional<string> qid = default;
+            string text = default;
+            IList<string> links = default;
+            string qid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SampleUtterance(text.Value, Optional.ToList(links), qid.Value, serializedAdditionalRawData);
+            return new SampleUtterance(text, links ?? new ChangeTrackingList<string>(), qid, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SampleUtterance>.Write(ModelReaderWriterOptions options)

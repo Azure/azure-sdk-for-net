@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoleName))
+            if (RoleName != null)
             {
                 writer.WritePropertyName("roleName"u8);
                 writer.WriteStringValue(RoleName);
             }
-            if (Optional.IsDefined(RoleDefinitionType))
+            if (RoleDefinitionType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RoleDefinitionType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DatabaseName))
+            if (DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Optional.IsCollectionDefined(Privileges))
+            if (!(Privileges is ChangeTrackingList<MongoDBPrivilege> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("privileges"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Roles))
+            if (!(Roles is ChangeTrackingList<MongoDBRole> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> roleName = default;
-            Optional<MongoDBRoleDefinitionType> type0 = default;
-            Optional<string> databaseName = default;
-            Optional<IList<MongoDBPrivilege>> privileges = default;
-            Optional<IList<MongoDBRole>> roles = default;
+            SystemData systemData = default;
+            string roleName = default;
+            MongoDBRoleDefinitionType? type0 = default;
+            string databaseName = default;
+            IList<MongoDBPrivilege> privileges = default;
+            IList<MongoDBRole> roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -222,7 +222,17 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBRoleDefinitionData(id, name, type, systemData.Value, roleName.Value, Optional.ToNullable(type0), databaseName.Value, Optional.ToList(privileges), Optional.ToList(roles), serializedAdditionalRawData);
+            return new MongoDBRoleDefinitionData(
+                id,
+                name,
+                type,
+                systemData,
+                roleName,
+                type0,
+                databaseName,
+                privileges ?? new ChangeTrackingList<MongoDBPrivilege>(),
+                roles ?? new ChangeTrackingList<MongoDBRole>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBRoleDefinitionData>.Write(ModelReaderWriterOptions options)

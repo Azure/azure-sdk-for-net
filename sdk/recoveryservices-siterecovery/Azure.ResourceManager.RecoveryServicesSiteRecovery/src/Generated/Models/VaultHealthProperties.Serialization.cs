@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(VaultErrors))
+            if (!(VaultErrors is ChangeTrackingList<SiteRecoveryHealthError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vaultErrors"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ProtectedItemsHealth))
+            if (ProtectedItemsHealth != null)
             {
                 writer.WritePropertyName("protectedItemsHealth"u8);
                 writer.WriteObjectValue(ProtectedItemsHealth);
             }
-            if (Optional.IsDefined(FabricsHealth))
+            if (FabricsHealth != null)
             {
                 writer.WritePropertyName("fabricsHealth"u8);
                 writer.WriteObjectValue(FabricsHealth);
             }
-            if (Optional.IsDefined(ContainersHealth))
+            if (ContainersHealth != null)
             {
                 writer.WritePropertyName("containersHealth"u8);
                 writer.WriteObjectValue(ContainersHealth);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> vaultErrors = default;
-            Optional<ResourceHealthSummary> protectedItemsHealth = default;
-            Optional<ResourceHealthSummary> fabricsHealth = default;
-            Optional<ResourceHealthSummary> containersHealth = default;
+            IReadOnlyList<SiteRecoveryHealthError> vaultErrors = default;
+            ResourceHealthSummary protectedItemsHealth = default;
+            ResourceHealthSummary fabricsHealth = default;
+            ResourceHealthSummary containersHealth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultHealthProperties(Optional.ToList(vaultErrors), protectedItemsHealth.Value, fabricsHealth.Value, containersHealth.Value, serializedAdditionalRawData);
+            return new VaultHealthProperties(vaultErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), protectedItemsHealth, fabricsHealth, containersHealth, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultHealthProperties>.Write(ModelReaderWriterOptions options)

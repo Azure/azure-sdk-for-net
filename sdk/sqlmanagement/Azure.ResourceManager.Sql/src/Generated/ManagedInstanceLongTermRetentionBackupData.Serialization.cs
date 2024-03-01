@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ManagedInstanceName))
+            if (options.Format != "W" && ManagedInstanceName != null)
             {
                 writer.WritePropertyName("managedInstanceName"u8);
                 writer.WriteStringValue(ManagedInstanceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagedInstanceCreateOn))
+            if (options.Format != "W" && ManagedInstanceCreateOn.HasValue)
             {
                 writer.WritePropertyName("managedInstanceCreateTime"u8);
                 writer.WriteStringValue(ManagedInstanceCreateOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseDeletedOn))
+            if (options.Format != "W" && DatabaseDeletedOn.HasValue)
             {
                 writer.WritePropertyName("databaseDeletionTime"u8);
                 writer.WriteStringValue(DatabaseDeletedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupOn))
+            if (options.Format != "W" && BackupOn.HasValue)
             {
                 writer.WritePropertyName("backupTime"u8);
                 writer.WriteStringValue(BackupOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupExpireOn))
+            if (options.Format != "W" && BackupExpireOn.HasValue)
             {
                 writer.WritePropertyName("backupExpirationTime"u8);
                 writer.WriteStringValue(BackupExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupStorageRedundancy))
+            if (options.Format != "W" && BackupStorageRedundancy.HasValue)
             {
                 writer.WritePropertyName("backupStorageRedundancy"u8);
                 writer.WriteStringValue(BackupStorageRedundancy.Value.ToString());
@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> managedInstanceName = default;
-            Optional<DateTimeOffset> managedInstanceCreateTime = default;
-            Optional<string> databaseName = default;
-            Optional<DateTimeOffset> databaseDeletionTime = default;
-            Optional<DateTimeOffset> backupTime = default;
-            Optional<DateTimeOffset> backupExpirationTime = default;
-            Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
+            SystemData systemData = default;
+            string managedInstanceName = default;
+            DateTimeOffset? managedInstanceCreateTime = default;
+            string databaseName = default;
+            DateTimeOffset? databaseDeletionTime = default;
+            DateTimeOffset? backupTime = default;
+            DateTimeOffset? backupExpirationTime = default;
+            SqlBackupStorageRedundancy? backupStorageRedundancy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,7 +236,19 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceLongTermRetentionBackupData(id, name, type, systemData.Value, managedInstanceName.Value, Optional.ToNullable(managedInstanceCreateTime), databaseName.Value, Optional.ToNullable(databaseDeletionTime), Optional.ToNullable(backupTime), Optional.ToNullable(backupExpirationTime), Optional.ToNullable(backupStorageRedundancy), serializedAdditionalRawData);
+            return new ManagedInstanceLongTermRetentionBackupData(
+                id,
+                name,
+                type,
+                systemData,
+                managedInstanceName,
+                managedInstanceCreateTime,
+                databaseName,
+                databaseDeletionTime,
+                backupTime,
+                backupExpirationTime,
+                backupStorageRedundancy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceLongTermRetentionBackupData>.Write(ModelReaderWriterOptions options)

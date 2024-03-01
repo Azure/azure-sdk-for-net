@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartObject();
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
-            if (Optional.IsCollectionDefined(BoundingRegions))
+            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             string content = default;
-            Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
+            IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -126,7 +126,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentKeyValueElement(content, Optional.ToList(boundingRegions), spans, serializedAdditionalRawData);
+            return new DocumentKeyValueElement(content, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentKeyValueElement>.Write(ModelReaderWriterOptions options)

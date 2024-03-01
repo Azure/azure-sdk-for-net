@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(VendorOSVersion))
+            if (VendorOSVersion != null)
             {
                 writer.WritePropertyName("vendorOsVersion"u8);
                 writer.WriteStringValue(VendorOSVersion);
             }
-            if (Optional.IsDefined(VendorFirmwareVersion))
+            if (VendorFirmwareVersion != null)
             {
                 writer.WritePropertyName("vendorFirmwareVersion"u8);
                 writer.WriteStringValue(VendorFirmwareVersion);
             }
-            if (Optional.IsDefined(IsDefault))
+            if (IsDefault.HasValue)
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteStringValue(IsDefault.Value.ToString());
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> version = default;
-            Optional<string> vendorOSVersion = default;
-            Optional<string> vendorFirmwareVersion = default;
-            Optional<NetworkFabricBooleanValue> isDefault = default;
+            string version = default;
+            string vendorOSVersion = default;
+            string vendorFirmwareVersion = default;
+            NetworkFabricBooleanValue? isDefault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportedVersionProperties(version.Value, vendorOSVersion.Value, vendorFirmwareVersion.Value, Optional.ToNullable(isDefault), serializedAdditionalRawData);
+            return new SupportedVersionProperties(version, vendorOSVersion, vendorFirmwareVersion, isDefault, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportedVersionProperties>.Write(ModelReaderWriterOptions options)

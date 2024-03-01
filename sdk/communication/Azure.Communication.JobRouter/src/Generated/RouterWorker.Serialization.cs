@@ -37,12 +37,12 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Queues))
+            if (!(Queues is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("queues"u8);
                 writer.WriteStartArray();
@@ -52,12 +52,12 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Capacity))
+            if (Capacity.HasValue)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (Optional.IsCollectionDefined(_labels))
+            if (!(_labels is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(_tags))
+            if (!(_tags is ChangeTrackingDictionary<string, BinaryData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -103,7 +103,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Channels))
+            if (!(Channels is ChangeTrackingList<RouterChannel> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("channels"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Offers))
+            if (options.Format != "W" && !(Offers is ChangeTrackingList<RouterJobOffer> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("offers"u8);
                 writer.WriteStartArray();
@@ -123,7 +123,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AssignedJobs))
+            if (options.Format != "W" && !(AssignedJobs is ChangeTrackingList<RouterWorkerAssignment> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("assignedJobs"u8);
                 writer.WriteStartArray();
@@ -133,15 +133,20 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LoadRatio))
+            if (options.Format != "W" && LoadRatio.HasValue)
             {
                 writer.WritePropertyName("loadRatio"u8);
                 writer.WriteNumberValue(LoadRatio.Value);
             }
-            if (Optional.IsDefined(AvailableForOffers))
+            if (AvailableForOffers.HasValue)
             {
                 writer.WritePropertyName("availableForOffers"u8);
                 writer.WriteBooleanValue(AvailableForOffers.Value);
+            }
+            if (MaxConcurrentOffers.HasValue)
+            {
+                writer.WritePropertyName("maxConcurrentOffers"u8);
+                writer.WriteNumberValue(MaxConcurrentOffers.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -183,16 +188,17 @@ namespace Azure.Communication.JobRouter
             }
             ETag etag = default;
             string id = default;
-            Optional<RouterWorkerState> state = default;
-            Optional<IList<string>> queues = default;
-            Optional<int> capacity = default;
-            Optional<IDictionary<string, BinaryData>> labels = default;
-            Optional<IDictionary<string, BinaryData>> tags = default;
-            Optional<IList<RouterChannel>> channels = default;
-            Optional<IReadOnlyList<RouterJobOffer>> offers = default;
-            Optional<IReadOnlyList<RouterWorkerAssignment>> assignedJobs = default;
-            Optional<double> loadRatio = default;
-            Optional<bool> availableForOffers = default;
+            RouterWorkerState? state = default;
+            IList<string> queues = default;
+            int? capacity = default;
+            IDictionary<string, BinaryData> labels = default;
+            IDictionary<string, BinaryData> tags = default;
+            IList<RouterChannel> channels = default;
+            IReadOnlyList<RouterJobOffer> offers = default;
+            IReadOnlyList<RouterWorkerAssignment> assignedJobs = default;
+            double? loadRatio = default;
+            bool? availableForOffers = default;
+            int? maxConcurrentOffers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -341,13 +347,36 @@ namespace Azure.Communication.JobRouter
                     availableForOffers = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("maxConcurrentOffers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxConcurrentOffers = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterWorker(etag, id, Optional.ToNullable(state), Optional.ToList(queues), Optional.ToNullable(capacity), Optional.ToDictionary(labels), Optional.ToDictionary(tags), Optional.ToList(channels), Optional.ToList(offers), Optional.ToList(assignedJobs), Optional.ToNullable(loadRatio), Optional.ToNullable(availableForOffers), serializedAdditionalRawData);
+            return new RouterWorker(
+                etag,
+                id,
+                state,
+                queues ?? new ChangeTrackingList<string>(),
+                capacity,
+                labels ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                tags ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                channels ?? new ChangeTrackingList<RouterChannel>(),
+                offers ?? new ChangeTrackingList<RouterJobOffer>(),
+                assignedJobs ?? new ChangeTrackingList<RouterWorkerAssignment>(),
+                loadRatio,
+                availableForOffers,
+                maxConcurrentOffers,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterWorker>.Write(ModelReaderWriterOptions options)

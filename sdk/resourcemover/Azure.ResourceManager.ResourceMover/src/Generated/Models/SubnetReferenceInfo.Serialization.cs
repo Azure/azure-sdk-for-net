@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             ResourceIdentifier sourceArmResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubnetReferenceInfo(sourceArmResourceId, serializedAdditionalRawData, name.Value);
+            return new SubnetReferenceInfo(sourceArmResourceId, serializedAdditionalRawData, name);
         }
 
         BinaryData IPersistableModel<SubnetReferenceInfo>.Write(ModelReaderWriterOptions options)

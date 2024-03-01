@@ -29,12 +29,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(Info))
+            if (Info != null)
             {
                 writer.WritePropertyName("info"u8);
                 writer.WriteObjectValue(Info);
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (!(Data is ChangeTrackingList<PatientDocument> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -83,8 +83,8 @@ namespace Azure.Health.Insights.ClinicalMatching
                 return null;
             }
             string id = default;
-            Optional<PatientInfo> info = default;
-            Optional<IList<PatientDocument>> data = default;
+            PatientInfo info = default;
+            IList<PatientDocument> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatientRecord(id, info.Value, Optional.ToList(data), serializedAdditionalRawData);
+            return new PatientRecord(id, info, data ?? new ChangeTrackingList<PatientDocument>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatientRecord>.Write(ModelReaderWriterOptions options)

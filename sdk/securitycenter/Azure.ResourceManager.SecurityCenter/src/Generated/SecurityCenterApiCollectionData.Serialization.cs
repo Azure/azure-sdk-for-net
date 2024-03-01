@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiscoveredVia))
+            if (options.Format != "W" && DiscoveredVia != null)
             {
                 writer.WritePropertyName("discoveredVia"u8);
                 writer.WriteStringValue(DiscoveredVia);
             }
-            if (options.Format != "W" && Optional.IsDefined(BaseUri))
+            if (options.Format != "W" && BaseUri != null)
             {
                 writer.WritePropertyName("baseUrl"u8);
                 writer.WriteStringValue(BaseUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfApiEndpoints))
+            if (options.Format != "W" && NumberOfApiEndpoints.HasValue)
             {
                 writer.WritePropertyName("numberOfApiEndpoints"u8);
                 writer.WriteNumberValue(NumberOfApiEndpoints.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfInactiveApiEndpoints))
+            if (options.Format != "W" && NumberOfInactiveApiEndpoints.HasValue)
             {
                 writer.WritePropertyName("numberOfInactiveApiEndpoints"u8);
                 writer.WriteNumberValue(NumberOfInactiveApiEndpoints.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfUnauthenticatedApiEndpoints))
+            if (options.Format != "W" && NumberOfUnauthenticatedApiEndpoints.HasValue)
             {
                 writer.WritePropertyName("numberOfUnauthenticatedApiEndpoints"u8);
                 writer.WriteNumberValue(NumberOfUnauthenticatedApiEndpoints.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfExternalApiEndpoints))
+            if (options.Format != "W" && NumberOfExternalApiEndpoints.HasValue)
             {
                 writer.WritePropertyName("numberOfExternalApiEndpoints"u8);
                 writer.WriteNumberValue(NumberOfExternalApiEndpoints.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfApiEndpointsWithSensitiveDataExposed))
+            if (options.Format != "W" && NumberOfApiEndpointsWithSensitiveDataExposed.HasValue)
             {
                 writer.WritePropertyName("numberOfApiEndpointsWithSensitiveDataExposed"u8);
                 writer.WriteNumberValue(NumberOfApiEndpointsWithSensitiveDataExposed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SensitivityLabel))
+            if (options.Format != "W" && SensitivityLabel != null)
             {
                 writer.WritePropertyName("sensitivityLabel"u8);
                 writer.WriteStringValue(SensitivityLabel);
@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SecurityFamilyProvisioningState> provisioningState = default;
-            Optional<string> displayName = default;
-            Optional<ResourceIdentifier> discoveredVia = default;
-            Optional<Uri> baseUrl = default;
-            Optional<long> numberOfApiEndpoints = default;
-            Optional<long> numberOfInactiveApiEndpoints = default;
-            Optional<long> numberOfUnauthenticatedApiEndpoints = default;
-            Optional<long> numberOfExternalApiEndpoints = default;
-            Optional<long> numberOfApiEndpointsWithSensitiveDataExposed = default;
-            Optional<string> sensitivityLabel = default;
+            SystemData systemData = default;
+            SecurityFamilyProvisioningState? provisioningState = default;
+            string displayName = default;
+            ResourceIdentifier discoveredVia = default;
+            Uri baseUrl = default;
+            long? numberOfApiEndpoints = default;
+            long? numberOfInactiveApiEndpoints = default;
+            long? numberOfUnauthenticatedApiEndpoints = default;
+            long? numberOfExternalApiEndpoints = default;
+            long? numberOfApiEndpointsWithSensitiveDataExposed = default;
+            string sensitivityLabel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -281,7 +281,22 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCenterApiCollectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), displayName.Value, discoveredVia.Value, baseUrl.Value, Optional.ToNullable(numberOfApiEndpoints), Optional.ToNullable(numberOfInactiveApiEndpoints), Optional.ToNullable(numberOfUnauthenticatedApiEndpoints), Optional.ToNullable(numberOfExternalApiEndpoints), Optional.ToNullable(numberOfApiEndpointsWithSensitiveDataExposed), sensitivityLabel.Value, serializedAdditionalRawData);
+            return new SecurityCenterApiCollectionData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                displayName,
+                discoveredVia,
+                baseUrl,
+                numberOfApiEndpoints,
+                numberOfInactiveApiEndpoints,
+                numberOfUnauthenticatedApiEndpoints,
+                numberOfExternalApiEndpoints,
+                numberOfApiEndpointsWithSensitiveDataExposed,
+                sensitivityLabel,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCenterApiCollectionData>.Write(ModelReaderWriterOptions options)

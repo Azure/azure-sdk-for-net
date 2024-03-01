@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(RuleName))
+            if (RuleName != null)
             {
                 writer.WritePropertyName("ruleName"u8);
                 writer.WriteStringValue(RuleName);
             }
-            if (Optional.IsDefined(IsSoftDeleted))
+            if (IsSoftDeleted.HasValue)
             {
                 writer.WritePropertyName("isSoftDeleted"u8);
                 writer.WriteBooleanValue(IsSoftDeleted.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<string> ruleName = default;
-            Optional<bool> isSoftDeleted = default;
+            DateTimeOffset? expiryTime = default;
+            string ruleName = default;
+            bool? isSoftDeleted = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPointProperties(Optional.ToNullable(expiryTime), ruleName.Value, Optional.ToNullable(isSoftDeleted), serializedAdditionalRawData);
+            return new RecoveryPointProperties(expiryTime, ruleName, isSoftDeleted, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryPointProperties>.Write(ModelReaderWriterOptions options)

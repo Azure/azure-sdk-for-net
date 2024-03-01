@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LocalPreference))
+            if (LocalPreference.HasValue)
             {
                 writer.WritePropertyName("localPreference"u8);
                 writer.WriteNumberValue(LocalPreference.Value);
             }
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
-            if (Optional.IsDefined(IPCommunityProperties))
+            if (IPCommunityProperties != null)
             {
                 writer.WritePropertyName("ipCommunityProperties"u8);
                 writer.WriteObjectValue(IPCommunityProperties);
             }
-            if (Optional.IsDefined(IPExtendedCommunityProperties))
+            if (IPExtendedCommunityProperties != null)
             {
                 writer.WritePropertyName("ipExtendedCommunityProperties"u8);
                 writer.WriteObjectValue(IPExtendedCommunityProperties);
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<long> localPreference = default;
+            long? localPreference = default;
             RoutePolicyActionType actionType = default;
-            Optional<ActionIPCommunityProperties> ipCommunityProperties = default;
-            Optional<ActionIPExtendedCommunityProperties> ipExtendedCommunityProperties = default;
+            ActionIPCommunityProperties ipCommunityProperties = default;
+            ActionIPExtendedCommunityProperties ipExtendedCommunityProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StatementActionProperties(Optional.ToNullable(localPreference), actionType, ipCommunityProperties.Value, ipExtendedCommunityProperties.Value, serializedAdditionalRawData);
+            return new StatementActionProperties(localPreference, actionType, ipCommunityProperties, ipExtendedCommunityProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StatementActionProperties>.Write(ModelReaderWriterOptions options)

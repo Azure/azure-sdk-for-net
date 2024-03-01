@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinReplicas))
+            if (MinReplicas.HasValue)
             {
                 writer.WritePropertyName("minReplicas"u8);
                 writer.WriteNumberValue(MinReplicas.Value);
             }
-            if (Optional.IsDefined(MaxReplicas))
+            if (MaxReplicas.HasValue)
             {
                 writer.WritePropertyName("maxReplicas"u8);
                 writer.WriteNumberValue(MaxReplicas.Value);
             }
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<ContainerAppScaleRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<int> minReplicas = default;
-            Optional<int> maxReplicas = default;
-            Optional<IList<ContainerAppScaleRule>> rules = default;
+            int? minReplicas = default;
+            int? maxReplicas = default;
+            IList<ContainerAppScaleRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppScale(Optional.ToNullable(minReplicas), Optional.ToNullable(maxReplicas), Optional.ToList(rules), serializedAdditionalRawData);
+            return new ContainerAppScale(minReplicas, maxReplicas, rules ?? new ChangeTrackingList<ContainerAppScaleRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppScale>.Write(ModelReaderWriterOptions options)

@@ -31,12 +31,12 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(QueueId);
             writer.WritePropertyName("length"u8);
             writer.WriteNumberValue(Length);
-            if (Optional.IsCollectionDefined(EstimatedWaitTimes))
+            if (!(EstimatedWaitTimes is ChangeTrackingDictionary<int, TimeSpan> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("estimatedWaitTimeMinutes"u8);
                 WriteEstimatedWaitTimes(writer);
             }
-            if (Optional.IsDefined(LongestJobWaitTimeMinutes))
+            if (LongestJobWaitTimeMinutes.HasValue)
             {
                 writer.WritePropertyName("longestJobWaitTimeMinutes"u8);
                 writer.WriteNumberValue(LongestJobWaitTimeMinutes.Value);
@@ -81,8 +81,8 @@ namespace Azure.Communication.JobRouter
             }
             string queueId = default;
             int length = default;
-            Optional<IDictionary<int, TimeSpan>> estimatedWaitTimeMinutes = default;
-            Optional<double> longestJobWaitTimeMinutes = default;
+            IDictionary<int, TimeSpan> estimatedWaitTimeMinutes = default;
+            double? longestJobWaitTimeMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterQueueStatistics(queueId, length, Optional.ToDictionary(estimatedWaitTimeMinutes), Optional.ToNullable(longestJobWaitTimeMinutes), serializedAdditionalRawData);
+            return new RouterQueueStatistics(queueId, length, estimatedWaitTimeMinutes ?? new ChangeTrackingDictionary<int, TimeSpan>(), longestJobWaitTimeMinutes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterQueueStatistics>.Write(ModelReaderWriterOptions options)

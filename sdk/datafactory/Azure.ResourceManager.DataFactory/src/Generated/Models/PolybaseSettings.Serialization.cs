@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RejectType))
+            if (RejectType.HasValue)
             {
                 writer.WritePropertyName("rejectType"u8);
                 writer.WriteStringValue(RejectType.Value.ToString());
             }
-            if (Optional.IsDefined(RejectValue))
+            if (RejectValue != null)
             {
                 writer.WritePropertyName("rejectValue"u8);
                 JsonSerializer.Serialize(writer, RejectValue);
             }
-            if (Optional.IsDefined(RejectSampleValue))
+            if (RejectSampleValue != null)
             {
                 writer.WritePropertyName("rejectSampleValue"u8);
                 JsonSerializer.Serialize(writer, RejectSampleValue);
             }
-            if (Optional.IsDefined(UseTypeDefault))
+            if (UseTypeDefault != null)
             {
                 writer.WritePropertyName("useTypeDefault"u8);
                 JsonSerializer.Serialize(writer, UseTypeDefault);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<PolybaseSettingsRejectType> rejectType = default;
-            Optional<DataFactoryElement<int>> rejectValue = default;
-            Optional<DataFactoryElement<int>> rejectSampleValue = default;
-            Optional<DataFactoryElement<bool>> useTypeDefault = default;
+            PolybaseSettingsRejectType? rejectType = default;
+            DataFactoryElement<int> rejectValue = default;
+            DataFactoryElement<int> rejectSampleValue = default;
+            DataFactoryElement<bool> useTypeDefault = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PolybaseSettings(Optional.ToNullable(rejectType), rejectValue.Value, rejectSampleValue.Value, useTypeDefault.Value, additionalProperties);
+            return new PolybaseSettings(rejectType, rejectValue, rejectSampleValue, useTypeDefault, additionalProperties);
         }
 
         BinaryData IPersistableModel<PolybaseSettings>.Write(ModelReaderWriterOptions options)

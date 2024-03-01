@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AzureDnsRecord))
+            if (options.Format != "W" && AzureDnsRecord != null)
             {
                 writer.WritePropertyName("azureDnsRecord"u8);
                 writer.WriteStringValue(AzureDnsRecord);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicAzureDnsRecord))
+            if (options.Format != "W" && PublicAzureDnsRecord != null)
             {
                 writer.WritePropertyName("publicAzureDnsRecord"u8);
                 writer.WriteStringValue(PublicAzureDnsRecord);
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> azureDnsRecord = default;
-            Optional<string> publicAzureDnsRecord = default;
+            SystemData systemData = default;
+            string azureDnsRecord = default;
+            string publicAzureDnsRecord = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServerDnsAliasData(id, name, type, systemData.Value, azureDnsRecord.Value, publicAzureDnsRecord.Value, serializedAdditionalRawData);
+            return new ManagedServerDnsAliasData(
+                id,
+                name,
+                type,
+                systemData,
+                azureDnsRecord,
+                publicAzureDnsRecord,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServerDnsAliasData>.Write(ModelReaderWriterOptions options)

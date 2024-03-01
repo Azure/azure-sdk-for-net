@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KpiType))
+            if (KpiType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(KpiType.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<ViewKpiType> type = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<bool> enabled = default;
+            ViewKpiType? type = default;
+            ResourceIdentifier id = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ViewKpiProperties(Optional.ToNullable(type), id.Value, Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new ViewKpiProperties(type, id, enabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ViewKpiProperties>.Write(ModelReaderWriterOptions options)

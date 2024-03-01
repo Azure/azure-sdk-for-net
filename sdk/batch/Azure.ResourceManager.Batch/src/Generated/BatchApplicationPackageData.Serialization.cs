@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,34 +49,34 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Format))
+            if (options.Format != "W" && Format != null)
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageUri))
+            if (options.Format != "W" && StorageUri != null)
             {
                 writer.WritePropertyName("storageUrl"u8);
                 writer.WriteStringValue(StorageUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageUriExpireOn))
+            if (options.Format != "W" && StorageUriExpireOn.HasValue)
             {
                 writer.WritePropertyName("storageUrlExpiry"u8);
                 writer.WriteStringValue(StorageUriExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastActivatedOn))
+            if (options.Format != "W" && LastActivatedOn.HasValue)
             {
                 writer.WritePropertyName("lastActivationTime"u8);
                 writer.WriteStringValue(LastActivatedOn.Value, "O");
@@ -120,16 +120,16 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<BatchApplicationPackageState> state = default;
-            Optional<string> format = default;
-            Optional<Uri> storageUrl = default;
-            Optional<DateTimeOffset> storageUrlExpiry = default;
-            Optional<DateTimeOffset> lastActivationTime = default;
+            SystemData systemData = default;
+            BatchApplicationPackageState? state = default;
+            string format = default;
+            Uri storageUrl = default;
+            DateTimeOffset? storageUrlExpiry = default;
+            DateTimeOffset? lastActivationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,7 +226,18 @@ namespace Azure.ResourceManager.Batch
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchApplicationPackageData(id, name, type, systemData.Value, Optional.ToNullable(state), format.Value, storageUrl.Value, Optional.ToNullable(storageUrlExpiry), Optional.ToNullable(lastActivationTime), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new BatchApplicationPackageData(
+                id,
+                name,
+                type,
+                systemData,
+                state,
+                format,
+                storageUrl,
+                storageUrlExpiry,
+                lastActivationTime,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchApplicationPackageData>.Write(ModelReaderWriterOptions options)

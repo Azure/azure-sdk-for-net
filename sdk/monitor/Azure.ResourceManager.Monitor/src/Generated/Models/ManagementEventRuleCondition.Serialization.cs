@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Aggregation))
+            if (Aggregation != null)
             {
                 writer.WritePropertyName("aggregation"u8);
                 writer.WriteObjectValue(Aggregation);
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(DataSource))
+            if (DataSource != null)
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<ManagementEventAggregationCondition> aggregation = default;
+            ManagementEventAggregationCondition aggregation = default;
             string odataType = default;
-            Optional<RuleDataSource> dataSource = default;
+            RuleDataSource dataSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementEventRuleCondition(odataType, dataSource.Value, serializedAdditionalRawData, aggregation.Value);
+            return new ManagementEventRuleCondition(odataType, dataSource, serializedAdditionalRawData, aggregation);
         }
 
         BinaryData IPersistableModel<ManagementEventRuleCondition>.Write(ModelReaderWriterOptions options)

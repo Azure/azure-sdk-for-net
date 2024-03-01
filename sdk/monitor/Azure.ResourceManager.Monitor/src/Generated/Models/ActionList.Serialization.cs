@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ActionGroups))
+            if (!(ActionGroups is ChangeTrackingList<ActivityLogAlertActionGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actionGroups"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<ActivityLogAlertActionGroup>> actionGroups = default;
+            IList<ActivityLogAlertActionGroup> actionGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActionList(Optional.ToList(actionGroups), serializedAdditionalRawData);
+            return new ActionList(actionGroups ?? new ChangeTrackingList<ActivityLogAlertActionGroup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActionList>.Write(ModelReaderWriterOptions options)

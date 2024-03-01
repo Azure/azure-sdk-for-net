@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
+            if (options.Format != "W" && ManagedBy != null)
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,124 +72,124 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
+            if (options.Format != "W" && TimeCreated.HasValue)
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
-            if (Optional.IsDefined(OSType))
+            if (OSType.HasValue)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(HyperVGeneration))
+            if (HyperVGeneration.HasValue)
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (Optional.IsDefined(PurchasePlan))
+            if (PurchasePlan != null)
             {
                 writer.WritePropertyName("purchasePlan"u8);
                 writer.WriteObjectValue(PurchasePlan);
             }
-            if (Optional.IsDefined(SupportedCapabilities))
+            if (SupportedCapabilities != null)
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
                 writer.WriteObjectValue(SupportedCapabilities);
             }
-            if (Optional.IsDefined(CreationData))
+            if (CreationData != null)
             {
                 writer.WritePropertyName("creationData"u8);
                 writer.WriteObjectValue(CreationData);
             }
-            if (Optional.IsDefined(DiskSizeGB))
+            if (DiskSizeGB.HasValue)
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskSizeBytes))
+            if (options.Format != "W" && DiskSizeBytes.HasValue)
             {
                 writer.WritePropertyName("diskSizeBytes"u8);
                 writer.WriteNumberValue(DiskSizeBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskState))
+            if (options.Format != "W" && DiskState.HasValue)
             {
                 writer.WritePropertyName("diskState"u8);
                 writer.WriteStringValue(DiskState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(UniqueId))
+            if (options.Format != "W" && UniqueId != null)
             {
                 writer.WritePropertyName("uniqueId"u8);
                 writer.WriteStringValue(UniqueId);
             }
-            if (Optional.IsDefined(EncryptionSettingsGroup))
+            if (EncryptionSettingsGroup != null)
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
                 writer.WriteObjectValue(EncryptionSettingsGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(Incremental))
+            if (Incremental.HasValue)
             {
                 writer.WritePropertyName("incremental"u8);
                 writer.WriteBooleanValue(Incremental.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IncrementalSnapshotFamilyId))
+            if (options.Format != "W" && IncrementalSnapshotFamilyId != null)
             {
                 writer.WritePropertyName("incrementalSnapshotFamilyId"u8);
                 writer.WriteStringValue(IncrementalSnapshotFamilyId);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(NetworkAccessPolicy))
+            if (NetworkAccessPolicy.HasValue)
             {
                 writer.WritePropertyName("networkAccessPolicy"u8);
                 writer.WriteStringValue(NetworkAccessPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(DiskAccessId))
+            if (DiskAccessId != null)
             {
                 writer.WritePropertyName("diskAccessId"u8);
                 writer.WriteStringValue(DiskAccessId);
             }
-            if (Optional.IsDefined(SecurityProfile))
+            if (SecurityProfile != null)
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (Optional.IsDefined(SupportsHibernation))
+            if (SupportsHibernation.HasValue)
             {
                 writer.WritePropertyName("supportsHibernation"u8);
                 writer.WriteBooleanValue(SupportsHibernation.Value);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(CompletionPercent))
+            if (CompletionPercent.HasValue)
             {
                 writer.WritePropertyName("completionPercent"u8);
                 writer.WriteNumberValue(CompletionPercent.Value);
             }
-            if (Optional.IsDefined(CopyCompletionError))
+            if (CopyCompletionError != null)
             {
                 writer.WritePropertyName("copyCompletionError"u8);
                 writer.WriteObjectValue(CopyCompletionError);
             }
-            if (Optional.IsDefined(DataAccessAuthMode))
+            if (DataAccessAuthMode.HasValue)
             {
                 writer.WritePropertyName("dataAccessAuthMode"u8);
                 writer.WriteStringValue(DataAccessAuthMode.Value.ToString());
@@ -233,38 +233,38 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<string> managedBy = default;
-            Optional<SnapshotSku> sku = default;
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string managedBy = default;
+            SnapshotSku sku = default;
+            ExtendedLocation extendedLocation = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<SupportedOperatingSystemType> osType = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<DiskPurchasePlan> purchasePlan = default;
-            Optional<SupportedCapabilities> supportedCapabilities = default;
-            Optional<DiskCreationData> creationData = default;
-            Optional<int> diskSizeGB = default;
-            Optional<long> diskSizeBytes = default;
-            Optional<DiskState> diskState = default;
-            Optional<string> uniqueId = default;
-            Optional<EncryptionSettingsGroup> encryptionSettingsGroup = default;
-            Optional<string> provisioningState = default;
-            Optional<bool> incremental = default;
-            Optional<string> incrementalSnapshotFamilyId = default;
-            Optional<DiskEncryption> encryption = default;
-            Optional<NetworkAccessPolicy> networkAccessPolicy = default;
-            Optional<ResourceIdentifier> diskAccessId = default;
-            Optional<DiskSecurityProfile> securityProfile = default;
-            Optional<bool> supportsHibernation = default;
-            Optional<DiskPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<float> completionPercent = default;
-            Optional<CopyCompletionError> copyCompletionError = default;
-            Optional<DataAccessAuthMode> dataAccessAuthMode = default;
+            SystemData systemData = default;
+            DateTimeOffset? timeCreated = default;
+            SupportedOperatingSystemType? osType = default;
+            HyperVGeneration? hyperVGeneration = default;
+            DiskPurchasePlan purchasePlan = default;
+            SupportedCapabilities supportedCapabilities = default;
+            DiskCreationData creationData = default;
+            int? diskSizeGB = default;
+            long? diskSizeBytes = default;
+            DiskState? diskState = default;
+            string uniqueId = default;
+            EncryptionSettingsGroup encryptionSettingsGroup = default;
+            string provisioningState = default;
+            bool? incremental = default;
+            string incrementalSnapshotFamilyId = default;
+            DiskEncryption encryption = default;
+            NetworkAccessPolicy? networkAccessPolicy = default;
+            ResourceIdentifier diskAccessId = default;
+            DiskSecurityProfile securityProfile = default;
+            bool? supportsHibernation = default;
+            DiskPublicNetworkAccess? publicNetworkAccess = default;
+            float? completionPercent = default;
+            CopyCompletionError copyCompletionError = default;
+            DataAccessAuthMode? dataAccessAuthMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -548,7 +548,40 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, extendedLocation, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), Optional.ToNullable(diskState), uniqueId.Value, encryptionSettingsGroup.Value, provisioningState.Value, Optional.ToNullable(incremental), incrementalSnapshotFamilyId.Value, encryption.Value, Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, securityProfile.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(completionPercent), copyCompletionError.Value, Optional.ToNullable(dataAccessAuthMode), serializedAdditionalRawData);
+            return new SnapshotData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                managedBy,
+                sku,
+                extendedLocation,
+                timeCreated,
+                osType,
+                hyperVGeneration,
+                purchasePlan,
+                supportedCapabilities,
+                creationData,
+                diskSizeGB,
+                diskSizeBytes,
+                diskState,
+                uniqueId,
+                encryptionSettingsGroup,
+                provisioningState,
+                incremental,
+                incrementalSnapshotFamilyId,
+                encryption,
+                networkAccessPolicy,
+                diskAccessId,
+                securityProfile,
+                supportsHibernation,
+                publicNetworkAccess,
+                completionPercent,
+                copyCompletionError,
+                dataAccessAuthMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotData>.Write(ModelReaderWriterOptions options)

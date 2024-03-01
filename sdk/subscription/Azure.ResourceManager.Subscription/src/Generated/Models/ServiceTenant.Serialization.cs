@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Subscription.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(TenantName))
+            if (TenantName != null)
             {
                 writer.WritePropertyName("tenantName"u8);
                 writer.WriteStringValue(TenantName);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> tenantName = default;
+            Guid? tenantId = default;
+            string tenantName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTenant(Optional.ToNullable(tenantId), tenantName.Value, serializedAdditionalRawData);
+            return new ServiceTenant(tenantId, tenantName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTenant>.Write(ModelReaderWriterOptions options)

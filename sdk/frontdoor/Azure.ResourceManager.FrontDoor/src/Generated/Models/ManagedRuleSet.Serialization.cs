@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (Optional.IsDefined(RuleSetAction))
+            if (RuleSetAction.HasValue)
             {
                 writer.WritePropertyName("ruleSetAction"u8);
                 writer.WriteStringValue(RuleSetAction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Exclusions))
+            if (!(Exclusions is ChangeTrackingList<ManagedRuleExclusion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RuleGroupOverrides))
+            if (!(RuleGroupOverrides is ChangeTrackingList<ManagedRuleGroupOverride> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ruleGroupOverrides"u8);
                 writer.WriteStartArray();
@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             string ruleSetType = default;
             string ruleSetVersion = default;
-            Optional<ManagedRuleSetActionType> ruleSetAction = default;
-            Optional<IList<ManagedRuleExclusion>> exclusions = default;
-            Optional<IList<ManagedRuleGroupOverride>> ruleGroupOverrides = default;
+            ManagedRuleSetActionType? ruleSetAction = default;
+            IList<ManagedRuleExclusion> exclusions = default;
+            IList<ManagedRuleGroupOverride> ruleGroupOverrides = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleSet(ruleSetType, ruleSetVersion, Optional.ToNullable(ruleSetAction), Optional.ToList(exclusions), Optional.ToList(ruleGroupOverrides), serializedAdditionalRawData);
+            return new ManagedRuleSet(
+                ruleSetType,
+                ruleSetVersion,
+                ruleSetAction,
+                exclusions ?? new ChangeTrackingList<ManagedRuleExclusion>(),
+                ruleGroupOverrides ?? new ChangeTrackingList<ManagedRuleGroupOverride>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleSet>.Write(ModelReaderWriterOptions options)

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Sql
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -53,14 +53,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectionType))
+            if (ConnectionType.HasValue)
             {
                 writer.WritePropertyName("connectionType"u8);
                 writer.WriteStringValue(ConnectionType.Value.ToString());
@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> kind = default;
+            AzureLocation? location = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ServerConnectionType> connectionType = default;
+            SystemData systemData = default;
+            ServerConnectionType? connectionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +180,15 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerConnectionPolicyData(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, Optional.ToNullable(connectionType), serializedAdditionalRawData);
+            return new SqlServerConnectionPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                connectionType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerConnectionPolicyData>.Write(ModelReaderWriterOptions options)

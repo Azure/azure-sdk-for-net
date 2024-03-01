@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,37 +50,37 @@ namespace Azure.ResourceManager.MySql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageProfile))
+            if (StorageProfile != null)
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (Optional.IsDefined(AdministratorLoginPassword))
+            if (AdministratorLoginPassword != null)
             {
                 writer.WritePropertyName("administratorLoginPassword"u8);
                 writer.WriteStringValue(AdministratorLoginPassword);
             }
-            if (Optional.IsDefined(Version))
+            if (Version.HasValue)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version.Value.ToString());
             }
-            if (Optional.IsDefined(SslEnforcement))
+            if (SslEnforcement.HasValue)
             {
                 writer.WritePropertyName("sslEnforcement"u8);
                 writer.WriteStringValue(SslEnforcement.Value.ToSerialString());
             }
-            if (Optional.IsDefined(MinimalTlsVersion))
+            if (MinimalTlsVersion.HasValue)
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(ReplicationRole))
+            if (ReplicationRole != null)
             {
                 writer.WritePropertyName("replicationRole"u8);
                 writer.WriteStringValue(ReplicationRole);
@@ -124,16 +124,16 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<MySqlSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<MySqlStorageProfile> storageProfile = default;
-            Optional<string> administratorLoginPassword = default;
-            Optional<MySqlServerVersion> version = default;
-            Optional<MySqlSslEnforcementEnum> sslEnforcement = default;
-            Optional<MySqlMinimalTlsVersionEnum> minimalTlsVersion = default;
-            Optional<MySqlPublicNetworkAccessEnum> publicNetworkAccess = default;
-            Optional<string> replicationRole = default;
+            ManagedServiceIdentity identity = default;
+            MySqlSku sku = default;
+            IDictionary<string, string> tags = default;
+            MySqlStorageProfile storageProfile = default;
+            string administratorLoginPassword = default;
+            MySqlServerVersion? version = default;
+            MySqlSslEnforcementEnum? sslEnforcement = default;
+            MySqlMinimalTlsVersionEnum? minimalTlsVersion = default;
+            MySqlPublicNetworkAccessEnum? publicNetworkAccess = default;
+            string replicationRole = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,7 +243,18 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerPatch(identity, sku.Value, Optional.ToDictionary(tags), storageProfile.Value, administratorLoginPassword.Value, Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(publicNetworkAccess), replicationRole.Value, serializedAdditionalRawData);
+            return new MySqlServerPatch(
+                identity,
+                sku,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                storageProfile,
+                administratorLoginPassword,
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                publicNetworkAccess,
+                replicationRole,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerPatch>.Write(ModelReaderWriterOptions options)

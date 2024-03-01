@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HttpsProxy))
+            if (HttpsProxy != null)
             {
                 writer.WritePropertyName("httpsProxy"u8);
                 writer.WriteStringValue(HttpsProxy);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> httpsProxy = default;
+            string httpsProxy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HttpProxyConfiguration(httpsProxy.Value, serializedAdditionalRawData);
+            return new HttpProxyConfiguration(httpsProxy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HttpProxyConfiguration>.Write(ModelReaderWriterOptions options)

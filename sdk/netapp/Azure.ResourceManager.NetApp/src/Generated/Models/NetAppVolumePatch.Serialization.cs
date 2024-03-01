@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,54 +55,54 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceLevel))
+            if (ServiceLevel.HasValue)
             {
                 writer.WritePropertyName("serviceLevel"u8);
                 writer.WriteStringValue(ServiceLevel.Value.ToString());
             }
-            if (Optional.IsDefined(UsageThreshold))
+            if (UsageThreshold.HasValue)
             {
                 writer.WritePropertyName("usageThreshold"u8);
                 writer.WriteNumberValue(UsageThreshold.Value);
             }
-            if (Optional.IsDefined(ExportPolicy))
+            if (ExportPolicy != null)
             {
                 writer.WritePropertyName("exportPolicy"u8);
                 writer.WriteObjectValue(ExportPolicy);
             }
-            if (Optional.IsDefined(ThroughputMibps))
+            if (ThroughputMibps.HasValue)
             {
                 writer.WritePropertyName("throughputMibps"u8);
                 writer.WriteNumberValue(ThroughputMibps.Value);
             }
-            if (Optional.IsDefined(DataProtection))
+            if (DataProtection != null)
             {
                 writer.WritePropertyName("dataProtection"u8);
                 writer.WriteObjectValue(DataProtection);
             }
-            if (Optional.IsDefined(IsDefaultQuotaEnabled))
+            if (IsDefaultQuotaEnabled.HasValue)
             {
                 writer.WritePropertyName("isDefaultQuotaEnabled"u8);
                 writer.WriteBooleanValue(IsDefaultQuotaEnabled.Value);
             }
-            if (Optional.IsDefined(DefaultUserQuotaInKiBs))
+            if (DefaultUserQuotaInKiBs.HasValue)
             {
                 writer.WritePropertyName("defaultUserQuotaInKiBs"u8);
                 writer.WriteNumberValue(DefaultUserQuotaInKiBs.Value);
             }
-            if (Optional.IsDefined(DefaultGroupQuotaInKiBs))
+            if (DefaultGroupQuotaInKiBs.HasValue)
             {
                 writer.WritePropertyName("defaultGroupQuotaInKiBs"u8);
                 writer.WriteNumberValue(DefaultGroupQuotaInKiBs.Value);
             }
-            if (Optional.IsDefined(UnixPermissions))
+            if (UnixPermissions != null)
             {
                 if (UnixPermissions != null)
                 {
@@ -114,27 +114,27 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("unixPermissions");
                 }
             }
-            if (Optional.IsDefined(IsCoolAccessEnabled))
+            if (IsCoolAccessEnabled.HasValue)
             {
                 writer.WritePropertyName("coolAccess"u8);
                 writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
-            if (Optional.IsDefined(CoolnessPeriod))
+            if (CoolnessPeriod.HasValue)
             {
                 writer.WritePropertyName("coolnessPeriod"u8);
                 writer.WriteNumberValue(CoolnessPeriod.Value);
             }
-            if (Optional.IsDefined(CoolAccessRetrievalPolicy))
+            if (CoolAccessRetrievalPolicy.HasValue)
             {
                 writer.WritePropertyName("coolAccessRetrievalPolicy"u8);
                 writer.WriteStringValue(CoolAccessRetrievalPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(IsSnapshotDirectoryVisible))
+            if (IsSnapshotDirectoryVisible.HasValue)
             {
                 writer.WritePropertyName("snapshotDirectoryVisible"u8);
                 writer.WriteBooleanValue(IsSnapshotDirectoryVisible.Value);
             }
-            if (Optional.IsDefined(SmbAccessBasedEnumeration))
+            if (SmbAccessBasedEnumeration.HasValue)
             {
                 if (SmbAccessBasedEnumeration != null)
                 {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("smbAccessBasedEnumeration");
                 }
             }
-            if (Optional.IsDefined(SmbNonBrowsable))
+            if (SmbNonBrowsable.HasValue)
             {
                 writer.WritePropertyName("smbNonBrowsable"u8);
                 writer.WriteStringValue(SmbNonBrowsable.Value.ToString());
@@ -190,27 +190,27 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetAppFileServiceLevel> serviceLevel = default;
-            Optional<long> usageThreshold = default;
-            Optional<VolumePatchPropertiesExportPolicy> exportPolicy = default;
-            Optional<float> throughputMibps = default;
-            Optional<NetAppVolumePatchDataProtection> dataProtection = default;
-            Optional<bool> isDefaultQuotaEnabled = default;
-            Optional<long> defaultUserQuotaInKiBs = default;
-            Optional<long> defaultGroupQuotaInKiBs = default;
-            Optional<string> unixPermissions = default;
-            Optional<bool> coolAccess = default;
-            Optional<int> coolnessPeriod = default;
-            Optional<CoolAccessRetrievalPolicy> coolAccessRetrievalPolicy = default;
-            Optional<bool> snapshotDirectoryVisible = default;
-            Optional<SmbAccessBasedEnumeration?> smbAccessBasedEnumeration = default;
-            Optional<SmbNonBrowsable> smbNonBrowsable = default;
+            SystemData systemData = default;
+            NetAppFileServiceLevel? serviceLevel = default;
+            long? usageThreshold = default;
+            VolumePatchPropertiesExportPolicy exportPolicy = default;
+            float? throughputMibps = default;
+            NetAppVolumePatchDataProtection dataProtection = default;
+            bool? isDefaultQuotaEnabled = default;
+            long? defaultUserQuotaInKiBs = default;
+            long? defaultGroupQuotaInKiBs = default;
+            string unixPermissions = default;
+            bool? coolAccess = default;
+            int? coolnessPeriod = default;
+            CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default;
+            bool? snapshotDirectoryVisible = default;
+            SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default;
+            SmbNonBrowsable? smbNonBrowsable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -413,7 +413,29 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumePatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(serviceLevel), Optional.ToNullable(usageThreshold), exportPolicy.Value, Optional.ToNullable(throughputMibps), dataProtection.Value, Optional.ToNullable(isDefaultQuotaEnabled), Optional.ToNullable(defaultUserQuotaInKiBs), Optional.ToNullable(defaultGroupQuotaInKiBs), unixPermissions.Value, Optional.ToNullable(coolAccess), Optional.ToNullable(coolnessPeriod), Optional.ToNullable(coolAccessRetrievalPolicy), Optional.ToNullable(snapshotDirectoryVisible), Optional.ToNullable(smbAccessBasedEnumeration), Optional.ToNullable(smbNonBrowsable), serializedAdditionalRawData);
+            return new NetAppVolumePatch(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                serviceLevel,
+                usageThreshold,
+                exportPolicy,
+                throughputMibps,
+                dataProtection,
+                isDefaultQuotaEnabled,
+                defaultUserQuotaInKiBs,
+                defaultGroupQuotaInKiBs,
+                unixPermissions,
+                coolAccess,
+                coolnessPeriod,
+                coolAccessRetrievalPolicy,
+                snapshotDirectoryVisible,
+                smbAccessBasedEnumeration,
+                smbNonBrowsable,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumePatch>.Write(ModelReaderWriterOptions options)

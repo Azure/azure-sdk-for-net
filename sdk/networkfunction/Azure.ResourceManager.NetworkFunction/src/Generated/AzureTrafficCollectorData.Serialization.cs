@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.NetworkFunction
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.NetworkFunction
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(CollectorPolicies))
+            if (options.Format != "W" && !(CollectorPolicies is ChangeTrackingList<SubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("collectorPolicies"u8);
                 writer.WriteStartArray();
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.NetworkFunction
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VirtualHub))
+            if (VirtualHub != null)
             {
                 writer.WritePropertyName("virtualHub"u8);
                 JsonSerializer.Serialize(writer, VirtualHub);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<SubResource>> collectorPolicies = default;
-            Optional<SubResource> virtualHub = default;
-            Optional<CollectorProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            IReadOnlyList<SubResource> collectorPolicies = default;
+            SubResource virtualHub = default;
+            CollectorProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,7 +245,18 @@ namespace Azure.ResourceManager.NetworkFunction
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureTrafficCollectorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToList(collectorPolicies), virtualHub, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AzureTrafficCollectorData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                collectorPolicies ?? new ChangeTrackingList<SubResource>(),
+                virtualHub,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureTrafficCollectorData>.Write(ModelReaderWriterOptions options)

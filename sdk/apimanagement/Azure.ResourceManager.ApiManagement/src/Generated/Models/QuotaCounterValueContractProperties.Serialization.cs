@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CallsCount))
+            if (CallsCount.HasValue)
             {
                 writer.WritePropertyName("callsCount"u8);
                 writer.WriteNumberValue(CallsCount.Value);
             }
-            if (Optional.IsDefined(KbTransferred))
+            if (KbTransferred.HasValue)
             {
                 writer.WritePropertyName("kbTransferred"u8);
                 writer.WriteNumberValue(KbTransferred.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<int> callsCount = default;
-            Optional<double> kbTransferred = default;
+            int? callsCount = default;
+            double? kbTransferred = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaCounterValueContractProperties(Optional.ToNullable(callsCount), Optional.ToNullable(kbTransferred), serializedAdditionalRawData);
+            return new QuotaCounterValueContractProperties(callsCount, kbTransferred, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaCounterValueContractProperties>.Write(ModelReaderWriterOptions options)

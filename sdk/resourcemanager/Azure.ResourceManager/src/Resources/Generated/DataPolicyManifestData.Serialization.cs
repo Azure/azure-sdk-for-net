@@ -165,15 +165,15 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<string>> namespaces = default;
-            Optional<string> policyMode = default;
-            Optional<bool> isBuiltInOnly = default;
-            Optional<IReadOnlyList<ResourceTypeAliases>> resourceTypeAliases = default;
-            Optional<IReadOnlyList<DataPolicyManifestEffect>> effects = default;
-            Optional<IReadOnlyList<string>> fieldValues = default;
-            Optional<IReadOnlyList<string>> standard = default;
-            Optional<IReadOnlyList<DataManifestCustomResourceFunctionDefinition>> custom = default;
+            SystemData systemData = default;
+            IReadOnlyList<string> namespaces = default;
+            string policyMode = default;
+            bool? isBuiltInOnly = default;
+            IReadOnlyList<ResourceTypeAliases> resourceTypeAliases = default;
+            IReadOnlyList<DataPolicyManifestEffect> effects = default;
+            IReadOnlyList<string> fieldValues = default;
+            IReadOnlyList<string> standard = default;
+            IReadOnlyList<DataManifestCustomResourceFunctionDefinition> custom = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -330,7 +330,20 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataPolicyManifestData(id, name, type, systemData.Value, Optional.ToList(namespaces), policyMode.Value, Optional.ToNullable(isBuiltInOnly), Optional.ToList(resourceTypeAliases), Optional.ToList(effects), Optional.ToList(fieldValues), Optional.ToList(standard), Optional.ToList(custom), serializedAdditionalRawData);
+            return new DataPolicyManifestData(
+                id,
+                name,
+                type,
+                systemData,
+                namespaces ?? new ChangeTrackingList<string>(),
+                policyMode,
+                isBuiltInOnly,
+                resourceTypeAliases ?? new ChangeTrackingList<ResourceTypeAliases>(),
+                effects ?? new ChangeTrackingList<DataPolicyManifestEffect>(),
+                fieldValues ?? new ChangeTrackingList<string>(),
+                standard ?? new ChangeTrackingList<string>(),
+                custom ?? new ChangeTrackingList<DataManifestCustomResourceFunctionDefinition>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataPolicyManifestData>.Write(ModelReaderWriterOptions options)

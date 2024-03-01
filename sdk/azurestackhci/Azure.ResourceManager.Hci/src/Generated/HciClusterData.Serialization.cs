@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Hci
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,99 +56,99 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CloudId))
+            if (options.Format != "W" && CloudId.HasValue)
             {
                 writer.WritePropertyName("cloudId"u8);
                 writer.WriteStringValue(CloudId.Value);
             }
-            if (Optional.IsDefined(CloudManagementEndpoint))
+            if (CloudManagementEndpoint != null)
             {
                 writer.WritePropertyName("cloudManagementEndpoint"u8);
                 writer.WriteStringValue(CloudManagementEndpoint);
             }
-            if (Optional.IsDefined(AadClientId))
+            if (AadClientId.HasValue)
             {
                 writer.WritePropertyName("aadClientId"u8);
                 writer.WriteStringValue(AadClientId.Value);
             }
-            if (Optional.IsDefined(AadTenantId))
+            if (AadTenantId.HasValue)
             {
                 writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId.Value);
             }
-            if (Optional.IsDefined(AadApplicationObjectId))
+            if (AadApplicationObjectId.HasValue)
             {
                 writer.WritePropertyName("aadApplicationObjectId"u8);
                 writer.WriteStringValue(AadApplicationObjectId.Value);
             }
-            if (Optional.IsDefined(AadServicePrincipalObjectId))
+            if (AadServicePrincipalObjectId.HasValue)
             {
                 writer.WritePropertyName("aadServicePrincipalObjectId"u8);
                 writer.WriteStringValue(AadServicePrincipalObjectId.Value);
             }
-            if (Optional.IsDefined(SoftwareAssuranceProperties))
+            if (SoftwareAssuranceProperties != null)
             {
                 writer.WritePropertyName("softwareAssuranceProperties"u8);
                 writer.WriteObjectValue(SoftwareAssuranceProperties);
             }
-            if (Optional.IsDefined(DesiredProperties))
+            if (DesiredProperties != null)
             {
                 writer.WritePropertyName("desiredProperties"u8);
                 writer.WriteObjectValue(DesiredProperties);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReportedProperties))
+            if (options.Format != "W" && ReportedProperties != null)
             {
                 writer.WritePropertyName("reportedProperties"u8);
                 writer.WriteObjectValue(ReportedProperties);
             }
-            if (options.Format != "W" && Optional.IsDefined(TrialDaysRemaining))
+            if (options.Format != "W" && TrialDaysRemaining.HasValue)
             {
                 writer.WritePropertyName("trialDaysRemaining"u8);
                 writer.WriteNumberValue(TrialDaysRemaining.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingModel))
+            if (options.Format != "W" && BillingModel != null)
             {
                 writer.WritePropertyName("billingModel"u8);
                 writer.WriteStringValue(BillingModel);
             }
-            if (options.Format != "W" && Optional.IsDefined(RegistrationTimestamp))
+            if (options.Format != "W" && RegistrationTimestamp.HasValue)
             {
                 writer.WritePropertyName("registrationTimestamp"u8);
                 writer.WriteStringValue(RegistrationTimestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSyncTimestamp))
+            if (options.Format != "W" && LastSyncTimestamp.HasValue)
             {
                 writer.WritePropertyName("lastSyncTimestamp"u8);
                 writer.WriteStringValue(LastSyncTimestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastBillingTimestamp))
+            if (options.Format != "W" && LastBillingTimestamp.HasValue)
             {
                 writer.WritePropertyName("lastBillingTimestamp"u8);
                 writer.WriteStringValue(LastBillingTimestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceEndpoint))
+            if (options.Format != "W" && ServiceEndpoint != null)
             {
                 writer.WritePropertyName("serviceEndpoint"u8);
                 writer.WriteStringValue(ServiceEndpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceProviderObjectId))
+            if (options.Format != "W" && ResourceProviderObjectId != null)
             {
                 writer.WritePropertyName("resourceProviderObjectId"u8);
                 writer.WriteStringValue(ResourceProviderObjectId);
@@ -156,22 +156,22 @@ namespace Azure.ResourceManager.Hci
             writer.WriteEndObject();
             writer.WritePropertyName("identity"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
+            if (options.Format != "W" && PrincipalId.HasValue)
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(TypeIdentityType))
+            if (TypeIdentityType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypeIdentityType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (!(UserAssignedIdentities is ChangeTrackingDictionary<string, UserAssignedIdentity> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
@@ -221,34 +221,34 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HciProvisioningState> provisioningState = default;
-            Optional<HciClusterStatus> status = default;
-            Optional<Guid> cloudId = default;
-            Optional<string> cloudManagementEndpoint = default;
-            Optional<Guid> aadClientId = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<Guid> aadApplicationObjectId = default;
-            Optional<Guid> aadServicePrincipalObjectId = default;
-            Optional<SoftwareAssuranceProperties> softwareAssuranceProperties = default;
-            Optional<HciClusterDesiredProperties> desiredProperties = default;
-            Optional<HciClusterReportedProperties> reportedProperties = default;
-            Optional<float> trialDaysRemaining = default;
-            Optional<string> billingModel = default;
-            Optional<DateTimeOffset> registrationTimestamp = default;
-            Optional<DateTimeOffset> lastSyncTimestamp = default;
-            Optional<DateTimeOffset> lastBillingTimestamp = default;
-            Optional<string> serviceEndpoint = default;
-            Optional<string> resourceProviderObjectId = default;
-            Optional<Guid> principalId = default;
-            Optional<Guid> tenantId = default;
-            Optional<HciManagedServiceIdentityType> type0 = default;
-            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
+            SystemData systemData = default;
+            HciProvisioningState? provisioningState = default;
+            HciClusterStatus? status = default;
+            Guid? cloudId = default;
+            string cloudManagementEndpoint = default;
+            Guid? aadClientId = default;
+            Guid? aadTenantId = default;
+            Guid? aadApplicationObjectId = default;
+            Guid? aadServicePrincipalObjectId = default;
+            SoftwareAssuranceProperties softwareAssuranceProperties = default;
+            HciClusterDesiredProperties desiredProperties = default;
+            HciClusterReportedProperties reportedProperties = default;
+            float? trialDaysRemaining = default;
+            string billingModel = default;
+            DateTimeOffset? registrationTimestamp = default;
+            DateTimeOffset? lastSyncTimestamp = default;
+            DateTimeOffset? lastBillingTimestamp = default;
+            string serviceEndpoint = default;
+            string resourceProviderObjectId = default;
+            Guid? principalId = default;
+            Guid? tenantId = default;
+            HciManagedServiceIdentityType? type0 = default;
+            IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -513,7 +513,36 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), Optional.ToNullable(aadApplicationObjectId), Optional.ToNullable(aadServicePrincipalObjectId), softwareAssuranceProperties.Value, desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), serviceEndpoint.Value, resourceProviderObjectId.Value, Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(type0), Optional.ToDictionary(userAssignedIdentities), serializedAdditionalRawData);
+            return new HciClusterData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                status,
+                cloudId,
+                cloudManagementEndpoint,
+                aadClientId,
+                aadTenantId,
+                aadApplicationObjectId,
+                aadServicePrincipalObjectId,
+                softwareAssuranceProperties,
+                desiredProperties,
+                reportedProperties,
+                trialDaysRemaining,
+                billingModel,
+                registrationTimestamp,
+                lastSyncTimestamp,
+                lastBillingTimestamp,
+                serviceEndpoint,
+                resourceProviderObjectId,
+                principalId,
+                tenantId,
+                type0,
+                userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterData>.Write(ModelReaderWriterOptions options)

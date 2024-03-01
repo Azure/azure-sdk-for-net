@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -49,24 +49,24 @@ namespace Azure.ResourceManager.ManagedNetwork
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(AssignedManagedNetwork))
+            if (AssignedManagedNetwork != null)
             {
                 writer.WritePropertyName("assignedManagedNetwork"u8);
                 writer.WriteStringValue(AssignedManagedNetwork);
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.ManagedNetwork
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ETag> etag = default;
-            Optional<string> assignedManagedNetwork = default;
+            SystemData systemData = default;
+            ProvisioningState? provisioningState = default;
+            ETag? etag = default;
+            string assignedManagedNetwork = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,16 @@ namespace Azure.ResourceManager.ManagedNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScopeAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(etag), assignedManagedNetwork.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ScopeAssignmentData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                etag,
+                assignedManagedNetwork,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScopeAssignmentData>.Write(ModelReaderWriterOptions options)

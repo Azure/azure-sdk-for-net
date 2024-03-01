@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableTPM))
+            if (EnableTPM.HasValue)
             {
                 writer.WritePropertyName("enableTPM"u8);
                 writer.WriteBooleanValue(EnableTPM.Value);
             }
-            if (Optional.IsDefined(UefiSettings))
+            if (UefiSettings != null)
             {
                 writer.WritePropertyName("uefiSettings"u8);
                 writer.WriteObjectValue(UefiSettings);
             }
-            if (Optional.IsDefined(SecurityType))
+            if (SecurityType.HasValue)
             {
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType.Value.ToString());
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<bool> enableTPM = default;
-            Optional<VirtualMachineInstancePropertiesSecurityProfileUefiSettings> uefiSettings = default;
-            Optional<SecurityType> securityType = default;
+            bool? enableTPM = default;
+            VirtualMachineInstancePropertiesSecurityProfileUefiSettings uefiSettings = default;
+            SecurityType? securityType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstancePropertiesSecurityProfile(Optional.ToNullable(enableTPM), uefiSettings.Value, Optional.ToNullable(securityType), serializedAdditionalRawData);
+            return new VirtualMachineInstancePropertiesSecurityProfile(enableTPM, uefiSettings, securityType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstancePropertiesSecurityProfile>.Write(ModelReaderWriterOptions options)

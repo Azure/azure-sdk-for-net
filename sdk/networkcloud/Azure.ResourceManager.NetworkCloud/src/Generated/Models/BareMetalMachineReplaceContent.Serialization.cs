@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BmcCredentials))
+            if (BmcCredentials != null)
             {
                 writer.WritePropertyName("bmcCredentials"u8);
                 writer.WriteObjectValue(BmcCredentials);
             }
-            if (Optional.IsDefined(BmcMacAddress))
+            if (BmcMacAddress != null)
             {
                 writer.WritePropertyName("bmcMacAddress"u8);
                 writer.WriteStringValue(BmcMacAddress);
             }
-            if (Optional.IsDefined(BootMacAddress))
+            if (BootMacAddress != null)
             {
                 writer.WritePropertyName("bootMacAddress"u8);
                 writer.WriteStringValue(BootMacAddress);
             }
-            if (Optional.IsDefined(MachineName))
+            if (MachineName != null)
             {
                 writer.WritePropertyName("machineName"u8);
                 writer.WriteStringValue(MachineName);
             }
-            if (Optional.IsDefined(SerialNumber))
+            if (SerialNumber != null)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<AdministrativeCredentials> bmcCredentials = default;
-            Optional<string> bmcMacAddress = default;
-            Optional<string> bootMacAddress = default;
-            Optional<string> machineName = default;
-            Optional<string> serialNumber = default;
+            AdministrativeCredentials bmcCredentials = default;
+            string bmcMacAddress = default;
+            string bootMacAddress = default;
+            string machineName = default;
+            string serialNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BareMetalMachineReplaceContent(bmcCredentials.Value, bmcMacAddress.Value, bootMacAddress.Value, machineName.Value, serialNumber.Value, serializedAdditionalRawData);
+            return new BareMetalMachineReplaceContent(
+                bmcCredentials,
+                bmcMacAddress,
+                bootMacAddress,
+                machineName,
+                serialNumber,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BareMetalMachineReplaceContent>.Write(ModelReaderWriterOptions options)

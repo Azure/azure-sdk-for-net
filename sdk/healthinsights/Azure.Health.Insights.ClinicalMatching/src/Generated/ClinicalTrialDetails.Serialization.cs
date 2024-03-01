@@ -29,12 +29,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(EligibilityCriteriaText))
+            if (EligibilityCriteriaText != null)
             {
                 writer.WritePropertyName("eligibilityCriteriaText"u8);
                 writer.WriteStringValue(EligibilityCriteriaText);
             }
-            if (Optional.IsDefined(Demographics))
+            if (Demographics != null)
             {
                 writer.WritePropertyName("demographics"u8);
                 writer.WriteObjectValue(Demographics);
@@ -80,8 +80,8 @@ namespace Azure.Health.Insights.ClinicalMatching
                 return null;
             }
             string id = default;
-            Optional<string> eligibilityCriteriaText = default;
-            Optional<ClinicalTrialDemographics> demographics = default;
+            string eligibilityCriteriaText = default;
+            ClinicalTrialDemographics demographics = default;
             ClinicalTrialMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -117,7 +117,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClinicalTrialDetails(id, eligibilityCriteriaText.Value, demographics.Value, metadata, serializedAdditionalRawData);
+            return new ClinicalTrialDetails(id, eligibilityCriteriaText, demographics, metadata, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClinicalTrialDetails>.Write(ModelReaderWriterOptions options)

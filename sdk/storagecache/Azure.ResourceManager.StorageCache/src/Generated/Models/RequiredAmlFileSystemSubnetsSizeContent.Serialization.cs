@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageCapacityTiB))
+            if (StorageCapacityTiB.HasValue)
             {
                 writer.WritePropertyName("storageCapacityTiB"u8);
                 writer.WriteNumberValue(StorageCapacityTiB.Value);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<float> storageCapacityTiB = default;
-            Optional<StorageCacheSkuName> sku = default;
+            float? storageCapacityTiB = default;
+            StorageCacheSkuName sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequiredAmlFileSystemSubnetsSizeContent(Optional.ToNullable(storageCapacityTiB), sku.Value, serializedAdditionalRawData);
+            return new RequiredAmlFileSystemSubnetsSizeContent(storageCapacityTiB, sku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequiredAmlFileSystemSubnetsSizeContent>.Write(ModelReaderWriterOptions options)

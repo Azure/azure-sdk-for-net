@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CatalogOptions))
+            if (CatalogOptions != null)
             {
                 writer.WritePropertyName("catalogOptions"u8);
                 writer.WriteObjectValue(CatalogOptions);
             }
-            if (Optional.IsDefined(Coordinator))
+            if (Coordinator != null)
             {
                 writer.WritePropertyName("coordinator"u8);
                 writer.WriteObjectValue(Coordinator);
             }
-            if (Optional.IsDefined(UserPluginsSpec))
+            if (UserPluginsSpec != null)
             {
                 writer.WritePropertyName("userPluginsSpec"u8);
                 writer.WriteObjectValue(UserPluginsSpec);
             }
-            if (Optional.IsDefined(UserTelemetrySpec))
+            if (UserTelemetrySpec != null)
             {
                 writer.WritePropertyName("userTelemetrySpec"u8);
                 writer.WriteObjectValue(UserTelemetrySpec);
             }
-            if (Optional.IsDefined(Worker))
+            if (Worker != null)
             {
                 writer.WritePropertyName("worker"u8);
                 writer.WriteObjectValue(Worker);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<CatalogOptions> catalogOptions = default;
-            Optional<TrinoCoordinator> coordinator = default;
-            Optional<TrinoUserPluginListResult> userPluginsSpec = default;
-            Optional<TrinoUserTelemetry> userTelemetrySpec = default;
-            Optional<TrinoWorker> worker = default;
+            CatalogOptions catalogOptions = default;
+            TrinoCoordinator coordinator = default;
+            TrinoUserPluginListResult userPluginsSpec = default;
+            TrinoUserTelemetry userTelemetrySpec = default;
+            TrinoWorker worker = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrinoProfile(catalogOptions.Value, coordinator.Value, userPluginsSpec.Value, userTelemetrySpec.Value, worker.Value, serializedAdditionalRawData);
+            return new TrinoProfile(
+                catalogOptions,
+                coordinator,
+                userPluginsSpec,
+                userTelemetrySpec,
+                worker,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrinoProfile>.Write(ModelReaderWriterOptions options)

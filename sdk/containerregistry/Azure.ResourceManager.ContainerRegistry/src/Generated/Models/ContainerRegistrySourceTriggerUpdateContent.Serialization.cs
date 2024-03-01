@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceRepository))
+            if (SourceRepository != null)
             {
                 writer.WritePropertyName("sourceRepository"u8);
                 writer.WriteObjectValue(SourceRepository);
             }
-            if (Optional.IsCollectionDefined(SourceTriggerEvents))
+            if (!(SourceTriggerEvents is ChangeTrackingList<ContainerRegistrySourceTriggerEvent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sourceTriggerEvents"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<SourceCodeRepoUpdateContent> sourceRepository = default;
-            Optional<IList<ContainerRegistrySourceTriggerEvent>> sourceTriggerEvents = default;
-            Optional<ContainerRegistryTriggerStatus> status = default;
+            SourceCodeRepoUpdateContent sourceRepository = default;
+            IList<ContainerRegistrySourceTriggerEvent> sourceTriggerEvents = default;
+            ContainerRegistryTriggerStatus? status = default;
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistrySourceTriggerUpdateContent(sourceRepository.Value, Optional.ToList(sourceTriggerEvents), Optional.ToNullable(status), name, serializedAdditionalRawData);
+            return new ContainerRegistrySourceTriggerUpdateContent(sourceRepository, sourceTriggerEvents ?? new ChangeTrackingList<ContainerRegistrySourceTriggerEvent>(), status, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistrySourceTriggerUpdateContent>.Write(ModelReaderWriterOptions options)

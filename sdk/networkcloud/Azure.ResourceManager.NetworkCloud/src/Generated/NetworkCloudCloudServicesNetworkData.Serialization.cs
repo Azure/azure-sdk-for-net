@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AdditionalEgressEndpoints))
+            if (!(AdditionalEgressEndpoints is ChangeTrackingList<EgressEndpoint> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("additionalEgressEndpoints"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AssociatedResourceIds))
+            if (options.Format != "W" && !(AssociatedResourceIds is ChangeTrackingList<ResourceIdentifier> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("associatedResourceIds"u8);
                 writer.WriteStartArray();
@@ -90,27 +90,27 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterId))
+            if (options.Format != "W" && ClusterId != null)
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
+            if (options.Format != "W" && DetailedStatus.HasValue)
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
+            if (options.Format != "W" && DetailedStatusMessage != null)
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (Optional.IsDefined(EnableDefaultEgressEndpoints))
+            if (EnableDefaultEgressEndpoints.HasValue)
             {
                 writer.WritePropertyName("enableDefaultEgressEndpoints"u8);
                 writer.WriteStringValue(EnableDefaultEgressEndpoints.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EnabledEgressEndpoints))
+            if (options.Format != "W" && !(EnabledEgressEndpoints is ChangeTrackingList<EgressEndpoint> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("enabledEgressEndpoints"u8);
                 writer.WriteStartArray();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HybridAksClustersAssociatedIds))
+            if (options.Format != "W" && !(HybridAksClustersAssociatedIds is ChangeTrackingList<ResourceIdentifier> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("hybridAksClustersAssociatedIds"u8);
                 writer.WriteStartArray();
@@ -135,17 +135,17 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(InterfaceName))
+            if (options.Format != "W" && InterfaceName != null)
             {
                 writer.WritePropertyName("interfaceName"u8);
                 writer.WriteStringValue(InterfaceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAssociatedIds))
+            if (options.Format != "W" && !(VirtualMachinesAssociatedIds is ChangeTrackingList<ResourceIdentifier> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("virtualMachinesAssociatedIds"u8);
                 writer.WriteStartArray();
@@ -200,23 +200,23 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<EgressEndpoint>> additionalEgressEndpoints = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> associatedResourceIds = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<CloudServicesNetworkDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<CloudServicesNetworkEnableDefaultEgressEndpoint> enableDefaultEgressEndpoints = default;
-            Optional<IReadOnlyList<EgressEndpoint>> enabledEgressEndpoints = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> hybridAksClustersAssociatedIds = default;
-            Optional<string> interfaceName = default;
-            Optional<CloudServicesNetworkProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> virtualMachinesAssociatedIds = default;
+            SystemData systemData = default;
+            IList<EgressEndpoint> additionalEgressEndpoints = default;
+            IReadOnlyList<ResourceIdentifier> associatedResourceIds = default;
+            ResourceIdentifier clusterId = default;
+            CloudServicesNetworkDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints = default;
+            IReadOnlyList<EgressEndpoint> enabledEgressEndpoints = default;
+            IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds = default;
+            string interfaceName = default;
+            CloudServicesNetworkProvisioningState? provisioningState = default;
+            IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -424,7 +424,26 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudCloudServicesNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(additionalEgressEndpoints), Optional.ToList(associatedResourceIds), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(enableDefaultEgressEndpoints), Optional.ToList(enabledEgressEndpoints), Optional.ToList(hybridAksClustersAssociatedIds), interfaceName.Value, Optional.ToNullable(provisioningState), Optional.ToList(virtualMachinesAssociatedIds), serializedAdditionalRawData);
+            return new NetworkCloudCloudServicesNetworkData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                additionalEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(),
+                associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                clusterId,
+                detailedStatus,
+                detailedStatusMessage,
+                enableDefaultEgressEndpoints,
+                enabledEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(),
+                hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                interfaceName,
+                provisioningState,
+                virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudCloudServicesNetworkData>.Write(ModelReaderWriterOptions options)

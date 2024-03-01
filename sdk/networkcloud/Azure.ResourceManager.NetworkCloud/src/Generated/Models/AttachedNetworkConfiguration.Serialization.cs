@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(L2Networks))
+            if (!(L2Networks is ChangeTrackingList<L2NetworkAttachmentConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("l2Networks"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(L3Networks))
+            if (!(L3Networks is ChangeTrackingList<L3NetworkAttachmentConfiguration> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("l3Networks"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrunkedNetworks))
+            if (!(TrunkedNetworks is ChangeTrackingList<TrunkedNetworkAttachmentConfiguration> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("trunkedNetworks"u8);
                 writer.WriteStartArray();
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<IList<L2NetworkAttachmentConfiguration>> l2Networks = default;
-            Optional<IList<L3NetworkAttachmentConfiguration>> l3Networks = default;
-            Optional<IList<TrunkedNetworkAttachmentConfiguration>> trunkedNetworks = default;
+            IList<L2NetworkAttachmentConfiguration> l2Networks = default;
+            IList<L3NetworkAttachmentConfiguration> l3Networks = default;
+            IList<TrunkedNetworkAttachmentConfiguration> trunkedNetworks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttachedNetworkConfiguration(Optional.ToList(l2Networks), Optional.ToList(l3Networks), Optional.ToList(trunkedNetworks), serializedAdditionalRawData);
+            return new AttachedNetworkConfiguration(l2Networks ?? new ChangeTrackingList<L2NetworkAttachmentConfiguration>(), l3Networks ?? new ChangeTrackingList<L3NetworkAttachmentConfiguration>(), trunkedNetworks ?? new ChangeTrackingList<TrunkedNetworkAttachmentConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttachedNetworkConfiguration>.Write(ModelReaderWriterOptions options)

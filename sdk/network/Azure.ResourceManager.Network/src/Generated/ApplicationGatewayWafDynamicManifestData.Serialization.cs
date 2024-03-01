@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AvailableRuleSets))
+            if (!(AvailableRuleSets is ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availableRuleSets"u8);
                 writer.WriteStartArray();
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("defaultRuleSet"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RuleSetType))
+            if (RuleSetType != null)
             {
                 writer.WritePropertyName("ruleSetType"u8);
                 writer.WriteStringValue(RuleSetType);
             }
-            if (Optional.IsDefined(RuleSetVersion))
+            if (RuleSetVersion != null)
             {
                 writer.WritePropertyName("ruleSetVersion"u8);
                 writer.WriteStringValue(RuleSetVersion);
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Network
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<ApplicationGatewayFirewallManifestRuleSet>> availableRuleSets = default;
-            Optional<string> ruleSetType = default;
-            Optional<string> ruleSetVersion = default;
+            SystemData systemData = default;
+            IReadOnlyList<ApplicationGatewayFirewallManifestRuleSet> availableRuleSets = default;
+            string ruleSetType = default;
+            string ruleSetVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,15 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayWafDynamicManifestData(id, name, type, systemData.Value, Optional.ToList(availableRuleSets), ruleSetType.Value, ruleSetVersion.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayWafDynamicManifestData(
+                id,
+                name,
+                type,
+                systemData,
+                availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>(),
+                ruleSetType,
+                ruleSetVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayWafDynamicManifestData>.Write(ModelReaderWriterOptions options)

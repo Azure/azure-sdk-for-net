@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<EventTypeUnderTopic> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EventTypeUnderTopic>> value = default;
+            IReadOnlyList<EventTypeUnderTopic> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventTypesListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new EventTypesListResult(value ?? new ChangeTrackingList<EventTypeUnderTopic>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventTypesListResult>.Write(ModelReaderWriterOptions options)

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.HDInsight
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HDInsight
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HDInsight
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.HDInsight
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<HDInsightApplicationProperties> properties = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
+            HDInsightApplicationProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,15 @@ namespace Azure.ResourceManager.HDInsight
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightApplicationData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(tags), properties.Value, serializedAdditionalRawData);
+            return new HDInsightApplicationData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightApplicationData>.Write(ModelReaderWriterOptions options)

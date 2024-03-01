@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevCenter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,44 +56,44 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DevBoxDefinitionName))
+            if (DevBoxDefinitionName != null)
             {
                 writer.WritePropertyName("devBoxDefinitionName"u8);
                 writer.WriteStringValue(DevBoxDefinitionName);
             }
-            if (Optional.IsDefined(NetworkConnectionName))
+            if (NetworkConnectionName != null)
             {
                 writer.WritePropertyName("networkConnectionName"u8);
                 writer.WriteStringValue(NetworkConnectionName);
             }
-            if (Optional.IsDefined(LicenseType))
+            if (LicenseType.HasValue)
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(LocalAdministrator))
+            if (LocalAdministrator.HasValue)
             {
                 writer.WritePropertyName("localAdministrator"u8);
                 writer.WriteStringValue(LocalAdministrator.Value.ToString());
             }
-            if (Optional.IsDefined(StopOnDisconnect))
+            if (StopOnDisconnect != null)
             {
                 writer.WritePropertyName("stopOnDisconnect"u8);
                 writer.WriteObjectValue(StopOnDisconnect);
             }
-            if (options.Format != "W" && Optional.IsDefined(HealthStatus))
+            if (options.Format != "W" && HealthStatus.HasValue)
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HealthStatusDetails))
+            if (options.Format != "W" && !(HealthStatusDetails is ChangeTrackingList<DevCenterHealthStatusDetail> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("healthStatusDetails"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DevCenter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -147,20 +147,20 @@ namespace Azure.ResourceManager.DevCenter
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> devBoxDefinitionName = default;
-            Optional<string> networkConnectionName = default;
-            Optional<DevCenterLicenseType> licenseType = default;
-            Optional<LocalAdminStatus> localAdministrator = default;
-            Optional<StopOnDisconnectConfiguration> stopOnDisconnect = default;
-            Optional<DevCenterHealthStatus> healthStatus = default;
-            Optional<IReadOnlyList<DevCenterHealthStatusDetail>> healthStatusDetails = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string devBoxDefinitionName = default;
+            string networkConnectionName = default;
+            DevCenterLicenseType? licenseType = default;
+            LocalAdminStatus? localAdministrator = default;
+            StopOnDisconnectConfiguration stopOnDisconnect = default;
+            DevCenterHealthStatus? healthStatus = default;
+            IReadOnlyList<DevCenterHealthStatusDetail> healthStatusDetails = default;
+            DevCenterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -295,7 +295,22 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, devBoxDefinitionName.Value, networkConnectionName.Value, Optional.ToNullable(licenseType), Optional.ToNullable(localAdministrator), stopOnDisconnect.Value, Optional.ToNullable(healthStatus), Optional.ToList(healthStatusDetails), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DevCenterPoolData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                devBoxDefinitionName,
+                networkConnectionName,
+                licenseType,
+                localAdministrator,
+                stopOnDisconnect,
+                healthStatus,
+                healthStatusDetails ?? new ChangeTrackingList<DevCenterHealthStatusDetail>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterPoolData>.Write(ModelReaderWriterOptions options)

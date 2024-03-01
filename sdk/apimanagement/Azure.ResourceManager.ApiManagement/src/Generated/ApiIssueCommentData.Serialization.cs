@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Text))
+            if (Text != null)
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(UserId))
+            if (UserId != null)
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> text = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<ResourceIdentifier> userId = default;
+            SystemData systemData = default;
+            string text = default;
+            DateTimeOffset? createdDate = default;
+            ResourceIdentifier userId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiIssueCommentData(id, name, type, systemData.Value, text.Value, Optional.ToNullable(createdDate), userId.Value, serializedAdditionalRawData);
+            return new ApiIssueCommentData(
+                id,
+                name,
+                type,
+                systemData,
+                text,
+                createdDate,
+                userId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiIssueCommentData>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SamplingType))
+            if (SamplingType.HasValue)
             {
                 writer.WritePropertyName("samplingType"u8);
                 writer.WriteStringValue(SamplingType.Value.ToString());
             }
-            if (Optional.IsDefined(Percentage))
+            if (Percentage.HasValue)
             {
                 writer.WritePropertyName("percentage"u8);
                 writer.WriteNumberValue(Percentage.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<SamplingType> samplingType = default;
-            Optional<double> percentage = default;
+            SamplingType? samplingType = default;
+            double? percentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SamplingSettings(Optional.ToNullable(samplingType), Optional.ToNullable(percentage), serializedAdditionalRawData);
+            return new SamplingSettings(samplingType, percentage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SamplingSettings>.Write(ModelReaderWriterOptions options)

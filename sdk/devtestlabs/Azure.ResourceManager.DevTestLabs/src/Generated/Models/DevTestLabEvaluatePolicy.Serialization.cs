@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FactName))
+            if (FactName != null)
             {
                 writer.WritePropertyName("factName"u8);
                 writer.WriteStringValue(FactName);
             }
-            if (Optional.IsDefined(FactData))
+            if (FactData != null)
             {
                 writer.WritePropertyName("factData"u8);
                 writer.WriteStringValue(FactData);
             }
-            if (Optional.IsDefined(ValueOffset))
+            if (ValueOffset != null)
             {
                 writer.WritePropertyName("valueOffset"u8);
                 writer.WriteStringValue(ValueOffset);
             }
-            if (Optional.IsDefined(UserObjectId))
+            if (UserObjectId != null)
             {
                 writer.WritePropertyName("userObjectId"u8);
                 writer.WriteStringValue(UserObjectId);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> factName = default;
-            Optional<string> factData = default;
-            Optional<string> valueOffset = default;
-            Optional<string> userObjectId = default;
+            string factName = default;
+            string factData = default;
+            string valueOffset = default;
+            string userObjectId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabEvaluatePolicy(factName.Value, factData.Value, valueOffset.Value, userObjectId.Value, serializedAdditionalRawData);
+            return new DevTestLabEvaluatePolicy(factName, factData, valueOffset, userObjectId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabEvaluatePolicy>.Write(ModelReaderWriterOptions options)

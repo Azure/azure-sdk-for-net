@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sysctls))
+            if (Sysctls != null)
             {
                 writer.WritePropertyName("sysctls"u8);
                 writer.WriteObjectValue(Sysctls);
             }
-            if (Optional.IsDefined(TransparentHugePageEnabled))
+            if (TransparentHugePageEnabled != null)
             {
                 writer.WritePropertyName("transparentHugePageEnabled"u8);
                 writer.WriteStringValue(TransparentHugePageEnabled);
             }
-            if (Optional.IsDefined(TransparentHugePageDefrag))
+            if (TransparentHugePageDefrag != null)
             {
                 writer.WritePropertyName("transparentHugePageDefrag"u8);
                 writer.WriteStringValue(TransparentHugePageDefrag);
             }
-            if (Optional.IsDefined(SwapFileSizeInMB))
+            if (SwapFileSizeInMB.HasValue)
             {
                 writer.WritePropertyName("swapFileSizeMB"u8);
                 writer.WriteNumberValue(SwapFileSizeInMB.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<SysctlConfig> sysctls = default;
-            Optional<string> transparentHugePageEnabled = default;
-            Optional<string> transparentHugePageDefrag = default;
-            Optional<int> swapFileSizeMB = default;
+            SysctlConfig sysctls = default;
+            string transparentHugePageEnabled = default;
+            string transparentHugePageDefrag = default;
+            int? swapFileSizeMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinuxOSConfig(sysctls.Value, transparentHugePageEnabled.Value, transparentHugePageDefrag.Value, Optional.ToNullable(swapFileSizeMB), serializedAdditionalRawData);
+            return new LinuxOSConfig(sysctls, transparentHugePageEnabled, transparentHugePageDefrag, swapFileSizeMB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinuxOSConfig>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(EligibleAuthorizations))
+            if (!(EligibleAuthorizations is ChangeTrackingList<ManagedServicesEligibleAuthorization> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("eligibleAuthorizations"u8);
                 writer.WriteStartArray();
@@ -48,29 +48,29 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RegistrationDefinitionName))
+            if (RegistrationDefinitionName != null)
             {
                 writer.WritePropertyName("registrationDefinitionName"u8);
                 writer.WriteStringValue(RegistrationDefinitionName);
             }
             writer.WritePropertyName("managedByTenantId"u8);
             writer.WriteStringValue(ManagedByTenantId);
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ManageeTenantId))
+            if (options.Format != "W" && ManageeTenantId.HasValue)
             {
                 writer.WritePropertyName("manageeTenantId"u8);
                 writer.WriteStringValue(ManageeTenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManageeTenantName))
+            if (options.Format != "W" && ManageeTenantName != null)
             {
                 writer.WritePropertyName("manageeTenantName"u8);
                 writer.WriteStringValue(ManageeTenantName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagedByTenantName))
+            if (options.Format != "W" && ManagedByTenantName != null)
             {
                 writer.WritePropertyName("managedByTenantName"u8);
                 writer.WriteStringValue(ManagedByTenantName);
@@ -113,15 +113,15 @@ namespace Azure.ResourceManager.ManagedServices.Models
             {
                 return null;
             }
-            Optional<string> description = default;
+            string description = default;
             IList<ManagedServicesAuthorization> authorizations = default;
-            Optional<IList<ManagedServicesEligibleAuthorization>> eligibleAuthorizations = default;
-            Optional<string> registrationDefinitionName = default;
+            IList<ManagedServicesEligibleAuthorization> eligibleAuthorizations = default;
+            string registrationDefinitionName = default;
             Guid managedByTenantId = default;
-            Optional<ManagedServicesProvisioningState> provisioningState = default;
-            Optional<Guid> manageeTenantId = default;
-            Optional<string> manageeTenantName = default;
-            Optional<string> managedByTenantName = default;
+            ManagedServicesProvisioningState? provisioningState = default;
+            Guid? manageeTenantId = default;
+            string manageeTenantName = default;
+            string managedByTenantName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,17 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesRegistrationProperties(description.Value, authorizations, Optional.ToList(eligibleAuthorizations), registrationDefinitionName.Value, managedByTenantId, Optional.ToNullable(provisioningState), Optional.ToNullable(manageeTenantId), manageeTenantName.Value, managedByTenantName.Value, serializedAdditionalRawData);
+            return new ManagedServicesRegistrationProperties(
+                description,
+                authorizations,
+                eligibleAuthorizations ?? new ChangeTrackingList<ManagedServicesEligibleAuthorization>(),
+                registrationDefinitionName,
+                managedByTenantId,
+                provisioningState,
+                manageeTenantId,
+                manageeTenantName,
+                managedByTenantName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesRegistrationProperties>.Write(ModelReaderWriterOptions options)

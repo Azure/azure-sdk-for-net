@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CapacityGB))
+            if (options.Format != "W" && CapacityGB.HasValue)
             {
                 writer.WritePropertyName("capacityGB"u8);
                 writer.WriteNumberValue(CapacityGB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Connection))
+            if (options.Format != "W" && Connection.HasValue)
             {
                 writer.WritePropertyName("connection"u8);
                 writer.WriteStringValue(Connection.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskType))
+            if (options.Format != "W" && DiskType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<long> capacityGB = default;
-            Optional<MachineSkuDiskConnectionType> connection = default;
-            Optional<DiskType> type = default;
+            long? capacityGB = default;
+            MachineSkuDiskConnectionType? connection = default;
+            DiskType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineDisk(Optional.ToNullable(capacityGB), Optional.ToNullable(connection), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new MachineDisk(capacityGB, connection, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineDisk>.Write(ModelReaderWriterOptions options)

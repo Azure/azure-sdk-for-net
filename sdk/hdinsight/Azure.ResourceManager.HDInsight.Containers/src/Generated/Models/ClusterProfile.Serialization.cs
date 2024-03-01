@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(ClusterVersion);
             writer.WritePropertyName("ossVersion"u8);
             writer.WriteStringValue(OssVersion);
-            if (options.Format != "W" && Optional.IsCollectionDefined(Components))
+            if (options.Format != "W" && !(Components is ChangeTrackingList<ClusterComponentItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("components"u8);
                 writer.WriteStartArray();
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteObjectValue(IdentityProfile);
             writer.WritePropertyName("authorizationProfile"u8);
             writer.WriteObjectValue(AuthorizationProfile);
-            if (Optional.IsDefined(SecretsProfile))
+            if (SecretsProfile != null)
             {
                 writer.WritePropertyName("secretsProfile"u8);
                 writer.WriteObjectValue(SecretsProfile);
             }
-            if (Optional.IsCollectionDefined(ServiceConfigsProfiles))
+            if (!(ServiceConfigsProfiles is ChangeTrackingList<ClusterServiceConfigsProfile> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("serviceConfigsProfiles"u8);
                 writer.WriteStartArray();
@@ -59,32 +59,32 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectivityProfile))
+            if (options.Format != "W" && ConnectivityProfile != null)
             {
                 writer.WritePropertyName("connectivityProfile"u8);
                 writer.WriteObjectValue(ConnectivityProfile);
             }
-            if (Optional.IsDefined(LogAnalyticsProfile))
+            if (LogAnalyticsProfile != null)
             {
                 writer.WritePropertyName("logAnalyticsProfile"u8);
                 writer.WriteObjectValue(LogAnalyticsProfile);
             }
-            if (Optional.IsDefined(PrometheusProfile))
+            if (PrometheusProfile != null)
             {
                 writer.WritePropertyName("prometheusProfile"u8);
                 writer.WriteObjectValue(PrometheusProfile);
             }
-            if (Optional.IsDefined(SshProfile))
+            if (SshProfile != null)
             {
                 writer.WritePropertyName("sshProfile"u8);
                 writer.WriteObjectValue(SshProfile);
             }
-            if (Optional.IsDefined(AutoscaleProfile))
+            if (AutoscaleProfile != null)
             {
                 writer.WritePropertyName("autoscaleProfile"u8);
                 writer.WriteObjectValue(AutoscaleProfile);
             }
-            if (Optional.IsCollectionDefined(KafkaProfile))
+            if (!(KafkaProfile is ChangeTrackingDictionary<string, BinaryData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("kafkaProfile"u8);
                 writer.WriteStartObject();
@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(TrinoProfile))
+            if (TrinoProfile != null)
             {
                 writer.WritePropertyName("trinoProfile"u8);
                 writer.WriteObjectValue(TrinoProfile);
             }
-            if (Optional.IsCollectionDefined(LlapProfile))
+            if (!(LlapProfile is ChangeTrackingDictionary<string, BinaryData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("llapProfile"u8);
                 writer.WriteStartObject();
@@ -135,17 +135,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(FlinkProfile))
+            if (FlinkProfile != null)
             {
                 writer.WritePropertyName("flinkProfile"u8);
                 writer.WriteObjectValue(FlinkProfile);
             }
-            if (Optional.IsDefined(SparkProfile))
+            if (SparkProfile != null)
             {
                 writer.WritePropertyName("sparkProfile"u8);
                 writer.WriteObjectValue(SparkProfile);
             }
-            if (Optional.IsCollectionDefined(StubProfile))
+            if (!(StubProfile is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("stubProfile"u8);
                 writer.WriteStartObject();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ScriptActionProfiles))
+            if (!(ScriptActionProfiles is ChangeTrackingList<ScriptActionProfile> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("scriptActionProfiles"u8);
                 writer.WriteStartArray();
@@ -218,23 +218,23 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             string clusterVersion = default;
             string ossVersion = default;
-            Optional<IReadOnlyList<ClusterComponentItem>> components = default;
+            IReadOnlyList<ClusterComponentItem> components = default;
             HDInsightIdentityProfile identityProfile = default;
             AuthorizationProfile authorizationProfile = default;
-            Optional<ClusterSecretsProfile> secretsProfile = default;
-            Optional<IList<ClusterServiceConfigsProfile>> serviceConfigsProfiles = default;
-            Optional<ClusterConnectivityProfile> connectivityProfile = default;
-            Optional<ClusterLogAnalyticsProfile> logAnalyticsProfile = default;
-            Optional<ClusterPrometheusProfile> prometheusProfile = default;
-            Optional<ClusterSshProfile> sshProfile = default;
-            Optional<ClusterAutoscaleProfile> autoscaleProfile = default;
-            Optional<IDictionary<string, BinaryData>> kafkaProfile = default;
-            Optional<TrinoProfile> trinoProfile = default;
-            Optional<IDictionary<string, BinaryData>> llapProfile = default;
-            Optional<FlinkProfile> flinkProfile = default;
-            Optional<SparkProfile> sparkProfile = default;
-            Optional<IDictionary<string, BinaryData>> stubProfile = default;
-            Optional<IList<ScriptActionProfile>> scriptActionProfiles = default;
+            ClusterSecretsProfile secretsProfile = default;
+            IList<ClusterServiceConfigsProfile> serviceConfigsProfiles = default;
+            ClusterConnectivityProfile connectivityProfile = default;
+            ClusterLogAnalyticsProfile logAnalyticsProfile = default;
+            ClusterPrometheusProfile prometheusProfile = default;
+            ClusterSshProfile sshProfile = default;
+            ClusterAutoscaleProfile autoscaleProfile = default;
+            IDictionary<string, BinaryData> kafkaProfile = default;
+            TrinoProfile trinoProfile = default;
+            IDictionary<string, BinaryData> llapProfile = default;
+            FlinkProfile flinkProfile = default;
+            SparkProfile sparkProfile = default;
+            IDictionary<string, BinaryData> stubProfile = default;
+            IList<ScriptActionProfile> scriptActionProfiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -451,7 +451,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterProfile(clusterVersion, ossVersion, Optional.ToList(components), identityProfile, authorizationProfile, secretsProfile.Value, Optional.ToList(serviceConfigsProfiles), connectivityProfile.Value, logAnalyticsProfile.Value, prometheusProfile.Value, sshProfile.Value, autoscaleProfile.Value, Optional.ToDictionary(kafkaProfile), trinoProfile.Value, Optional.ToDictionary(llapProfile), flinkProfile.Value, sparkProfile.Value, Optional.ToDictionary(stubProfile), Optional.ToList(scriptActionProfiles), serializedAdditionalRawData);
+            return new ClusterProfile(
+                clusterVersion,
+                ossVersion,
+                components ?? new ChangeTrackingList<ClusterComponentItem>(),
+                identityProfile,
+                authorizationProfile,
+                secretsProfile,
+                serviceConfigsProfiles ?? new ChangeTrackingList<ClusterServiceConfigsProfile>(),
+                connectivityProfile,
+                logAnalyticsProfile,
+                prometheusProfile,
+                sshProfile,
+                autoscaleProfile,
+                kafkaProfile ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                trinoProfile,
+                llapProfile ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                flinkProfile,
+                sparkProfile,
+                stubProfile ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                scriptActionProfiles ?? new ChangeTrackingList<ScriptActionProfile>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterProfile>.Write(ModelReaderWriterOptions options)

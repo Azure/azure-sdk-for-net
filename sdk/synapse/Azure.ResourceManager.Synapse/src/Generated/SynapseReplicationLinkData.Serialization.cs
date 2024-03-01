@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Synapse
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,59 +48,59 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IsTerminationAllowed))
+            if (options.Format != "W" && IsTerminationAllowed.HasValue)
             {
                 writer.WritePropertyName("isTerminationAllowed"u8);
                 writer.WriteBooleanValue(IsTerminationAllowed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReplicationMode))
+            if (options.Format != "W" && ReplicationMode != null)
             {
                 writer.WritePropertyName("replicationMode"u8);
                 writer.WriteStringValue(ReplicationMode);
             }
-            if (options.Format != "W" && Optional.IsDefined(PartnerServer))
+            if (options.Format != "W" && PartnerServer != null)
             {
                 writer.WritePropertyName("partnerServer"u8);
                 writer.WriteStringValue(PartnerServer);
             }
-            if (options.Format != "W" && Optional.IsDefined(PartnerDatabase))
+            if (options.Format != "W" && PartnerDatabase != null)
             {
                 writer.WritePropertyName("partnerDatabase"u8);
                 writer.WriteStringValue(PartnerDatabase);
             }
-            if (options.Format != "W" && Optional.IsDefined(PartnerLocation))
+            if (options.Format != "W" && PartnerLocation.HasValue)
             {
                 writer.WritePropertyName("partnerLocation"u8);
                 writer.WriteStringValue(PartnerLocation.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Role))
+            if (options.Format != "W" && Role.HasValue)
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PartnerRole))
+            if (options.Format != "W" && PartnerRole.HasValue)
             {
                 writer.WritePropertyName("partnerRole"u8);
                 writer.WriteStringValue(PartnerRole.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
+            if (options.Format != "W" && PercentComplete.HasValue)
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReplicationState))
+            if (options.Format != "W" && ReplicationState.HasValue)
             {
                 writer.WritePropertyName("replicationState"u8);
                 writer.WriteStringValue(ReplicationState.Value.ToString());
@@ -144,21 +144,21 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isTerminationAllowed = default;
-            Optional<string> replicationMode = default;
-            Optional<string> partnerServer = default;
-            Optional<string> partnerDatabase = default;
-            Optional<AzureLocation> partnerLocation = default;
-            Optional<SynapseReplicationRole> role = default;
-            Optional<SynapseReplicationRole> partnerRole = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<int> percentComplete = default;
-            Optional<SynapseReplicationState> replicationState = default;
+            SystemData systemData = default;
+            bool? isTerminationAllowed = default;
+            string replicationMode = default;
+            string partnerServer = default;
+            string partnerDatabase = default;
+            AzureLocation? partnerLocation = default;
+            SynapseReplicationRole? role = default;
+            SynapseReplicationRole? partnerRole = default;
+            DateTimeOffset? startTime = default;
+            int? percentComplete = default;
+            SynapseReplicationState? replicationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -292,7 +292,23 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseReplicationLinkData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(isTerminationAllowed), replicationMode.Value, partnerServer.Value, partnerDatabase.Value, Optional.ToNullable(partnerLocation), Optional.ToNullable(role), Optional.ToNullable(partnerRole), Optional.ToNullable(startTime), Optional.ToNullable(percentComplete), Optional.ToNullable(replicationState), serializedAdditionalRawData);
+            return new SynapseReplicationLinkData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                isTerminationAllowed,
+                replicationMode,
+                partnerServer,
+                partnerDatabase,
+                partnerLocation,
+                role,
+                partnerRole,
+                startTime,
+                percentComplete,
+                replicationState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseReplicationLinkData>.Write(ModelReaderWriterOptions options)

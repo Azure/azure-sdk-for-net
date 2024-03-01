@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AvailabilityZones))
+            if (!(AvailabilityZones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -45,32 +45,32 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -83,22 +83,22 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(SslPolicy))
+            if (SslPolicy != null)
             {
                 writer.WritePropertyName("sslPolicy"u8);
                 writer.WriteObjectValue(SslPolicy);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationalState))
+            if (options.Format != "W" && OperationalState.HasValue)
             {
                 writer.WritePropertyName("operationalState"u8);
                 writer.WriteStringValue(OperationalState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(GatewayIPConfigurations))
+            if (!(GatewayIPConfigurations is ChangeTrackingList<ApplicationGatewayIPConfiguration> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("gatewayIPConfigurations"u8);
                 writer.WriteStartArray();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AuthenticationCertificates))
+            if (!(AuthenticationCertificates is ChangeTrackingList<ApplicationGatewayAuthenticationCertificate> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("authenticationCertificates"u8);
                 writer.WriteStartArray();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrustedRootCertificates))
+            if (!(TrustedRootCertificates is ChangeTrackingList<ApplicationGatewayTrustedRootCertificate> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("trustedRootCertificates"u8);
                 writer.WriteStartArray();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrustedClientCertificates))
+            if (!(TrustedClientCertificates is ChangeTrackingList<ApplicationGatewayTrustedClientCertificate> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("trustedClientCertificates"u8);
                 writer.WriteStartArray();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SslCertificates))
+            if (!(SslCertificates is ChangeTrackingList<ApplicationGatewaySslCertificate> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("sslCertificates"u8);
                 writer.WriteStartArray();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FrontendIPConfigurations))
+            if (!(FrontendIPConfigurations is ChangeTrackingList<ApplicationGatewayFrontendIPConfiguration> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("frontendIPConfigurations"u8);
                 writer.WriteStartArray();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FrontendPorts))
+            if (!(FrontendPorts is ChangeTrackingList<ApplicationGatewayFrontendPort> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("frontendPorts"u8);
                 writer.WriteStartArray();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Probes))
+            if (!(Probes is ChangeTrackingList<ApplicationGatewayProbe> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("probes"u8);
                 writer.WriteStartArray();
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BackendAddressPools))
+            if (!(BackendAddressPools is ChangeTrackingList<ApplicationGatewayBackendAddressPool> collection9 && collection9.IsUndefined))
             {
                 writer.WritePropertyName("backendAddressPools"u8);
                 writer.WriteStartArray();
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BackendHttpSettingsCollection))
+            if (!(BackendHttpSettingsCollection is ChangeTrackingList<ApplicationGatewayBackendHttpSettings> collection10 && collection10.IsUndefined))
             {
                 writer.WritePropertyName("backendHttpSettingsCollection"u8);
                 writer.WriteStartArray();
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BackendSettingsCollection))
+            if (!(BackendSettingsCollection is ChangeTrackingList<ApplicationGatewayBackendSettings> collection11 && collection11.IsUndefined))
             {
                 writer.WritePropertyName("backendSettingsCollection"u8);
                 writer.WriteStartArray();
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(HttpListeners))
+            if (!(HttpListeners is ChangeTrackingList<ApplicationGatewayHttpListener> collection12 && collection12.IsUndefined))
             {
                 writer.WritePropertyName("httpListeners"u8);
                 writer.WriteStartArray();
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Listeners))
+            if (!(Listeners is ChangeTrackingList<ApplicationGatewayListener> collection13 && collection13.IsUndefined))
             {
                 writer.WritePropertyName("listeners"u8);
                 writer.WriteStartArray();
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SslProfiles))
+            if (!(SslProfiles is ChangeTrackingList<ApplicationGatewaySslProfile> collection14 && collection14.IsUndefined))
             {
                 writer.WritePropertyName("sslProfiles"u8);
                 writer.WriteStartArray();
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UrlPathMaps))
+            if (!(UrlPathMaps is ChangeTrackingList<ApplicationGatewayUrlPathMap> collection15 && collection15.IsUndefined))
             {
                 writer.WritePropertyName("urlPathMaps"u8);
                 writer.WriteStartArray();
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequestRoutingRules))
+            if (!(RequestRoutingRules is ChangeTrackingList<ApplicationGatewayRequestRoutingRule> collection16 && collection16.IsUndefined))
             {
                 writer.WritePropertyName("requestRoutingRules"u8);
                 writer.WriteStartArray();
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RoutingRules))
+            if (!(RoutingRules is ChangeTrackingList<ApplicationGatewayRoutingRule> collection17 && collection17.IsUndefined))
             {
                 writer.WritePropertyName("routingRules"u8);
                 writer.WriteStartArray();
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RewriteRuleSets))
+            if (!(RewriteRuleSets is ChangeTrackingList<ApplicationGatewayRewriteRuleSet> collection18 && collection18.IsUndefined))
             {
                 writer.WritePropertyName("rewriteRuleSets"u8);
                 writer.WriteStartArray();
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RedirectConfigurations))
+            if (!(RedirectConfigurations is ChangeTrackingList<ApplicationGatewayRedirectConfiguration> collection19 && collection19.IsUndefined))
             {
                 writer.WritePropertyName("redirectConfigurations"u8);
                 writer.WriteStartArray();
@@ -288,32 +288,32 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(WebApplicationFirewallConfiguration))
+            if (WebApplicationFirewallConfiguration != null)
             {
                 writer.WritePropertyName("webApplicationFirewallConfiguration"u8);
                 writer.WriteObjectValue(WebApplicationFirewallConfiguration);
             }
-            if (Optional.IsDefined(FirewallPolicy))
+            if (FirewallPolicy != null)
             {
                 writer.WritePropertyName("firewallPolicy"u8);
                 JsonSerializer.Serialize(writer, FirewallPolicy);
             }
-            if (Optional.IsDefined(EnableHttp2))
+            if (EnableHttp2.HasValue)
             {
                 writer.WritePropertyName("enableHttp2"u8);
                 writer.WriteBooleanValue(EnableHttp2.Value);
             }
-            if (Optional.IsDefined(EnableFips))
+            if (EnableFips.HasValue)
             {
                 writer.WritePropertyName("enableFips"u8);
                 writer.WriteBooleanValue(EnableFips.Value);
             }
-            if (Optional.IsDefined(AutoscaleConfiguration))
+            if (AutoscaleConfiguration != null)
             {
                 writer.WritePropertyName("autoscaleConfiguration"u8);
                 writer.WriteObjectValue(AutoscaleConfiguration);
             }
-            if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
+            if (!(PrivateLinkConfigurations is ChangeTrackingList<ApplicationGatewayPrivateLinkConfiguration> collection20 && collection20.IsUndefined))
             {
                 writer.WritePropertyName("privateLinkConfigurations"u8);
                 writer.WriteStartArray();
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData> collection21 && collection21.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -333,17 +333,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            if (options.Format != "W" && ResourceGuid.HasValue)
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(CustomErrorConfigurations))
+            if (!(CustomErrorConfigurations is ChangeTrackingList<ApplicationGatewayCustomError> collection22 && collection22.IsUndefined))
             {
                 writer.WritePropertyName("customErrorConfigurations"u8);
                 writer.WriteStartArray();
@@ -353,12 +353,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ForceFirewallPolicyAssociation))
+            if (ForceFirewallPolicyAssociation.HasValue)
             {
                 writer.WritePropertyName("forceFirewallPolicyAssociation"u8);
                 writer.WriteBooleanValue(ForceFirewallPolicyAssociation.Value);
             }
-            if (Optional.IsCollectionDefined(LoadDistributionPolicies))
+            if (!(LoadDistributionPolicies is ChangeTrackingList<ApplicationGatewayLoadDistributionPolicy> collection23 && collection23.IsUndefined))
             {
                 writer.WritePropertyName("loadDistributionPolicies"u8);
                 writer.WriteStartArray();
@@ -368,12 +368,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(GlobalConfiguration))
+            if (GlobalConfiguration != null)
             {
                 writer.WritePropertyName("globalConfiguration"u8);
                 writer.WriteObjectValue(GlobalConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultPredefinedSslPolicy))
+            if (options.Format != "W" && DefaultPredefinedSslPolicy.HasValue)
             {
                 writer.WritePropertyName("defaultPredefinedSslPolicy"u8);
                 writer.WriteStringValue(DefaultPredefinedSslPolicy.Value.ToString());
@@ -417,50 +417,50 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IList<string>> zones = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ApplicationGatewaySku> sku = default;
-            Optional<ApplicationGatewaySslPolicy> sslPolicy = default;
-            Optional<ApplicationGatewayOperationalState> operationalState = default;
-            Optional<IList<ApplicationGatewayIPConfiguration>> gatewayIPConfigurations = default;
-            Optional<IList<ApplicationGatewayAuthenticationCertificate>> authenticationCertificates = default;
-            Optional<IList<ApplicationGatewayTrustedRootCertificate>> trustedRootCertificates = default;
-            Optional<IList<ApplicationGatewayTrustedClientCertificate>> trustedClientCertificates = default;
-            Optional<IList<ApplicationGatewaySslCertificate>> sslCertificates = default;
-            Optional<IList<ApplicationGatewayFrontendIPConfiguration>> frontendIPConfigurations = default;
-            Optional<IList<ApplicationGatewayFrontendPort>> frontendPorts = default;
-            Optional<IList<ApplicationGatewayProbe>> probes = default;
-            Optional<IList<ApplicationGatewayBackendAddressPool>> backendAddressPools = default;
-            Optional<IList<ApplicationGatewayBackendHttpSettings>> backendHttpSettingsCollection = default;
-            Optional<IList<ApplicationGatewayBackendSettings>> backendSettingsCollection = default;
-            Optional<IList<ApplicationGatewayHttpListener>> httpListeners = default;
-            Optional<IList<ApplicationGatewayListener>> listeners = default;
-            Optional<IList<ApplicationGatewaySslProfile>> sslProfiles = default;
-            Optional<IList<ApplicationGatewayUrlPathMap>> urlPathMaps = default;
-            Optional<IList<ApplicationGatewayRequestRoutingRule>> requestRoutingRules = default;
-            Optional<IList<ApplicationGatewayRoutingRule>> routingRules = default;
-            Optional<IList<ApplicationGatewayRewriteRuleSet>> rewriteRuleSets = default;
-            Optional<IList<ApplicationGatewayRedirectConfiguration>> redirectConfigurations = default;
-            Optional<ApplicationGatewayWebApplicationFirewallConfiguration> webApplicationFirewallConfiguration = default;
-            Optional<WritableSubResource> firewallPolicy = default;
-            Optional<bool> enableHttp2 = default;
-            Optional<bool> enableFips = default;
-            Optional<ApplicationGatewayAutoscaleConfiguration> autoscaleConfiguration = default;
-            Optional<IList<ApplicationGatewayPrivateLinkConfiguration>> privateLinkConfigurations = default;
-            Optional<IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IList<ApplicationGatewayCustomError>> customErrorConfigurations = default;
-            Optional<bool> forceFirewallPolicyAssociation = default;
-            Optional<IList<ApplicationGatewayLoadDistributionPolicy>> loadDistributionPolicies = default;
-            Optional<ApplicationGatewayGlobalConfiguration> globalConfiguration = default;
-            Optional<ApplicationGatewaySslPolicyName> defaultPredefinedSslPolicy = default;
+            ETag? etag = default;
+            IList<string> zones = default;
+            ManagedServiceIdentity identity = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            ApplicationGatewaySku sku = default;
+            ApplicationGatewaySslPolicy sslPolicy = default;
+            ApplicationGatewayOperationalState? operationalState = default;
+            IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = default;
+            IList<ApplicationGatewayAuthenticationCertificate> authenticationCertificates = default;
+            IList<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates = default;
+            IList<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates = default;
+            IList<ApplicationGatewaySslCertificate> sslCertificates = default;
+            IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = default;
+            IList<ApplicationGatewayFrontendPort> frontendPorts = default;
+            IList<ApplicationGatewayProbe> probes = default;
+            IList<ApplicationGatewayBackendAddressPool> backendAddressPools = default;
+            IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = default;
+            IList<ApplicationGatewayBackendSettings> backendSettingsCollection = default;
+            IList<ApplicationGatewayHttpListener> httpListeners = default;
+            IList<ApplicationGatewayListener> listeners = default;
+            IList<ApplicationGatewaySslProfile> sslProfiles = default;
+            IList<ApplicationGatewayUrlPathMap> urlPathMaps = default;
+            IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules = default;
+            IList<ApplicationGatewayRoutingRule> routingRules = default;
+            IList<ApplicationGatewayRewriteRuleSet> rewriteRuleSets = default;
+            IList<ApplicationGatewayRedirectConfiguration> redirectConfigurations = default;
+            ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration = default;
+            WritableSubResource firewallPolicy = default;
+            bool? enableHttp2 = default;
+            bool? enableFips = default;
+            ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration = default;
+            IList<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations = default;
+            IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            IList<ApplicationGatewayCustomError> customErrorConfigurations = default;
+            bool? forceFirewallPolicyAssociation = default;
+            IList<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies = default;
+            ApplicationGatewayGlobalConfiguration globalConfiguration = default;
+            ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -1000,7 +1000,52 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(zones), identity, sku.Value, sslPolicy.Value, Optional.ToNullable(operationalState), Optional.ToList(gatewayIPConfigurations), Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), Optional.ToList(trustedClientCertificates), Optional.ToList(sslCertificates), Optional.ToList(frontendIPConfigurations), Optional.ToList(frontendPorts), Optional.ToList(probes), Optional.ToList(backendAddressPools), Optional.ToList(backendHttpSettingsCollection), Optional.ToList(backendSettingsCollection), Optional.ToList(httpListeners), Optional.ToList(listeners), Optional.ToList(sslProfiles), Optional.ToList(urlPathMaps), Optional.ToList(requestRoutingRules), Optional.ToList(routingRules), Optional.ToList(rewriteRuleSets), Optional.ToList(redirectConfigurations), webApplicationFirewallConfiguration.Value, firewallPolicy, Optional.ToNullable(enableHttp2), Optional.ToNullable(enableFips), autoscaleConfiguration.Value, Optional.ToList(privateLinkConfigurations), Optional.ToList(privateEndpointConnections), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), Optional.ToNullable(forceFirewallPolicyAssociation), Optional.ToList(loadDistributionPolicies), globalConfiguration.Value, Optional.ToNullable(defaultPredefinedSslPolicy));
+            return new ApplicationGatewayData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                zones ?? new ChangeTrackingList<string>(),
+                identity,
+                sku,
+                sslPolicy,
+                operationalState,
+                gatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>(),
+                authenticationCertificates ?? new ChangeTrackingList<ApplicationGatewayAuthenticationCertificate>(),
+                trustedRootCertificates ?? new ChangeTrackingList<ApplicationGatewayTrustedRootCertificate>(),
+                trustedClientCertificates ?? new ChangeTrackingList<ApplicationGatewayTrustedClientCertificate>(),
+                sslCertificates ?? new ChangeTrackingList<ApplicationGatewaySslCertificate>(),
+                frontendIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayFrontendIPConfiguration>(),
+                frontendPorts ?? new ChangeTrackingList<ApplicationGatewayFrontendPort>(),
+                probes ?? new ChangeTrackingList<ApplicationGatewayProbe>(),
+                backendAddressPools ?? new ChangeTrackingList<ApplicationGatewayBackendAddressPool>(),
+                backendHttpSettingsCollection ?? new ChangeTrackingList<ApplicationGatewayBackendHttpSettings>(),
+                backendSettingsCollection ?? new ChangeTrackingList<ApplicationGatewayBackendSettings>(),
+                httpListeners ?? new ChangeTrackingList<ApplicationGatewayHttpListener>(),
+                listeners ?? new ChangeTrackingList<ApplicationGatewayListener>(),
+                sslProfiles ?? new ChangeTrackingList<ApplicationGatewaySslProfile>(),
+                urlPathMaps ?? new ChangeTrackingList<ApplicationGatewayUrlPathMap>(),
+                requestRoutingRules ?? new ChangeTrackingList<ApplicationGatewayRequestRoutingRule>(),
+                routingRules ?? new ChangeTrackingList<ApplicationGatewayRoutingRule>(),
+                rewriteRuleSets ?? new ChangeTrackingList<ApplicationGatewayRewriteRuleSet>(),
+                redirectConfigurations ?? new ChangeTrackingList<ApplicationGatewayRedirectConfiguration>(),
+                webApplicationFirewallConfiguration,
+                firewallPolicy,
+                enableHttp2,
+                enableFips,
+                autoscaleConfiguration,
+                privateLinkConfigurations ?? new ChangeTrackingList<ApplicationGatewayPrivateLinkConfiguration>(),
+                privateEndpointConnections ?? new ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>(),
+                resourceGuid,
+                provisioningState,
+                customErrorConfigurations ?? new ChangeTrackingList<ApplicationGatewayCustomError>(),
+                forceFirewallPolicyAssociation,
+                loadDistributionPolicies ?? new ChangeTrackingList<ApplicationGatewayLoadDistributionPolicy>(),
+                globalConfiguration,
+                defaultPredefinedSslPolicy);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayData>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
-            if (Optional.IsDefined(QueryObjectCounts))
+            if (QueryObjectCounts.HasValue)
             {
                 writer.WritePropertyName("queryObjectCounts"u8);
                 writer.WriteBooleanValue(QueryObjectCounts.Value);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             SqlConnectionInfo targetConnectionInfo = default;
-            Optional<bool> queryObjectCounts = default;
+            bool? queryObjectCounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToTargetSqlDBTaskInput(targetConnectionInfo, Optional.ToNullable(queryObjectCounts), serializedAdditionalRawData);
+            return new ConnectToTargetSqlDBTaskInput(targetConnectionInfo, queryObjectCounts, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectToTargetSqlDBTaskInput>.Write(ModelReaderWriterOptions options)

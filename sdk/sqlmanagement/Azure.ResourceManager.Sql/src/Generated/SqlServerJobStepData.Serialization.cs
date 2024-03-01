@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StepId))
+            if (StepId.HasValue)
             {
                 writer.WritePropertyName("stepId"u8);
                 writer.WriteNumberValue(StepId.Value);
             }
-            if (Optional.IsDefined(TargetGroup))
+            if (TargetGroup != null)
             {
                 writer.WritePropertyName("targetGroup"u8);
                 writer.WriteStringValue(TargetGroup);
             }
-            if (Optional.IsDefined(Credential))
+            if (Credential != null)
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteStringValue(Credential);
             }
-            if (Optional.IsDefined(Action))
+            if (Action != null)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action);
             }
-            if (Optional.IsDefined(Output))
+            if (Output != null)
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteObjectValue(Output);
             }
-            if (Optional.IsDefined(ExecutionOptions))
+            if (ExecutionOptions != null)
             {
                 writer.WritePropertyName("executionOptions"u8);
                 writer.WriteObjectValue(ExecutionOptions);
@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> stepId = default;
-            Optional<string> targetGroup = default;
-            Optional<string> credential = default;
-            Optional<JobStepAction> action = default;
-            Optional<JobStepOutput> output = default;
-            Optional<JobStepExecutionOptions> executionOptions = default;
+            SystemData systemData = default;
+            int? stepId = default;
+            string targetGroup = default;
+            string credential = default;
+            JobStepAction action = default;
+            JobStepOutput output = default;
+            JobStepExecutionOptions executionOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerJobStepData(id, name, type, systemData.Value, Optional.ToNullable(stepId), targetGroup.Value, credential.Value, action.Value, output.Value, executionOptions.Value, serializedAdditionalRawData);
+            return new SqlServerJobStepData(
+                id,
+                name,
+                type,
+                systemData,
+                stepId,
+                targetGroup,
+                credential,
+                action,
+                output,
+                executionOptions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerJobStepData>.Write(ModelReaderWriterOptions options)

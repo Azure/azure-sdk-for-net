@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SyncDatabaseId))
+            if (SyncDatabaseId != null)
             {
                 writer.WritePropertyName("syncDatabaseId"u8);
                 writer.WriteStringValue(SyncDatabaseId);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastAliveOn))
+            if (options.Format != "W" && LastAliveOn.HasValue)
             {
                 writer.WritePropertyName("lastAliveTime"u8);
                 writer.WriteStringValue(LastAliveOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IsUpToDate))
+            if (options.Format != "W" && IsUpToDate.HasValue)
             {
                 writer.WritePropertyName("isUpToDate"u8);
                 writer.WriteBooleanValue(IsUpToDate.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> syncDatabaseId = default;
-            Optional<DateTimeOffset> lastAliveTime = default;
-            Optional<SyncAgentState> state = default;
-            Optional<bool> isUpToDate = default;
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<string> version = default;
+            SystemData systemData = default;
+            ResourceIdentifier syncDatabaseId = default;
+            DateTimeOffset? lastAliveTime = default;
+            SyncAgentState? state = default;
+            bool? isUpToDate = default;
+            DateTimeOffset? expiryTime = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +225,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncAgentData(id, name, type, systemData.Value, syncDatabaseId.Value, Optional.ToNullable(lastAliveTime), Optional.ToNullable(state), Optional.ToNullable(isUpToDate), Optional.ToNullable(expiryTime), version.Value, serializedAdditionalRawData);
+            return new SyncAgentData(
+                id,
+                name,
+                type,
+                systemData,
+                syncDatabaseId,
+                lastAliveTime,
+                state,
+                isUpToDate,
+                expiryTime,
+                version,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncAgentData>.Write(ModelReaderWriterOptions options)

@@ -44,29 +44,29 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(NetAppVolume))
+            if (NetAppVolume != null)
             {
                 writer.WritePropertyName("netAppVolume"u8);
                 JsonSerializer.Serialize(writer, NetAppVolume);
             }
-            if (Optional.IsDefined(DiskPoolVolume))
+            if (DiskPoolVolume != null)
             {
                 writer.WritePropertyName("diskPoolVolume"u8);
                 writer.WriteObjectValue(DiskPoolVolume);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AvsPrivateCloudDatastoreProvisioningState> provisioningState = default;
-            Optional<WritableSubResource> netAppVolume = default;
-            Optional<DiskPoolVolume> diskPoolVolume = default;
-            Optional<DatastoreStatus> status = default;
+            SystemData systemData = default;
+            AvsPrivateCloudDatastoreProvisioningState? provisioningState = default;
+            WritableSubResource netAppVolume = default;
+            DiskPoolVolume diskPoolVolume = default;
+            DatastoreStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +200,16 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsPrivateCloudDatastoreData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), netAppVolume, diskPoolVolume.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new AvsPrivateCloudDatastoreData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                netAppVolume,
+                diskPoolVolume,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudDatastoreData>.Write(ModelReaderWriterOptions options)

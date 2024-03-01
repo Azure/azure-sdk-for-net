@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteObjectValue(ProductDetails);
             writer.WritePropertyName("orderItemType"u8);
             writer.WriteStringValue(OrderItemType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(CurrentStage))
+            if (options.Format != "W" && CurrentStage != null)
             {
                 writer.WritePropertyName("currentStage"u8);
                 writer.WriteObjectValue(CurrentStage);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OrderItemStageHistory))
+            if (options.Format != "W" && !(OrderItemStageHistory is ChangeTrackingList<EdgeOrderStageDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("orderItemStageHistory"u8);
                 writer.WriteStartArray();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Preferences))
+            if (Preferences != null)
             {
                 writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences);
             }
-            if (options.Format != "W" && Optional.IsDefined(ForwardShippingDetails))
+            if (options.Format != "W" && ForwardShippingDetails != null)
             {
                 writer.WritePropertyName("forwardShippingDetails"u8);
                 writer.WriteObjectValue(ForwardShippingDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReverseShippingDetails))
+            if (options.Format != "W" && ReverseShippingDetails != null)
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
                 writer.WriteObjectValue(ReverseShippingDetails);
             }
-            if (Optional.IsCollectionDefined(NotificationEmailList))
+            if (!(NotificationEmailList is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("notificationEmailList"u8);
                 writer.WriteStartArray();
@@ -71,37 +71,37 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CancellationReason))
+            if (options.Format != "W" && CancellationReason != null)
             {
                 writer.WritePropertyName("cancellationReason"u8);
                 writer.WriteStringValue(CancellationReason);
             }
-            if (options.Format != "W" && Optional.IsDefined(CancellationStatus))
+            if (options.Format != "W" && CancellationStatus.HasValue)
             {
                 writer.WritePropertyName("cancellationStatus"u8);
                 writer.WriteStringValue(CancellationStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletionStatus))
+            if (options.Format != "W" && DeletionStatus.HasValue)
             {
                 writer.WritePropertyName("deletionStatus"u8);
                 writer.WriteStringValue(DeletionStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ReturnReason))
+            if (options.Format != "W" && ReturnReason != null)
             {
                 writer.WritePropertyName("returnReason"u8);
                 writer.WriteStringValue(ReturnReason);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReturnStatus))
+            if (options.Format != "W" && ReturnStatus.HasValue)
             {
                 writer.WritePropertyName("returnStatus"u8);
                 writer.WriteStringValue(ReturnStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FirstOrDefaultManagement))
+            if (options.Format != "W" && FirstOrDefaultManagement != null)
             {
                 writer.WritePropertyName("managementRpDetails"u8);
                 writer.WriteObjectValue(FirstOrDefaultManagement);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ManagementRPDetailsList))
+            if (options.Format != "W" && !(ManagementRPDetailsList is ChangeTrackingList<ResourceProviderDetails> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("managementRpDetailsList"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -156,20 +156,20 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             ProductDetails productDetails = default;
             OrderItemType orderItemType = default;
-            Optional<EdgeOrderStageDetails> currentStage = default;
-            Optional<IReadOnlyList<EdgeOrderStageDetails>> orderItemStageHistory = default;
-            Optional<OrderItemPreferences> preferences = default;
-            Optional<ForwardShippingDetails> forwardShippingDetails = default;
-            Optional<ReverseShippingDetails> reverseShippingDetails = default;
-            Optional<IList<string>> notificationEmailList = default;
-            Optional<string> cancellationReason = default;
-            Optional<OrderItemCancellationStatus> cancellationStatus = default;
-            Optional<EdgeOrderActionStatus> deletionStatus = default;
-            Optional<string> returnReason = default;
-            Optional<OrderItemReturnStatus> returnStatus = default;
-            Optional<ResourceProviderDetails> managementRPDetails = default;
-            Optional<IReadOnlyList<ResourceProviderDetails>> managementRPDetailsList = default;
-            Optional<ResponseError> error = default;
+            EdgeOrderStageDetails currentStage = default;
+            IReadOnlyList<EdgeOrderStageDetails> orderItemStageHistory = default;
+            OrderItemPreferences preferences = default;
+            ForwardShippingDetails forwardShippingDetails = default;
+            ReverseShippingDetails reverseShippingDetails = default;
+            IList<string> notificationEmailList = default;
+            string cancellationReason = default;
+            OrderItemCancellationStatus? cancellationStatus = default;
+            EdgeOrderActionStatus? deletionStatus = default;
+            string returnReason = default;
+            OrderItemReturnStatus? returnStatus = default;
+            ResourceProviderDetails managementRPDetails = default;
+            IReadOnlyList<ResourceProviderDetails> managementRPDetailsList = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -323,7 +323,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderItemDetails(productDetails, orderItemType, currentStage.Value, Optional.ToList(orderItemStageHistory), preferences.Value, forwardShippingDetails.Value, reverseShippingDetails.Value, Optional.ToList(notificationEmailList), cancellationReason.Value, Optional.ToNullable(cancellationStatus), Optional.ToNullable(deletionStatus), returnReason.Value, Optional.ToNullable(returnStatus), managementRPDetails.Value, Optional.ToList(managementRPDetailsList), error.Value, serializedAdditionalRawData);
+            return new EdgeOrderItemDetails(
+                productDetails,
+                orderItemType,
+                currentStage,
+                orderItemStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>(),
+                preferences,
+                forwardShippingDetails,
+                reverseShippingDetails,
+                notificationEmailList ?? new ChangeTrackingList<string>(),
+                cancellationReason,
+                cancellationStatus,
+                deletionStatus,
+                returnReason,
+                returnStatus,
+                managementRPDetails,
+                managementRPDetailsList ?? new ChangeTrackingList<ResourceProviderDetails>(),
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderItemDetails>.Write(ModelReaderWriterOptions options)

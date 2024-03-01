@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MediaLiveOutputData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OdataCount))
+            if (OdataCount.HasValue)
             {
                 writer.WritePropertyName("@odata.count"u8);
                 writer.WriteNumberValue(OdataCount.Value);
             }
-            if (Optional.IsDefined(OdataNextLink))
+            if (OdataNextLink != null)
             {
                 writer.WritePropertyName("@odata.nextLink"u8);
                 writer.WriteStringValue(OdataNextLink);
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MediaLiveOutputData>> value = default;
-            Optional<int> odataCount = default;
-            Optional<string> odataNextLink = default;
+            IReadOnlyList<MediaLiveOutputData> value = default;
+            int? odataCount = default;
+            string odataNextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LiveOutputListResult(Optional.ToList(value), Optional.ToNullable(odataCount), odataNextLink.Value, serializedAdditionalRawData);
+            return new LiveOutputListResult(value ?? new ChangeTrackingList<MediaLiveOutputData>(), odataCount, odataNextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LiveOutputListResult>.Write(ModelReaderWriterOptions options)

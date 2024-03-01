@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Stack))
+            if (Stack != null)
             {
                 writer.WritePropertyName("stack"u8);
                 writer.WriteObjectValue(Stack);
             }
-            if (Optional.IsCollectionDefined(BuildpackGroups))
+            if (!(BuildpackGroups is ChangeTrackingList<BuildpacksGroupProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("buildpackGroups"u8);
                 writer.WriteStartArray();
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformBuilderProvisioningState> provisioningState = default;
-            Optional<AppPlatformClusterStackProperties> stack = default;
-            Optional<IList<BuildpacksGroupProperties>> buildpackGroups = default;
+            AppPlatformBuilderProvisioningState? provisioningState = default;
+            AppPlatformClusterStackProperties stack = default;
+            IList<BuildpacksGroupProperties> buildpackGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuilderProperties(Optional.ToNullable(provisioningState), stack.Value, Optional.ToList(buildpackGroups), serializedAdditionalRawData);
+            return new AppPlatformBuilderProperties(provisioningState, stack, buildpackGroups ?? new ChangeTrackingList<BuildpacksGroupProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformBuilderProperties>.Write(ModelReaderWriterOptions options)

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Redis
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IPAddress startIP = default;
             IPAddress endIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.Redis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisFirewallRuleData(id, name, type, systemData.Value, startIP, endIP, serializedAdditionalRawData);
+            return new RedisFirewallRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                startIP,
+                endIP,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisFirewallRuleData>.Write(ModelReaderWriterOptions options)

@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PredefinedTag>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PredefinedTag> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredefinedTagsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PredefinedTagsListResult(value ?? new ChangeTrackingList<PredefinedTag>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredefinedTagsListResult>.Write(ModelReaderWriterOptions options)

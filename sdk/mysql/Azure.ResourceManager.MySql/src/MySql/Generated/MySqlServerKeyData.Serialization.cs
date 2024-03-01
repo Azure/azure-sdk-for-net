@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MySql
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.MySql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerKeyType))
+            if (ServerKeyType.HasValue)
             {
                 writer.WritePropertyName("serverKeyType"u8);
                 writer.WriteStringValue(ServerKeyType.Value.ToString());
             }
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.MySql
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MySqlServerKeyType> serverKeyType = default;
-            Optional<Uri> uri = default;
-            Optional<DateTimeOffset> creationDate = default;
+            SystemData systemData = default;
+            MySqlServerKeyType? serverKeyType = default;
+            Uri uri = default;
+            DateTimeOffset? creationDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerKeyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(serverKeyType), uri.Value, Optional.ToNullable(creationDate), serializedAdditionalRawData);
+            return new MySqlServerKeyData(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serverKeyType,
+                uri,
+                creationDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerKeyData>.Write(ModelReaderWriterOptions options)

@@ -27,42 +27,42 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(UniqueOfferId))
+            if (options.Format != "W" && UniqueOfferId != null)
             {
                 writer.WritePropertyName("uniqueOfferId"u8);
                 writer.WriteStringValue(UniqueOfferId);
             }
-            if (options.Format != "W" && Optional.IsDefined(OfferDisplayName))
+            if (options.Format != "W" && OfferDisplayName != null)
             {
                 writer.WritePropertyName("offerDisplayName"u8);
                 writer.WriteStringValue(OfferDisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherDisplayName))
+            if (options.Format != "W" && PublisherDisplayName != null)
             {
                 writer.WritePropertyName("publisherDisplayName"u8);
                 writer.WriteStringValue(PublisherDisplayName);
             }
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateStoreId))
+            if (options.Format != "W" && PrivateStoreId.HasValue)
             {
                 writer.WritePropertyName("privateStoreId"u8);
                 writer.WriteStringValue(PrivateStoreId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
+            if (options.Format != "W" && ModifiedOn.HasValue)
             {
                 writer.WritePropertyName("modifiedAt"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(SpecificPlanIdsLimitation))
+            if (!(SpecificPlanIdsLimitation is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("specificPlanIdsLimitation"u8);
                 writer.WriteStartArray();
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsUpdateSuppressedDueToIdempotence))
+            if (IsUpdateSuppressedDueToIdempotence.HasValue)
             {
                 writer.WritePropertyName("updateSuppressedDueIdempotence"u8);
                 writer.WriteBooleanValue(IsUpdateSuppressedDueToIdempotence.Value);
             }
-            if (Optional.IsCollectionDefined(IconFileUris))
+            if (!(IconFileUris is ChangeTrackingDictionary<string, Uri> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("iconFileUris"u8);
                 writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Plans))
+            if (!(Plans is ChangeTrackingList<PrivateStorePlan> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("plans"u8);
                 writer.WriteStartArray();
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> uniqueOfferId = default;
-            Optional<string> offerDisplayName = default;
-            Optional<string> publisherDisplayName = default;
-            Optional<ETag> eTag = default;
-            Optional<Guid> privateStoreId = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> modifiedAt = default;
-            Optional<IReadOnlyList<string>> specificPlanIdsLimitation = default;
-            Optional<bool> updateSuppressedDueIdempotence = default;
-            Optional<IReadOnlyDictionary<string, Uri>> iconFileUris = default;
-            Optional<IReadOnlyList<PrivateStorePlan>> plans = default;
+            string uniqueOfferId = default;
+            string offerDisplayName = default;
+            string publisherDisplayName = default;
+            ETag? eTag = default;
+            Guid? privateStoreId = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? modifiedAt = default;
+            IReadOnlyList<string> specificPlanIdsLimitation = default;
+            bool? updateSuppressedDueIdempotence = default;
+            IReadOnlyDictionary<string, Uri> iconFileUris = default;
+            IReadOnlyList<PrivateStorePlan> plans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -271,7 +271,19 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateStoreOfferResult(uniqueOfferId.Value, offerDisplayName.Value, publisherDisplayName.Value, Optional.ToNullable(eTag), Optional.ToNullable(privateStoreId), Optional.ToNullable(createdAt), Optional.ToNullable(modifiedAt), Optional.ToList(specificPlanIdsLimitation), Optional.ToNullable(updateSuppressedDueIdempotence), Optional.ToDictionary(iconFileUris), Optional.ToList(plans), serializedAdditionalRawData);
+            return new PrivateStoreOfferResult(
+                uniqueOfferId,
+                offerDisplayName,
+                publisherDisplayName,
+                eTag,
+                privateStoreId,
+                createdAt,
+                modifiedAt,
+                specificPlanIdsLimitation ?? new ChangeTrackingList<string>(),
+                updateSuppressedDueIdempotence,
+                iconFileUris ?? new ChangeTrackingDictionary<string, Uri>(),
+                plans ?? new ChangeTrackingList<PrivateStorePlan>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateStoreOfferResult>.Write(ModelReaderWriterOptions options)

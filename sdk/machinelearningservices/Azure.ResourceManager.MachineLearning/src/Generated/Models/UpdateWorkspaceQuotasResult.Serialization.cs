@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<MachineLearningWorkspaceQuotaUpdate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningWorkspaceQuotaUpdate>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MachineLearningWorkspaceQuotaUpdate> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateWorkspaceQuotasResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new UpdateWorkspaceQuotasResult(value ?? new ChangeTrackingList<MachineLearningWorkspaceQuotaUpdate>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateWorkspaceQuotasResult>.Write(ModelReaderWriterOptions options)

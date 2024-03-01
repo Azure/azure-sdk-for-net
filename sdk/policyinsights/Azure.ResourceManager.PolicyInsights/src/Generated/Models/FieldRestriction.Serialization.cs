@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Result))
+            if (options.Format != "W" && Result.HasValue)
             {
                 writer.WritePropertyName("result"u8);
                 writer.WriteStringValue(Result.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultValue))
+            if (options.Format != "W" && DefaultValue != null)
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Values))
+            if (options.Format != "W" && !(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Policy))
+            if (options.Format != "W" && Policy != null)
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<FieldRestrictionResult> result = default;
-            Optional<string> defaultValue = default;
-            Optional<IReadOnlyList<string>> values = default;
-            Optional<PolicyReference> policy = default;
+            FieldRestrictionResult? result = default;
+            string defaultValue = default;
+            IReadOnlyList<string> values = default;
+            PolicyReference policy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FieldRestriction(Optional.ToNullable(result), defaultValue.Value, Optional.ToList(values), policy.Value, serializedAdditionalRawData);
+            return new FieldRestriction(result, defaultValue, values ?? new ChangeTrackingList<string>(), policy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FieldRestriction>.Write(ModelReaderWriterOptions options)

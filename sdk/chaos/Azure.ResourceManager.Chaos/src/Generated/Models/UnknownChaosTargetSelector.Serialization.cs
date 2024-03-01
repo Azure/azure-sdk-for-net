@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStringValue(SelectorType.ToString());
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             SelectorType type = "Unknown";
             string id = default;
-            Optional<ChaosTargetFilter> filter = default;
+            ChaosTargetFilter filter = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownChaosTargetSelector(type, id, filter.Value, additionalProperties);
+            return new UnknownChaosTargetSelector(type, id, filter, additionalProperties);
         }
 
         BinaryData IPersistableModel<ChaosTargetSelector>.Write(ModelReaderWriterOptions options)

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,34 +49,34 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(UpdateStrategyId))
+            if (UpdateStrategyId != null)
             {
                 writer.WritePropertyName("updateStrategyId"u8);
                 writer.WriteStringValue(UpdateStrategyId);
             }
-            if (Optional.IsDefined(Strategy))
+            if (Strategy != null)
             {
                 writer.WritePropertyName("strategy"u8);
                 writer.WriteObjectValue(Strategy);
             }
-            if (Optional.IsDefined(ManagedClusterUpdate))
+            if (ManagedClusterUpdate != null)
             {
                 writer.WritePropertyName("managedClusterUpdate"u8);
                 writer.WriteObjectValue(ManagedClusterUpdate);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -120,16 +120,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerServiceFleetUpdateRunProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> updateStrategyId = default;
-            Optional<ContainerServiceFleetUpdateRunStrategy> strategy = default;
-            Optional<ContainerServiceFleetManagedClusterUpdate> managedClusterUpdate = default;
-            Optional<ContainerServiceFleetUpdateRunStatus> status = default;
+            SystemData systemData = default;
+            ContainerServiceFleetUpdateRunProvisioningState? provisioningState = default;
+            ResourceIdentifier updateStrategyId = default;
+            ContainerServiceFleetUpdateRunStrategy strategy = default;
+            ContainerServiceFleetManagedClusterUpdate managedClusterUpdate = default;
+            ContainerServiceFleetUpdateRunStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,7 +230,18 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetUpdateRunData(id, name, type, systemData.Value, Optional.ToNullable(eTag), Optional.ToNullable(provisioningState), updateStrategyId.Value, strategy.Value, managedClusterUpdate.Value, status.Value, serializedAdditionalRawData);
+            return new ContainerServiceFleetUpdateRunData(
+                id,
+                name,
+                type,
+                systemData,
+                eTag,
+                provisioningState,
+                updateStrategyId,
+                strategy,
+                managedClusterUpdate,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetUpdateRunData>.Write(ModelReaderWriterOptions options)

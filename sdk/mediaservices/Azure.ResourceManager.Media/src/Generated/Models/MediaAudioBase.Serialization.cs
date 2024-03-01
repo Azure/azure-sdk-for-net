@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Channels))
+            if (Channels.HasValue)
             {
                 writer.WritePropertyName("channels"u8);
                 writer.WriteNumberValue(Channels.Value);
             }
-            if (Optional.IsDefined(SamplingRate))
+            if (SamplingRate.HasValue)
             {
                 writer.WritePropertyName("samplingRate"u8);
                 writer.WriteNumberValue(SamplingRate.Value);
             }
-            if (Optional.IsDefined(Bitrate))
+            if (Bitrate.HasValue)
             {
                 writer.WritePropertyName("bitrate"u8);
                 writer.WriteNumberValue(Bitrate.Value);
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.DDAudio": return DDAudio.DeserializeDDAudio(element, options);
                 }
             }
-            Optional<int> channels = default;
-            Optional<int> samplingRate = default;
-            Optional<int> bitrate = default;
+            int? channels = default;
+            int? samplingRate = default;
+            int? bitrate = default;
             string odataType = "#Microsoft.Media.Audio";
-            Optional<string> label = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaAudioBase(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(channels), Optional.ToNullable(samplingRate), Optional.ToNullable(bitrate));
+            return new MediaAudioBase(
+                odataType,
+                label,
+                serializedAdditionalRawData,
+                channels,
+                samplingRate,
+                bitrate);
         }
 
         BinaryData IPersistableModel<MediaAudioBase>.Write(ModelReaderWriterOptions options)

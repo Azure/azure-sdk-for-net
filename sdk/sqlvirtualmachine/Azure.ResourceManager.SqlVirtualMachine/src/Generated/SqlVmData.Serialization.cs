@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,84 +62,84 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualMachineResourceId))
+            if (VirtualMachineResourceId != null)
             {
                 writer.WritePropertyName("virtualMachineResourceId"u8);
                 writer.WriteStringValue(VirtualMachineResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(SqlImageOffer))
+            if (SqlImageOffer != null)
             {
                 writer.WritePropertyName("sqlImageOffer"u8);
                 writer.WriteStringValue(SqlImageOffer);
             }
-            if (Optional.IsDefined(SqlServerLicenseType))
+            if (SqlServerLicenseType.HasValue)
             {
                 writer.WritePropertyName("sqlServerLicenseType"u8);
                 writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(SqlManagement))
+            if (SqlManagement.HasValue)
             {
                 writer.WritePropertyName("sqlManagement"u8);
                 writer.WriteStringValue(SqlManagement.Value.ToString());
             }
-            if (Optional.IsDefined(SqlImageSku))
+            if (SqlImageSku.HasValue)
             {
                 writer.WritePropertyName("sqlImageSku"u8);
                 writer.WriteStringValue(SqlImageSku.Value.ToString());
             }
-            if (Optional.IsDefined(SqlVmGroupResourceId))
+            if (SqlVmGroupResourceId != null)
             {
                 writer.WritePropertyName("sqlVirtualMachineGroupResourceId"u8);
                 writer.WriteStringValue(SqlVmGroupResourceId);
             }
-            if (Optional.IsDefined(WindowsServerFailoverClusterDomainCredentials))
+            if (WindowsServerFailoverClusterDomainCredentials != null)
             {
                 writer.WritePropertyName("wsfcDomainCredentials"u8);
                 writer.WriteObjectValue(WindowsServerFailoverClusterDomainCredentials);
             }
-            if (Optional.IsDefined(WindowsServerFailoverClusterStaticIP))
+            if (WindowsServerFailoverClusterStaticIP != null)
             {
                 writer.WritePropertyName("wsfcStaticIp"u8);
                 writer.WriteStringValue(WindowsServerFailoverClusterStaticIP.ToString());
             }
-            if (Optional.IsDefined(AutoPatchingSettings))
+            if (AutoPatchingSettings != null)
             {
                 writer.WritePropertyName("autoPatchingSettings"u8);
                 writer.WriteObjectValue(AutoPatchingSettings);
             }
-            if (Optional.IsDefined(AutoBackupSettings))
+            if (AutoBackupSettings != null)
             {
                 writer.WritePropertyName("autoBackupSettings"u8);
                 writer.WriteObjectValue(AutoBackupSettings);
             }
-            if (Optional.IsDefined(KeyVaultCredentialSettings))
+            if (KeyVaultCredentialSettings != null)
             {
                 writer.WritePropertyName("keyVaultCredentialSettings"u8);
                 writer.WriteObjectValue(KeyVaultCredentialSettings);
             }
-            if (Optional.IsDefined(ServerConfigurationsManagementSettings))
+            if (ServerConfigurationsManagementSettings != null)
             {
                 writer.WritePropertyName("serverConfigurationsManagementSettings"u8);
                 writer.WriteObjectValue(ServerConfigurationsManagementSettings);
             }
-            if (Optional.IsDefined(StorageConfigurationSettings))
+            if (StorageConfigurationSettings != null)
             {
                 writer.WritePropertyName("storageConfigurationSettings"u8);
                 writer.WriteObjectValue(StorageConfigurationSettings);
             }
-            if (Optional.IsDefined(AssessmentSettings))
+            if (AssessmentSettings != null)
             {
                 writer.WritePropertyName("assessmentSettings"u8);
                 writer.WriteObjectValue(AssessmentSettings);
@@ -183,28 +183,28 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> virtualMachineResourceId = default;
-            Optional<string> provisioningState = default;
-            Optional<string> sqlImageOffer = default;
-            Optional<SqlServerLicenseType> sqlServerLicenseType = default;
-            Optional<SqlManagementMode> sqlManagement = default;
-            Optional<SqlImageSku> sqlImageSku = default;
-            Optional<ResourceIdentifier> sqlVmGroupResourceId = default;
-            Optional<WindowsServerFailoverClusterDomainCredentials> windowsServerFailoverClusterDomainCredentials = default;
-            Optional<IPAddress> windowsServerFailoverClusterStaticIP = default;
-            Optional<SqlVmAutoPatchingSettings> autoPatchingSettings = default;
-            Optional<SqlVmAutoBackupSettings> autoBackupSettings = default;
-            Optional<SqlVmKeyVaultCredentialSettings> keyVaultCredentialSettings = default;
-            Optional<SqlServerConfigurationsManagementSettings> serverConfigurationsManagementSettings = default;
-            Optional<SqlVmStorageConfigurationSettings> storageConfigurationSettings = default;
-            Optional<SqlVmAssessmentSettings> assessmentSettings = default;
+            SystemData systemData = default;
+            ResourceIdentifier virtualMachineResourceId = default;
+            string provisioningState = default;
+            string sqlImageOffer = default;
+            SqlServerLicenseType? sqlServerLicenseType = default;
+            SqlManagementMode? sqlManagement = default;
+            SqlImageSku? sqlImageSku = default;
+            ResourceIdentifier sqlVmGroupResourceId = default;
+            WindowsServerFailoverClusterDomainCredentials windowsServerFailoverClusterDomainCredentials = default;
+            IPAddress windowsServerFailoverClusterStaticIP = default;
+            SqlVmAutoPatchingSettings autoPatchingSettings = default;
+            SqlVmAutoBackupSettings autoBackupSettings = default;
+            SqlVmKeyVaultCredentialSettings keyVaultCredentialSettings = default;
+            SqlServerConfigurationsManagementSettings serverConfigurationsManagementSettings = default;
+            SqlVmStorageConfigurationSettings storageConfigurationSettings = default;
+            SqlVmAssessmentSettings assessmentSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -406,7 +406,30 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, virtualMachineResourceId.Value, provisioningState.Value, sqlImageOffer.Value, Optional.ToNullable(sqlServerLicenseType), Optional.ToNullable(sqlManagement), Optional.ToNullable(sqlImageSku), sqlVmGroupResourceId.Value, windowsServerFailoverClusterDomainCredentials.Value, windowsServerFailoverClusterStaticIP.Value, autoPatchingSettings.Value, autoBackupSettings.Value, keyVaultCredentialSettings.Value, serverConfigurationsManagementSettings.Value, storageConfigurationSettings.Value, assessmentSettings.Value, serializedAdditionalRawData);
+            return new SqlVmData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                virtualMachineResourceId,
+                provisioningState,
+                sqlImageOffer,
+                sqlServerLicenseType,
+                sqlManagement,
+                sqlImageSku,
+                sqlVmGroupResourceId,
+                windowsServerFailoverClusterDomainCredentials,
+                windowsServerFailoverClusterStaticIP,
+                autoPatchingSettings,
+                autoBackupSettings,
+                keyVaultCredentialSettings,
+                serverConfigurationsManagementSettings,
+                storageConfigurationSettings,
+                assessmentSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmData>.Write(ModelReaderWriterOptions options)

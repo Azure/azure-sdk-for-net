@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteStartObject();
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
-            if (Optional.IsDefined(Manufacturer))
+            if (Manufacturer != null)
             {
                 writer.WritePropertyName("manufacturer"u8);
                 writer.WriteStringValue(Manufacturer);
             }
-            if (Optional.IsCollectionDefined(SupportedVersions))
+            if (!(SupportedVersions is ChangeTrackingList<SupportedVersionProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedVersions"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SupportedRoleTypes))
+            if (!(SupportedRoleTypes is ChangeTrackingList<NetworkDeviceRoleName> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedRoleTypes"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Interfaces))
+            if (!(Interfaces is ChangeTrackingList<NetworkDeviceInterfaceProperties> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("interfaces"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string model = default;
-            Optional<string> manufacturer = default;
-            Optional<IList<SupportedVersionProperties>> supportedVersions = default;
-            Optional<IList<NetworkDeviceRoleName>> supportedRoleTypes = default;
-            Optional<IList<NetworkDeviceInterfaceProperties>> interfaces = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            string manufacturer = default;
+            IList<SupportedVersionProperties> supportedVersions = default;
+            IList<NetworkDeviceRoleName> supportedRoleTypes = default;
+            IList<NetworkDeviceInterfaceProperties> interfaces = default;
+            NetworkFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -248,7 +248,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkDeviceSkuData(id, name, type, systemData.Value, model, manufacturer.Value, Optional.ToList(supportedVersions), Optional.ToList(supportedRoleTypes), Optional.ToList(interfaces), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkDeviceSkuData(
+                id,
+                name,
+                type,
+                systemData,
+                model,
+                manufacturer,
+                supportedVersions ?? new ChangeTrackingList<SupportedVersionProperties>(),
+                supportedRoleTypes ?? new ChangeTrackingList<NetworkDeviceRoleName>(),
+                interfaces ?? new ChangeTrackingList<NetworkDeviceInterfaceProperties>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkDeviceSkuData>.Write(ModelReaderWriterOptions options)

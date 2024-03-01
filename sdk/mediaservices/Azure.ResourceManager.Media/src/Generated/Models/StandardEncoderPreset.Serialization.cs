@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ExperimentalOptions))
+            if (!(ExperimentalOptions is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("experimentalOptions"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Filters))
+            if (Filters != null)
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> experimentalOptions = default;
-            Optional<FilteringOperations> filters = default;
+            IDictionary<string, string> experimentalOptions = default;
+            FilteringOperations filters = default;
             IList<MediaCodecBase> codecs = default;
             IList<MediaFormatBase> formats = default;
             string odataType = default;
@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StandardEncoderPreset(odataType, serializedAdditionalRawData, Optional.ToDictionary(experimentalOptions), filters.Value, codecs, formats);
+            return new StandardEncoderPreset(
+                odataType,
+                serializedAdditionalRawData,
+                experimentalOptions ?? new ChangeTrackingDictionary<string, string>(),
+                filters,
+                codecs,
+                formats);
         }
 
         BinaryData IPersistableModel<StandardEncoderPreset>.Write(ModelReaderWriterOptions options)

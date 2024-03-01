@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScheduleRunFrequency))
+            if (ScheduleRunFrequency.HasValue)
             {
                 writer.WritePropertyName("scheduleRunFrequency"u8);
                 writer.WriteStringValue(ScheduleRunFrequency.Value.ToString());
             }
-            if (Optional.IsDefined(HourlySchedule))
+            if (HourlySchedule != null)
             {
                 writer.WritePropertyName("hourlySchedule"u8);
                 writer.WriteObjectValue(HourlySchedule);
             }
-            if (Optional.IsDefined(DailySchedule))
+            if (DailySchedule != null)
             {
                 writer.WritePropertyName("dailySchedule"u8);
                 writer.WriteObjectValue(DailySchedule);
             }
-            if (Optional.IsDefined(WeeklySchedule))
+            if (WeeklySchedule != null)
             {
                 writer.WritePropertyName("weeklySchedule"u8);
                 writer.WriteObjectValue(WeeklySchedule);
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<ScheduleRunType> scheduleRunFrequency = default;
-            Optional<BackupHourlySchedule> hourlySchedule = default;
-            Optional<BackupDailySchedule> dailySchedule = default;
-            Optional<BackupWeeklySchedule> weeklySchedule = default;
+            ScheduleRunType? scheduleRunFrequency = default;
+            BackupHourlySchedule hourlySchedule = default;
+            BackupDailySchedule dailySchedule = default;
+            BackupWeeklySchedule weeklySchedule = default;
             string schedulePolicyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SimpleSchedulePolicyV2(schedulePolicyType, serializedAdditionalRawData, Optional.ToNullable(scheduleRunFrequency), hourlySchedule.Value, dailySchedule.Value, weeklySchedule.Value);
+            return new SimpleSchedulePolicyV2(
+                schedulePolicyType,
+                serializedAdditionalRawData,
+                scheduleRunFrequency,
+                hourlySchedule,
+                dailySchedule,
+                weeklySchedule);
         }
 
         BinaryData IPersistableModel<SimpleSchedulePolicyV2>.Write(ModelReaderWriterOptions options)

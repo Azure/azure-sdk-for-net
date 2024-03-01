@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataStoreType))
+            if (DataStoreType.HasValue)
             {
                 writer.WritePropertyName("datastoreType"u8);
                 writer.WriteStringValue(DataStoreType.Value.ToString());
             }
-            if (Optional.IsDefined(StorageSettingType))
+            if (StorageSettingType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(StorageSettingType.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<StorageSettingStoreType> datastoreType = default;
-            Optional<StorageSettingType> type = default;
+            StorageSettingStoreType? datastoreType = default;
+            StorageSettingType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupStorageSetting(Optional.ToNullable(datastoreType), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new DataProtectionBackupStorageSetting(datastoreType, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupStorageSetting>.Write(ModelReaderWriterOptions options)

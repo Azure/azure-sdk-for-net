@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(GroupId))
+            if (GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsDefined(RpGroupType))
+            if (RpGroupType != null)
             {
                 writer.WritePropertyName("rpGroupType"u8);
                 writer.WriteStringValue(RpGroupType);
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (Optional.IsCollectionDefined(ChildTasks))
+            if (!(ChildTasks is ChangeTrackingList<AsrTask> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("childTasks"u8);
                 writer.WriteStartArray();
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> groupId = default;
-            Optional<string> rpGroupType = default;
+            string name = default;
+            string groupId = default;
+            string rpGroupType = default;
             string instanceType = default;
-            Optional<IReadOnlyList<AsrTask>> childTasks = default;
+            IReadOnlyList<AsrTask> childTasks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPlanShutdownGroupTaskDetails(instanceType, Optional.ToList(childTasks), serializedAdditionalRawData, name.Value, groupId.Value, rpGroupType.Value);
+            return new RecoveryPlanShutdownGroupTaskDetails(
+                instanceType,
+                childTasks ?? new ChangeTrackingList<AsrTask>(),
+                serializedAdditionalRawData,
+                name,
+                groupId,
+                rpGroupType);
         }
 
         BinaryData IPersistableModel<RecoveryPlanShutdownGroupTaskDetails>.Write(ModelReaderWriterOptions options)

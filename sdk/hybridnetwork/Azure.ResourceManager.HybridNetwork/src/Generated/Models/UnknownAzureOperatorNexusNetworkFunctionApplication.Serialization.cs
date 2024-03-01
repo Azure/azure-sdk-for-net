@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("artifactType"u8);
             writer.WriteStringValue(ArtifactType.ToString());
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DependsOnProfile))
+            if (DependsOnProfile != null)
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
                 writer.WriteObjectValue(DependsOnProfile);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 return null;
             }
             AzureOperatorNexusArtifactType artifactType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
-            Optional<string> name = default;
-            Optional<DependsOnProfile> dependsOnProfile = default;
+            string name = default;
+            DependsOnProfile dependsOnProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownAzureOperatorNexusNetworkFunctionApplication(name.Value, dependsOnProfile.Value, serializedAdditionalRawData, artifactType);
+            return new UnknownAzureOperatorNexusNetworkFunctionApplication(name, dependsOnProfile, serializedAdditionalRawData, artifactType);
         }
 
         BinaryData IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>.Write(ModelReaderWriterOptions options)

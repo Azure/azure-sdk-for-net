@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Settings))
+            if (Settings != null)
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (Optional.IsDefined(Open))
+            if (Open != null)
             {
                 writer.WritePropertyName("open"u8);
                 writer.WriteObjectValue(Open);
             }
-            if (Optional.IsDefined(Browse))
+            if (Browse != null)
             {
                 writer.WritePropertyName("browse"u8);
                 writer.WriteObjectValue(Browse);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<SwaggerCustomDynamicTreeSettings> settings = default;
-            Optional<SwaggerCustomDynamicTreeCommand> open = default;
-            Optional<SwaggerCustomDynamicTreeCommand> browse = default;
+            SwaggerCustomDynamicTreeSettings settings = default;
+            SwaggerCustomDynamicTreeCommand open = default;
+            SwaggerCustomDynamicTreeCommand browse = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicTree(settings.Value, open.Value, browse.Value, serializedAdditionalRawData);
+            return new SwaggerCustomDynamicTree(settings, open, browse, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicTree>.Write(ModelReaderWriterOptions options)

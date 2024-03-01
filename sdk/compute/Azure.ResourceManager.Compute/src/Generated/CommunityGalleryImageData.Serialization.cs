@@ -27,59 +27,59 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OSType))
+            if (OSType.HasValue)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(OSState))
+            if (OSState.HasValue)
             {
                 writer.WritePropertyName("osState"u8);
                 writer.WriteStringValue(OSState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(EndOfLifeOn))
+            if (EndOfLifeOn.HasValue)
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (Optional.IsDefined(ImageIdentifier))
+            if (ImageIdentifier != null)
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteObjectValue(ImageIdentifier);
             }
-            if (Optional.IsDefined(Recommended))
+            if (Recommended != null)
             {
                 writer.WritePropertyName("recommended"u8);
                 writer.WriteObjectValue(Recommended);
             }
-            if (Optional.IsDefined(Disallowed))
+            if (Disallowed != null)
             {
                 writer.WritePropertyName("disallowed"u8);
                 writer.WriteObjectValue(Disallowed);
             }
-            if (Optional.IsDefined(HyperVGeneration))
+            if (HyperVGeneration.HasValue)
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Features))
+            if (!(Features is ChangeTrackingList<GalleryImageFeature> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStartArray();
@@ -89,32 +89,32 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PurchasePlan))
+            if (PurchasePlan != null)
             {
                 writer.WritePropertyName("purchasePlan"u8);
                 writer.WriteObjectValue(PurchasePlan);
             }
-            if (Optional.IsDefined(Architecture))
+            if (Architecture.HasValue)
             {
                 writer.WritePropertyName("architecture"u8);
                 writer.WriteStringValue(Architecture.Value.ToString());
             }
-            if (Optional.IsDefined(PrivacyStatementUri))
+            if (PrivacyStatementUri != null)
             {
                 writer.WritePropertyName("privacyStatementUri"u8);
                 writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Eula))
+            if (Eula != null)
             {
                 writer.WritePropertyName("eula"u8);
                 writer.WriteStringValue(Eula);
             }
-            if (Optional.IsDefined(Disclaimer))
+            if (Disclaimer != null)
             {
                 writer.WritePropertyName("disclaimer"u8);
                 writer.WriteStringValue(Disclaimer);
             }
-            if (Optional.IsCollectionDefined(ArtifactTags))
+            if (!(ArtifactTags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("artifactTags"u8);
                 writer.WriteStartObject();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute
             writer.WriteEndObject();
             writer.WritePropertyName("identifier"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(UniqueId))
+            if (UniqueId != null)
             {
                 writer.WritePropertyName("uniqueId"u8);
                 writer.WriteStringValue(UniqueId);
@@ -172,24 +172,24 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<ResourceType> type = default;
-            Optional<SupportedOperatingSystemType> osType = default;
-            Optional<OperatingSystemStateType> osState = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<CommunityGalleryImageIdentifier> identifier = default;
-            Optional<RecommendedMachineConfiguration> recommended = default;
-            Optional<Disallowed> disallowed = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<IReadOnlyList<GalleryImageFeature>> features = default;
-            Optional<ImagePurchasePlan> purchasePlan = default;
-            Optional<ArchitectureType> architecture = default;
-            Optional<Uri> privacyStatementUri = default;
-            Optional<string> eula = default;
-            Optional<string> disclaimer = default;
-            Optional<IReadOnlyDictionary<string, string>> artifactTags = default;
-            Optional<string> uniqueId = default;
+            string name = default;
+            AzureLocation? location = default;
+            ResourceType? type = default;
+            SupportedOperatingSystemType? osType = default;
+            OperatingSystemStateType? osState = default;
+            DateTimeOffset? endOfLifeDate = default;
+            CommunityGalleryImageIdentifier identifier = default;
+            RecommendedMachineConfiguration recommended = default;
+            Disallowed disallowed = default;
+            HyperVGeneration? hyperVGeneration = default;
+            IReadOnlyList<GalleryImageFeature> features = default;
+            ImagePurchasePlan purchasePlan = default;
+            ArchitectureType? architecture = default;
+            Uri privacyStatementUri = default;
+            string eula = default;
+            string disclaimer = default;
+            IReadOnlyDictionary<string, string> artifactTags = default;
+            string uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -380,7 +380,26 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunityGalleryImageData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value, serializedAdditionalRawData, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), Optional.ToList(features), purchasePlan.Value, Optional.ToNullable(architecture), privacyStatementUri.Value, eula.Value, disclaimer.Value, Optional.ToDictionary(artifactTags));
+            return new CommunityGalleryImageData(
+                name,
+                location,
+                type,
+                uniqueId,
+                serializedAdditionalRawData,
+                osType,
+                osState,
+                endOfLifeDate,
+                identifier,
+                recommended,
+                disallowed,
+                hyperVGeneration,
+                features ?? new ChangeTrackingList<GalleryImageFeature>(),
+                purchasePlan,
+                architecture,
+                privacyStatementUri,
+                eula,
+                disclaimer,
+                artifactTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<CommunityGalleryImageData>.Write(ModelReaderWriterOptions options)

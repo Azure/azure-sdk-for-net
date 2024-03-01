@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MoverUnresolvedDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(SummaryCollection))
+            if (options.Format != "W" && SummaryCollection != null)
             {
                 writer.WritePropertyName("summaryCollection"u8);
                 writer.WriteObjectValue(SummaryCollection);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalCount))
+            if (options.Format != "W" && TotalCount.HasValue)
             {
                 writer.WritePropertyName("totalCount"u8);
                 writer.WriteNumberValue(TotalCount.Value);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MoverUnresolvedDependency>> value = default;
-            Optional<string> nextLink = default;
-            Optional<MoverSummaryList> summaryCollection = default;
-            Optional<long> totalCount = default;
+            IReadOnlyList<MoverUnresolvedDependency> value = default;
+            string nextLink = default;
+            MoverSummaryList summaryCollection = default;
+            long? totalCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverUnresolvedDependencyList(Optional.ToList(value), nextLink.Value, summaryCollection.Value, Optional.ToNullable(totalCount), serializedAdditionalRawData);
+            return new MoverUnresolvedDependencyList(value ?? new ChangeTrackingList<MoverUnresolvedDependency>(), nextLink, summaryCollection, totalCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverUnresolvedDependencyList>.Write(ModelReaderWriterOptions options)

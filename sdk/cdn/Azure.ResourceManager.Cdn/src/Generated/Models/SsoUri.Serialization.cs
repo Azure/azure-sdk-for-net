@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AvailableSsoUri))
+            if (options.Format != "W" && AvailableSsoUri != null)
             {
                 writer.WritePropertyName("ssoUriValue"u8);
                 writer.WriteStringValue(AvailableSsoUri.AbsoluteUri);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<Uri> ssoUriValue = default;
+            Uri ssoUriValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsoUri(ssoUriValue.Value, serializedAdditionalRawData);
+            return new SsoUri(ssoUriValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsoUri>.Write(ModelReaderWriterOptions options)

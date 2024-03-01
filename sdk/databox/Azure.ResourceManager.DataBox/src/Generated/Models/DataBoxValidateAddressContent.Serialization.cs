@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteObjectValue(ShippingAddress);
             writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
-            if (Optional.IsDefined(TransportPreferences))
+            if (TransportPreferences != null)
             {
                 writer.WritePropertyName("transportPreferences"u8);
                 writer.WriteObjectValue(TransportPreferences);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             DataBoxShippingAddress shippingAddress = default;
             DataBoxSkuName deviceType = default;
-            Optional<TransportPreferences> transportPreferences = default;
+            TransportPreferences transportPreferences = default;
             DataBoxValidationInputDiscriminator validationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxValidateAddressContent(validationType, serializedAdditionalRawData, shippingAddress, deviceType, transportPreferences.Value);
+            return new DataBoxValidateAddressContent(validationType, serializedAdditionalRawData, shippingAddress, deviceType, transportPreferences);
         }
 
         BinaryData IPersistableModel<DataBoxValidateAddressContent>.Write(ModelReaderWriterOptions options)

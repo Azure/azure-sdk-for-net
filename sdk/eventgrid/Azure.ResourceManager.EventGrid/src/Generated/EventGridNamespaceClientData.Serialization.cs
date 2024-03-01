@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(AuthenticationName))
+            if (AuthenticationName != null)
             {
                 writer.WritePropertyName("authenticationName"u8);
                 writer.WriteStringValue(AuthenticationName);
             }
-            if (Optional.IsDefined(ClientCertificateAuthentication))
+            if (ClientCertificateAuthentication != null)
             {
                 writer.WritePropertyName("clientCertificateAuthentication"u8);
                 writer.WriteObjectValue(ClientCertificateAuthentication);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Attributes))
+            if (!(Attributes is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -140,13 +140,13 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> authenticationName = default;
-            Optional<ClientCertificateAuthentication> clientCertificateAuthentication = default;
-            Optional<EventGridNamespaceClientState> state = default;
-            Optional<IDictionary<string, BinaryData>> attributes = default;
-            Optional<EventGridNamespaceClientProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string description = default;
+            string authenticationName = default;
+            ClientCertificateAuthentication clientCertificateAuthentication = default;
+            EventGridNamespaceClientState? state = default;
+            IDictionary<string, BinaryData> attributes = default;
+            EventGridNamespaceClientProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,7 +251,18 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridNamespaceClientData(id, name, type, systemData.Value, description.Value, authenticationName.Value, clientCertificateAuthentication.Value, Optional.ToNullable(state), Optional.ToDictionary(attributes), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new EventGridNamespaceClientData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                authenticationName,
+                clientCertificateAuthentication,
+                state,
+                attributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridNamespaceClientData>.Write(ModelReaderWriterOptions options)

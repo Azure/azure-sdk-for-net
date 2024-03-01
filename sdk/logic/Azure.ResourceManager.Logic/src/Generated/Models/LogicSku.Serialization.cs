@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Optional.IsDefined(Plan))
+            if (Plan != null)
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteObjectValue(Plan);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             LogicSkuName name = default;
-            Optional<LogicResourceReference> plan = default;
+            LogicResourceReference plan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicSku(name, plan.Value, serializedAdditionalRawData);
+            return new LogicSku(name, plan, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicSku>.Write(ModelReaderWriterOptions options)

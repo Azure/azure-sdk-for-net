@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceRuntimeSubnetId))
+            if (ServiceRuntimeSubnetId != null)
             {
                 writer.WritePropertyName("serviceRuntimeSubnetId"u8);
                 writer.WriteStringValue(ServiceRuntimeSubnetId);
             }
-            if (Optional.IsDefined(AppSubnetId))
+            if (AppSubnetId != null)
             {
                 writer.WritePropertyName("appSubnetId"u8);
                 writer.WriteStringValue(AppSubnetId);
             }
-            if (Optional.IsDefined(ServiceCidr))
+            if (ServiceCidr != null)
             {
                 writer.WritePropertyName("serviceCidr"u8);
                 writer.WriteStringValue(ServiceCidr);
             }
-            if (Optional.IsDefined(ServiceRuntimeNetworkResourceGroup))
+            if (ServiceRuntimeNetworkResourceGroup != null)
             {
                 writer.WritePropertyName("serviceRuntimeNetworkResourceGroup"u8);
                 writer.WriteStringValue(ServiceRuntimeNetworkResourceGroup);
             }
-            if (Optional.IsDefined(AppNetworkResourceGroup))
+            if (AppNetworkResourceGroup != null)
             {
                 writer.WritePropertyName("appNetworkResourceGroup"u8);
                 writer.WriteStringValue(AppNetworkResourceGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(OutboundIPs))
+            if (options.Format != "W" && OutboundIPs != null)
             {
                 writer.WritePropertyName("outboundIPs"u8);
                 writer.WriteObjectValue(OutboundIPs);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredTraffics))
+            if (options.Format != "W" && !(RequiredTraffics is ChangeTrackingList<AppPlatformServiceRequiredTraffic> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requiredTraffics"u8);
                 writer.WriteStartArray();
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IngressConfig))
+            if (IngressConfig != null)
             {
                 writer.WritePropertyName("ingressConfig"u8);
                 writer.WriteObjectValue(IngressConfig);
             }
-            if (Optional.IsDefined(OutboundType))
+            if (OutboundType != null)
             {
                 writer.WritePropertyName("outboundType"u8);
                 writer.WriteStringValue(OutboundType);
@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> serviceRuntimeSubnetId = default;
-            Optional<ResourceIdentifier> appSubnetId = default;
-            Optional<string> serviceCidr = default;
-            Optional<string> serviceRuntimeNetworkResourceGroup = default;
-            Optional<string> appNetworkResourceGroup = default;
-            Optional<NetworkProfileOutboundIPs> outboundIPs = default;
-            Optional<IReadOnlyList<AppPlatformServiceRequiredTraffic>> requiredTraffics = default;
-            Optional<IngressConfig> ingressConfig = default;
-            Optional<string> outboundType = default;
+            ResourceIdentifier serviceRuntimeSubnetId = default;
+            ResourceIdentifier appSubnetId = default;
+            string serviceCidr = default;
+            string serviceRuntimeNetworkResourceGroup = default;
+            string appNetworkResourceGroup = default;
+            NetworkProfileOutboundIPs outboundIPs = default;
+            IReadOnlyList<AppPlatformServiceRequiredTraffic> requiredTraffics = default;
+            IngressConfig ingressConfig = default;
+            string outboundType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformServiceNetworkProfile(serviceRuntimeSubnetId.Value, appSubnetId.Value, serviceCidr.Value, serviceRuntimeNetworkResourceGroup.Value, appNetworkResourceGroup.Value, outboundIPs.Value, Optional.ToList(requiredTraffics), ingressConfig.Value, outboundType.Value, serializedAdditionalRawData);
+            return new AppPlatformServiceNetworkProfile(
+                serviceRuntimeSubnetId,
+                appSubnetId,
+                serviceCidr,
+                serviceRuntimeNetworkResourceGroup,
+                appNetworkResourceGroup,
+                outboundIPs,
+                requiredTraffics ?? new ChangeTrackingList<AppPlatformServiceRequiredTraffic>(),
+                ingressConfig,
+                outboundType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformServiceNetworkProfile>.Write(ModelReaderWriterOptions options)

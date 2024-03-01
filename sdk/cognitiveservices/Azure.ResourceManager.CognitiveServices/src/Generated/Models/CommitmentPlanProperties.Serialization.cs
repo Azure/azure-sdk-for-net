@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(CommitmentPlanGuid))
+            if (CommitmentPlanGuid.HasValue)
             {
                 writer.WritePropertyName("commitmentPlanGuid"u8);
                 writer.WriteStringValue(CommitmentPlanGuid.Value);
             }
-            if (Optional.IsDefined(HostingModel))
+            if (HostingModel.HasValue)
             {
                 writer.WritePropertyName("hostingModel"u8);
                 writer.WriteStringValue(HostingModel.Value.ToString());
             }
-            if (Optional.IsDefined(PlanType))
+            if (PlanType != null)
             {
                 writer.WritePropertyName("planType"u8);
                 writer.WriteStringValue(PlanType);
             }
-            if (Optional.IsDefined(Current))
+            if (Current != null)
             {
                 writer.WritePropertyName("current"u8);
                 writer.WriteObjectValue(Current);
             }
-            if (Optional.IsDefined(AutoRenew))
+            if (AutoRenew.HasValue)
             {
                 writer.WritePropertyName("autoRenew"u8);
                 writer.WriteBooleanValue(AutoRenew.Value);
             }
-            if (Optional.IsDefined(Next))
+            if (Next != null)
             {
                 writer.WritePropertyName("next"u8);
                 writer.WriteObjectValue(Next);
             }
-            if (options.Format != "W" && Optional.IsDefined(Last))
+            if (options.Format != "W" && Last != null)
             {
                 writer.WritePropertyName("last"u8);
                 writer.WriteObjectValue(Last);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningIssues))
+            if (options.Format != "W" && !(ProvisioningIssues is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("provisioningIssues"u8);
                 writer.WriteStartArray();
@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<CommitmentPlanProvisioningState> provisioningState = default;
-            Optional<Guid> commitmentPlanGuid = default;
-            Optional<ServiceAccountHostingModel> hostingModel = default;
-            Optional<string> planType = default;
-            Optional<CommitmentPeriod> current = default;
-            Optional<bool> autoRenew = default;
-            Optional<CommitmentPeriod> next = default;
-            Optional<CommitmentPeriod> last = default;
-            Optional<IReadOnlyList<string>> provisioningIssues = default;
+            CommitmentPlanProvisioningState? provisioningState = default;
+            Guid? commitmentPlanGuid = default;
+            ServiceAccountHostingModel? hostingModel = default;
+            string planType = default;
+            CommitmentPeriod current = default;
+            bool? autoRenew = default;
+            CommitmentPeriod next = default;
+            CommitmentPeriod last = default;
+            IReadOnlyList<string> provisioningIssues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,7 +215,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommitmentPlanProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(commitmentPlanGuid), Optional.ToNullable(hostingModel), planType.Value, current.Value, Optional.ToNullable(autoRenew), next.Value, last.Value, Optional.ToList(provisioningIssues), serializedAdditionalRawData);
+            return new CommitmentPlanProperties(
+                provisioningState,
+                commitmentPlanGuid,
+                hostingModel,
+                planType,
+                current,
+                autoRenew,
+                next,
+                last,
+                provisioningIssues ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommitmentPlanProperties>.Write(ModelReaderWriterOptions options)

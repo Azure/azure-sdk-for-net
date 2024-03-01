@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.VoiceServices
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.VoiceServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(PhoneNumber))
+            if (PhoneNumber != null)
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
             }
-            if (Optional.IsDefined(Purpose))
+            if (Purpose.HasValue)
             {
                 writer.WritePropertyName("purpose"u8);
                 writer.WriteStringValue(Purpose.Value.ToString());
@@ -117,15 +117,15 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<VoiceServicesProvisioningState> provisioningState = default;
-            Optional<string> phoneNumber = default;
-            Optional<VoiceServicesTestLinePurpose> purpose = default;
+            SystemData systemData = default;
+            VoiceServicesProvisioningState? provisioningState = default;
+            string phoneNumber = default;
+            VoiceServicesTestLinePurpose? purpose = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.VoiceServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VoiceServicesTestLineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), phoneNumber.Value, Optional.ToNullable(purpose), serializedAdditionalRawData);
+            return new VoiceServicesTestLineData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                phoneNumber,
+                purpose,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VoiceServicesTestLineData>.Write(ModelReaderWriterOptions options)

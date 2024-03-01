@@ -20,15 +20,15 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Optional<string> eventSource = default;
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInformation = default;
-            Optional<IReadOnlyList<CommunicationIdentifierModel>> participants = default;
-            Optional<string> version = default;
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
-            Optional<string> publicEventType = default;
+            string eventSource = default;
+            string operationContext = default;
+            ResultInformation resultInformation = default;
+            IReadOnlyList<CommunicationIdentifierModel> participants = default;
+            string version = default;
+            string callConnectionId = default;
+            string serverCallId = default;
+            string correlationId = default;
+            string publicEventType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventSource"u8))
@@ -90,7 +90,16 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new AddParticipantsFailedInternal(eventSource.Value, operationContext.Value, resultInformation.Value, Optional.ToList(participants), version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new AddParticipantsFailedInternal(
+                eventSource,
+                operationContext,
+                resultInformation,
+                participants ?? new ChangeTrackingList<CommunicationIdentifierModel>(),
+                version,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                publicEventType);
         }
     }
 }

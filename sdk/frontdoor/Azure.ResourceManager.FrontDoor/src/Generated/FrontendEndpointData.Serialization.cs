@@ -28,49 +28,49 @@ namespace Azure.ResourceManager.FrontDoor
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(SessionAffinityEnabledState))
+            if (SessionAffinityEnabledState.HasValue)
             {
                 writer.WritePropertyName("sessionAffinityEnabledState"u8);
                 writer.WriteStringValue(SessionAffinityEnabledState.Value.ToString());
             }
-            if (Optional.IsDefined(SessionAffinityTtlInSeconds))
+            if (SessionAffinityTtlInSeconds.HasValue)
             {
                 writer.WritePropertyName("sessionAffinityTtlSeconds"u8);
                 writer.WriteNumberValue(SessionAffinityTtlInSeconds.Value);
             }
-            if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
+            if (WebApplicationFirewallPolicyLink != null)
             {
                 writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
                 JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomHttpsProvisioningState))
+            if (options.Format != "W" && CustomHttpsProvisioningState.HasValue)
             {
                 if (CustomHttpsProvisioningState != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.FrontDoor
                     writer.WriteNull("customHttpsProvisioningState");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomHttpsProvisioningSubstate))
+            if (options.Format != "W" && CustomHttpsProvisioningSubstate.HasValue)
             {
                 if (CustomHttpsProvisioningSubstate != null)
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.FrontDoor
                     writer.WriteNull("customHttpsProvisioningSubstate");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomHttpsConfiguration))
+            if (options.Format != "W" && CustomHttpsConfiguration != null)
             {
                 if (CustomHttpsConfiguration != null)
                 {
@@ -145,17 +145,17 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> hostName = default;
-            Optional<SessionAffinityEnabledState> sessionAffinityEnabledState = default;
-            Optional<int> sessionAffinityTtlSeconds = default;
-            Optional<WritableSubResource> webApplicationFirewallPolicyLink = default;
-            Optional<FrontDoorResourceState> resourceState = default;
-            Optional<FrontendEndpointCustomHttpsProvisioningState?> customHttpsProvisioningState = default;
-            Optional<FrontendEndpointCustomHttpsProvisioningSubstate?> customHttpsProvisioningSubstate = default;
-            Optional<CustomHttpsConfiguration> customHttpsConfiguration = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string hostName = default;
+            SessionAffinityEnabledState? sessionAffinityEnabledState = default;
+            int? sessionAffinityTtlSeconds = default;
+            WritableSubResource webApplicationFirewallPolicyLink = default;
+            FrontDoorResourceState? resourceState = default;
+            FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState = default;
+            FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate = default;
+            CustomHttpsConfiguration customHttpsConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -272,7 +272,19 @@ namespace Azure.ResourceManager.FrontDoor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontendEndpointData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, hostName.Value, Optional.ToNullable(sessionAffinityEnabledState), Optional.ToNullable(sessionAffinityTtlSeconds), webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsConfiguration.Value);
+            return new FrontendEndpointData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                hostName,
+                sessionAffinityEnabledState,
+                sessionAffinityTtlSeconds,
+                webApplicationFirewallPolicyLink,
+                resourceState,
+                customHttpsProvisioningState,
+                customHttpsProvisioningSubstate,
+                customHttpsConfiguration);
         }
 
         BinaryData IPersistableModel<FrontendEndpointData>.Write(ModelReaderWriterOptions options)

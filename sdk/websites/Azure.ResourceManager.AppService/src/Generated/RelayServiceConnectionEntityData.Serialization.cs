@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,39 +47,39 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(EntityName))
+            if (EntityName != null)
             {
                 writer.WritePropertyName("entityName"u8);
                 writer.WriteStringValue(EntityName);
             }
-            if (Optional.IsDefined(EntityConnectionString))
+            if (EntityConnectionString != null)
             {
                 writer.WritePropertyName("entityConnectionString"u8);
                 writer.WriteStringValue(EntityConnectionString);
             }
-            if (Optional.IsDefined(ResourceConnectionString))
+            if (ResourceConnectionString != null)
             {
                 writer.WritePropertyName("resourceConnectionString"u8);
                 writer.WriteStringValue(ResourceConnectionString);
             }
-            if (Optional.IsDefined(Hostname))
+            if (Hostname != null)
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Optional.IsDefined(Port))
+            if (Port.HasValue)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(BiztalkUri))
+            if (BiztalkUri != null)
             {
                 writer.WritePropertyName("biztalkUri"u8);
                 writer.WriteStringValue(BiztalkUri.AbsoluteUri);
@@ -123,17 +123,17 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> entityName = default;
-            Optional<string> entityConnectionString = default;
-            Optional<string> resourceConnectionString = default;
-            Optional<string> hostname = default;
-            Optional<int> port = default;
-            Optional<Uri> biztalkUri = default;
+            SystemData systemData = default;
+            string entityName = default;
+            string entityConnectionString = default;
+            string resourceConnectionString = default;
+            string hostname = default;
+            int? port = default;
+            Uri biztalkUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +223,19 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayServiceConnectionEntityData(id, name, type, systemData.Value, entityName.Value, entityConnectionString.Value, resourceConnectionString.Value, hostname.Value, Optional.ToNullable(port), biztalkUri.Value, kind.Value, serializedAdditionalRawData);
+            return new RelayServiceConnectionEntityData(
+                id,
+                name,
+                type,
+                systemData,
+                entityName,
+                entityConnectionString,
+                resourceConnectionString,
+                hostname,
+                port,
+                biztalkUri,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayServiceConnectionEntityData>.Write(ModelReaderWriterOptions options)

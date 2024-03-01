@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Billing.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Code.HasValue)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code.Value.ToString());
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(Details))
+            if (Details != null)
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStringValue(Details);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<SubscriptionTransferValidationErrorCode> code = default;
-            Optional<string> message = default;
-            Optional<string> details = default;
+            SubscriptionTransferValidationErrorCode? code = default;
+            string message = default;
+            string details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingSubscriptionValidateMoveEligibilityError(Optional.ToNullable(code), message.Value, details.Value, serializedAdditionalRawData);
+            return new BillingSubscriptionValidateMoveEligibilityError(code, message, details, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingSubscriptionValidateMoveEligibilityError>.Write(ModelReaderWriterOptions options)

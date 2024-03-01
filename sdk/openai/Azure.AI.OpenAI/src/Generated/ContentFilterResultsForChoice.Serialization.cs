@@ -27,32 +27,32 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sexual))
+            if (Sexual != null)
             {
                 writer.WritePropertyName("sexual"u8);
                 writer.WriteObjectValue(Sexual);
             }
-            if (Optional.IsDefined(Violence))
+            if (Violence != null)
             {
                 writer.WritePropertyName("violence"u8);
                 writer.WriteObjectValue(Violence);
             }
-            if (Optional.IsDefined(Hate))
+            if (Hate != null)
             {
                 writer.WritePropertyName("hate"u8);
                 writer.WriteObjectValue(Hate);
             }
-            if (Optional.IsDefined(SelfHarm))
+            if (SelfHarm != null)
             {
                 writer.WritePropertyName("self_harm"u8);
                 writer.WriteObjectValue(SelfHarm);
             }
-            if (Optional.IsDefined(Profanity))
+            if (Profanity != null)
             {
                 writer.WritePropertyName("profanity"u8);
                 writer.WriteObjectValue(Profanity);
             }
-            if (Optional.IsCollectionDefined(CustomBlocklists))
+            if (!(CustomBlocklists is ChangeTrackingList<ContentFilterBlocklistIdResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("custom_blocklists"u8);
                 writer.WriteStartArray();
@@ -62,17 +62,17 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
-            if (Optional.IsDefined(ProtectedMaterialText))
+            if (ProtectedMaterialText != null)
             {
                 writer.WritePropertyName("protected_material_text"u8);
                 writer.WriteObjectValue(ProtectedMaterialText);
             }
-            if (Optional.IsDefined(ProtectedMaterialCode))
+            if (ProtectedMaterialCode != null)
             {
                 writer.WritePropertyName("protected_material_code"u8);
                 writer.WriteObjectValue(ProtectedMaterialCode);
@@ -115,15 +115,15 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<ContentFilterResult> sexual = default;
-            Optional<ContentFilterResult> violence = default;
-            Optional<ContentFilterResult> hate = default;
-            Optional<ContentFilterResult> selfHarm = default;
-            Optional<ContentFilterDetectionResult> profanity = default;
-            Optional<IReadOnlyList<ContentFilterBlocklistIdResult>> customBlocklists = default;
-            Optional<ResponseError> error = default;
-            Optional<ContentFilterDetectionResult> protectedMaterialText = default;
-            Optional<ContentFilterCitedDetectionResult> protectedMaterialCode = default;
+            ContentFilterResult sexual = default;
+            ContentFilterResult violence = default;
+            ContentFilterResult hate = default;
+            ContentFilterResult selfHarm = default;
+            ContentFilterDetectionResult profanity = default;
+            IReadOnlyList<ContentFilterBlocklistIdResult> customBlocklists = default;
+            ResponseError error = default;
+            ContentFilterDetectionResult protectedMaterialText = default;
+            ContentFilterCitedDetectionResult protectedMaterialCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,17 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentFilterResultsForChoice(sexual.Value, violence.Value, hate.Value, selfHarm.Value, profanity.Value, Optional.ToList(customBlocklists), error.Value, protectedMaterialText.Value, protectedMaterialCode.Value, serializedAdditionalRawData);
+            return new ContentFilterResultsForChoice(
+                sexual,
+                violence,
+                hate,
+                selfHarm,
+                profanity,
+                customBlocklists ?? new ChangeTrackingList<ContentFilterBlocklistIdResult>(),
+                error,
+                protectedMaterialText,
+                protectedMaterialCode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentFilterResultsForChoice>.Write(ModelReaderWriterOptions options)

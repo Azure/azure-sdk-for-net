@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Title))
+            if (options.Format != "W" && Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (options.Format != "W" && Optional.IsDefined(Link))
+            if (options.Format != "W" && Link != null)
             {
                 writer.WritePropertyName("link"u8);
                 writer.WriteStringValue(Link);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> link = default;
+            string title = default;
+            string link = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCve(title.Value, link.Value, serializedAdditionalRawData);
+            return new SecurityCve(title, link, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCve>.Write(ModelReaderWriterOptions options)

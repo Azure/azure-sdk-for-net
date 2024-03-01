@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SessionId))
+            if (SessionId.HasValue)
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(ReservationToReturn))
+            if (ReservationToReturn != null)
             {
                 writer.WritePropertyName("reservationToReturn"u8);
                 writer.WriteObjectValue(ReservationToReturn);
             }
-            if (Optional.IsDefined(ReturnReason))
+            if (ReturnReason != null)
             {
                 writer.WritePropertyName("returnReason"u8);
                 writer.WriteStringValue(ReturnReason);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<Guid> sessionId = default;
-            Optional<string> scope = default;
-            Optional<ReservationToReturn> reservationToReturn = default;
-            Optional<string> returnReason = default;
+            Guid? sessionId = default;
+            string scope = default;
+            ReservationToReturn reservationToReturn = default;
+            string returnReason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationRefundRequestProperties(Optional.ToNullable(sessionId), scope.Value, reservationToReturn.Value, returnReason.Value, serializedAdditionalRawData);
+            return new ReservationRefundRequestProperties(sessionId, scope, reservationToReturn, returnReason, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationRefundRequestProperties>.Write(ModelReaderWriterOptions options)

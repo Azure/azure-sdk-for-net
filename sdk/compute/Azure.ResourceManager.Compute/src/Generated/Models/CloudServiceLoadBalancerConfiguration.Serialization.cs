@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier id = default;
             string name = default;
             IList<LoadBalancerFrontendIPConfiguration> frontendIPConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceLoadBalancerConfiguration(id.Value, name, frontendIPConfigurations, serializedAdditionalRawData);
+            return new CloudServiceLoadBalancerConfiguration(id, name, frontendIPConfigurations, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceLoadBalancerConfiguration>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AppConfigurationStoreApiKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppConfigurationStoreApiKey>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AppConfigurationStoreApiKey> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationStoreApiKeyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AppConfigurationStoreApiKeyListResult(value ?? new ChangeTrackingList<AppConfigurationStoreApiKey>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationStoreApiKeyListResult>.Write(ModelReaderWriterOptions options)

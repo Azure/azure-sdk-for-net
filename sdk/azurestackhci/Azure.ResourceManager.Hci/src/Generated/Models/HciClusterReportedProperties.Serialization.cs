@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ClusterName))
+            if (options.Format != "W" && ClusterName != null)
             {
                 writer.WritePropertyName("clusterName"u8);
                 writer.WriteStringValue(ClusterName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterId))
+            if (options.Format != "W" && ClusterId.HasValue)
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterVersion))
+            if (options.Format != "W" && ClusterVersion != null)
             {
                 writer.WritePropertyName("clusterVersion"u8);
                 writer.WriteStringValue(ClusterVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
+            if (options.Format != "W" && !(Nodes is ChangeTrackingList<HciClusterNode> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -51,22 +51,22 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ImdsAttestation))
+            if (options.Format != "W" && ImdsAttestation.HasValue)
             {
                 writer.WritePropertyName("imdsAttestation"u8);
                 writer.WriteStringValue(ImdsAttestation.Value.ToString());
             }
-            if (Optional.IsDefined(DiagnosticLevel))
+            if (DiagnosticLevel.HasValue)
             {
                 writer.WritePropertyName("diagnosticLevel"u8);
                 writer.WriteStringValue(DiagnosticLevel.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedCapabilities))
+            if (options.Format != "W" && !(SupportedCapabilities is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
                 writer.WriteStartArray();
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> clusterName = default;
-            Optional<Guid> clusterId = default;
-            Optional<string> clusterVersion = default;
-            Optional<IReadOnlyList<HciClusterNode>> nodes = default;
-            Optional<DateTimeOffset> lastUpdated = default;
-            Optional<ImdsAttestationState> imdsAttestation = default;
-            Optional<HciClusterDiagnosticLevel> diagnosticLevel = default;
-            Optional<IReadOnlyList<string>> supportedCapabilities = default;
+            string clusterName = default;
+            Guid? clusterId = default;
+            string clusterVersion = default;
+            IReadOnlyList<HciClusterNode> nodes = default;
+            DateTimeOffset? lastUpdated = default;
+            ImdsAttestationState? imdsAttestation = default;
+            HciClusterDiagnosticLevel? diagnosticLevel = default;
+            IReadOnlyList<string> supportedCapabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +206,16 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterReportedProperties(clusterName.Value, Optional.ToNullable(clusterId), clusterVersion.Value, Optional.ToList(nodes), Optional.ToNullable(lastUpdated), Optional.ToNullable(imdsAttestation), Optional.ToNullable(diagnosticLevel), Optional.ToList(supportedCapabilities), serializedAdditionalRawData);
+            return new HciClusterReportedProperties(
+                clusterName,
+                clusterId,
+                clusterVersion,
+                nodes ?? new ChangeTrackingList<HciClusterNode>(),
+                lastUpdated,
+                imdsAttestation,
+                diagnosticLevel,
+                supportedCapabilities ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterReportedProperties>.Write(ModelReaderWriterOptions options)

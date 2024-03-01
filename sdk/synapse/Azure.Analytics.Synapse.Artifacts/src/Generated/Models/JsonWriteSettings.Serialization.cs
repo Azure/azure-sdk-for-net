@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FilePattern))
+            if (FilePattern != null)
             {
                 writer.WritePropertyName("filePattern"u8);
                 writer.WriteObjectValue(FilePattern);
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> filePattern = default;
+            object filePattern = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -63,7 +63,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new JsonWriteSettings(type, additionalProperties, filePattern.Value);
+            return new JsonWriteSettings(type, additionalProperties, filePattern);
         }
 
         internal partial class JsonWriteSettingsConverter : JsonConverter<JsonWriteSettings>

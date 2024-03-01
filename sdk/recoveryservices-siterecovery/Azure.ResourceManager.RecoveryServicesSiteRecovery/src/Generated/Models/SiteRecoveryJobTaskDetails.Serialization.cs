@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(JobTask))
+            if (JobTask != null)
             {
                 writer.WritePropertyName("jobTask"u8);
                 writer.WriteObjectValue(JobTask);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     case "VirtualMachineTaskDetails": return SiteRecoveryVmTaskDetails.DeserializeSiteRecoveryVmTaskDetails(element, options);
                 }
             }
-            Optional<SiteRecoveryJobEntity> jobTask = default;
+            SiteRecoveryJobEntity jobTask = default;
             string instanceType = "JobTaskDetails";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryJobTaskDetails(instanceType, serializedAdditionalRawData, jobTask.Value);
+            return new SiteRecoveryJobTaskDetails(instanceType, serializedAdditionalRawData, jobTask);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobTaskDetails>.Write(ModelReaderWriterOptions options)

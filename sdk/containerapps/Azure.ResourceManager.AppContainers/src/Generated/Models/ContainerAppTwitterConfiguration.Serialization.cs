@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Registration))
+            if (Registration != null)
             {
                 writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<ContainerAppTwitterRegistration> registration = default;
+            bool? enabled = default;
+            ContainerAppTwitterRegistration registration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppTwitterConfiguration(Optional.ToNullable(enabled), registration.Value, serializedAdditionalRawData);
+            return new ContainerAppTwitterConfiguration(enabled, registration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppTwitterConfiguration>.Write(ModelReaderWriterOptions options)

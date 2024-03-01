@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteObjectValue(Message);
@@ -43,22 +43,22 @@ namespace Azure.AI.OpenAI
             {
                 writer.WriteNull("finish_reason");
             }
-            if (Optional.IsDefined(FinishDetails))
+            if (FinishDetails != null)
             {
                 writer.WritePropertyName("finish_details"u8);
                 writer.WriteObjectValue(FinishDetails);
             }
-            if (Optional.IsDefined(InternalStreamingDeltaMessage))
+            if (InternalStreamingDeltaMessage != null)
             {
                 writer.WritePropertyName("delta"u8);
                 writer.WriteObjectValue(InternalStreamingDeltaMessage);
             }
-            if (Optional.IsDefined(ContentFilterResults))
+            if (ContentFilterResults != null)
             {
                 writer.WritePropertyName("content_filter_results"u8);
                 writer.WriteObjectValue(ContentFilterResults);
             }
-            if (Optional.IsDefined(Enhancements))
+            if (Enhancements != null)
             {
                 writer.WritePropertyName("enhancements"u8);
                 writer.WriteObjectValue(Enhancements);
@@ -101,13 +101,13 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<ChatResponseMessage> message = default;
+            ChatResponseMessage message = default;
             int index = default;
             CompletionsFinishReason? finishReason = default;
-            Optional<ChatFinishDetails> finishDetails = default;
-            Optional<ChatResponseMessage> delta = default;
-            Optional<ContentFilterResultsForChoice> contentFilterResults = default;
-            Optional<AzureChatEnhancements> enhancements = default;
+            ChatFinishDetails finishDetails = default;
+            ChatResponseMessage delta = default;
+            ContentFilterResultsForChoice contentFilterResults = default;
+            AzureChatEnhancements enhancements = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,15 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatChoice(message.Value, index, finishReason, finishDetails.Value, delta.Value, contentFilterResults.Value, enhancements.Value, serializedAdditionalRawData);
+            return new ChatChoice(
+                message,
+                index,
+                finishReason,
+                finishDetails,
+                delta,
+                contentFilterResults,
+                enhancements,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatChoice>.Write(ModelReaderWriterOptions options)

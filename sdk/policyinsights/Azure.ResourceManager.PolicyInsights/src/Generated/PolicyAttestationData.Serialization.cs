@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -52,32 +52,32 @@ namespace Azure.ResourceManager.PolicyInsights
             writer.WriteStartObject();
             writer.WritePropertyName("policyAssignmentId"u8);
             writer.WriteStringValue(PolicyAssignmentId);
-            if (Optional.IsDefined(PolicyDefinitionReferenceId))
+            if (PolicyDefinitionReferenceId != null)
             {
                 writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
             }
-            if (Optional.IsDefined(ComplianceState))
+            if (ComplianceState.HasValue)
             {
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiresOn"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(Owner))
+            if (Owner != null)
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
-            if (Optional.IsDefined(Comments))
+            if (Comments != null)
             {
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (Optional.IsCollectionDefined(Evidence))
+            if (!(Evidence is ChangeTrackingList<AttestationEvidence> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("evidence"u8);
                 writer.WriteStartArray();
@@ -87,22 +87,22 @@ namespace Azure.ResourceManager.PolicyInsights
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastComplianceStateChangeOn))
+            if (options.Format != "W" && LastComplianceStateChangeOn.HasValue)
             {
                 writer.WritePropertyName("lastComplianceStateChangeAt"u8);
                 writer.WriteStringValue(LastComplianceStateChangeOn.Value, "O");
             }
-            if (Optional.IsDefined(AssessOn))
+            if (AssessOn.HasValue)
             {
                 writer.WritePropertyName("assessmentDate"u8);
                 writer.WriteStringValue(AssessOn.Value, "O");
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -156,18 +156,18 @@ namespace Azure.ResourceManager.PolicyInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             ResourceIdentifier policyAssignmentId = default;
-            Optional<string> policyDefinitionReferenceId = default;
-            Optional<PolicyComplianceState> complianceState = default;
-            Optional<DateTimeOffset> expiresOn = default;
-            Optional<string> owner = default;
-            Optional<string> comments = default;
-            Optional<IList<AttestationEvidence>> evidence = default;
-            Optional<string> provisioningState = default;
-            Optional<DateTimeOffset> lastComplianceStateChangeAt = default;
-            Optional<DateTimeOffset> assessmentDate = default;
-            Optional<BinaryData> metadata = default;
+            string policyDefinitionReferenceId = default;
+            PolicyComplianceState? complianceState = default;
+            DateTimeOffset? expiresOn = default;
+            string owner = default;
+            string comments = default;
+            IList<AttestationEvidence> evidence = default;
+            string provisioningState = default;
+            DateTimeOffset? lastComplianceStateChangeAt = default;
+            DateTimeOffset? assessmentDate = default;
+            BinaryData metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -298,7 +298,23 @@ namespace Azure.ResourceManager.PolicyInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAttestationData(id, name, type, systemData.Value, policyAssignmentId, policyDefinitionReferenceId.Value, Optional.ToNullable(complianceState), Optional.ToNullable(expiresOn), owner.Value, comments.Value, Optional.ToList(evidence), provisioningState.Value, Optional.ToNullable(lastComplianceStateChangeAt), Optional.ToNullable(assessmentDate), metadata.Value, serializedAdditionalRawData);
+            return new PolicyAttestationData(
+                id,
+                name,
+                type,
+                systemData,
+                policyAssignmentId,
+                policyDefinitionReferenceId,
+                complianceState,
+                expiresOn,
+                owner,
+                comments,
+                evidence ?? new ChangeTrackingList<AttestationEvidence>(),
+                provisioningState,
+                lastComplianceStateChangeAt,
+                assessmentDate,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyAttestationData>.Write(ModelReaderWriterOptions options)

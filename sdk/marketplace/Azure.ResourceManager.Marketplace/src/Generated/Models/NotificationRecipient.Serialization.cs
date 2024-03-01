@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrincipalId))
+            if (PrincipalId.HasValue)
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EmailAddress))
+            if (options.Format != "W" && EmailAddress != null)
             {
                 writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<Guid> principalId = default;
-            Optional<string> emailAddress = default;
-            Optional<string> displayName = default;
+            Guid? principalId = default;
+            string emailAddress = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationRecipient(Optional.ToNullable(principalId), emailAddress.Value, displayName.Value, serializedAdditionalRawData);
+            return new NotificationRecipient(principalId, emailAddress, displayName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationRecipient>.Write(ModelReaderWriterOptions options)

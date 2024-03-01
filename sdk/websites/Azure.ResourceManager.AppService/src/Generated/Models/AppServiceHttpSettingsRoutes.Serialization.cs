@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApiPrefix))
+            if (ApiPrefix != null)
             {
                 writer.WritePropertyName("apiPrefix"u8);
                 writer.WriteStringValue(ApiPrefix);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> apiPrefix = default;
+            string apiPrefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceHttpSettingsRoutes(apiPrefix.Value, serializedAdditionalRawData);
+            return new AppServiceHttpSettingsRoutes(apiPrefix, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceHttpSettingsRoutes>.Write(ModelReaderWriterOptions options)

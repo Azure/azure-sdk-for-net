@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProtectedItemName))
+            if (options.Format != "W" && ProtectedItemName != null)
             {
                 writer.WritePropertyName("protectedItemName"u8);
                 writer.WriteStringValue(ProtectedItemName);
             }
-            if (options.Format != "W" && Optional.IsDefined(VmName))
+            if (options.Format != "W" && VmName != null)
             {
                 writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TestVmName))
+            if (options.Format != "W" && TestVmName != null)
             {
                 writer.WritePropertyName("testVmName"u8);
                 writer.WriteStringValue(TestVmName);
             }
-            if (options.Format != "W" && Optional.IsDefined(RecoveryPointId))
+            if (options.Format != "W" && RecoveryPointId != null)
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (options.Format != "W" && Optional.IsDefined(RecoveryPointOn))
+            if (options.Format != "W" && RecoveryPointOn.HasValue)
             {
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkName))
+            if (options.Format != "W" && NetworkName != null)
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Subnet))
+            if (options.Format != "W" && Subnet != null)
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> protectedItemName = default;
-            Optional<string> vmName = default;
-            Optional<string> testVmName = default;
-            Optional<string> recoveryPointId = default;
-            Optional<DateTimeOffset> recoveryPointTime = default;
-            Optional<string> networkName = default;
-            Optional<string> subnet = default;
+            string protectedItemName = default;
+            string vmName = default;
+            string testVmName = default;
+            string recoveryPointId = default;
+            DateTimeOffset? recoveryPointTime = default;
+            string networkName = default;
+            string subnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverProtectedItemProperties(protectedItemName.Value, vmName.Value, testVmName.Value, recoveryPointId.Value, Optional.ToNullable(recoveryPointTime), networkName.Value, subnet.Value, serializedAdditionalRawData);
+            return new FailoverProtectedItemProperties(
+                protectedItemName,
+                vmName,
+                testVmName,
+                recoveryPointId,
+                recoveryPointTime,
+                networkName,
+                subnet,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverProtectedItemProperties>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<OperationalInsightsSearchSchemaValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<SearchMetadata> metadata = default;
-            Optional<IReadOnlyList<OperationalInsightsSearchSchemaValue>> value = default;
+            SearchMetadata metadata = default;
+            IReadOnlyList<OperationalInsightsSearchSchemaValue> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchGetSchemaResponse(metadata.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new SearchGetSchemaResponse(metadata, value ?? new ChangeTrackingList<OperationalInsightsSearchSchemaValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchGetSchemaResponse>.Write(ModelReaderWriterOptions options)

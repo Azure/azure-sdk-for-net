@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteStringValue(ForecastType.ToString());
             writer.WritePropertyName("timeframe"u8);
             writer.WriteStringValue(Timeframe.ToString());
-            if (Optional.IsDefined(TimePeriod))
+            if (TimePeriod != null)
             {
                 writer.WritePropertyName("timePeriod"u8);
                 writer.WriteObjectValue(TimePeriod);
             }
             writer.WritePropertyName("dataset"u8);
             writer.WriteObjectValue(Dataset);
-            if (Optional.IsDefined(IncludeActualCost))
+            if (IncludeActualCost.HasValue)
             {
                 writer.WritePropertyName("includeActualCost"u8);
                 writer.WriteBooleanValue(IncludeActualCost.Value);
             }
-            if (Optional.IsDefined(IncludeFreshPartialCost))
+            if (IncludeFreshPartialCost.HasValue)
             {
                 writer.WritePropertyName("includeFreshPartialCost"u8);
                 writer.WriteBooleanValue(IncludeFreshPartialCost.Value);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             ForecastType type = default;
             ForecastTimeframe timeframe = default;
-            Optional<ForecastTimePeriod> timePeriod = default;
+            ForecastTimePeriod timePeriod = default;
             ForecastDataset dataset = default;
-            Optional<bool> includeActualCost = default;
-            Optional<bool> includeFreshPartialCost = default;
+            bool? includeActualCost = default;
+            bool? includeFreshPartialCost = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastDefinition(type, timeframe, timePeriod.Value, dataset, Optional.ToNullable(includeActualCost), Optional.ToNullable(includeFreshPartialCost), serializedAdditionalRawData);
+            return new ForecastDefinition(
+                type,
+                timeframe,
+                timePeriod,
+                dataset,
+                includeActualCost,
+                includeFreshPartialCost,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForecastDefinition>.Write(ModelReaderWriterOptions options)

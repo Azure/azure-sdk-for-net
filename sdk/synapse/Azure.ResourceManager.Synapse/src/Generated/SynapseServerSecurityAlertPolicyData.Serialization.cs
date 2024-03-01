@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(DisabledAlerts))
+            if (!(DisabledAlerts is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disabledAlerts"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Synapse
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EmailAddresses))
+            if (!(EmailAddresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("emailAddresses"u8);
                 writer.WriteStartArray();
@@ -75,27 +75,27 @@ namespace Azure.ResourceManager.Synapse
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableEmailToAccountAdmins))
+            if (EnableEmailToAccountAdmins.HasValue)
             {
                 writer.WritePropertyName("emailAccountAdmins"u8);
                 writer.WriteBooleanValue(EnableEmailToAccountAdmins.Value);
             }
-            if (Optional.IsDefined(StorageEndpoint))
+            if (StorageEndpoint != null)
             {
                 writer.WritePropertyName("storageEndpoint"u8);
                 writer.WriteStringValue(StorageEndpoint);
             }
-            if (Optional.IsDefined(StorageAccountAccessKey))
+            if (StorageAccountAccessKey != null)
             {
                 writer.WritePropertyName("storageAccountAccessKey"u8);
                 writer.WriteStringValue(StorageAccountAccessKey);
             }
-            if (Optional.IsDefined(RetentionDays))
+            if (RetentionDays.HasValue)
             {
                 writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
@@ -142,15 +142,15 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SynapseSecurityAlertPolicyState> state = default;
-            Optional<IList<string>> disabledAlerts = default;
-            Optional<IList<string>> emailAddresses = default;
-            Optional<bool> emailAccountAdmins = default;
-            Optional<string> storageEndpoint = default;
-            Optional<string> storageAccountAccessKey = default;
-            Optional<int> retentionDays = default;
-            Optional<DateTimeOffset> creationTime = default;
+            SystemData systemData = default;
+            SynapseSecurityAlertPolicyState? state = default;
+            IList<string> disabledAlerts = default;
+            IList<string> emailAddresses = default;
+            bool? emailAccountAdmins = default;
+            string storageEndpoint = default;
+            string storageAccountAccessKey = default;
+            int? retentionDays = default;
+            DateTimeOffset? creationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -271,7 +271,20 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseServerSecurityAlertPolicyData(id, name, type, systemData.Value, Optional.ToNullable(state), Optional.ToList(disabledAlerts), Optional.ToList(emailAddresses), Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToNullable(creationTime), serializedAdditionalRawData);
+            return new SynapseServerSecurityAlertPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                state,
+                disabledAlerts ?? new ChangeTrackingList<string>(),
+                emailAddresses ?? new ChangeTrackingList<string>(),
+                emailAccountAdmins,
+                storageEndpoint,
+                storageAccountAccessKey,
+                retentionDays,
+                creationTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseServerSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options)

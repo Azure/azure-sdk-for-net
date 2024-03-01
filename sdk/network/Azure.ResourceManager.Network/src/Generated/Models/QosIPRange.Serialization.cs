@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartIP))
+            if (StartIP != null)
             {
                 writer.WritePropertyName("startIP"u8);
                 writer.WriteStringValue(StartIP);
             }
-            if (Optional.IsDefined(EndIP))
+            if (EndIP != null)
             {
                 writer.WritePropertyName("endIP"u8);
                 writer.WriteStringValue(EndIP);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> startIP = default;
-            Optional<string> endIP = default;
+            string startIP = default;
+            string endIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QosIPRange(startIP.Value, endIP.Value, serializedAdditionalRawData);
+            return new QosIPRange(startIP, endIP, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QosIPRange>.Write(ModelReaderWriterOptions options)

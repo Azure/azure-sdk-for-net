@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartObject();
             writer.WritePropertyName("functionUri"u8);
             writer.WriteStringValue(FunctionUri.AbsoluteUri);
-            if (Optional.IsDefined(Credential))
+            if (Credential != null)
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
@@ -75,7 +75,7 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             Uri functionUri = default;
-            Optional<FunctionRouterRuleCredential> credential = default;
+            FunctionRouterRuleCredential credential = default;
             RouterRuleKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -106,7 +106,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionRouterRule(kind, serializedAdditionalRawData, functionUri, credential.Value);
+            return new FunctionRouterRule(kind, serializedAdditionalRawData, functionUri, credential);
         }
 
         BinaryData IPersistableModel<FunctionRouterRule>.Write(ModelReaderWriterOptions options)

@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(AutoAssign))
+            if (AutoAssign.HasValue)
             {
                 writer.WritePropertyName("autoAssign"u8);
                 writer.WriteStringValue(AutoAssign.Value.ToString());
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(OnlyUseHostIPs))
+            if (OnlyUseHostIPs.HasValue)
             {
                 writer.WritePropertyName("onlyUseHostIps"u8);
                 writer.WriteStringValue(OnlyUseHostIPs.Value.ToString());
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             IList<string> addresses = default;
-            Optional<BfdEnabled> autoAssign = default;
+            BfdEnabled? autoAssign = default;
             string name = default;
-            Optional<BfdEnabled> onlyUseHostIPs = default;
+            BfdEnabled? onlyUseHostIPs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPAddressPool(addresses, Optional.ToNullable(autoAssign), name, Optional.ToNullable(onlyUseHostIPs), serializedAdditionalRawData);
+            return new IPAddressPool(addresses, autoAssign, name, onlyUseHostIPs, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPAddressPool>.Write(ModelReaderWriterOptions options)

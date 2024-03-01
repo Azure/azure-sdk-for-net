@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InterimSchemaName))
+            if (InterimSchemaName != null)
             {
                 writer.WritePropertyName("interimSchemaName"u8);
                 JsonSerializer.Serialize(writer, InterimSchemaName);
             }
-            if (Optional.IsDefined(Keys))
+            if (Keys != null)
             {
                 writer.WritePropertyName("keys"u8);
                 JsonSerializer.Serialize(writer, Keys);
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> interimSchemaName = default;
-            Optional<DataFactoryElement<IList<string>>> keys = default;
+            DataFactoryElement<string> interimSchemaName = default;
+            DataFactoryElement<IList<string>> keys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDWUpsertSettings(interimSchemaName.Value, keys.Value, serializedAdditionalRawData);
+            return new SqlDWUpsertSettings(interimSchemaName, keys, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDWUpsertSettings>.Write(ModelReaderWriterOptions options)

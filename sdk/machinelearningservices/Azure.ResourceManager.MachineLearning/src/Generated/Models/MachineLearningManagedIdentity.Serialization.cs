@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
+            if (ClientId.HasValue)
             {
                 if (ClientId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("clientId");
                 }
             }
-            if (Optional.IsDefined(ObjectId))
+            if (ObjectId.HasValue)
             {
                 if (ObjectId != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("objectId");
                 }
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 if (ResourceId != null)
                 {
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<Guid?> clientId = default;
-            Optional<Guid?> objectId = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            Guid? clientId = default;
+            Guid? objectId = default;
+            ResourceIdentifier resourceId = default;
             IdentityConfigurationType identityType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningManagedIdentity(identityType, serializedAdditionalRawData, Optional.ToNullable(clientId), Optional.ToNullable(objectId), resourceId.Value);
+            return new MachineLearningManagedIdentity(identityType, serializedAdditionalRawData, clientId, objectId, resourceId);
         }
 
         BinaryData IPersistableModel<MachineLearningManagedIdentity>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteNumberValue(Offset);
             writer.WritePropertyName("length"u8);
             writer.WriteNumberValue(Length);
-            if (Optional.IsCollectionDefined(Targets))
+            if (!(Targets is ChangeTrackingList<SentenceTarget> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Assessments))
+            if (!(Assessments is ChangeTrackingList<SentenceAssessment> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("assessments"u8);
                 writer.WriteStartArray();
@@ -57,8 +57,8 @@ namespace Azure.AI.TextAnalytics.Models
             SentimentConfidenceScores confidenceScores = default;
             int offset = default;
             int length = default;
-            Optional<IReadOnlyList<SentenceTarget>> targets = default;
-            Optional<IReadOnlyList<SentenceAssessment>> assessments = default;
+            IReadOnlyList<SentenceTarget> targets = default;
+            IReadOnlyList<SentenceAssessment> assessments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -115,7 +115,14 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentenceSentimentInternal(text, sentiment, confidenceScores, offset, length, Optional.ToList(targets), Optional.ToList(assessments));
+            return new SentenceSentimentInternal(
+                text,
+                sentiment,
+                confidenceScores,
+                offset,
+                length,
+                targets ?? new ChangeTrackingList<SentenceTarget>(),
+                assessments ?? new ChangeTrackingList<SentenceAssessment>());
         }
     }
 }

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(ContainerIds))
+            if (!(ContainerIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("containerIds"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<A2AZoneDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExtendedLocations))
+            if (!(ExtendedLocations is ChangeTrackingList<A2AExtendedLocationDetails> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("extendedLocations"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LocationDetails))
+            if (!(LocationDetails is ChangeTrackingList<A2AFabricSpecificLocationDetails> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("locationDetails"u8);
                 writer.WriteStartArray();
@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> containerIds = default;
-            Optional<IReadOnlyList<A2AZoneDetails>> zones = default;
-            Optional<IReadOnlyList<A2AExtendedLocationDetails>> extendedLocations = default;
-            Optional<IReadOnlyList<A2AFabricSpecificLocationDetails>> locationDetails = default;
+            AzureLocation? location = default;
+            IReadOnlyList<ResourceIdentifier> containerIds = default;
+            IReadOnlyList<A2AZoneDetails> zones = default;
+            IReadOnlyList<A2AExtendedLocationDetails> extendedLocations = default;
+            IReadOnlyList<A2AFabricSpecificLocationDetails> locationDetails = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -209,7 +209,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryFabricProviderSpecificDetails(instanceType, serializedAdditionalRawData, Optional.ToNullable(location), Optional.ToList(containerIds), Optional.ToList(zones), Optional.ToList(extendedLocations), Optional.ToList(locationDetails));
+            return new SiteRecoveryFabricProviderSpecificDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                location,
+                containerIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                zones ?? new ChangeTrackingList<A2AZoneDetails>(),
+                extendedLocations ?? new ChangeTrackingList<A2AExtendedLocationDetails>(),
+                locationDetails ?? new ChangeTrackingList<A2AFabricSpecificLocationDetails>());
         }
 
         BinaryData IPersistableModel<SiteRecoveryFabricProviderSpecificDetails>.Write(ModelReaderWriterOptions options)

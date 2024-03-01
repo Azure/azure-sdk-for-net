@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (PrivateEndpoint != null)
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Optional.IsDefined(ConnectionState))
+            if (ConnectionState != null)
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
             }
-            if (Optional.IsDefined(GroupId))
+            if (GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<SearchServicePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<string> groupId = default;
-            Optional<SearchPrivateLinkServiceConnectionProvisioningState> provisioningState = default;
+            WritableSubResource privateEndpoint = default;
+            SearchServicePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            string groupId = default;
+            SearchPrivateLinkServiceConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchServicePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState.Value, groupId.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SearchServicePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState, groupId, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchServicePrivateEndpointConnectionProperties>.Write(ModelReaderWriterOptions options)

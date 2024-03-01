@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(AllowUpdates))
+            if (AllowUpdates.HasValue)
             {
                 writer.WritePropertyName("allowUpdates"u8);
                 writer.WriteBooleanValue(AllowUpdates.Value);
             }
-            if (Optional.IsDefined(DefaultVersion))
+            if (DefaultVersion != null)
             {
                 writer.WritePropertyName("defaultVersion"u8);
                 writer.WriteStringValue(DefaultVersion);
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<bool> allowUpdates = default;
-            Optional<string> defaultVersion = default;
+            SystemData systemData = default;
+            string displayName = default;
+            bool? allowUpdates = default;
+            string defaultVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.Batch
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchApplicationData(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(allowUpdates), defaultVersion.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new BatchApplicationData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                allowUpdates,
+                defaultVersion,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchApplicationData>.Write(ModelReaderWriterOptions options)

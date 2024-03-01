@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPMask))
+            if (IPMask != null)
             {
                 writer.WritePropertyName("ipMask"u8);
                 writer.WriteStringValue(IPMask);
             }
-            if (Optional.IsDefined(Action))
+            if (Action.HasValue)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> ipMask = default;
-            Optional<EventGridIPActionType> action = default;
+            string ipMask = default;
+            EventGridIPActionType? action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridInboundIPRule(ipMask.Value, Optional.ToNullable(action), serializedAdditionalRawData);
+            return new EventGridInboundIPRule(ipMask, action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridInboundIPRule>.Write(ModelReaderWriterOptions options)

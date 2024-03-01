@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Subscription))
+            if (Subscription != null)
             {
                 writer.WritePropertyName("subscription"u8);
                 writer.WriteObjectValue(Subscription);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<EdgeProfileSubscription> subscription = default;
+            EdgeProfileSubscription subscription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeProfile(subscription.Value, serializedAdditionalRawData);
+            return new EdgeProfile(subscription, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeProfile>.Write(ModelReaderWriterOptions options)

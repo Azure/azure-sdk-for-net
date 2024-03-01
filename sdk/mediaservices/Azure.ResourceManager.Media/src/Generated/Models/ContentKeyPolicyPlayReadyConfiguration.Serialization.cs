@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ResponseCustomData))
+            if (ResponseCustomData != null)
             {
                 writer.WritePropertyName("responseCustomData"u8);
 #if NET6_0_OR_GREATER
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             IList<ContentKeyPolicyPlayReadyLicense> licenses = default;
-            Optional<BinaryData> responseCustomData = default;
+            BinaryData responseCustomData = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyPlayReadyConfiguration(odataType, serializedAdditionalRawData, licenses, responseCustomData.Value);
+            return new ContentKeyPolicyPlayReadyConfiguration(odataType, serializedAdditionalRawData, licenses, responseCustomData);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyPlayReadyConfiguration>.Write(ModelReaderWriterOptions options)

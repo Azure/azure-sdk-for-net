@@ -44,39 +44,39 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ArmSkuName))
+            if (options.Format != "W" && ArmSkuName != null)
             {
                 writer.WritePropertyName("armSkuName"u8);
                 writer.WriteStringValue(ArmSkuName);
             }
-            if (options.Format != "W" && Optional.IsDefined(BenefitId))
+            if (options.Format != "W" && BenefitId != null)
             {
                 writer.WritePropertyName("benefitId"u8);
                 writer.WriteStringValue(BenefitId);
             }
-            if (options.Format != "W" && Optional.IsDefined(BenefitOrderId))
+            if (options.Format != "W" && BenefitOrderId != null)
             {
                 writer.WritePropertyName("benefitOrderId"u8);
                 writer.WriteStringValue(BenefitOrderId);
             }
-            if (Optional.IsDefined(BenefitType))
+            if (BenefitType.HasValue)
             {
                 writer.WritePropertyName("benefitType"u8);
                 writer.WriteStringValue(BenefitType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(UsageOn))
+            if (options.Format != "W" && UsageOn.HasValue)
             {
                 writer.WritePropertyName("usageDate"u8);
                 writer.WriteStringValue(UsageOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UtilizationPercentage))
+            if (options.Format != "W" && UtilizationPercentage.HasValue)
             {
                 writer.WritePropertyName("utilizationPercentage"u8);
                 writer.WriteNumberValue(UtilizationPercentage.Value);
@@ -124,13 +124,13 @@ namespace Azure.ResourceManager.CostManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> armSkuName = default;
-            Optional<string> benefitId = default;
-            Optional<string> benefitOrderId = default;
-            Optional<BillingAccountBenefitKind> benefitType = default;
-            Optional<DateTimeOffset> usageDate = default;
-            Optional<decimal> utilizationPercentage = default;
+            SystemData systemData = default;
+            string armSkuName = default;
+            string benefitId = default;
+            string benefitOrderId = default;
+            BillingAccountBenefitKind? benefitType = default;
+            DateTimeOffset? usageDate = default;
+            decimal? utilizationPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IncludedQuantityUtilizationSummary(id, name, type, systemData.Value, kind, serializedAdditionalRawData, armSkuName.Value, benefitId.Value, benefitOrderId.Value, Optional.ToNullable(benefitType), Optional.ToNullable(usageDate), Optional.ToNullable(utilizationPercentage));
+            return new IncludedQuantityUtilizationSummary(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                armSkuName,
+                benefitId,
+                benefitOrderId,
+                benefitType,
+                usageDate,
+                utilizationPercentage);
         }
 
         BinaryData IPersistableModel<IncludedQuantityUtilizationSummary>.Write(ModelReaderWriterOptions options)

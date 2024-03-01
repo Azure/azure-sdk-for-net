@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             writer.WritePropertyName("maxPercentDeltaUnhealthyNodes"u8);
             writer.WriteNumberValue(MaxPercentDeltaUnhealthyNodes);
-            if (Optional.IsDefined(MaxPercentUpgradeDomainDeltaUnhealthyNodes))
+            if (MaxPercentUpgradeDomainDeltaUnhealthyNodes.HasValue)
             {
                 writer.WritePropertyName("maxPercentUpgradeDomainDeltaUnhealthyNodes"u8);
                 writer.WriteNumberValue(MaxPercentUpgradeDomainDeltaUnhealthyNodes.Value);
             }
-            if (Optional.IsDefined(MaxPercentDeltaUnhealthyApplications))
+            if (MaxPercentDeltaUnhealthyApplications.HasValue)
             {
                 writer.WritePropertyName("maxPercentDeltaUnhealthyApplications"u8);
                 writer.WriteNumberValue(MaxPercentDeltaUnhealthyApplications.Value);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             int maxPercentDeltaUnhealthyNodes = default;
-            Optional<int> maxPercentUpgradeDomainDeltaUnhealthyNodes = default;
-            Optional<int> maxPercentDeltaUnhealthyApplications = default;
+            int? maxPercentUpgradeDomainDeltaUnhealthyNodes = default;
+            int? maxPercentDeltaUnhealthyApplications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterUpgradeDeltaHealthPolicy(maxPercentDeltaUnhealthyNodes, Optional.ToNullable(maxPercentUpgradeDomainDeltaUnhealthyNodes), Optional.ToNullable(maxPercentDeltaUnhealthyApplications), serializedAdditionalRawData);
+            return new ManagedClusterUpgradeDeltaHealthPolicy(maxPercentDeltaUnhealthyNodes, maxPercentUpgradeDomainDeltaUnhealthyNodes, maxPercentDeltaUnhealthyApplications, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterUpgradeDeltaHealthPolicy>.Write(ModelReaderWriterOptions options)

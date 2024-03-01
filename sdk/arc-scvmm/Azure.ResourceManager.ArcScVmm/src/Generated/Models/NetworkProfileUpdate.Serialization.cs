@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NetworkInterfaces))
+            if (!(NetworkInterfaces is ChangeTrackingList<NetworkInterfacesUpdate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<IList<NetworkInterfacesUpdate>> networkInterfaces = default;
+            IList<NetworkInterfacesUpdate> networkInterfaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkProfileUpdate(Optional.ToList(networkInterfaces), serializedAdditionalRawData);
+            return new NetworkProfileUpdate(networkInterfaces ?? new ChangeTrackingList<NetworkInterfacesUpdate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkProfileUpdate>.Write(ModelReaderWriterOptions options)

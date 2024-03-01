@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag != null)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag);
             }
-            if (Optional.IsDefined(RemotePrivateEndpoint))
+            if (RemotePrivateEndpoint != null)
             {
                 writer.WritePropertyName("remotePrivateEndpoint"u8);
                 writer.WriteObjectValue(RemotePrivateEndpoint);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.DeviceUpdate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 return null;
             }
-            Optional<string> eTag = default;
-            Optional<DeviceUpdateRemotePrivateEndpoint> remotePrivateEndpoint = default;
-            Optional<string> status = default;
+            string eTag = default;
+            DeviceUpdateRemotePrivateEndpoint remotePrivateEndpoint = default;
+            string status = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DeviceUpdatePrivateEndpointConnectionProxyProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            DeviceUpdatePrivateEndpointConnectionProxyProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdatePrivateEndpointConnectionProxyData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), eTag.Value, remotePrivateEndpoint.Value, status.Value, serializedAdditionalRawData);
+            return new DeviceUpdatePrivateEndpointConnectionProxyData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                eTag,
+                remotePrivateEndpoint,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>.Write(ModelReaderWriterOptions options)

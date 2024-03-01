@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PermissionScopes))
+            if (!(PermissionScopes is ChangeTrackingList<StoragePermissionScope> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("permissionScopes"u8);
                 writer.WriteStartArray();
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Storage
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(HomeDirectory))
+            if (HomeDirectory != null)
             {
                 writer.WritePropertyName("homeDirectory"u8);
                 writer.WriteStringValue(HomeDirectory);
             }
-            if (Optional.IsCollectionDefined(SshAuthorizedKeys))
+            if (!(SshAuthorizedKeys is ChangeTrackingList<StorageSshPublicKey> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sshAuthorizedKeys"u8);
                 writer.WriteStartArray();
@@ -75,22 +75,22 @@ namespace Azure.ResourceManager.Storage
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Sid))
+            if (options.Format != "W" && Sid != null)
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid);
             }
-            if (Optional.IsDefined(HasSharedKey))
+            if (HasSharedKey.HasValue)
             {
                 writer.WritePropertyName("hasSharedKey"u8);
                 writer.WriteBooleanValue(HasSharedKey.Value);
             }
-            if (Optional.IsDefined(HasSshKey))
+            if (HasSshKey.HasValue)
             {
                 writer.WritePropertyName("hasSshKey"u8);
                 writer.WriteBooleanValue(HasSshKey.Value);
             }
-            if (Optional.IsDefined(HasSshPassword))
+            if (HasSshPassword.HasValue)
             {
                 writer.WritePropertyName("hasSshPassword"u8);
                 writer.WriteBooleanValue(HasSshPassword.Value);
@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<StoragePermissionScope>> permissionScopes = default;
-            Optional<string> homeDirectory = default;
-            Optional<IList<StorageSshPublicKey>> sshAuthorizedKeys = default;
-            Optional<string> sid = default;
-            Optional<bool> hasSharedKey = default;
-            Optional<bool> hasSshKey = default;
-            Optional<bool> hasSshPassword = default;
+            SystemData systemData = default;
+            IList<StoragePermissionScope> permissionScopes = default;
+            string homeDirectory = default;
+            IList<StorageSshPublicKey> sshAuthorizedKeys = default;
+            string sid = default;
+            bool? hasSharedKey = default;
+            bool? hasSshKey = default;
+            bool? hasSshPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -256,7 +256,19 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountLocalUserData(id, name, type, systemData.Value, Optional.ToList(permissionScopes), homeDirectory.Value, Optional.ToList(sshAuthorizedKeys), sid.Value, Optional.ToNullable(hasSharedKey), Optional.ToNullable(hasSshKey), Optional.ToNullable(hasSshPassword), serializedAdditionalRawData);
+            return new StorageAccountLocalUserData(
+                id,
+                name,
+                type,
+                systemData,
+                permissionScopes ?? new ChangeTrackingList<StoragePermissionScope>(),
+                homeDirectory,
+                sshAuthorizedKeys ?? new ChangeTrackingList<StorageSshPublicKey>(),
+                sid,
+                hasSharedKey,
+                hasSshKey,
+                hasSshPassword,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountLocalUserData>.Write(ModelReaderWriterOptions options)

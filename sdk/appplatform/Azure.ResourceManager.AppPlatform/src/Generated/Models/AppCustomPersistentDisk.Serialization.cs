@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomPersistentDiskProperties))
+            if (CustomPersistentDiskProperties != null)
             {
                 writer.WritePropertyName("customPersistentDiskProperties"u8);
                 writer.WriteObjectValue(CustomPersistentDiskProperties);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppCustomPersistentDiskProperties> customPersistentDiskProperties = default;
+            AppCustomPersistentDiskProperties customPersistentDiskProperties = default;
             string storageId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppCustomPersistentDisk(customPersistentDiskProperties.Value, storageId, serializedAdditionalRawData);
+            return new AppCustomPersistentDisk(customPersistentDiskProperties, storageId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppCustomPersistentDisk>.Write(ModelReaderWriterOptions options)

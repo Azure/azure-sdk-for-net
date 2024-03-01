@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ProductionData))
+            if (ProductionData != null)
             {
                 if (ProductionData != null)
                 {
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("samplingRate"u8);
             writer.WriteNumberValue(SamplingRate);
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IList<GenerationTokenStatisticsMetricThreshold> metricThresholds = default;
-            Optional<MonitoringInputDataBase> productionData = default;
+            MonitoringInputDataBase productionData = default;
             double samplingRate = default;
-            Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            MonitoringNotificationMode? mode = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -180,7 +180,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenerationTokenStatisticsSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData, metricThresholds, productionData.Value, samplingRate);
+            return new GenerationTokenStatisticsSignal(
+                mode,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                metricThresholds,
+                productionData,
+                samplingRate);
         }
 
         BinaryData IPersistableModel<GenerationTokenStatisticsSignal>.Write(ModelReaderWriterOptions options)

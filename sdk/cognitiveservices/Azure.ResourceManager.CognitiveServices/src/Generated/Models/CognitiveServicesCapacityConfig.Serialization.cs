@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Minimum))
+            if (Minimum.HasValue)
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (Optional.IsDefined(Maximum))
+            if (Maximum.HasValue)
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (Optional.IsDefined(Step))
+            if (Step.HasValue)
             {
                 writer.WritePropertyName("step"u8);
                 writer.WriteNumberValue(Step.Value);
             }
-            if (Optional.IsDefined(Default))
+            if (Default.HasValue)
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<int> minimum = default;
-            Optional<int> maximum = default;
-            Optional<int> step = default;
-            Optional<int> @default = default;
+            int? minimum = default;
+            int? maximum = default;
+            int? step = default;
+            int? @default = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesCapacityConfig(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(step), Optional.ToNullable(@default), serializedAdditionalRawData);
+            return new CognitiveServicesCapacityConfig(minimum, maximum, step, @default, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesCapacityConfig>.Write(ModelReaderWriterOptions options)

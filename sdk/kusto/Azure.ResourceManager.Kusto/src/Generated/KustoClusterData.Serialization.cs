@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Kusto
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.Kusto
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -79,39 +79,39 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterUri))
+            if (options.Format != "W" && ClusterUri != null)
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(ClusterUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataIngestionUri))
+            if (options.Format != "W" && DataIngestionUri != null)
             {
                 writer.WritePropertyName("dataIngestionUri"u8);
                 writer.WriteStringValue(DataIngestionUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(StateReason))
+            if (options.Format != "W" && StateReason != null)
             {
                 writer.WritePropertyName("stateReason"u8);
                 writer.WriteStringValue(StateReason);
             }
-            if (Optional.IsCollectionDefined(TrustedExternalTenants))
+            if (!(TrustedExternalTenants is ChangeTrackingList<KustoClusterTrustedExternalTenant> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("trustedExternalTenants"u8);
                 writer.WriteStartArray();
@@ -121,52 +121,52 @@ namespace Azure.ResourceManager.Kusto
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OptimizedAutoscale))
+            if (OptimizedAutoscale != null)
             {
                 writer.WritePropertyName("optimizedAutoscale"u8);
                 writer.WriteObjectValue(OptimizedAutoscale);
             }
-            if (Optional.IsDefined(IsDiskEncryptionEnabled))
+            if (IsDiskEncryptionEnabled.HasValue)
             {
                 writer.WritePropertyName("enableDiskEncryption"u8);
                 writer.WriteBooleanValue(IsDiskEncryptionEnabled.Value);
             }
-            if (Optional.IsDefined(IsStreamingIngestEnabled))
+            if (IsStreamingIngestEnabled.HasValue)
             {
                 writer.WritePropertyName("enableStreamingIngest"u8);
                 writer.WriteBooleanValue(IsStreamingIngestEnabled.Value);
             }
-            if (Optional.IsDefined(VirtualNetworkConfiguration))
+            if (VirtualNetworkConfiguration != null)
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
                 writer.WriteObjectValue(VirtualNetworkConfiguration);
             }
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (KeyVaultProperties != null)
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Optional.IsDefined(IsPurgeEnabled))
+            if (IsPurgeEnabled.HasValue)
             {
                 writer.WritePropertyName("enablePurge"u8);
                 writer.WriteBooleanValue(IsPurgeEnabled.Value);
             }
-            if (Optional.IsDefined(LanguageExtensions))
+            if (LanguageExtensions != null)
             {
                 writer.WritePropertyName("languageExtensions"u8);
                 writer.WriteObjectValue(LanguageExtensions);
             }
-            if (Optional.IsDefined(IsDoubleEncryptionEnabled))
+            if (IsDoubleEncryptionEnabled.HasValue)
             {
                 writer.WritePropertyName("enableDoubleEncryption"u8);
                 writer.WriteBooleanValue(IsDoubleEncryptionEnabled.Value);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AllowedIPRangeList))
+            if (!(AllowedIPRangeList is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("allowedIpRangeList"u8);
                 writer.WriteStartArray();
@@ -176,12 +176,12 @@ namespace Azure.ResourceManager.Kusto
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EngineType))
+            if (EngineType.HasValue)
             {
                 writer.WritePropertyName("engineType"u8);
                 writer.WriteStringValue(EngineType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AcceptedAudiences))
+            if (!(AcceptedAudiences is ChangeTrackingList<AcceptedAudience> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("acceptedAudiences"u8);
                 writer.WriteStartArray();
@@ -191,17 +191,17 @@ namespace Azure.ResourceManager.Kusto
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsAutoStopEnabled))
+            if (IsAutoStopEnabled.HasValue)
             {
                 writer.WritePropertyName("enableAutoStop"u8);
                 writer.WriteBooleanValue(IsAutoStopEnabled.Value);
             }
-            if (Optional.IsDefined(RestrictOutboundNetworkAccess))
+            if (RestrictOutboundNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
                 writer.WriteStringValue(RestrictOutboundNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AllowedFqdnList))
+            if (!(AllowedFqdnList is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("allowedFqdnList"u8);
                 writer.WriteStartArray();
@@ -211,17 +211,17 @@ namespace Azure.ResourceManager.Kusto
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PublicIPType))
+            if (PublicIPType.HasValue)
             {
                 writer.WritePropertyName("publicIPType"u8);
                 writer.WriteStringValue(PublicIPType.Value.ToString());
             }
-            if (Optional.IsDefined(VirtualClusterGraduationProperties))
+            if (VirtualClusterGraduationProperties != null)
             {
                 writer.WritePropertyName("virtualClusterGraduationProperties"u8);
                 writer.WriteStringValue(VirtualClusterGraduationProperties);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<KustoPrivateEndpointConnectionData> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Kusto
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(MigrationCluster))
+            if (options.Format != "W" && MigrationCluster != null)
             {
                 writer.WritePropertyName("migrationCluster"u8);
                 writer.WriteObjectValue(MigrationCluster);
@@ -276,40 +276,40 @@ namespace Azure.ResourceManager.Kusto
                 return null;
             }
             KustoSku sku = default;
-            Optional<IList<string>> zones = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IList<string> zones = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KustoClusterState> state = default;
-            Optional<KustoProvisioningState> provisioningState = default;
-            Optional<Uri> uri = default;
-            Optional<Uri> dataIngestionUri = default;
-            Optional<string> stateReason = default;
-            Optional<IList<KustoClusterTrustedExternalTenant>> trustedExternalTenants = default;
-            Optional<OptimizedAutoscale> optimizedAutoscale = default;
-            Optional<bool> enableDiskEncryption = default;
-            Optional<bool> enableStreamingIngest = default;
-            Optional<KustoClusterVirtualNetworkConfiguration> virtualNetworkConfiguration = default;
-            Optional<KustoKeyVaultProperties> keyVaultProperties = default;
-            Optional<bool> enablePurge = default;
-            Optional<KustoLanguageExtensionList> languageExtensions = default;
-            Optional<bool> enableDoubleEncryption = default;
-            Optional<KustoClusterPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<string>> allowedIPRangeList = default;
-            Optional<KustoClusterEngineType> engineType = default;
-            Optional<IList<AcceptedAudience>> acceptedAudiences = default;
-            Optional<bool> enableAutoStop = default;
-            Optional<KustoClusterNetworkAccessFlag> restrictOutboundNetworkAccess = default;
-            Optional<IList<string>> allowedFqdnList = default;
-            Optional<KustoClusterPublicIPType> publicIPType = default;
-            Optional<string> virtualClusterGraduationProperties = default;
-            Optional<IReadOnlyList<KustoPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<MigrationClusterProperties> migrationCluster = default;
+            SystemData systemData = default;
+            KustoClusterState? state = default;
+            KustoProvisioningState? provisioningState = default;
+            Uri uri = default;
+            Uri dataIngestionUri = default;
+            string stateReason = default;
+            IList<KustoClusterTrustedExternalTenant> trustedExternalTenants = default;
+            OptimizedAutoscale optimizedAutoscale = default;
+            bool? enableDiskEncryption = default;
+            bool? enableStreamingIngest = default;
+            KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = default;
+            KustoKeyVaultProperties keyVaultProperties = default;
+            bool? enablePurge = default;
+            KustoLanguageExtensionList languageExtensions = default;
+            bool? enableDoubleEncryption = default;
+            KustoClusterPublicNetworkAccess? publicNetworkAccess = default;
+            IList<string> allowedIPRangeList = default;
+            KustoClusterEngineType? engineType = default;
+            IList<AcceptedAudience> acceptedAudiences = default;
+            bool? enableAutoStop = default;
+            KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default;
+            IList<string> allowedFqdnList = default;
+            KustoClusterPublicIPType? publicIPType = default;
+            string virtualClusterGraduationProperties = default;
+            IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections = default;
+            MigrationClusterProperties migrationCluster = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -654,7 +654,43 @@ namespace Azure.ResourceManager.Kusto
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(zones), identity, Optional.ToNullable(etag), Optional.ToNullable(state), Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, Optional.ToList(trustedExternalTenants), optimizedAutoscale.Value, Optional.ToNullable(enableDiskEncryption), Optional.ToNullable(enableStreamingIngest), virtualNetworkConfiguration.Value, keyVaultProperties.Value, Optional.ToNullable(enablePurge), languageExtensions.Value, Optional.ToNullable(enableDoubleEncryption), Optional.ToNullable(publicNetworkAccess), Optional.ToList(allowedIPRangeList), Optional.ToNullable(engineType), Optional.ToList(acceptedAudiences), Optional.ToNullable(enableAutoStop), Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(publicIPType), virtualClusterGraduationProperties.Value, Optional.ToList(privateEndpointConnections), migrationCluster.Value, serializedAdditionalRawData);
+            return new KustoClusterData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                zones ?? new ChangeTrackingList<string>(),
+                identity,
+                etag,
+                state,
+                provisioningState,
+                uri,
+                dataIngestionUri,
+                stateReason,
+                trustedExternalTenants ?? new ChangeTrackingList<KustoClusterTrustedExternalTenant>(),
+                optimizedAutoscale,
+                enableDiskEncryption,
+                enableStreamingIngest,
+                virtualNetworkConfiguration,
+                keyVaultProperties,
+                enablePurge,
+                languageExtensions,
+                enableDoubleEncryption,
+                publicNetworkAccess,
+                allowedIPRangeList ?? new ChangeTrackingList<string>(),
+                engineType,
+                acceptedAudiences ?? new ChangeTrackingList<AcceptedAudience>(),
+                enableAutoStop,
+                restrictOutboundNetworkAccess,
+                allowedFqdnList ?? new ChangeTrackingList<string>(),
+                publicIPType,
+                virtualClusterGraduationProperties,
+                privateEndpointConnections ?? new ChangeTrackingList<KustoPrivateEndpointConnectionData>(),
+                migrationCluster,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoClusterData>.Write(ModelReaderWriterOptions options)

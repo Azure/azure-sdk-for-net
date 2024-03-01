@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(And))
+            if (!(And is ChangeTrackingList<BudgetFilterProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("and"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Dimensions))
+            if (Dimensions != null)
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteObjectValue(Dimensions);
             }
-            if (Optional.IsDefined(Tags))
+            if (Tags != null)
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IList<BudgetFilterProperties>> and = default;
-            Optional<BudgetComparisonExpression> dimensions = default;
-            Optional<BudgetComparisonExpression> tags = default;
+            IList<BudgetFilterProperties> and = default;
+            BudgetComparisonExpression dimensions = default;
+            BudgetComparisonExpression tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionBudgetFilter(Optional.ToList(and), dimensions.Value, tags.Value, serializedAdditionalRawData);
+            return new ConsumptionBudgetFilter(and ?? new ChangeTrackingList<BudgetFilterProperties>(), dimensions, tags, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionBudgetFilter>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevCenter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,34 +56,34 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DevCenterId))
+            if (DevCenterId != null)
             {
                 writer.WritePropertyName("devCenterId"u8);
                 writer.WriteStringValue(DevCenterId);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(MaxDevBoxesPerUser))
+            if (MaxDevBoxesPerUser.HasValue)
             {
                 writer.WritePropertyName("maxDevBoxesPerUser"u8);
                 writer.WriteNumberValue(MaxDevBoxesPerUser.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DevCenterUri))
+            if (options.Format != "W" && DevCenterUri != null)
             {
                 writer.WritePropertyName("devCenterUri"u8);
                 writer.WriteStringValue(DevCenterUri.AbsoluteUri);
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.DevCenter
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> devCenterId = default;
-            Optional<string> description = default;
-            Optional<int> maxDevBoxesPerUser = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
-            Optional<Uri> devCenterUri = default;
+            SystemData systemData = default;
+            ResourceIdentifier devCenterId = default;
+            string description = default;
+            int? maxDevBoxesPerUser = default;
+            DevCenterProvisioningState? provisioningState = default;
+            Uri devCenterUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,7 +244,19 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterProjectData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, devCenterId.Value, description.Value, Optional.ToNullable(maxDevBoxesPerUser), Optional.ToNullable(provisioningState), devCenterUri.Value, serializedAdditionalRawData);
+            return new DevCenterProjectData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                devCenterId,
+                description,
+                maxDevBoxesPerUser,
+                provisioningState,
+                devCenterUri,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterProjectData>.Write(ModelReaderWriterOptions options)

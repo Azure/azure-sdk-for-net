@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DataCollectionRuleResourceId))
+            if (options.Format != "W" && DataCollectionRuleResourceId != null)
             {
                 writer.WritePropertyName("dataCollectionRuleResourceId"u8);
                 writer.WriteStringValue(DataCollectionRuleResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataCollectionEndpointResourceId))
+            if (options.Format != "W" && DataCollectionEndpointResourceId != null)
             {
                 writer.WritePropertyName("dataCollectionEndpointResourceId"u8);
                 writer.WriteStringValue(DataCollectionEndpointResourceId);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> dataCollectionRuleResourceId = default;
-            Optional<ResourceIdentifier> dataCollectionEndpointResourceId = default;
+            ResourceIdentifier dataCollectionRuleResourceId = default;
+            ResourceIdentifier dataCollectionEndpointResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorWorkspaceDefaultIngestionSettings(dataCollectionRuleResourceId.Value, dataCollectionEndpointResourceId.Value, serializedAdditionalRawData);
+            return new MonitorWorkspaceDefaultIngestionSettings(dataCollectionRuleResourceId, dataCollectionEndpointResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorWorkspaceDefaultIngestionSettings>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.DeviceUpdate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AccountName))
+            if (options.Format != "W" && AccountName != null)
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Optional.IsCollectionDefined(IotHubs))
+            if (!(IotHubs is ChangeTrackingList<DeviceUpdateIotHubSettings> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("iotHubs"u8);
                 writer.WriteStartArray();
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableDiagnostics))
+            if (EnableDiagnostics.HasValue)
             {
                 writer.WritePropertyName("enableDiagnostics"u8);
                 writer.WriteBooleanValue(EnableDiagnostics.Value);
             }
-            if (Optional.IsDefined(DiagnosticStorageProperties))
+            if (DiagnosticStorageProperties != null)
             {
                 writer.WritePropertyName("diagnosticStorageProperties"u8);
                 writer.WriteObjectValue(DiagnosticStorageProperties);
@@ -132,17 +132,17 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DeviceUpdateProvisioningState> provisioningState = default;
-            Optional<string> accountName = default;
-            Optional<IList<DeviceUpdateIotHubSettings>> iotHubs = default;
-            Optional<bool> enableDiagnostics = default;
-            Optional<DiagnosticStorageProperties> diagnosticStorageProperties = default;
+            SystemData systemData = default;
+            DeviceUpdateProvisioningState? provisioningState = default;
+            string accountName = default;
+            IList<DeviceUpdateIotHubSettings> iotHubs = default;
+            bool? enableDiagnostics = default;
+            DiagnosticStorageProperties diagnosticStorageProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), accountName.Value, Optional.ToList(iotHubs), Optional.ToNullable(enableDiagnostics), diagnosticStorageProperties.Value, serializedAdditionalRawData);
+            return new DeviceUpdateInstanceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                accountName,
+                iotHubs ?? new ChangeTrackingList<DeviceUpdateIotHubSettings>(),
+                enableDiagnostics,
+                diagnosticStorageProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdateInstanceData>.Write(ModelReaderWriterOptions options)

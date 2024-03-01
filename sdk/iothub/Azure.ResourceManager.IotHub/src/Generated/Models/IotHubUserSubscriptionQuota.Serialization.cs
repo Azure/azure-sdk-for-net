@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IotHubTypeId))
+            if (IotHubTypeId != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(IotHubTypeId);
             }
-            if (Optional.IsDefined(UserSubscriptionQuotaType))
+            if (UserSubscriptionQuotaType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(UserSubscriptionQuotaType);
             }
-            if (Optional.IsDefined(Unit))
+            if (Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Optional.IsDefined(CurrentValue))
+            if (CurrentValue.HasValue)
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (Optional.IsDefined(Limit))
+            if (Limit.HasValue)
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> type = default;
-            Optional<string> unit = default;
-            Optional<int> currentValue = default;
-            Optional<int> limit = default;
-            Optional<IotHubTypeName> name = default;
+            string id = default;
+            string type = default;
+            string unit = default;
+            int? currentValue = default;
+            int? limit = default;
+            IotHubTypeName name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubUserSubscriptionQuota(id.Value, type.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, serializedAdditionalRawData);
+            return new IotHubUserSubscriptionQuota(
+                id,
+                type,
+                unit,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubUserSubscriptionQuota>.Write(ModelReaderWriterOptions options)

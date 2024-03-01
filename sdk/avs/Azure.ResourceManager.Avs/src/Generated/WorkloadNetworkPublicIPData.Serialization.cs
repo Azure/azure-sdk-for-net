@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(NumberOfPublicIPs))
+            if (NumberOfPublicIPs.HasValue)
             {
                 writer.WritePropertyName("numberOfPublicIPs"u8);
                 writer.WriteNumberValue(NumberOfPublicIPs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIPBlock))
+            if (options.Format != "W" && PublicIPBlock != null)
             {
                 writer.WritePropertyName("publicIPBlock"u8);
                 writer.WriteStringValue(PublicIPBlock);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<long> numberOfPublicIPs = default;
-            Optional<string> publicIPBlock = default;
-            Optional<WorkloadNetworkPublicIPProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string displayName = default;
+            long? numberOfPublicIPs = default;
+            string publicIPBlock = default;
+            WorkloadNetworkPublicIPProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkPublicIPData(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(numberOfPublicIPs), publicIPBlock.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new WorkloadNetworkPublicIPData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                numberOfPublicIPs,
+                publicIPBlock,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkPublicIPData>.Write(ModelReaderWriterOptions options)

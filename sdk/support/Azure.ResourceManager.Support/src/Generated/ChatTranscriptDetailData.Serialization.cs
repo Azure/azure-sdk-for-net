@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Messages))
+            if (!(Messages is ChangeTrackingList<ChatTranscriptMessageProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Support
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.Support
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<ChatTranscriptMessageProperties>> messages = default;
-            Optional<DateTimeOffset> startTime = default;
+            SystemData systemData = default;
+            IList<ChatTranscriptMessageProperties> messages = default;
+            DateTimeOffset? startTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.Support
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatTranscriptDetailData(id, name, type, systemData.Value, Optional.ToList(messages), Optional.ToNullable(startTime), serializedAdditionalRawData);
+            return new ChatTranscriptDetailData(
+                id,
+                name,
+                type,
+                systemData,
+                messages ?? new ChangeTrackingList<ChatTranscriptMessageProperties>(),
+                startTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatTranscriptDetailData>.Write(ModelReaderWriterOptions options)

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,74 +49,74 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(WatchlistId))
+            if (WatchlistId.HasValue)
             {
                 writer.WritePropertyName("watchlistId"u8);
                 writer.WriteStringValue(WatchlistId.Value);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Provider))
+            if (Provider != null)
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (Optional.IsDefined(Source))
+            if (Source.HasValue)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(UpdatedOn))
+            if (UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(CreatedBy))
+            if (CreatedBy != null)
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteObjectValue(CreatedBy);
             }
-            if (Optional.IsDefined(UpdatedBy))
+            if (UpdatedBy != null)
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteObjectValue(UpdatedBy);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(WatchlistType))
+            if (WatchlistType != null)
             {
                 writer.WritePropertyName("watchlistType"u8);
                 writer.WriteStringValue(WatchlistType);
             }
-            if (Optional.IsDefined(WatchlistAlias))
+            if (WatchlistAlias != null)
             {
                 writer.WritePropertyName("watchlistAlias"u8);
                 writer.WriteStringValue(WatchlistAlias);
             }
-            if (Optional.IsDefined(IsDeleted))
+            if (IsDeleted.HasValue)
             {
                 writer.WritePropertyName("isDeleted"u8);
                 writer.WriteBooleanValue(IsDeleted.Value);
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -126,37 +126,37 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultDuration))
+            if (DefaultDuration.HasValue)
             {
                 writer.WritePropertyName("defaultDuration"u8);
                 writer.WriteStringValue(DefaultDuration.Value, "P");
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(NumberOfLinesToSkip))
+            if (NumberOfLinesToSkip.HasValue)
             {
                 writer.WritePropertyName("numberOfLinesToSkip"u8);
                 writer.WriteNumberValue(NumberOfLinesToSkip.Value);
             }
-            if (Optional.IsDefined(RawContent))
+            if (RawContent != null)
             {
                 writer.WritePropertyName("rawContent"u8);
                 writer.WriteStringValue(RawContent);
             }
-            if (Optional.IsDefined(ItemsSearchKey))
+            if (ItemsSearchKey != null)
             {
                 writer.WritePropertyName("itemsSearchKey"u8);
                 writer.WriteStringValue(ItemsSearchKey);
             }
-            if (Optional.IsDefined(ContentType))
+            if (ContentType != null)
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (Optional.IsDefined(UploadStatus))
+            if (UploadStatus != null)
             {
                 writer.WritePropertyName("uploadStatus"u8);
                 writer.WriteStringValue(UploadStatus);
@@ -200,31 +200,31 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> watchlistId = default;
-            Optional<string> displayName = default;
-            Optional<string> provider = default;
-            Optional<Source> source = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<SecurityInsightsUserInfo> createdBy = default;
-            Optional<SecurityInsightsUserInfo> updatedBy = default;
-            Optional<string> description = default;
-            Optional<string> watchlistType = default;
-            Optional<string> watchlistAlias = default;
-            Optional<bool> isDeleted = default;
-            Optional<IList<string>> labels = default;
-            Optional<TimeSpan> defaultDuration = default;
-            Optional<Guid> tenantId = default;
-            Optional<int> numberOfLinesToSkip = default;
-            Optional<string> rawContent = default;
-            Optional<string> itemsSearchKey = default;
-            Optional<string> contentType = default;
-            Optional<string> uploadStatus = default;
+            SystemData systemData = default;
+            Guid? watchlistId = default;
+            string displayName = default;
+            string provider = default;
+            Source? source = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? updated = default;
+            SecurityInsightsUserInfo createdBy = default;
+            SecurityInsightsUserInfo updatedBy = default;
+            string description = default;
+            string watchlistType = default;
+            string watchlistAlias = default;
+            bool? isDeleted = default;
+            IList<string> labels = default;
+            TimeSpan? defaultDuration = default;
+            Guid? tenantId = default;
+            int? numberOfLinesToSkip = default;
+            string rawContent = default;
+            string itemsSearchKey = default;
+            string contentType = default;
+            string uploadStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -429,7 +429,33 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsWatchlistData(id, name, type, systemData.Value, Optional.ToNullable(watchlistId), displayName.Value, provider.Value, Optional.ToNullable(source), Optional.ToNullable(created), Optional.ToNullable(updated), createdBy.Value, updatedBy.Value, description.Value, watchlistType.Value, watchlistAlias.Value, Optional.ToNullable(isDeleted), Optional.ToList(labels), Optional.ToNullable(defaultDuration), Optional.ToNullable(tenantId), Optional.ToNullable(numberOfLinesToSkip), rawContent.Value, itemsSearchKey.Value, contentType.Value, uploadStatus.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityInsightsWatchlistData(
+                id,
+                name,
+                type,
+                systemData,
+                watchlistId,
+                displayName,
+                provider,
+                source,
+                created,
+                updated,
+                createdBy,
+                updatedBy,
+                description,
+                watchlistType,
+                watchlistAlias,
+                isDeleted,
+                labels ?? new ChangeTrackingList<string>(),
+                defaultDuration,
+                tenantId,
+                numberOfLinesToSkip,
+                rawContent,
+                itemsSearchKey,
+                contentType,
+                uploadStatus,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsWatchlistData>.Write(ModelReaderWriterOptions options)

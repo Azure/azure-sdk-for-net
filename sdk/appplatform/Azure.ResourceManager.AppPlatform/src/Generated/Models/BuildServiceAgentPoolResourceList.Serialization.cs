@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AppPlatformBuildServiceAgentPoolData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppPlatformBuildServiceAgentPoolData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AppPlatformBuildServiceAgentPoolData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BuildServiceAgentPoolResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new BuildServiceAgentPoolResourceList(value ?? new ChangeTrackingList<AppPlatformBuildServiceAgentPoolData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BuildServiceAgentPoolResourceList>.Write(ModelReaderWriterOptions options)

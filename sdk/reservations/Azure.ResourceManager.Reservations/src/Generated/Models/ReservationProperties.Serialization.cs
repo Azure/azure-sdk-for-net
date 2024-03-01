@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReservedResourceType))
+            if (ReservedResourceType.HasValue)
             {
                 writer.WritePropertyName("reservedResourceType"u8);
                 writer.WriteStringValue(ReservedResourceType.Value.ToString());
             }
-            if (Optional.IsDefined(InstanceFlexibility))
+            if (InstanceFlexibility.HasValue)
             {
                 writer.WritePropertyName("instanceFlexibility"u8);
                 writer.WriteStringValue(InstanceFlexibility.Value.ToString());
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(AppliedScopes))
+            if (!(AppliedScopes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("appliedScopes"u8);
                 writer.WriteStartArray();
@@ -51,157 +51,157 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AppliedScopeType))
+            if (AppliedScopeType.HasValue)
             {
                 writer.WritePropertyName("appliedScopeType"u8);
                 writer.WriteStringValue(AppliedScopeType.Value.ToString());
             }
-            if (Optional.IsDefined(IsArchived))
+            if (IsArchived.HasValue)
             {
                 writer.WritePropertyName("archived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
-            if (Optional.IsDefined(Capabilities))
+            if (Capabilities != null)
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStringValue(Capabilities);
             }
-            if (Optional.IsDefined(Quantity))
+            if (Quantity.HasValue)
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(EffectOn))
+            if (EffectOn.HasValue)
             {
                 writer.WritePropertyName("effectiveDateTime"u8);
                 writer.WriteStringValue(EffectOn.Value, "O");
             }
-            if (Optional.IsDefined(BenefitStartOn))
+            if (BenefitStartOn.HasValue)
             {
                 writer.WritePropertyName("benefitStartTime"u8);
                 writer.WriteStringValue(BenefitStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedDateTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiryDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "D");
             }
-            if (Optional.IsDefined(ReservationExpireOn))
+            if (ReservationExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiryDateTime"u8);
                 writer.WriteStringValue(ReservationExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(ReviewOn))
+            if (ReviewOn.HasValue)
             {
                 writer.WritePropertyName("reviewDateTime"u8);
                 writer.WriteStringValue(ReviewOn.Value, "O");
             }
-            if (Optional.IsDefined(SkuDescription))
+            if (SkuDescription != null)
             {
                 writer.WritePropertyName("skuDescription"u8);
                 writer.WriteStringValue(SkuDescription);
             }
-            if (Optional.IsDefined(ExtendedStatusInfo))
+            if (ExtendedStatusInfo != null)
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
                 writer.WriteObjectValue(ExtendedStatusInfo);
             }
-            if (Optional.IsDefined(BillingPlan))
+            if (BillingPlan.HasValue)
             {
                 writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayProvisioningState))
+            if (options.Format != "W" && DisplayProvisioningState != null)
             {
                 writer.WritePropertyName("displayProvisioningState"u8);
                 writer.WriteStringValue(DisplayProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningSubState))
+            if (options.Format != "W" && ProvisioningSubState != null)
             {
                 writer.WritePropertyName("provisioningSubState"u8);
                 writer.WriteStringValue(ProvisioningSubState);
             }
-            if (Optional.IsDefined(PurchaseOn))
+            if (PurchaseOn.HasValue)
             {
                 writer.WritePropertyName("purchaseDate"u8);
                 writer.WriteStringValue(PurchaseOn.Value, "D");
             }
-            if (Optional.IsDefined(ReservationPurchaseOn))
+            if (ReservationPurchaseOn.HasValue)
             {
                 writer.WritePropertyName("purchaseDateTime"u8);
                 writer.WriteStringValue(ReservationPurchaseOn.Value, "O");
             }
-            if (Optional.IsDefined(SplitProperties))
+            if (SplitProperties != null)
             {
                 writer.WritePropertyName("splitProperties"u8);
                 writer.WriteObjectValue(SplitProperties);
             }
-            if (Optional.IsDefined(MergeProperties))
+            if (MergeProperties != null)
             {
                 writer.WritePropertyName("mergeProperties"u8);
                 writer.WriteObjectValue(MergeProperties);
             }
-            if (Optional.IsDefined(SwapProperties))
+            if (SwapProperties != null)
             {
                 writer.WritePropertyName("swapProperties"u8);
                 writer.WriteObjectValue(SwapProperties);
             }
-            if (Optional.IsDefined(AppliedScopeProperties))
+            if (AppliedScopeProperties != null)
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
                 writer.WriteObjectValue(AppliedScopeProperties);
             }
-            if (Optional.IsDefined(BillingScopeId))
+            if (BillingScopeId != null)
             {
                 writer.WritePropertyName("billingScopeId"u8);
                 writer.WriteStringValue(BillingScopeId);
             }
-            if (Optional.IsDefined(IsRenewEnabled))
+            if (IsRenewEnabled.HasValue)
             {
                 writer.WritePropertyName("renew"u8);
                 writer.WriteBooleanValue(IsRenewEnabled.Value);
             }
-            if (Optional.IsDefined(RenewSource))
+            if (RenewSource != null)
             {
                 writer.WritePropertyName("renewSource"u8);
                 writer.WriteStringValue(RenewSource);
             }
-            if (Optional.IsDefined(RenewDestination))
+            if (RenewDestination != null)
             {
                 writer.WritePropertyName("renewDestination"u8);
                 writer.WriteStringValue(RenewDestination);
             }
-            if (Optional.IsDefined(RenewProperties))
+            if (RenewProperties != null)
             {
                 writer.WritePropertyName("renewProperties"u8);
                 writer.WriteObjectValue(RenewProperties);
             }
-            if (Optional.IsDefined(Term))
+            if (Term.HasValue)
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(UserFriendlyAppliedScopeType))
+            if (options.Format != "W" && UserFriendlyAppliedScopeType != null)
             {
                 writer.WritePropertyName("userFriendlyAppliedScopeType"u8);
                 writer.WriteStringValue(UserFriendlyAppliedScopeType);
             }
-            if (options.Format != "W" && Optional.IsDefined(UserFriendlyRenewState))
+            if (options.Format != "W" && UserFriendlyRenewState != null)
             {
                 writer.WritePropertyName("userFriendlyRenewState"u8);
                 writer.WriteStringValue(UserFriendlyRenewState);
             }
-            if (options.Format != "W" && Optional.IsDefined(Utilization))
+            if (options.Format != "W" && Utilization != null)
             {
                 writer.WritePropertyName("utilization"u8);
                 writer.WriteObjectValue(Utilization);
@@ -244,41 +244,41 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservedResourceType> reservedResourceType = default;
-            Optional<InstanceFlexibility> instanceFlexibility = default;
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> appliedScopes = default;
-            Optional<AppliedScopeType> appliedScopeType = default;
-            Optional<bool> archived = default;
-            Optional<string> capabilities = default;
-            Optional<int> quantity = default;
-            Optional<ReservationProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> effectiveDateTime = default;
-            Optional<DateTimeOffset> benefitStartTime = default;
-            Optional<DateTimeOffset> lastUpdatedDateTime = default;
-            Optional<DateTimeOffset> expiryDate = default;
-            Optional<DateTimeOffset> expiryDateTime = default;
-            Optional<DateTimeOffset> reviewDateTime = default;
-            Optional<string> skuDescription = default;
-            Optional<ExtendedStatusInfo> extendedStatusInfo = default;
-            Optional<ReservationBillingPlan> billingPlan = default;
-            Optional<string> displayProvisioningState = default;
-            Optional<string> provisioningSubState = default;
-            Optional<DateTimeOffset> purchaseDate = default;
-            Optional<DateTimeOffset> purchaseDateTime = default;
-            Optional<ReservationSplitProperties> splitProperties = default;
-            Optional<ReservationMergeProperties> mergeProperties = default;
-            Optional<ReservationSwapProperties> swapProperties = default;
-            Optional<AppliedScopeProperties> appliedScopeProperties = default;
-            Optional<ResourceIdentifier> billingScopeId = default;
-            Optional<bool> renew = default;
-            Optional<string> renewSource = default;
-            Optional<string> renewDestination = default;
-            Optional<RenewProperties> renewProperties = default;
-            Optional<ReservationTerm> term = default;
-            Optional<string> userFriendlyAppliedScopeType = default;
-            Optional<string> userFriendlyRenewState = default;
-            Optional<ReservationPropertiesUtilization> utilization = default;
+            ReservedResourceType? reservedResourceType = default;
+            InstanceFlexibility? instanceFlexibility = default;
+            string displayName = default;
+            IReadOnlyList<string> appliedScopes = default;
+            AppliedScopeType? appliedScopeType = default;
+            bool? archived = default;
+            string capabilities = default;
+            int? quantity = default;
+            ReservationProvisioningState? provisioningState = default;
+            DateTimeOffset? effectiveDateTime = default;
+            DateTimeOffset? benefitStartTime = default;
+            DateTimeOffset? lastUpdatedDateTime = default;
+            DateTimeOffset? expiryDate = default;
+            DateTimeOffset? expiryDateTime = default;
+            DateTimeOffset? reviewDateTime = default;
+            string skuDescription = default;
+            ExtendedStatusInfo extendedStatusInfo = default;
+            ReservationBillingPlan? billingPlan = default;
+            string displayProvisioningState = default;
+            string provisioningSubState = default;
+            DateTimeOffset? purchaseDate = default;
+            DateTimeOffset? purchaseDateTime = default;
+            ReservationSplitProperties splitProperties = default;
+            ReservationMergeProperties mergeProperties = default;
+            ReservationSwapProperties swapProperties = default;
+            AppliedScopeProperties appliedScopeProperties = default;
+            ResourceIdentifier billingScopeId = default;
+            bool? renew = default;
+            string renewSource = default;
+            string renewDestination = default;
+            RenewProperties renewProperties = default;
+            ReservationTerm? term = default;
+            string userFriendlyAppliedScopeType = default;
+            string userFriendlyRenewState = default;
+            ReservationPropertiesUtilization utilization = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -573,7 +573,43 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationProperties(Optional.ToNullable(reservedResourceType), Optional.ToNullable(instanceFlexibility), displayName.Value, Optional.ToList(appliedScopes), Optional.ToNullable(appliedScopeType), Optional.ToNullable(archived), capabilities.Value, Optional.ToNullable(quantity), Optional.ToNullable(provisioningState), Optional.ToNullable(effectiveDateTime), Optional.ToNullable(benefitStartTime), Optional.ToNullable(lastUpdatedDateTime), Optional.ToNullable(expiryDate), Optional.ToNullable(expiryDateTime), Optional.ToNullable(reviewDateTime), skuDescription.Value, extendedStatusInfo.Value, Optional.ToNullable(billingPlan), displayProvisioningState.Value, provisioningSubState.Value, Optional.ToNullable(purchaseDate), Optional.ToNullable(purchaseDateTime), splitProperties.Value, mergeProperties.Value, swapProperties.Value, appliedScopeProperties.Value, billingScopeId.Value, Optional.ToNullable(renew), renewSource.Value, renewDestination.Value, renewProperties.Value, Optional.ToNullable(term), userFriendlyAppliedScopeType.Value, userFriendlyRenewState.Value, utilization.Value, serializedAdditionalRawData);
+            return new ReservationProperties(
+                reservedResourceType,
+                instanceFlexibility,
+                displayName,
+                appliedScopes ?? new ChangeTrackingList<string>(),
+                appliedScopeType,
+                archived,
+                capabilities,
+                quantity,
+                provisioningState,
+                effectiveDateTime,
+                benefitStartTime,
+                lastUpdatedDateTime,
+                expiryDate,
+                expiryDateTime,
+                reviewDateTime,
+                skuDescription,
+                extendedStatusInfo,
+                billingPlan,
+                displayProvisioningState,
+                provisioningSubState,
+                purchaseDate,
+                purchaseDateTime,
+                splitProperties,
+                mergeProperties,
+                swapProperties,
+                appliedScopeProperties,
+                billingScopeId,
+                renew,
+                renewSource,
+                renewDestination,
+                renewProperties,
+                term,
+                userFriendlyAppliedScopeType,
+                userFriendlyRenewState,
+                utilization,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationProperties>.Write(ModelReaderWriterOptions options)

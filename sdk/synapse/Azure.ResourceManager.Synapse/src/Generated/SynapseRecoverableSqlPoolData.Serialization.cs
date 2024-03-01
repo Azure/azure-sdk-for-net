@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Edition))
+            if (options.Format != "W" && Edition != null)
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceLevelObjective))
+            if (options.Format != "W" && ServiceLevelObjective != null)
             {
                 writer.WritePropertyName("serviceLevelObjective"u8);
                 writer.WriteStringValue(ServiceLevelObjective);
             }
-            if (options.Format != "W" && Optional.IsDefined(ElasticPoolName))
+            if (options.Format != "W" && ElasticPoolName != null)
             {
                 writer.WritePropertyName("elasticPoolName"u8);
                 writer.WriteStringValue(ElasticPoolName);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastAvailableBackupOn))
+            if (options.Format != "W" && LastAvailableBackupOn.HasValue)
             {
                 writer.WritePropertyName("lastAvailableBackupDate"u8);
                 writer.WriteStringValue(LastAvailableBackupOn.Value, "O");
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> edition = default;
-            Optional<string> serviceLevelObjective = default;
-            Optional<string> elasticPoolName = default;
-            Optional<DateTimeOffset> lastAvailableBackupDate = default;
+            SystemData systemData = default;
+            string edition = default;
+            string serviceLevelObjective = default;
+            string elasticPoolName = default;
+            DateTimeOffset? lastAvailableBackupDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseRecoverableSqlPoolData(id, name, type, systemData.Value, edition.Value, serviceLevelObjective.Value, elasticPoolName.Value, Optional.ToNullable(lastAvailableBackupDate), serializedAdditionalRawData);
+            return new SynapseRecoverableSqlPoolData(
+                id,
+                name,
+                type,
+                systemData,
+                edition,
+                serviceLevelObjective,
+                elasticPoolName,
+                lastAvailableBackupDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseRecoverableSqlPoolData>.Write(ModelReaderWriterOptions options)

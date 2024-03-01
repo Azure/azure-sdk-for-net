@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScaleSettings))
+            if (ScaleSettings != null)
             {
                 writer.WritePropertyName("scaleSettings"u8);
                 writer.WriteObjectValue(ScaleSettings);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<AmlComputeScaleSettings> scaleSettings = default;
+            AmlComputeScaleSettings scaleSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScaleSettingsInformation(scaleSettings.Value, serializedAdditionalRawData);
+            return new ScaleSettingsInformation(scaleSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScaleSettingsInformation>.Write(ModelReaderWriterOptions options)

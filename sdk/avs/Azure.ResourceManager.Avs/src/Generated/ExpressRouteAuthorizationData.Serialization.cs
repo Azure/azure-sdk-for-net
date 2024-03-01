@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpressRouteAuthorizationId))
+            if (options.Format != "W" && ExpressRouteAuthorizationId != null)
             {
                 writer.WritePropertyName("expressRouteAuthorizationId"u8);
                 writer.WriteStringValue(ExpressRouteAuthorizationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpressRouteAuthorizationKey))
+            if (options.Format != "W" && ExpressRouteAuthorizationKey != null)
             {
                 writer.WritePropertyName("expressRouteAuthorizationKey"u8);
                 writer.WriteStringValue(ExpressRouteAuthorizationKey);
             }
-            if (Optional.IsDefined(ExpressRouteId))
+            if (ExpressRouteId != null)
             {
                 writer.WritePropertyName("expressRouteId"u8);
                 writer.WriteStringValue(ExpressRouteId);
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ExpressRouteAuthorizationProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> expressRouteAuthorizationId = default;
-            Optional<string> expressRouteAuthorizationKey = default;
-            Optional<ResourceIdentifier> expressRouteId = default;
+            SystemData systemData = default;
+            ExpressRouteAuthorizationProvisioningState? provisioningState = default;
+            ResourceIdentifier expressRouteAuthorizationId = default;
+            string expressRouteAuthorizationKey = default;
+            ResourceIdentifier expressRouteId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteAuthorizationData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), expressRouteAuthorizationId.Value, expressRouteAuthorizationKey.Value, expressRouteId.Value, serializedAdditionalRawData);
+            return new ExpressRouteAuthorizationData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                expressRouteAuthorizationId,
+                expressRouteAuthorizationKey,
+                expressRouteId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteAuthorizationData>.Write(ModelReaderWriterOptions options)

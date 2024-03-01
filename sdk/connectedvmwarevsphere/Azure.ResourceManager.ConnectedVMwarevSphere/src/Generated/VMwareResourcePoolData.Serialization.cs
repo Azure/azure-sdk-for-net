@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,94 +67,94 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Uuid))
+            if (options.Format != "W" && Uuid != null)
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (Optional.IsDefined(VCenterId))
+            if (VCenterId != null)
             {
                 writer.WritePropertyName("vCenterId"u8);
                 writer.WriteStringValue(VCenterId);
             }
-            if (Optional.IsDefined(MoRefId))
+            if (MoRefId != null)
             {
                 writer.WritePropertyName("moRefId"u8);
                 writer.WriteStringValue(MoRefId);
             }
-            if (Optional.IsDefined(InventoryItemId))
+            if (InventoryItemId != null)
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MoName))
+            if (options.Format != "W" && MoName != null)
             {
                 writer.WritePropertyName("moName"u8);
                 writer.WriteStringValue(MoName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CpuSharesLevel))
+            if (options.Format != "W" && CpuSharesLevel != null)
             {
                 writer.WritePropertyName("cpuSharesLevel"u8);
                 writer.WriteStringValue(CpuSharesLevel);
             }
-            if (options.Format != "W" && Optional.IsDefined(CpuReservationMHz))
+            if (options.Format != "W" && CpuReservationMHz.HasValue)
             {
                 writer.WritePropertyName("cpuReservationMHz"u8);
                 writer.WriteNumberValue(CpuReservationMHz.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CpuLimitMHz))
+            if (options.Format != "W" && CpuLimitMHz.HasValue)
             {
                 writer.WritePropertyName("cpuLimitMHz"u8);
                 writer.WriteNumberValue(CpuLimitMHz.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MemSharesLevel))
+            if (options.Format != "W" && MemSharesLevel != null)
             {
                 writer.WritePropertyName("memSharesLevel"u8);
                 writer.WriteStringValue(MemSharesLevel);
             }
-            if (options.Format != "W" && Optional.IsDefined(MemReservationMB))
+            if (options.Format != "W" && MemReservationMB.HasValue)
             {
                 writer.WritePropertyName("memReservationMB"u8);
                 writer.WriteNumberValue(MemReservationMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MemLimitMB))
+            if (options.Format != "W" && MemLimitMB.HasValue)
             {
                 writer.WritePropertyName("memLimitMB"u8);
                 writer.WriteNumberValue(MemLimitMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MemOverallUsageGB))
+            if (options.Format != "W" && MemOverallUsageGB.HasValue)
             {
                 writer.WritePropertyName("memOverallUsageGB"u8);
                 writer.WriteNumberValue(MemOverallUsageGB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MemCapacityGB))
+            if (options.Format != "W" && MemCapacityGB.HasValue)
             {
                 writer.WritePropertyName("memCapacityGB"u8);
                 writer.WriteNumberValue(MemCapacityGB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CpuOverallUsageMHz))
+            if (options.Format != "W" && CpuOverallUsageMHz.HasValue)
             {
                 writer.WritePropertyName("cpuOverallUsageMHz"u8);
                 writer.WriteNumberValue(CpuOverallUsageMHz.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CpuCapacityMHz))
+            if (options.Format != "W" && CpuCapacityMHz.HasValue)
             {
                 writer.WritePropertyName("cpuCapacityMHz"u8);
                 writer.WriteNumberValue(CpuCapacityMHz.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomResourceName))
+            if (options.Format != "W" && CustomResourceName != null)
             {
                 writer.WritePropertyName("customResourceName"u8);
                 writer.WriteStringValue(CustomResourceName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DatastoreIds))
+            if (options.Format != "W" && !(DatastoreIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("datastoreIds"u8);
                 writer.WriteStartArray();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkIds))
+            if (options.Format != "W" && !(NetworkIds is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("networkIds"u8);
                 writer.WriteStartArray();
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
+            if (options.Format != "W" && !(Statuses is ChangeTrackingList<VMwareResourceStatus> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -228,34 +228,34 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ExtendedLocation extendedLocation = default;
+            string kind = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uuid = default;
-            Optional<string> vCenterId = default;
-            Optional<string> moRefId = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> moName = default;
-            Optional<string> cpuSharesLevel = default;
-            Optional<long> cpuReservationMHz = default;
-            Optional<long> cpuLimitMHz = default;
-            Optional<string> memSharesLevel = default;
-            Optional<long> memReservationMB = default;
-            Optional<long> memLimitMB = default;
-            Optional<long> memOverallUsageGB = default;
-            Optional<long> memCapacityGB = default;
-            Optional<long> cpuOverallUsageMHz = default;
-            Optional<long> cpuCapacityMHz = default;
-            Optional<string> customResourceName = default;
-            Optional<IReadOnlyList<string>> datastoreIds = default;
-            Optional<IReadOnlyList<string>> networkIds = default;
-            Optional<IReadOnlyList<VMwareResourceStatus>> statuses = default;
-            Optional<VMwareResourceProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string uuid = default;
+            string vCenterId = default;
+            string moRefId = default;
+            string inventoryItemId = default;
+            string moName = default;
+            string cpuSharesLevel = default;
+            long? cpuReservationMHz = default;
+            long? cpuLimitMHz = default;
+            string memSharesLevel = default;
+            long? memReservationMB = default;
+            long? memLimitMB = default;
+            long? memOverallUsageGB = default;
+            long? memCapacityGB = default;
+            long? cpuOverallUsageMHz = default;
+            long? cpuCapacityMHz = default;
+            string customResourceName = default;
+            IReadOnlyList<string> datastoreIds = default;
+            IReadOnlyList<string> networkIds = default;
+            IReadOnlyList<VMwareResourceStatus> statuses = default;
+            VMwareResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -498,7 +498,36 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareResourcePoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, cpuSharesLevel.Value, Optional.ToNullable(cpuReservationMHz), Optional.ToNullable(cpuLimitMHz), memSharesLevel.Value, Optional.ToNullable(memReservationMB), Optional.ToNullable(memLimitMB), Optional.ToNullable(memOverallUsageGB), Optional.ToNullable(memCapacityGB), Optional.ToNullable(cpuOverallUsageMHz), Optional.ToNullable(cpuCapacityMHz), customResourceName.Value, Optional.ToList(datastoreIds), Optional.ToList(networkIds), Optional.ToList(statuses), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VMwareResourcePoolData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                kind,
+                uuid,
+                vCenterId,
+                moRefId,
+                inventoryItemId,
+                moName,
+                cpuSharesLevel,
+                cpuReservationMHz,
+                cpuLimitMHz,
+                memSharesLevel,
+                memReservationMB,
+                memLimitMB,
+                memOverallUsageGB,
+                memCapacityGB,
+                cpuOverallUsageMHz,
+                cpuCapacityMHz,
+                customResourceName,
+                datastoreIds ?? new ChangeTrackingList<string>(),
+                networkIds ?? new ChangeTrackingList<string>(),
+                statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareResourcePoolData>.Write(ModelReaderWriterOptions options)

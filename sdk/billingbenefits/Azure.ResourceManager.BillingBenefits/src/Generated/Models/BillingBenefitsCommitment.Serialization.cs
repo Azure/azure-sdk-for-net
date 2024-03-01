@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Grain))
+            if (Grain.HasValue)
             {
                 writer.WritePropertyName("grain"u8);
                 writer.WriteStringValue(Grain.Value.ToString());
             }
-            if (Optional.IsDefined(CurrencyCode))
+            if (CurrencyCode != null)
             {
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
-            if (Optional.IsDefined(Amount))
+            if (Amount.HasValue)
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<BillingBenefitsCommitmentGrain> grain = default;
-            Optional<string> currencyCode = default;
-            Optional<double> amount = default;
+            BillingBenefitsCommitmentGrain? grain = default;
+            string currencyCode = default;
+            double? amount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsCommitment(currencyCode.Value, Optional.ToNullable(amount), serializedAdditionalRawData, Optional.ToNullable(grain));
+            return new BillingBenefitsCommitment(currencyCode, amount, serializedAdditionalRawData, grain);
         }
 
         BinaryData IPersistableModel<BillingBenefitsCommitment>.Write(ModelReaderWriterOptions options)

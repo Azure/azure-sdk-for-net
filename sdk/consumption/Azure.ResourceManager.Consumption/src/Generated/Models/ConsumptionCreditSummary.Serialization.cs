@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,44 +48,44 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(BalanceSummary))
+            if (options.Format != "W" && BalanceSummary != null)
             {
                 writer.WritePropertyName("balanceSummary"u8);
                 writer.WriteObjectValue(BalanceSummary);
             }
-            if (options.Format != "W" && Optional.IsDefined(PendingCreditAdjustments))
+            if (options.Format != "W" && PendingCreditAdjustments != null)
             {
                 writer.WritePropertyName("pendingCreditAdjustments"u8);
                 writer.WriteObjectValue(PendingCreditAdjustments);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpiredCredit))
+            if (options.Format != "W" && ExpiredCredit != null)
             {
                 writer.WritePropertyName("expiredCredit"u8);
                 writer.WriteObjectValue(ExpiredCredit);
             }
-            if (options.Format != "W" && Optional.IsDefined(PendingEligibleCharges))
+            if (options.Format != "W" && PendingEligibleCharges != null)
             {
                 writer.WritePropertyName("pendingEligibleCharges"u8);
                 writer.WriteObjectValue(PendingEligibleCharges);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreditCurrency))
+            if (options.Format != "W" && CreditCurrency != null)
             {
                 writer.WritePropertyName("creditCurrency"u8);
                 writer.WriteStringValue(CreditCurrency);
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingCurrency))
+            if (options.Format != "W" && BillingCurrency != null)
             {
                 writer.WritePropertyName("billingCurrency"u8);
                 writer.WriteStringValue(BillingCurrency);
             }
-            if (options.Format != "W" && Optional.IsDefined(Reseller))
+            if (options.Format != "W" && Reseller != null)
             {
                 writer.WritePropertyName("reseller"u8);
                 writer.WriteObjectValue(Reseller);
@@ -129,18 +129,18 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<CreditBalanceSummary> balanceSummary = default;
-            Optional<ConsumptionAmount> pendingCreditAdjustments = default;
-            Optional<ConsumptionAmount> expiredCredit = default;
-            Optional<ConsumptionAmount> pendingEligibleCharges = default;
-            Optional<string> creditCurrency = default;
-            Optional<string> billingCurrency = default;
-            Optional<ConsumptionReseller> reseller = default;
+            SystemData systemData = default;
+            CreditBalanceSummary balanceSummary = default;
+            ConsumptionAmount pendingCreditAdjustments = default;
+            ConsumptionAmount expiredCredit = default;
+            ConsumptionAmount pendingEligibleCharges = default;
+            string creditCurrency = default;
+            string billingCurrency = default;
+            ConsumptionReseller reseller = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,7 +251,20 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionCreditSummary(id, name, type, systemData.Value, balanceSummary.Value, pendingCreditAdjustments.Value, expiredCredit.Value, pendingEligibleCharges.Value, creditCurrency.Value, billingCurrency.Value, reseller.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new ConsumptionCreditSummary(
+                id,
+                name,
+                type,
+                systemData,
+                balanceSummary,
+                pendingCreditAdjustments,
+                expiredCredit,
+                pendingEligibleCharges,
+                creditCurrency,
+                billingCurrency,
+                reseller,
+                eTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionCreditSummary>.Write(ModelReaderWriterOptions options)

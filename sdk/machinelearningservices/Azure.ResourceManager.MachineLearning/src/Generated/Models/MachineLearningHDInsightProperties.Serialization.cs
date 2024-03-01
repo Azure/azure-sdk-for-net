@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SshPort))
+            if (SshPort.HasValue)
             {
                 writer.WritePropertyName("sshPort"u8);
                 writer.WriteNumberValue(SshPort.Value);
             }
-            if (Optional.IsDefined(Address))
+            if (Address != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address.ToString());
             }
-            if (Optional.IsDefined(AdministratorAccount))
+            if (AdministratorAccount != null)
             {
                 if (AdministratorAccount != null)
                 {
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> sshPort = default;
-            Optional<IPAddress> address = default;
-            Optional<MachineLearningVmSshCredentials> administratorAccount = default;
+            int? sshPort = default;
+            IPAddress address = default;
+            MachineLearningVmSshCredentials administratorAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningHDInsightProperties(Optional.ToNullable(sshPort), address.Value, administratorAccount.Value, serializedAdditionalRawData);
+            return new MachineLearningHDInsightProperties(sshPort, address, administratorAccount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningHDInsightProperties>.Write(ModelReaderWriterOptions options)

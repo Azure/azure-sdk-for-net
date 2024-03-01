@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,34 +48,34 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerKeyName))
+            if (ServerKeyName != null)
             {
                 writer.WritePropertyName("serverKeyName"u8);
                 writer.WriteStringValue(ServerKeyName);
             }
-            if (Optional.IsDefined(ServerKeyType))
+            if (ServerKeyType.HasValue)
             {
                 writer.WritePropertyName("serverKeyType"u8);
                 writer.WriteStringValue(ServerKeyType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Uri))
+            if (options.Format != "W" && Uri != null)
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
+            if (options.Format != "W" && Thumbprint != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (Optional.IsDefined(IsAutoRotationEnabled))
+            if (IsAutoRotationEnabled.HasValue)
             {
                 writer.WritePropertyName("autoRotationEnabled"u8);
                 writer.WriteBooleanValue(IsAutoRotationEnabled.Value);
@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> serverKeyName = default;
-            Optional<SqlServerKeyType> serverKeyType = default;
-            Optional<Uri> uri = default;
-            Optional<string> thumbprint = default;
-            Optional<bool> autoRotationEnabled = default;
+            SystemData systemData = default;
+            string serverKeyName = default;
+            SqlServerKeyType? serverKeyType = default;
+            Uri uri = default;
+            string thumbprint = default;
+            bool? autoRotationEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,7 +217,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceEncryptionProtectorData(id, name, type, systemData.Value, kind.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(autoRotationEnabled), serializedAdditionalRawData);
+            return new ManagedInstanceEncryptionProtectorData(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serverKeyName,
+                serverKeyType,
+                uri,
+                thumbprint,
+                autoRotationEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceEncryptionProtectorData>.Write(ModelReaderWriterOptions options)

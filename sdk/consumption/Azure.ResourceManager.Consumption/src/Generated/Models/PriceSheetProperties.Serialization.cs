@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(BillingPeriodId))
+            if (options.Format != "W" && BillingPeriodId != null)
             {
                 writer.WritePropertyName("billingPeriodId"u8);
                 writer.WriteStringValue(BillingPeriodId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterId))
+            if (options.Format != "W" && MeterId.HasValue)
             {
                 writer.WritePropertyName("meterId"u8);
                 writer.WriteStringValue(MeterId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterDetails))
+            if (options.Format != "W" && MeterDetails != null)
             {
                 writer.WritePropertyName("meterDetails"u8);
                 writer.WriteObjectValue(MeterDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(UnitOfMeasure))
+            if (options.Format != "W" && UnitOfMeasure != null)
             {
                 writer.WritePropertyName("unitOfMeasure"u8);
                 writer.WriteStringValue(UnitOfMeasure);
             }
-            if (options.Format != "W" && Optional.IsDefined(IncludedQuantity))
+            if (options.Format != "W" && IncludedQuantity.HasValue)
             {
                 writer.WritePropertyName("includedQuantity"u8);
                 writer.WriteNumberValue(IncludedQuantity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PartNumber))
+            if (options.Format != "W" && PartNumber != null)
             {
                 writer.WritePropertyName("partNumber"u8);
                 writer.WriteStringValue(PartNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(UnitPrice))
+            if (options.Format != "W" && UnitPrice.HasValue)
             {
                 writer.WritePropertyName("unitPrice"u8);
                 writer.WriteNumberValue(UnitPrice.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrencyCode))
+            if (options.Format != "W" && CurrencyCode != null)
             {
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(OfferId))
+            if (options.Format != "W" && OfferId != null)
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> billingPeriodId = default;
-            Optional<Guid> meterId = default;
-            Optional<ConsumptionMeterDetails> meterDetails = default;
-            Optional<string> unitOfMeasure = default;
-            Optional<decimal> includedQuantity = default;
-            Optional<string> partNumber = default;
-            Optional<decimal> unitPrice = default;
-            Optional<string> currencyCode = default;
-            Optional<string> offerId = default;
+            ResourceIdentifier billingPeriodId = default;
+            Guid? meterId = default;
+            ConsumptionMeterDetails meterDetails = default;
+            string unitOfMeasure = default;
+            decimal? includedQuantity = default;
+            string partNumber = default;
+            decimal? unitPrice = default;
+            string currencyCode = default;
+            string offerId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,7 +193,17 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PriceSheetProperties(billingPeriodId.Value, Optional.ToNullable(meterId), meterDetails.Value, unitOfMeasure.Value, Optional.ToNullable(includedQuantity), partNumber.Value, Optional.ToNullable(unitPrice), currencyCode.Value, offerId.Value, serializedAdditionalRawData);
+            return new PriceSheetProperties(
+                billingPeriodId,
+                meterId,
+                meterDetails,
+                unitOfMeasure,
+                includedQuantity,
+                partNumber,
+                unitPrice,
+                currencyCode,
+                offerId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PriceSheetProperties>.Write(ModelReaderWriterOptions options)

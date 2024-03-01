@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(PublisherId))
+            if (PublisherId != null)
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (Optional.IsDefined(OfferId))
+            if (OfferId != null)
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsDefined(ContentVersion))
+            if (ContentVersion != null)
             {
                 writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
-            if (Optional.IsCollectionDefined(SkuMappings))
+            if (!(SkuMappings is ChangeTrackingList<HciSkuMappings> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("skuMappings"u8);
                 writer.WriteStartArray();
@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.Hci
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> publisherId = default;
-            Optional<string> offerId = default;
-            Optional<string> content = default;
-            Optional<string> contentVersion = default;
-            Optional<IList<HciSkuMappings>> skuMappings = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string publisherId = default;
+            string offerId = default;
+            string content = default;
+            string contentVersion = default;
+            IList<HciSkuMappings> skuMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,7 +219,18 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciSkuData(id, name, type, systemData.Value, provisioningState.Value, publisherId.Value, offerId.Value, content.Value, contentVersion.Value, Optional.ToList(skuMappings), serializedAdditionalRawData);
+            return new HciSkuData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                publisherId,
+                offerId,
+                content,
+                contentVersion,
+                skuMappings ?? new ChangeTrackingList<HciSkuMappings>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciSkuData>.Write(ModelReaderWriterOptions options)

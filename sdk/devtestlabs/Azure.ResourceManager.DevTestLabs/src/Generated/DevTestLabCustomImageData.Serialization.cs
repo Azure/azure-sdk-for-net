@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,49 +56,49 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Vm))
+            if (Vm != null)
             {
                 writer.WritePropertyName("vm"u8);
                 writer.WriteObjectValue(Vm);
             }
-            if (Optional.IsDefined(Vhd))
+            if (Vhd != null)
             {
                 writer.WritePropertyName("vhd"u8);
                 writer.WriteObjectValue(Vhd);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Author))
+            if (Author != null)
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ManagedImageId))
+            if (ManagedImageId != null)
             {
                 writer.WritePropertyName("managedImageId"u8);
                 writer.WriteStringValue(ManagedImageId);
             }
-            if (Optional.IsDefined(ManagedSnapshotId))
+            if (ManagedSnapshotId != null)
             {
                 writer.WritePropertyName("managedSnapshotId"u8);
                 writer.WriteStringValue(ManagedSnapshotId);
             }
-            if (Optional.IsCollectionDefined(DataDiskStorageInfo))
+            if (!(DataDiskStorageInfo is ChangeTrackingList<DevTestLabDataDiskStorageTypeInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dataDiskStorageInfo"u8);
                 writer.WriteStartArray();
@@ -108,22 +108,22 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CustomImagePlan))
+            if (CustomImagePlan != null)
             {
                 writer.WritePropertyName("customImagePlan"u8);
                 writer.WriteObjectValue(CustomImagePlan);
             }
-            if (Optional.IsDefined(IsPlanAuthorized))
+            if (IsPlanAuthorized.HasValue)
             {
                 writer.WritePropertyName("isPlanAuthorized"u8);
                 writer.WriteBooleanValue(IsPlanAuthorized.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
+            if (options.Format != "W" && UniqueIdentifier.HasValue)
             {
                 writer.WritePropertyName("uniqueIdentifier"u8);
                 writer.WriteStringValue(UniqueIdentifier.Value);
@@ -167,24 +167,24 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevTestLabCustomImageVm> vm = default;
-            Optional<DevTestLabCustomImageVhd> vhd = default;
-            Optional<string> description = default;
-            Optional<string> author = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<string> managedImageId = default;
-            Optional<string> managedSnapshotId = default;
-            Optional<IList<DevTestLabDataDiskStorageTypeInfo>> dataDiskStorageInfo = default;
-            Optional<DevTestLabCustomImagePlan> customImagePlan = default;
-            Optional<bool> isPlanAuthorized = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            SystemData systemData = default;
+            DevTestLabCustomImageVm vm = default;
+            DevTestLabCustomImageVhd vhd = default;
+            string description = default;
+            string author = default;
+            DateTimeOffset? creationDate = default;
+            string managedImageId = default;
+            string managedSnapshotId = default;
+            IList<DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo = default;
+            DevTestLabCustomImagePlan customImagePlan = default;
+            bool? isPlanAuthorized = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -343,7 +343,26 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabCustomImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, vm.Value, vhd.Value, description.Value, author.Value, Optional.ToNullable(creationDate), managedImageId.Value, managedSnapshotId.Value, Optional.ToList(dataDiskStorageInfo), customImagePlan.Value, Optional.ToNullable(isPlanAuthorized), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabCustomImageData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                vm,
+                vhd,
+                description,
+                author,
+                creationDate,
+                managedImageId,
+                managedSnapshotId,
+                dataDiskStorageInfo ?? new ChangeTrackingList<DevTestLabDataDiskStorageTypeInfo>(),
+                customImagePlan,
+                isPlanAuthorized,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabCustomImageData>.Write(ModelReaderWriterOptions options)

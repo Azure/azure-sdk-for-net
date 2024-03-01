@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             writer.WriteNumberValue(Count);
             writer.WritePropertyName("resultTruncated"u8);
             writer.WriteStringValue(ResultTruncated.ToSerialString());
-            if (Optional.IsDefined(SkipToken))
+            if (SkipToken != null)
             {
                 writer.WritePropertyName("$skipToken"u8);
                 writer.WriteStringValue(SkipToken);
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            if (Optional.IsCollectionDefined(Facets))
+            if (!(Facets is ChangeTrackingList<Facet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("facets"u8);
                 writer.WriteStartArray();
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             long totalRecords = default;
             long count = default;
             ResultTruncated resultTruncated = default;
-            Optional<string> skipToken = default;
+            string skipToken = default;
             BinaryData data = default;
-            Optional<IReadOnlyList<Facet>> facets = default;
+            IReadOnlyList<Facet> facets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceQueryResult(totalRecords, count, resultTruncated, skipToken.Value, data, Optional.ToList(facets), serializedAdditionalRawData);
+            return new ResourceQueryResult(
+                totalRecords,
+                count,
+                resultTruncated,
+                skipToken,
+                data,
+                facets ?? new ChangeTrackingList<Facet>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceQueryResult>.Write(ModelReaderWriterOptions options)

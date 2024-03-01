@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPRules))
+            if (!(IPRules is ChangeTrackingList<SearchServiceIPRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<IList<SearchServiceIPRule>> ipRules = default;
+            IList<SearchServiceIPRule> ipRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkRuleSet(Optional.ToList(ipRules), serializedAdditionalRawData);
+            return new NetworkRuleSet(ipRules ?? new ChangeTrackingList<SearchServiceIPRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkRuleSet>.Write(ModelReaderWriterOptions options)

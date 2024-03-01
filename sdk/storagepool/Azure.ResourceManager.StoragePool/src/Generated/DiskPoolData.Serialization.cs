@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.StoragePool
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
+            if (options.Format != "W" && ManagedBy != null)
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ManagedByExtended))
+            if (options.Format != "W" && !(ManagedByExtended is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("managedByExtended"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StoragePool
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StoragePool
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.StoragePool
             writer.WriteEndArray();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsCollectionDefined(Disks))
+            if (!(Disks is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StoragePool
             }
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
-            if (Optional.IsCollectionDefined(AdditionalCapabilities))
+            if (!(AdditionalCapabilities is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
                 writer.WriteStartArray();
@@ -159,21 +159,21 @@ namespace Azure.ResourceManager.StoragePool
             {
                 return null;
             }
-            Optional<StoragePoolSku> sku = default;
-            Optional<string> managedBy = default;
-            Optional<IReadOnlyList<string>> managedByExtended = default;
-            Optional<IDictionary<string, string>> tags = default;
+            StoragePoolSku sku = default;
+            string managedBy = default;
+            IReadOnlyList<string> managedByExtended = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             DiskPoolIscsiTargetProvisioningState provisioningState = default;
             IList<string> availabilityZones = default;
             StoragePoolOperationalStatus status = default;
-            Optional<IList<WritableSubResource>> disks = default;
+            IList<WritableSubResource> disks = default;
             ResourceIdentifier subnetId = default;
-            Optional<IList<string>> additionalCapabilities = default;
+            IList<string> additionalCapabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -320,7 +320,23 @@ namespace Azure.ResourceManager.StoragePool
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, managedBy.Value, Optional.ToList(managedByExtended), provisioningState, availabilityZones, status, Optional.ToList(disks), subnetId, Optional.ToList(additionalCapabilities), serializedAdditionalRawData);
+            return new DiskPoolData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                managedBy,
+                managedByExtended ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                availabilityZones,
+                status,
+                disks ?? new ChangeTrackingList<WritableSubResource>(),
+                subnetId,
+                additionalCapabilities ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolData>.Write(ModelReaderWriterOptions options)

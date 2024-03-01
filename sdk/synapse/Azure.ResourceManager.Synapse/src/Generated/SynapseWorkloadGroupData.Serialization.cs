@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinResourcePercent))
+            if (MinResourcePercent.HasValue)
             {
                 writer.WritePropertyName("minResourcePercent"u8);
                 writer.WriteNumberValue(MinResourcePercent.Value);
             }
-            if (Optional.IsDefined(MaxResourcePercent))
+            if (MaxResourcePercent.HasValue)
             {
                 writer.WritePropertyName("maxResourcePercent"u8);
                 writer.WriteNumberValue(MaxResourcePercent.Value);
             }
-            if (Optional.IsDefined(MinResourcePercentPerRequest))
+            if (MinResourcePercentPerRequest.HasValue)
             {
                 writer.WritePropertyName("minResourcePercentPerRequest"u8);
                 writer.WriteNumberValue(MinResourcePercentPerRequest.Value);
             }
-            if (Optional.IsDefined(MaxResourcePercentPerRequest))
+            if (MaxResourcePercentPerRequest.HasValue)
             {
                 writer.WritePropertyName("maxResourcePercentPerRequest"u8);
                 writer.WriteNumberValue(MaxResourcePercentPerRequest.Value);
             }
-            if (Optional.IsDefined(Importance))
+            if (Importance != null)
             {
                 writer.WritePropertyName("importance"u8);
                 writer.WriteStringValue(Importance);
             }
-            if (Optional.IsDefined(QueryExecutionTimeout))
+            if (QueryExecutionTimeout.HasValue)
             {
                 writer.WritePropertyName("queryExecutionTimeout"u8);
                 writer.WriteNumberValue(QueryExecutionTimeout.Value);
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> minResourcePercent = default;
-            Optional<int> maxResourcePercent = default;
-            Optional<double> minResourcePercentPerRequest = default;
-            Optional<double> maxResourcePercentPerRequest = default;
-            Optional<string> importance = default;
-            Optional<int> queryExecutionTimeout = default;
+            SystemData systemData = default;
+            int? minResourcePercent = default;
+            int? maxResourcePercent = default;
+            double? minResourcePercentPerRequest = default;
+            double? maxResourcePercentPerRequest = default;
+            string importance = default;
+            int? queryExecutionTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,18 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkloadGroupData(id, name, type, systemData.Value, Optional.ToNullable(minResourcePercent), Optional.ToNullable(maxResourcePercent), Optional.ToNullable(minResourcePercentPerRequest), Optional.ToNullable(maxResourcePercentPerRequest), importance.Value, Optional.ToNullable(queryExecutionTimeout), serializedAdditionalRawData);
+            return new SynapseWorkloadGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                minResourcePercent,
+                maxResourcePercent,
+                minResourcePercentPerRequest,
+                maxResourcePercentPerRequest,
+                importance,
+                queryExecutionTimeout,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseWorkloadGroupData>.Write(ModelReaderWriterOptions options)

@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GitHub))
+            if (GitHub != null)
             {
                 writer.WritePropertyName("gitHub"u8);
                 writer.WriteObjectValue(GitHub);
             }
-            if (Optional.IsDefined(AdoGit))
+            if (AdoGit != null)
             {
                 writer.WritePropertyName("adoGit"u8);
                 writer.WriteObjectValue(AdoGit);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SyncState))
+            if (options.Format != "W" && SyncState.HasValue)
             {
                 writer.WritePropertyName("syncState"u8);
                 writer.WriteStringValue(SyncState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSyncOn))
+            if (options.Format != "W" && LastSyncOn.HasValue)
             {
                 writer.WritePropertyName("lastSyncTime"u8);
                 writer.WriteStringValue(LastSyncOn.Value, "O");
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevCenterGitCatalog> gitHub = default;
-            Optional<DevCenterGitCatalog> adoGit = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
-            Optional<DevCenterCatalogSyncState> syncState = default;
-            Optional<DateTimeOffset> lastSyncTime = default;
+            SystemData systemData = default;
+            DevCenterGitCatalog gitHub = default;
+            DevCenterGitCatalog adoGit = default;
+            DevCenterProvisioningState? provisioningState = default;
+            DevCenterCatalogSyncState? syncState = default;
+            DateTimeOffset? lastSyncTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterCatalogData(id, name, type, systemData.Value, gitHub.Value, adoGit.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(syncState), Optional.ToNullable(lastSyncTime), serializedAdditionalRawData);
+            return new DevCenterCatalogData(
+                id,
+                name,
+                type,
+                systemData,
+                gitHub,
+                adoGit,
+                provisioningState,
+                syncState,
+                lastSyncTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterCatalogData>.Write(ModelReaderWriterOptions options)

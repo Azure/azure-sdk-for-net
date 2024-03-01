@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Field))
+            if (options.Format != "W" && Field != null)
             {
                 writer.WritePropertyName("field"u8);
                 writer.WriteStringValue(Field);
             }
-            if (Optional.IsCollectionDefined(Restrictions))
+            if (!(Restrictions is ChangeTrackingList<FieldRestriction> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("restrictions"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> field = default;
-            Optional<IReadOnlyList<FieldRestriction>> restrictions = default;
+            string field = default;
+            IReadOnlyList<FieldRestriction> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FieldRestrictions(field.Value, Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new FieldRestrictions(field, restrictions ?? new ChangeTrackingList<FieldRestriction>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FieldRestrictions>.Write(ModelReaderWriterOptions options)

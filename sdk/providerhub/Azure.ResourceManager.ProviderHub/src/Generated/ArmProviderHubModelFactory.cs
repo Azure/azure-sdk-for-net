@@ -26,7 +26,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <returns> A new <see cref="ProviderHub.CustomRolloutData"/> instance for mocking. </returns>
         public static CustomRolloutData CustomRolloutData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CustomRolloutProperties properties = null)
         {
-            return new CustomRolloutData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new CustomRolloutData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderHub.ProviderRegistrationData"/>. </summary>
@@ -38,7 +44,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <returns> A new <see cref="ProviderHub.ProviderRegistrationData"/> instance for mocking. </returns>
         public static ProviderRegistrationData ProviderRegistrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProviderRegistrationProperties properties = null)
         {
-            return new ProviderRegistrationData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new ProviderRegistrationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderHub.ResourceTypeRegistrationData"/>. </summary>
@@ -50,7 +62,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <returns> A new <see cref="ProviderHub.ResourceTypeRegistrationData"/> instance for mocking. </returns>
         public static ResourceTypeRegistrationData ResourceTypeRegistrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceTypeRegistrationProperties properties = null)
         {
-            return new ResourceTypeRegistrationData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new ResourceTypeRegistrationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TypedErrorInfo"/>. </summary>
@@ -71,7 +89,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <returns> A new <see cref="ProviderHub.DefaultRolloutData"/> instance for mocking. </returns>
         public static DefaultRolloutData DefaultRolloutData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DefaultRolloutProperties properties = null)
         {
-            return new DefaultRolloutData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new DefaultRolloutData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceProviderManifest"/>. </summary>
@@ -99,7 +123,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             capabilities ??= new List<ResourceProviderCapabilities>();
             globalNotificationEndpoints ??= new List<ResourceProviderEndpoint>();
 
-            return new ResourceProviderManifest(providerAuthenticationAllowedAudiences != null ? new ResourceProviderAuthentication(providerAuthenticationAllowedAudiences?.ToList(), serializedAdditionalRawData: null) : null, providerAuthorizations?.ToList(), @namespace, providerVersion, providerType, requiredFeatures?.ToList(), requiredFeaturesPolicy.HasValue ? new FeaturesRule(requiredFeaturesPolicy.Value, serializedAdditionalRawData: null) : null, optInHeaders != null ? new RequestHeaderOptions(optInHeaders, serializedAdditionalRawData: null) : null, resourceTypes?.ToList(), management, capabilities?.ToList(), metadata, globalNotificationEndpoints?.ToList(), reRegisterSubscriptionMetadata, serializedAdditionalRawData: null);
+            return new ResourceProviderManifest(
+                providerAuthenticationAllowedAudiences != null ? new ResourceProviderAuthentication(providerAuthenticationAllowedAudiences?.ToList(), serializedAdditionalRawData: null) : null,
+                providerAuthorizations?.ToList(),
+                @namespace,
+                providerVersion,
+                providerType,
+                requiredFeatures?.ToList(),
+                requiredFeaturesPolicy.HasValue ? new FeaturesRule(requiredFeaturesPolicy.Value, serializedAdditionalRawData: null) : null,
+                optInHeaders != null ? new RequestHeaderOptions(optInHeaders, serializedAdditionalRawData: null) : null,
+                resourceTypes?.ToList(),
+                management,
+                capabilities?.ToList(),
+                metadata,
+                globalNotificationEndpoints?.ToList(),
+                reRegisterSubscriptionMetadata,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProviderResourceType"/>. </summary>
@@ -143,7 +182,32 @@ namespace Azure.ResourceManager.ProviderHub.Models
             extendedLocations ??= new List<ProviderHubExtendedLocationOptions>();
             linkedOperationRules ??= new List<LinkedOperationRule>();
 
-            return new ProviderResourceType(name, routingType, resourceValidation, allowedUnauthorizedActions?.ToList(), authorizationActionMappings?.ToList(), linkedAccessChecks?.ToList(), defaultApiVersion, loggingRules?.ToList(), throttlingRules?.ToList(), endpoints?.ToList(), marketplaceType, managementType != null ? new IdentityManagement(managementType, serializedAdditionalRawData: null) : null, metadata, requiredFeatures?.ToList(), requiredFeaturesPolicy.HasValue ? new FeaturesRule(requiredFeaturesPolicy.Value, serializedAdditionalRawData: null) : null, subscriptionStateRules?.ToList(), serviceTreeInfos?.ToList(), optInHeaders != null ? new RequestHeaderOptions(optInHeaders, serializedAdditionalRawData: null) : null, skuLink, disallowedActionVerbs?.ToList(), templateDeploymentPolicy, extendedLocations?.ToList(), linkedOperationRules?.ToList(), resourceDeletionPolicy, serializedAdditionalRawData: null);
+            return new ProviderResourceType(
+                name,
+                routingType,
+                resourceValidation,
+                allowedUnauthorizedActions?.ToList(),
+                authorizationActionMappings?.ToList(),
+                linkedAccessChecks?.ToList(),
+                defaultApiVersion,
+                loggingRules?.ToList(),
+                throttlingRules?.ToList(),
+                endpoints?.ToList(),
+                marketplaceType,
+                managementType != null ? new IdentityManagement(managementType, serializedAdditionalRawData: null) : null,
+                metadata,
+                requiredFeatures?.ToList(),
+                requiredFeaturesPolicy.HasValue ? new FeaturesRule(requiredFeaturesPolicy.Value, serializedAdditionalRawData: null) : null,
+                subscriptionStateRules?.ToList(),
+                serviceTreeInfos?.ToList(),
+                optInHeaders != null ? new RequestHeaderOptions(optInHeaders, serializedAdditionalRawData: null) : null,
+                skuLink,
+                disallowedActionVerbs?.ToList(),
+                templateDeploymentPolicy,
+                extendedLocations?.ToList(),
+                linkedOperationRules?.ToList(),
+                resourceDeletionPolicy,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceProviderEndpoint"/>. </summary>
@@ -161,7 +225,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
             locations ??= new List<AzureLocation>();
             requiredFeatures ??= new List<string>();
 
-            return new ResourceProviderEndpoint(isEnabled, apiVersions?.ToList(), endpointUri, locations?.ToList(), requiredFeatures?.ToList(), requiredFeaturesPolicy.HasValue ? new FeaturesRule(requiredFeaturesPolicy.Value, serializedAdditionalRawData: null) : null, timeout, serializedAdditionalRawData: null);
+            return new ResourceProviderEndpoint(
+                isEnabled,
+                apiVersions?.ToList(),
+                endpointUri,
+                locations?.ToList(),
+                requiredFeatures?.ToList(),
+                requiredFeaturesPolicy.HasValue ? new FeaturesRule(requiredFeaturesPolicy.Value, serializedAdditionalRawData: null) : null,
+                timeout,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TemplateDeploymentPolicy"/>. </summary>
@@ -211,7 +283,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <returns> A new <see cref="ProviderHub.NotificationRegistrationData"/> instance for mocking. </returns>
         public static NotificationRegistrationData NotificationRegistrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NotificationRegistrationProperties properties = null)
         {
-            return new NotificationRegistrationData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new NotificationRegistrationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderHub.ResourceTypeSkuData"/>. </summary>
@@ -223,7 +301,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <returns> A new <see cref="ProviderHub.ResourceTypeSkuData"/> instance for mocking. </returns>
         public static ResourceTypeSkuData ResourceTypeSkuData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceTypeSkuProperties properties = null)
         {
-            return new ResourceTypeSkuData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new ResourceTypeSkuData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
     }
 }

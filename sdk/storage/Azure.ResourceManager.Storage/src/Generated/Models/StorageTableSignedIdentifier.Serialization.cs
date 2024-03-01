@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(AccessPolicy))
+            if (AccessPolicy != null)
             {
                 writer.WritePropertyName("accessPolicy"u8);
                 writer.WriteObjectValue(AccessPolicy);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             string id = default;
-            Optional<StorageTableAccessPolicy> accessPolicy = default;
+            StorageTableAccessPolicy accessPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageTableSignedIdentifier(id, accessPolicy.Value, serializedAdditionalRawData);
+            return new StorageTableSignedIdentifier(id, accessPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageTableSignedIdentifier>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Archives))
+            if (!(Archives is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 if (Archives != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("archives");
                 }
             }
-            if (Optional.IsDefined(Args))
+            if (Args != null)
             {
                 if (Args != null)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("codeId"u8);
             writer.WriteStringValue(CodeId);
-            if (Optional.IsCollectionDefined(Conf))
+            if (!(Conf is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (Conf != null)
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("entry"u8);
             writer.WriteObjectValue(Entry);
-            if (Optional.IsDefined(EnvironmentId))
+            if (EnvironmentId != null)
             {
                 if (EnvironmentId != null)
                 {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentId");
                 }
             }
-            if (Optional.IsCollectionDefined(Files))
+            if (!(Files is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 if (Files != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("files");
                 }
             }
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingDictionary<string, MachineLearningJobInput> collection2 && collection2.IsUndefined))
             {
                 if (Inputs != null)
                 {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("inputs");
                 }
             }
-            if (Optional.IsCollectionDefined(Jars))
+            if (!(Jars is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 if (Jars != null)
                 {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jars");
                 }
             }
-            if (Optional.IsCollectionDefined(Outputs))
+            if (!(Outputs is ChangeTrackingDictionary<string, MachineLearningJobOutput> collection4 && collection4.IsUndefined))
             {
                 if (Outputs != null)
                 {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("outputs");
                 }
             }
-            if (Optional.IsCollectionDefined(PyFiles))
+            if (!(PyFiles is ChangeTrackingList<string> collection5 && collection5.IsUndefined))
             {
                 if (PyFiles != null)
                 {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("pyFiles");
                 }
             }
-            if (Optional.IsDefined(QueueSettings))
+            if (QueueSettings != null)
             {
                 if (QueueSettings != null)
                 {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("queueSettings");
                 }
             }
-            if (Optional.IsDefined(Resources))
+            if (Resources != null)
             {
                 if (Resources != null)
                 {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resources");
                 }
             }
-            if (Optional.IsDefined(ComponentId))
+            if (ComponentId != null)
             {
                 if (ComponentId != null)
                 {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("componentId");
                 }
             }
-            if (Optional.IsDefined(ComputeId))
+            if (ComputeId != null)
             {
                 if (ComputeId != null)
                 {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("computeId");
                 }
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 if (DisplayName != null)
                 {
@@ -236,12 +236,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Optional.IsDefined(ExperimentName))
+            if (ExperimentName != null)
             {
                 writer.WritePropertyName("experimentName"u8);
                 writer.WriteStringValue(ExperimentName);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 if (Identity != null)
                 {
@@ -253,14 +253,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("identity");
                 }
             }
-            if (Optional.IsDefined(IsArchived))
+            if (IsArchived.HasValue)
             {
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType.ToString());
-            if (Optional.IsDefined(NotificationSetting))
+            if (NotificationSetting != null)
             {
                 if (NotificationSetting != null)
                 {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("notificationSetting");
                 }
             }
-            if (Optional.IsCollectionDefined(SecretsConfiguration))
+            if (!(SecretsConfiguration is ChangeTrackingDictionary<string, SecretConfiguration> collection6 && collection6.IsUndefined))
             {
                 if (SecretsConfiguration != null)
                 {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("secretsConfiguration");
                 }
             }
-            if (Optional.IsCollectionDefined(Services))
+            if (!(Services is ChangeTrackingDictionary<string, MachineLearningJobService> collection7 && collection7.IsUndefined))
             {
                 if (Services != null)
                 {
@@ -308,12 +308,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("services");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection8 && collection8.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection9 && collection9.IsUndefined))
             {
                 if (Tags != null)
                 {
@@ -399,33 +399,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<string>> archives = default;
-            Optional<string> args = default;
+            IList<string> archives = default;
+            string args = default;
             string codeId = default;
-            Optional<IDictionary<string, string>> conf = default;
+            IDictionary<string, string> conf = default;
             SparkJobEntry entry = default;
-            Optional<string> environmentId = default;
-            Optional<IList<string>> files = default;
-            Optional<IDictionary<string, MachineLearningJobInput>> inputs = default;
-            Optional<IList<string>> jars = default;
-            Optional<IDictionary<string, MachineLearningJobOutput>> outputs = default;
-            Optional<IList<string>> pyFiles = default;
-            Optional<JobQueueSettings> queueSettings = default;
-            Optional<SparkResourceConfiguration> resources = default;
-            Optional<ResourceIdentifier> componentId = default;
-            Optional<ResourceIdentifier> computeId = default;
-            Optional<string> displayName = default;
-            Optional<string> experimentName = default;
-            Optional<MachineLearningIdentityConfiguration> identity = default;
-            Optional<bool> isArchived = default;
+            string environmentId = default;
+            IList<string> files = default;
+            IDictionary<string, MachineLearningJobInput> inputs = default;
+            IList<string> jars = default;
+            IDictionary<string, MachineLearningJobOutput> outputs = default;
+            IList<string> pyFiles = default;
+            JobQueueSettings queueSettings = default;
+            SparkResourceConfiguration resources = default;
+            ResourceIdentifier componentId = default;
+            ResourceIdentifier computeId = default;
+            string displayName = default;
+            string experimentName = default;
+            MachineLearningIdentityConfiguration identity = default;
+            bool? isArchived = default;
             JobType jobType = default;
-            Optional<NotificationSetting> notificationSetting = default;
-            Optional<IDictionary<string, SecretConfiguration>> secretsConfiguration = default;
-            Optional<IDictionary<string, MachineLearningJobService>> services = default;
-            Optional<MachineLearningJobStatus> status = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            NotificationSetting notificationSetting = default;
+            IDictionary<string, SecretConfiguration> secretsConfiguration = default;
+            IDictionary<string, MachineLearningJobService> services = default;
+            MachineLearningJobStatus? status = default;
+            string description = default;
+            IDictionary<string, string> properties = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -739,7 +739,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SparkJob(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), serializedAdditionalRawData, componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, notificationSetting.Value, Optional.ToDictionary(secretsConfiguration), Optional.ToDictionary(services), Optional.ToNullable(status), Optional.ToList(archives), args.Value, codeId, Optional.ToDictionary(conf), entry, environmentId.Value, Optional.ToList(files), Optional.ToDictionary(inputs), Optional.ToList(jars), Optional.ToDictionary(outputs), Optional.ToList(pyFiles), queueSettings.Value, resources.Value);
+            return new SparkJob(
+                description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                componentId,
+                computeId,
+                displayName,
+                experimentName,
+                identity,
+                isArchived,
+                jobType,
+                notificationSetting,
+                secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(),
+                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
+                status,
+                archives ?? new ChangeTrackingList<string>(),
+                args,
+                codeId,
+                conf ?? new ChangeTrackingDictionary<string, string>(),
+                entry,
+                environmentId,
+                files ?? new ChangeTrackingList<string>(),
+                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
+                jars ?? new ChangeTrackingList<string>(),
+                outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
+                pyFiles ?? new ChangeTrackingList<string>(),
+                queueSettings,
+                resources);
         }
 
         BinaryData IPersistableModel<SparkJob>.Write(ModelReaderWriterOptions options)

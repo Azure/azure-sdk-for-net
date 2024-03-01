@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Alerts))
+            if (Alerts != null)
             {
                 writer.WritePropertyName("alerts"u8);
                 writer.WriteObjectValue(Alerts);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<DataConnectorDataTypeCommon> alerts = default;
+            DataConnectorDataTypeCommon alerts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAlertsDataTypeOfDataConnector(alerts.Value, serializedAdditionalRawData);
+            return new SecurityInsightsAlertsDataTypeOfDataConnector(alerts, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAlertsDataTypeOfDataConnector>.Write(ModelReaderWriterOptions options)

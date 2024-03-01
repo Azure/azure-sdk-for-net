@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Components))
+            if (Components != null)
             {
                 writer.WritePropertyName("components"u8);
                 writer.WriteObjectValue(Components);
             }
-            if (Optional.IsDefined(CertificateAuthority))
+            if (CertificateAuthority != null)
             {
                 writer.WritePropertyName("certificateAuthority"u8);
                 writer.WriteObjectValue(CertificateAuthority);
             }
-            if (Optional.IsCollectionDefined(Revisions))
+            if (!(Revisions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("revisions"u8);
                 writer.WriteStartArray();
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IstioComponents> components = default;
-            Optional<IstioCertificateAuthority> certificateAuthority = default;
-            Optional<IList<string>> revisions = default;
+            IstioComponents components = default;
+            IstioCertificateAuthority certificateAuthority = default;
+            IList<string> revisions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IstioServiceMesh(components.Value, certificateAuthority.Value, Optional.ToList(revisions), serializedAdditionalRawData);
+            return new IstioServiceMesh(components, certificateAuthority, revisions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IstioServiceMesh>.Write(ModelReaderWriterOptions options)

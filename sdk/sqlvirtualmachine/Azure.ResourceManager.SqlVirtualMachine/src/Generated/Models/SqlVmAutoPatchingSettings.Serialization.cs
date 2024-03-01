@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(DayOfWeek))
+            if (DayOfWeek.HasValue)
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
             }
-            if (Optional.IsDefined(MaintenanceWindowStartingHour))
+            if (MaintenanceWindowStartingHour.HasValue)
             {
                 writer.WritePropertyName("maintenanceWindowStartingHour"u8);
                 writer.WriteNumberValue(MaintenanceWindowStartingHour.Value);
             }
-            if (Optional.IsDefined(MaintenanceWindowDurationInMinutes))
+            if (MaintenanceWindowDurationInMinutes.HasValue)
             {
                 writer.WritePropertyName("maintenanceWindowDuration"u8);
                 writer.WriteNumberValue(MaintenanceWindowDurationInMinutes.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<bool> enable = default;
-            Optional<SqlVmAutoPatchingDayOfWeek> dayOfWeek = default;
-            Optional<int> maintenanceWindowStartingHour = default;
-            Optional<int> maintenanceWindowDuration = default;
+            bool? enable = default;
+            SqlVmAutoPatchingDayOfWeek? dayOfWeek = default;
+            int? maintenanceWindowStartingHour = default;
+            int? maintenanceWindowDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmAutoPatchingSettings(Optional.ToNullable(enable), Optional.ToNullable(dayOfWeek), Optional.ToNullable(maintenanceWindowStartingHour), Optional.ToNullable(maintenanceWindowDuration), serializedAdditionalRawData);
+            return new SqlVmAutoPatchingSettings(enable, dayOfWeek, maintenanceWindowStartingHour, maintenanceWindowDuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmAutoPatchingSettings>.Write(ModelReaderWriterOptions options)

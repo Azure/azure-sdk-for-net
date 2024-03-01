@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
@@ -49,54 +49,54 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlacementProfile))
+            if (PlacementProfile != null)
             {
                 writer.WritePropertyName("placementProfile"u8);
                 writer.WriteObjectValue(PlacementProfile);
             }
-            if (Optional.IsDefined(OSProfile))
+            if (OSProfile != null)
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (Optional.IsDefined(HardwareProfile))
+            if (HardwareProfile != null)
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (Optional.IsDefined(NetworkProfile))
+            if (NetworkProfile != null)
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Optional.IsDefined(StorageProfile))
+            if (StorageProfile != null)
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (Optional.IsDefined(SecurityProfile))
+            if (SecurityProfile != null)
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (Optional.IsDefined(InfrastructureProfile))
+            if (InfrastructureProfile != null)
             {
                 writer.WritePropertyName("infrastructureProfile"u8);
                 writer.WriteObjectValue(InfrastructureProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(PowerState))
+            if (options.Format != "W" && PowerState != null)
             {
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteStringValue(PowerState);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
+            if (options.Format != "W" && !(Statuses is ChangeTrackingList<VMwareResourceStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceUid))
+            if (options.Format != "W" && ResourceUid != null)
             {
                 writer.WritePropertyName("resourceUid"u8);
                 writer.WriteStringValue(ResourceUid);
@@ -155,22 +155,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
+            ExtendedLocation extendedLocation = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PlacementProfile> placementProfile = default;
-            Optional<OSProfileForVmInstance> osProfile = default;
-            Optional<VmInstanceHardwareProfile> hardwareProfile = default;
-            Optional<VMwareNetworkProfile> networkProfile = default;
-            Optional<VMwareStorageProfile> storageProfile = default;
-            Optional<SecurityProfile> securityProfile = default;
-            Optional<VCenterInfrastructureProfile> infrastructureProfile = default;
-            Optional<string> powerState = default;
-            Optional<IReadOnlyList<VMwareResourceStatus>> statuses = default;
-            Optional<VMwareResourceProvisioningState> provisioningState = default;
-            Optional<string> resourceUid = default;
+            SystemData systemData = default;
+            PlacementProfile placementProfile = default;
+            OSProfileForVmInstance osProfile = default;
+            VmInstanceHardwareProfile hardwareProfile = default;
+            VMwareNetworkProfile networkProfile = default;
+            VMwareStorageProfile storageProfile = default;
+            SecurityProfile securityProfile = default;
+            VCenterInfrastructureProfile infrastructureProfile = default;
+            string powerState = default;
+            IReadOnlyList<VMwareResourceStatus> statuses = default;
+            VMwareResourceProvisioningState? provisioningState = default;
+            string resourceUid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -322,7 +322,24 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareVmInstanceData(id, name, type, systemData.Value, extendedLocation, placementProfile.Value, osProfile.Value, hardwareProfile.Value, networkProfile.Value, storageProfile.Value, securityProfile.Value, infrastructureProfile.Value, powerState.Value, Optional.ToList(statuses), Optional.ToNullable(provisioningState), resourceUid.Value, serializedAdditionalRawData);
+            return new VMwareVmInstanceData(
+                id,
+                name,
+                type,
+                systemData,
+                extendedLocation,
+                placementProfile,
+                osProfile,
+                hardwareProfile,
+                networkProfile,
+                storageProfile,
+                securityProfile,
+                infrastructureProfile,
+                powerState,
+                statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
+                provisioningState,
+                resourceUid,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareVmInstanceData>.Write(ModelReaderWriterOptions options)

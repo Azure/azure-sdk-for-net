@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DynatraceMonitorVmInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DynatraceMonitorVmInfo>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DynatraceMonitorVmInfo> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmHostsListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VmHostsListResponse(value ?? new ChangeTrackingList<DynatraceMonitorVmInfo>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmHostsListResponse>.Write(ModelReaderWriterOptions options)

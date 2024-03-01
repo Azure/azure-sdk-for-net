@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Description))
+            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(InteractionType))
+            if (InteractionType != null)
             {
                 writer.WritePropertyName("interactionType"u8);
                 writer.WriteStringValue(InteractionType);
             }
-            if (options.Format != "W" && Optional.IsDefined(LinkName))
+            if (options.Format != "W" && LinkName != null)
             {
                 writer.WritePropertyName("linkName"u8);
                 writer.WriteStringValue(LinkName);
             }
-            if (Optional.IsCollectionDefined(Mappings))
+            if (!(Mappings is ChangeTrackingList<RelationshipLinkFieldMapping> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("mappings"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ProfilePropertyReferences))
+            if (!(ProfilePropertyReferences is ChangeTrackingList<ParticipantProfilePropertyReference> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("profilePropertyReferences"u8);
                 writer.WriteStartArray();
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(RelatedProfilePropertyReferences))
+            if (!(RelatedProfilePropertyReferences is ChangeTrackingList<ParticipantProfilePropertyReference> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("relatedProfilePropertyReferences"u8);
                 writer.WriteStartArray();
@@ -117,17 +117,17 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RelationshipName))
+            if (RelationshipName != null)
             {
                 writer.WritePropertyName("relationshipName"u8);
                 writer.WriteStringValue(RelationshipName);
             }
-            if (options.Format != "W" && Optional.IsDefined(RelationshipGuidId))
+            if (options.Format != "W" && RelationshipGuidId != null)
             {
                 writer.WritePropertyName("relationshipGuidId"u8);
                 writer.WriteStringValue(RelationshipGuidId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -174,18 +174,18 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, string>> displayName = default;
-            Optional<IDictionary<string, string>> description = default;
-            Optional<string> interactionType = default;
-            Optional<string> linkName = default;
-            Optional<IList<RelationshipLinkFieldMapping>> mappings = default;
-            Optional<IList<ParticipantProfilePropertyReference>> profilePropertyReferences = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<IList<ParticipantProfilePropertyReference>> relatedProfilePropertyReferences = default;
-            Optional<string> relationshipName = default;
-            Optional<string> relationshipGuidId = default;
-            Optional<Guid> tenantId = default;
+            SystemData systemData = default;
+            IDictionary<string, string> displayName = default;
+            IDictionary<string, string> description = default;
+            string interactionType = default;
+            string linkName = default;
+            IList<RelationshipLinkFieldMapping> mappings = default;
+            IList<ParticipantProfilePropertyReference> profilePropertyReferences = default;
+            ProvisioningState? provisioningState = default;
+            IList<ParticipantProfilePropertyReference> relatedProfilePropertyReferences = default;
+            string relationshipName = default;
+            string relationshipGuidId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -340,7 +340,23 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelationshipLinkResourceFormatData(id, name, type, systemData.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), interactionType.Value, linkName.Value, Optional.ToList(mappings), Optional.ToList(profilePropertyReferences), Optional.ToNullable(provisioningState), Optional.ToList(relatedProfilePropertyReferences), relationshipName.Value, relationshipGuidId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new RelationshipLinkResourceFormatData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                interactionType,
+                linkName,
+                mappings ?? new ChangeTrackingList<RelationshipLinkFieldMapping>(),
+                profilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(),
+                provisioningState,
+                relatedProfilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(),
+                relationshipName,
+                relationshipGuidId,
+                tenantId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelationshipLinkResourceFormatData>.Write(ModelReaderWriterOptions options)

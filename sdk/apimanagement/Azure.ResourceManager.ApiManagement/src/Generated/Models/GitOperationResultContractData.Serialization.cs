@@ -42,44 +42,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationResultIdentifier))
+            if (OperationResultIdentifier != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(OperationResultIdentifier);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StartedOn))
+            if (StartedOn.HasValue)
             {
                 writer.WritePropertyName("started"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (Optional.IsDefined(UpdatedOn))
+            if (UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ResultInfo))
+            if (ResultInfo != null)
             {
                 writer.WritePropertyName("resultInfo"u8);
                 writer.WriteStringValue(ResultInfo);
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ActionLog))
+            if (options.Format != "W" && !(ActionLog is ChangeTrackingList<OperationResultLogItemContract> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actionLog"u8);
                 writer.WriteStartArray();
@@ -131,14 +131,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> id0 = default;
-            Optional<AsyncOperationStatus> status = default;
-            Optional<DateTimeOffset> started = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<string> resultInfo = default;
-            Optional<ErrorResponseBody> error = default;
-            Optional<IReadOnlyList<OperationResultLogItemContract>> actionLog = default;
+            SystemData systemData = default;
+            string id0 = default;
+            AsyncOperationStatus? status = default;
+            DateTimeOffset? started = default;
+            DateTimeOffset? updated = default;
+            string resultInfo = default;
+            ErrorResponseBody error = default;
+            IReadOnlyList<OperationResultLogItemContract> actionLog = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,7 +245,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitOperationResultContractData(id, name, type, systemData.Value, id0.Value, Optional.ToNullable(status), Optional.ToNullable(started), Optional.ToNullable(updated), resultInfo.Value, error.Value, Optional.ToList(actionLog), serializedAdditionalRawData);
+            return new GitOperationResultContractData(
+                id,
+                name,
+                type,
+                systemData,
+                id0,
+                status,
+                started,
+                updated,
+                resultInfo,
+                error,
+                actionLog ?? new ChangeTrackingList<OperationResultLogItemContract>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitOperationResultContractData>.Write(ModelReaderWriterOptions options)

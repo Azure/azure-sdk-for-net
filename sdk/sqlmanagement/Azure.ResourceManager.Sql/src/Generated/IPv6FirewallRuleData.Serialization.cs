@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.Sql
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartIPv6Address))
+            if (StartIPv6Address != null)
             {
                 writer.WritePropertyName("startIPv6Address"u8);
                 writer.WriteStringValue(StartIPv6Address);
             }
-            if (Optional.IsDefined(EndIPv6Address))
+            if (EndIPv6Address != null)
             {
                 writer.WritePropertyName("endIPv6Address"u8);
                 writer.WriteStringValue(EndIPv6Address);
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> startIPv6Address = default;
-            Optional<string> endIPv6Address = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string startIPv6Address = default;
+            string endIPv6Address = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPv6FirewallRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, startIPv6Address.Value, endIPv6Address.Value);
+            return new IPv6FirewallRuleData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                startIPv6Address,
+                endIPv6Address);
         }
 
         BinaryData IPersistableModel<IPv6FirewallRuleData>.Write(ModelReaderWriterOptions options)

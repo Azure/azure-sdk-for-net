@@ -42,49 +42,49 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Branch))
+            if (Branch != null)
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Optional.IsDefined(CommitId))
+            if (CommitId != null)
             {
                 writer.WritePropertyName("commitId"u8);
                 writer.WriteStringValue(CommitId);
             }
-            if (Optional.IsDefined(IsExported))
+            if (IsExported.HasValue)
             {
                 writer.WritePropertyName("isExport"u8);
                 writer.WriteBooleanValue(IsExported.Value);
             }
-            if (Optional.IsDefined(IsSynced))
+            if (IsSynced.HasValue)
             {
                 writer.WritePropertyName("isSynced"u8);
                 writer.WriteBooleanValue(IsSynced.Value);
             }
-            if (Optional.IsDefined(IsGitEnabled))
+            if (IsGitEnabled.HasValue)
             {
                 writer.WritePropertyName("isGitEnabled"u8);
                 writer.WriteBooleanValue(IsGitEnabled.Value);
             }
-            if (Optional.IsDefined(SyncOn))
+            if (SyncOn.HasValue)
             {
                 writer.WritePropertyName("syncDate"u8);
                 writer.WriteStringValue(SyncOn.Value, "O");
             }
-            if (Optional.IsDefined(ConfigurationChangeOn))
+            if (ConfigurationChangeOn.HasValue)
             {
                 writer.WritePropertyName("configurationChangeDate"u8);
                 writer.WriteStringValue(ConfigurationChangeOn.Value, "O");
             }
-            if (Optional.IsDefined(LastOperationId))
+            if (LastOperationId != null)
             {
                 writer.WritePropertyName("lastOperationId"u8);
                 writer.WriteStringValue(LastOperationId);
@@ -131,15 +131,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> branch = default;
-            Optional<string> commitId = default;
-            Optional<bool> isExport = default;
-            Optional<bool> isSynced = default;
-            Optional<bool> isGitEnabled = default;
-            Optional<DateTimeOffset> syncDate = default;
-            Optional<DateTimeOffset> configurationChangeDate = default;
-            Optional<string> lastOperationId = default;
+            SystemData systemData = default;
+            string branch = default;
+            string commitId = default;
+            bool? isExport = default;
+            bool? isSynced = default;
+            bool? isGitEnabled = default;
+            DateTimeOffset? syncDate = default;
+            DateTimeOffset? configurationChangeDate = default;
+            string lastOperationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -246,7 +246,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantConfigurationSyncStateContract(id, name, type, systemData.Value, branch.Value, commitId.Value, Optional.ToNullable(isExport), Optional.ToNullable(isSynced), Optional.ToNullable(isGitEnabled), Optional.ToNullable(syncDate), Optional.ToNullable(configurationChangeDate), lastOperationId.Value, serializedAdditionalRawData);
+            return new TenantConfigurationSyncStateContract(
+                id,
+                name,
+                type,
+                systemData,
+                branch,
+                commitId,
+                isExport,
+                isSynced,
+                isGitEnabled,
+                syncDate,
+                configurationChangeDate,
+                lastOperationId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TenantConfigurationSyncStateContract>.Write(ModelReaderWriterOptions options)

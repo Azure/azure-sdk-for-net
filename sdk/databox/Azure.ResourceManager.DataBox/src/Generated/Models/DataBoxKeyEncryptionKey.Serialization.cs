@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kekType"u8);
             writer.WriteStringValue(KekType.ToSerialString());
-            if (Optional.IsDefined(ManagedIdentity))
+            if (ManagedIdentity != null)
             {
                 writer.WritePropertyName("identityProperties"u8);
                 writer.WriteObjectValue(ManagedIdentity);
             }
-            if (Optional.IsDefined(KekUri))
+            if (KekUri != null)
             {
                 writer.WritePropertyName("kekUrl"u8);
                 writer.WriteStringValue(KekUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(KekVaultResourceId))
+            if (KekVaultResourceId != null)
             {
                 writer.WritePropertyName("kekVaultResourceID"u8);
                 writer.WriteStringValue(KekVaultResourceId);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataBoxKeyEncryptionKeyType kekType = default;
-            Optional<DataBoxManagedIdentity> identityProperties = default;
-            Optional<Uri> kekUrl = default;
-            Optional<ResourceIdentifier> kekVaultResourceId = default;
+            DataBoxManagedIdentity identityProperties = default;
+            Uri kekUrl = default;
+            ResourceIdentifier kekVaultResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxKeyEncryptionKey(kekType, identityProperties.Value, kekUrl.Value, kekVaultResourceId.Value, serializedAdditionalRawData);
+            return new DataBoxKeyEncryptionKey(kekType, identityProperties, kekUrl, kekVaultResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxKeyEncryptionKey>.Write(ModelReaderWriterOptions options)

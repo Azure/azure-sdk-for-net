@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Authorization
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(ResourceTypes))
+            if (!(ResourceTypes is ChangeTrackingList<AuthorizationProviderResourceType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Operations))
+            if (!(Operations is ChangeTrackingList<AuthorizationProviderOperationInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Authorization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -111,13 +111,13 @@ namespace Azure.ResourceManager.Authorization
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<AuthorizationProviderResourceType>> resourceTypes = default;
-            Optional<IReadOnlyList<AuthorizationProviderOperationInfo>> operations = default;
+            string displayName = default;
+            IReadOnlyList<AuthorizationProviderResourceType> resourceTypes = default;
+            IReadOnlyList<AuthorizationProviderOperationInfo> operations = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationProviderOperationsMetadataData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(resourceTypes), Optional.ToList(operations), serializedAdditionalRawData);
+            return new AuthorizationProviderOperationsMetadataData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                resourceTypes ?? new ChangeTrackingList<AuthorizationProviderResourceType>(),
+                operations ?? new ChangeTrackingList<AuthorizationProviderOperationInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationProviderOperationsMetadataData>.Write(ModelReaderWriterOptions options)

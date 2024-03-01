@@ -44,49 +44,49 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            if (Annotation != null)
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (options.Format != "W" && Optional.IsDefined(PhysicalIdentifier))
+            if (options.Format != "W" && PhysicalIdentifier != null)
             {
                 writer.WritePropertyName("physicalIdentifier"u8);
                 writer.WriteStringValue(PhysicalIdentifier);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectedTo))
+            if (options.Format != "W" && ConnectedTo != null)
             {
                 writer.WritePropertyName("connectedTo"u8);
                 writer.WriteStringValue(ConnectedTo);
             }
-            if (options.Format != "W" && Optional.IsDefined(InterfaceType))
+            if (options.Format != "W" && InterfaceType.HasValue)
             {
                 writer.WritePropertyName("interfaceType"u8);
                 writer.WriteStringValue(InterfaceType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IPv4Address))
+            if (options.Format != "W" && IPv4Address != null)
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IPv6Address))
+            if (options.Format != "W" && IPv6Address != null)
             {
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStringValue(IPv6Address);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
+            if (options.Format != "W" && AdministrativeState.HasValue)
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
@@ -133,15 +133,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
-            Optional<string> physicalIdentifier = default;
-            Optional<string> connectedTo = default;
-            Optional<NetworkDeviceInterfaceType> interfaceType = default;
-            Optional<IPAddress> ipv4Address = default;
-            Optional<string> ipv6Address = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            SystemData systemData = default;
+            string annotation = default;
+            string physicalIdentifier = default;
+            string connectedTo = default;
+            NetworkDeviceInterfaceType? interfaceType = default;
+            IPAddress ipv4Address = default;
+            string ipv6Address = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,7 +244,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkDeviceInterfaceData(id, name, type, systemData.Value, annotation.Value, physicalIdentifier.Value, connectedTo.Value, Optional.ToNullable(interfaceType), ipv4Address.Value, ipv6Address.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkDeviceInterfaceData(
+                id,
+                name,
+                type,
+                systemData,
+                annotation,
+                physicalIdentifier,
+                connectedTo,
+                interfaceType,
+                ipv4Address,
+                ipv6Address,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkDeviceInterfaceData>.Write(ModelReaderWriterOptions options)

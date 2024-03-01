@@ -14,7 +14,7 @@ namespace Azure.Communication.Messages
     internal partial class UnknownMessageTemplateValue : MessageTemplateValue
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMessageTemplateValue"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownMessageTemplateValue(string name, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, kind, serializedAdditionalRawData)

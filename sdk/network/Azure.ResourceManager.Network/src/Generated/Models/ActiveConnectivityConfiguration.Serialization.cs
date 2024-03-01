@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CommittedOn))
+            if (CommittedOn.HasValue)
             {
                 writer.WritePropertyName("commitTime"u8);
                 writer.WriteStringValue(CommittedOn.Value, "O");
             }
-            if (Optional.IsDefined(Region))
+            if (Region.HasValue)
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region.Value);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsCollectionDefined(ConfigurationGroups))
+            if (!(ConfigurationGroups is ChangeTrackingList<NetworkConfigurationGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("configurationGroups"u8);
                 writer.WriteStartArray();
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ConnectivityTopology))
+            if (ConnectivityTopology.HasValue)
             {
                 writer.WritePropertyName("connectivityTopology"u8);
                 writer.WriteStringValue(ConnectivityTopology.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Hubs))
+            if (!(Hubs is ChangeTrackingList<ConnectivityHub> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("hubs"u8);
                 writer.WriteStartArray();
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsGlobal))
+            if (IsGlobal.HasValue)
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteStringValue(IsGlobal.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AppliesToGroups))
+            if (!(AppliesToGroups is ChangeTrackingList<ConnectivityGroupItem> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("appliesToGroups"u8);
                 writer.WriteStartArray();
@@ -88,17 +88,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(DeleteExistingPeering))
+            if (DeleteExistingPeering.HasValue)
             {
                 writer.WritePropertyName("deleteExistingPeering"u8);
                 writer.WriteStringValue(DeleteExistingPeering.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            if (options.Format != "W" && ResourceGuid.HasValue)
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
@@ -142,18 +142,18 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> commitTime = default;
-            Optional<AzureLocation> region = default;
-            Optional<string> id = default;
-            Optional<IReadOnlyList<NetworkConfigurationGroup>> configurationGroups = default;
-            Optional<string> description = default;
-            Optional<ConnectivityTopology> connectivityTopology = default;
-            Optional<IReadOnlyList<ConnectivityHub>> hubs = default;
-            Optional<GlobalMeshSupportFlag> isGlobal = default;
-            Optional<IReadOnlyList<ConnectivityGroupItem>> appliesToGroups = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<DeleteExistingPeering> deleteExistingPeering = default;
-            Optional<Guid> resourceGuid = default;
+            DateTimeOffset? commitTime = default;
+            AzureLocation? region = default;
+            string id = default;
+            IReadOnlyList<NetworkConfigurationGroup> configurationGroups = default;
+            string description = default;
+            ConnectivityTopology? connectivityTopology = default;
+            IReadOnlyList<ConnectivityHub> hubs = default;
+            GlobalMeshSupportFlag? isGlobal = default;
+            IReadOnlyList<ConnectivityGroupItem> appliesToGroups = default;
+            NetworkProvisioningState? provisioningState = default;
+            DeleteExistingPeering? deleteExistingPeering = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -291,7 +291,20 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActiveConnectivityConfiguration(id.Value, Optional.ToList(configurationGroups), description.Value, Optional.ToNullable(connectivityTopology), Optional.ToList(hubs), Optional.ToNullable(isGlobal), Optional.ToList(appliesToGroups), Optional.ToNullable(provisioningState), Optional.ToNullable(deleteExistingPeering), Optional.ToNullable(resourceGuid), serializedAdditionalRawData, Optional.ToNullable(commitTime), Optional.ToNullable(region));
+            return new ActiveConnectivityConfiguration(
+                id,
+                configurationGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
+                description,
+                connectivityTopology,
+                hubs ?? new ChangeTrackingList<ConnectivityHub>(),
+                isGlobal,
+                appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>(),
+                provisioningState,
+                deleteExistingPeering,
+                resourceGuid,
+                serializedAdditionalRawData,
+                commitTime,
+                region);
         }
 
         BinaryData IPersistableModel<ActiveConnectivityConfiguration>.Write(ModelReaderWriterOptions options)

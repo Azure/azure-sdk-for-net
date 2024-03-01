@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkVirtualApplianceId))
+            if (NetworkVirtualApplianceId != null)
             {
                 writer.WritePropertyName("networkVirtualApplianceId"u8);
                 writer.WriteStringValue(NetworkVirtualApplianceId);
             }
             writer.WritePropertyName("vHub"u8);
             writer.WriteObjectValue(Vhub);
-            if (Optional.IsDefined(TrustSubnet))
+            if (TrustSubnet != null)
             {
                 writer.WritePropertyName("trustSubnet"u8);
                 writer.WriteObjectValue(TrustSubnet);
             }
-            if (Optional.IsDefined(UnTrustSubnet))
+            if (UnTrustSubnet != null)
             {
                 writer.WritePropertyName("unTrustSubnet"u8);
                 writer.WriteObjectValue(UnTrustSubnet);
             }
-            if (Optional.IsDefined(IPOfTrustSubnetForUdr))
+            if (IPOfTrustSubnetForUdr != null)
             {
                 writer.WritePropertyName("ipOfTrustSubnetForUdr"u8);
                 writer.WriteObjectValue(IPOfTrustSubnetForUdr);
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<string> networkVirtualApplianceId = default;
+            string networkVirtualApplianceId = default;
             IPAddressSpaceInfo vHub = default;
-            Optional<IPAddressSpaceInfo> trustSubnet = default;
-            Optional<IPAddressSpaceInfo> unTrustSubnet = default;
-            Optional<IPAddressInfo> ipOfTrustSubnetForUdr = default;
+            IPAddressSpaceInfo trustSubnet = default;
+            IPAddressSpaceInfo unTrustSubnet = default;
+            IPAddressInfo ipOfTrustSubnetForUdr = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallVwanConfiguration(networkVirtualApplianceId.Value, vHub, trustSubnet.Value, unTrustSubnet.Value, ipOfTrustSubnetForUdr.Value, serializedAdditionalRawData);
+            return new FirewallVwanConfiguration(
+                networkVirtualApplianceId,
+                vHub,
+                trustSubnet,
+                unTrustSubnet,
+                ipOfTrustSubnetForUdr,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallVwanConfiguration>.Write(ModelReaderWriterOptions options)

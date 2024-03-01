@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(GalleryResourceId))
+            if (GalleryResourceId != null)
             {
                 writer.WritePropertyName("galleryResourceId"u8);
                 writer.WriteStringValue(GalleryResourceId);
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> galleryResourceId = default;
+            SystemData systemData = default;
+            DevCenterProvisioningState? provisioningState = default;
+            ResourceIdentifier galleryResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterGalleryData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), galleryResourceId.Value, serializedAdditionalRawData);
+            return new DevCenterGalleryData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                galleryResourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterGalleryData>.Write(ModelReaderWriterOptions options)

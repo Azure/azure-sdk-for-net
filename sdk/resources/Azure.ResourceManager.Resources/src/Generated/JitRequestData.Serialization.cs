@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApplicationResourceId))
+            if (ApplicationResourceId != null)
             {
                 writer.WritePropertyName("applicationResourceId"u8);
                 writer.WriteStringValue(ApplicationResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherTenantId))
+            if (options.Format != "W" && PublisherTenantId.HasValue)
             {
                 writer.WritePropertyName("publisherTenantId"u8);
                 writer.WriteStringValue(PublisherTenantId.Value);
             }
-            if (Optional.IsCollectionDefined(JitAuthorizationPolicies))
+            if (!(JitAuthorizationPolicies is ChangeTrackingList<JitAuthorizationPolicies> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("jitAuthorizationPolicies"u8);
                 writer.WriteStartArray();
@@ -83,27 +83,27 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(JitSchedulingPolicy))
+            if (JitSchedulingPolicy != null)
             {
                 writer.WritePropertyName("jitSchedulingPolicy"u8);
                 writer.WriteObjectValue(JitSchedulingPolicy);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(JitRequestState))
+            if (options.Format != "W" && JitRequestState.HasValue)
             {
                 writer.WritePropertyName("jitRequestState"u8);
                 writer.WriteStringValue(JitRequestState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
+            if (options.Format != "W" && CreatedBy != null)
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteObjectValue(CreatedBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedBy))
+            if (options.Format != "W" && UpdatedBy != null)
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteObjectValue(UpdatedBy);
@@ -147,20 +147,20 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> applicationResourceId = default;
-            Optional<Guid> publisherTenantId = default;
-            Optional<IList<JitAuthorizationPolicies>> jitAuthorizationPolicies = default;
-            Optional<JitSchedulingPolicy> jitSchedulingPolicy = default;
-            Optional<ResourcesProvisioningState> provisioningState = default;
-            Optional<JitRequestState> jitRequestState = default;
-            Optional<ArmApplicationDetails> createdBy = default;
-            Optional<ArmApplicationDetails> updatedBy = default;
+            SystemData systemData = default;
+            string applicationResourceId = default;
+            Guid? publisherTenantId = default;
+            IList<JitAuthorizationPolicies> jitAuthorizationPolicies = default;
+            JitSchedulingPolicy jitSchedulingPolicy = default;
+            ResourcesProvisioningState? provisioningState = default;
+            JitRequestState? jitRequestState = default;
+            ArmApplicationDetails createdBy = default;
+            ArmApplicationDetails updatedBy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -299,7 +299,22 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitRequestData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, applicationResourceId.Value, Optional.ToNullable(publisherTenantId), Optional.ToList(jitAuthorizationPolicies), jitSchedulingPolicy.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(jitRequestState), createdBy.Value, updatedBy.Value, serializedAdditionalRawData);
+            return new JitRequestData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                applicationResourceId,
+                publisherTenantId,
+                jitAuthorizationPolicies ?? new ChangeTrackingList<JitAuthorizationPolicies>(),
+                jitSchedulingPolicy,
+                provisioningState,
+                jitRequestState,
+                createdBy,
+                updatedBy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitRequestData>.Write(ModelReaderWriterOptions options)

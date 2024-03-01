@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AppInsightsInstrumentationKey))
+            if (options.Format != "W" && AppInsightsInstrumentationKey != null)
             {
                 writer.WritePropertyName("appInsightsInstrumentationKey"u8);
                 writer.WriteStringValue(AppInsightsInstrumentationKey);
             }
-            if (Optional.IsDefined(ContainerRegistryCredentials))
+            if (ContainerRegistryCredentials != null)
             {
                 writer.WritePropertyName("containerRegistryCredentials"u8);
                 writer.WriteObjectValue(ContainerRegistryCredentials);
             }
-            if (Optional.IsDefined(NotebookAccessKeys))
+            if (NotebookAccessKeys != null)
             {
                 writer.WritePropertyName("notebookAccessKeys"u8);
                 writer.WriteObjectValue(NotebookAccessKeys);
             }
-            if (options.Format != "W" && Optional.IsDefined(UserStorageResourceId))
+            if (options.Format != "W" && UserStorageResourceId != null)
             {
                 writer.WritePropertyName("userStorageArmId"u8);
                 writer.WriteStringValue(UserStorageResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(UserStorageKey))
+            if (options.Format != "W" && UserStorageKey != null)
             {
                 writer.WritePropertyName("userStorageKey"u8);
                 writer.WriteStringValue(UserStorageKey);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> appInsightsInstrumentationKey = default;
-            Optional<MachineLearningContainerRegistryCredentials> containerRegistryCredentials = default;
-            Optional<MachineLearningWorkspaceGetNotebookKeysResult> notebookAccessKeys = default;
-            Optional<string> userStorageArmId = default;
-            Optional<string> userStorageKey = default;
+            string appInsightsInstrumentationKey = default;
+            MachineLearningContainerRegistryCredentials containerRegistryCredentials = default;
+            MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys = default;
+            string userStorageArmId = default;
+            string userStorageKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspaceGetKeysResult(appInsightsInstrumentationKey.Value, containerRegistryCredentials.Value, notebookAccessKeys.Value, userStorageArmId.Value, userStorageKey.Value, serializedAdditionalRawData);
+            return new MachineLearningWorkspaceGetKeysResult(
+                appInsightsInstrumentationKey,
+                containerRegistryCredentials,
+                notebookAccessKeys,
+                userStorageArmId,
+                userStorageKey,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceGetKeysResult>.Write(ModelReaderWriterOptions options)

@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Partition))
+            if (Partition != null)
             {
                 writer.WritePropertyName("partition"u8);
                 writer.WriteStringValue(Partition);
             }
-            if (Optional.IsDefined(ReplicaGroup))
+            if (ReplicaGroup != null)
             {
                 writer.WritePropertyName("replicaGroup"u8);
                 writer.WriteStringValue(ReplicaGroup);
             }
-            if (Optional.IsDefined(RequestId))
+            if (RequestId != null)
             {
                 writer.WritePropertyName("requestId"u8);
                 writer.WriteStringValue(RequestId);
             }
-            if (Optional.IsDefined(AzureFileShareUri))
+            if (AzureFileShareUri != null)
             {
                 writer.WritePropertyName("azureFileShareUri"u8);
                 writer.WriteStringValue(AzureFileShareUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(SourceAzureFileShareUri))
+            if (SourceAzureFileShareUri != null)
             {
                 writer.WritePropertyName("sourceAzureFileShareUri"u8);
                 writer.WriteStringValue(SourceAzureFileShareUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(FailedFileList))
+            if (FailedFileList != null)
             {
                 writer.WritePropertyName("failedFileList"u8);
                 writer.WriteStringValue(FailedFileList);
             }
-            if (Optional.IsCollectionDefined(RestoreFileSpec))
+            if (!(RestoreFileSpec is ChangeTrackingList<RestoreFileSpec> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("restoreFileSpec"u8);
                 writer.WriteStartArray();
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<string> partition = default;
-            Optional<string> replicaGroup = default;
-            Optional<string> requestId = default;
-            Optional<Uri> azureFileShareUri = default;
-            Optional<string> status = default;
-            Optional<Uri> sourceAzureFileShareUri = default;
-            Optional<string> failedFileList = default;
-            Optional<IList<RestoreFileSpec>> restoreFileSpec = default;
+            string partition = default;
+            string replicaGroup = default;
+            string requestId = default;
+            Uri azureFileShareUri = default;
+            string status = default;
+            Uri sourceAzureFileShareUri = default;
+            string failedFileList = default;
+            IList<RestoreFileSpec> restoreFileSpec = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,7 +184,16 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostRestoreContent(partition.Value, replicaGroup.Value, requestId.Value, azureFileShareUri.Value, status.Value, sourceAzureFileShareUri.Value, failedFileList.Value, Optional.ToList(restoreFileSpec), serializedAdditionalRawData);
+            return new PostRestoreContent(
+                partition,
+                replicaGroup,
+                requestId,
+                azureFileShareUri,
+                status,
+                sourceAzureFileShareUri,
+                failedFileList,
+                restoreFileSpec ?? new ChangeTrackingList<RestoreFileSpec>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostRestoreContent>.Write(ModelReaderWriterOptions options)

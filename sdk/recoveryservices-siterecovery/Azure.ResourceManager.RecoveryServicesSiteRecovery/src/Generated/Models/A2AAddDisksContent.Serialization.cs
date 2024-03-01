@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(VmDisks))
+            if (!(VmDisks is ChangeTrackingList<A2AVmDiskDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vmDisks"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VmManagedDisks))
+            if (!(VmManagedDisks is ChangeTrackingList<A2AVmManagedDiskDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vmManagedDisks"u8);
                 writer.WriteStartArray();
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IList<A2AVmDiskDetails>> vmDisks = default;
-            Optional<IList<A2AVmManagedDiskDetails>> vmManagedDisks = default;
+            IList<A2AVmDiskDetails> vmDisks = default;
+            IList<A2AVmManagedDiskDetails> vmManagedDisks = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AAddDisksContent(instanceType, serializedAdditionalRawData, Optional.ToList(vmDisks), Optional.ToList(vmManagedDisks));
+            return new A2AAddDisksContent(instanceType, serializedAdditionalRawData, vmDisks ?? new ChangeTrackingList<A2AVmDiskDetails>(), vmManagedDisks ?? new ChangeTrackingList<A2AVmManagedDiskDetails>());
         }
 
         BinaryData IPersistableModel<A2AAddDisksContent>.Write(ModelReaderWriterOptions options)

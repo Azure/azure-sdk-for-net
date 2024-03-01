@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Timespan);
             writer.WritePropertyName("interval"u8);
             writer.WriteStringValue(Interval, "P");
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Monitor.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string timespan = default;
             TimeSpan interval = default;
-            Optional<string> @namespace = default;
+            string @namespace = default;
             IReadOnlyList<MonitorTimeSeriesBaseline> baselines = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -183,7 +183,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorSingleMetricBaseline(id, name, type, systemData.Value, timespan, interval, @namespace.Value, baselines, serializedAdditionalRawData);
+            return new MonitorSingleMetricBaseline(
+                id,
+                name,
+                type,
+                systemData,
+                timespan,
+                interval,
+                @namespace,
+                baselines,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorSingleMetricBaseline>.Write(ModelReaderWriterOptions options)

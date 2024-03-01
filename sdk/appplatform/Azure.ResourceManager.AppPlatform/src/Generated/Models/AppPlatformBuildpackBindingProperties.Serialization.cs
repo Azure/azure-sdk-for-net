@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BindingType))
+            if (BindingType.HasValue)
             {
                 writer.WritePropertyName("bindingType"u8);
                 writer.WriteStringValue(BindingType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(LaunchProperties))
+            if (LaunchProperties != null)
             {
                 writer.WritePropertyName("launchProperties"u8);
                 writer.WriteObjectValue(LaunchProperties);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<BuildpackBindingType> bindingType = default;
-            Optional<BuildpackBindingProvisioningState> provisioningState = default;
-            Optional<BuildpackBindingLaunchProperties> launchProperties = default;
+            BuildpackBindingType? bindingType = default;
+            BuildpackBindingProvisioningState? provisioningState = default;
+            BuildpackBindingLaunchProperties launchProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuildpackBindingProperties(Optional.ToNullable(bindingType), Optional.ToNullable(provisioningState), launchProperties.Value, serializedAdditionalRawData);
+            return new AppPlatformBuildpackBindingProperties(bindingType, provisioningState, launchProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformBuildpackBindingProperties>.Write(ModelReaderWriterOptions options)

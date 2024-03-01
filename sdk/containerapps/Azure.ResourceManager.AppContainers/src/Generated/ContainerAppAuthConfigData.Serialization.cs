@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Platform))
+            if (Platform != null)
             {
                 writer.WritePropertyName("platform"u8);
                 writer.WriteObjectValue(Platform);
             }
-            if (Optional.IsDefined(GlobalValidation))
+            if (GlobalValidation != null)
             {
                 writer.WritePropertyName("globalValidation"u8);
                 writer.WriteObjectValue(GlobalValidation);
             }
-            if (Optional.IsDefined(IdentityProviders))
+            if (IdentityProviders != null)
             {
                 writer.WritePropertyName("identityProviders"u8);
                 writer.WriteObjectValue(IdentityProviders);
             }
-            if (Optional.IsDefined(Login))
+            if (Login != null)
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
             }
-            if (Optional.IsDefined(HttpSettings))
+            if (HttpSettings != null)
             {
                 writer.WritePropertyName("httpSettings"u8);
                 writer.WriteObjectValue(HttpSettings);
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.AppContainers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerAppAuthPlatform> platform = default;
-            Optional<ContainerAppGlobalValidation> globalValidation = default;
-            Optional<ContainerAppIdentityProvidersConfiguration> identityProviders = default;
-            Optional<ContainerAppLogin> login = default;
-            Optional<ContainerAppHttpSettings> httpSettings = default;
+            SystemData systemData = default;
+            ContainerAppAuthPlatform platform = default;
+            ContainerAppGlobalValidation globalValidation = default;
+            ContainerAppIdentityProvidersConfiguration identityProviders = default;
+            ContainerAppLogin login = default;
+            ContainerAppHttpSettings httpSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppAuthConfigData(id, name, type, systemData.Value, platform.Value, globalValidation.Value, identityProviders.Value, login.Value, httpSettings.Value, serializedAdditionalRawData);
+            return new ContainerAppAuthConfigData(
+                id,
+                name,
+                type,
+                systemData,
+                platform,
+                globalValidation,
+                identityProviders,
+                login,
+                httpSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppAuthConfigData>.Write(ModelReaderWriterOptions options)

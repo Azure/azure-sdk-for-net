@@ -29,23 +29,23 @@ namespace Azure.ResourceManager.AppContainers
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsDefined(ManagedBy))
+            if (ManagedBy != null)
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -73,64 +73,64 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ManagedEnvironmentId))
+            if (ManagedEnvironmentId != null)
             {
                 writer.WritePropertyName("managedEnvironmentId"u8);
                 writer.WriteStringValue(ManagedEnvironmentId);
             }
-            if (Optional.IsDefined(EnvironmentId))
+            if (EnvironmentId != null)
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (Optional.IsDefined(WorkloadProfileName))
+            if (WorkloadProfileName != null)
             {
                 writer.WritePropertyName("workloadProfileName"u8);
                 writer.WriteStringValue(WorkloadProfileName);
             }
-            if (options.Format != "W" && Optional.IsDefined(LatestRevisionName))
+            if (options.Format != "W" && LatestRevisionName != null)
             {
                 writer.WritePropertyName("latestRevisionName"u8);
                 writer.WriteStringValue(LatestRevisionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(LatestReadyRevisionName))
+            if (options.Format != "W" && LatestReadyRevisionName != null)
             {
                 writer.WritePropertyName("latestReadyRevisionName"u8);
                 writer.WriteStringValue(LatestReadyRevisionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(LatestRevisionFqdn))
+            if (options.Format != "W" && LatestRevisionFqdn != null)
             {
                 writer.WritePropertyName("latestRevisionFqdn"u8);
                 writer.WriteStringValue(LatestRevisionFqdn);
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationId))
+            if (options.Format != "W" && CustomDomainVerificationId != null)
             {
                 writer.WritePropertyName("customDomainVerificationId"u8);
                 writer.WriteStringValue(CustomDomainVerificationId);
             }
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (Optional.IsDefined(Template))
+            if (Template != null)
             {
                 writer.WritePropertyName("template"u8);
                 writer.WriteObjectValue(Template);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OutboundIPAddressList))
+            if (options.Format != "W" && !(OutboundIPAddressList is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(EventStreamEndpoint))
+            if (options.Format != "W" && EventStreamEndpoint != null)
             {
                 writer.WritePropertyName("eventStreamEndpoint"u8);
                 writer.WriteStringValue(EventStreamEndpoint.AbsoluteUri);
@@ -189,27 +189,27 @@ namespace Azure.ResourceManager.AppContainers
             {
                 return null;
             }
-            Optional<ContainerAppExtendedLocation> extendedLocation = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> managedBy = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ContainerAppExtendedLocation extendedLocation = default;
+            ManagedServiceIdentity identity = default;
+            string managedBy = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerAppProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> managedEnvironmentId = default;
-            Optional<ResourceIdentifier> environmentId = default;
-            Optional<string> workloadProfileName = default;
-            Optional<string> latestRevisionName = default;
-            Optional<string> latestReadyRevisionName = default;
-            Optional<string> latestRevisionFqdn = default;
-            Optional<string> customDomainVerificationId = default;
-            Optional<ContainerAppConfiguration> configuration = default;
-            Optional<ContainerAppTemplate> template = default;
-            Optional<IReadOnlyList<IPAddress>> outboundIPAddresses = default;
-            Optional<Uri> eventStreamEndpoint = default;
+            SystemData systemData = default;
+            ContainerAppProvisioningState? provisioningState = default;
+            ResourceIdentifier managedEnvironmentId = default;
+            ResourceIdentifier environmentId = default;
+            string workloadProfileName = default;
+            string latestRevisionName = default;
+            string latestReadyRevisionName = default;
+            string latestRevisionFqdn = default;
+            string customDomainVerificationId = default;
+            ContainerAppConfiguration configuration = default;
+            ContainerAppTemplate template = default;
+            IReadOnlyList<IPAddress> outboundIPAddresses = default;
+            Uri eventStreamEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -399,7 +399,29 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, identity, managedBy.Value, Optional.ToNullable(provisioningState), managedEnvironmentId.Value, environmentId.Value, workloadProfileName.Value, latestRevisionName.Value, latestReadyRevisionName.Value, latestRevisionFqdn.Value, customDomainVerificationId.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value, serializedAdditionalRawData);
+            return new ContainerAppData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                identity,
+                managedBy,
+                provisioningState,
+                managedEnvironmentId,
+                environmentId,
+                workloadProfileName,
+                latestRevisionName,
+                latestReadyRevisionName,
+                latestRevisionFqdn,
+                customDomainVerificationId,
+                configuration,
+                template,
+                outboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                eventStreamEndpoint,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppData>.Write(ModelReaderWriterOptions options)

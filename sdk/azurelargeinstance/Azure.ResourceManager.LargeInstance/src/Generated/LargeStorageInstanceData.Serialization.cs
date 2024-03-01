@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.LargeInstance
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.LargeInstance
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureLargeStorageInstanceUniqueIdentifier))
+            if (AzureLargeStorageInstanceUniqueIdentifier != null)
             {
                 writer.WritePropertyName("azureLargeStorageInstanceUniqueIdentifier"u8);
                 writer.WriteStringValue(AzureLargeStorageInstanceUniqueIdentifier);
             }
-            if (Optional.IsDefined(StorageProperties))
+            if (StorageProperties != null)
             {
                 writer.WritePropertyName("storageProperties"u8);
                 writer.WriteObjectValue(StorageProperties);
@@ -112,14 +112,14 @@ namespace Azure.ResourceManager.LargeInstance
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> azureLargeStorageInstanceUniqueIdentifier = default;
-            Optional<LargeInstanceStorageProperties> storageProperties = default;
+            SystemData systemData = default;
+            string azureLargeStorageInstanceUniqueIdentifier = default;
+            LargeInstanceStorageProperties storageProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.LargeInstance
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeStorageInstanceData(id, name, type, systemData.Value, azureLargeStorageInstanceUniqueIdentifier.Value, storageProperties.Value, Optional.ToDictionary(tags), location, serializedAdditionalRawData);
+            return new LargeStorageInstanceData(
+                id,
+                name,
+                type,
+                systemData,
+                azureLargeStorageInstanceUniqueIdentifier,
+                storageProperties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeStorageInstanceData>.Write(ModelReaderWriterOptions options)

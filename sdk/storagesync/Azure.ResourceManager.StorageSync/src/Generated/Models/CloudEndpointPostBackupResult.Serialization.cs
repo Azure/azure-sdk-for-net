@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             writer.WriteStartObject();
             writer.WritePropertyName("backupMetadata"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CloudEndpointName))
+            if (options.Format != "W" && CloudEndpointName != null)
             {
                 writer.WritePropertyName("cloudEndpointName"u8);
                 writer.WriteStringValue(CloudEndpointName);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<string> cloudEndpointName = default;
+            string cloudEndpointName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudEndpointPostBackupResult(cloudEndpointName.Value, serializedAdditionalRawData);
+            return new CloudEndpointPostBackupResult(cloudEndpointName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudEndpointPostBackupResult>.Write(ModelReaderWriterOptions options)

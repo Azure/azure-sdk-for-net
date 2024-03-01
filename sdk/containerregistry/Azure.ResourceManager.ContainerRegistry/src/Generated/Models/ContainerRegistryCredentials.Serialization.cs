@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceRegistry))
+            if (SourceRegistry != null)
             {
                 writer.WritePropertyName("sourceRegistry"u8);
                 writer.WriteObjectValue(SourceRegistry);
             }
-            if (Optional.IsCollectionDefined(CustomRegistries))
+            if (!(CustomRegistries is ChangeTrackingDictionary<string, CustomRegistryCredentials> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customRegistries"u8);
                 writer.WriteStartObject();
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<SourceRegistryCredentials> sourceRegistry = default;
-            Optional<IDictionary<string, CustomRegistryCredentials>> customRegistries = default;
+            SourceRegistryCredentials sourceRegistry = default;
+            IDictionary<string, CustomRegistryCredentials> customRegistries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryCredentials(sourceRegistry.Value, Optional.ToDictionary(customRegistries), serializedAdditionalRawData);
+            return new ContainerRegistryCredentials(sourceRegistry, customRegistries ?? new ChangeTrackingDictionary<string, CustomRegistryCredentials>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryCredentials>.Write(ModelReaderWriterOptions options)

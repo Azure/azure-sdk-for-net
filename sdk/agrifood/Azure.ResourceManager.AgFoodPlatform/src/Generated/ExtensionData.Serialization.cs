@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,34 +48,34 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ExtensionId))
+            if (options.Format != "W" && ExtensionId != null)
             {
                 writer.WritePropertyName("extensionId"u8);
                 writer.WriteStringValue(ExtensionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtensionCategory))
+            if (options.Format != "W" && ExtensionCategory != null)
             {
                 writer.WritePropertyName("extensionCategory"u8);
                 writer.WriteStringValue(ExtensionCategory);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstalledExtensionVersion))
+            if (options.Format != "W" && InstalledExtensionVersion != null)
             {
                 writer.WritePropertyName("installedExtensionVersion"u8);
                 writer.WriteStringValue(InstalledExtensionVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtensionAuthLink))
+            if (options.Format != "W" && ExtensionAuthLink != null)
             {
                 writer.WritePropertyName("extensionAuthLink"u8);
                 writer.WriteStringValue(ExtensionAuthLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtensionApiDocsLink))
+            if (options.Format != "W" && ExtensionApiDocsLink != null)
             {
                 writer.WritePropertyName("extensionApiDocsLink"u8);
                 writer.WriteStringValue(ExtensionApiDocsLink);
@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> extensionId = default;
-            Optional<string> extensionCategory = default;
-            Optional<string> installedExtensionVersion = default;
-            Optional<string> extensionAuthLink = default;
-            Optional<string> extensionApiDocsLink = default;
+            SystemData systemData = default;
+            string extensionId = default;
+            string extensionCategory = default;
+            string installedExtensionVersion = default;
+            string extensionAuthLink = default;
+            string extensionApiDocsLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +209,18 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtensionData(id, name, type, systemData.Value, Optional.ToNullable(eTag), extensionId.Value, extensionCategory.Value, installedExtensionVersion.Value, extensionAuthLink.Value, extensionApiDocsLink.Value, serializedAdditionalRawData);
+            return new ExtensionData(
+                id,
+                name,
+                type,
+                systemData,
+                eTag,
+                extensionId,
+                extensionCategory,
+                installedExtensionVersion,
+                extensionAuthLink,
+                extensionApiDocsLink,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtensionData>.Write(ModelReaderWriterOptions options)

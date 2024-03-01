@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Orbital
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,39 +48,39 @@ namespace Azure.ResourceManager.Orbital
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(City))
+            if (City != null)
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (Optional.IsDefined(ProviderName))
+            if (ProviderName != null)
             {
                 writer.WritePropertyName("providerName"u8);
                 writer.WriteStringValue(ProviderName);
             }
-            if (Optional.IsDefined(LongitudeDegrees))
+            if (LongitudeDegrees.HasValue)
             {
                 writer.WritePropertyName("longitudeDegrees"u8);
                 writer.WriteNumberValue(LongitudeDegrees.Value);
             }
-            if (Optional.IsDefined(LatitudeDegrees))
+            if (LatitudeDegrees.HasValue)
             {
                 writer.WritePropertyName("latitudeDegrees"u8);
                 writer.WriteNumberValue(LatitudeDegrees.Value);
             }
-            if (Optional.IsDefined(AltitudeMeters))
+            if (AltitudeMeters.HasValue)
             {
                 writer.WritePropertyName("altitudeMeters"u8);
                 writer.WriteNumberValue(AltitudeMeters.Value);
             }
-            if (Optional.IsDefined(ReleaseMode))
+            if (ReleaseMode.HasValue)
             {
                 writer.WritePropertyName("releaseMode"u8);
                 writer.WriteStringValue(ReleaseMode.Value.ToString());
@@ -124,17 +124,17 @@ namespace Azure.ResourceManager.Orbital
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> city = default;
-            Optional<string> providerName = default;
-            Optional<float> longitudeDegrees = default;
-            Optional<float> latitudeDegrees = default;
-            Optional<float> altitudeMeters = default;
-            Optional<GroundStationReleaseMode> releaseMode = default;
+            SystemData systemData = default;
+            string city = default;
+            string providerName = default;
+            float? longitudeDegrees = default;
+            float? latitudeDegrees = default;
+            float? altitudeMeters = default;
+            GroundStationReleaseMode? releaseMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,7 +236,19 @@ namespace Azure.ResourceManager.Orbital
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableGroundStationData(id, name, type, systemData.Value, Optional.ToNullable(location), city.Value, providerName.Value, Optional.ToNullable(longitudeDegrees), Optional.ToNullable(latitudeDegrees), Optional.ToNullable(altitudeMeters), Optional.ToNullable(releaseMode), serializedAdditionalRawData);
+            return new AvailableGroundStationData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                city,
+                providerName,
+                longitudeDegrees,
+                latitudeDegrees,
+                altitudeMeters,
+                releaseMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableGroundStationData>.Write(ModelReaderWriterOptions options)

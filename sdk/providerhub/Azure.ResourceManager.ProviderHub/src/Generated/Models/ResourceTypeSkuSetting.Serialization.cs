@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Tier))
+            if (Tier != null)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Optional.IsDefined(Size))
+            if (Size != null)
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Optional.IsDefined(Family))
+            if (Family != null)
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LocationInfo))
+            if (!(LocationInfo is ChangeTrackingList<ResourceTypeSkuLocationInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("locationInfo"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequiredQuotaIds))
+            if (!(RequiredQuotaIds is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("requiredQuotaIds"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequiredFeatures))
+            if (!(RequiredFeatures is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Capacity))
+            if (Capacity != null)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (Optional.IsCollectionDefined(Costs))
+            if (!(Costs is ChangeTrackingList<ResourceTypeSkuCost> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Capabilities))
+            if (!(Capabilities is ChangeTrackingList<ResourceSkuCapability> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -152,17 +152,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             string name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<string> kind = default;
-            Optional<IList<string>> locations = default;
-            Optional<IList<ResourceTypeSkuLocationInfo>> locationInfo = default;
-            Optional<IList<string>> requiredQuotaIds = default;
-            Optional<IList<string>> requiredFeatures = default;
-            Optional<ResourceTypeSkuCapacity> capacity = default;
-            Optional<IList<ResourceTypeSkuCost>> costs = default;
-            Optional<IList<ResourceSkuCapability>> capabilities = default;
+            string tier = default;
+            string size = default;
+            string family = default;
+            string kind = default;
+            IList<string> locations = default;
+            IList<ResourceTypeSkuLocationInfo> locationInfo = default;
+            IList<string> requiredQuotaIds = default;
+            IList<string> requiredFeatures = default;
+            ResourceTypeSkuCapacity capacity = default;
+            IList<ResourceTypeSkuCost> costs = default;
+            IList<ResourceSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -291,7 +291,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeSkuSetting(name, tier.Value, size.Value, family.Value, kind.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(requiredQuotaIds), Optional.ToList(requiredFeatures), capacity.Value, Optional.ToList(costs), Optional.ToList(capabilities), serializedAdditionalRawData);
+            return new ResourceTypeSkuSetting(
+                name,
+                tier,
+                size,
+                family,
+                kind,
+                locations ?? new ChangeTrackingList<string>(),
+                locationInfo ?? new ChangeTrackingList<ResourceTypeSkuLocationInfo>(),
+                requiredQuotaIds ?? new ChangeTrackingList<string>(),
+                requiredFeatures ?? new ChangeTrackingList<string>(),
+                capacity,
+                costs ?? new ChangeTrackingList<ResourceTypeSkuCost>(),
+                capabilities ?? new ChangeTrackingList<ResourceSkuCapability>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeSkuSetting>.Write(ModelReaderWriterOptions options)

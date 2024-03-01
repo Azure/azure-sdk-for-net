@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,39 +56,39 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeploymentProperties))
+            if (DeploymentProperties != null)
             {
                 writer.WritePropertyName("deploymentProperties"u8);
                 writer.WriteObjectValue(DeploymentProperties);
             }
-            if (Optional.IsDefined(ArmTemplateDisplayName))
+            if (ArmTemplateDisplayName != null)
             {
                 writer.WritePropertyName("armTemplateDisplayName"u8);
                 writer.WriteStringValue(ArmTemplateDisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGroupId))
+            if (options.Format != "W" && ResourceGroupId != null)
             {
                 writer.WritePropertyName("resourceGroupId"u8);
                 writer.WriteStringValue(ResourceGroupId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedByUser))
+            if (options.Format != "W" && CreatedByUser != null)
             {
                 writer.WritePropertyName("createdByUser"u8);
                 writer.WriteStringValue(CreatedByUser);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
+            if (options.Format != "W" && UniqueIdentifier.HasValue)
             {
                 writer.WritePropertyName("uniqueIdentifier"u8);
                 writer.WriteStringValue(UniqueIdentifier.Value);
@@ -132,18 +132,18 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevTestLabEnvironmentDeployment> deploymentProperties = default;
-            Optional<string> armTemplateDisplayName = default;
-            Optional<string> resourceGroupId = default;
-            Optional<string> createdByUser = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            SystemData systemData = default;
+            DevTestLabEnvironmentDeployment deploymentProperties = default;
+            string armTemplateDisplayName = default;
+            string resourceGroupId = default;
+            string createdByUser = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -247,7 +247,20 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, deploymentProperties.Value, armTemplateDisplayName.Value, resourceGroupId.Value, createdByUser.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabEnvironmentData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                deploymentProperties,
+                armTemplateDisplayName,
+                resourceGroupId,
+                createdByUser,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabEnvironmentData>.Write(ModelReaderWriterOptions options)

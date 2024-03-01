@@ -26,92 +26,92 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(ProtectedItemType))
+            if (ProtectedItemType != null)
             {
                 writer.WritePropertyName("protectedItemType"u8);
                 writer.WriteStringValue(ProtectedItemType);
             }
-            if (Optional.IsDefined(ProtectableItemId))
+            if (ProtectableItemId != null)
             {
                 writer.WritePropertyName("protectableItemId"u8);
                 writer.WriteStringValue(ProtectableItemId);
             }
-            if (Optional.IsDefined(RecoveryServicesProviderId))
+            if (RecoveryServicesProviderId != null)
             {
                 writer.WritePropertyName("recoveryServicesProviderId"u8);
                 writer.WriteStringValue(RecoveryServicesProviderId);
             }
-            if (Optional.IsDefined(PrimaryFabricFriendlyName))
+            if (PrimaryFabricFriendlyName != null)
             {
                 writer.WritePropertyName("primaryFabricFriendlyName"u8);
                 writer.WriteStringValue(PrimaryFabricFriendlyName);
             }
-            if (Optional.IsDefined(PrimaryFabricProvider))
+            if (PrimaryFabricProvider != null)
             {
                 writer.WritePropertyName("primaryFabricProvider"u8);
                 writer.WriteStringValue(PrimaryFabricProvider);
             }
-            if (Optional.IsDefined(RecoveryFabricFriendlyName))
+            if (RecoveryFabricFriendlyName != null)
             {
                 writer.WritePropertyName("recoveryFabricFriendlyName"u8);
                 writer.WriteStringValue(RecoveryFabricFriendlyName);
             }
-            if (Optional.IsDefined(RecoveryFabricId))
+            if (RecoveryFabricId != null)
             {
                 writer.WritePropertyName("recoveryFabricId"u8);
                 writer.WriteStringValue(RecoveryFabricId);
             }
-            if (Optional.IsDefined(PrimaryProtectionContainerFriendlyName))
+            if (PrimaryProtectionContainerFriendlyName != null)
             {
                 writer.WritePropertyName("primaryProtectionContainerFriendlyName"u8);
                 writer.WriteStringValue(PrimaryProtectionContainerFriendlyName);
             }
-            if (Optional.IsDefined(RecoveryProtectionContainerFriendlyName))
+            if (RecoveryProtectionContainerFriendlyName != null)
             {
                 writer.WritePropertyName("recoveryProtectionContainerFriendlyName"u8);
                 writer.WriteStringValue(RecoveryProtectionContainerFriendlyName);
             }
-            if (Optional.IsDefined(ProtectionState))
+            if (ProtectionState != null)
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState);
             }
-            if (Optional.IsDefined(ProtectionStateDescription))
+            if (ProtectionStateDescription != null)
             {
                 writer.WritePropertyName("protectionStateDescription"u8);
                 writer.WriteStringValue(ProtectionStateDescription);
             }
-            if (Optional.IsDefined(ActiveLocation))
+            if (ActiveLocation != null)
             {
                 writer.WritePropertyName("activeLocation"u8);
                 writer.WriteStringValue(ActiveLocation);
             }
-            if (Optional.IsDefined(TestFailoverState))
+            if (TestFailoverState != null)
             {
                 writer.WritePropertyName("testFailoverState"u8);
                 writer.WriteStringValue(TestFailoverState);
             }
-            if (Optional.IsDefined(TestFailoverStateDescription))
+            if (TestFailoverStateDescription != null)
             {
                 writer.WritePropertyName("testFailoverStateDescription"u8);
                 writer.WriteStringValue(TestFailoverStateDescription);
             }
-            if (Optional.IsDefined(SwitchProviderState))
+            if (SwitchProviderState != null)
             {
                 writer.WritePropertyName("switchProviderState"u8);
                 writer.WriteStringValue(SwitchProviderState);
             }
-            if (Optional.IsDefined(SwitchProviderStateDescription))
+            if (SwitchProviderStateDescription != null)
             {
                 writer.WritePropertyName("switchProviderStateDescription"u8);
                 writer.WriteStringValue(SwitchProviderStateDescription);
             }
-            if (Optional.IsCollectionDefined(AllowedOperations))
+            if (!(AllowedOperations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedOperations"u8);
                 writer.WriteStartArray();
@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ReplicationHealth))
+            if (ReplicationHealth != null)
             {
                 writer.WritePropertyName("replicationHealth"u8);
                 writer.WriteStringValue(ReplicationHealth);
             }
-            if (Optional.IsDefined(FailoverHealth))
+            if (FailoverHealth != null)
             {
                 writer.WritePropertyName("failoverHealth"u8);
                 writer.WriteStringValue(FailoverHealth);
             }
-            if (Optional.IsCollectionDefined(HealthErrors))
+            if (!(HealthErrors is ChangeTrackingList<SiteRecoveryHealthError> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
@@ -141,47 +141,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PolicyId))
+            if (PolicyId != null)
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (Optional.IsDefined(PolicyFriendlyName))
+            if (PolicyFriendlyName != null)
             {
                 writer.WritePropertyName("policyFriendlyName"u8);
                 writer.WriteStringValue(PolicyFriendlyName);
             }
-            if (Optional.IsDefined(LastSuccessfulFailoverOn))
+            if (LastSuccessfulFailoverOn.HasValue)
             {
                 writer.WritePropertyName("lastSuccessfulFailoverTime"u8);
                 writer.WriteStringValue(LastSuccessfulFailoverOn.Value, "O");
             }
-            if (Optional.IsDefined(LastSuccessfulTestFailoverOn))
+            if (LastSuccessfulTestFailoverOn.HasValue)
             {
                 writer.WritePropertyName("lastSuccessfulTestFailoverTime"u8);
                 writer.WriteStringValue(LastSuccessfulTestFailoverOn.Value, "O");
             }
-            if (Optional.IsDefined(CurrentScenario))
+            if (CurrentScenario != null)
             {
                 writer.WritePropertyName("currentScenario"u8);
                 writer.WriteObjectValue(CurrentScenario);
             }
-            if (Optional.IsDefined(FailoverRecoveryPointId))
+            if (FailoverRecoveryPointId != null)
             {
                 writer.WritePropertyName("failoverRecoveryPointId"u8);
                 writer.WriteStringValue(FailoverRecoveryPointId);
             }
-            if (Optional.IsDefined(ProviderSpecificDetails))
+            if (ProviderSpecificDetails != null)
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
             }
-            if (Optional.IsDefined(RecoveryContainerId))
+            if (RecoveryContainerId != null)
             {
                 writer.WritePropertyName("recoveryContainerId"u8);
                 writer.WriteStringValue(RecoveryContainerId);
             }
-            if (Optional.IsDefined(EventCorrelationId))
+            if (EventCorrelationId.HasValue)
             {
                 writer.WritePropertyName("eventCorrelationId"u8);
                 writer.WriteStringValue(EventCorrelationId.Value);
@@ -224,36 +224,36 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<string> protectedItemType = default;
-            Optional<ResourceIdentifier> protectableItemId = default;
-            Optional<string> recoveryServicesProviderId = default;
-            Optional<string> primaryFabricFriendlyName = default;
-            Optional<string> primaryFabricProvider = default;
-            Optional<string> recoveryFabricFriendlyName = default;
-            Optional<ResourceIdentifier> recoveryFabricId = default;
-            Optional<string> primaryProtectionContainerFriendlyName = default;
-            Optional<string> recoveryProtectionContainerFriendlyName = default;
-            Optional<string> protectionState = default;
-            Optional<string> protectionStateDescription = default;
-            Optional<string> activeLocation = default;
-            Optional<string> testFailoverState = default;
-            Optional<string> testFailoverStateDescription = default;
-            Optional<string> switchProviderState = default;
-            Optional<string> switchProviderStateDescription = default;
-            Optional<IReadOnlyList<string>> allowedOperations = default;
-            Optional<string> replicationHealth = default;
-            Optional<string> failoverHealth = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<string> policyFriendlyName = default;
-            Optional<DateTimeOffset> lastSuccessfulFailoverTime = default;
-            Optional<DateTimeOffset> lastSuccessfulTestFailoverTime = default;
-            Optional<CurrentScenarioDetails> currentScenario = default;
-            Optional<ResourceIdentifier> failoverRecoveryPointId = default;
-            Optional<ReplicationProviderSpecificSettings> providerSpecificDetails = default;
-            Optional<ResourceIdentifier> recoveryContainerId = default;
-            Optional<Guid> eventCorrelationId = default;
+            string friendlyName = default;
+            string protectedItemType = default;
+            ResourceIdentifier protectableItemId = default;
+            string recoveryServicesProviderId = default;
+            string primaryFabricFriendlyName = default;
+            string primaryFabricProvider = default;
+            string recoveryFabricFriendlyName = default;
+            ResourceIdentifier recoveryFabricId = default;
+            string primaryProtectionContainerFriendlyName = default;
+            string recoveryProtectionContainerFriendlyName = default;
+            string protectionState = default;
+            string protectionStateDescription = default;
+            string activeLocation = default;
+            string testFailoverState = default;
+            string testFailoverStateDescription = default;
+            string switchProviderState = default;
+            string switchProviderStateDescription = default;
+            IReadOnlyList<string> allowedOperations = default;
+            string replicationHealth = default;
+            string failoverHealth = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
+            ResourceIdentifier policyId = default;
+            string policyFriendlyName = default;
+            DateTimeOffset? lastSuccessfulFailoverTime = default;
+            DateTimeOffset? lastSuccessfulTestFailoverTime = default;
+            CurrentScenarioDetails currentScenario = default;
+            ResourceIdentifier failoverRecoveryPointId = default;
+            ReplicationProviderSpecificSettings providerSpecificDetails = default;
+            ResourceIdentifier recoveryContainerId = default;
+            Guid? eventCorrelationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -472,7 +472,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationProtectedItemProperties(friendlyName.Value, protectedItemType.Value, protectableItemId.Value, recoveryServicesProviderId.Value, primaryFabricFriendlyName.Value, primaryFabricProvider.Value, recoveryFabricFriendlyName.Value, recoveryFabricId.Value, primaryProtectionContainerFriendlyName.Value, recoveryProtectionContainerFriendlyName.Value, protectionState.Value, protectionStateDescription.Value, activeLocation.Value, testFailoverState.Value, testFailoverStateDescription.Value, switchProviderState.Value, switchProviderStateDescription.Value, Optional.ToList(allowedOperations), replicationHealth.Value, failoverHealth.Value, Optional.ToList(healthErrors), policyId.Value, policyFriendlyName.Value, Optional.ToNullable(lastSuccessfulFailoverTime), Optional.ToNullable(lastSuccessfulTestFailoverTime), currentScenario.Value, failoverRecoveryPointId.Value, providerSpecificDetails.Value, recoveryContainerId.Value, Optional.ToNullable(eventCorrelationId), serializedAdditionalRawData);
+            return new ReplicationProtectedItemProperties(
+                friendlyName,
+                protectedItemType,
+                protectableItemId,
+                recoveryServicesProviderId,
+                primaryFabricFriendlyName,
+                primaryFabricProvider,
+                recoveryFabricFriendlyName,
+                recoveryFabricId,
+                primaryProtectionContainerFriendlyName,
+                recoveryProtectionContainerFriendlyName,
+                protectionState,
+                protectionStateDescription,
+                activeLocation,
+                testFailoverState,
+                testFailoverStateDescription,
+                switchProviderState,
+                switchProviderStateDescription,
+                allowedOperations ?? new ChangeTrackingList<string>(),
+                replicationHealth,
+                failoverHealth,
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                policyId,
+                policyFriendlyName,
+                lastSuccessfulFailoverTime,
+                lastSuccessfulTestFailoverTime,
+                currentScenario,
+                failoverRecoveryPointId,
+                providerSpecificDetails,
+                recoveryContainerId,
+                eventCorrelationId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationProtectedItemProperties>.Write(ModelReaderWriterOptions options)

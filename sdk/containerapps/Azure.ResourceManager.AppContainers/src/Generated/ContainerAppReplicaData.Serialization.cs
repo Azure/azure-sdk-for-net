@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RunningState))
+            if (options.Format != "W" && RunningState.HasValue)
             {
                 writer.WritePropertyName("runningState"u8);
                 writer.WriteStringValue(RunningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RunningStateDetails))
+            if (options.Format != "W" && RunningStateDetails != null)
             {
                 writer.WritePropertyName("runningStateDetails"u8);
                 writer.WriteStringValue(RunningStateDetails);
             }
-            if (Optional.IsCollectionDefined(Containers))
+            if (!(Containers is ChangeTrackingList<ContainerAppReplicaContainer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InitContainers))
+            if (!(InitContainers is ChangeTrackingList<ContainerAppReplicaContainer> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.AppContainers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<ContainerAppReplicaRunningState> runningState = default;
-            Optional<string> runningStateDetails = default;
-            Optional<IList<ContainerAppReplicaContainer>> containers = default;
-            Optional<IList<ContainerAppReplicaContainer>> initContainers = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdTime = default;
+            ContainerAppReplicaRunningState? runningState = default;
+            string runningStateDetails = default;
+            IList<ContainerAppReplicaContainer> containers = default;
+            IList<ContainerAppReplicaContainer> initContainers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,7 +230,17 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppReplicaData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(runningState), runningStateDetails.Value, Optional.ToList(containers), Optional.ToList(initContainers), serializedAdditionalRawData);
+            return new ContainerAppReplicaData(
+                id,
+                name,
+                type,
+                systemData,
+                createdTime,
+                runningState,
+                runningStateDetails,
+                containers ?? new ChangeTrackingList<ContainerAppReplicaContainer>(),
+                initContainers ?? new ChangeTrackingList<ContainerAppReplicaContainer>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppReplicaData>.Write(ModelReaderWriterOptions options)

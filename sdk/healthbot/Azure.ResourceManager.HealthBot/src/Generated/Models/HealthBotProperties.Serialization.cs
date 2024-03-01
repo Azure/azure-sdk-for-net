@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HealthBot.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(BotManagementPortalLink))
+            if (options.Format != "W" && BotManagementPortalLink != null)
             {
                 writer.WritePropertyName("botManagementPortalLink"u8);
                 writer.WriteStringValue(BotManagementPortalLink.AbsoluteUri);
             }
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (KeyVaultProperties != null)
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HealthBot.Models
             {
                 return null;
             }
-            Optional<string> provisioningState = default;
-            Optional<Uri> botManagementPortalLink = default;
-            Optional<HealthBotKeyVaultProperties> keyVaultProperties = default;
+            string provisioningState = default;
+            Uri botManagementPortalLink = default;
+            HealthBotKeyVaultProperties keyVaultProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthBotProperties(provisioningState.Value, botManagementPortalLink.Value, keyVaultProperties.Value, serializedAdditionalRawData);
+            return new HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthBotProperties>.Write(ModelReaderWriterOptions options)

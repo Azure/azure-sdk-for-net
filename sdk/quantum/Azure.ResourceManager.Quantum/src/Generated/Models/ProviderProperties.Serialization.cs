@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Quantum.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProviderType))
+            if (options.Format != "W" && ProviderType != null)
             {
                 writer.WritePropertyName("providerType"u8);
                 writer.WriteStringValue(ProviderType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Company))
+            if (options.Format != "W" && Company != null)
             {
                 writer.WritePropertyName("company"u8);
                 writer.WriteStringValue(Company);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultEndpoint))
+            if (options.Format != "W" && DefaultEndpoint != null)
             {
                 writer.WritePropertyName("defaultEndpoint"u8);
                 writer.WriteStringValue(DefaultEndpoint);
             }
-            if (Optional.IsDefined(Aad))
+            if (Aad != null)
             {
                 writer.WritePropertyName("aad"u8);
                 writer.WriteObjectValue(Aad);
             }
-            if (Optional.IsDefined(ManagedApplication))
+            if (ManagedApplication != null)
             {
                 writer.WritePropertyName("managedApplication"u8);
                 writer.WriteObjectValue(ManagedApplication);
             }
-            if (Optional.IsCollectionDefined(Targets))
+            if (!(Targets is ChangeTrackingList<TargetDescription> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Skus))
+            if (!(Skus is ChangeTrackingList<SkuDescription> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("skus"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(QuotaDimensions))
+            if (!(QuotaDimensions is ChangeTrackingList<QuotaDimension> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("quotaDimensions"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PricingDimensions))
+            if (!(PricingDimensions is ChangeTrackingList<PricingDimension> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("pricingDimensions"u8);
                 writer.WriteStartArray();
@@ -134,16 +134,16 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> providerType = default;
-            Optional<string> company = default;
-            Optional<string> defaultEndpoint = default;
-            Optional<ProviderPropertiesAad> aad = default;
-            Optional<ProviderPropertiesManagedApplication> managedApplication = default;
-            Optional<IReadOnlyList<TargetDescription>> targets = default;
-            Optional<IReadOnlyList<SkuDescription>> skus = default;
-            Optional<IReadOnlyList<QuotaDimension>> quotaDimensions = default;
-            Optional<IReadOnlyList<PricingDimension>> pricingDimensions = default;
+            string description = default;
+            string providerType = default;
+            string company = default;
+            string defaultEndpoint = default;
+            ProviderPropertiesAad aad = default;
+            ProviderPropertiesManagedApplication managedApplication = default;
+            IReadOnlyList<TargetDescription> targets = default;
+            IReadOnlyList<SkuDescription> skus = default;
+            IReadOnlyList<QuotaDimension> quotaDimensions = default;
+            IReadOnlyList<PricingDimension> pricingDimensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -248,7 +248,18 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderProperties(description.Value, providerType.Value, company.Value, defaultEndpoint.Value, aad.Value, managedApplication.Value, Optional.ToList(targets), Optional.ToList(skus), Optional.ToList(quotaDimensions), Optional.ToList(pricingDimensions), serializedAdditionalRawData);
+            return new ProviderProperties(
+                description,
+                providerType,
+                company,
+                defaultEndpoint,
+                aad,
+                managedApplication,
+                targets ?? new ChangeTrackingList<TargetDescription>(),
+                skus ?? new ChangeTrackingList<SkuDescription>(),
+                quotaDimensions ?? new ChangeTrackingList<QuotaDimension>(),
+                pricingDimensions ?? new ChangeTrackingList<PricingDimension>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderProperties>.Write(ModelReaderWriterOptions options)

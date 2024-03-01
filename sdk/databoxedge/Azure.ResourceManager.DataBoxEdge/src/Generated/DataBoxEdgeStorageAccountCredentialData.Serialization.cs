@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -52,31 +52,31 @@ namespace Azure.ResourceManager.DataBoxEdge
             writer.WriteStartObject();
             writer.WritePropertyName("alias"u8);
             writer.WriteStringValue(Alias);
-            if (Optional.IsDefined(UserName))
+            if (UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Optional.IsDefined(AccountKey))
+            if (AccountKey != null)
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteObjectValue(AccountKey);
             }
-            if (Optional.IsDefined(ConnectionString))
+            if (ConnectionString != null)
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
             writer.WritePropertyName("sslStatus"u8);
             writer.WriteStringValue(SslStatus.ToString());
-            if (Optional.IsDefined(BlobDomainName))
+            if (BlobDomainName != null)
             {
                 writer.WritePropertyName("blobDomainName"u8);
                 writer.WriteStringValue(BlobDomainName);
             }
             writer.WritePropertyName("accountType"u8);
             writer.WriteStringValue(AccountType.ToString());
-            if (Optional.IsDefined(StorageAccountId))
+            if (StorageAccountId != null)
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
@@ -123,15 +123,15 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string @alias = default;
-            Optional<string> userName = default;
-            Optional<AsymmetricEncryptedSecret> accountKey = default;
-            Optional<string> connectionString = default;
+            string userName = default;
+            AsymmetricEncryptedSecret accountKey = default;
+            string connectionString = default;
             DataBoxEdgeStorageAccountSslStatus sslStatus = default;
-            Optional<string> blobDomainName = default;
+            string blobDomainName = default;
             DataBoxEdgeStorageAccountType accountType = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
+            ResourceIdentifier storageAccountId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,7 +226,20 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeStorageAccountCredentialData(id, name, type, systemData.Value, @alias, userName.Value, accountKey.Value, connectionString.Value, sslStatus, blobDomainName.Value, accountType, storageAccountId.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeStorageAccountCredentialData(
+                id,
+                name,
+                type,
+                systemData,
+                @alias,
+                userName,
+                accountKey,
+                connectionString,
+                sslStatus,
+                blobDomainName,
+                accountType,
+                storageAccountId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeStorageAccountCredentialData>.Write(ModelReaderWriterOptions options)

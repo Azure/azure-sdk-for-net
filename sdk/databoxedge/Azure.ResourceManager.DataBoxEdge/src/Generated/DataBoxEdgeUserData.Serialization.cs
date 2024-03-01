@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncryptedPassword))
+            if (EncryptedPassword != null)
             {
                 writer.WritePropertyName("encryptedPassword"u8);
                 writer.WriteObjectValue(EncryptedPassword);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ShareAccessRights))
+            if (options.Format != "W" && !(ShareAccessRights is ChangeTrackingList<ShareAccessRight> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("shareAccessRights"u8);
                 writer.WriteStartArray();
@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AsymmetricEncryptedSecret> encryptedPassword = default;
-            Optional<IReadOnlyList<ShareAccessRight>> shareAccessRights = default;
+            SystemData systemData = default;
+            AsymmetricEncryptedSecret encryptedPassword = default;
+            IReadOnlyList<ShareAccessRight> shareAccessRights = default;
             DataBoxEdgeUserType userType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -187,7 +187,15 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeUserData(id, name, type, systemData.Value, encryptedPassword.Value, Optional.ToList(shareAccessRights), userType, serializedAdditionalRawData);
+            return new DataBoxEdgeUserData(
+                id,
+                name,
+                type,
+                systemData,
+                encryptedPassword,
+                shareAccessRights ?? new ChangeTrackingList<ShareAccessRight>(),
+                userType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeUserData>.Write(ModelReaderWriterOptions options)

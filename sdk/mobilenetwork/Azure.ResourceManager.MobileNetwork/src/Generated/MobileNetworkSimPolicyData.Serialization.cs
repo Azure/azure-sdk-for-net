@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SiteProvisioningState))
+            if (options.Format != "W" && !(SiteProvisioningState is ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("siteProvisioningState"u8);
                 writer.WriteStartObject();
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteObjectValue(UeAmbr);
             writer.WritePropertyName("defaultSlice"u8);
             JsonSerializer.Serialize(writer, DefaultSlice);
-            if (Optional.IsDefined(RfspIndex))
+            if (RfspIndex.HasValue)
             {
                 writer.WritePropertyName("rfspIndex"u8);
                 writer.WriteNumberValue(RfspIndex.Value);
             }
-            if (Optional.IsDefined(RegistrationTimer))
+            if (RegistrationTimer.HasValue)
             {
                 writer.WritePropertyName("registrationTimer"u8);
                 writer.WriteNumberValue(RegistrationTimer.Value);
@@ -140,18 +140,18 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
-            Optional<IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState>> siteProvisioningState = default;
+            SystemData systemData = default;
+            MobileNetworkProvisioningState? provisioningState = default;
+            IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState = default;
             Ambr ueAmbr = default;
             WritableSubResource defaultSlice = default;
-            Optional<int> rfspIndex = default;
-            Optional<int> registrationTimer = default;
+            int? rfspIndex = default;
+            int? registrationTimer = default;
             IList<MobileNetworkSliceConfiguration> sliceConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -279,7 +279,21 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkSimPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToDictionary(siteProvisioningState), ueAmbr, defaultSlice, Optional.ToNullable(rfspIndex), Optional.ToNullable(registrationTimer), sliceConfigurations, serializedAdditionalRawData);
+            return new MobileNetworkSimPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                siteProvisioningState ?? new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>(),
+                ueAmbr,
+                defaultSlice,
+                rfspIndex,
+                registrationTimer,
+                sliceConfigurations,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkSimPolicyData>.Write(ModelReaderWriterOptions options)

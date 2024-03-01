@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArtifactStoreReference))
+            if (ArtifactStoreReference != null)
             {
                 writer.WritePropertyName("artifactStoreReference"u8);
                 JsonSerializer.Serialize(writer, ArtifactStoreReference);
             }
-            if (Optional.IsDefined(ArtifactName))
+            if (ArtifactName != null)
             {
                 writer.WritePropertyName("artifactName"u8);
                 writer.WriteStringValue(ArtifactName);
             }
-            if (Optional.IsDefined(ArtifactVersion))
+            if (ArtifactVersion != null)
             {
                 writer.WritePropertyName("artifactVersion"u8);
                 writer.WriteStringValue(ArtifactVersion);
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> artifactStoreReference = default;
-            Optional<string> artifactName = default;
-            Optional<string> artifactVersion = default;
+            WritableSubResource artifactStoreReference = default;
+            string artifactName = default;
+            string artifactVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NSDArtifactProfile(artifactStoreReference, artifactName.Value, artifactVersion.Value, serializedAdditionalRawData);
+            return new NSDArtifactProfile(artifactStoreReference, artifactName, artifactVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NSDArtifactProfile>.Write(ModelReaderWriterOptions options)

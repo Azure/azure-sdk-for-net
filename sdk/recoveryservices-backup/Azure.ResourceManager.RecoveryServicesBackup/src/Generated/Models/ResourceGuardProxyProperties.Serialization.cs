@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             writer.WritePropertyName("resourceGuardResourceId"u8);
             writer.WriteStringValue(ResourceGuardResourceId);
-            if (Optional.IsCollectionDefined(ResourceGuardOperationDetails))
+            if (!(ResourceGuardOperationDetails is ChangeTrackingList<ResourceGuardOperationDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceGuardOperationDetails"u8);
                 writer.WriteStartArray();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LastUpdatedOn))
+            if (LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             ResourceIdentifier resourceGuardResourceId = default;
-            Optional<IList<ResourceGuardOperationDetail>> resourceGuardOperationDetails = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<string> description = default;
+            IList<ResourceGuardOperationDetail> resourceGuardOperationDetails = default;
+            DateTimeOffset? lastUpdatedTime = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGuardProxyProperties(resourceGuardResourceId, Optional.ToList(resourceGuardOperationDetails), Optional.ToNullable(lastUpdatedTime), description.Value, serializedAdditionalRawData);
+            return new ResourceGuardProxyProperties(resourceGuardResourceId, resourceGuardOperationDetails ?? new ChangeTrackingList<ResourceGuardOperationDetail>(), lastUpdatedTime, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGuardProxyProperties>.Write(ModelReaderWriterOptions options)

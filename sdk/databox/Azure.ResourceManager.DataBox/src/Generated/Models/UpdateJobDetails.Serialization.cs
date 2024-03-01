@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContactDetails))
+            if (ContactDetails != null)
             {
                 writer.WritePropertyName("contactDetails"u8);
                 writer.WriteObjectValue(ContactDetails);
             }
-            if (Optional.IsDefined(ShippingAddress))
+            if (ShippingAddress != null)
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
-            if (Optional.IsDefined(ReverseShippingDetails))
+            if (ReverseShippingDetails != null)
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
                 writer.WriteObjectValue(ReverseShippingDetails);
             }
-            if (Optional.IsDefined(Preferences))
+            if (Preferences != null)
             {
                 writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences);
             }
-            if (Optional.IsDefined(KeyEncryptionKey))
+            if (KeyEncryptionKey != null)
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
-            if (Optional.IsDefined(ReturnToCustomerPackageDetails))
+            if (ReturnToCustomerPackageDetails != null)
             {
                 writer.WritePropertyName("returnToCustomerPackageDetails"u8);
                 writer.WriteObjectValue(ReturnToCustomerPackageDetails);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DataBoxContactDetails> contactDetails = default;
-            Optional<DataBoxShippingAddress> shippingAddress = default;
-            Optional<ReverseShippingDetails> reverseShippingDetails = default;
-            Optional<DataBoxOrderPreferences> preferences = default;
-            Optional<DataBoxKeyEncryptionKey> keyEncryptionKey = default;
-            Optional<PackageCarrierDetails> returnToCustomerPackageDetails = default;
+            DataBoxContactDetails contactDetails = default;
+            DataBoxShippingAddress shippingAddress = default;
+            ReverseShippingDetails reverseShippingDetails = default;
+            DataBoxOrderPreferences preferences = default;
+            DataBoxKeyEncryptionKey keyEncryptionKey = default;
+            PackageCarrierDetails returnToCustomerPackageDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateJobDetails(contactDetails.Value, shippingAddress.Value, reverseShippingDetails.Value, preferences.Value, keyEncryptionKey.Value, returnToCustomerPackageDetails.Value, serializedAdditionalRawData);
+            return new UpdateJobDetails(
+                contactDetails,
+                shippingAddress,
+                reverseShippingDetails,
+                preferences,
+                keyEncryptionKey,
+                returnToCustomerPackageDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateJobDetails>.Write(ModelReaderWriterOptions options)

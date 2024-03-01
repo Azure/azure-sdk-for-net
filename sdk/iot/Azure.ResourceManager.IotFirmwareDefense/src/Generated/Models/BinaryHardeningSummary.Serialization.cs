@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TotalFiles))
+            if (TotalFiles.HasValue)
             {
                 writer.WritePropertyName("totalFiles"u8);
                 writer.WriteNumberValue(TotalFiles.Value);
             }
-            if (Optional.IsDefined(Nx))
+            if (Nx.HasValue)
             {
                 if (Nx != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("nx");
                 }
             }
-            if (Optional.IsDefined(Pie))
+            if (Pie.HasValue)
             {
                 if (Pie != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("pie");
                 }
             }
-            if (Optional.IsDefined(Relro))
+            if (Relro.HasValue)
             {
                 if (Relro != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("relro");
                 }
             }
-            if (Optional.IsDefined(Canary))
+            if (Canary.HasValue)
             {
                 if (Canary != null)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("canary");
                 }
             }
-            if (Optional.IsDefined(Stripped))
+            if (Stripped.HasValue)
             {
                 if (Stripped != null)
                 {
@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<long> totalFiles = default;
-            Optional<int?> nx = default;
-            Optional<int?> pie = default;
-            Optional<int?> relro = default;
-            Optional<int?> canary = default;
-            Optional<int?> stripped = default;
+            long? totalFiles = default;
+            int? nx = default;
+            int? pie = default;
+            int? relro = default;
+            int? canary = default;
+            int? stripped = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BinaryHardeningSummary(Optional.ToNullable(totalFiles), Optional.ToNullable(nx), Optional.ToNullable(pie), Optional.ToNullable(relro), Optional.ToNullable(canary), Optional.ToNullable(stripped), serializedAdditionalRawData);
+            return new BinaryHardeningSummary(
+                totalFiles,
+                nx,
+                pie,
+                relro,
+                canary,
+                stripped,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BinaryHardeningSummary>.Write(ModelReaderWriterOptions options)

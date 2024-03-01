@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Orbital.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroundStationName))
+            if (GroundStationName != null)
             {
                 writer.WritePropertyName("groundStation"u8);
                 writer.WriteStringValue(GroundStationName);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "D");
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Orbital.Models
             {
                 return null;
             }
-            Optional<string> groundStation = default;
-            Optional<DateTimeOffset> expirationDate = default;
+            string groundStation = default;
+            DateTimeOffset? expirationDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizedGroundStation(groundStation.Value, Optional.ToNullable(expirationDate), serializedAdditionalRawData);
+            return new AuthorizedGroundStation(groundStation, expirationDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizedGroundStation>.Write(ModelReaderWriterOptions options)

@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timeout))
+            if (options.Format != "W" && Timeout.HasValue)
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Parameters))
+            if (options.Format != "W" && !(Parameters is ChangeTrackingList<ScriptParameter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<TimeSpan> timeout = default;
-            Optional<IReadOnlyList<ScriptParameter>> parameters = default;
+            SystemData systemData = default;
+            string description = default;
+            TimeSpan? timeout = default;
+            IReadOnlyList<ScriptParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,15 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptCmdletData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(timeout), Optional.ToList(parameters), serializedAdditionalRawData);
+            return new ScriptCmdletData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                timeout,
+                parameters ?? new ChangeTrackingList<ScriptParameter>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptCmdletData>.Write(ModelReaderWriterOptions options)

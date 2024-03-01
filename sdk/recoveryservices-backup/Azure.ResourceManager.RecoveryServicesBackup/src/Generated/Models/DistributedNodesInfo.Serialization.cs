@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NodeName))
+            if (NodeName != null)
             {
                 writer.WritePropertyName("nodeName"u8);
                 writer.WriteStringValue(NodeName);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(ErrorDetail))
+            if (ErrorDetail != null)
             {
                 writer.WritePropertyName("errorDetail"u8);
                 writer.WriteObjectValue(ErrorDetail);
             }
-            if (Optional.IsDefined(SourceResourceId))
+            if (SourceResourceId != null)
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> nodeName = default;
-            Optional<string> status = default;
-            Optional<BackupErrorDetail> errorDetail = default;
-            Optional<string> sourceResourceId = default;
+            string nodeName = default;
+            string status = default;
+            BackupErrorDetail errorDetail = default;
+            string sourceResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DistributedNodesInfo(nodeName.Value, status.Value, errorDetail.Value, sourceResourceId.Value, serializedAdditionalRawData);
+            return new DistributedNodesInfo(nodeName, status, errorDetail, sourceResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DistributedNodesInfo>.Write(ModelReaderWriterOptions options)

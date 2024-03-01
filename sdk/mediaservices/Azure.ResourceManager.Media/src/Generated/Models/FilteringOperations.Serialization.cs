@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Deinterlace))
+            if (Deinterlace != null)
             {
                 writer.WritePropertyName("deinterlace"u8);
                 writer.WriteObjectValue(Deinterlace);
             }
-            if (Optional.IsDefined(Rotation))
+            if (Rotation.HasValue)
             {
                 writer.WritePropertyName("rotation"u8);
                 writer.WriteStringValue(Rotation.Value.ToString());
             }
-            if (Optional.IsDefined(Crop))
+            if (Crop != null)
             {
                 writer.WritePropertyName("crop"u8);
                 writer.WriteObjectValue(Crop);
             }
-            if (Optional.IsDefined(FadeIn))
+            if (FadeIn != null)
             {
                 writer.WritePropertyName("fadeIn"u8);
                 writer.WriteObjectValue(FadeIn);
             }
-            if (Optional.IsDefined(FadeOut))
+            if (FadeOut != null)
             {
                 writer.WritePropertyName("fadeOut"u8);
                 writer.WriteObjectValue(FadeOut);
             }
-            if (Optional.IsCollectionDefined(Overlays))
+            if (!(Overlays is ChangeTrackingList<MediaOverlayBase> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("overlays"u8);
                 writer.WriteStartArray();
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<DeinterlaceSettings> deinterlace = default;
-            Optional<RotationSetting> rotation = default;
-            Optional<RectangularWindow> crop = default;
-            Optional<FadeOptions> fadeIn = default;
-            Optional<FadeOptions> fadeOut = default;
-            Optional<IList<MediaOverlayBase>> overlays = default;
+            DeinterlaceSettings deinterlace = default;
+            RotationSetting? rotation = default;
+            RectangularWindow crop = default;
+            FadeOptions fadeIn = default;
+            FadeOptions fadeOut = default;
+            IList<MediaOverlayBase> overlays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FilteringOperations(deinterlace.Value, Optional.ToNullable(rotation), crop.Value, fadeIn.Value, fadeOut.Value, Optional.ToList(overlays), serializedAdditionalRawData);
+            return new FilteringOperations(
+                deinterlace,
+                rotation,
+                crop,
+                fadeIn,
+                fadeOut,
+                overlays ?? new ChangeTrackingList<MediaOverlayBase>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FilteringOperations>.Write(ModelReaderWriterOptions options)

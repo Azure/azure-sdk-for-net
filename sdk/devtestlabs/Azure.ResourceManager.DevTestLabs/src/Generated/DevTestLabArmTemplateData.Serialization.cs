@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,34 +56,34 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(Publisher))
+            if (options.Format != "W" && Publisher != null)
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (options.Format != "W" && Optional.IsDefined(Icon))
+            if (options.Format != "W" && Icon != null)
             {
                 writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(Icon);
             }
-            if (options.Format != "W" && Optional.IsDefined(Contents))
+            if (options.Format != "W" && Contents != null)
             {
                 writer.WritePropertyName("contents"u8);
 #if NET6_0_OR_GREATER
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ParametersValueFilesInfo))
+            if (options.Format != "W" && !(ParametersValueFilesInfo is ChangeTrackingList<DevTestLabParametersValueFileInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("parametersValueFilesInfo"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
+            if (options.Format != "W" && IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -154,20 +154,20 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> publisher = default;
-            Optional<string> icon = default;
-            Optional<BinaryData> contents = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<IReadOnlyList<DevTestLabParametersValueFileInfo>> parametersValueFilesInfo = default;
-            Optional<bool> enabled = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            string publisher = default;
+            string icon = default;
+            BinaryData contents = default;
+            DateTimeOffset? createdDate = default;
+            IReadOnlyList<DevTestLabParametersValueFileInfo> parametersValueFilesInfo = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -294,7 +294,22 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabArmTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, displayName.Value, description.Value, publisher.Value, icon.Value, contents.Value, Optional.ToNullable(createdDate), Optional.ToList(parametersValueFilesInfo), Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new DevTestLabArmTemplateData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                displayName,
+                description,
+                publisher,
+                icon,
+                contents,
+                createdDate,
+                parametersValueFilesInfo ?? new ChangeTrackingList<DevTestLabParametersValueFileInfo>(),
+                enabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabArmTemplateData>.Write(ModelReaderWriterOptions options)

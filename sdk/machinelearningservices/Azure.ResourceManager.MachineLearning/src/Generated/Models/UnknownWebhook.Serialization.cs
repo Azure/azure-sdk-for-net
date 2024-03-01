@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventType))
+            if (EventType != null)
             {
                 if (EventType != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> eventType = default;
+            string eventType = default;
             MachineLearningWebhookType webhookType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownWebhook(eventType.Value, webhookType, serializedAdditionalRawData);
+            return new UnknownWebhook(eventType, webhookType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWebhook>.Write(ModelReaderWriterOptions options)

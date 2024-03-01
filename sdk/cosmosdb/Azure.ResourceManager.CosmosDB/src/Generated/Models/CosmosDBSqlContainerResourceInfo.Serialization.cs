@@ -28,52 +28,52 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(ContainerName);
-            if (Optional.IsDefined(IndexingPolicy))
+            if (IndexingPolicy != null)
             {
                 writer.WritePropertyName("indexingPolicy"u8);
                 writer.WriteObjectValue(IndexingPolicy);
             }
-            if (Optional.IsDefined(PartitionKey))
+            if (PartitionKey != null)
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteObjectValue(PartitionKey);
             }
-            if (Optional.IsDefined(DefaultTtl))
+            if (DefaultTtl.HasValue)
             {
                 writer.WritePropertyName("defaultTtl"u8);
                 writer.WriteNumberValue(DefaultTtl.Value);
             }
-            if (Optional.IsDefined(UniqueKeyPolicy))
+            if (UniqueKeyPolicy != null)
             {
                 writer.WritePropertyName("uniqueKeyPolicy"u8);
                 writer.WriteObjectValue(UniqueKeyPolicy);
             }
-            if (Optional.IsDefined(ConflictResolutionPolicy))
+            if (ConflictResolutionPolicy != null)
             {
                 writer.WritePropertyName("conflictResolutionPolicy"u8);
                 writer.WriteObjectValue(ConflictResolutionPolicy);
             }
-            if (Optional.IsDefined(ClientEncryptionPolicy))
+            if (ClientEncryptionPolicy != null)
             {
                 writer.WritePropertyName("clientEncryptionPolicy"u8);
                 writer.WriteObjectValue(ClientEncryptionPolicy);
             }
-            if (Optional.IsDefined(AnalyticalStorageTtl))
+            if (AnalyticalStorageTtl.HasValue)
             {
                 writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
             }
-            if (Optional.IsDefined(RestoreParameters))
+            if (RestoreParameters != null)
             {
                 writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters);
             }
-            if (Optional.IsDefined(CreateMode))
+            if (CreateMode.HasValue)
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Optional.IsDefined(MaterializedViewDefinition))
+            if (MaterializedViewDefinition != null)
             {
                 writer.WritePropertyName("materializedViewDefinition"u8);
                 writer.WriteObjectValue(MaterializedViewDefinition);
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string id = default;
-            Optional<CosmosDBIndexingPolicy> indexingPolicy = default;
-            Optional<CosmosDBContainerPartitionKey> partitionKey = default;
-            Optional<int> defaultTtl = default;
-            Optional<CosmosDBUniqueKeyPolicy> uniqueKeyPolicy = default;
-            Optional<ConflictResolutionPolicy> conflictResolutionPolicy = default;
-            Optional<CosmosDBClientEncryptionPolicy> clientEncryptionPolicy = default;
-            Optional<long> analyticalStorageTtl = default;
-            Optional<ResourceRestoreParameters> restoreParameters = default;
-            Optional<CosmosDBAccountCreateMode> createMode = default;
-            Optional<MaterializedViewDefinition> materializedViewDefinition = default;
+            CosmosDBIndexingPolicy indexingPolicy = default;
+            CosmosDBContainerPartitionKey partitionKey = default;
+            int? defaultTtl = default;
+            CosmosDBUniqueKeyPolicy uniqueKeyPolicy = default;
+            ConflictResolutionPolicy conflictResolutionPolicy = default;
+            CosmosDBClientEncryptionPolicy clientEncryptionPolicy = default;
+            long? analyticalStorageTtl = default;
+            ResourceRestoreParameters restoreParameters = default;
+            CosmosDBAccountCreateMode? createMode = default;
+            MaterializedViewDefinition materializedViewDefinition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,7 +232,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlContainerResourceInfo(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, clientEncryptionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Optional.ToNullable(createMode), materializedViewDefinition.Value, serializedAdditionalRawData);
+            return new CosmosDBSqlContainerResourceInfo(
+                id,
+                indexingPolicy,
+                partitionKey,
+                defaultTtl,
+                uniqueKeyPolicy,
+                conflictResolutionPolicy,
+                clientEncryptionPolicy,
+                analyticalStorageTtl,
+                restoreParameters,
+                createMode,
+                materializedViewDefinition,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBSqlContainerResourceInfo>.Write(ModelReaderWriterOptions options)

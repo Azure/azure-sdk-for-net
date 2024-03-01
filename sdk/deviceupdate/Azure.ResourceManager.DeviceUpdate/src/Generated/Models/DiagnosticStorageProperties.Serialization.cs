@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             writer.WriteStartObject();
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
-            if (Optional.IsDefined(ConnectionString))
+            if (ConnectionString != null)
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 return null;
             }
             DiagnosticStorageAuthenticationType authenticationType = default;
-            Optional<string> connectionString = default;
+            string connectionString = default;
             ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticStorageProperties(authenticationType, connectionString.Value, resourceId, serializedAdditionalRawData);
+            return new DiagnosticStorageProperties(authenticationType, connectionString, resourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticStorageProperties>.Write(ModelReaderWriterOptions options)

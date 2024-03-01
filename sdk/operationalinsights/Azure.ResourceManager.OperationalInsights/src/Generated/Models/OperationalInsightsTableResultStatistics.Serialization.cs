@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Progress))
+            if (options.Format != "W" && Progress.HasValue)
             {
                 writer.WritePropertyName("progress"u8);
                 writer.WriteNumberValue(Progress.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IngestedRecords))
+            if (options.Format != "W" && IngestedRecords.HasValue)
             {
                 writer.WritePropertyName("ingestedRecords"u8);
                 writer.WriteNumberValue(IngestedRecords.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScannedGB))
+            if (options.Format != "W" && ScannedGB.HasValue)
             {
                 writer.WritePropertyName("scannedGb"u8);
                 writer.WriteNumberValue(ScannedGB.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<float> progress = default;
-            Optional<int> ingestedRecords = default;
-            Optional<float> scannedGb = default;
+            float? progress = default;
+            int? ingestedRecords = default;
+            float? scannedGb = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsTableResultStatistics(Optional.ToNullable(progress), Optional.ToNullable(ingestedRecords), Optional.ToNullable(scannedGb), serializedAdditionalRawData);
+            return new OperationalInsightsTableResultStatistics(progress, ingestedRecords, scannedGb, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsTableResultStatistics>.Write(ModelReaderWriterOptions options)

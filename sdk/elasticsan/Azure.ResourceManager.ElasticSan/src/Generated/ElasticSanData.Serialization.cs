@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ElasticSan
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ElasticSan
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ElasticSan
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsCollectionDefined(AvailabilityZones))
+            if (!(AvailabilityZones is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ElasticSan
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -84,32 +84,32 @@ namespace Azure.ResourceManager.ElasticSan
             writer.WriteNumberValue(BaseSizeTiB);
             writer.WritePropertyName("extendedCapacitySizeTiB"u8);
             writer.WriteNumberValue(ExtendedCapacitySizeTiB);
-            if (options.Format != "W" && Optional.IsDefined(TotalVolumeSizeGiB))
+            if (options.Format != "W" && TotalVolumeSizeGiB.HasValue)
             {
                 writer.WritePropertyName("totalVolumeSizeGiB"u8);
                 writer.WriteNumberValue(TotalVolumeSizeGiB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VolumeGroupCount))
+            if (options.Format != "W" && VolumeGroupCount.HasValue)
             {
                 writer.WritePropertyName("volumeGroupCount"u8);
                 writer.WriteNumberValue(VolumeGroupCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalIops))
+            if (options.Format != "W" && TotalIops.HasValue)
             {
                 writer.WritePropertyName("totalIops"u8);
                 writer.WriteNumberValue(TotalIops.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalMbps))
+            if (options.Format != "W" && TotalMbps.HasValue)
             {
                 writer.WritePropertyName("totalMBps"u8);
                 writer.WriteNumberValue(TotalMbps.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalSizeTiB))
+            if (options.Format != "W" && TotalSizeTiB.HasValue)
             {
                 writer.WritePropertyName("totalSizeTiB"u8);
                 writer.WriteNumberValue(TotalSizeTiB.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<ElasticSanPrivateEndpointConnectionData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ElasticSan
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -163,24 +163,24 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             ElasticSanSku sku = default;
-            Optional<IList<string>> availabilityZones = default;
-            Optional<ElasticSanProvisioningState> provisioningState = default;
+            IList<string> availabilityZones = default;
+            ElasticSanProvisioningState? provisioningState = default;
             long baseSizeTiB = default;
             long extendedCapacitySizeTiB = default;
-            Optional<long> totalVolumeSizeGiB = default;
-            Optional<long> volumeGroupCount = default;
-            Optional<long> totalIops = default;
-            Optional<long> totalMbps = default;
-            Optional<long> totalSizeTiB = default;
-            Optional<IReadOnlyList<ElasticSanPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<ElasticSanPublicNetworkAccess> publicNetworkAccess = default;
+            long? totalVolumeSizeGiB = default;
+            long? volumeGroupCount = default;
+            long? totalIops = default;
+            long? totalMbps = default;
+            long? totalSizeTiB = default;
+            IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default;
+            ElasticSanPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -352,7 +352,26 @@ namespace Azure.ResourceManager.ElasticSan
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(availabilityZones), Optional.ToNullable(provisioningState), baseSizeTiB, extendedCapacitySizeTiB, Optional.ToNullable(totalVolumeSizeGiB), Optional.ToNullable(volumeGroupCount), Optional.ToNullable(totalIops), Optional.ToNullable(totalMbps), Optional.ToNullable(totalSizeTiB), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new ElasticSanData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                availabilityZones ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                baseSizeTiB,
+                extendedCapacitySizeTiB,
+                totalVolumeSizeGiB,
+                volumeGroupCount,
+                totalIops,
+                totalMbps,
+                totalSizeTiB,
+                privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(),
+                publicNetworkAccess,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanData>.Write(ModelReaderWriterOptions options)

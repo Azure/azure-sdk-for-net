@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Delete))
+            if (Delete != null)
             {
                 writer.WritePropertyName("delete"u8);
                 writer.WriteObjectValue(Delete);
             }
-            if (Optional.IsDefined(Set))
+            if (Set != null)
             {
                 writer.WritePropertyName("set"u8);
                 writer.WriteObjectValue(Set);
             }
-            if (Optional.IsDefined(Add))
+            if (Add != null)
             {
                 writer.WritePropertyName("add"u8);
                 writer.WriteObjectValue(Add);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IPExtendedCommunityIdList> delete = default;
-            Optional<IPExtendedCommunityIdList> @set = default;
-            Optional<IPExtendedCommunityIdList> @add = default;
+            IPExtendedCommunityIdList delete = default;
+            IPExtendedCommunityIdList @set = default;
+            IPExtendedCommunityIdList @add = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActionIPExtendedCommunityProperties(@add.Value, serializedAdditionalRawData, delete.Value, @set.Value);
+            return new ActionIPExtendedCommunityProperties(@add, serializedAdditionalRawData, delete, @set);
         }
 
         BinaryData IPersistableModel<ActionIPExtendedCommunityProperties>.Write(ModelReaderWriterOptions options)

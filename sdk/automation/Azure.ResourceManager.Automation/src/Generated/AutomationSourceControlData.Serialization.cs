@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RepoUri))
+            if (RepoUri != null)
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Branch))
+            if (Branch != null)
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Optional.IsDefined(FolderPath))
+            if (FolderPath != null)
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (Optional.IsDefined(IsAutoSyncEnabled))
+            if (IsAutoSyncEnabled.HasValue)
             {
                 writer.WritePropertyName("autoSync"u8);
                 writer.WriteBooleanValue(IsAutoSyncEnabled.Value);
             }
-            if (Optional.IsDefined(IsAutoPublishRunbookEnabled))
+            if (IsAutoPublishRunbookEnabled.HasValue)
             {
                 writer.WritePropertyName("publishRunbook"u8);
                 writer.WriteBooleanValue(IsAutoPublishRunbookEnabled.Value);
             }
-            if (Optional.IsDefined(SourceType))
+            if (SourceType.HasValue)
             {
                 writer.WritePropertyName("sourceType"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -137,16 +137,16 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> repoUrl = default;
-            Optional<string> branch = default;
-            Optional<string> folderPath = default;
-            Optional<bool> autoSync = default;
-            Optional<bool> publishRunbook = default;
-            Optional<SourceControlSourceType> sourceType = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
+            SystemData systemData = default;
+            Uri repoUrl = default;
+            string branch = default;
+            string folderPath = default;
+            bool? autoSync = default;
+            bool? publishRunbook = default;
+            SourceControlSourceType? sourceType = default;
+            string description = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -262,7 +262,21 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationSourceControlData(id, name, type, systemData.Value, repoUrl.Value, branch.Value, folderPath.Value, Optional.ToNullable(autoSync), Optional.ToNullable(publishRunbook), Optional.ToNullable(sourceType), description.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), serializedAdditionalRawData);
+            return new AutomationSourceControlData(
+                id,
+                name,
+                type,
+                systemData,
+                repoUrl,
+                branch,
+                folderPath,
+                autoSync,
+                publishRunbook,
+                sourceType,
+                description,
+                creationTime,
+                lastModifiedTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationSourceControlData>.Write(ModelReaderWriterOptions options)

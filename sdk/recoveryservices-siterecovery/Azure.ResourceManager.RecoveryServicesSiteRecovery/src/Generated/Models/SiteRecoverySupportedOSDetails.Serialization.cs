@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OSName))
+            if (OSName != null)
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
-            if (Optional.IsDefined(OSType))
+            if (OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Optional.IsCollectionDefined(OSVersions))
+            if (!(OSVersions is ChangeTrackingList<SiteRecoveryOSVersionWrapper> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("osVersions"u8);
                 writer.WriteStartArray();
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> osName = default;
-            Optional<string> osType = default;
-            Optional<IReadOnlyList<SiteRecoveryOSVersionWrapper>> osVersions = default;
+            string osName = default;
+            string osType = default;
+            IReadOnlyList<SiteRecoveryOSVersionWrapper> osVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoverySupportedOSDetails(osName.Value, osType.Value, Optional.ToList(osVersions), serializedAdditionalRawData);
+            return new SiteRecoverySupportedOSDetails(osName, osType, osVersions ?? new ChangeTrackingList<SiteRecoveryOSVersionWrapper>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoverySupportedOSDetails>.Write(ModelReaderWriterOptions options)

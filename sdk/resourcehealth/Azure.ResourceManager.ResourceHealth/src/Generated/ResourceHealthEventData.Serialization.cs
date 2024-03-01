@@ -43,74 +43,74 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventType))
+            if (EventType.HasValue)
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType.Value.ToString());
             }
-            if (Optional.IsDefined(EventSubType))
+            if (EventSubType.HasValue)
             {
                 writer.WritePropertyName("eventSubType"u8);
                 writer.WriteStringValue(EventSubType.Value.ToString());
             }
-            if (Optional.IsDefined(EventSource))
+            if (EventSource.HasValue)
             {
                 writer.WritePropertyName("eventSource"u8);
                 writer.WriteStringValue(EventSource.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Summary))
+            if (Summary != null)
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Optional.IsDefined(Header))
+            if (Header != null)
             {
                 writer.WritePropertyName("header"u8);
                 writer.WriteStringValue(Header);
             }
-            if (Optional.IsDefined(Level))
+            if (Level.HasValue)
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToString());
             }
-            if (Optional.IsDefined(EventLevel))
+            if (EventLevel.HasValue)
             {
                 writer.WritePropertyName("eventLevel"u8);
                 writer.WriteStringValue(EventLevel.Value.ToString());
             }
-            if (Optional.IsDefined(ExternalIncidentId))
+            if (ExternalIncidentId != null)
             {
                 writer.WritePropertyName("externalIncidentId"u8);
                 writer.WriteStringValue(ExternalIncidentId);
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Optional.IsDefined(Article))
+            if (Article != null)
             {
                 writer.WritePropertyName("article"u8);
                 writer.WriteObjectValue(Article);
             }
-            if (Optional.IsCollectionDefined(Links))
+            if (!(Links is ChangeTrackingList<ResourceHealthEventLink> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -120,17 +120,17 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ImpactStartOn))
+            if (ImpactStartOn.HasValue)
             {
                 writer.WritePropertyName("impactStartTime"u8);
                 writer.WriteStringValue(ImpactStartOn.Value, "O");
             }
-            if (Optional.IsDefined(ImpactMitigationOn))
+            if (ImpactMitigationOn.HasValue)
             {
                 writer.WritePropertyName("impactMitigationTime"u8);
                 writer.WriteStringValue(ImpactMitigationOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Impact))
+            if (!(Impact is ChangeTrackingList<ResourceHealthEventImpact> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("impact"u8);
                 writer.WriteStartArray();
@@ -140,12 +140,12 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RecommendedActions))
+            if (RecommendedActions != null)
             {
                 writer.WritePropertyName("recommendedActions"u8);
                 writer.WriteObjectValue(RecommendedActions);
             }
-            if (Optional.IsCollectionDefined(Faqs))
+            if (!(Faqs is ChangeTrackingList<ResourceHealthEventFaq> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("faqs"u8);
                 writer.WriteStartArray();
@@ -155,72 +155,72 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsHirEvent))
+            if (IsHirEvent.HasValue)
             {
                 writer.WritePropertyName("isHIR"u8);
                 writer.WriteBooleanValue(IsHirEvent.Value);
             }
-            if (Optional.IsDefined(IsMicrosoftSupportEnabled))
+            if (IsMicrosoftSupportEnabled.HasValue)
             {
                 writer.WritePropertyName("enableMicrosoftSupport"u8);
                 writer.WriteBooleanValue(IsMicrosoftSupportEnabled.Value);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(IsPlatformInitiated))
+            if (IsPlatformInitiated.HasValue)
             {
                 writer.WritePropertyName("platformInitiated"u8);
                 writer.WriteBooleanValue(IsPlatformInitiated.Value);
             }
-            if (Optional.IsDefined(IsChatWithUsEnabled))
+            if (IsChatWithUsEnabled.HasValue)
             {
                 writer.WritePropertyName("enableChatWithUs"u8);
                 writer.WriteBooleanValue(IsChatWithUsEnabled.Value);
             }
-            if (Optional.IsDefined(Priority))
+            if (Priority.HasValue)
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsDefined(LastUpdateOn))
+            if (LastUpdateOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdateTime"u8);
                 writer.WriteStringValue(LastUpdateOn.Value, "O");
             }
-            if (Optional.IsDefined(HirStage))
+            if (HirStage != null)
             {
                 writer.WritePropertyName("hirStage"u8);
                 writer.WriteStringValue(HirStage);
             }
-            if (Optional.IsDefined(AdditionalInformation))
+            if (AdditionalInformation != null)
             {
                 writer.WritePropertyName("additionalInformation"u8);
                 writer.WriteObjectValue(AdditionalInformation);
             }
-            if (Optional.IsDefined(Duration))
+            if (Duration.HasValue)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteNumberValue(Duration.Value);
             }
-            if (Optional.IsDefined(ImpactType))
+            if (ImpactType != null)
             {
                 writer.WritePropertyName("impactType"u8);
                 writer.WriteStringValue(ImpactType);
             }
-            if (Optional.IsDefined(MaintenanceId))
+            if (MaintenanceId != null)
             {
                 writer.WritePropertyName("maintenanceId"u8);
                 writer.WriteStringValue(MaintenanceId);
             }
-            if (Optional.IsDefined(MaintenanceType))
+            if (MaintenanceType != null)
             {
                 writer.WritePropertyName("maintenanceType"u8);
                 writer.WriteStringValue(MaintenanceType);
             }
-            if (Optional.IsDefined(ArgQuery))
+            if (ArgQuery != null)
             {
                 writer.WritePropertyName("argQuery"u8);
                 writer.WriteStringValue(ArgQuery);
@@ -267,39 +267,39 @@ namespace Azure.ResourceManager.ResourceHealth
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceHealthEventTypeValue> eventType = default;
-            Optional<EventSubTypeValue> eventSubType = default;
-            Optional<ResourceHealthEventSourceValue> eventSource = default;
-            Optional<ResourceHealthEventStatusValue> status = default;
-            Optional<string> title = default;
-            Optional<string> summary = default;
-            Optional<string> header = default;
-            Optional<ResourceHealthEventInsightLevelValue> level = default;
-            Optional<ResourceHealthEventLevelValue> eventLevel = default;
-            Optional<string> externalIncidentId = default;
-            Optional<string> reason = default;
-            Optional<ResourceHealthEventArticle> article = default;
-            Optional<IReadOnlyList<ResourceHealthEventLink>> links = default;
-            Optional<DateTimeOffset> impactStartTime = default;
-            Optional<DateTimeOffset> impactMitigationTime = default;
-            Optional<IReadOnlyList<ResourceHealthEventImpact>> impact = default;
-            Optional<ResourceHealthEventRecommendedActions> recommendedActions = default;
-            Optional<IReadOnlyList<ResourceHealthEventFaq>> faqs = default;
-            Optional<bool> isHIR = default;
-            Optional<bool> enableMicrosoftSupport = default;
-            Optional<string> description = default;
-            Optional<bool> platformInitiated = default;
-            Optional<bool> enableChatWithUs = default;
-            Optional<int> priority = default;
-            Optional<DateTimeOffset> lastUpdateTime = default;
-            Optional<string> hirStage = default;
-            Optional<ResourceHealthEventAdditionalInformation> additionalInformation = default;
-            Optional<int> duration = default;
-            Optional<string> impactType = default;
-            Optional<string> maintenanceId = default;
-            Optional<string> maintenanceType = default;
-            Optional<string> argQuery = default;
+            SystemData systemData = default;
+            ResourceHealthEventTypeValue? eventType = default;
+            EventSubTypeValue? eventSubType = default;
+            ResourceHealthEventSourceValue? eventSource = default;
+            ResourceHealthEventStatusValue? status = default;
+            string title = default;
+            string summary = default;
+            string header = default;
+            ResourceHealthEventInsightLevelValue? level = default;
+            ResourceHealthEventLevelValue? eventLevel = default;
+            string externalIncidentId = default;
+            string reason = default;
+            ResourceHealthEventArticle article = default;
+            IReadOnlyList<ResourceHealthEventLink> links = default;
+            DateTimeOffset? impactStartTime = default;
+            DateTimeOffset? impactMitigationTime = default;
+            IReadOnlyList<ResourceHealthEventImpact> impact = default;
+            ResourceHealthEventRecommendedActions recommendedActions = default;
+            IReadOnlyList<ResourceHealthEventFaq> faqs = default;
+            bool? isHIR = default;
+            bool? enableMicrosoftSupport = default;
+            string description = default;
+            bool? platformInitiated = default;
+            bool? enableChatWithUs = default;
+            int? priority = default;
+            DateTimeOffset? lastUpdateTime = default;
+            string hirStage = default;
+            ResourceHealthEventAdditionalInformation additionalInformation = default;
+            int? duration = default;
+            string impactType = default;
+            string maintenanceId = default;
+            string maintenanceType = default;
+            string argQuery = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -605,7 +605,44 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventData(id, name, type, systemData.Value, Optional.ToNullable(eventType), Optional.ToNullable(eventSubType), Optional.ToNullable(eventSource), Optional.ToNullable(status), title.Value, summary.Value, header.Value, Optional.ToNullable(level), Optional.ToNullable(eventLevel), externalIncidentId.Value, reason.Value, article.Value, Optional.ToList(links), Optional.ToNullable(impactStartTime), Optional.ToNullable(impactMitigationTime), Optional.ToList(impact), recommendedActions.Value, Optional.ToList(faqs), Optional.ToNullable(isHIR), Optional.ToNullable(enableMicrosoftSupport), description.Value, Optional.ToNullable(platformInitiated), Optional.ToNullable(enableChatWithUs), Optional.ToNullable(priority), Optional.ToNullable(lastUpdateTime), hirStage.Value, additionalInformation.Value, Optional.ToNullable(duration), impactType.Value, maintenanceId.Value, maintenanceType.Value, argQuery.Value, serializedAdditionalRawData);
+            return new ResourceHealthEventData(
+                id,
+                name,
+                type,
+                systemData,
+                eventType,
+                eventSubType,
+                eventSource,
+                status,
+                title,
+                summary,
+                header,
+                level,
+                eventLevel,
+                externalIncidentId,
+                reason,
+                article,
+                links ?? new ChangeTrackingList<ResourceHealthEventLink>(),
+                impactStartTime,
+                impactMitigationTime,
+                impact ?? new ChangeTrackingList<ResourceHealthEventImpact>(),
+                recommendedActions,
+                faqs ?? new ChangeTrackingList<ResourceHealthEventFaq>(),
+                isHIR,
+                enableMicrosoftSupport,
+                description,
+                platformInitiated,
+                enableChatWithUs,
+                priority,
+                lastUpdateTime,
+                hirStage,
+                additionalInformation,
+                duration,
+                impactType,
+                maintenanceId,
+                maintenanceType,
+                argQuery,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventData>.Write(ModelReaderWriterOptions options)

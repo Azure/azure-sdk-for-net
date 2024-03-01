@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Key))
+            if (Key.HasValue)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteNumberValue(Key.Value);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsCollectionDefined(Subnets))
+            if (!(Subnets is ChangeTrackingList<PrivateAccessSubnet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> key = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<IList<PrivateAccessSubnet>> subnets = default;
+            string name = default;
+            int? key = default;
+            ResourceIdentifier resourceId = default;
+            IList<PrivateAccessSubnet> subnets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateAccessVirtualNetwork(name.Value, Optional.ToNullable(key), resourceId.Value, Optional.ToList(subnets), serializedAdditionalRawData);
+            return new PrivateAccessVirtualNetwork(name, key, resourceId, subnets ?? new ChangeTrackingList<PrivateAccessSubnet>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateAccessVirtualNetwork>.Write(ModelReaderWriterOptions options)

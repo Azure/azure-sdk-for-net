@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PreserveZipFileNameAsFolder))
+            if (PreserveZipFileNameAsFolder != null)
             {
                 writer.WritePropertyName("preserveZipFileNameAsFolder"u8);
                 JsonSerializer.Serialize(writer, PreserveZipFileNameAsFolder);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<bool>> preserveZipFileNameAsFolder = default;
+            DataFactoryElement<bool> preserveZipFileNameAsFolder = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ZipDeflateReadSettings(type, additionalProperties, preserveZipFileNameAsFolder.Value);
+            return new ZipDeflateReadSettings(type, additionalProperties, preserveZipFileNameAsFolder);
         }
 
         BinaryData IPersistableModel<ZipDeflateReadSettings>.Write(ModelReaderWriterOptions options)

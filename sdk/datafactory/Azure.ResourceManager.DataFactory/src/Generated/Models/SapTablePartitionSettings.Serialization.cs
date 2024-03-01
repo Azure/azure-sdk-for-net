@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PartitionColumnName))
+            if (PartitionColumnName != null)
             {
                 writer.WritePropertyName("partitionColumnName"u8);
                 JsonSerializer.Serialize(writer, PartitionColumnName);
             }
-            if (Optional.IsDefined(PartitionUpperBound))
+            if (PartitionUpperBound != null)
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
                 JsonSerializer.Serialize(writer, PartitionUpperBound);
             }
-            if (Optional.IsDefined(PartitionLowerBound))
+            if (PartitionLowerBound != null)
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
                 JsonSerializer.Serialize(writer, PartitionLowerBound);
             }
-            if (Optional.IsDefined(MaxPartitionsNumber))
+            if (MaxPartitionsNumber != null)
             {
                 writer.WritePropertyName("maxPartitionsNumber"u8);
                 JsonSerializer.Serialize(writer, MaxPartitionsNumber);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> partitionColumnName = default;
-            Optional<DataFactoryElement<string>> partitionUpperBound = default;
-            Optional<DataFactoryElement<string>> partitionLowerBound = default;
-            Optional<DataFactoryElement<int>> maxPartitionsNumber = default;
+            DataFactoryElement<string> partitionColumnName = default;
+            DataFactoryElement<string> partitionUpperBound = default;
+            DataFactoryElement<string> partitionLowerBound = default;
+            DataFactoryElement<int> maxPartitionsNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapTablePartitionSettings(partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value, maxPartitionsNumber.Value, serializedAdditionalRawData);
+            return new SapTablePartitionSettings(partitionColumnName, partitionUpperBound, partitionLowerBound, maxPartitionsNumber, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapTablePartitionSettings>.Write(ModelReaderWriterOptions options)

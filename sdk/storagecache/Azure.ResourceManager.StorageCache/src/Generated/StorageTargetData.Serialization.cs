@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StorageCache
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Junctions))
+            if (!(Junctions is ChangeTrackingList<NamespaceJunction> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("junctions"u8);
                 writer.WriteStartArray();
@@ -65,42 +65,42 @@ namespace Azure.ResourceManager.StorageCache
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TargetType))
+            if (TargetType.HasValue)
             {
                 writer.WritePropertyName("targetType"u8);
                 writer.WriteStringValue(TargetType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(Nfs3))
+            if (Nfs3 != null)
             {
                 writer.WritePropertyName("nfs3"u8);
                 writer.WriteObjectValue(Nfs3);
             }
-            if (Optional.IsDefined(Clfs))
+            if (Clfs != null)
             {
                 writer.WritePropertyName("clfs"u8);
                 writer.WriteObjectValue(Clfs);
             }
-            if (Optional.IsDefined(Unknown))
+            if (Unknown != null)
             {
                 writer.WritePropertyName("unknown"u8);
                 writer.WriteObjectValue(Unknown);
             }
-            if (Optional.IsDefined(BlobNfs))
+            if (BlobNfs != null)
             {
                 writer.WritePropertyName("blobNfs"u8);
                 writer.WriteObjectValue(BlobNfs);
             }
-            if (options.Format != "W" && Optional.IsDefined(AllocationPercentage))
+            if (options.Format != "W" && AllocationPercentage.HasValue)
             {
                 writer.WritePropertyName("allocationPercentage"u8);
                 writer.WriteNumberValue(AllocationPercentage.Value);
@@ -144,20 +144,20 @@ namespace Azure.ResourceManager.StorageCache
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<NamespaceJunction>> junctions = default;
-            Optional<StorageTargetType> targetType = default;
-            Optional<StorageCacheProvisioningStateType> provisioningState = default;
-            Optional<StorageTargetOperationalStateType> state = default;
-            Optional<Nfs3Target> nfs3 = default;
-            Optional<ClfsTarget> clfs = default;
-            Optional<UnknownTarget> unknown = default;
-            Optional<BlobNfsTarget> blobNfs = default;
-            Optional<int> allocationPercentage = default;
+            SystemData systemData = default;
+            IList<NamespaceJunction> junctions = default;
+            StorageTargetType? targetType = default;
+            StorageCacheProvisioningStateType? provisioningState = default;
+            StorageTargetOperationalStateType? state = default;
+            Nfs3Target nfs3 = default;
+            ClfsTarget clfs = default;
+            UnknownTarget unknown = default;
+            BlobNfsTarget blobNfs = default;
+            int? allocationPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -299,7 +299,22 @@ namespace Azure.ResourceManager.StorageCache
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageTargetData(id, name, type, systemData.Value, Optional.ToList(junctions), Optional.ToNullable(targetType), Optional.ToNullable(provisioningState), Optional.ToNullable(state), nfs3.Value, clfs.Value, unknown.Value, blobNfs.Value, Optional.ToNullable(allocationPercentage), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new StorageTargetData(
+                id,
+                name,
+                type,
+                systemData,
+                junctions ?? new ChangeTrackingList<NamespaceJunction>(),
+                targetType,
+                provisioningState,
+                state,
+                nfs3,
+                clfs,
+                unknown,
+                blobNfs,
+                allocationPercentage,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageTargetData>.Write(ModelReaderWriterOptions options)

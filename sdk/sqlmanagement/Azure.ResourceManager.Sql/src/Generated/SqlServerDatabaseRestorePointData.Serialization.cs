@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,29 +48,29 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RestorePointType))
+            if (options.Format != "W" && RestorePointType.HasValue)
             {
                 writer.WritePropertyName("restorePointType"u8);
                 writer.WriteStringValue(RestorePointType.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(EarliestRestoreOn))
+            if (options.Format != "W" && EarliestRestoreOn.HasValue)
             {
                 writer.WritePropertyName("earliestRestoreDate"u8);
                 writer.WriteStringValue(EarliestRestoreOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RestorePointCreatedOn))
+            if (options.Format != "W" && RestorePointCreatedOn.HasValue)
             {
                 writer.WritePropertyName("restorePointCreationDate"u8);
                 writer.WriteStringValue(RestorePointCreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RestorePointLabel))
+            if (options.Format != "W" && RestorePointLabel != null)
             {
                 writer.WritePropertyName("restorePointLabel"u8);
                 writer.WriteStringValue(RestorePointLabel);
@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RestorePointType> restorePointType = default;
-            Optional<DateTimeOffset> earliestRestoreDate = default;
-            Optional<DateTimeOffset> restorePointCreationDate = default;
-            Optional<string> restorePointLabel = default;
+            SystemData systemData = default;
+            RestorePointType? restorePointType = default;
+            DateTimeOffset? earliestRestoreDate = default;
+            DateTimeOffset? restorePointCreationDate = default;
+            string restorePointLabel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,7 +210,17 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerDatabaseRestorePointData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(restorePointType), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(restorePointCreationDate), restorePointLabel.Value, serializedAdditionalRawData);
+            return new SqlServerDatabaseRestorePointData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                restorePointType,
+                earliestRestoreDate,
+                restorePointCreationDate,
+                restorePointLabel,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerDatabaseRestorePointData>.Write(ModelReaderWriterOptions options)

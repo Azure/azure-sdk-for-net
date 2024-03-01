@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArmResourceIdentifier))
+            if (ArmResourceIdentifier != null)
             {
                 if (ArmResourceIdentifier != null)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ArmResourceId> armResourceId = default;
+            ArmResourceId armResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserCreatedStorageAccount(armResourceId.Value, serializedAdditionalRawData);
+            return new UserCreatedStorageAccount(armResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserCreatedStorageAccount>.Write(ModelReaderWriterOptions options)

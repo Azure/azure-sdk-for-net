@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Plugin))
+            if (Plugin != null)
             {
                 writer.WritePropertyName("plugin"u8);
                 writer.WriteObjectValue(Plugin);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IstioPluginCertificateAuthority> plugin = default;
+            IstioPluginCertificateAuthority plugin = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IstioCertificateAuthority(plugin.Value, serializedAdditionalRawData);
+            return new IstioCertificateAuthority(plugin, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IstioCertificateAuthority>.Write(ModelReaderWriterOptions options)

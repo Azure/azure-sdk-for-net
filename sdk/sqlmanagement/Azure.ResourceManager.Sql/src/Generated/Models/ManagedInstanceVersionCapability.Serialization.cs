@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedEditions))
+            if (options.Format != "W" && !(SupportedEditions is ChangeTrackingList<ManagedInstanceEditionCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedEditions"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedInstancePoolEditions))
+            if (options.Format != "W" && !(SupportedInstancePoolEditions is ChangeTrackingList<InstancePoolEditionCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedInstancePoolEditions"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<ManagedInstanceEditionCapability>> supportedEditions = default;
-            Optional<IReadOnlyList<InstancePoolEditionCapability>> supportedInstancePoolEditions = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            IReadOnlyList<ManagedInstanceEditionCapability> supportedEditions = default;
+            IReadOnlyList<InstancePoolEditionCapability> supportedInstancePoolEditions = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceVersionCapability(name.Value, Optional.ToList(supportedEditions), Optional.ToList(supportedInstancePoolEditions), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ManagedInstanceVersionCapability(
+                name,
+                supportedEditions ?? new ChangeTrackingList<ManagedInstanceEditionCapability>(),
+                supportedInstancePoolEditions ?? new ChangeTrackingList<InstancePoolEditionCapability>(),
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceVersionCapability>.Write(ModelReaderWriterOptions options)

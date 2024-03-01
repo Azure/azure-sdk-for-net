@@ -130,7 +130,15 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AS2ProtocolSettings(messageConnectionSettings, acknowledgementConnectionSettings, mdnSettings, securitySettings, validationSettings, envelopeSettings, errorSettings, serializedAdditionalRawData);
+            return new AS2ProtocolSettings(
+                messageConnectionSettings,
+                acknowledgementConnectionSettings,
+                mdnSettings,
+                securitySettings,
+                validationSettings,
+                envelopeSettings,
+                errorSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AS2ProtocolSettings>.Write(ModelReaderWriterOptions options)

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CentralServer))
+            if (CentralServer != null)
             {
                 writer.WritePropertyName("centralServer"u8);
                 writer.WriteObjectValue(CentralServer);
             }
-            if (Optional.IsDefined(ApplicationServer))
+            if (ApplicationServer != null)
             {
                 writer.WritePropertyName("applicationServer"u8);
                 writer.WriteObjectValue(ApplicationServer);
             }
-            if (Optional.IsDefined(DatabaseServer))
+            if (DatabaseServer != null)
             {
                 writer.WritePropertyName("databaseServer"u8);
                 writer.WriteObjectValue(DatabaseServer);
             }
-            if (Optional.IsDefined(SharedStorage))
+            if (SharedStorage != null)
             {
                 writer.WritePropertyName("sharedStorage"u8);
                 writer.WriteObjectValue(SharedStorage);
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<CentralServerFullResourceNames> centralServer = default;
-            Optional<ApplicationServerFullResourceNames> applicationServer = default;
-            Optional<DatabaseServerFullResourceNames> databaseServer = default;
-            Optional<SharedStorageResourceNames> sharedStorage = default;
+            CentralServerFullResourceNames centralServer = default;
+            ApplicationServerFullResourceNames applicationServer = default;
+            DatabaseServerFullResourceNames databaseServer = default;
+            SharedStorageResourceNames sharedStorage = default;
             SapNamingPatternType namingPatternType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreeTierFullResourceNames(namingPatternType, serializedAdditionalRawData, centralServer.Value, applicationServer.Value, databaseServer.Value, sharedStorage.Value);
+            return new ThreeTierFullResourceNames(
+                namingPatternType,
+                serializedAdditionalRawData,
+                centralServer,
+                applicationServer,
+                databaseServer,
+                sharedStorage);
         }
 
         BinaryData IPersistableModel<ThreeTierFullResourceNames>.Write(ModelReaderWriterOptions options)

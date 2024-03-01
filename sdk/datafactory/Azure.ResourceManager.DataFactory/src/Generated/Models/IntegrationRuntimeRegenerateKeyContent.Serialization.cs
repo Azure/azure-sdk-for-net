@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyName))
+            if (KeyName.HasValue)
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IntegrationRuntimeAuthKeyName> keyName = default;
+            IntegrationRuntimeAuthKeyName? keyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationRuntimeRegenerateKeyContent(Optional.ToNullable(keyName), serializedAdditionalRawData);
+            return new IntegrationRuntimeRegenerateKeyContent(keyName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeRegenerateKeyContent>.Write(ModelReaderWriterOptions options)

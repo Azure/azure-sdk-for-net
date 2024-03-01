@@ -108,6 +108,7 @@ internal static class StreamExtensions
         }
         finally
         {
+            await destination.FlushAsync(cancellationToken).ConfigureAwait(false);
             ArrayPool<byte>.Shared.Return(buffer);
         }
     }
@@ -127,6 +128,7 @@ internal static class StreamExtensions
         }
         finally
         {
+            destination.Flush();
             ArrayPool<byte>.Shared.Return(buffer);
         }
     }

@@ -29,19 +29,19 @@ namespace Azure.Health.Insights.CancerProfiling
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(ClinicalType))
+            if (ClinicalType.HasValue)
             {
                 writer.WritePropertyName("clinicalType"u8);
                 writer.WriteStringValue(ClinicalType.Value.ToString());
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(Language))
+            if (Language != null)
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsDefined(CreatedDateTime))
+            if (CreatedDateTime.HasValue)
             {
                 writer.WritePropertyName("createdDateTime"u8);
                 writer.WriteStringValue(CreatedDateTime.Value, "O");
@@ -87,10 +87,10 @@ namespace Azure.Health.Insights.CancerProfiling
                 return null;
             }
             DocumentType type = default;
-            Optional<ClinicalDocumentType> clinicalType = default;
+            ClinicalDocumentType? clinicalType = default;
             string id = default;
-            Optional<string> language = default;
-            Optional<DateTimeOffset> createdDateTime = default;
+            string language = default;
+            DateTimeOffset? createdDateTime = default;
             DocumentContent content = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +140,14 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatientDocument(type, Optional.ToNullable(clinicalType), id, language.Value, Optional.ToNullable(createdDateTime), content, serializedAdditionalRawData);
+            return new PatientDocument(
+                type,
+                clinicalType,
+                id,
+                language,
+                createdDateTime,
+                content,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatientDocument>.Write(ModelReaderWriterOptions options)

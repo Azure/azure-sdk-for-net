@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArtifactManifestState))
+            if (ArtifactManifestState.HasValue)
             {
                 writer.WritePropertyName("artifactManifestState"u8);
                 writer.WriteStringValue(ArtifactManifestState.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ArtifactManifestState> artifactManifestState = default;
+            ArtifactManifestState? artifactManifestState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArtifactManifestUpdateState(Optional.ToNullable(artifactManifestState), serializedAdditionalRawData);
+            return new ArtifactManifestUpdateState(artifactManifestState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArtifactManifestUpdateState>.Write(ModelReaderWriterOptions options)

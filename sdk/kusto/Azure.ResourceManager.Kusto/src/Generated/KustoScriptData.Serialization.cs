@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScriptUri))
+            if (ScriptUri != null)
             {
                 writer.WritePropertyName("scriptUrl"u8);
                 writer.WriteStringValue(ScriptUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ScriptUriSasToken))
+            if (ScriptUriSasToken != null)
             {
                 writer.WritePropertyName("scriptUrlSasToken"u8);
                 writer.WriteStringValue(ScriptUriSasToken);
             }
-            if (Optional.IsDefined(ScriptContent))
+            if (ScriptContent != null)
             {
                 writer.WritePropertyName("scriptContent"u8);
                 writer.WriteStringValue(ScriptContent);
             }
-            if (Optional.IsDefined(ForceUpdateTag))
+            if (ForceUpdateTag != null)
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
-            if (Optional.IsDefined(ShouldContinueOnErrors))
+            if (ShouldContinueOnErrors.HasValue)
             {
                 writer.WritePropertyName("continueOnErrors"u8);
                 writer.WriteBooleanValue(ShouldContinueOnErrors.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Kusto
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> scriptUrl = default;
-            Optional<string> scriptUrlSasToken = default;
-            Optional<string> scriptContent = default;
-            Optional<string> forceUpdateTag = default;
-            Optional<bool> continueOnErrors = default;
-            Optional<KustoProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            Uri scriptUrl = default;
+            string scriptUrlSasToken = default;
+            string scriptContent = default;
+            string forceUpdateTag = default;
+            bool? continueOnErrors = default;
+            KustoProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,7 +217,18 @@ namespace Azure.ResourceManager.Kusto
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoScriptData(id, name, type, systemData.Value, scriptUrl.Value, scriptUrlSasToken.Value, scriptContent.Value, forceUpdateTag.Value, Optional.ToNullable(continueOnErrors), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new KustoScriptData(
+                id,
+                name,
+                type,
+                systemData,
+                scriptUrl,
+                scriptUrlSasToken,
+                scriptContent,
+                forceUpdateTag,
+                continueOnErrors,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoScriptData>.Write(ModelReaderWriterOptions options)

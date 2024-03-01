@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (options.Format != "W" && Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Optional.IsDefined(HealthCategory))
+            if (options.Format != "W" && HealthCategory != null)
             {
                 writer.WritePropertyName("healthCategory"u8);
                 writer.WriteStringValue(HealthCategory);
             }
-            if (options.Format != "W" && Optional.IsDefined(Category))
+            if (options.Format != "W" && Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && Optional.IsDefined(Severity))
+            if (options.Format != "W" && Severity != null)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (options.Format != "W" && Optional.IsDefined(Source))
+            if (options.Format != "W" && Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(IsCustomerResolvable))
+            if (options.Format != "W" && IsCustomerResolvable.HasValue)
             {
                 writer.WritePropertyName("isCustomerResolvable"u8);
                 writer.WriteBooleanValue(IsCustomerResolvable.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Summary))
+            if (options.Format != "W" && Summary != null)
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(Causes))
+            if (options.Format != "W" && Causes != null)
             {
                 writer.WritePropertyName("causes"u8);
                 writer.WriteStringValue(Causes);
             }
-            if (options.Format != "W" && Optional.IsDefined(Recommendation))
+            if (options.Format != "W" && Recommendation != null)
             {
                 writer.WritePropertyName("recommendation"u8);
                 writer.WriteStringValue(Recommendation);
@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> healthCategory = default;
-            Optional<string> category = default;
-            Optional<string> severity = default;
-            Optional<string> source = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<bool> isCustomerResolvable = default;
-            Optional<string> summary = default;
-            Optional<string> message = default;
-            Optional<string> causes = default;
-            Optional<string> recommendation = default;
+            string code = default;
+            string healthCategory = default;
+            string category = default;
+            string severity = default;
+            string source = default;
+            DateTimeOffset? creationTime = default;
+            bool? isCustomerResolvable = default;
+            string summary = default;
+            string message = default;
+            string causes = default;
+            string recommendation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationInnerHealthErrorInfo(code.Value, healthCategory.Value, category.Value, severity.Value, source.Value, Optional.ToNullable(creationTime), Optional.ToNullable(isCustomerResolvable), summary.Value, message.Value, causes.Value, recommendation.Value, serializedAdditionalRawData);
+            return new DataReplicationInnerHealthErrorInfo(
+                code,
+                healthCategory,
+                category,
+                severity,
+                source,
+                creationTime,
+                isCustomerResolvable,
+                summary,
+                message,
+                causes,
+                recommendation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationInnerHealthErrorInfo>.Write(ModelReaderWriterOptions options)

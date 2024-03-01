@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(HardwareProfile))
+            if (options.Format != "W" && HardwareProfile != null)
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (Optional.IsDefined(StorageProfile))
+            if (StorageProfile != null)
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSProfile))
+            if (options.Format != "W" && OSProfile != null)
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiagnosticsProfile))
+            if (options.Format != "W" && DiagnosticsProfile != null)
             {
                 writer.WritePropertyName("diagnosticsProfile"u8);
                 writer.WriteObjectValue(DiagnosticsProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(LicenseType))
+            if (options.Format != "W" && LicenseType != null)
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType);
             }
-            if (options.Format != "W" && Optional.IsDefined(VmId))
+            if (options.Format != "W" && VmId != null)
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecurityProfile))
+            if (options.Format != "W" && SecurityProfile != null)
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(UserData))
+            if (options.Format != "W" && UserData != null)
             {
                 writer.WritePropertyName("userData"u8);
                 writer.WriteStringValue(UserData);
             }
-            if (options.Format != "W" && Optional.IsDefined(HyperVGeneration))
+            if (options.Format != "W" && HyperVGeneration.HasValue)
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
@@ -114,16 +114,16 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<VirtualMachineHardwareProfile> hardwareProfile = default;
-            Optional<RestorePointSourceVmStorageProfile> storageProfile = default;
-            Optional<VirtualMachineOSProfile> osProfile = default;
-            Optional<DiagnosticsProfile> diagnosticsProfile = default;
-            Optional<string> licenseType = default;
-            Optional<string> vmId = default;
-            Optional<SecurityProfile> securityProfile = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> userData = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
+            VirtualMachineHardwareProfile hardwareProfile = default;
+            RestorePointSourceVmStorageProfile storageProfile = default;
+            VirtualMachineOSProfile osProfile = default;
+            DiagnosticsProfile diagnosticsProfile = default;
+            string licenseType = default;
+            string vmId = default;
+            SecurityProfile securityProfile = default;
+            AzureLocation? location = default;
+            string userData = default;
+            HyperVGeneration? hyperVGeneration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePointSourceMetadata(hardwareProfile.Value, storageProfile.Value, osProfile.Value, diagnosticsProfile.Value, licenseType.Value, vmId.Value, securityProfile.Value, Optional.ToNullable(location), userData.Value, Optional.ToNullable(hyperVGeneration), serializedAdditionalRawData);
+            return new RestorePointSourceMetadata(
+                hardwareProfile,
+                storageProfile,
+                osProfile,
+                diagnosticsProfile,
+                licenseType,
+                vmId,
+                securityProfile,
+                location,
+                userData,
+                hyperVGeneration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorePointSourceMetadata>.Write(ModelReaderWriterOptions options)

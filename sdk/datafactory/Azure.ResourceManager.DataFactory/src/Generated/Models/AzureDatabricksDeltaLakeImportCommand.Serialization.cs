@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DateFormat))
+            if (DateFormat != null)
             {
                 writer.WritePropertyName("dateFormat"u8);
                 JsonSerializer.Serialize(writer, DateFormat);
             }
-            if (Optional.IsDefined(TimestampFormat))
+            if (TimestampFormat != null)
             {
                 writer.WritePropertyName("timestampFormat"u8);
                 JsonSerializer.Serialize(writer, TimestampFormat);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> dateFormat = default;
-            Optional<DataFactoryElement<string>> timestampFormat = default;
+            DataFactoryElement<string> dateFormat = default;
+            DataFactoryElement<string> timestampFormat = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDatabricksDeltaLakeImportCommand(type, additionalProperties, dateFormat.Value, timestampFormat.Value);
+            return new AzureDatabricksDeltaLakeImportCommand(type, additionalProperties, dateFormat, timestampFormat);
         }
 
         BinaryData IPersistableModel<AzureDatabricksDeltaLakeImportCommand>.Write(ModelReaderWriterOptions options)

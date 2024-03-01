@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Communication.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Domain))
+            if (Domain != null)
             {
                 writer.WritePropertyName("Domain"u8);
                 writer.WriteObjectValue(Domain);
             }
-            if (Optional.IsDefined(Spf))
+            if (Spf != null)
             {
                 writer.WritePropertyName("SPF"u8);
                 writer.WriteObjectValue(Spf);
             }
-            if (Optional.IsDefined(Dkim))
+            if (Dkim != null)
             {
                 writer.WritePropertyName("DKIM"u8);
                 writer.WriteObjectValue(Dkim);
             }
-            if (Optional.IsDefined(Dkim2))
+            if (Dkim2 != null)
             {
                 writer.WritePropertyName("DKIM2"u8);
                 writer.WriteObjectValue(Dkim2);
             }
-            if (Optional.IsDefined(Dmarc))
+            if (Dmarc != null)
             {
                 writer.WritePropertyName("DMARC"u8);
                 writer.WriteObjectValue(Dmarc);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<VerificationDnsRecord> domain = default;
-            Optional<VerificationDnsRecord> spf = default;
-            Optional<VerificationDnsRecord> dkim = default;
-            Optional<VerificationDnsRecord> dkiM2 = default;
-            Optional<VerificationDnsRecord> dmarc = default;
+            VerificationDnsRecord domain = default;
+            VerificationDnsRecord spf = default;
+            VerificationDnsRecord dkim = default;
+            VerificationDnsRecord dkiM2 = default;
+            VerificationDnsRecord dmarc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DomainPropertiesVerificationRecords(domain.Value, spf.Value, dkim.Value, dkiM2.Value, dmarc.Value, serializedAdditionalRawData);
+            return new DomainPropertiesVerificationRecords(
+                domain,
+                spf,
+                dkim,
+                dkiM2,
+                dmarc,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DomainPropertiesVerificationRecords>.Write(ModelReaderWriterOptions options)

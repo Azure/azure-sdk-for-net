@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventHubs
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(ClientAppGroupIdentifier))
+            if (ClientAppGroupIdentifier != null)
             {
                 writer.WritePropertyName("clientAppGroupIdentifier"u8);
                 writer.WriteStringValue(ClientAppGroupIdentifier);
             }
-            if (Optional.IsCollectionDefined(Policies))
+            if (!(Policies is ChangeTrackingList<EventHubsApplicationGroupPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStartArray();
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isEnabled = default;
-            Optional<string> clientAppGroupIdentifier = default;
-            Optional<IList<EventHubsApplicationGroupPolicy>> policies = default;
+            SystemData systemData = default;
+            bool? isEnabled = default;
+            string clientAppGroupIdentifier = default;
+            IList<EventHubsApplicationGroupPolicy> policies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.EventHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsApplicationGroupData(id, name, type, systemData.Value, Optional.ToNullable(isEnabled), clientAppGroupIdentifier.Value, Optional.ToList(policies), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new EventHubsApplicationGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                isEnabled,
+                clientAppGroupIdentifier,
+                policies ?? new ChangeTrackingList<EventHubsApplicationGroupPolicy>(),
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsApplicationGroupData>.Write(ModelReaderWriterOptions options)

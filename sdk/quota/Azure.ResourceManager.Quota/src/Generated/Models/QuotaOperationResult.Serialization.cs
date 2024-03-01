@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Quota.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Display))
+            if (Display != null)
             {
                 writer.WritePropertyName("display"u8);
                 writer.WriteObjectValue(Display);
             }
-            if (Optional.IsDefined(Origin))
+            if (Origin != null)
             {
                 writer.WritePropertyName("origin"u8);
                 writer.WriteStringValue(Origin);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<QuotaOperationDisplay> display = default;
-            Optional<string> origin = default;
+            string name = default;
+            QuotaOperationDisplay display = default;
+            string origin = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaOperationResult(name.Value, display.Value, origin.Value, serializedAdditionalRawData);
+            return new QuotaOperationResult(name, display, origin, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaOperationResult>.Write(ModelReaderWriterOptions options)

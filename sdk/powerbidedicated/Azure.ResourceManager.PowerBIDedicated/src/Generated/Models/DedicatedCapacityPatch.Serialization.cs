@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Administration))
+            if (Administration != null)
             {
                 writer.WritePropertyName("administration"u8);
                 writer.WriteObjectValue(Administration);
             }
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
+            if (options.Format != "W" && FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Optional<CapacitySku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<DedicatedCapacityAdministrators> administration = default;
-            Optional<Mode> mode = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> friendlyName = default;
+            CapacitySku sku = default;
+            IDictionary<string, string> tags = default;
+            DedicatedCapacityAdministrators administration = default;
+            Mode? mode = default;
+            Guid? tenantId = default;
+            string friendlyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedCapacityPatch(sku.Value, Optional.ToDictionary(tags), administration.Value, Optional.ToNullable(mode), Optional.ToNullable(tenantId), friendlyName.Value, serializedAdditionalRawData);
+            return new DedicatedCapacityPatch(
+                sku,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                administration,
+                mode,
+                tenantId,
+                friendlyName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DedicatedCapacityPatch>.Write(ModelReaderWriterOptions options)

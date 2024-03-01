@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MinValue))
+            if (options.Format != "W" && MinValue != null)
             {
                 writer.WritePropertyName("minValue"u8);
                 writer.WriteObjectValue(MinValue);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxValue))
+            if (options.Format != "W" && MaxValue != null)
             {
                 writer.WritePropertyName("maxValue"u8);
                 writer.WriteObjectValue(MaxValue);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScaleSize))
+            if (options.Format != "W" && ScaleSize != null)
             {
                 writer.WritePropertyName("scaleSize"u8);
                 writer.WriteObjectValue(ScaleSize);
             }
-            if (options.Format != "W" && Optional.IsDefined(LogSize))
+            if (options.Format != "W" && LogSize != null)
             {
                 writer.WritePropertyName("logSize"u8);
                 writer.WriteObjectValue(LogSize);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<MaxSizeCapability> minValue = default;
-            Optional<MaxSizeCapability> maxValue = default;
-            Optional<MaxSizeCapability> scaleSize = default;
-            Optional<LogSizeCapability> logSize = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            MaxSizeCapability minValue = default;
+            MaxSizeCapability maxValue = default;
+            MaxSizeCapability scaleSize = default;
+            LogSizeCapability logSize = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaxSizeRangeCapability(minValue.Value, maxValue.Value, scaleSize.Value, logSize.Value, Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new MaxSizeRangeCapability(
+                minValue,
+                maxValue,
+                scaleSize,
+                logSize,
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaxSizeRangeCapability>.Write(ModelReaderWriterOptions options)

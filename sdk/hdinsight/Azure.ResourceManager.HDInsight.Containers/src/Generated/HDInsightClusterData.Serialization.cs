@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,39 +56,39 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ClusterType))
+            if (ClusterType != null)
             {
                 writer.WritePropertyName("clusterType"u8);
                 writer.WriteStringValue(ClusterType);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentId))
+            if (options.Format != "W" && DeploymentId != null)
             {
                 writer.WritePropertyName("deploymentId"u8);
                 writer.WriteStringValue(DeploymentId);
             }
-            if (Optional.IsDefined(ComputeProfile))
+            if (ComputeProfile != null)
             {
                 writer.WritePropertyName("computeProfile"u8);
                 writer.WriteObjectValue(ComputeProfile);
             }
-            if (Optional.IsDefined(ClusterProfile))
+            if (ClusterProfile != null)
             {
                 writer.WritePropertyName("clusterProfile"u8);
                 writer.WriteObjectValue(ClusterProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
@@ -132,18 +132,18 @@ namespace Azure.ResourceManager.HDInsight.Containers
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HDInsightProvisioningStatus> provisioningState = default;
-            Optional<string> clusterType = default;
-            Optional<string> deploymentId = default;
-            Optional<ComputeProfile> computeProfile = default;
-            Optional<ClusterProfile> clusterProfile = default;
-            Optional<string> status = default;
+            SystemData systemData = default;
+            HDInsightProvisioningStatus? provisioningState = default;
+            string clusterType = default;
+            string deploymentId = default;
+            ComputeProfile computeProfile = default;
+            ClusterProfile clusterProfile = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,7 +251,20 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), clusterType.Value, deploymentId.Value, computeProfile.Value, clusterProfile.Value, status.Value, serializedAdditionalRawData);
+            return new HDInsightClusterData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                clusterType,
+                deploymentId,
+                computeProfile,
+                clusterProfile,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterData>.Write(ModelReaderWriterOptions options)

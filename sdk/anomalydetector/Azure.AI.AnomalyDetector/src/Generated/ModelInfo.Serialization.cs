@@ -29,7 +29,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartObject();
             writer.WritePropertyName("dataSource"u8);
             writer.WriteStringValue(DataSource.AbsoluteUri);
-            if (Optional.IsDefined(DataSchema))
+            if (DataSchema.HasValue)
             {
                 writer.WritePropertyName("dataSchema"u8);
                 writer.WriteStringValue(DataSchema.Value.ToString());
@@ -38,27 +38,27 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStringValue(StartTime, "O");
             writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndTime, "O");
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(SlidingWindow))
+            if (SlidingWindow.HasValue)
             {
                 writer.WritePropertyName("slidingWindow"u8);
                 writer.WriteNumberValue(SlidingWindow.Value);
             }
-            if (Optional.IsDefined(AlignPolicy))
+            if (AlignPolicy != null)
             {
                 writer.WritePropertyName("alignPolicy"u8);
                 writer.WriteObjectValue(AlignPolicy);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
+            if (options.Format != "W" && !(Errors is ChangeTrackingList<ErrorResponse> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(DiagnosticsInfo))
+            if (options.Format != "W" && DiagnosticsInfo != null)
             {
                 writer.WritePropertyName("diagnosticsInfo"u8);
                 writer.WriteObjectValue(DiagnosticsInfo);
@@ -112,15 +112,15 @@ namespace Azure.AI.AnomalyDetector
                 return null;
             }
             Uri dataSource = default;
-            Optional<DataSchema> dataSchema = default;
+            DataSchema? dataSchema = default;
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
-            Optional<string> displayName = default;
-            Optional<int> slidingWindow = default;
-            Optional<AlignPolicy> alignPolicy = default;
-            Optional<ModelStatus> status = default;
-            Optional<IReadOnlyList<ErrorResponse>> errors = default;
-            Optional<DiagnosticsInfo> diagnosticsInfo = default;
+            string displayName = default;
+            int? slidingWindow = default;
+            AlignPolicy alignPolicy = default;
+            ModelStatus? status = default;
+            IReadOnlyList<ErrorResponse> errors = default;
+            DiagnosticsInfo diagnosticsInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,7 +210,18 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelInfo(dataSource, Optional.ToNullable(dataSchema), startTime, endTime, displayName.Value, Optional.ToNullable(slidingWindow), alignPolicy.Value, Optional.ToNullable(status), Optional.ToList(errors), diagnosticsInfo.Value, serializedAdditionalRawData);
+            return new ModelInfo(
+                dataSource,
+                dataSchema,
+                startTime,
+                endTime,
+                displayName,
+                slidingWindow,
+                alignPolicy,
+                status,
+                errors ?? new ChangeTrackingList<ErrorResponse>(),
+                diagnosticsInfo,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ModelInfo>.Write(ModelReaderWriterOptions options)

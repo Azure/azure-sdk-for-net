@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.DataMigration
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,39 +72,39 @@ namespace Azure.ResourceManager.DataMigration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(PublicKey))
+            if (PublicKey != null)
             {
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
             }
-            if (Optional.IsDefined(VirtualSubnetId))
+            if (VirtualSubnetId != null)
             {
                 writer.WritePropertyName("virtualSubnetId"u8);
                 writer.WriteStringValue(VirtualSubnetId);
             }
-            if (Optional.IsDefined(VirtualNicId))
+            if (VirtualNicId != null)
             {
                 writer.WritePropertyName("virtualNicId"u8);
                 writer.WriteStringValue(VirtualNicId);
             }
-            if (Optional.IsDefined(AutoStopDelay))
+            if (AutoStopDelay != null)
             {
                 writer.WritePropertyName("autoStopDelay"u8);
                 writer.WriteStringValue(AutoStopDelay);
             }
-            if (Optional.IsDefined(DeleteResourcesOnStop))
+            if (DeleteResourcesOnStop.HasValue)
             {
                 writer.WritePropertyName("deleteResourcesOnStop"u8);
                 writer.WriteBooleanValue(DeleteResourcesOnStop.Value);
@@ -148,21 +148,21 @@ namespace Azure.ResourceManager.DataMigration
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<string> kind = default;
-            Optional<ServiceSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            string kind = default;
+            ServiceSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             Core.ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ServiceProvisioningState> provisioningState = default;
-            Optional<string> publicKey = default;
-            Optional<string> virtualSubnetId = default;
-            Optional<string> virtualNicId = default;
-            Optional<string> autoStopDelay = default;
-            Optional<bool> deleteResourcesOnStop = default;
+            SystemData systemData = default;
+            ServiceProvisioningState? provisioningState = default;
+            string publicKey = default;
+            string virtualSubnetId = default;
+            string virtualNicId = default;
+            string autoStopDelay = default;
+            bool? deleteResourcesOnStop = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -289,7 +289,23 @@ namespace Azure.ResourceManager.DataMigration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataMigrationServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), kind.Value, sku.Value, Optional.ToNullable(provisioningState), publicKey.Value, virtualSubnetId.Value, virtualNicId.Value, autoStopDelay.Value, Optional.ToNullable(deleteResourcesOnStop), serializedAdditionalRawData);
+            return new DataMigrationServiceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                kind,
+                sku,
+                provisioningState,
+                publicKey,
+                virtualSubnetId,
+                virtualNicId,
+                autoStopDelay,
+                deleteResourcesOnStop,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataMigrationServiceData>.Write(ModelReaderWriterOptions options)

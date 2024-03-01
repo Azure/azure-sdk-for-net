@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(FieldRestrictions))
+            if (options.Format != "W" && !(FieldRestrictions is ChangeTrackingList<FieldRestrictions> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fieldRestrictions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ContentEvaluationResult))
+            if (options.Format != "W" && ContentEvaluationResult != null)
             {
                 writer.WritePropertyName("contentEvaluationResult"u8);
                 writer.WriteObjectValue(ContentEvaluationResult);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FieldRestrictions>> fieldRestrictions = default;
-            Optional<CheckRestrictionsResultContentEvaluationResult> contentEvaluationResult = default;
+            IReadOnlyList<FieldRestrictions> fieldRestrictions = default;
+            CheckRestrictionsResultContentEvaluationResult contentEvaluationResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CheckPolicyRestrictionsResult(Optional.ToList(fieldRestrictions), contentEvaluationResult.Value, serializedAdditionalRawData);
+            return new CheckPolicyRestrictionsResult(fieldRestrictions ?? new ChangeTrackingList<FieldRestrictions>(), contentEvaluationResult, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CheckPolicyRestrictionsResult>.Write(ModelReaderWriterOptions options)

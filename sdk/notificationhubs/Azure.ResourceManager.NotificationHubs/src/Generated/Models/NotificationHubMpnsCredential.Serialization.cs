@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MpnsCertificate))
+            if (MpnsCertificate != null)
             {
                 writer.WritePropertyName("mpnsCertificate"u8);
                 writer.WriteStringValue(MpnsCertificate);
             }
-            if (Optional.IsDefined(CertificateKey))
+            if (CertificateKey != null)
             {
                 writer.WritePropertyName("certificateKey"u8);
                 writer.WriteStringValue(CertificateKey);
             }
-            if (Optional.IsDefined(ThumbprintString))
+            if (ThumbprintString != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<string> mpnsCertificate = default;
-            Optional<string> certificateKey = default;
-            Optional<string> thumbprint = default;
+            string mpnsCertificate = default;
+            string certificateKey = default;
+            string thumbprint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubMpnsCredential(mpnsCertificate.Value, certificateKey.Value, thumbprint.Value, serializedAdditionalRawData);
+            return new NotificationHubMpnsCredential(mpnsCertificate, certificateKey, thumbprint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubMpnsCredential>.Write(ModelReaderWriterOptions options)

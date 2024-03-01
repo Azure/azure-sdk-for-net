@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(GroupMembers))
+            if (!(GroupMembers is ChangeTrackingList<ServerTrustGroupServerInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupMembers"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrustScopes))
+            if (!(TrustScopes is ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("trustScopes"u8);
                 writer.WriteStartArray();
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<ServerTrustGroupServerInfo>> groupMembers = default;
-            Optional<IList<ServerTrustGroupPropertiesTrustScopesItem>> trustScopes = default;
+            SystemData systemData = default;
+            IList<ServerTrustGroupServerInfo> groupMembers = default;
+            IList<ServerTrustGroupPropertiesTrustScopesItem> trustScopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +189,14 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerTrustGroupData(id, name, type, systemData.Value, Optional.ToList(groupMembers), Optional.ToList(trustScopes), serializedAdditionalRawData);
+            return new SqlServerTrustGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                groupMembers ?? new ChangeTrackingList<ServerTrustGroupServerInfo>(),
+                trustScopes ?? new ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerTrustGroupData>.Write(ModelReaderWriterOptions options)

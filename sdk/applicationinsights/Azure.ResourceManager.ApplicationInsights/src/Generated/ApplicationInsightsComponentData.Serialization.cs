@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -64,109 +64,109 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ApplicationId))
+            if (options.Format != "W" && ApplicationId != null)
             {
                 writer.WritePropertyName("ApplicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(AppId))
+            if (options.Format != "W" && AppId != null)
             {
                 writer.WritePropertyName("AppId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (options.Format != "W" && Optional.IsDefined(NamePropertiesName))
+            if (options.Format != "W" && NamePropertiesName != null)
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(NamePropertiesName);
             }
-            if (Optional.IsDefined(ApplicationType))
+            if (ApplicationType.HasValue)
             {
                 writer.WritePropertyName("Application_Type"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
-            if (Optional.IsDefined(FlowType))
+            if (FlowType.HasValue)
             {
                 writer.WritePropertyName("Flow_Type"u8);
                 writer.WriteStringValue(FlowType.Value.ToString());
             }
-            if (Optional.IsDefined(RequestSource))
+            if (RequestSource.HasValue)
             {
                 writer.WritePropertyName("Request_Source"u8);
                 writer.WriteStringValue(RequestSource.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(InstrumentationKey))
+            if (options.Format != "W" && InstrumentationKey != null)
             {
                 writer.WritePropertyName("InstrumentationKey"u8);
                 writer.WriteStringValue(InstrumentationKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("CreationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("TenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(HockeyAppId))
+            if (HockeyAppId != null)
             {
                 writer.WritePropertyName("HockeyAppId"u8);
                 writer.WriteStringValue(HockeyAppId);
             }
-            if (options.Format != "W" && Optional.IsDefined(HockeyAppToken))
+            if (options.Format != "W" && HockeyAppToken != null)
             {
                 writer.WritePropertyName("HockeyAppToken"u8);
                 writer.WriteStringValue(HockeyAppToken);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(SamplingPercentage))
+            if (SamplingPercentage.HasValue)
             {
                 writer.WritePropertyName("SamplingPercentage"u8);
                 writer.WriteNumberValue(SamplingPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectionString))
+            if (options.Format != "W" && ConnectionString != null)
             {
                 writer.WritePropertyName("ConnectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (Optional.IsDefined(RetentionInDays))
+            if (RetentionInDays.HasValue)
             {
                 writer.WritePropertyName("RetentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
-            if (Optional.IsDefined(IsDisableIPMasking))
+            if (IsDisableIPMasking.HasValue)
             {
                 writer.WritePropertyName("DisableIpMasking"u8);
                 writer.WriteBooleanValue(IsDisableIPMasking.Value);
             }
-            if (Optional.IsDefined(IsImmediatePurgeDataOn30Days))
+            if (IsImmediatePurgeDataOn30Days.HasValue)
             {
                 writer.WritePropertyName("ImmediatePurgeDataOn30Days"u8);
                 writer.WriteBooleanValue(IsImmediatePurgeDataOn30Days.Value);
             }
-            if (Optional.IsDefined(WorkspaceResourceId))
+            if (WorkspaceResourceId != null)
             {
                 writer.WritePropertyName("WorkspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(LaMigrationOn))
+            if (options.Format != "W" && LaMigrationOn.HasValue)
             {
                 writer.WritePropertyName("LaMigrationDate"u8);
                 writer.WriteStringValue(LaMigrationOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateLinkScopedResources))
+            if (options.Format != "W" && !(PrivateLinkScopedResources is ChangeTrackingList<PrivateLinkScopedResourceContent> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("PrivateLinkScopedResources"u8);
                 writer.WriteStartArray();
@@ -176,27 +176,27 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PublicNetworkAccessForIngestion))
+            if (PublicNetworkAccessForIngestion.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccessForIngestion"u8);
                 writer.WriteStringValue(PublicNetworkAccessForIngestion.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetworkAccessForQuery))
+            if (PublicNetworkAccessForQuery.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccessForQuery"u8);
                 writer.WriteStringValue(PublicNetworkAccessForQuery.Value.ToString());
             }
-            if (Optional.IsDefined(IngestionMode))
+            if (IngestionMode.HasValue)
             {
                 writer.WritePropertyName("IngestionMode"u8);
                 writer.WriteStringValue(IngestionMode.Value.ToString());
             }
-            if (Optional.IsDefined(IsDisableLocalAuth))
+            if (IsDisableLocalAuth.HasValue)
             {
                 writer.WritePropertyName("DisableLocalAuth"u8);
                 writer.WriteBooleanValue(IsDisableLocalAuth.Value);
             }
-            if (Optional.IsDefined(IsForceCustomerStorageForProfiler))
+            if (IsForceCustomerStorageForProfiler.HasValue)
             {
                 writer.WritePropertyName("ForceCustomerStorageForProfiler"u8);
                 writer.WriteBooleanValue(IsForceCustomerStorageForProfiler.Value);
@@ -241,38 +241,38 @@ namespace Azure.ResourceManager.ApplicationInsights
                 return null;
             }
             string kind = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> applicationId = default;
-            Optional<string> appId = default;
-            Optional<string> name0 = default;
-            Optional<ApplicationType> applicationType = default;
-            Optional<FlowType> flowType = default;
-            Optional<RequestSource> requestSource = default;
-            Optional<string> instrumentationKey = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> hockeyAppId = default;
-            Optional<string> hockeyAppToken = default;
-            Optional<string> provisioningState = default;
-            Optional<double> samplingPercentage = default;
-            Optional<string> connectionString = default;
-            Optional<int> retentionInDays = default;
-            Optional<bool> disableIPMasking = default;
-            Optional<bool> immediatePurgeDataOn30Days = default;
-            Optional<string> workspaceResourceId = default;
-            Optional<DateTimeOffset> laMigrationDate = default;
-            Optional<IReadOnlyList<PrivateLinkScopedResourceContent>> privateLinkScopedResources = default;
-            Optional<PublicNetworkAccessType> publicNetworkAccessForIngestion = default;
-            Optional<PublicNetworkAccessType> publicNetworkAccessForQuery = default;
-            Optional<IngestionMode> ingestionMode = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<bool> forceCustomerStorageForProfiler = default;
+            SystemData systemData = default;
+            string applicationId = default;
+            string appId = default;
+            string name0 = default;
+            ApplicationType? applicationType = default;
+            FlowType? flowType = default;
+            RequestSource? requestSource = default;
+            string instrumentationKey = default;
+            DateTimeOffset? creationDate = default;
+            Guid? tenantId = default;
+            string hockeyAppId = default;
+            string hockeyAppToken = default;
+            string provisioningState = default;
+            double? samplingPercentage = default;
+            string connectionString = default;
+            int? retentionInDays = default;
+            bool? disableIPMasking = default;
+            bool? immediatePurgeDataOn30Days = default;
+            string workspaceResourceId = default;
+            DateTimeOffset? laMigrationDate = default;
+            IReadOnlyList<PrivateLinkScopedResourceContent> privateLinkScopedResources = default;
+            PublicNetworkAccessType? publicNetworkAccessForIngestion = default;
+            PublicNetworkAccessType? publicNetworkAccessForQuery = default;
+            IngestionMode? ingestionMode = default;
+            bool? disableLocalAuth = default;
+            bool? forceCustomerStorageForProfiler = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -546,7 +546,41 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind, Optional.ToNullable(etag), applicationId.Value, appId.Value, name0.Value, Optional.ToNullable(applicationType), Optional.ToNullable(flowType), Optional.ToNullable(requestSource), instrumentationKey.Value, Optional.ToNullable(creationDate), Optional.ToNullable(tenantId), hockeyAppId.Value, hockeyAppToken.Value, provisioningState.Value, Optional.ToNullable(samplingPercentage), connectionString.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(disableIPMasking), Optional.ToNullable(immediatePurgeDataOn30Days), workspaceResourceId.Value, Optional.ToNullable(laMigrationDate), Optional.ToList(privateLinkScopedResources), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(ingestionMode), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(forceCustomerStorageForProfiler), serializedAdditionalRawData);
+            return new ApplicationInsightsComponentData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                kind,
+                etag,
+                applicationId,
+                appId,
+                name0,
+                applicationType,
+                flowType,
+                requestSource,
+                instrumentationKey,
+                creationDate,
+                tenantId,
+                hockeyAppId,
+                hockeyAppToken,
+                provisioningState,
+                samplingPercentage,
+                connectionString,
+                retentionInDays,
+                disableIPMasking,
+                immediatePurgeDataOn30Days,
+                workspaceResourceId,
+                laMigrationDate,
+                privateLinkScopedResources ?? new ChangeTrackingList<PrivateLinkScopedResourceContent>(),
+                publicNetworkAccessForIngestion,
+                publicNetworkAccessForQuery,
+                ingestionMode,
+                disableLocalAuth,
+                forceCustomerStorageForProfiler,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentData>.Write(ModelReaderWriterOptions options)

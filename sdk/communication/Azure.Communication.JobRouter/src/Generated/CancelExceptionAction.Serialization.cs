@@ -27,17 +27,17 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Note))
+            if (Note != null)
             {
                 writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);
             }
-            if (Optional.IsDefined(DispositionCode))
+            if (DispositionCode != null)
             {
                 writer.WritePropertyName("dispositionCode"u8);
                 writer.WriteStringValue(DispositionCode);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -82,9 +82,9 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<string> note = default;
-            Optional<string> dispositionCode = default;
-            Optional<string> id = default;
+            string note = default;
+            string dispositionCode = default;
+            string id = default;
             ExceptionActionKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -116,7 +116,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CancelExceptionAction(id.Value, kind, serializedAdditionalRawData, note.Value, dispositionCode.Value);
+            return new CancelExceptionAction(id, kind, serializedAdditionalRawData, note, dispositionCode);
         }
 
         BinaryData IPersistableModel<CancelExceptionAction>.Write(ModelReaderWriterOptions options)

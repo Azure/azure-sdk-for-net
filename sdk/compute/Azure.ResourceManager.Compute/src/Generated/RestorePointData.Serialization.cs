@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ExcludeDisks))
+            if (!(ExcludeDisks is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("excludeDisks"u8);
                 writer.WriteStartArray();
@@ -61,32 +61,32 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SourceMetadata))
+            if (SourceMetadata != null)
             {
                 writer.WritePropertyName("sourceMetadata"u8);
                 writer.WriteObjectValue(SourceMetadata);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(ConsistencyMode))
+            if (ConsistencyMode.HasValue)
             {
                 writer.WritePropertyName("consistencyMode"u8);
                 writer.WriteStringValue(ConsistencyMode.Value.ToString());
             }
-            if (Optional.IsDefined(TimeCreated))
+            if (TimeCreated.HasValue)
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
-            if (Optional.IsDefined(SourceRestorePoint))
+            if (SourceRestorePoint != null)
             {
                 writer.WritePropertyName("sourceRestorePoint"u8);
                 JsonSerializer.Serialize(writer, SourceRestorePoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceView))
+            if (options.Format != "W" && InstanceView != null)
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<WritableSubResource>> excludeDisks = default;
-            Optional<RestorePointSourceMetadata> sourceMetadata = default;
-            Optional<string> provisioningState = default;
-            Optional<ConsistencyModeType> consistencyMode = default;
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<WritableSubResource> sourceRestorePoint = default;
-            Optional<RestorePointInstanceView> instanceView = default;
+            SystemData systemData = default;
+            IList<WritableSubResource> excludeDisks = default;
+            RestorePointSourceMetadata sourceMetadata = default;
+            string provisioningState = default;
+            ConsistencyModeType? consistencyMode = default;
+            DateTimeOffset? timeCreated = default;
+            WritableSubResource sourceRestorePoint = default;
+            RestorePointInstanceView instanceView = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,7 +251,19 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePointData(id, name, type, systemData.Value, Optional.ToList(excludeDisks), sourceMetadata.Value, provisioningState.Value, Optional.ToNullable(consistencyMode), Optional.ToNullable(timeCreated), sourceRestorePoint, instanceView.Value, serializedAdditionalRawData);
+            return new RestorePointData(
+                id,
+                name,
+                type,
+                systemData,
+                excludeDisks ?? new ChangeTrackingList<WritableSubResource>(),
+                sourceMetadata,
+                provisioningState,
+                consistencyMode,
+                timeCreated,
+                sourceRestorePoint,
+                instanceView,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorePointData>.Write(ModelReaderWriterOptions options)

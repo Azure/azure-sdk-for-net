@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Default))
+            if (options.Format != "W" && Default.HasValue)
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Minimum))
+            if (options.Format != "W" && Minimum.HasValue)
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Maximum))
+            if (options.Format != "W" && Maximum.HasValue)
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScaleType))
+            if (options.Format != "W" && ScaleType.HasValue)
             {
                 writer.WritePropertyName("scaleType"u8);
                 writer.WriteStringValue(ScaleType.Value.ToString());
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<long> @default = default;
-            Optional<long> minimum = default;
-            Optional<long> maximum = default;
-            Optional<LabServicesSkuCapacityScaleType> scaleType = default;
+            long? @default = default;
+            long? minimum = default;
+            long? maximum = default;
+            LabServicesSkuCapacityScaleType? scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableLabServicesSkuCapacity(Optional.ToNullable(@default), Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(scaleType), serializedAdditionalRawData);
+            return new AvailableLabServicesSkuCapacity(@default, minimum, maximum, scaleType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableLabServicesSkuCapacity>.Write(ModelReaderWriterOptions options)

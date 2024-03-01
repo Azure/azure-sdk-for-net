@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.EventHubs
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,84 +66,84 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinimumTlsVersion))
+            if (MinimumTlsVersion.HasValue)
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceBusEndpoint))
+            if (options.Format != "W" && ServiceBusEndpoint != null)
             {
                 writer.WritePropertyName("serviceBusEndpoint"u8);
                 writer.WriteStringValue(ServiceBusEndpoint);
             }
-            if (Optional.IsDefined(ClusterArmId))
+            if (ClusterArmId != null)
             {
                 writer.WritePropertyName("clusterArmId"u8);
                 writer.WriteStringValue(ClusterArmId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MetricId))
+            if (options.Format != "W" && MetricId != null)
             {
                 writer.WritePropertyName("metricId"u8);
                 writer.WriteStringValue(MetricId);
             }
-            if (Optional.IsDefined(IsAutoInflateEnabled))
+            if (IsAutoInflateEnabled.HasValue)
             {
                 writer.WritePropertyName("isAutoInflateEnabled"u8);
                 writer.WriteBooleanValue(IsAutoInflateEnabled.Value);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(MaximumThroughputUnits))
+            if (MaximumThroughputUnits.HasValue)
             {
                 writer.WritePropertyName("maximumThroughputUnits"u8);
                 writer.WriteNumberValue(MaximumThroughputUnits.Value);
             }
-            if (Optional.IsDefined(KafkaEnabled))
+            if (KafkaEnabled.HasValue)
             {
                 writer.WritePropertyName("kafkaEnabled"u8);
                 writer.WriteBooleanValue(KafkaEnabled.Value);
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (ZoneRedundant.HasValue)
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(ZoneRedundant.Value);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (!(PrivateEndpointConnections is ChangeTrackingList<EventHubsPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -153,12 +153,12 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (DisableLocalAuth.HasValue)
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (Optional.IsDefined(AlternateName))
+            if (AlternateName != null)
             {
                 writer.WritePropertyName("alternateName"u8);
                 writer.WriteStringValue(AlternateName);
@@ -202,31 +202,31 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Optional<EventHubsSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            EventHubsSku sku = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EventHubsTlsVersion> minimumTlsVersion = default;
-            Optional<string> provisioningState = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<string> serviceBusEndpoint = default;
-            Optional<ResourceIdentifier> clusterArmId = default;
-            Optional<string> metricId = default;
-            Optional<bool> isAutoInflateEnabled = default;
-            Optional<EventHubsPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<int> maximumThroughputUnits = default;
-            Optional<bool> kafkaEnabled = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<EventHubsEncryption> encryption = default;
-            Optional<IList<EventHubsPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<string> alternateName = default;
+            SystemData systemData = default;
+            EventHubsTlsVersion? minimumTlsVersion = default;
+            string provisioningState = default;
+            string status = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
+            string serviceBusEndpoint = default;
+            ResourceIdentifier clusterArmId = default;
+            string metricId = default;
+            bool? isAutoInflateEnabled = default;
+            EventHubsPublicNetworkAccess? publicNetworkAccess = default;
+            int? maximumThroughputUnits = default;
+            bool? kafkaEnabled = default;
+            bool? zoneRedundant = default;
+            EventHubsEncryption encryption = default;
+            IList<EventHubsPrivateEndpointConnectionData> privateEndpointConnections = default;
+            bool? disableLocalAuth = default;
+            string alternateName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -448,7 +448,33 @@ namespace Azure.ResourceManager.EventHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(minimumTlsVersion), provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value, serializedAdditionalRawData);
+            return new EventHubsNamespaceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                identity,
+                minimumTlsVersion,
+                provisioningState,
+                status,
+                createdAt,
+                updatedAt,
+                serviceBusEndpoint,
+                clusterArmId,
+                metricId,
+                isAutoInflateEnabled,
+                publicNetworkAccess,
+                maximumThroughputUnits,
+                kafkaEnabled,
+                zoneRedundant,
+                encryption,
+                privateEndpointConnections ?? new ChangeTrackingList<EventHubsPrivateEndpointConnectionData>(),
+                disableLocalAuth,
+                alternateName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsNamespaceData>.Write(ModelReaderWriterOptions options)

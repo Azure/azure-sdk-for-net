@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Note))
+            if (Note != null)
             {
                 writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);
@@ -70,7 +70,7 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<string> note = default;
+            string note = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CompleteJobOptions(note.Value, serializedAdditionalRawData);
+            return new CompleteJobOptions(note, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CompleteJobOptions>.Write(ModelReaderWriterOptions options)

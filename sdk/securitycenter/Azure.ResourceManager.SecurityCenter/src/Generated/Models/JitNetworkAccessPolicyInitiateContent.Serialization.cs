@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Justification))
+            if (Justification != null)
             {
                 writer.WritePropertyName("justification"u8);
                 writer.WriteStringValue(Justification);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines = default;
-            Optional<string> justification = default;
+            string justification = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitNetworkAccessPolicyInitiateContent(virtualMachines, justification.Value, serializedAdditionalRawData);
+            return new JitNetworkAccessPolicyInitiateContent(virtualMachines, justification, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitNetworkAccessPolicyInitiateContent>.Write(ModelReaderWriterOptions options)

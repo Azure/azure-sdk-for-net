@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Billing.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(BillingFrequency))
+            if (options.Format != "W" && BillingFrequency != null)
             {
                 writer.WritePropertyName("billingFrequency"u8);
                 writer.WriteStringValue(BillingFrequency);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProductTypeId))
+            if (options.Format != "W" && ProductTypeId != null)
             {
                 writer.WritePropertyName("productTypeId"u8);
                 writer.WriteStringValue(ProductTypeId);
             }
-            if (Optional.IsDefined(Quantity))
+            if (Quantity.HasValue)
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SkuId))
+            if (options.Format != "W" && SkuId != null)
             {
                 writer.WritePropertyName("skuId"u8);
                 writer.WriteStringValue(SkuId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TermDuration))
+            if (options.Format != "W" && TermDuration.HasValue)
             {
                 writer.WritePropertyName("termDuration"u8);
                 writer.WriteStringValue(TermDuration.Value, "P");
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<string> billingFrequency = default;
-            Optional<string> productTypeId = default;
-            Optional<long> quantity = default;
-            Optional<string> skuId = default;
-            Optional<TimeSpan> termDuration = default;
+            string billingFrequency = default;
+            string productTypeId = default;
+            long? quantity = default;
+            string skuId = default;
+            TimeSpan? termDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionRenewalTermDetails(billingFrequency.Value, productTypeId.Value, Optional.ToNullable(quantity), skuId.Value, Optional.ToNullable(termDuration), serializedAdditionalRawData);
+            return new SubscriptionRenewalTermDetails(
+                billingFrequency,
+                productTypeId,
+                quantity,
+                skuId,
+                termDuration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionRenewalTermDetails>.Write(ModelReaderWriterOptions options)

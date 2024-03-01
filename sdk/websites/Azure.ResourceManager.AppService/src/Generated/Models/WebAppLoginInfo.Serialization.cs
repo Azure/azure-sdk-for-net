@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Routes))
+            if (Routes != null)
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteObjectValue(Routes);
             }
-            if (Optional.IsDefined(TokenStore))
+            if (TokenStore != null)
             {
                 writer.WritePropertyName("tokenStore"u8);
                 writer.WriteObjectValue(TokenStore);
             }
-            if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
+            if (PreserveUrlFragmentsForLogins.HasValue)
             {
                 writer.WritePropertyName("preserveUrlFragmentsForLogins"u8);
                 writer.WriteBooleanValue(PreserveUrlFragmentsForLogins.Value);
             }
-            if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
+            if (!(AllowedExternalRedirectUrls is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedExternalRedirectUrls"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CookieExpiration))
+            if (CookieExpiration != null)
             {
                 writer.WritePropertyName("cookieExpiration"u8);
                 writer.WriteObjectValue(CookieExpiration);
             }
-            if (Optional.IsDefined(Nonce))
+            if (Nonce != null)
             {
                 writer.WritePropertyName("nonce"u8);
                 writer.WriteObjectValue(Nonce);
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<LoginRoutes> routes = default;
-            Optional<AppServiceTokenStore> tokenStore = default;
-            Optional<bool> preserveUrlFragmentsForLogins = default;
-            Optional<IList<string>> allowedExternalRedirectUrls = default;
-            Optional<WebAppCookieExpiration> cookieExpiration = default;
-            Optional<LoginFlowNonceSettings> nonce = default;
+            LoginRoutes routes = default;
+            AppServiceTokenStore tokenStore = default;
+            bool? preserveUrlFragmentsForLogins = default;
+            IList<string> allowedExternalRedirectUrls = default;
+            WebAppCookieExpiration cookieExpiration = default;
+            LoginFlowNonceSettings nonce = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppLoginInfo(routes.Value, tokenStore.Value, Optional.ToNullable(preserveUrlFragmentsForLogins), Optional.ToList(allowedExternalRedirectUrls), cookieExpiration.Value, nonce.Value, serializedAdditionalRawData);
+            return new WebAppLoginInfo(
+                routes,
+                tokenStore,
+                preserveUrlFragmentsForLogins,
+                allowedExternalRedirectUrls ?? new ChangeTrackingList<string>(),
+                cookieExpiration,
+                nonce,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppLoginInfo>.Write(ModelReaderWriterOptions options)

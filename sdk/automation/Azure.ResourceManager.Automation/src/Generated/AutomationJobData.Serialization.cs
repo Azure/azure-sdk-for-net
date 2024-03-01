@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Runbook))
+            if (Runbook != null)
             {
                 writer.WritePropertyName("runbook"u8);
                 writer.WriteObjectValue(Runbook);
             }
-            if (Optional.IsDefined(StartedBy))
+            if (StartedBy != null)
             {
                 writer.WritePropertyName("startedBy"u8);
                 writer.WriteStringValue(StartedBy);
             }
-            if (Optional.IsDefined(RunOn))
+            if (RunOn != null)
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
-            if (Optional.IsDefined(JobId))
+            if (JobId.HasValue)
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId.Value);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(StatusDetails))
+            if (StatusDetails != null)
             {
                 writer.WritePropertyName("statusDetails"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 if (StartOn != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("startTime");
                 }
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 if (EndOn != null)
                 {
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("endTime");
                 }
             }
-            if (Optional.IsDefined(Exception))
+            if (Exception != null)
             {
                 writer.WritePropertyName("exception"u8);
                 writer.WriteStringValue(Exception);
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (LastModifiedOn.HasValue)
             {
                 if (LastModifiedOn != null)
                 {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("lastModifiedTime");
                 }
             }
-            if (Optional.IsDefined(LastStatusModifiedOn))
+            if (LastStatusModifiedOn.HasValue)
             {
                 if (LastStatusModifiedOn != null)
                 {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("lastStatusModifiedTime");
                 }
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Automation
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -196,21 +196,21 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RunbookAssociationProperty> runbook = default;
-            Optional<string> startedBy = default;
-            Optional<string> runOn = default;
-            Optional<Guid> jobId = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<AutomationJobStatus> status = default;
-            Optional<string> statusDetails = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<string> exception = default;
-            Optional<DateTimeOffset?> lastModifiedTime = default;
-            Optional<DateTimeOffset?> lastStatusModifiedTime = default;
-            Optional<IDictionary<string, string>> parameters = default;
-            Optional<JobProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            RunbookAssociationProperty runbook = default;
+            string startedBy = default;
+            string runOn = default;
+            Guid? jobId = default;
+            DateTimeOffset? creationTime = default;
+            AutomationJobStatus? status = default;
+            string statusDetails = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string exception = default;
+            DateTimeOffset? lastModifiedTime = default;
+            DateTimeOffset? lastStatusModifiedTime = default;
+            IDictionary<string, string> parameters = default;
+            JobProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -376,7 +376,26 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobData(id, name, type, systemData.Value, runbook.Value, startedBy.Value, runOn.Value, Optional.ToNullable(jobId), Optional.ToNullable(creationTime), Optional.ToNullable(status), statusDetails.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), exception.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastStatusModifiedTime), Optional.ToDictionary(parameters), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AutomationJobData(
+                id,
+                name,
+                type,
+                systemData,
+                runbook,
+                startedBy,
+                runOn,
+                jobId,
+                creationTime,
+                status,
+                statusDetails,
+                startTime,
+                endTime,
+                exception,
+                lastModifiedTime,
+                lastStatusModifiedTime,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobData>.Write(ModelReaderWriterOptions options)

@@ -31,7 +31,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (Optional.IsCollectionDefined(Polygon))
+            if (!(Polygon is ChangeTrackingList<float> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("polygon"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.AI.DocumentIntelligence
             }
             DocumentFormulaKind kind = default;
             string value = default;
-            Optional<IReadOnlyList<float>> polygon = default;
+            IReadOnlyList<float> polygon = default;
             DocumentSpan span = default;
             float confidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -132,7 +132,13 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentFormula(kind, value, Optional.ToList(polygon), span, confidence, serializedAdditionalRawData);
+            return new DocumentFormula(
+                kind,
+                value,
+                polygon ?? new ChangeTrackingList<float>(),
+                span,
+                confidence,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentFormula>.Write(ModelReaderWriterOptions options)

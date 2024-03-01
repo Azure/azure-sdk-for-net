@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventHubs
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(PartitionIds))
+            if (options.Format != "W" && !(PartitionIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("partitionIds"u8);
                 writer.WriteStartArray();
@@ -65,32 +65,32 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(PartitionCount))
+            if (PartitionCount.HasValue)
             {
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(CaptureDescription))
+            if (CaptureDescription != null)
             {
                 writer.WritePropertyName("captureDescription"u8);
                 writer.WriteObjectValue(CaptureDescription);
             }
-            if (Optional.IsDefined(RetentionDescription))
+            if (RetentionDescription != null)
             {
                 writer.WritePropertyName("retentionDescription"u8);
                 writer.WriteObjectValue(RetentionDescription);
@@ -134,18 +134,18 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<string>> partitionIds = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<long> partitionCount = default;
-            Optional<EventHubEntityStatus> status = default;
-            Optional<CaptureDescription> captureDescription = default;
-            Optional<RetentionDescription> retentionDescription = default;
+            SystemData systemData = default;
+            IReadOnlyList<string> partitionIds = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
+            long? partitionCount = default;
+            EventHubEntityStatus? status = default;
+            CaptureDescription captureDescription = default;
+            RetentionDescription retentionDescription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,7 +269,20 @@ namespace Azure.ResourceManager.EventHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubData(id, name, type, systemData.Value, Optional.ToList(partitionIds), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(partitionCount), Optional.ToNullable(status), captureDescription.Value, retentionDescription.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new EventHubData(
+                id,
+                name,
+                type,
+                systemData,
+                partitionIds ?? new ChangeTrackingList<string>(),
+                createdAt,
+                updatedAt,
+                partitionCount,
+                status,
+                captureDescription,
+                retentionDescription,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubData>.Write(ModelReaderWriterOptions options)

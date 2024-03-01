@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Port))
+            if (Port.HasValue)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(Identifier))
+            if (Identifier.HasValue)
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteNumberValue(Identifier.Value);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol.HasValue)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(InterfaceType))
+            if (InterfaceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(InterfaceType.Value.ToString());
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<int> port = default;
-            Optional<int> identifier = default;
-            Optional<GatewayLoadBalancerTunnelProtocol> protocol = default;
-            Optional<GatewayLoadBalancerTunnelInterfaceType> type = default;
+            int? port = default;
+            int? identifier = default;
+            GatewayLoadBalancerTunnelProtocol? protocol = default;
+            GatewayLoadBalancerTunnelInterfaceType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayLoadBalancerTunnelInterface(Optional.ToNullable(port), Optional.ToNullable(identifier), Optional.ToNullable(protocol), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new GatewayLoadBalancerTunnelInterface(port, identifier, protocol, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayLoadBalancerTunnelInterface>.Write(ModelReaderWriterOptions options)

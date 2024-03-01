@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(MoRefId))
+            if (options.Format != "W" && MoRefId != null)
             {
                 writer.WritePropertyName("moRefId"u8);
                 writer.WriteStringValue(MoRefId);
             }
-            if (options.Format != "W" && Optional.IsDefined(FolderPath))
+            if (options.Format != "W" && FolderPath != null)
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (options.Format != "W" && Optional.IsDefined(RestrictMovement))
+            if (options.Format != "W" && RestrictMovement.HasValue)
             {
                 writer.WritePropertyName("restrictMovement"u8);
                 writer.WriteStringValue(RestrictMovement.Value.ToString());
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> moRefId = default;
-            Optional<string> folderPath = default;
-            Optional<VirtualMachineRestrictMovementState> restrictMovement = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string moRefId = default;
+            string folderPath = default;
+            VirtualMachineRestrictMovementState? restrictMovement = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,7 +187,16 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsPrivateCloudClusterVirtualMachineData(id, name, type, systemData.Value, displayName.Value, moRefId.Value, folderPath.Value, Optional.ToNullable(restrictMovement), serializedAdditionalRawData);
+            return new AvsPrivateCloudClusterVirtualMachineData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                moRefId,
+                folderPath,
+                restrictMovement,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>.Write(ModelReaderWriterOptions options)

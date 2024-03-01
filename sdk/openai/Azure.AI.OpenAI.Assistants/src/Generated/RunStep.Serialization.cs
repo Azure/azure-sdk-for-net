@@ -90,7 +90,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 writer.WriteNull("failed_at");
             }
-            if (Metadata != null && Optional.IsCollectionDefined(Metadata))
+            if (Metadata != null && !(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -258,7 +258,23 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunStep(id, @object, type, assistantId, threadId, runId, status, stepDetails, lastError, createdAt, expiredAt, completedAt, cancelledAt, failedAt, metadata, serializedAdditionalRawData);
+            return new RunStep(
+                id,
+                @object,
+                type,
+                assistantId,
+                threadId,
+                runId,
+                status,
+                stepDetails,
+                lastError,
+                createdAt,
+                expiredAt,
+                completedAt,
+                cancelledAt,
+                failedAt,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunStep>.Write(ModelReaderWriterOptions options)

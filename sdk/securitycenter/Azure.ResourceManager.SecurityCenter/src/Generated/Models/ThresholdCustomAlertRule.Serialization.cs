@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteNumberValue(MinThreshold);
             writer.WritePropertyName("maxThreshold"u8);
             writer.WriteNumberValue(MaxThreshold);
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             int minThreshold = default;
             int maxThreshold = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            string displayName = default;
+            string description = default;
             bool isEnabled = default;
             string ruleType = "ThresholdCustomAlertRule";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -151,7 +151,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThresholdCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, serializedAdditionalRawData, minThreshold, maxThreshold);
+            return new ThresholdCustomAlertRule(
+                displayName,
+                description,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                minThreshold,
+                maxThreshold);
         }
 
         BinaryData IPersistableModel<ThresholdCustomAlertRule>.Write(ModelReaderWriterOptions options)

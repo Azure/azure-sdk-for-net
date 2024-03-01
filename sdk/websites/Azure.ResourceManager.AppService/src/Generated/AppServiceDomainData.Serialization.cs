@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,44 +61,44 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContactAdmin))
+            if (ContactAdmin != null)
             {
                 writer.WritePropertyName("contactAdmin"u8);
                 writer.WriteObjectValue(ContactAdmin);
             }
-            if (Optional.IsDefined(ContactBilling))
+            if (ContactBilling != null)
             {
                 writer.WritePropertyName("contactBilling"u8);
                 writer.WriteObjectValue(ContactBilling);
             }
-            if (Optional.IsDefined(ContactRegistrant))
+            if (ContactRegistrant != null)
             {
                 writer.WritePropertyName("contactRegistrant"u8);
                 writer.WriteObjectValue(ContactRegistrant);
             }
-            if (Optional.IsDefined(ContactTech))
+            if (ContactTech != null)
             {
                 writer.WritePropertyName("contactTech"u8);
                 writer.WriteObjectValue(ContactTech);
             }
-            if (options.Format != "W" && Optional.IsDefined(RegistrationStatus))
+            if (options.Format != "W" && RegistrationStatus.HasValue)
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NameServers))
+            if (options.Format != "W" && !(NameServers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("nameServers"u8);
                 writer.WriteStartArray();
@@ -108,37 +108,37 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsDomainPrivacyEnabled))
+            if (IsDomainPrivacyEnabled.HasValue)
             {
                 writer.WritePropertyName("privacy"u8);
                 writer.WriteBooleanValue(IsDomainPrivacyEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastRenewedOn))
+            if (options.Format != "W" && LastRenewedOn.HasValue)
             {
                 writer.WritePropertyName("lastRenewedTime"u8);
                 writer.WriteStringValue(LastRenewedOn.Value, "O");
             }
-            if (Optional.IsDefined(IsAutoRenew))
+            if (IsAutoRenew.HasValue)
             {
                 writer.WritePropertyName("autoRenew"u8);
                 writer.WriteBooleanValue(IsAutoRenew.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsDnsRecordManagementReady))
+            if (options.Format != "W" && IsDnsRecordManagementReady.HasValue)
             {
                 writer.WritePropertyName("readyForDnsRecordManagement"u8);
                 writer.WriteBooleanValue(IsDnsRecordManagementReady.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ManagedHostNames))
+            if (options.Format != "W" && !(ManagedHostNames is ChangeTrackingList<AppServiceHostName> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("managedHostNames"u8);
                 writer.WriteStartArray();
@@ -148,12 +148,12 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Consent))
+            if (Consent != null)
             {
                 writer.WritePropertyName("consent"u8);
                 writer.WriteObjectValue(Consent);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DomainNotRenewableReasons))
+            if (options.Format != "W" && !(DomainNotRenewableReasons is ChangeTrackingList<DomainNotRenewableReason> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("domainNotRenewableReasons"u8);
                 writer.WriteStartArray();
@@ -163,22 +163,22 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DnsType))
+            if (DnsType.HasValue)
             {
                 writer.WritePropertyName("dnsType"u8);
                 writer.WriteStringValue(DnsType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DnsZoneId))
+            if (DnsZoneId != null)
             {
                 writer.WritePropertyName("dnsZoneId"u8);
                 writer.WriteStringValue(DnsZoneId);
             }
-            if (Optional.IsDefined(TargetDnsType))
+            if (TargetDnsType.HasValue)
             {
                 writer.WritePropertyName("targetDnsType"u8);
                 writer.WriteStringValue(TargetDnsType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(AuthCode))
+            if (AuthCode != null)
             {
                 writer.WritePropertyName("authCode"u8);
                 writer.WriteStringValue(AuthCode);
@@ -222,33 +222,33 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string kind = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RegistrationContactInfo> contactAdmin = default;
-            Optional<RegistrationContactInfo> contactBilling = default;
-            Optional<RegistrationContactInfo> contactRegistrant = default;
-            Optional<RegistrationContactInfo> contactTech = default;
-            Optional<AppServiceDomainStatus> registrationStatus = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<string>> nameServers = default;
-            Optional<bool> privacy = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> expirationTime = default;
-            Optional<DateTimeOffset> lastRenewedTime = default;
-            Optional<bool> autoRenew = default;
-            Optional<bool> readyForDnsRecordManagement = default;
-            Optional<IReadOnlyList<AppServiceHostName>> managedHostNames = default;
-            Optional<DomainPurchaseConsent> consent = default;
-            Optional<IReadOnlyList<DomainNotRenewableReason>> domainNotRenewableReasons = default;
-            Optional<AppServiceDnsType> dnsType = default;
-            Optional<string> dnsZoneId = default;
-            Optional<AppServiceDnsType> targetDnsType = default;
-            Optional<string> authCode = default;
+            SystemData systemData = default;
+            RegistrationContactInfo contactAdmin = default;
+            RegistrationContactInfo contactBilling = default;
+            RegistrationContactInfo contactRegistrant = default;
+            RegistrationContactInfo contactTech = default;
+            AppServiceDomainStatus? registrationStatus = default;
+            ProvisioningState? provisioningState = default;
+            IReadOnlyList<string> nameServers = default;
+            bool? privacy = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? expirationTime = default;
+            DateTimeOffset? lastRenewedTime = default;
+            bool? autoRenew = default;
+            bool? readyForDnsRecordManagement = default;
+            IReadOnlyList<AppServiceHostName> managedHostNames = default;
+            DomainPurchaseConsent consent = default;
+            IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons = default;
+            AppServiceDnsType? dnsType = default;
+            string dnsZoneId = default;
+            AppServiceDnsType? targetDnsType = default;
+            string authCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -506,7 +506,35 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, contactAdmin.Value, contactBilling.Value, contactRegistrant.Value, contactTech.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(provisioningState), Optional.ToList(nameServers), Optional.ToNullable(privacy), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), Optional.ToNullable(lastRenewedTime), Optional.ToNullable(autoRenew), Optional.ToNullable(readyForDnsRecordManagement), Optional.ToList(managedHostNames), consent.Value, Optional.ToList(domainNotRenewableReasons), Optional.ToNullable(dnsType), dnsZoneId.Value, Optional.ToNullable(targetDnsType), authCode.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceDomainData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                contactAdmin,
+                contactBilling,
+                contactRegistrant,
+                contactTech,
+                registrationStatus,
+                provisioningState,
+                nameServers ?? new ChangeTrackingList<string>(),
+                privacy,
+                createdTime,
+                expirationTime,
+                lastRenewedTime,
+                autoRenew,
+                readyForDnsRecordManagement,
+                managedHostNames ?? new ChangeTrackingList<AppServiceHostName>(),
+                consent,
+                domainNotRenewableReasons ?? new ChangeTrackingList<DomainNotRenewableReason>(),
+                dnsType,
+                dnsZoneId,
+                targetDnsType,
+                authCode,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceDomainData>.Write(ModelReaderWriterOptions options)

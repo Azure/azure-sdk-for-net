@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPAddressType))
+            if (IPAddressType.HasValue)
             {
                 writer.WritePropertyName("ipAddressType"u8);
                 writer.WriteStringValue(IPAddressType.Value.ToString());
             }
-            if (Optional.IsDefined(LoadBalancerBackendAddressPoolId))
+            if (LoadBalancerBackendAddressPoolId != null)
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPoolId"u8);
                 writer.WriteStringValue(LoadBalancerBackendAddressPoolId);
             }
-            if (Optional.IsDefined(LoadBalancerInboundNatPoolId))
+            if (LoadBalancerInboundNatPoolId != null)
             {
                 writer.WritePropertyName("loadBalancerInboundNatPoolId"u8);
                 writer.WriteStringValue(LoadBalancerInboundNatPoolId);
             }
-            if (Optional.IsDefined(ApplicationGatewayBackendAddressPoolId))
+            if (ApplicationGatewayBackendAddressPoolId != null)
             {
                 writer.WritePropertyName("applicationGatewayBackendAddressPoolId"u8);
                 writer.WriteStringValue(ApplicationGatewayBackendAddressPoolId);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<NodeTypeFrontendConfigurationIPAddressType> ipAddressType = default;
-            Optional<ResourceIdentifier> loadBalancerBackendAddressPoolId = default;
-            Optional<ResourceIdentifier> loadBalancerInboundNatPoolId = default;
-            Optional<ResourceIdentifier> applicationGatewayBackendAddressPoolId = default;
+            NodeTypeFrontendConfigurationIPAddressType? ipAddressType = default;
+            ResourceIdentifier loadBalancerBackendAddressPoolId = default;
+            ResourceIdentifier loadBalancerInboundNatPoolId = default;
+            ResourceIdentifier applicationGatewayBackendAddressPoolId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodeTypeFrontendConfiguration(Optional.ToNullable(ipAddressType), loadBalancerBackendAddressPoolId.Value, loadBalancerInboundNatPoolId.Value, applicationGatewayBackendAddressPoolId.Value, serializedAdditionalRawData);
+            return new NodeTypeFrontendConfiguration(ipAddressType, loadBalancerBackendAddressPoolId, loadBalancerInboundNatPoolId, applicationGatewayBackendAddressPoolId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodeTypeFrontendConfiguration>.Write(ModelReaderWriterOptions options)

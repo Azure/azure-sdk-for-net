@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Keda))
+            if (Keda != null)
             {
                 writer.WritePropertyName("keda"u8);
                 writer.WriteObjectValue(Keda);
             }
-            if (Optional.IsDefined(VerticalPodAutoscaler))
+            if (VerticalPodAutoscaler != null)
             {
                 writer.WritePropertyName("verticalPodAutoscaler"u8);
                 writer.WriteObjectValue(VerticalPodAutoscaler);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ManagedClusterWorkloadAutoScalerProfileKeda> keda = default;
-            Optional<ManagedClusterVerticalPodAutoscaler> verticalPodAutoscaler = default;
+            ManagedClusterWorkloadAutoScalerProfileKeda keda = default;
+            ManagedClusterVerticalPodAutoscaler verticalPodAutoscaler = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterWorkloadAutoScalerProfile(keda.Value, verticalPodAutoscaler.Value, serializedAdditionalRawData);
+            return new ManagedClusterWorkloadAutoScalerProfile(keda, verticalPodAutoscaler, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterWorkloadAutoScalerProfile>.Write(ModelReaderWriterOptions options)

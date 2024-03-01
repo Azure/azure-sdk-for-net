@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(JobScheduleId))
+            if (JobScheduleId.HasValue)
             {
                 writer.WritePropertyName("jobScheduleId"u8);
                 writer.WriteStringValue(JobScheduleId.Value);
             }
-            if (Optional.IsDefined(Schedule))
+            if (Schedule != null)
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
             }
-            if (Optional.IsDefined(Runbook))
+            if (Runbook != null)
             {
                 writer.WritePropertyName("runbook"u8);
                 writer.WriteObjectValue(Runbook);
             }
-            if (Optional.IsDefined(RunOn))
+            if (RunOn != null)
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> jobScheduleId = default;
-            Optional<ScheduleAssociationProperty> schedule = default;
-            Optional<RunbookAssociationProperty> runbook = default;
-            Optional<string> runOn = default;
-            Optional<IReadOnlyDictionary<string, string>> parameters = default;
+            SystemData systemData = default;
+            Guid? jobScheduleId = default;
+            ScheduleAssociationProperty schedule = default;
+            RunbookAssociationProperty runbook = default;
+            string runOn = default;
+            IReadOnlyDictionary<string, string> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,17 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobScheduleData(id, name, type, systemData.Value, Optional.ToNullable(jobScheduleId), schedule.Value, runbook.Value, runOn.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+            return new AutomationJobScheduleData(
+                id,
+                name,
+                type,
+                systemData,
+                jobScheduleId,
+                schedule,
+                runbook,
+                runOn,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobScheduleData>.Write(ModelReaderWriterOptions options)

@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ObjectId))
+            if (options.Format != "W" && ObjectId != null)
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (Optional.IsDefined(UserPrincipalName))
+            if (UserPrincipalName != null)
             {
                 writer.WritePropertyName("userPrincipalName"u8);
                 writer.WriteStringValue(UserPrincipalName);
             }
-            if (Optional.IsDefined(ApplicationType))
+            if (ApplicationType.HasValue)
             {
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
-            if (Optional.IsDefined(SessionState))
+            if (SessionState.HasValue)
             {
                 writer.WritePropertyName("sessionState"u8);
                 writer.WriteStringValue(SessionState.Value.ToString());
             }
-            if (Optional.IsDefined(ActiveDirectoryUserName))
+            if (ActiveDirectoryUserName != null)
             {
                 writer.WritePropertyName("activeDirectoryUserName"u8);
                 writer.WriteStringValue(ActiveDirectoryUserName);
             }
-            if (Optional.IsDefined(CreateOn))
+            if (CreateOn.HasValue)
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreateOn.Value, "O");
@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> objectId = default;
-            Optional<string> userPrincipalName = default;
-            Optional<VirtualApplicationType> applicationType = default;
-            Optional<UserSessionState> sessionState = default;
-            Optional<string> activeDirectoryUserName = default;
-            Optional<DateTimeOffset> createTime = default;
+            SystemData systemData = default;
+            string objectId = default;
+            string userPrincipalName = default;
+            VirtualApplicationType? applicationType = default;
+            UserSessionState? sessionState = default;
+            string activeDirectoryUserName = default;
+            DateTimeOffset? createTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,7 +217,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserSessionData(id, name, type, systemData.Value, objectId.Value, userPrincipalName.Value, Optional.ToNullable(applicationType), Optional.ToNullable(sessionState), activeDirectoryUserName.Value, Optional.ToNullable(createTime), serializedAdditionalRawData);
+            return new UserSessionData(
+                id,
+                name,
+                type,
+                systemData,
+                objectId,
+                userPrincipalName,
+                applicationType,
+                sessionState,
+                activeDirectoryUserName,
+                createTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserSessionData>.Write(ModelReaderWriterOptions options)

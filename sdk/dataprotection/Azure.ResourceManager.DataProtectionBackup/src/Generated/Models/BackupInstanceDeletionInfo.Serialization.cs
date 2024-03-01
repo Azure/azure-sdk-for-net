@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DeleteOn))
+            if (options.Format != "W" && DeleteOn.HasValue)
             {
                 writer.WritePropertyName("deletionTime"u8);
                 writer.WriteStringValue(DeleteOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingEndOn))
+            if (options.Format != "W" && BillingEndOn.HasValue)
             {
                 writer.WritePropertyName("billingEndDate"u8);
                 writer.WriteStringValue(BillingEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeOn))
+            if (options.Format != "W" && ScheduledPurgeOn.HasValue)
             {
                 writer.WritePropertyName("scheduledPurgeTime"u8);
                 writer.WriteStringValue(ScheduledPurgeOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DeleteActivityId))
+            if (options.Format != "W" && DeleteActivityId != null)
             {
                 writer.WritePropertyName("deleteActivityID"u8);
                 writer.WriteStringValue(DeleteActivityId);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> deletionTime = default;
-            Optional<DateTimeOffset> billingEndDate = default;
-            Optional<DateTimeOffset> scheduledPurgeTime = default;
-            Optional<string> deleteActivityId = default;
+            DateTimeOffset? deletionTime = default;
+            DateTimeOffset? billingEndDate = default;
+            DateTimeOffset? scheduledPurgeTime = default;
+            string deleteActivityId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupInstanceDeletionInfo(Optional.ToNullable(deletionTime), Optional.ToNullable(billingEndDate), Optional.ToNullable(scheduledPurgeTime), deleteActivityId.Value, serializedAdditionalRawData);
+            return new BackupInstanceDeletionInfo(deletionTime, billingEndDate, scheduledPurgeTime, deleteActivityId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupInstanceDeletionInfo>.Write(ModelReaderWriterOptions options)

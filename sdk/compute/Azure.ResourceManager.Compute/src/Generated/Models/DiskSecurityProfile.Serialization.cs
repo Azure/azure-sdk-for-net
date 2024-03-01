@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecurityType))
+            if (SecurityType.HasValue)
             {
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType.Value.ToString());
             }
-            if (Optional.IsDefined(SecureVmDiskEncryptionSetId))
+            if (SecureVmDiskEncryptionSetId != null)
             {
                 writer.WritePropertyName("secureVMDiskEncryptionSetId"u8);
                 writer.WriteStringValue(SecureVmDiskEncryptionSetId);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<DiskSecurityType> securityType = default;
-            Optional<ResourceIdentifier> secureVmDiskEncryptionSetId = default;
+            DiskSecurityType? securityType = default;
+            ResourceIdentifier secureVmDiskEncryptionSetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskSecurityProfile(Optional.ToNullable(securityType), secureVmDiskEncryptionSetId.Value, serializedAdditionalRawData);
+            return new DiskSecurityProfile(securityType, secureVmDiskEncryptionSetId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskSecurityProfile>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Categories))
+            if (!(Categories is ChangeTrackingList<ResourceLogCategory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<IList<ResourceLogCategory>> categories = default;
+            IList<ResourceLogCategory> categories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceLogConfiguration(Optional.ToList(categories), serializedAdditionalRawData);
+            return new ResourceLogConfiguration(categories ?? new ChangeTrackingList<ResourceLogCategory>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceLogConfiguration>.Write(ModelReaderWriterOptions options)

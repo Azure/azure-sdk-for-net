@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("authMode"u8);
             writer.WriteStringValue(AuthMode.ToString());
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsDefined(Keys))
+            if (Keys != null)
             {
                 if (Keys != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("keys");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ScoringUri))
+            if (options.Format != "W" && ScoringUri != null)
             {
                 if (ScoringUri != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("scoringUri");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(SwaggerUri))
+            if (options.Format != "W" && SwaggerUri != null)
             {
                 if (SwaggerUri != null)
                 {
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningEndpointAuthMode authMode = default;
-            Optional<string> description = default;
-            Optional<MachineLearningEndpointAuthKeys> keys = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<Uri> scoringUri = default;
-            Optional<Uri> swaggerUri = default;
+            string description = default;
+            MachineLearningEndpointAuthKeys keys = default;
+            IDictionary<string, string> properties = default;
+            Uri scoringUri = default;
+            Uri swaggerUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,7 +208,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningEndpointProperties(authMode, description.Value, keys.Value, Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value, serializedAdditionalRawData);
+            return new MachineLearningEndpointProperties(
+                authMode,
+                description,
+                keys,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                scoringUri,
+                swaggerUri,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningEndpointProperties>.Write(ModelReaderWriterOptions options)

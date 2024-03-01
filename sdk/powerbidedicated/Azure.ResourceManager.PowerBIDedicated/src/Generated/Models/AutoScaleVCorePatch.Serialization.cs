@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CapacityLimit))
+            if (CapacityLimit.HasValue)
             {
                 writer.WritePropertyName("capacityLimit"u8);
                 writer.WriteNumberValue(CapacityLimit.Value);
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Optional<AutoScaleVCoreSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<int> capacityLimit = default;
+            AutoScaleVCoreSku sku = default;
+            IDictionary<string, string> tags = default;
+            int? capacityLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoScaleVCorePatch(sku.Value, Optional.ToDictionary(tags), Optional.ToNullable(capacityLimit), serializedAdditionalRawData);
+            return new AutoScaleVCorePatch(sku, tags ?? new ChangeTrackingDictionary<string, string>(), capacityLimit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoScaleVCorePatch>.Write(ModelReaderWriterOptions options)

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartObject();
             writer.WritePropertyName("primaryDnsIpAddress"u8);
             writer.WriteStringValue(PrimaryDnsIPAddress.ToString());
-            if (Optional.IsDefined(SecondaryDnsIPAddress))
+            if (SecondaryDnsIPAddress != null)
             {
                 writer.WritePropertyName("secondaryDnsIpAddress"u8);
                 writer.WriteStringValue(SecondaryDnsIPAddress.ToString());
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStringValue(DomainNetBiosName);
             writer.WritePropertyName("cacheNetBiosName"u8);
             writer.WriteStringValue(CacheNetBiosName);
-            if (options.Format != "W" && Optional.IsDefined(DomainJoined))
+            if (options.Format != "W" && DomainJoined.HasValue)
             {
                 writer.WritePropertyName("domainJoined"u8);
                 writer.WriteStringValue(DomainJoined.Value.ToString());
             }
-            if (Optional.IsDefined(Credentials))
+            if (Credentials != null)
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.StorageCache.Models
                 return null;
             }
             IPAddress primaryDnsIPAddress = default;
-            Optional<IPAddress> secondaryDnsIPAddress = default;
+            IPAddress secondaryDnsIPAddress = default;
             string domainName = default;
             string domainNetBiosName = default;
             string cacheNetBiosName = default;
-            Optional<DomainJoinedType> domainJoined = default;
-            Optional<StorageCacheActiveDirectorySettingsCredentials> credentials = default;
+            DomainJoinedType? domainJoined = default;
+            StorageCacheActiveDirectorySettingsCredentials credentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,15 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheActiveDirectorySettings(primaryDnsIPAddress, secondaryDnsIPAddress.Value, domainName, domainNetBiosName, cacheNetBiosName, Optional.ToNullable(domainJoined), credentials.Value, serializedAdditionalRawData);
+            return new StorageCacheActiveDirectorySettings(
+                primaryDnsIPAddress,
+                secondaryDnsIPAddress,
+                domainName,
+                domainNetBiosName,
+                cacheNetBiosName,
+                domainJoined,
+                credentials,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheActiveDirectorySettings>.Write(ModelReaderWriterOptions options)

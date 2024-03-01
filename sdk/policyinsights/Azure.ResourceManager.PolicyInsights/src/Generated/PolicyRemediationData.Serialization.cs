@@ -43,74 +43,74 @@ namespace Azure.ResourceManager.PolicyInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicyAssignmentId))
+            if (PolicyAssignmentId != null)
             {
                 writer.WritePropertyName("policyAssignmentId"u8);
                 writer.WriteStringValue(PolicyAssignmentId);
             }
-            if (Optional.IsDefined(PolicyDefinitionReferenceId))
+            if (PolicyDefinitionReferenceId != null)
             {
                 writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
             }
-            if (Optional.IsDefined(ResourceDiscoveryMode))
+            if (ResourceDiscoveryMode.HasValue)
             {
                 writer.WritePropertyName("resourceDiscoveryMode"u8);
                 writer.WriteStringValue(ResourceDiscoveryMode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedOn"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filter);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
+            if (options.Format != "W" && DeploymentStatus != null)
             {
                 writer.WritePropertyName("deploymentStatus"u8);
                 writer.WriteObjectValue(DeploymentStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
+            if (options.Format != "W" && StatusMessage != null)
             {
                 writer.WritePropertyName("statusMessage"u8);
                 writer.WriteStringValue(StatusMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
+            if (options.Format != "W" && CorrelationId != null)
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (Optional.IsDefined(ResourceCount))
+            if (ResourceCount.HasValue)
             {
                 writer.WritePropertyName("resourceCount"u8);
                 writer.WriteNumberValue(ResourceCount.Value);
             }
-            if (Optional.IsDefined(ParallelDeployments))
+            if (ParallelDeployments.HasValue)
             {
                 writer.WritePropertyName("parallelDeployments"u8);
                 writer.WriteNumberValue(ParallelDeployments.Value);
             }
-            if (Optional.IsDefined(FailureThreshold))
+            if (FailureThreshold != null)
             {
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteObjectValue(FailureThreshold);
@@ -157,20 +157,20 @@ namespace Azure.ResourceManager.PolicyInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> policyAssignmentId = default;
-            Optional<string> policyDefinitionReferenceId = default;
-            Optional<ResourceDiscoveryMode> resourceDiscoveryMode = default;
-            Optional<string> provisioningState = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> lastUpdatedOn = default;
-            Optional<RemediationFilters> filters = default;
-            Optional<RemediationDeploymentSummary> deploymentStatus = default;
-            Optional<string> statusMessage = default;
-            Optional<string> correlationId = default;
-            Optional<int> resourceCount = default;
-            Optional<int> parallelDeployments = default;
-            Optional<RemediationPropertiesFailureThreshold> failureThreshold = default;
+            SystemData systemData = default;
+            ResourceIdentifier policyAssignmentId = default;
+            string policyDefinitionReferenceId = default;
+            ResourceDiscoveryMode? resourceDiscoveryMode = default;
+            string provisioningState = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? lastUpdatedOn = default;
+            RemediationFilters filters = default;
+            RemediationDeploymentSummary deploymentStatus = default;
+            string statusMessage = default;
+            string correlationId = default;
+            int? resourceCount = default;
+            int? parallelDeployments = default;
+            RemediationPropertiesFailureThreshold failureThreshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -318,7 +318,25 @@ namespace Azure.ResourceManager.PolicyInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyRemediationData(id, name, type, systemData.Value, policyAssignmentId.Value, policyDefinitionReferenceId.Value, Optional.ToNullable(resourceDiscoveryMode), provisioningState.Value, Optional.ToNullable(createdOn), Optional.ToNullable(lastUpdatedOn), filters.Value, deploymentStatus.Value, statusMessage.Value, correlationId.Value, Optional.ToNullable(resourceCount), Optional.ToNullable(parallelDeployments), failureThreshold.Value, serializedAdditionalRawData);
+            return new PolicyRemediationData(
+                id,
+                name,
+                type,
+                systemData,
+                policyAssignmentId,
+                policyDefinitionReferenceId,
+                resourceDiscoveryMode,
+                provisioningState,
+                createdOn,
+                lastUpdatedOn,
+                filters,
+                deploymentStatus,
+                statusMessage,
+                correlationId,
+                resourceCount,
+                parallelDeployments,
+                failureThreshold,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyRemediationData>.Write(ModelReaderWriterOptions options)

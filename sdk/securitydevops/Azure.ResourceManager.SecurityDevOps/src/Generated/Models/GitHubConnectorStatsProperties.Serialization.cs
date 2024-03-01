@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(OwnersCount))
+            if (OwnersCount.HasValue)
             {
                 writer.WritePropertyName("ownersCount"u8);
                 writer.WriteNumberValue(OwnersCount.Value);
             }
-            if (Optional.IsDefined(ReposCount))
+            if (ReposCount.HasValue)
             {
                 writer.WritePropertyName("reposCount"u8);
                 writer.WriteNumberValue(ReposCount.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<long> ownersCount = default;
-            Optional<long> reposCount = default;
+            ProvisioningState? provisioningState = default;
+            long? ownersCount = default;
+            long? reposCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitHubConnectorStatsProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(ownersCount), Optional.ToNullable(reposCount), serializedAdditionalRawData);
+            return new GitHubConnectorStatsProperties(provisioningState, ownersCount, reposCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitHubConnectorStatsProperties>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<RedisEnterprisePrivateLinkResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RedisEnterprisePrivateLinkResource>> value = default;
+            IReadOnlyList<RedisEnterprisePrivateLinkResource> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterprisePrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new RedisEnterprisePrivateLinkResourceListResult(value ?? new ChangeTrackingList<RedisEnterprisePrivateLinkResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterprisePrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

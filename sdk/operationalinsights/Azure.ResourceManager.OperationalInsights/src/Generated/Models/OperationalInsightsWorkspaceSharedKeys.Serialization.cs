@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimarySharedKey))
+            if (PrimarySharedKey != null)
             {
                 writer.WritePropertyName("primarySharedKey"u8);
                 writer.WriteStringValue(PrimarySharedKey);
             }
-            if (Optional.IsDefined(SecondarySharedKey))
+            if (SecondarySharedKey != null)
             {
                 writer.WritePropertyName("secondarySharedKey"u8);
                 writer.WriteStringValue(SecondarySharedKey);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<string> primarySharedKey = default;
-            Optional<string> secondarySharedKey = default;
+            string primarySharedKey = default;
+            string secondarySharedKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsWorkspaceSharedKeys(primarySharedKey.Value, secondarySharedKey.Value, serializedAdditionalRawData);
+            return new OperationalInsightsWorkspaceSharedKeys(primarySharedKey, secondarySharedKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsWorkspaceSharedKeys>.Write(ModelReaderWriterOptions options)

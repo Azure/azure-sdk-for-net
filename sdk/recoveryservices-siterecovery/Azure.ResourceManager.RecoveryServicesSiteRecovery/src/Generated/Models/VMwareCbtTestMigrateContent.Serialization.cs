@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(RecoveryPointId);
             writer.WritePropertyName("networkId"u8);
             writer.WriteStringValue(NetworkId);
-            if (Optional.IsCollectionDefined(VmNics))
+            if (!(VmNics is ChangeTrackingList<VMwareCbtNicContent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OSUpgradeVersion))
+            if (OSUpgradeVersion != null)
             {
                 writer.WritePropertyName("osUpgradeVersion"u8);
                 writer.WriteStringValue(OSUpgradeVersion);
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             ResourceIdentifier recoveryPointId = default;
             ResourceIdentifier networkId = default;
-            Optional<IList<VMwareCbtNicContent>> vmNics = default;
-            Optional<string> osUpgradeVersion = default;
+            IList<VMwareCbtNicContent> vmNics = default;
+            string osUpgradeVersion = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtTestMigrateContent(instanceType, serializedAdditionalRawData, recoveryPointId, networkId, Optional.ToList(vmNics), osUpgradeVersion.Value);
+            return new VMwareCbtTestMigrateContent(
+                instanceType,
+                serializedAdditionalRawData,
+                recoveryPointId,
+                networkId,
+                vmNics ?? new ChangeTrackingList<VMwareCbtNicContent>(),
+                osUpgradeVersion);
         }
 
         BinaryData IPersistableModel<VMwareCbtTestMigrateContent>.Write(ModelReaderWriterOptions options)

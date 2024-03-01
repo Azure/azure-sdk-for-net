@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -18,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<string> accessToken = default;
+            string accessToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("access_token"u8))
@@ -27,7 +26,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new AcrAccessToken(accessToken.Value);
+            return new AcrAccessToken(accessToken);
         }
     }
 }

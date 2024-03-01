@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TypePropertiesType))
+            if (options.Format != "W" && TypePropertiesType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypePropertiesType.Value.ToString());
             }
-            if (Optional.IsDefined(Permissions))
+            if (Permissions != null)
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permissions);
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Redis
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AccessPolicyProvisioningState> provisioningState = default;
-            Optional<AccessPolicyType> type0 = default;
-            Optional<string> permissions = default;
+            SystemData systemData = default;
+            AccessPolicyProvisioningState? provisioningState = default;
+            AccessPolicyType? type0 = default;
+            string permissions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +180,15 @@ namespace Azure.ResourceManager.Redis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisCacheAccessPolicyData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(type0), permissions.Value, serializedAdditionalRawData);
+            return new RedisCacheAccessPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                type0,
+                permissions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisCacheAccessPolicyData>.Write(ModelReaderWriterOptions options)

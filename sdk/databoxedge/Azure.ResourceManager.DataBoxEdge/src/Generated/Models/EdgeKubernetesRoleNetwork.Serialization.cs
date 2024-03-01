@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CniConfig))
+            if (options.Format != "W" && CniConfig != null)
             {
                 writer.WritePropertyName("cniConfig"u8);
                 writer.WriteObjectValue(CniConfig);
             }
-            if (options.Format != "W" && Optional.IsDefined(LoadBalancerConfig))
+            if (options.Format != "W" && LoadBalancerConfig != null)
             {
                 writer.WritePropertyName("loadBalancerConfig"u8);
                 writer.WriteObjectValue(LoadBalancerConfig);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<CniConfig> cniConfig = default;
-            Optional<DataBoxEdgeLoadBalancerConfig> loadBalancerConfig = default;
+            CniConfig cniConfig = default;
+            DataBoxEdgeLoadBalancerConfig loadBalancerConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesRoleNetwork(cniConfig.Value, loadBalancerConfig.Value, serializedAdditionalRawData);
+            return new EdgeKubernetesRoleNetwork(cniConfig, loadBalancerConfig, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeKubernetesRoleNetwork>.Write(ModelReaderWriterOptions options)

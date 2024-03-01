@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,13 +20,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<AppEventTypeDetail> appEventTypeDetail = default;
-            Optional<string> name = default;
-            Optional<string> clientRequestId = default;
-            Optional<string> correlationRequestId = default;
-            Optional<string> requestId = default;
-            Optional<string> address = default;
-            Optional<string> verb = default;
+            AppEventTypeDetail appEventTypeDetail = default;
+            string name = default;
+            string clientRequestId = default;
+            string correlationRequestId = default;
+            string requestId = default;
+            string address = default;
+            string verb = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appEventTypeDetail"u8))
@@ -70,7 +69,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new WebSlotSwapCompletedEventData(appEventTypeDetail.Value, name.Value, clientRequestId.Value, correlationRequestId.Value, requestId.Value, address.Value, verb.Value);
+            return new WebSlotSwapCompletedEventData(
+                appEventTypeDetail,
+                name,
+                clientRequestId,
+                correlationRequestId,
+                requestId,
+                address,
+                verb);
         }
 
         internal partial class WebSlotSwapCompletedEventDataConverter : JsonConverter<WebSlotSwapCompletedEventData>

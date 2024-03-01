@@ -76,7 +76,7 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Metadata != null && Optional.IsCollectionDefined(Metadata))
+            if (Metadata != null && !(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -234,7 +234,18 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Assistant(id, @object, createdAt, name, description, model, instructions, tools, fileIds, metadata, serializedAdditionalRawData);
+            return new Assistant(
+                id,
+                @object,
+                createdAt,
+                name,
+                description,
+                model,
+                instructions,
+                tools,
+                fileIds,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Assistant>.Write(ModelReaderWriterOptions options)

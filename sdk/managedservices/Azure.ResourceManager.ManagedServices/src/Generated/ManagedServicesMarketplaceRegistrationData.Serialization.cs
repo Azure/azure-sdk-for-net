@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ManagedServices
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(Plan))
+            if (Plan != null)
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteObjectValue(Plan);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 return null;
             }
-            Optional<ManagedServicesMarketplaceRegistrationProperties> properties = default;
-            Optional<ManagedServicesPlan> plan = default;
+            ManagedServicesMarketplaceRegistrationProperties properties = default;
+            ManagedServicesPlan plan = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.ManagedServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesMarketplaceRegistrationData(id, name, type, systemData.Value, properties.Value, plan.Value, serializedAdditionalRawData);
+            return new ManagedServicesMarketplaceRegistrationData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                plan,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesMarketplaceRegistrationData>.Write(ModelReaderWriterOptions options)

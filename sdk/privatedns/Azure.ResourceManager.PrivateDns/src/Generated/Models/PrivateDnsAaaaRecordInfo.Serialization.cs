@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPv6Address))
+            if (IPv6Address != null)
             {
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStringValue(IPv6Address.ToString());
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipv6Address = default;
+            IPAddress ipv6Address = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsAaaaRecordInfo(ipv6Address.Value, serializedAdditionalRawData);
+            return new PrivateDnsAaaaRecordInfo(ipv6Address, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateDnsAaaaRecordInfo>.Write(ModelReaderWriterOptions options)

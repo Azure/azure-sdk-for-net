@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Script))
+            if (Script != null)
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
-            if (Optional.IsDefined(ScriptUri))
+            if (ScriptUri != null)
             {
                 writer.WritePropertyName("scriptUri"u8);
                 writer.WriteStringValue(ScriptUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(CommandId))
+            if (CommandId != null)
             {
                 writer.WritePropertyName("commandId"u8);
                 writer.WriteStringValue(CommandId);
             }
-            if (Optional.IsDefined(ScriptUriManagedIdentity))
+            if (ScriptUriManagedIdentity != null)
             {
                 writer.WritePropertyName("scriptUriManagedIdentity"u8);
                 writer.WriteObjectValue(ScriptUriManagedIdentity);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> script = default;
-            Optional<Uri> scriptUri = default;
-            Optional<string> commandId = default;
-            Optional<RunCommandManagedIdentity> scriptUriManagedIdentity = default;
+            string script = default;
+            Uri scriptUri = default;
+            string commandId = default;
+            RunCommandManagedIdentity scriptUriManagedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineRunCommandScriptSource(script.Value, scriptUri.Value, commandId.Value, scriptUriManagedIdentity.Value, serializedAdditionalRawData);
+            return new VirtualMachineRunCommandScriptSource(script, scriptUri, commandId, scriptUriManagedIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineRunCommandScriptSource>.Write(ModelReaderWriterOptions options)

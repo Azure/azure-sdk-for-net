@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TypePropertiesType))
+            if (options.Format != "W" && TypePropertiesType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypePropertiesType.Value.ToString());
             }
-            if (Optional.IsDefined(MaxComputeRacks))
+            if (MaxComputeRacks.HasValue)
             {
                 writer.WritePropertyName("maxComputeRacks"u8);
                 writer.WriteNumberValue(MaxComputeRacks.Value);
             }
-            if (Optional.IsDefined(MaximumServerCount))
+            if (MaximumServerCount.HasValue)
             {
                 writer.WritePropertyName("maximumServerCount"u8);
                 writer.WriteNumberValue(MaximumServerCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedVersions))
+            if (options.Format != "W" && !(SupportedVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedVersions"u8);
                 writer.WriteStartArray();
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Details))
+            if (options.Format != "W" && Details != null)
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStringValue(Details);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetworkFabricSkuType> type0 = default;
-            Optional<int> maxComputeRacks = default;
-            Optional<int> maximumServerCount = default;
-            Optional<IReadOnlyList<string>> supportedVersions = default;
-            Optional<string> details = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            NetworkFabricSkuType? type0 = default;
+            int? maxComputeRacks = default;
+            int? maximumServerCount = default;
+            IReadOnlyList<string> supportedVersions = default;
+            string details = default;
+            NetworkFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -235,7 +235,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricSkuData(id, name, type, systemData.Value, Optional.ToNullable(type0), Optional.ToNullable(maxComputeRacks), Optional.ToNullable(maximumServerCount), Optional.ToList(supportedVersions), details.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkFabricSkuData(
+                id,
+                name,
+                type,
+                systemData,
+                type0,
+                maxComputeRacks,
+                maximumServerCount,
+                supportedVersions ?? new ChangeTrackingList<string>(),
+                details,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricSkuData>.Write(ModelReaderWriterOptions options)

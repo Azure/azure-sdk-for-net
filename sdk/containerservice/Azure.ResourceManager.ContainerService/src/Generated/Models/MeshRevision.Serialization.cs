@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Revision))
+            if (Revision != null)
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteStringValue(Revision);
             }
-            if (Optional.IsCollectionDefined(Upgrades))
+            if (!(Upgrades is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("upgrades"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CompatibleWith))
+            if (!(CompatibleWith is ChangeTrackingList<CompatibleVersions> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("compatibleWith"u8);
                 writer.WriteStartArray();
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> revision = default;
-            Optional<IList<string>> upgrades = default;
-            Optional<IList<CompatibleVersions>> compatibleWith = default;
+            string revision = default;
+            IList<string> upgrades = default;
+            IList<CompatibleVersions> compatibleWith = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MeshRevision(revision.Value, Optional.ToList(upgrades), Optional.ToList(compatibleWith), serializedAdditionalRawData);
+            return new MeshRevision(revision, upgrades ?? new ChangeTrackingList<string>(), compatibleWith ?? new ChangeTrackingList<CompatibleVersions>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MeshRevision>.Write(ModelReaderWriterOptions options)

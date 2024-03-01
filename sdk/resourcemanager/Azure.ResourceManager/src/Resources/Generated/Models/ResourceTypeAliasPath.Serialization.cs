@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
-            Optional<ResourceTypeAliasPattern> pattern = default;
-            Optional<ResourceTypeAliasPathMetadata> metadata = default;
+            string path = default;
+            IReadOnlyList<string> apiVersions = default;
+            ResourceTypeAliasPattern pattern = default;
+            ResourceTypeAliasPathMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeAliasPath(path.Value, Optional.ToList(apiVersions), pattern.Value, metadata.Value, serializedAdditionalRawData);
+            return new ResourceTypeAliasPath(path, apiVersions ?? new ChangeTrackingList<string>(), pattern, metadata, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeAliasPath>.Write(ModelReaderWriterOptions options)

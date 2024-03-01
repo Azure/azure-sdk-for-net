@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SolutionId))
+            if (SolutionId != null)
             {
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Insights))
+            if (!(Insights is ChangeTrackingList<SelfHelpDiagnosticInsight> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("insights"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> solutionId = default;
-            Optional<SelfHelpDiagnosticStatus> status = default;
-            Optional<IReadOnlyList<SelfHelpDiagnosticInsight>> insights = default;
-            Optional<SelfHelpError> error = default;
+            string solutionId = default;
+            SelfHelpDiagnosticStatus? status = default;
+            IReadOnlyList<SelfHelpDiagnosticInsight> insights = default;
+            SelfHelpError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpDiagnosticInfo(solutionId.Value, Optional.ToNullable(status), Optional.ToList(insights), error.Value, serializedAdditionalRawData);
+            return new SelfHelpDiagnosticInfo(solutionId, status, insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(), error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpDiagnosticInfo>.Write(ModelReaderWriterOptions options)

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserId))
+            if (UserId != null)
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (Optional.IsDefined(AccountInfo))
+            if (AccountInfo != null)
             {
                 writer.WritePropertyName("accountInfo"u8);
                 writer.WriteObjectValue(AccountInfo);
             }
-            if (Optional.IsDefined(OrganizationInfo))
+            if (OrganizationInfo != null)
             {
                 writer.WritePropertyName("organizationInfo"u8);
                 writer.WriteObjectValue(OrganizationInfo);
             }
-            if (Optional.IsDefined(SingleSignOnProperties))
+            if (SingleSignOnProperties != null)
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
                 writer.WriteObjectValue(SingleSignOnProperties);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<string> userId = default;
-            Optional<NewRelicObservabilityAccountInfo> accountInfo = default;
-            Optional<NewRelicObservabilityOrganizationInfo> organizationInfo = default;
-            Optional<NewRelicSingleSignOnProperties> singleSignOnProperties = default;
+            string userId = default;
+            NewRelicObservabilityAccountInfo accountInfo = default;
+            NewRelicObservabilityOrganizationInfo organizationInfo = default;
+            NewRelicSingleSignOnProperties singleSignOnProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicAccountProperties(userId.Value, accountInfo.Value, organizationInfo.Value, singleSignOnProperties.Value, serializedAdditionalRawData);
+            return new NewRelicAccountProperties(userId, accountInfo, organizationInfo, singleSignOnProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicAccountProperties>.Write(ModelReaderWriterOptions options)

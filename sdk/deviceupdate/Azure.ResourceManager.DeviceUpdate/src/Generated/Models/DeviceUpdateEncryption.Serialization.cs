@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyVaultKeyUri))
+            if (KeyVaultKeyUri != null)
             {
                 writer.WritePropertyName("keyVaultKeyUri"u8);
                 writer.WriteStringValue(KeyVaultKeyUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(UserAssignedIdentity))
+            if (UserAssignedIdentity != null)
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<Uri> keyVaultKeyUri = default;
-            Optional<ResourceIdentifier> userAssignedIdentity = default;
+            Uri keyVaultKeyUri = default;
+            ResourceIdentifier userAssignedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateEncryption(keyVaultKeyUri.Value, userAssignedIdentity.Value, serializedAdditionalRawData);
+            return new DeviceUpdateEncryption(keyVaultKeyUri, userAssignedIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdateEncryption>.Write(ModelReaderWriterOptions options)

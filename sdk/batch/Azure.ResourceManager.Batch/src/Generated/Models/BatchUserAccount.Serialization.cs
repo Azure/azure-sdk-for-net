@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("password"u8);
             writer.WriteStringValue(Password);
-            if (Optional.IsDefined(ElevationLevel))
+            if (ElevationLevel.HasValue)
             {
                 writer.WritePropertyName("elevationLevel"u8);
                 writer.WriteStringValue(ElevationLevel.Value.ToSerialString());
             }
-            if (Optional.IsDefined(LinuxUserConfiguration))
+            if (LinuxUserConfiguration != null)
             {
                 writer.WritePropertyName("linuxUserConfiguration"u8);
                 writer.WriteObjectValue(LinuxUserConfiguration);
             }
-            if (Optional.IsDefined(WindowsUserConfiguration))
+            if (WindowsUserConfiguration != null)
             {
                 writer.WritePropertyName("windowsUserConfiguration"u8);
                 writer.WriteObjectValue(WindowsUserConfiguration);
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.Batch.Models
             }
             string name = default;
             string password = default;
-            Optional<BatchUserAccountElevationLevel> elevationLevel = default;
-            Optional<BatchLinuxUserConfiguration> linuxUserConfiguration = default;
-            Optional<BatchWindowsUserConfiguration> windowsUserConfiguration = default;
+            BatchUserAccountElevationLevel? elevationLevel = default;
+            BatchLinuxUserConfiguration linuxUserConfiguration = default;
+            BatchWindowsUserConfiguration windowsUserConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchUserAccount(name, password, Optional.ToNullable(elevationLevel), linuxUserConfiguration.Value, windowsUserConfiguration.Value, serializedAdditionalRawData);
+            return new BatchUserAccount(
+                name,
+                password,
+                elevationLevel,
+                linuxUserConfiguration,
+                windowsUserConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchUserAccount>.Write(ModelReaderWriterOptions options)

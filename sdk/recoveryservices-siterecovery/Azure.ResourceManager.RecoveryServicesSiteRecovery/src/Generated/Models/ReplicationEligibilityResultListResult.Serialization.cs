@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ReplicationEligibilityResultData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReplicationEligibilityResultData>> value = default;
+            IReadOnlyList<ReplicationEligibilityResultData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationEligibilityResultListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ReplicationEligibilityResultListResult(value ?? new ChangeTrackingList<ReplicationEligibilityResultData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationEligibilityResultListResult>.Write(ModelReaderWriterOptions options)

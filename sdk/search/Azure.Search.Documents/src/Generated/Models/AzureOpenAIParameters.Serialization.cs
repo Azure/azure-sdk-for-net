@@ -16,22 +16,22 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceUri))
+            if (ResourceUri != null)
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DeploymentId))
+            if (DeploymentId != null)
             {
                 writer.WritePropertyName("deploymentId"u8);
                 writer.WriteStringValue(DeploymentId);
             }
-            if (Optional.IsDefined(ApiKey))
+            if (ApiKey != null)
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Optional.IsDefined(AuthIdentity))
+            if (AuthIdentity != null)
             {
                 if (AuthIdentity != null)
                 {
@@ -52,10 +52,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<Uri> resourceUri = default;
-            Optional<string> deploymentId = default;
-            Optional<string> apiKey = default;
-            Optional<SearchIndexerDataIdentity> authIdentity = default;
+            Uri resourceUri = default;
+            string deploymentId = default;
+            string apiKey = default;
+            SearchIndexerDataIdentity authIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceUri"u8))
@@ -88,7 +88,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new AzureOpenAIParameters(resourceUri.Value, deploymentId.Value, apiKey.Value, authIdentity.Value);
+            return new AzureOpenAIParameters(resourceUri, deploymentId, apiKey, authIdentity);
         }
     }
 }

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Column))
+            if (Column != null)
             {
                 writer.WritePropertyName("column"u8);
                 writer.WriteStringValue(Column);
             }
-            if (Optional.IsDefined(Operator))
+            if (Operator != null)
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator);
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<string> column = default;
-            Optional<string> @operator = default;
-            Optional<BinaryData> value = default;
-            Optional<string> key = default;
+            string column = default;
+            string @operator = default;
+            BinaryData value = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsWorkspacePurgeFilter(column.Value, @operator.Value, value.Value, key.Value, serializedAdditionalRawData);
+            return new OperationalInsightsWorkspacePurgeFilter(column, @operator, value, key, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsWorkspacePurgeFilter>.Write(ModelReaderWriterOptions options)

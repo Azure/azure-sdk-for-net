@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(LowerCaseKeepWords))
+            if (LowerCaseKeepWords.HasValue)
             {
                 writer.WritePropertyName("keepWordsCase"u8);
                 writer.WriteBooleanValue(LowerCaseKeepWords.Value);
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<string> keepWords = default;
-            Optional<bool> keepWordsCase = default;
+            bool? keepWordsCase = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -77,7 +77,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new KeepTokenFilter(odataType, name, keepWords, Optional.ToNullable(keepWordsCase));
+            return new KeepTokenFilter(odataType, name, keepWords, keepWordsCase);
         }
     }
 }

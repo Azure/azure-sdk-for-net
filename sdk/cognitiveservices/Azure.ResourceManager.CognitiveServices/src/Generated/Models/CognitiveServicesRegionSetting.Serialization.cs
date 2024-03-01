@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Value))
+            if (Value.HasValue)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
-            if (Optional.IsDefined(Customsubdomain))
+            if (Customsubdomain != null)
             {
                 writer.WritePropertyName("customsubdomain"u8);
                 writer.WriteStringValue(Customsubdomain);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<float> value = default;
-            Optional<string> customsubdomain = default;
+            string name = default;
+            float? value = default;
+            string customsubdomain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesRegionSetting(name.Value, Optional.ToNullable(value), customsubdomain.Value, serializedAdditionalRawData);
+            return new CognitiveServicesRegionSetting(name, value, customsubdomain, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesRegionSetting>.Write(ModelReaderWriterOptions options)

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventStartOn))
+            if (EventStartOn.HasValue)
             {
                 writer.WritePropertyName("eventStartTime"u8);
                 writer.WriteStringValue(EventStartOn.Value, "O");
             }
-            if (Optional.IsDefined(EventStatusLastModifiedOn))
+            if (EventStatusLastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("eventStatusLastModifiedTime"u8);
                 writer.WriteStringValue(EventStatusLastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(CorrelationId))
+            if (CorrelationId != null)
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (Optional.IsDefined(IncidentProperties))
+            if (IncidentProperties != null)
             {
                 writer.WritePropertyName("incidentProperties"u8);
                 writer.WriteObjectValue(IncidentProperties);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> eventStartTime = default;
-            Optional<DateTimeOffset> eventStatusLastModifiedTime = default;
-            Optional<string> correlationId = default;
-            Optional<ServiceImpactingEventStatus> status = default;
-            Optional<ServiceImpactingEventIncidentProperties> incidentProperties = default;
+            DateTimeOffset? eventStartTime = default;
+            DateTimeOffset? eventStatusLastModifiedTime = default;
+            string correlationId = default;
+            ServiceImpactingEventStatus status = default;
+            ServiceImpactingEventIncidentProperties incidentProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceImpactingEvent(Optional.ToNullable(eventStartTime), Optional.ToNullable(eventStatusLastModifiedTime), correlationId.Value, status.Value, incidentProperties.Value, serializedAdditionalRawData);
+            return new ServiceImpactingEvent(
+                eventStartTime,
+                eventStatusLastModifiedTime,
+                correlationId,
+                status,
+                incidentProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceImpactingEvent>.Write(ModelReaderWriterOptions options)

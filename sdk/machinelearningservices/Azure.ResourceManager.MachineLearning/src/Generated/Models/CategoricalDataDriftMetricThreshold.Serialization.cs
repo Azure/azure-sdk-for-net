@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(Metric.ToString());
             writer.WritePropertyName("dataType"u8);
             writer.WriteStringValue(DataType.ToString());
-            if (Optional.IsDefined(Threshold))
+            if (Threshold != null)
             {
                 if (Threshold != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             CategoricalDataDriftMetric metric = default;
             MonitoringFeatureDataType dataType = default;
-            Optional<MonitoringThreshold> threshold = default;
+            MonitoringThreshold threshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CategoricalDataDriftMetricThreshold(dataType, threshold.Value, serializedAdditionalRawData, metric);
+            return new CategoricalDataDriftMetricThreshold(dataType, threshold, serializedAdditionalRawData, metric);
         }
 
         BinaryData IPersistableModel<CategoricalDataDriftMetricThreshold>.Write(ModelReaderWriterOptions options)

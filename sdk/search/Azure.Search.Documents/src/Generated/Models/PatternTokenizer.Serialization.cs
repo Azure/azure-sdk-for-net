@@ -15,17 +15,17 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Pattern))
+            if (Pattern != null)
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (Optional.IsDefined(FlagsInternal))
+            if (FlagsInternal != null)
             {
                 writer.WritePropertyName("flags"u8);
                 writer.WriteStringValue(FlagsInternal);
             }
-            if (Optional.IsDefined(Group))
+            if (Group.HasValue)
             {
                 writer.WritePropertyName("group"u8);
                 writer.WriteNumberValue(Group.Value);
@@ -43,9 +43,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> pattern = default;
-            Optional<string> flags = default;
-            Optional<int> group = default;
+            string pattern = default;
+            string flags = default;
+            int? group = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PatternTokenizer(odataType, name, pattern.Value, flags.Value, Optional.ToNullable(group));
+            return new PatternTokenizer(odataType, name, pattern, flags, group);
         }
     }
 }

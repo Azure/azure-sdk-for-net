@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(VersionQueryName))
+            if (VersionQueryName != null)
             {
                 writer.WritePropertyName("versionQueryName"u8);
                 writer.WriteStringValue(VersionQueryName);
             }
-            if (Optional.IsDefined(VersionHeaderName))
+            if (VersionHeaderName != null)
             {
                 writer.WritePropertyName("versionHeaderName"u8);
                 writer.WriteStringValue(VersionHeaderName);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(VersioningScheme))
+            if (VersioningScheme.HasValue)
             {
                 writer.WritePropertyName("versioningScheme"u8);
                 writer.WriteStringValue(VersioningScheme.Value.ToString());
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> versionQueryName = default;
-            Optional<string> versionHeaderName = default;
-            Optional<string> displayName = default;
-            Optional<VersioningScheme> versioningScheme = default;
+            SystemData systemData = default;
+            string description = default;
+            string versionQueryName = default;
+            string versionHeaderName = default;
+            string displayName = default;
+            VersioningScheme? versioningScheme = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,7 +198,17 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiVersionSetData(id, name, type, systemData.Value, description.Value, versionQueryName.Value, versionHeaderName.Value, displayName.Value, Optional.ToNullable(versioningScheme), serializedAdditionalRawData);
+            return new ApiVersionSetData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                versionQueryName,
+                versionHeaderName,
+                displayName,
+                versioningScheme,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiVersionSetData>.Write(ModelReaderWriterOptions options)

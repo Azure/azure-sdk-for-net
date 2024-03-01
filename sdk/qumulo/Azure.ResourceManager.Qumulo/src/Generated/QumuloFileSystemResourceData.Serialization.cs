@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Qumulo
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Qumulo
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Qumulo
             writer.WriteStartObject();
             writer.WritePropertyName("marketplaceDetails"u8);
             writer.WriteObjectValue(MarketplaceDetails);
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.Qumulo
             writer.WriteObjectValue(UserDetails);
             writer.WritePropertyName("delegatedSubnetId"u8);
             writer.WriteStringValue(DelegatedSubnetId);
-            if (Optional.IsDefined(ClusterLoginUri))
+            if (ClusterLoginUri != null)
             {
                 writer.WritePropertyName("clusterLoginUrl"u8);
                 writer.WriteStringValue(ClusterLoginUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(PrivateIPs))
+            if (!(PrivateIPs is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateIPs"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Qumulo
             writer.WriteStringValue(AdminPassword);
             writer.WritePropertyName("initialCapacity"u8);
             writer.WriteNumberValue(InitialCapacity);
-            if (Optional.IsDefined(AvailabilityZone))
+            if (AvailabilityZone != null)
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone);
@@ -150,23 +150,23 @@ namespace Azure.ResourceManager.Qumulo
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             MarketplaceDetails marketplaceDetails = default;
-            Optional<QumuloProvisioningState> provisioningState = default;
+            QumuloProvisioningState? provisioningState = default;
             StorageSku storageSku = default;
             QumuloUserDetails userDetails = default;
             string delegatedSubnetId = default;
-            Optional<Uri> clusterLoginUrl = default;
-            Optional<IList<IPAddress>> privateIPs = default;
+            Uri clusterLoginUrl = default;
+            IList<IPAddress> privateIPs = default;
             string adminPassword = default;
             int initialCapacity = default;
-            Optional<string> availabilityZone = default;
+            string availabilityZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -315,7 +315,25 @@ namespace Azure.ResourceManager.Qumulo
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QumuloFileSystemResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, marketplaceDetails, Optional.ToNullable(provisioningState), storageSku, userDetails, delegatedSubnetId, clusterLoginUrl.Value, Optional.ToList(privateIPs), adminPassword, initialCapacity, availabilityZone.Value, serializedAdditionalRawData);
+            return new QumuloFileSystemResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                marketplaceDetails,
+                provisioningState,
+                storageSku,
+                userDetails,
+                delegatedSubnetId,
+                clusterLoginUrl,
+                privateIPs ?? new ChangeTrackingList<IPAddress>(),
+                adminPassword,
+                initialCapacity,
+                availabilityZone,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QumuloFileSystemResourceData>.Write(ModelReaderWriterOptions options)

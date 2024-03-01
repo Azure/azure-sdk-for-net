@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(PublicIPAddress))
+            if (PublicIPAddress != null)
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             ResourceIdentifier id = default;
             IList<JitNetworkAccessPortRule> ports = default;
-            Optional<string> publicIPAddress = default;
+            string publicIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitNetworkAccessPolicyVirtualMachine(id, ports, publicIPAddress.Value, serializedAdditionalRawData);
+            return new JitNetworkAccessPolicyVirtualMachine(id, ports, publicIPAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitNetworkAccessPolicyVirtualMachine>.Write(ModelReaderWriterOptions options)

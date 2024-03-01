@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Core.Optional.IsDefined(ParameterType))
+            if (options.Format != "W" && ParameterType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ParameterType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Core.Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Core.Optional.IsDefined(Visibility))
+            if (options.Format != "W" && Visibility.HasValue)
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());
             }
-            if (options.Format != "W" && Core.Optional.IsDefined(Optional))
+            if (options.Format != "W" && Optional.HasValue)
             {
                 writer.WritePropertyName("optional"u8);
                 writer.WriteStringValue(Optional.Value.ToString());
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<ScriptParameterType> type = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<ParameterVisibilityStatus> visibility = default;
-            Optional<ParameterOptionalityStatus> optional = default;
+            ScriptParameterType? type = default;
+            string name = default;
+            string description = default;
+            ParameterVisibilityStatus? visibility = default;
+            ParameterOptionalityStatus? optional = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptParameter(Core.Optional.ToNullable(type), name.Value, description.Value, Core.Optional.ToNullable(visibility), Core.Optional.ToNullable(optional), serializedAdditionalRawData);
+            return new ScriptParameter(
+                type,
+                name,
+                description,
+                visibility,
+                optional,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptParameter>.Write(ModelReaderWriterOptions options)

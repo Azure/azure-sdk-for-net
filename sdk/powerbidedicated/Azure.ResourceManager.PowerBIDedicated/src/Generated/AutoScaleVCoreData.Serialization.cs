@@ -29,24 +29,24 @@ namespace Azure.ResourceManager.PowerBIDedicated
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,24 +57,24 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(SystemData))
+            if (SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 writer.WriteObjectValue(SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CapacityLimit))
+            if (CapacityLimit.HasValue)
             {
                 writer.WritePropertyName("capacityLimit"u8);
                 writer.WriteNumberValue(CapacityLimit.Value);
             }
-            if (Optional.IsDefined(CapacityObjectId))
+            if (CapacityObjectId != null)
             {
                 writer.WritePropertyName("capacityObjectId"u8);
                 writer.WriteStringValue(CapacityObjectId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 return null;
             }
             AutoScaleVCoreSku sku = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            string id = default;
+            string name = default;
+            string type = default;
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> capacityLimit = default;
-            Optional<string> capacityObjectId = default;
-            Optional<VCoreProvisioningState> provisioningState = default;
+            IDictionary<string, string> tags = default;
+            SystemData systemData = default;
+            int? capacityLimit = default;
+            string capacityObjectId = default;
+            VCoreProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoScaleVCoreData(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), systemData.Value, serializedAdditionalRawData, sku, Optional.ToNullable(capacityLimit), capacityObjectId.Value, Optional.ToNullable(provisioningState));
+            return new AutoScaleVCoreData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                systemData,
+                serializedAdditionalRawData,
+                sku,
+                capacityLimit,
+                capacityObjectId,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<AutoScaleVCoreData>.Write(ModelReaderWriterOptions options)

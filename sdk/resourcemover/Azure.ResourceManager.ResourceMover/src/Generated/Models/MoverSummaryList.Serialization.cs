@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FieldName))
+            if (FieldName != null)
             {
                 writer.WritePropertyName("fieldName"u8);
                 writer.WriteStringValue(FieldName);
             }
-            if (Optional.IsCollectionDefined(Summary))
+            if (!(Summary is ChangeTrackingList<MoverSummaryItemInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> fieldName = default;
-            Optional<IReadOnlyList<MoverSummaryItemInfo>> summary = default;
+            string fieldName = default;
+            IReadOnlyList<MoverSummaryItemInfo> summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverSummaryList(fieldName.Value, Optional.ToList(summary), serializedAdditionalRawData);
+            return new MoverSummaryList(fieldName, summary ?? new ChangeTrackingList<MoverSummaryItemInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverSummaryList>.Write(ModelReaderWriterOptions options)

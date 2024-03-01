@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.Billing
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Family))
+            if (Family.HasValue)
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PaymentMethodType))
+            if (options.Format != "W" && PaymentMethodType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PaymentMethodType);
             }
-            if (options.Format != "W" && Optional.IsDefined(AccountHolderName))
+            if (options.Format != "W" && AccountHolderName != null)
             {
                 writer.WritePropertyName("accountHolderName"u8);
                 writer.WriteStringValue(AccountHolderName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Expiration))
+            if (options.Format != "W" && Expiration != null)
             {
                 writer.WritePropertyName("expiration"u8);
                 writer.WriteStringValue(Expiration);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastFourDigits))
+            if (options.Format != "W" && LastFourDigits != null)
             {
                 writer.WritePropertyName("lastFourDigits"u8);
                 writer.WriteStringValue(LastFourDigits);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(Logos))
+            if (!(Logos is ChangeTrackingList<PaymentMethodLogo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("logos"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Billing
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -137,15 +137,15 @@ namespace Azure.ResourceManager.Billing
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PaymentMethodFamily> family = default;
-            Optional<string> type0 = default;
-            Optional<string> accountHolderName = default;
-            Optional<string> expiration = default;
-            Optional<string> lastFourDigits = default;
-            Optional<string> displayName = default;
-            Optional<IList<PaymentMethodLogo>> logos = default;
-            Optional<PaymentMethodStatus> status = default;
+            SystemData systemData = default;
+            PaymentMethodFamily? family = default;
+            string type0 = default;
+            string accountHolderName = default;
+            string expiration = default;
+            string lastFourDigits = default;
+            string displayName = default;
+            IList<PaymentMethodLogo> logos = default;
+            PaymentMethodStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -249,7 +249,20 @@ namespace Azure.ResourceManager.Billing
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingPaymentMethodData(id, name, type, systemData.Value, Optional.ToNullable(family), type0.Value, accountHolderName.Value, expiration.Value, lastFourDigits.Value, displayName.Value, Optional.ToList(logos), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new BillingPaymentMethodData(
+                id,
+                name,
+                type,
+                systemData,
+                family,
+                type0,
+                accountHolderName,
+                expiration,
+                lastFourDigits,
+                displayName,
+                logos ?? new ChangeTrackingList<PaymentMethodLogo>(),
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingPaymentMethodData>.Write(ModelReaderWriterOptions options)

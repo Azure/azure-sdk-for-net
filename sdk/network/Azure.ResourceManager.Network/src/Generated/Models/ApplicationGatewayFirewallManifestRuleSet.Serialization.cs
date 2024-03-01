@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tiers))
+            if (!(Tiers is ChangeTrackingList<ApplicationGatewayTierType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tiers"u8);
                 writer.WriteStartArray();
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.Network.Models
             }
             string ruleSetType = default;
             string ruleSetVersion = default;
-            Optional<ApplicationGatewayRuleSetStatusOption> status = default;
-            Optional<IReadOnlyList<ApplicationGatewayTierType>> tiers = default;
+            ApplicationGatewayRuleSetStatusOption? status = default;
+            IReadOnlyList<ApplicationGatewayTierType> tiers = default;
             IReadOnlyList<ApplicationGatewayFirewallRuleGroup> ruleGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayFirewallManifestRuleSet(ruleSetType, ruleSetVersion, Optional.ToNullable(status), Optional.ToList(tiers), ruleGroups, serializedAdditionalRawData);
+            return new ApplicationGatewayFirewallManifestRuleSet(
+                ruleSetType,
+                ruleSetVersion,
+                status,
+                tiers ?? new ChangeTrackingList<ApplicationGatewayTierType>(),
+                ruleGroups,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayFirewallManifestRuleSet>.Write(ModelReaderWriterOptions options)

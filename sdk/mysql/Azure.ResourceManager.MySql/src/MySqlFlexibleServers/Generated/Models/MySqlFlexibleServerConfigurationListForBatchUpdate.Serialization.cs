@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingList<MySqlFlexibleServerConfigurationForBatchUpdate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ResetAllToDefault))
+            if (ResetAllToDefault.HasValue)
             {
                 writer.WritePropertyName("resetAllToDefault"u8);
                 writer.WriteStringValue(ResetAllToDefault.Value.ToString());
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IList<MySqlFlexibleServerConfigurationForBatchUpdate>> value = default;
-            Optional<MySqlFlexibleServerConfigurationResetAllToDefault> resetAllToDefault = default;
+            IList<MySqlFlexibleServerConfigurationForBatchUpdate> value = default;
+            MySqlFlexibleServerConfigurationResetAllToDefault? resetAllToDefault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerConfigurationListForBatchUpdate(Optional.ToList(value), Optional.ToNullable(resetAllToDefault), serializedAdditionalRawData);
+            return new MySqlFlexibleServerConfigurationListForBatchUpdate(value ?? new ChangeTrackingList<MySqlFlexibleServerConfigurationForBatchUpdate>(), resetAllToDefault, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerConfigurationListForBatchUpdate>.Write(ModelReaderWriterOptions options)

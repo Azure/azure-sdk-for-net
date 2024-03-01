@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Automanage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AutomanageBestPracticeData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Automanage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomanageBestPracticeData>> value = default;
+            IReadOnlyList<AutomanageBestPracticeData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BestPracticeList(Optional.ToList(value), serializedAdditionalRawData);
+            return new BestPracticeList(value ?? new ChangeTrackingList<AutomanageBestPracticeData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BestPracticeList>.Write(ModelReaderWriterOptions options)

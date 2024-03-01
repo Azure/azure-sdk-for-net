@@ -45,124 +45,124 @@ namespace Azure.ResourceManager.BillingBenefits
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayProvisioningState))
+            if (options.Format != "W" && DisplayProvisioningState != null)
             {
                 writer.WritePropertyName("displayProvisioningState"u8);
                 writer.WriteStringValue(DisplayProvisioningState);
             }
-            if (Optional.IsDefined(BillingScopeId))
+            if (BillingScopeId != null)
             {
                 writer.WritePropertyName("billingScopeId"u8);
                 writer.WriteStringValue(BillingScopeId);
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingProfileId))
+            if (options.Format != "W" && BillingProfileId != null)
             {
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomerId))
+            if (options.Format != "W" && CustomerId != null)
             {
                 writer.WritePropertyName("customerId"u8);
                 writer.WriteStringValue(CustomerId);
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingAccountId))
+            if (options.Format != "W" && BillingAccountId != null)
             {
                 writer.WritePropertyName("billingAccountId"u8);
                 writer.WriteStringValue(BillingAccountId);
             }
-            if (Optional.IsDefined(Term))
+            if (Term.HasValue)
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term.Value.ToString());
             }
-            if (Optional.IsDefined(BillingPlan))
+            if (BillingPlan.HasValue)
             {
                 writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
             }
-            if (Optional.IsDefined(AppliedScopeType))
+            if (AppliedScopeType.HasValue)
             {
                 writer.WritePropertyName("appliedScopeType"u8);
                 writer.WriteStringValue(AppliedScopeType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(UserFriendlyAppliedScopeType))
+            if (options.Format != "W" && UserFriendlyAppliedScopeType != null)
             {
                 writer.WritePropertyName("userFriendlyAppliedScopeType"u8);
                 writer.WriteStringValue(UserFriendlyAppliedScopeType);
             }
-            if (Optional.IsDefined(AppliedScopeProperties))
+            if (AppliedScopeProperties != null)
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
                 writer.WriteObjectValue(AppliedScopeProperties);
             }
-            if (Optional.IsDefined(Commitment))
+            if (Commitment != null)
             {
                 writer.WritePropertyName("commitment"u8);
                 writer.WriteObjectValue(Commitment);
             }
-            if (options.Format != "W" && Optional.IsDefined(EffectOn))
+            if (options.Format != "W" && EffectOn.HasValue)
             {
                 writer.WritePropertyName("effectiveDateTime"u8);
                 writer.WriteStringValue(EffectOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiryDateTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(PurchaseOn))
+            if (options.Format != "W" && PurchaseOn.HasValue)
             {
                 writer.WritePropertyName("purchaseDateTime"u8);
                 writer.WriteStringValue(PurchaseOn.Value, "O");
             }
-            if (Optional.IsDefined(BenefitStartOn))
+            if (BenefitStartOn.HasValue)
             {
                 writer.WritePropertyName("benefitStartTime"u8);
                 writer.WriteStringValue(BenefitStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtendedStatusInfo))
+            if (options.Format != "W" && ExtendedStatusInfo != null)
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
                 writer.WriteObjectValue(ExtendedStatusInfo);
             }
-            if (Optional.IsDefined(IsRenewed))
+            if (IsRenewed.HasValue)
             {
                 writer.WritePropertyName("renew"u8);
                 writer.WriteBooleanValue(IsRenewed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Utilization))
+            if (options.Format != "W" && Utilization != null)
             {
                 writer.WritePropertyName("utilization"u8);
                 writer.WriteObjectValue(Utilization);
             }
-            if (Optional.IsDefined(RenewSource))
+            if (RenewSource != null)
             {
                 writer.WritePropertyName("renewSource"u8);
                 writer.WriteStringValue(RenewSource);
             }
-            if (Optional.IsDefined(RenewDestination))
+            if (RenewDestination != null)
             {
                 writer.WritePropertyName("renewDestination"u8);
                 writer.WriteStringValue(RenewDestination);
             }
-            if (Optional.IsDefined(RenewProperties))
+            if (RenewProperties != null)
             {
                 writer.WritePropertyName("renewProperties"u8);
                 writer.WriteObjectValue(RenewProperties);
@@ -210,30 +210,30 @@ namespace Azure.ResourceManager.BillingBenefits
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<BillingBenefitsProvisioningState> provisioningState = default;
-            Optional<string> displayProvisioningState = default;
-            Optional<ResourceIdentifier> billingScopeId = default;
-            Optional<ResourceIdentifier> billingProfileId = default;
-            Optional<string> customerId = default;
-            Optional<ResourceIdentifier> billingAccountId = default;
-            Optional<BillingBenefitsTerm> term = default;
-            Optional<BillingBenefitsBillingPlan> billingPlan = default;
-            Optional<BillingBenefitsAppliedScopeType> appliedScopeType = default;
-            Optional<string> userFriendlyAppliedScopeType = default;
-            Optional<BillingBenefitsAppliedScopeProperties> appliedScopeProperties = default;
-            Optional<BillingBenefitsCommitment> commitment = default;
-            Optional<DateTimeOffset> effectiveDateTime = default;
-            Optional<DateTimeOffset> expiryDateTime = default;
-            Optional<DateTimeOffset> purchaseDateTime = default;
-            Optional<DateTimeOffset> benefitStartTime = default;
-            Optional<BillingBenefitsExtendedStatusInfo> extendedStatusInfo = default;
-            Optional<bool> renew = default;
-            Optional<BillingBenefitsSavingsPlanUtilization> utilization = default;
-            Optional<string> renewSource = default;
-            Optional<string> renewDestination = default;
-            Optional<RenewProperties> renewProperties = default;
+            SystemData systemData = default;
+            string displayName = default;
+            BillingBenefitsProvisioningState? provisioningState = default;
+            string displayProvisioningState = default;
+            ResourceIdentifier billingScopeId = default;
+            ResourceIdentifier billingProfileId = default;
+            string customerId = default;
+            ResourceIdentifier billingAccountId = default;
+            BillingBenefitsTerm? term = default;
+            BillingBenefitsBillingPlan? billingPlan = default;
+            BillingBenefitsAppliedScopeType? appliedScopeType = default;
+            string userFriendlyAppliedScopeType = default;
+            BillingBenefitsAppliedScopeProperties appliedScopeProperties = default;
+            BillingBenefitsCommitment commitment = default;
+            DateTimeOffset? effectiveDateTime = default;
+            DateTimeOffset? expiryDateTime = default;
+            DateTimeOffset? purchaseDateTime = default;
+            DateTimeOffset? benefitStartTime = default;
+            BillingBenefitsExtendedStatusInfo extendedStatusInfo = default;
+            bool? renew = default;
+            BillingBenefitsSavingsPlanUtilization utilization = default;
+            string renewSource = default;
+            string renewDestination = default;
+            RenewProperties renewProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -468,7 +468,36 @@ namespace Azure.ResourceManager.BillingBenefits
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsSavingsPlanData(id, name, type, systemData.Value, sku, displayName.Value, Optional.ToNullable(provisioningState), displayProvisioningState.Value, billingScopeId.Value, billingProfileId.Value, customerId.Value, billingAccountId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), userFriendlyAppliedScopeType.Value, appliedScopeProperties.Value, commitment.Value, Optional.ToNullable(effectiveDateTime), Optional.ToNullable(expiryDateTime), Optional.ToNullable(purchaseDateTime), Optional.ToNullable(benefitStartTime), extendedStatusInfo.Value, Optional.ToNullable(renew), utilization.Value, renewSource.Value, renewDestination.Value, renewProperties.Value, serializedAdditionalRawData);
+            return new BillingBenefitsSavingsPlanData(
+                id,
+                name,
+                type,
+                systemData,
+                sku,
+                displayName,
+                provisioningState,
+                displayProvisioningState,
+                billingScopeId,
+                billingProfileId,
+                customerId,
+                billingAccountId,
+                term,
+                billingPlan,
+                appliedScopeType,
+                userFriendlyAppliedScopeType,
+                appliedScopeProperties,
+                commitment,
+                effectiveDateTime,
+                expiryDateTime,
+                purchaseDateTime,
+                benefitStartTime,
+                extendedStatusInfo,
+                renew,
+                utilization,
+                renewSource,
+                renewDestination,
+                renewProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsSavingsPlanData>.Write(ModelReaderWriterOptions options)

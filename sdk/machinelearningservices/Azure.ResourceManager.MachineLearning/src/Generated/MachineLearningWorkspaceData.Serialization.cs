@@ -28,23 +28,23 @@ namespace Azure.ResourceManager.MachineLearning
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,24 +72,24 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowPublicAccessWhenBehindVnet))
+            if (AllowPublicAccessWhenBehindVnet.HasValue)
             {
                 writer.WritePropertyName("allowPublicAccessWhenBehindVnet"u8);
                 writer.WriteBooleanValue(AllowPublicAccessWhenBehindVnet.Value);
             }
-            if (Optional.IsDefined(ApplicationInsights))
+            if (ApplicationInsights != null)
             {
                 writer.WritePropertyName("applicationInsights"u8);
                 writer.WriteStringValue(ApplicationInsights);
             }
-            if (Optional.IsCollectionDefined(AssociatedWorkspaces))
+            if (!(AssociatedWorkspaces is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("associatedWorkspaces"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ContainerRegistries))
+            if (!(ContainerRegistries is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("containerRegistries"u8);
                 writer.WriteStartArray();
@@ -109,32 +109,32 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ContainerRegistry))
+            if (ContainerRegistry != null)
             {
                 writer.WritePropertyName("containerRegistry"u8);
                 writer.WriteStringValue(ContainerRegistry);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DiscoveryUri))
+            if (DiscoveryUri != null)
             {
                 writer.WritePropertyName("discoveryUrl"u8);
                 writer.WriteStringValue(DiscoveryUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(EnableDataIsolation))
+            if (EnableDataIsolation.HasValue)
             {
                 writer.WritePropertyName("enableDataIsolation"u8);
                 writer.WriteBooleanValue(EnableDataIsolation.Value);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsCollectionDefined(ExistingWorkspaces))
+            if (!(ExistingWorkspaces is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("existingWorkspaces"u8);
                 writer.WriteStartArray();
@@ -144,37 +144,37 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FeatureStoreSettings))
+            if (FeatureStoreSettings != null)
             {
                 writer.WritePropertyName("featureStoreSettings"u8);
                 writer.WriteObjectValue(FeatureStoreSettings);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(IsHbiWorkspace))
+            if (IsHbiWorkspace.HasValue)
             {
                 writer.WritePropertyName("hbiWorkspace"u8);
                 writer.WriteBooleanValue(IsHbiWorkspace.Value);
             }
-            if (Optional.IsDefined(HubResourceId))
+            if (HubResourceId != null)
             {
                 writer.WritePropertyName("hubResourceId"u8);
                 writer.WriteStringValue(HubResourceId);
             }
-            if (Optional.IsDefined(ImageBuildCompute))
+            if (ImageBuildCompute != null)
             {
                 writer.WritePropertyName("imageBuildCompute"u8);
                 writer.WriteStringValue(ImageBuildCompute);
             }
-            if (Optional.IsDefined(KeyVault))
+            if (KeyVault != null)
             {
                 writer.WritePropertyName("keyVault"u8);
                 writer.WriteStringValue(KeyVault);
             }
-            if (Optional.IsCollectionDefined(KeyVaults))
+            if (!(KeyVaults is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("keyVaults"u8);
                 writer.WriteStartArray();
@@ -184,27 +184,27 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ManagedNetwork))
+            if (ManagedNetwork != null)
             {
                 writer.WritePropertyName("managedNetwork"u8);
                 writer.WriteObjectValue(ManagedNetwork);
             }
-            if (options.Format != "W" && Optional.IsDefined(MlFlowTrackingUri))
+            if (options.Format != "W" && MlFlowTrackingUri != null)
             {
                 writer.WritePropertyName("mlFlowTrackingUri"u8);
                 writer.WriteStringValue(MlFlowTrackingUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(NotebookInfo))
+            if (options.Format != "W" && NotebookInfo != null)
             {
                 writer.WritePropertyName("notebookInfo"u8);
                 writer.WriteObjectValue(NotebookInfo);
             }
-            if (Optional.IsDefined(PrimaryUserAssignedIdentity))
+            if (PrimaryUserAssignedIdentity != null)
             {
                 writer.WritePropertyName("primaryUserAssignedIdentity"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentity);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<MachineLearningPrivateEndpointConnectionData> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -214,32 +214,32 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateLinkCount))
+            if (options.Format != "W" && PrivateLinkCount.HasValue)
             {
                 writer.WritePropertyName("privateLinkCount"u8);
                 writer.WriteNumberValue(PrivateLinkCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetworkAccessType))
+            if (PublicNetworkAccessType.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccessType.Value.ToString());
             }
-            if (Optional.IsDefined(ServiceManagedResourcesSettings))
+            if (ServiceManagedResourcesSettings != null)
             {
                 writer.WritePropertyName("serviceManagedResourcesSettings"u8);
                 writer.WriteObjectValue(ServiceManagedResourcesSettings);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceProvisionedResourceGroup))
+            if (options.Format != "W" && ServiceProvisionedResourceGroup != null)
             {
                 writer.WritePropertyName("serviceProvisionedResourceGroup"u8);
                 writer.WriteStringValue(ServiceProvisionedResourceGroup);
             }
-            if (Optional.IsCollectionDefined(SharedPrivateLinkResources))
+            if (!(SharedPrivateLinkResources is ChangeTrackingList<MachineLearningSharedPrivateLinkResource> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("sharedPrivateLinkResources"u8);
                 writer.WriteStartArray();
@@ -249,17 +249,17 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SoftDeleteRetentionInDays))
+            if (SoftDeleteRetentionInDays.HasValue)
             {
                 writer.WritePropertyName("softDeleteRetentionInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionInDays.Value);
             }
-            if (Optional.IsDefined(StorageAccount))
+            if (StorageAccount != null)
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteStringValue(StorageAccount);
             }
-            if (Optional.IsCollectionDefined(StorageAccounts))
+            if (!(StorageAccounts is ChangeTrackingList<string> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -269,32 +269,32 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsStorageHnsEnabled))
+            if (options.Format != "W" && IsStorageHnsEnabled.HasValue)
             {
                 writer.WritePropertyName("storageHnsEnabled"u8);
                 writer.WriteBooleanValue(IsStorageHnsEnabled.Value);
             }
-            if (Optional.IsDefined(SystemDatastoresAuthMode))
+            if (SystemDatastoresAuthMode != null)
             {
                 writer.WritePropertyName("systemDatastoresAuthMode"u8);
                 writer.WriteStringValue(SystemDatastoresAuthMode);
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(IsV1LegacyMode))
+            if (IsV1LegacyMode.HasValue)
             {
                 writer.WritePropertyName("v1LegacyMode"u8);
                 writer.WriteBooleanValue(IsV1LegacyMode.Value);
             }
-            if (Optional.IsDefined(WorkspaceHubConfig))
+            if (WorkspaceHubConfig != null)
             {
                 writer.WritePropertyName("workspaceHubConfig"u8);
                 writer.WriteObjectValue(WorkspaceHubConfig);
             }
-            if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
+            if (options.Format != "W" && WorkspaceId != null)
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
@@ -338,52 +338,52 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> kind = default;
-            Optional<MachineLearningSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            string kind = default;
+            MachineLearningSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> allowPublicAccessWhenBehindVnet = default;
-            Optional<string> applicationInsights = default;
-            Optional<IList<string>> associatedWorkspaces = default;
-            Optional<IList<string>> containerRegistries = default;
-            Optional<string> containerRegistry = default;
-            Optional<string> description = default;
-            Optional<Uri> discoveryUrl = default;
-            Optional<bool> enableDataIsolation = default;
-            Optional<MachineLearningEncryptionSetting> encryption = default;
-            Optional<IList<string>> existingWorkspaces = default;
-            Optional<FeatureStoreSettings> featureStoreSettings = default;
-            Optional<string> friendlyName = default;
-            Optional<bool> hbiWorkspace = default;
-            Optional<ResourceIdentifier> hubResourceId = default;
-            Optional<string> imageBuildCompute = default;
-            Optional<string> keyVault = default;
-            Optional<IList<string>> keyVaults = default;
-            Optional<ManagedNetworkSettings> managedNetwork = default;
-            Optional<Uri> mlFlowTrackingUri = default;
-            Optional<MachineLearningNotebookResourceInfo> notebookInfo = default;
-            Optional<string> primaryUserAssignedIdentity = default;
-            Optional<IReadOnlyList<MachineLearningPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<int> privateLinkCount = default;
-            Optional<MachineLearningProvisioningState> provisioningState = default;
-            Optional<MachineLearningPublicNetworkAccessType> publicNetworkAccess = default;
-            Optional<ServiceManagedResourcesSettings> serviceManagedResourcesSettings = default;
-            Optional<string> serviceProvisionedResourceGroup = default;
-            Optional<IList<MachineLearningSharedPrivateLinkResource>> sharedPrivateLinkResources = default;
-            Optional<int> softDeleteRetentionInDays = default;
-            Optional<string> storageAccount = default;
-            Optional<IList<string>> storageAccounts = default;
-            Optional<bool> storageHnsEnabled = default;
-            Optional<string> systemDatastoresAuthMode = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> v1LegacyMode = default;
-            Optional<WorkspaceHubConfig> workspaceHubConfig = default;
-            Optional<string> workspaceId = default;
+            SystemData systemData = default;
+            bool? allowPublicAccessWhenBehindVnet = default;
+            string applicationInsights = default;
+            IList<string> associatedWorkspaces = default;
+            IList<string> containerRegistries = default;
+            string containerRegistry = default;
+            string description = default;
+            Uri discoveryUrl = default;
+            bool? enableDataIsolation = default;
+            MachineLearningEncryptionSetting encryption = default;
+            IList<string> existingWorkspaces = default;
+            FeatureStoreSettings featureStoreSettings = default;
+            string friendlyName = default;
+            bool? hbiWorkspace = default;
+            ResourceIdentifier hubResourceId = default;
+            string imageBuildCompute = default;
+            string keyVault = default;
+            IList<string> keyVaults = default;
+            ManagedNetworkSettings managedNetwork = default;
+            Uri mlFlowTrackingUri = default;
+            MachineLearningNotebookResourceInfo notebookInfo = default;
+            string primaryUserAssignedIdentity = default;
+            IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections = default;
+            int? privateLinkCount = default;
+            MachineLearningProvisioningState? provisioningState = default;
+            MachineLearningPublicNetworkAccessType? publicNetworkAccess = default;
+            ServiceManagedResourcesSettings serviceManagedResourcesSettings = default;
+            string serviceProvisionedResourceGroup = default;
+            IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources = default;
+            int? softDeleteRetentionInDays = default;
+            string storageAccount = default;
+            IList<string> storageAccounts = default;
+            bool? storageHnsEnabled = default;
+            string systemDatastoresAuthMode = default;
+            Guid? tenantId = default;
+            bool? v1LegacyMode = default;
+            WorkspaceHubConfig workspaceHubConfig = default;
+            string workspaceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -797,7 +797,54 @@ namespace Azure.ResourceManager.MachineLearning
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, sku.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), applicationInsights.Value, Optional.ToList(associatedWorkspaces), Optional.ToList(containerRegistries), containerRegistry.Value, description.Value, discoveryUrl.Value, Optional.ToNullable(enableDataIsolation), encryption.Value, Optional.ToList(existingWorkspaces), featureStoreSettings.Value, friendlyName.Value, Optional.ToNullable(hbiWorkspace), hubResourceId.Value, imageBuildCompute.Value, keyVault.Value, Optional.ToList(keyVaults), managedNetwork.Value, mlFlowTrackingUri.Value, notebookInfo.Value, primaryUserAssignedIdentity.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(privateLinkCount), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), serviceManagedResourcesSettings.Value, serviceProvisionedResourceGroup.Value, Optional.ToList(sharedPrivateLinkResources), Optional.ToNullable(softDeleteRetentionInDays), storageAccount.Value, Optional.ToList(storageAccounts), Optional.ToNullable(storageHnsEnabled), systemDatastoresAuthMode.Value, Optional.ToNullable(tenantId), Optional.ToNullable(v1LegacyMode), workspaceHubConfig.Value, workspaceId.Value, serializedAdditionalRawData);
+            return new MachineLearningWorkspaceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                kind,
+                sku,
+                allowPublicAccessWhenBehindVnet,
+                applicationInsights,
+                associatedWorkspaces ?? new ChangeTrackingList<string>(),
+                containerRegistries ?? new ChangeTrackingList<string>(),
+                containerRegistry,
+                description,
+                discoveryUrl,
+                enableDataIsolation,
+                encryption,
+                existingWorkspaces ?? new ChangeTrackingList<string>(),
+                featureStoreSettings,
+                friendlyName,
+                hbiWorkspace,
+                hubResourceId,
+                imageBuildCompute,
+                keyVault,
+                keyVaults ?? new ChangeTrackingList<string>(),
+                managedNetwork,
+                mlFlowTrackingUri,
+                notebookInfo,
+                primaryUserAssignedIdentity,
+                privateEndpointConnections ?? new ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>(),
+                privateLinkCount,
+                provisioningState,
+                publicNetworkAccess,
+                serviceManagedResourcesSettings,
+                serviceProvisionedResourceGroup,
+                sharedPrivateLinkResources ?? new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>(),
+                softDeleteRetentionInDays,
+                storageAccount,
+                storageAccounts ?? new ChangeTrackingList<string>(),
+                storageHnsEnabled,
+                systemDatastoresAuthMode,
+                tenantId,
+                v1LegacyMode,
+                workspaceHubConfig,
+                workspaceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceData>.Write(ModelReaderWriterOptions options)

@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TargetResourceType))
+            if (options.Format != "W" && TargetResourceType.HasValue)
             {
                 writer.WritePropertyName("targetResourceType"u8);
                 writer.WriteStringValue(TargetResourceType.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
+            if (options.Format != "W" && TargetResourceId != null)
             {
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetRegion))
+            if (options.Format != "W" && TargetRegion != null)
             {
                 writer.WritePropertyName("targetRegion"u8);
                 writer.WriteStringValue(TargetRegion);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceName))
+            if (options.Format != "W" && ResourceName != null)
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
+            if (options.Format != "W" && ResourceGroup != null)
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaintenanceStartTime))
+            if (options.Format != "W" && MaintenanceStartTime != null)
             {
                 writer.WritePropertyName("maintenanceStartTime"u8);
                 writer.WriteStringValue(MaintenanceStartTime);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaintenanceEndTime))
+            if (options.Format != "W" && MaintenanceEndTime != null)
             {
                 writer.WritePropertyName("maintenanceEndTime"u8);
                 writer.WriteStringValue(MaintenanceEndTime);
             }
-            if (Optional.IsCollectionDefined(Info))
+            if (!(Info is ChangeTrackingList<ResourceHealthKeyValueItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("info"u8);
                 writer.WriteStartArray();
@@ -142,16 +142,16 @@ namespace Azure.ResourceManager.ResourceHealth
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceType> targetResourceType = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
-            Optional<string> targetRegion = default;
-            Optional<string> resourceName = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> status = default;
-            Optional<string> maintenanceStartTime = default;
-            Optional<string> maintenanceEndTime = default;
-            Optional<IReadOnlyList<ResourceHealthKeyValueItem>> info = default;
+            SystemData systemData = default;
+            ResourceType? targetResourceType = default;
+            ResourceIdentifier targetResourceId = default;
+            string targetRegion = default;
+            string resourceName = default;
+            string resourceGroup = default;
+            string status = default;
+            string maintenanceStartTime = default;
+            string maintenanceEndTime = default;
+            IReadOnlyList<ResourceHealthKeyValueItem> info = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,7 +260,21 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventImpactedResourceData(id, name, type, systemData.Value, Optional.ToNullable(targetResourceType), targetResourceId.Value, targetRegion.Value, resourceName.Value, resourceGroup.Value, status.Value, maintenanceStartTime.Value, maintenanceEndTime.Value, Optional.ToList(info), serializedAdditionalRawData);
+            return new ResourceHealthEventImpactedResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                targetResourceType,
+                targetResourceId,
+                targetRegion,
+                resourceName,
+                resourceGroup,
+                status,
+                maintenanceStartTime,
+                maintenanceEndTime,
+                info ?? new ChangeTrackingList<ResourceHealthKeyValueItem>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventImpactedResourceData>.Write(ModelReaderWriterOptions options)

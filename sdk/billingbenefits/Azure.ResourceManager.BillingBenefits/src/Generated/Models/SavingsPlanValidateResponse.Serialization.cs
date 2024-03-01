@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Benefits))
+            if (!(Benefits is ChangeTrackingList<SavingsPlanValidateResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("benefits"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SavingsPlanValidateResult>> benefits = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SavingsPlanValidateResult> benefits = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanValidateResponse(Optional.ToList(benefits), nextLink.Value, serializedAdditionalRawData);
+            return new SavingsPlanValidateResponse(benefits ?? new ChangeTrackingList<SavingsPlanValidateResult>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanValidateResponse>.Write(ModelReaderWriterOptions options)

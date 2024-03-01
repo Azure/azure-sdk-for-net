@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Analysis
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(AnalysisSku);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,64 +58,64 @@ namespace Azure.ResourceManager.Analysis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AsAdministrators))
+            if (AsAdministrators != null)
             {
                 writer.WritePropertyName("asAdministrators"u8);
                 writer.WriteObjectValue(AsAdministrators);
             }
-            if (Optional.IsDefined(BackupBlobContainerUri))
+            if (BackupBlobContainerUri != null)
             {
                 writer.WritePropertyName("backupBlobContainerUri"u8);
                 writer.WriteStringValue(BackupBlobContainerUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(GatewayDetails))
+            if (GatewayDetails != null)
             {
                 writer.WritePropertyName("gatewayDetails"u8);
                 writer.WriteObjectValue(GatewayDetails);
             }
-            if (Optional.IsDefined(IPv4FirewallSettings))
+            if (IPv4FirewallSettings != null)
             {
                 writer.WritePropertyName("ipV4FirewallSettings"u8);
                 writer.WriteObjectValue(IPv4FirewallSettings);
             }
-            if (Optional.IsDefined(QueryPoolConnectionMode))
+            if (QueryPoolConnectionMode.HasValue)
             {
                 writer.WritePropertyName("querypoolConnectionMode"u8);
                 writer.WriteStringValue(QueryPoolConnectionMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ManagedMode))
+            if (ManagedMode.HasValue)
             {
                 writer.WritePropertyName("managedMode"u8);
                 writer.WriteNumberValue(ManagedMode.Value.ToSerialInt32());
             }
-            if (Optional.IsDefined(ServerMonitorMode))
+            if (ServerMonitorMode.HasValue)
             {
                 writer.WritePropertyName("serverMonitorMode"u8);
                 writer.WriteNumberValue(ServerMonitorMode.Value.ToSerialInt32());
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerFullName))
+            if (options.Format != "W" && ServerFullName != null)
             {
                 writer.WritePropertyName("serverFullName"u8);
                 writer.WriteStringValue(ServerFullName);
             }
-            if (Optional.IsDefined(AnalysisServerSku))
+            if (AnalysisServerSku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(AnalysisServerSku);
@@ -160,23 +160,23 @@ namespace Azure.ResourceManager.Analysis
                 return null;
             }
             AnalysisResourceSku sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ServerAdministrators> asAdministrators = default;
-            Optional<Uri> backupBlobContainerUri = default;
-            Optional<AnalysisGatewayDetails> gatewayDetails = default;
-            Optional<AnalysisIPv4FirewallSettings> ipV4FirewallSettings = default;
-            Optional<AnalysisConnectionMode> querypoolConnectionMode = default;
-            Optional<AnalysisManagedMode> managedMode = default;
-            Optional<ServerMonitorMode> serverMonitorMode = default;
-            Optional<AnalysisState> state = default;
-            Optional<AnalysisProvisioningState> provisioningState = default;
-            Optional<string> serverFullName = default;
-            Optional<AnalysisResourceSku> sku0 = default;
+            SystemData systemData = default;
+            ServerAdministrators asAdministrators = default;
+            Uri backupBlobContainerUri = default;
+            AnalysisGatewayDetails gatewayDetails = default;
+            AnalysisIPv4FirewallSettings ipV4FirewallSettings = default;
+            AnalysisConnectionMode? querypoolConnectionMode = default;
+            AnalysisManagedMode? managedMode = default;
+            ServerMonitorMode? serverMonitorMode = default;
+            AnalysisState? state = default;
+            AnalysisProvisioningState? provisioningState = default;
+            string serverFullName = default;
+            AnalysisResourceSku sku0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -342,7 +342,26 @@ namespace Azure.ResourceManager.Analysis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalysisServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, asAdministrators.Value, backupBlobContainerUri.Value, gatewayDetails.Value, ipV4FirewallSettings.Value, Optional.ToNullable(querypoolConnectionMode), Optional.ToNullable(managedMode), Optional.ToNullable(serverMonitorMode), Optional.ToNullable(state), Optional.ToNullable(provisioningState), serverFullName.Value, sku0.Value, sku, serializedAdditionalRawData);
+            return new AnalysisServerData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                asAdministrators,
+                backupBlobContainerUri,
+                gatewayDetails,
+                ipV4FirewallSettings,
+                querypoolConnectionMode,
+                managedMode,
+                serverMonitorMode,
+                state,
+                provisioningState,
+                serverFullName,
+                sku0,
+                sku,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalysisServerData>.Write(ModelReaderWriterOptions options)

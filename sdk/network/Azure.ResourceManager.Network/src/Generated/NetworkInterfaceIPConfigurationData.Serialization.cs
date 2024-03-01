@@ -29,34 +29,34 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GatewayLoadBalancer))
+            if (GatewayLoadBalancer != null)
             {
                 writer.WritePropertyName("gatewayLoadBalancer"u8);
                 JsonSerializer.Serialize(writer, GatewayLoadBalancer);
             }
-            if (Optional.IsCollectionDefined(VirtualNetworkTaps))
+            if (!(VirtualNetworkTaps is ChangeTrackingList<VirtualNetworkTapData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("virtualNetworkTaps"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ApplicationGatewayBackendAddressPools))
+            if (!(ApplicationGatewayBackendAddressPools is ChangeTrackingList<ApplicationGatewayBackendAddressPool> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("applicationGatewayBackendAddressPools"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LoadBalancerBackendAddressPools))
+            if (!(LoadBalancerBackendAddressPools is ChangeTrackingList<BackendAddressPoolData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPools"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LoadBalancerInboundNatRules))
+            if (!(LoadBalancerInboundNatRules is ChangeTrackingList<InboundNatRuleData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("loadBalancerInboundNatRules"u8);
                 writer.WriteStartArray();
@@ -96,37 +96,37 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (PrivateIPAddress != null)
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (Optional.IsDefined(PrivateIPAllocationMethod))
+            if (PrivateIPAllocationMethod.HasValue)
             {
                 writer.WritePropertyName("privateIPAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
             }
-            if (Optional.IsDefined(PrivateIPAddressVersion))
+            if (PrivateIPAddressVersion.HasValue)
             {
                 writer.WritePropertyName("privateIPAddressVersion"u8);
                 writer.WriteStringValue(PrivateIPAddressVersion.Value.ToString());
             }
-            if (Optional.IsDefined(Subnet))
+            if (Subnet != null)
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
-            if (Optional.IsDefined(Primary))
+            if (Primary.HasValue)
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(Primary.Value);
             }
-            if (Optional.IsDefined(PublicIPAddress))
+            if (PublicIPAddress != null)
             {
                 writer.WritePropertyName("publicIPAddress"u8);
                 writer.WriteObjectValue(PublicIPAddress);
             }
-            if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
+            if (!(ApplicationSecurityGroups is ChangeTrackingList<ApplicationSecurityGroupData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("applicationSecurityGroups"u8);
                 writer.WriteStartArray();
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateLinkConnectionProperties))
+            if (options.Format != "W" && PrivateLinkConnectionProperties != null)
             {
                 writer.WritePropertyName("privateLinkConnectionProperties"u8);
                 writer.WriteObjectValue(PrivateLinkConnectionProperties);
@@ -185,24 +185,24 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> gatewayLoadBalancer = default;
-            Optional<IList<VirtualNetworkTapData>> virtualNetworkTaps = default;
-            Optional<IList<ApplicationGatewayBackendAddressPool>> applicationGatewayBackendAddressPools = default;
-            Optional<IList<BackendAddressPoolData>> loadBalancerBackendAddressPools = default;
-            Optional<IList<InboundNatRuleData>> loadBalancerInboundNatRules = default;
-            Optional<string> privateIPAddress = default;
-            Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
-            Optional<NetworkIPVersion> privateIPAddressVersion = default;
-            Optional<SubnetData> subnet = default;
-            Optional<bool> primary = default;
-            Optional<PublicIPAddressData> publicIPAddress = default;
-            Optional<IList<ApplicationSecurityGroupData>> applicationSecurityGroups = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties> privateLinkConnectionProperties = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource gatewayLoadBalancer = default;
+            IList<VirtualNetworkTapData> virtualNetworkTaps = default;
+            IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = default;
+            IList<BackendAddressPoolData> loadBalancerBackendAddressPools = default;
+            IList<InboundNatRuleData> loadBalancerInboundNatRules = default;
+            string privateIPAddress = default;
+            NetworkIPAllocationMethod? privateIPAllocationMethod = default;
+            NetworkIPVersion? privateIPAddressVersion = default;
+            SubnetData subnet = default;
+            bool? primary = default;
+            PublicIPAddressData publicIPAddress = default;
+            IList<ApplicationSecurityGroupData> applicationSecurityGroups = default;
+            NetworkProvisioningState? provisioningState = default;
+            NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -404,7 +404,26 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceIPConfigurationData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), gatewayLoadBalancer, Optional.ToList(virtualNetworkTaps), Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerInboundNatRules), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), Optional.ToNullable(privateIPAddressVersion), subnet.Value, Optional.ToNullable(primary), publicIPAddress.Value, Optional.ToList(applicationSecurityGroups), Optional.ToNullable(provisioningState), privateLinkConnectionProperties.Value);
+            return new NetworkInterfaceIPConfigurationData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                gatewayLoadBalancer,
+                virtualNetworkTaps ?? new ChangeTrackingList<VirtualNetworkTapData>(),
+                applicationGatewayBackendAddressPools ?? new ChangeTrackingList<ApplicationGatewayBackendAddressPool>(),
+                loadBalancerBackendAddressPools ?? new ChangeTrackingList<BackendAddressPoolData>(),
+                loadBalancerInboundNatRules ?? new ChangeTrackingList<InboundNatRuleData>(),
+                privateIPAddress,
+                privateIPAllocationMethod,
+                privateIPAddressVersion,
+                subnet,
+                primary,
+                publicIPAddress,
+                applicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>(),
+                provisioningState,
+                privateLinkConnectionProperties);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceIPConfigurationData>.Write(ModelReaderWriterOptions options)

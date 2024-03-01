@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Position))
+            if (Position != null)
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteObjectValue(Position);
             }
-            if (Optional.IsDefined(Opacity))
+            if (Opacity.HasValue)
             {
                 writer.WritePropertyName("opacity"u8);
                 writer.WriteNumberValue(Opacity.Value);
             }
-            if (Optional.IsDefined(CropRectangle))
+            if (CropRectangle != null)
             {
                 writer.WritePropertyName("cropRectangle"u8);
                 writer.WriteObjectValue(CropRectangle);
@@ -45,27 +45,27 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(OdataType);
             writer.WritePropertyName("inputLabel"u8);
             writer.WriteStringValue(InputLabel);
-            if (Optional.IsDefined(Start))
+            if (Start.HasValue)
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteStringValue(Start.Value, "P");
             }
-            if (Optional.IsDefined(End))
+            if (End.HasValue)
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteStringValue(End.Value, "P");
             }
-            if (Optional.IsDefined(FadeInDuration))
+            if (FadeInDuration.HasValue)
             {
                 writer.WritePropertyName("fadeInDuration"u8);
                 writer.WriteStringValue(FadeInDuration.Value, "P");
             }
-            if (Optional.IsDefined(FadeOutDuration))
+            if (FadeOutDuration.HasValue)
             {
                 writer.WritePropertyName("fadeOutDuration"u8);
                 writer.WriteStringValue(FadeOutDuration.Value, "P");
             }
-            if (Optional.IsDefined(AudioGainLevel))
+            if (AudioGainLevel.HasValue)
             {
                 writer.WritePropertyName("audioGainLevel"u8);
                 writer.WriteNumberValue(AudioGainLevel.Value);
@@ -108,16 +108,16 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<RectangularWindow> position = default;
-            Optional<double> opacity = default;
-            Optional<RectangularWindow> cropRectangle = default;
+            RectangularWindow position = default;
+            double? opacity = default;
+            RectangularWindow cropRectangle = default;
             string odataType = default;
             string inputLabel = default;
-            Optional<TimeSpan> start = default;
-            Optional<TimeSpan> end = default;
-            Optional<TimeSpan> fadeInDuration = default;
-            Optional<TimeSpan> fadeOutDuration = default;
-            Optional<double> audioGainLevel = default;
+            TimeSpan? start = default;
+            TimeSpan? end = default;
+            TimeSpan? fadeInDuration = default;
+            TimeSpan? fadeOutDuration = default;
+            double? audioGainLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,7 +210,18 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VideoOverlay(odataType, inputLabel, Optional.ToNullable(start), Optional.ToNullable(end), Optional.ToNullable(fadeInDuration), Optional.ToNullable(fadeOutDuration), Optional.ToNullable(audioGainLevel), serializedAdditionalRawData, position.Value, Optional.ToNullable(opacity), cropRectangle.Value);
+            return new VideoOverlay(
+                odataType,
+                inputLabel,
+                start,
+                end,
+                fadeInDuration,
+                fadeOutDuration,
+                audioGainLevel,
+                serializedAdditionalRawData,
+                position,
+                opacity,
+                cropRectangle);
         }
 
         BinaryData IPersistableModel<VideoOverlay>.Write(ModelReaderWriterOptions options)

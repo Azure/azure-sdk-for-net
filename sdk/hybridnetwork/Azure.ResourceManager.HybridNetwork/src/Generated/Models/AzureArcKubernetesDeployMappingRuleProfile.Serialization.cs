@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HelmMappingRuleProfile))
+            if (HelmMappingRuleProfile != null)
             {
                 writer.WritePropertyName("helmMappingRuleProfile"u8);
                 writer.WriteObjectValue(HelmMappingRuleProfile);
             }
-            if (Optional.IsDefined(ApplicationEnablement))
+            if (ApplicationEnablement.HasValue)
             {
                 writer.WritePropertyName("applicationEnablement"u8);
                 writer.WriteStringValue(ApplicationEnablement.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<HelmMappingRuleProfile> helmMappingRuleProfile = default;
-            Optional<ApplicationEnablement> applicationEnablement = default;
+            HelmMappingRuleProfile helmMappingRuleProfile = default;
+            ApplicationEnablement? applicationEnablement = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureArcKubernetesDeployMappingRuleProfile(Optional.ToNullable(applicationEnablement), serializedAdditionalRawData, helmMappingRuleProfile.Value);
+            return new AzureArcKubernetesDeployMappingRuleProfile(applicationEnablement, serializedAdditionalRawData, helmMappingRuleProfile);
         }
 
         BinaryData IPersistableModel<AzureArcKubernetesDeployMappingRuleProfile>.Write(ModelReaderWriterOptions options)

@@ -45,69 +45,69 @@ namespace Azure.ResourceManager.BillingBenefits
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(BillingScopeId))
+            if (BillingScopeId != null)
             {
                 writer.WritePropertyName("billingScopeId"u8);
                 writer.WriteStringValue(BillingScopeId);
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingProfileId))
+            if (options.Format != "W" && BillingProfileId != null)
             {
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomerId))
+            if (options.Format != "W" && CustomerId != null)
             {
                 writer.WritePropertyName("customerId"u8);
                 writer.WriteStringValue(CustomerId);
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingAccountId))
+            if (options.Format != "W" && BillingAccountId != null)
             {
                 writer.WritePropertyName("billingAccountId"u8);
                 writer.WriteStringValue(BillingAccountId);
             }
-            if (Optional.IsDefined(Term))
+            if (Term.HasValue)
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term.Value.ToString());
             }
-            if (Optional.IsDefined(BillingPlan))
+            if (BillingPlan.HasValue)
             {
                 writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiryDateTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(BenefitStartOn))
+            if (BenefitStartOn.HasValue)
             {
                 writer.WritePropertyName("benefitStartTime"u8);
                 writer.WriteStringValue(BenefitStartOn.Value, "O");
             }
-            if (Optional.IsDefined(PlanInformation))
+            if (PlanInformation != null)
             {
                 writer.WritePropertyName("planInformation"u8);
                 writer.WriteObjectValue(PlanInformation);
             }
-            if (Optional.IsCollectionDefined(SavingsPlans))
+            if (!(SavingsPlans is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("savingsPlans"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtendedStatusInfo))
+            if (options.Format != "W" && ExtendedStatusInfo != null)
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
                 writer.WriteObjectValue(ExtendedStatusInfo);
@@ -165,20 +165,20 @@ namespace Azure.ResourceManager.BillingBenefits
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<BillingBenefitsProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> billingScopeId = default;
-            Optional<ResourceIdentifier> billingProfileId = default;
-            Optional<string> customerId = default;
-            Optional<ResourceIdentifier> billingAccountId = default;
-            Optional<BillingBenefitsTerm> term = default;
-            Optional<BillingBenefitsBillingPlan> billingPlan = default;
-            Optional<DateTimeOffset> expiryDateTime = default;
-            Optional<DateTimeOffset> benefitStartTime = default;
-            Optional<BillingPlanInformation> planInformation = default;
-            Optional<IList<string>> savingsPlans = default;
-            Optional<BillingBenefitsExtendedStatusInfo> extendedStatusInfo = default;
+            SystemData systemData = default;
+            string displayName = default;
+            BillingBenefitsProvisioningState? provisioningState = default;
+            ResourceIdentifier billingScopeId = default;
+            ResourceIdentifier billingProfileId = default;
+            string customerId = default;
+            ResourceIdentifier billingAccountId = default;
+            BillingBenefitsTerm? term = default;
+            BillingBenefitsBillingPlan? billingPlan = default;
+            DateTimeOffset? expiryDateTime = default;
+            DateTimeOffset? benefitStartTime = default;
+            BillingPlanInformation planInformation = default;
+            IList<string> savingsPlans = default;
+            BillingBenefitsExtendedStatusInfo extendedStatusInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -344,7 +344,26 @@ namespace Azure.ResourceManager.BillingBenefits
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsSavingsPlanOrderData(id, name, type, systemData.Value, sku, displayName.Value, Optional.ToNullable(provisioningState), billingScopeId.Value, billingProfileId.Value, customerId.Value, billingAccountId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(expiryDateTime), Optional.ToNullable(benefitStartTime), planInformation.Value, Optional.ToList(savingsPlans), extendedStatusInfo.Value, serializedAdditionalRawData);
+            return new BillingBenefitsSavingsPlanOrderData(
+                id,
+                name,
+                type,
+                systemData,
+                sku,
+                displayName,
+                provisioningState,
+                billingScopeId,
+                billingProfileId,
+                customerId,
+                billingAccountId,
+                term,
+                billingPlan,
+                expiryDateTime,
+                benefitStartTime,
+                planInformation,
+                savingsPlans ?? new ChangeTrackingList<string>(),
+                extendedStatusInfo,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsSavingsPlanOrderData>.Write(ModelReaderWriterOptions options)

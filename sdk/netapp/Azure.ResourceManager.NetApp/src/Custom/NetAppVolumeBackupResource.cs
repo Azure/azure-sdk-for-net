@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.NetApp
         internal NetAppVolumeBackupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _netAppVolumeBackupBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string netAppVolumeBackupBackupsApiVersion);
-            _netAppVolumeBackupBackupsRestClient = new BackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppVolumeBackupBackupsApiVersion);
+            // Volume backup resource was removed after 2022-11-01
+            _netAppVolumeBackupBackupsRestClient = new BackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-11-01");
 #if DEBUG
             ValidateResourceId(Id);
 #endif

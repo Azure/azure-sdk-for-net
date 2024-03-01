@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DatasetLanguage))
+            if (DatasetLanguage != null)
             {
                 if (DatasetLanguage != null)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> datasetLanguage = default;
+            string datasetLanguage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningFeaturizationSettings(datasetLanguage.Value, serializedAdditionalRawData);
+            return new MachineLearningFeaturizationSettings(datasetLanguage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningFeaturizationSettings>.Write(ModelReaderWriterOptions options)

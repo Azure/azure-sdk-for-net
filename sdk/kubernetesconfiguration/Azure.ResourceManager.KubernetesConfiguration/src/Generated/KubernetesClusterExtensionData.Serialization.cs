@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Plan))
+            if (Plan != null)
             {
                 writer.WritePropertyName("plan"u8);
                 JsonSerializer.Serialize(writer, Plan);
@@ -54,29 +54,29 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtensionType))
+            if (ExtensionType != null)
             {
                 writer.WritePropertyName("extensionType"u8);
                 writer.WriteStringValue(ExtensionType);
             }
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (AutoUpgradeMinorVersion.HasValue)
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (Optional.IsDefined(ReleaseTrain))
+            if (ReleaseTrain != null)
             {
                 writer.WritePropertyName("releaseTrain"u8);
                 writer.WriteStringValue(ReleaseTrain);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 if (Version != null)
                 {
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("version");
                 }
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteObjectValue(Scope);
             }
-            if (Optional.IsCollectionDefined(ConfigurationSettings))
+            if (!(ConfigurationSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (ConfigurationSettings != null)
                 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("configurationSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
+            if (!(ConfigurationProtectedSettings is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (ConfigurationProtectedSettings != null)
                 {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("configurationProtectedSettings");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentVersion))
+            if (options.Format != "W" && CurrentVersion != null)
             {
                 if (CurrentVersion != null)
                 {
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("currentVersion");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Statuses))
+            if (!(Statuses is ChangeTrackingList<KubernetesClusterExtensionStatus> collection1 && collection1.IsUndefined))
             {
                 if (Statuses != null)
                 {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("statuses");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorInfo))
+            if (options.Format != "W" && ErrorInfo != null)
             {
                 if (ErrorInfo != null)
                 {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("errorInfo");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CustomLocationSettings))
+            if (options.Format != "W" && !(CustomLocationSettings is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
             {
                 if (CustomLocationSettings != null)
                 {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("customLocationSettings");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(PackageUri))
+            if (options.Format != "W" && PackageUri != null)
             {
                 if (PackageUri != null)
                 {
@@ -205,12 +205,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("packageUri");
                 }
             }
-            if (Optional.IsDefined(AksAssignedIdentity))
+            if (AksAssignedIdentity != null)
             {
                 writer.WritePropertyName("aksAssignedIdentity"u8);
                 JsonSerializer.Serialize(writer, AksAssignedIdentity);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsSystemExtension))
+            if (options.Format != "W" && IsSystemExtension.HasValue)
             {
                 writer.WritePropertyName("isSystemExtension"u8);
                 writer.WriteBooleanValue(IsSystemExtension.Value);
@@ -254,27 +254,27 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ArmPlan> plan = default;
+            ManagedServiceIdentity identity = default;
+            ArmPlan plan = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> extensionType = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<string> releaseTrain = default;
-            Optional<string> version = default;
-            Optional<KubernetesClusterExtensionScope> scope = default;
-            Optional<IDictionary<string, string>> configurationSettings = default;
-            Optional<IDictionary<string, string>> configurationProtectedSettings = default;
-            Optional<string> currentVersion = default;
-            Optional<KubernetesConfigurationProvisioningState> provisioningState = default;
-            Optional<IList<KubernetesClusterExtensionStatus>> statuses = default;
-            Optional<ResponseError> errorInfo = default;
-            Optional<IReadOnlyDictionary<string, string>> customLocationSettings = default;
-            Optional<Uri> packageUri = default;
-            Optional<ManagedServiceIdentity> aksAssignedIdentity = default;
-            Optional<bool> isSystemExtension = default;
+            SystemData systemData = default;
+            string extensionType = default;
+            bool? autoUpgradeMinorVersion = default;
+            string releaseTrain = default;
+            string version = default;
+            KubernetesClusterExtensionScope scope = default;
+            IDictionary<string, string> configurationSettings = default;
+            IDictionary<string, string> configurationProtectedSettings = default;
+            string currentVersion = default;
+            KubernetesConfigurationProvisioningState? provisioningState = default;
+            IList<KubernetesClusterExtensionStatus> statuses = default;
+            ResponseError errorInfo = default;
+            IReadOnlyDictionary<string, string> customLocationSettings = default;
+            Uri packageUri = default;
+            ManagedServiceIdentity aksAssignedIdentity = default;
+            bool? isSystemExtension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -494,7 +494,29 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterExtensionData(id, name, type, systemData.Value, identity, plan, extensionType.Value, Optional.ToNullable(autoUpgradeMinorVersion), releaseTrain.Value, version.Value, scope.Value, Optional.ToDictionary(configurationSettings), Optional.ToDictionary(configurationProtectedSettings), currentVersion.Value, Optional.ToNullable(provisioningState), Optional.ToList(statuses), errorInfo.Value, Optional.ToDictionary(customLocationSettings), packageUri.Value, aksAssignedIdentity, Optional.ToNullable(isSystemExtension), serializedAdditionalRawData);
+            return new KubernetesClusterExtensionData(
+                id,
+                name,
+                type,
+                systemData,
+                identity,
+                plan,
+                extensionType,
+                autoUpgradeMinorVersion,
+                releaseTrain,
+                version,
+                scope,
+                configurationSettings ?? new ChangeTrackingDictionary<string, string>(),
+                configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
+                currentVersion,
+                provisioningState,
+                statuses ?? new ChangeTrackingList<KubernetesClusterExtensionStatus>(),
+                errorInfo,
+                customLocationSettings ?? new ChangeTrackingDictionary<string, string>(),
+                packageUri,
+                aksAssignedIdentity,
+                isSystemExtension,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterExtensionData>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CalculatedSavings))
+            if (!(CalculatedSavings is ChangeTrackingList<ConsumptionCalculatedSavingsProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("calculatedSavings"u8);
                 writer.WriteStartArray();
@@ -36,27 +36,27 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LookBackPeriod))
+            if (options.Format != "W" && LookBackPeriod.HasValue)
             {
                 writer.WritePropertyName("lookBackPeriod"u8);
                 writer.WriteNumberValue(LookBackPeriod.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RecommendedQuantity))
+            if (options.Format != "W" && RecommendedQuantity.HasValue)
             {
                 writer.WritePropertyName("recommendedQuantity"u8);
                 writer.WriteNumberValue(RecommendedQuantity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReservationOrderTerm))
+            if (options.Format != "W" && ReservationOrderTerm != null)
             {
                 writer.WritePropertyName("reservationOrderTerm"u8);
                 writer.WriteStringValue(ReservationOrderTerm);
             }
-            if (options.Format != "W" && Optional.IsDefined(SavingsType))
+            if (options.Format != "W" && SavingsType != null)
             {
                 writer.WritePropertyName("savingsType"u8);
                 writer.WriteStringValue(SavingsType);
             }
-            if (options.Format != "W" && Optional.IsDefined(UnitOfMeasure))
+            if (options.Format != "W" && UnitOfMeasure != null)
             {
                 writer.WritePropertyName("unitOfMeasure"u8);
                 writer.WriteStringValue(UnitOfMeasure);
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConsumptionCalculatedSavingsProperties>> calculatedSavings = default;
-            Optional<int> lookBackPeriod = default;
-            Optional<float> recommendedQuantity = default;
-            Optional<string> reservationOrderTerm = default;
-            Optional<string> savingsType = default;
-            Optional<string> unitOfMeasure = default;
+            IReadOnlyList<ConsumptionCalculatedSavingsProperties> calculatedSavings = default;
+            int? lookBackPeriod = default;
+            float? recommendedQuantity = default;
+            string reservationOrderTerm = default;
+            string savingsType = default;
+            string unitOfMeasure = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionSavingsProperties(Optional.ToList(calculatedSavings), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(recommendedQuantity), reservationOrderTerm.Value, savingsType.Value, unitOfMeasure.Value, serializedAdditionalRawData);
+            return new ConsumptionSavingsProperties(
+                calculatedSavings ?? new ChangeTrackingList<ConsumptionCalculatedSavingsProperties>(),
+                lookBackPeriod,
+                recommendedQuantity,
+                reservationOrderTerm,
+                savingsType,
+                unitOfMeasure,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionSavingsProperties>.Write(ModelReaderWriterOptions options)

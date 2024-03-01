@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinPort))
+            if (MinPort.HasValue)
             {
                 writer.WritePropertyName("minPort"u8);
                 writer.WriteNumberValue(MinPort.Value);
             }
-            if (Optional.IsDefined(MaxPort))
+            if (MaxPort.HasValue)
             {
                 writer.WritePropertyName("maxPort"u8);
                 writer.WriteNumberValue(MaxPort.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<int> minPort = default;
-            Optional<int> maxPort = default;
+            int? minPort = default;
+            int? maxPort = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkPortRange(Optional.ToNullable(minPort), Optional.ToNullable(maxPort), serializedAdditionalRawData);
+            return new MobileNetworkPortRange(minPort, maxPort, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkPortRange>.Write(ModelReaderWriterOptions options)

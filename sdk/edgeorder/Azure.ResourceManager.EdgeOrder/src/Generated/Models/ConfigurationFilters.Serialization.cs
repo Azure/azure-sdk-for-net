@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             writer.WritePropertyName("hierarchyInformation"u8);
             writer.WriteObjectValue(HierarchyInformation);
-            if (Optional.IsCollectionDefined(FilterableProperty))
+            if (!(FilterableProperty is ChangeTrackingList<FilterableProperty> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filterableProperty"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             HierarchyInformation hierarchyInformation = default;
-            Optional<IList<FilterableProperty>> filterableProperty = default;
+            IList<FilterableProperty> filterableProperty = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationFilters(hierarchyInformation, Optional.ToList(filterableProperty), serializedAdditionalRawData);
+            return new ConfigurationFilters(hierarchyInformation, filterableProperty ?? new ChangeTrackingList<FilterableProperty>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationFilters>.Write(ModelReaderWriterOptions options)

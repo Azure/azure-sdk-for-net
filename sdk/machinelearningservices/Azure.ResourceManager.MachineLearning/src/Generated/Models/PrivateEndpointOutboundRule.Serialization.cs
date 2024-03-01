@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Destination))
+            if (Destination != null)
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
-            if (Optional.IsDefined(Category))
+            if (Category.HasValue)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<PrivateEndpointDestination> destination = default;
-            Optional<OutboundRuleCategory> category = default;
-            Optional<OutboundRuleStatus> status = default;
+            PrivateEndpointDestination destination = default;
+            OutboundRuleCategory? category = default;
+            OutboundRuleStatus? status = default;
             OutboundRuleType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointOutboundRule(Optional.ToNullable(category), Optional.ToNullable(status), type, serializedAdditionalRawData, destination.Value);
+            return new PrivateEndpointOutboundRule(category, status, type, serializedAdditionalRawData, destination);
         }
 
         BinaryData IPersistableModel<PrivateEndpointOutboundRule>.Write(ModelReaderWriterOptions options)

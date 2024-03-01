@@ -32,7 +32,20 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.ConfluentAgreement"/> instance for mocking. </returns>
         public static ConfluentAgreement ConfluentAgreement(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string publisher = null, string product = null, string plan = null, string licenseTextLink = null, string privacyPolicyLink = null, DateTimeOffset? retrieveOn = null, string signature = null, bool? isAccepted = null)
         {
-            return new ConfluentAgreement(id, name, resourceType, systemData, publisher, product, plan, licenseTextLink, privacyPolicyLink, retrieveOn, signature, isAccepted, serializedAdditionalRawData: null);
+            return new ConfluentAgreement(
+                id,
+                name,
+                resourceType,
+                systemData,
+                publisher,
+                product,
+                plan,
+                licenseTextLink,
+                privacyPolicyLink,
+                retrieveOn,
+                signature,
+                isAccepted,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Confluent.ConfluentOrganizationData"/>. </summary>
@@ -53,7 +66,20 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConfluentOrganizationData(id, name, resourceType, systemData, tags, location, createdOn, provisioningState, organizationId, ssoUri, offerDetail, userDetail, serializedAdditionalRawData: null);
+            return new ConfluentOrganizationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                createdOn,
+                provisioningState,
+                organizationId,
+                ssoUri,
+                offerDetail,
+                userDetail,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfluentOfferDetail"/>. </summary>
@@ -66,7 +92,14 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.ConfluentOfferDetail"/> instance for mocking. </returns>
         public static ConfluentOfferDetail ConfluentOfferDetail(string publisherId = null, string id = null, string planId = null, string planName = null, string termUnit = null, ConfluentSaaSOfferStatus? status = null)
         {
-            return new ConfluentOfferDetail(publisherId, id, planId, planName, termUnit, status, serializedAdditionalRawData: null);
+            return new ConfluentOfferDetail(
+                publisherId,
+                id,
+                planId,
+                planName,
+                termUnit,
+                status,
+                serializedAdditionalRawData: null);
         }
     }
 }

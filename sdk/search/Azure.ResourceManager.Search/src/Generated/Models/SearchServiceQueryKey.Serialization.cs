@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Key))
+            if (options.Format != "W" && Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> key = default;
+            string name = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchServiceQueryKey(name.Value, key.Value, serializedAdditionalRawData);
+            return new SearchServiceQueryKey(name, key, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchServiceQueryKey>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(OperationErrorAdditionalInfoType))
+            if (options.Format != "W" && OperationErrorAdditionalInfoType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(OperationErrorAdditionalInfoType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Info))
+            if (options.Format != "W" && Info != null)
             {
                 writer.WritePropertyName("info"u8);
                 writer.WriteObjectValue(Info);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<MoveErrorInfo> info = default;
+            string type = default;
+            MoveErrorInfo info = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverOperationErrorAdditionalInfo(type.Value, info.Value, serializedAdditionalRawData);
+            return new MoverOperationErrorAdditionalInfo(type, info, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverOperationErrorAdditionalInfo>.Write(ModelReaderWriterOptions options)

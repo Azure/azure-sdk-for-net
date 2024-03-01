@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationMode))
+            if (options.Format != "W" && ConfigurationMode.HasValue)
             {
                 writer.WritePropertyName("configurationMode"u8);
                 writer.WriteStringValue(ConfigurationMode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IsModuleOverwriteAllowed))
+            if (options.Format != "W" && IsModuleOverwriteAllowed.HasValue)
             {
                 writer.WritePropertyName("allowModuleOverwrite"u8);
                 writer.WriteBooleanValue(IsModuleOverwriteAllowed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ActionAfterReboot))
+            if (options.Format != "W" && ActionAfterReboot.HasValue)
             {
                 writer.WritePropertyName("actionAfterReboot"u8);
                 writer.WriteStringValue(ActionAfterReboot.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RefreshFrequencyInMins))
+            if (options.Format != "W" && RefreshFrequencyInMins.HasValue)
             {
                 writer.WritePropertyName("refreshFrequencyMins"u8);
                 writer.WriteNumberValue(RefreshFrequencyInMins.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RebootIfNeeded))
+            if (options.Format != "W" && RebootIfNeeded.HasValue)
             {
                 writer.WritePropertyName("rebootIfNeeded"u8);
                 writer.WriteBooleanValue(RebootIfNeeded.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationModeFrequencyInMins))
+            if (options.Format != "W" && ConfigurationModeFrequencyInMins.HasValue)
             {
                 writer.WritePropertyName("configurationModeFrequencyMins"u8);
                 writer.WriteNumberValue(ConfigurationModeFrequencyInMins.Value);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<LcmConfigurationMode> configurationMode = default;
-            Optional<bool> allowModuleOverwrite = default;
-            Optional<ActionAfterReboot> actionAfterReboot = default;
-            Optional<float> refreshFrequencyMins = default;
-            Optional<bool> rebootIfNeeded = default;
-            Optional<float> configurationModeFrequencyMins = default;
+            LcmConfigurationMode? configurationMode = default;
+            bool? allowModuleOverwrite = default;
+            ActionAfterReboot? actionAfterReboot = default;
+            float? refreshFrequencyMins = default;
+            bool? rebootIfNeeded = default;
+            float? configurationModeFrequencyMins = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LcmConfigurationSetting(Optional.ToNullable(configurationMode), Optional.ToNullable(allowModuleOverwrite), Optional.ToNullable(actionAfterReboot), Optional.ToNullable(refreshFrequencyMins), Optional.ToNullable(rebootIfNeeded), Optional.ToNullable(configurationModeFrequencyMins), serializedAdditionalRawData);
+            return new LcmConfigurationSetting(
+                configurationMode,
+                allowModuleOverwrite,
+                actionAfterReboot,
+                refreshFrequencyMins,
+                rebootIfNeeded,
+                configurationModeFrequencyMins,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LcmConfigurationSetting>.Write(ModelReaderWriterOptions options)

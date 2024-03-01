@@ -36,7 +36,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteEndArray();
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
-            if (Optional.IsDefined(KnowledgeGraphLastUpdateDate))
+            if (KnowledgeGraphLastUpdateDate.HasValue)
             {
                 writer.WritePropertyName("knowledgeGraphLastUpdateDate"u8);
                 writer.WriteStringValue(KnowledgeGraphLastUpdateDate.Value, "D");
@@ -81,7 +81,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
             IReadOnlyList<TrialMatcherPatientResult> patients = default;
             string modelVersion = default;
-            Optional<DateTimeOffset> knowledgeGraphLastUpdateDate = default;
+            DateTimeOffset? knowledgeGraphLastUpdateDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrialMatcherResults(patients, modelVersion, Optional.ToNullable(knowledgeGraphLastUpdateDate), serializedAdditionalRawData);
+            return new TrialMatcherResults(patients, modelVersion, knowledgeGraphLastUpdateDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrialMatcherResults>.Write(ModelReaderWriterOptions options)

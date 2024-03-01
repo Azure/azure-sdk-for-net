@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<ChaosExperimentExecutionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 if (NextLink != null)
                 {
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ChaosExperimentExecutionData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ChaosExperimentExecutionData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExperimentExecutionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ExperimentExecutionListResult(value ?? new ChangeTrackingList<ChaosExperimentExecutionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExperimentExecutionListResult>.Write(ModelReaderWriterOptions options)

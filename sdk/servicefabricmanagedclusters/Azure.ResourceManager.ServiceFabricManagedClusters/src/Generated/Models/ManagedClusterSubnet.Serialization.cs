@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(IsIPv6Enabled))
+            if (IsIPv6Enabled.HasValue)
             {
                 writer.WritePropertyName("enableIpv6"u8);
                 writer.WriteBooleanValue(IsIPv6Enabled.Value);
             }
-            if (Optional.IsDefined(PrivateEndpointNetworkPolicies))
+            if (PrivateEndpointNetworkPolicies.HasValue)
             {
                 writer.WritePropertyName("privateEndpointNetworkPolicies"u8);
                 writer.WriteStringValue(PrivateEndpointNetworkPolicies.Value.ToString());
             }
-            if (Optional.IsDefined(PrivateLinkServiceNetworkPolicies))
+            if (PrivateLinkServiceNetworkPolicies.HasValue)
             {
                 writer.WritePropertyName("privateLinkServiceNetworkPolicies"u8);
                 writer.WriteStringValue(PrivateLinkServiceNetworkPolicies.Value.ToString());
             }
-            if (Optional.IsDefined(NetworkSecurityGroupId))
+            if (NetworkSecurityGroupId != null)
             {
                 writer.WritePropertyName("networkSecurityGroupId"u8);
                 writer.WriteStringValue(NetworkSecurityGroupId);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             string name = default;
-            Optional<bool> enableIPv6 = default;
-            Optional<ManagedClusterSubnetPrivateEndpointNetworkPoliciesState> privateEndpointNetworkPolicies = default;
-            Optional<ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState> privateLinkServiceNetworkPolicies = default;
-            Optional<ResourceIdentifier> networkSecurityGroupId = default;
+            bool? enableIPv6 = default;
+            ManagedClusterSubnetPrivateEndpointNetworkPoliciesState? privateEndpointNetworkPolicies = default;
+            ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState? privateLinkServiceNetworkPolicies = default;
+            ResourceIdentifier networkSecurityGroupId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterSubnet(name, Optional.ToNullable(enableIPv6), Optional.ToNullable(privateEndpointNetworkPolicies), Optional.ToNullable(privateLinkServiceNetworkPolicies), networkSecurityGroupId.Value, serializedAdditionalRawData);
+            return new ManagedClusterSubnet(
+                name,
+                enableIPv6,
+                privateEndpointNetworkPolicies,
+                privateLinkServiceNetworkPolicies,
+                networkSecurityGroupId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterSubnet>.Write(ModelReaderWriterOptions options)

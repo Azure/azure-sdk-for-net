@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.Reservations
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(Version))
+            if (Version.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Reservations
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -111,15 +111,15 @@ namespace Azure.ResourceManager.Reservations
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<int> etag = default;
-            Optional<ReservationsSkuName> sku = default;
-            Optional<ReservationProperties> properties = default;
-            Optional<ReservationKind> kind = default;
+            AzureLocation? location = default;
+            int? etag = default;
+            ReservationsSkuName sku = default;
+            ReservationProperties properties = default;
+            ReservationKind? kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,17 @@ namespace Azure.ResourceManager.Reservations
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationDetailData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(etag), sku.Value, properties.Value, Optional.ToNullable(kind), serializedAdditionalRawData);
+            return new ReservationDetailData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                etag,
+                sku,
+                properties,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationDetailData>.Write(ModelReaderWriterOptions options)

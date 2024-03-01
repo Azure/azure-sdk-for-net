@@ -28,32 +28,32 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(VpnProtocols))
+            if (!(VpnProtocols is ChangeTrackingList<VpnGatewayTunnelingProtocol> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vpnProtocols"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VpnAuthenticationTypes))
+            if (!(VpnAuthenticationTypes is ChangeTrackingList<VpnAuthenticationType> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("vpnAuthenticationTypes"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VpnClientRootCertificates))
+            if (!(VpnClientRootCertificates is ChangeTrackingList<VpnServerConfigVpnClientRootCertificate> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("vpnClientRootCertificates"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VpnClientRevokedCertificates))
+            if (!(VpnClientRevokedCertificates is ChangeTrackingList<VpnServerConfigVpnClientRevokedCertificate> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("vpnClientRevokedCertificates"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RadiusServerRootCertificates))
+            if (!(RadiusServerRootCertificates is ChangeTrackingList<VpnServerConfigRadiusServerRootCertificate> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("radiusServerRootCertificates"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RadiusClientRootCertificates))
+            if (!(RadiusClientRootCertificates is ChangeTrackingList<VpnServerConfigRadiusClientRootCertificate> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("radiusClientRootCertificates"u8);
                 writer.WriteStartArray();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VpnClientIPsecPolicies))
+            if (!(VpnClientIPsecPolicies is ChangeTrackingList<IPsecPolicy> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("vpnClientIpsecPolicies"u8);
                 writer.WriteStartArray();
@@ -136,17 +136,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RadiusServerAddress))
+            if (RadiusServerAddress != null)
             {
                 writer.WritePropertyName("radiusServerAddress"u8);
                 writer.WriteStringValue(RadiusServerAddress);
             }
-            if (Optional.IsDefined(RadiusServerSecret))
+            if (RadiusServerSecret != null)
             {
                 writer.WritePropertyName("radiusServerSecret"u8);
                 writer.WriteStringValue(RadiusServerSecret);
             }
-            if (Optional.IsCollectionDefined(RadiusServers))
+            if (!(RadiusServers is ChangeTrackingList<RadiusServer> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("radiusServers"u8);
                 writer.WriteStartArray();
@@ -156,17 +156,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AadAuthenticationParameters))
+            if (AadAuthenticationParameters != null)
             {
                 writer.WritePropertyName("aadAuthenticationParameters"u8);
                 writer.WriteObjectValue(AadAuthenticationParameters);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(P2SVpnGateways))
+            if (options.Format != "W" && !(P2SVpnGateways is ChangeTrackingList<P2SVpnGatewayData> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("p2SVpnGateways"u8);
                 writer.WriteStartArray();
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ConfigurationPolicyGroups))
+            if (!(ConfigurationPolicyGroups is ChangeTrackingList<VpnServerConfigurationPolicyGroupData> collection9 && collection9.IsUndefined))
             {
                 writer.WritePropertyName("configurationPolicyGroups"u8);
                 writer.WriteStartArray();
@@ -225,26 +225,26 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<VpnGatewayTunnelingProtocol>> vpnProtocols = default;
-            Optional<IList<VpnAuthenticationType>> vpnAuthenticationTypes = default;
-            Optional<IList<VpnServerConfigVpnClientRootCertificate>> vpnClientRootCertificates = default;
-            Optional<IList<VpnServerConfigVpnClientRevokedCertificate>> vpnClientRevokedCertificates = default;
-            Optional<IList<VpnServerConfigRadiusServerRootCertificate>> radiusServerRootCertificates = default;
-            Optional<IList<VpnServerConfigRadiusClientRootCertificate>> radiusClientRootCertificates = default;
-            Optional<IList<IPsecPolicy>> vpnClientIPsecPolicies = default;
-            Optional<string> radiusServerAddress = default;
-            Optional<string> radiusServerSecret = default;
-            Optional<IList<RadiusServer>> radiusServers = default;
-            Optional<AadAuthenticationParameters> aadAuthenticationParameters = default;
-            Optional<string> provisioningState = default;
-            Optional<IReadOnlyList<P2SVpnGatewayData>> p2sVpnGateways = default;
-            Optional<IList<VpnServerConfigurationPolicyGroupData>> configurationPolicyGroups = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            IList<VpnGatewayTunnelingProtocol> vpnProtocols = default;
+            IList<VpnAuthenticationType> vpnAuthenticationTypes = default;
+            IList<VpnServerConfigVpnClientRootCertificate> vpnClientRootCertificates = default;
+            IList<VpnServerConfigVpnClientRevokedCertificate> vpnClientRevokedCertificates = default;
+            IList<VpnServerConfigRadiusServerRootCertificate> radiusServerRootCertificates = default;
+            IList<VpnServerConfigRadiusClientRootCertificate> radiusClientRootCertificates = default;
+            IList<IPsecPolicy> vpnClientIPsecPolicies = default;
+            string radiusServerAddress = default;
+            string radiusServerSecret = default;
+            IList<RadiusServer> radiusServers = default;
+            AadAuthenticationParameters aadAuthenticationParameters = default;
+            string provisioningState = default;
+            IReadOnlyList<P2SVpnGatewayData> p2sVpnGateways = default;
+            IList<VpnServerConfigurationPolicyGroupData> configurationPolicyGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -486,7 +486,28 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnServerConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(vpnProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(radiusServerRootCertificates), Optional.ToList(radiusClientRootCertificates), Optional.ToList(vpnClientIPsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadAuthenticationParameters.Value, provisioningState.Value, Optional.ToList(p2sVpnGateways), Optional.ToList(configurationPolicyGroups));
+            return new VpnServerConfigurationData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                vpnProtocols ?? new ChangeTrackingList<VpnGatewayTunnelingProtocol>(),
+                vpnAuthenticationTypes ?? new ChangeTrackingList<VpnAuthenticationType>(),
+                vpnClientRootCertificates ?? new ChangeTrackingList<VpnServerConfigVpnClientRootCertificate>(),
+                vpnClientRevokedCertificates ?? new ChangeTrackingList<VpnServerConfigVpnClientRevokedCertificate>(),
+                radiusServerRootCertificates ?? new ChangeTrackingList<VpnServerConfigRadiusServerRootCertificate>(),
+                radiusClientRootCertificates ?? new ChangeTrackingList<VpnServerConfigRadiusClientRootCertificate>(),
+                vpnClientIPsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
+                radiusServerAddress,
+                radiusServerSecret,
+                radiusServers ?? new ChangeTrackingList<RadiusServer>(),
+                aadAuthenticationParameters,
+                provisioningState,
+                p2sVpnGateways ?? new ChangeTrackingList<P2SVpnGatewayData>(),
+                configurationPolicyGroups ?? new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>());
         }
 
         BinaryData IPersistableModel<VpnServerConfigurationData>.Write(ModelReaderWriterOptions options)

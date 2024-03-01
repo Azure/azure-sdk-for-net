@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SubnetId))
+            if (SubnetId != null)
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(DynamicVNetAssignmentScope))
+            if (DynamicVNetAssignmentScope.HasValue)
             {
                 writer.WritePropertyName("dynamicVnetAssignmentScope"u8);
                 writer.WriteStringValue(DynamicVNetAssignmentScope.Value.ToSerialString());
             }
-            if (Optional.IsDefined(EndpointConfiguration))
+            if (EndpointConfiguration != null)
             {
                 writer.WritePropertyName("endpointConfiguration"u8);
                 writer.WriteObjectValue(EndpointConfiguration);
             }
-            if (Optional.IsDefined(PublicIPAddressConfiguration))
+            if (PublicIPAddressConfiguration != null)
             {
                 writer.WritePropertyName("publicIPAddressConfiguration"u8);
                 writer.WriteObjectValue(PublicIPAddressConfiguration);
             }
-            if (Optional.IsDefined(EnableAcceleratedNetworking))
+            if (EnableAcceleratedNetworking.HasValue)
             {
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<DynamicVNetAssignmentScope> dynamicVnetAssignmentScope = default;
-            Optional<PoolEndpointConfiguration> endpointConfiguration = default;
-            Optional<BatchPublicIPAddressConfiguration> publicIPAddressConfiguration = default;
-            Optional<bool> enableAcceleratedNetworking = default;
+            ResourceIdentifier subnetId = default;
+            DynamicVNetAssignmentScope? dynamicVnetAssignmentScope = default;
+            PoolEndpointConfiguration endpointConfiguration = default;
+            BatchPublicIPAddressConfiguration publicIPAddressConfiguration = default;
+            bool? enableAcceleratedNetworking = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchNetworkConfiguration(subnetId.Value, Optional.ToNullable(dynamicVnetAssignmentScope), endpointConfiguration.Value, publicIPAddressConfiguration.Value, Optional.ToNullable(enableAcceleratedNetworking), serializedAdditionalRawData);
+            return new BatchNetworkConfiguration(
+                subnetId,
+                dynamicVnetAssignmentScope,
+                endpointConfiguration,
+                publicIPAddressConfiguration,
+                enableAcceleratedNetworking,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchNetworkConfiguration>.Write(ModelReaderWriterOptions options)

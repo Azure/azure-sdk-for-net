@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TransactionManagerCommunicationSettings))
+            if (TransactionManagerCommunicationSettings != null)
             {
                 writer.WritePropertyName("transactionManagerCommunicationSettings"u8);
                 writer.WriteObjectValue(TransactionManagerCommunicationSettings);
             }
-            if (Optional.IsDefined(IsXATransactionsEnabled))
+            if (IsXATransactionsEnabled.HasValue)
             {
                 writer.WritePropertyName("xaTransactionsEnabled"u8);
                 writer.WriteBooleanValue(IsXATransactionsEnabled.Value);
             }
-            if (Optional.IsDefined(SnaLu6Point2TransactionsEnabled))
+            if (SnaLu6Point2TransactionsEnabled.HasValue)
             {
                 writer.WritePropertyName("snaLu6point2TransactionsEnabled"u8);
                 writer.WriteBooleanValue(SnaLu6Point2TransactionsEnabled.Value);
             }
-            if (Optional.IsDefined(XATransactionsDefaultTimeoutInSeconds))
+            if (XATransactionsDefaultTimeoutInSeconds.HasValue)
             {
                 writer.WritePropertyName("xaTransactionsDefaultTimeout"u8);
                 writer.WriteNumberValue(XATransactionsDefaultTimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(XATransactionsMaximumTimeoutInSeconds))
+            if (XATransactionsMaximumTimeoutInSeconds.HasValue)
             {
                 writer.WritePropertyName("xaTransactionsMaximumTimeout"u8);
                 writer.WriteNumberValue(XATransactionsMaximumTimeoutInSeconds.Value);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ManagedInstanceDtcTransactionManagerCommunicationSettings> transactionManagerCommunicationSettings = default;
-            Optional<bool> xaTransactionsEnabled = default;
-            Optional<bool> snaLu6point2TransactionsEnabled = default;
-            Optional<int> xaTransactionsDefaultTimeout = default;
-            Optional<int> xaTransactionsMaximumTimeout = default;
+            ManagedInstanceDtcTransactionManagerCommunicationSettings transactionManagerCommunicationSettings = default;
+            bool? xaTransactionsEnabled = default;
+            bool? snaLu6point2TransactionsEnabled = default;
+            int? xaTransactionsDefaultTimeout = default;
+            int? xaTransactionsMaximumTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceDtcSecuritySettings(transactionManagerCommunicationSettings.Value, Optional.ToNullable(xaTransactionsEnabled), Optional.ToNullable(snaLu6point2TransactionsEnabled), Optional.ToNullable(xaTransactionsDefaultTimeout), Optional.ToNullable(xaTransactionsMaximumTimeout), serializedAdditionalRawData);
+            return new ManagedInstanceDtcSecuritySettings(
+                transactionManagerCommunicationSettings,
+                xaTransactionsEnabled,
+                snaLu6point2TransactionsEnabled,
+                xaTransactionsDefaultTimeout,
+                xaTransactionsMaximumTimeout,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceDtcSecuritySettings>.Write(ModelReaderWriterOptions options)

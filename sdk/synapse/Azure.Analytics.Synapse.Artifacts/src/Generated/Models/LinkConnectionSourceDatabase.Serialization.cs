@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedService))
+            if (LinkedService != null)
             {
                 writer.WritePropertyName("linkedService"u8);
                 writer.WriteObjectValue(LinkedService);
             }
-            if (Optional.IsDefined(TypeProperties))
+            if (TypeProperties != null)
             {
                 writer.WritePropertyName("typeProperties"u8);
                 writer.WriteObjectValue(TypeProperties);
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedService = default;
-            Optional<LinkConnectionSourceDatabaseTypeProperties> typeProperties = default;
+            LinkedServiceReference linkedService = default;
+            LinkConnectionSourceDatabaseTypeProperties typeProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"u8))
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkConnectionSourceDatabase(linkedService.Value, typeProperties.Value);
+            return new LinkConnectionSourceDatabase(linkedService, typeProperties);
         }
 
         internal partial class LinkConnectionSourceDatabaseConverter : JsonConverter<LinkConnectionSourceDatabase>

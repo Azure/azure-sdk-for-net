@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.FluidRelay
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,34 +61,34 @@ namespace Azure.ResourceManager.FluidRelay
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(FrsTenantId))
+            if (options.Format != "W" && FrsTenantId.HasValue)
             {
                 writer.WritePropertyName("frsTenantId"u8);
                 writer.WriteStringValue(FrsTenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FluidRelayEndpoints))
+            if (options.Format != "W" && FluidRelayEndpoints != null)
             {
                 writer.WritePropertyName("fluidRelayEndpoints"u8);
                 writer.WriteObjectValue(FluidRelayEndpoints);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(StorageSku))
+            if (StorageSku.HasValue)
             {
                 writer.WritePropertyName("storagesku"u8);
                 writer.WriteStringValue(StorageSku.Value.ToString());
@@ -132,18 +132,18 @@ namespace Azure.ResourceManager.FluidRelay
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> frsTenantId = default;
-            Optional<FluidRelayEndpoints> fluidRelayEndpoints = default;
-            Optional<FluidRelayProvisioningState> provisioningState = default;
-            Optional<Models.EncryptionProperties> encryption = default;
-            Optional<FluidRelayStorageSku> storagesku = default;
+            SystemData systemData = default;
+            Guid? frsTenantId = default;
+            FluidRelayEndpoints fluidRelayEndpoints = default;
+            FluidRelayProvisioningState? provisioningState = default;
+            Models.EncryptionProperties encryption = default;
+            FluidRelayStorageSku? storagesku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,7 +263,20 @@ namespace Azure.ResourceManager.FluidRelay
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FluidRelayServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(frsTenantId), fluidRelayEndpoints.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(storagesku), serializedAdditionalRawData);
+            return new FluidRelayServerData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                frsTenantId,
+                fluidRelayEndpoints,
+                provisioningState,
+                encryption,
+                storagesku,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FluidRelayServerData>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SynapseGeoBackupPolicyData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseGeoBackupPolicyData>> value = default;
+            IReadOnlyList<SynapseGeoBackupPolicyData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseGeoBackupPolicyListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new SynapseGeoBackupPolicyListResult(value ?? new ChangeTrackingList<SynapseGeoBackupPolicyData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseGeoBackupPolicyListResult>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ScheduleAvailabilityResponse))
+            if (options.Format != "W" && ScheduleAvailabilityResponse != null)
             {
                 writer.WritePropertyName("scheduleAvailabilityResponse"u8);
                 writer.WriteObjectValue(ScheduleAvailabilityResponse);
             }
-            if (options.Format != "W" && Optional.IsDefined(TransportAvailabilityResponse))
+            if (options.Format != "W" && TransportAvailabilityResponse != null)
             {
                 writer.WritePropertyName("transportAvailabilityResponse"u8);
                 writer.WriteObjectValue(TransportAvailabilityResponse);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataCenterAddressResponse))
+            if (options.Format != "W" && DataCenterAddressResponse != null)
             {
                 writer.WritePropertyName("datacenterAddressResponse"u8);
                 writer.WriteObjectValue(DataCenterAddressResponse);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<ScheduleAvailabilityResponse> scheduleAvailabilityResponse = default;
-            Optional<TransportAvailabilityResponse> transportAvailabilityResponse = default;
-            Optional<DataCenterAddressResult> dataCenterAddressResponse = default;
+            ScheduleAvailabilityResponse scheduleAvailabilityResponse = default;
+            TransportAvailabilityResponse transportAvailabilityResponse = default;
+            DataCenterAddressResult dataCenterAddressResponse = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegionConfigurationResult(scheduleAvailabilityResponse.Value, transportAvailabilityResponse.Value, dataCenterAddressResponse.Value, serializedAdditionalRawData);
+            return new RegionConfigurationResult(scheduleAvailabilityResponse, transportAvailabilityResponse, dataCenterAddressResponse, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionConfigurationResult>.Write(ModelReaderWriterOptions options)

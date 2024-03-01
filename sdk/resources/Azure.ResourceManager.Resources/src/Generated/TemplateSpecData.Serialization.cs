@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Versions))
+            if (options.Format != "W" && !(Versions is ChangeTrackingDictionary<string, TemplateSpecVersionInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("versions"u8);
                 writer.WriteStartObject();
@@ -136,15 +136,15 @@ namespace Azure.ResourceManager.Resources
                 return null;
             }
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<BinaryData> metadata = default;
-            Optional<IReadOnlyDictionary<string, TemplateSpecVersionInfo>> versions = default;
+            SystemData systemData = default;
+            string description = default;
+            string displayName = default;
+            BinaryData metadata = default;
+            IReadOnlyDictionary<string, TemplateSpecVersionInfo> versions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,7 +243,18 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TemplateSpecData(id, name, type, systemData.Value, location, Optional.ToDictionary(tags), description.Value, displayName.Value, metadata.Value, Optional.ToDictionary(versions), serializedAdditionalRawData);
+            return new TemplateSpecData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description,
+                displayName,
+                metadata,
+                versions ?? new ChangeTrackingDictionary<string, TemplateSpecVersionInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TemplateSpecData>.Write(ModelReaderWriterOptions options)

@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Cdn
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -65,34 +65,34 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicySettings))
+            if (PolicySettings != null)
             {
                 writer.WritePropertyName("policySettings"u8);
                 writer.WriteObjectValue(PolicySettings);
             }
-            if (Optional.IsDefined(RateLimitSettings))
+            if (RateLimitSettings != null)
             {
                 writer.WritePropertyName("rateLimitRules"u8);
                 writer.WriteObjectValue(RateLimitSettings);
             }
-            if (Optional.IsDefined(CustomSettings))
+            if (CustomSettings != null)
             {
                 writer.WritePropertyName("customRules"u8);
                 writer.WriteObjectValue(CustomSettings);
             }
-            if (Optional.IsDefined(ManagedRules))
+            if (ManagedRules != null)
             {
                 writer.WritePropertyName("managedRules"u8);
                 writer.WriteObjectValue(ManagedRules);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EndpointLinks))
+            if (options.Format != "W" && !(EndpointLinks is ChangeTrackingList<SubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("endpointLinks"u8);
                 writer.WriteStartArray();
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
@@ -151,21 +151,21 @@ namespace Azure.ResourceManager.Cdn
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             CdnSku sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WafPolicySettings> policySettings = default;
-            Optional<RateLimitRuleList> rateLimitRules = default;
-            Optional<CustomRuleList> customRules = default;
-            Optional<ManagedRuleSetList> managedRules = default;
-            Optional<IReadOnlyList<SubResource>> endpointLinks = default;
-            Optional<WebApplicationFirewallPolicyProvisioningState> provisioningState = default;
-            Optional<PolicyResourceState> resourceState = default;
+            SystemData systemData = default;
+            WafPolicySettings policySettings = default;
+            RateLimitRuleList rateLimitRules = default;
+            CustomRuleList customRules = default;
+            ManagedRuleSetList managedRules = default;
+            IReadOnlyList<SubResource> endpointLinks = default;
+            WebApplicationFirewallPolicyProvisioningState? provisioningState = default;
+            PolicyResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -313,7 +313,23 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnWebApplicationFirewallPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), sku, policySettings.Value, rateLimitRules.Value, customRules.Value, managedRules.Value, Optional.ToList(endpointLinks), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), serializedAdditionalRawData);
+            return new CdnWebApplicationFirewallPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                sku,
+                policySettings,
+                rateLimitRules,
+                customRules,
+                managedRules,
+                endpointLinks ?? new ChangeTrackingList<SubResource>(),
+                provisioningState,
+                resourceState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnWebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options)

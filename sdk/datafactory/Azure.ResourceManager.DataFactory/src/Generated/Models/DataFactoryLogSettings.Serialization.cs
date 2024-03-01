@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableCopyActivityLog))
+            if (EnableCopyActivityLog != null)
             {
                 writer.WritePropertyName("enableCopyActivityLog"u8);
                 JsonSerializer.Serialize(writer, EnableCopyActivityLog);
             }
-            if (Optional.IsDefined(CopyActivityLogSettings))
+            if (CopyActivityLogSettings != null)
             {
                 writer.WritePropertyName("copyActivityLogSettings"u8);
                 writer.WriteObjectValue(CopyActivityLogSettings);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<bool>> enableCopyActivityLog = default;
-            Optional<CopyActivityLogSettings> copyActivityLogSettings = default;
+            DataFactoryElement<bool> enableCopyActivityLog = default;
+            CopyActivityLogSettings copyActivityLogSettings = default;
             LogLocationSettings logLocationSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryLogSettings(enableCopyActivityLog.Value, copyActivityLogSettings.Value, logLocationSettings, serializedAdditionalRawData);
+            return new DataFactoryLogSettings(enableCopyActivityLog, copyActivityLogSettings, logLocationSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryLogSettings>.Write(ModelReaderWriterOptions options)

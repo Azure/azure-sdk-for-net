@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyName))
+            if (KeyName != null)
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (Optional.IsDefined(KeyVaultUri))
+            if (KeyVaultUri != null)
             {
                 writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(KeyVersion))
+            if (KeyVersion != null)
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<string> keyName = default;
-            Optional<Uri> keyVaultUri = default;
-            Optional<string> keyVersion = default;
-            Optional<UserAssignedIdentityProperties> identity = default;
+            string keyName = default;
+            Uri keyVaultUri = default;
+            string keyVersion = default;
+            UserAssignedIdentityProperties identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsKeyVaultProperties(keyName.Value, keyVaultUri.Value, keyVersion.Value, identity.Value, serializedAdditionalRawData);
+            return new EventHubsKeyVaultProperties(keyName, keyVaultUri, keyVersion, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsKeyVaultProperties>.Write(ModelReaderWriterOptions options)

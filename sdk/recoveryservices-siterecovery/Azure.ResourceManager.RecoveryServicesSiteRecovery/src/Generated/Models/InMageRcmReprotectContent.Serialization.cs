@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(DatastoreName);
             writer.WritePropertyName("logStorageAccountId"u8);
             writer.WriteStringValue(LogStorageAccountId);
-            if (Optional.IsDefined(PolicyId))
+            if (PolicyId != null)
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string reprotectAgentId = default;
             string datastoreName = default;
             ResourceIdentifier logStorageAccountId = default;
-            Optional<ResourceIdentifier> policyId = default;
+            ResourceIdentifier policyId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmReprotectContent(instanceType, serializedAdditionalRawData, reprotectAgentId, datastoreName, logStorageAccountId, policyId.Value);
+            return new InMageRcmReprotectContent(
+                instanceType,
+                serializedAdditionalRawData,
+                reprotectAgentId,
+                datastoreName,
+                logStorageAccountId,
+                policyId);
         }
 
         BinaryData IPersistableModel<InMageRcmReprotectContent>.Write(ModelReaderWriterOptions options)

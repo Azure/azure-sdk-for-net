@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsValidationRequired))
+            if (IsValidationRequired.HasValue)
             {
                 writer.WritePropertyName("validationRequired"u8);
                 writer.WriteBooleanValue(IsValidationRequired.Value);
             }
-            if (Optional.IsDefined(IsCrossResourceGroupMoveEnabled))
+            if (IsCrossResourceGroupMoveEnabled.HasValue)
             {
                 writer.WritePropertyName("crossResourceGroupMoveEnabled"u8);
                 writer.WriteBooleanValue(IsCrossResourceGroupMoveEnabled.Value);
             }
-            if (Optional.IsDefined(IsCrossSubscriptionMoveEnabled))
+            if (IsCrossSubscriptionMoveEnabled.HasValue)
             {
                 writer.WritePropertyName("crossSubscriptionMoveEnabled"u8);
                 writer.WriteBooleanValue(IsCrossSubscriptionMoveEnabled.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<bool> validationRequired = default;
-            Optional<bool> crossResourceGroupMoveEnabled = default;
-            Optional<bool> crossSubscriptionMoveEnabled = default;
+            bool? validationRequired = default;
+            bool? crossResourceGroupMoveEnabled = default;
+            bool? crossSubscriptionMoveEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceMovePolicy(Optional.ToNullable(validationRequired), Optional.ToNullable(crossResourceGroupMoveEnabled), Optional.ToNullable(crossSubscriptionMoveEnabled), serializedAdditionalRawData);
+            return new ResourceMovePolicy(validationRequired, crossResourceGroupMoveEnabled, crossSubscriptionMoveEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceMovePolicy>.Write(ModelReaderWriterOptions options)

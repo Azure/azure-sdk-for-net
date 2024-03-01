@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             writer.WriteStringValue(StartIPAddress.ToString());
             writer.WritePropertyName("endIpAddress"u8);
             writer.WriteStringValue(EndIPAddress.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IPAddress startIPAddress = default;
             IPAddress endIPAddress = default;
-            Optional<CosmosDBForPostgreSqlProvisioningState> provisioningState = default;
+            CosmosDBForPostgreSqlProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlFirewallRuleData(id, name, type, systemData.Value, startIPAddress, endIPAddress, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlFirewallRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                startIPAddress,
+                endIPAddress,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlFirewallRuleData>.Write(ModelReaderWriterOptions options)

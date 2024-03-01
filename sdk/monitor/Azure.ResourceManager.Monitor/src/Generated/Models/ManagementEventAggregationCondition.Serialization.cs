@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Operator))
+            if (Operator.HasValue)
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Threshold))
+            if (Threshold.HasValue)
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
             }
-            if (Optional.IsDefined(WindowSize))
+            if (WindowSize.HasValue)
             {
                 writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<MonitorConditionOperator> @operator = default;
-            Optional<double> threshold = default;
-            Optional<TimeSpan> windowSize = default;
+            MonitorConditionOperator? @operator = default;
+            double? threshold = default;
+            TimeSpan? windowSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementEventAggregationCondition(Optional.ToNullable(@operator), Optional.ToNullable(threshold), Optional.ToNullable(windowSize), serializedAdditionalRawData);
+            return new ManagementEventAggregationCondition(@operator, threshold, windowSize, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementEventAggregationCondition>.Write(ModelReaderWriterOptions options)

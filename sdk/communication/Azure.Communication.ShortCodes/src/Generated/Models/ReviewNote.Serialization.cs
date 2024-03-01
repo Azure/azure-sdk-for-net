@@ -16,12 +16,12 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(Date))
+            if (Date.HasValue)
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(Date.Value, "O");
@@ -35,8 +35,8 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<DateTimeOffset> date = default;
+            string message = default;
+            DateTimeOffset? date = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -54,7 +54,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new ReviewNote(message.Value, Optional.ToNullable(date));
+            return new ReviewNote(message, date);
         }
     }
 }

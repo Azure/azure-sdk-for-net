@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Capacity))
+            if (Capacity != null)
             {
                 if (Capacity != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("capacity");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType != null)
             {
                 if (ResourceType != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceType");
                 }
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 if (Sku != null)
                 {
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningSkuCapacity> capacity = default;
-            Optional<string> resourceType = default;
-            Optional<MachineLearningSkuSetting> sku = default;
+            MachineLearningSkuCapacity capacity = default;
+            string resourceType = default;
+            MachineLearningSkuSetting sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningSkuDetail(capacity.Value, resourceType.Value, sku.Value, serializedAdditionalRawData);
+            return new MachineLearningSkuDetail(capacity, resourceType, sku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningSkuDetail>.Write(ModelReaderWriterOptions options)

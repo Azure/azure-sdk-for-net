@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdminObjectId))
+            if (AdminObjectId != null)
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(AdminObjectId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> objectId = default;
+            string objectId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CollectionAdminUpdateContent(objectId.Value, serializedAdditionalRawData);
+            return new CollectionAdminUpdateContent(objectId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CollectionAdminUpdateContent>.Write(ModelReaderWriterOptions options)

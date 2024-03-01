@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OwnershipId))
+            if (OwnershipId != null)
             {
                 writer.WritePropertyName("ownershipId"u8);
                 writer.WriteStringValue(OwnershipId);
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> ownershipId = default;
+            SystemData systemData = default;
+            string ownershipId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DomainOwnershipIdentifierData(id, name, type, systemData.Value, ownershipId.Value, kind.Value, serializedAdditionalRawData);
+            return new DomainOwnershipIdentifierData(
+                id,
+                name,
+                type,
+                systemData,
+                ownershipId,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DomainOwnershipIdentifierData>.Write(ModelReaderWriterOptions options)

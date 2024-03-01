@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Workloads
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,59 +62,59 @@ namespace Azure.ResourceManager.Workloads
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Errors))
+            if (options.Format != "W" && Errors != null)
             {
                 writer.WritePropertyName("errors"u8);
                 JsonSerializer.Serialize(writer, Errors);
             }
-            if (Optional.IsDefined(AppLocation))
+            if (AppLocation.HasValue)
             {
                 writer.WritePropertyName("appLocation"u8);
                 writer.WriteStringValue(AppLocation.Value);
             }
-            if (Optional.IsDefined(RoutingPreference))
+            if (RoutingPreference.HasValue)
             {
                 writer.WritePropertyName("routingPreference"u8);
                 writer.WriteStringValue(RoutingPreference.Value.ToString());
             }
-            if (Optional.IsDefined(ZoneRedundancyPreference))
+            if (ZoneRedundancyPreference != null)
             {
                 writer.WritePropertyName("zoneRedundancyPreference"u8);
                 writer.WriteStringValue(ZoneRedundancyPreference);
             }
-            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
+            if (ManagedResourceGroupConfiguration != null)
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
             }
-            if (Optional.IsDefined(LogAnalyticsWorkspaceArmId))
+            if (LogAnalyticsWorkspaceArmId != null)
             {
                 writer.WritePropertyName("logAnalyticsWorkspaceArmId"u8);
                 writer.WriteStringValue(LogAnalyticsWorkspaceArmId);
             }
-            if (Optional.IsDefined(MonitorSubnetId))
+            if (MonitorSubnetId != null)
             {
                 writer.WritePropertyName("monitorSubnet"u8);
                 writer.WriteStringValue(MonitorSubnetId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MsiArmId))
+            if (options.Format != "W" && MsiArmId != null)
             {
                 writer.WritePropertyName("msiArmId"u8);
                 writer.WriteStringValue(MsiArmId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageAccountArmId))
+            if (options.Format != "W" && StorageAccountArmId != null)
             {
                 writer.WritePropertyName("storageAccountArmId"u8);
                 writer.WriteStringValue(StorageAccountArmId);
@@ -158,23 +158,23 @@ namespace Azure.ResourceManager.Workloads
             {
                 return null;
             }
-            Optional<UserAssignedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            UserAssignedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WorkloadMonitorProvisioningState> provisioningState = default;
-            Optional<ResponseError> errors = default;
-            Optional<AzureLocation> appLocation = default;
-            Optional<SapRoutingPreference> routingPreference = default;
-            Optional<string> zoneRedundancyPreference = default;
-            Optional<ManagedRGConfiguration> managedResourceGroupConfiguration = default;
-            Optional<ResourceIdentifier> logAnalyticsWorkspaceArmId = default;
-            Optional<ResourceIdentifier> monitorSubnet = default;
-            Optional<ResourceIdentifier> msiArmId = default;
-            Optional<ResourceIdentifier> storageAccountArmId = default;
+            SystemData systemData = default;
+            WorkloadMonitorProvisioningState? provisioningState = default;
+            ResponseError errors = default;
+            AzureLocation? appLocation = default;
+            SapRoutingPreference? routingPreference = default;
+            string zoneRedundancyPreference = default;
+            ManagedRGConfiguration managedResourceGroupConfiguration = default;
+            ResourceIdentifier logAnalyticsWorkspaceArmId = default;
+            ResourceIdentifier monitorSubnet = default;
+            ResourceIdentifier msiArmId = default;
+            ResourceIdentifier storageAccountArmId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -335,7 +335,25 @@ namespace Azure.ResourceManager.Workloads
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapMonitorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), errors.Value, Optional.ToNullable(appLocation), Optional.ToNullable(routingPreference), zoneRedundancyPreference.Value, managedResourceGroupConfiguration.Value, logAnalyticsWorkspaceArmId.Value, monitorSubnet.Value, msiArmId.Value, storageAccountArmId.Value, serializedAdditionalRawData);
+            return new SapMonitorData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState,
+                errors,
+                appLocation,
+                routingPreference,
+                zoneRedundancyPreference,
+                managedResourceGroupConfiguration,
+                logAnalyticsWorkspaceArmId,
+                monitorSubnet,
+                msiArmId,
+                storageAccountArmId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapMonitorData>.Write(ModelReaderWriterOptions options)

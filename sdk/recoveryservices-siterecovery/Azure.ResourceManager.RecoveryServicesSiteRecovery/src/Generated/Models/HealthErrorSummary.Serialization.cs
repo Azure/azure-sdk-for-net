@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SummaryCode))
+            if (SummaryCode != null)
             {
                 writer.WritePropertyName("summaryCode"u8);
                 writer.WriteStringValue(SummaryCode);
             }
-            if (Optional.IsDefined(Category))
+            if (Category.HasValue)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Optional.IsDefined(Severity))
+            if (Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsDefined(SummaryMessage))
+            if (SummaryMessage != null)
             {
                 writer.WritePropertyName("summaryMessage"u8);
                 writer.WriteStringValue(SummaryMessage);
             }
-            if (Optional.IsDefined(AffectedResourceType))
+            if (AffectedResourceType != null)
             {
                 writer.WritePropertyName("affectedResourceType"u8);
                 writer.WriteStringValue(AffectedResourceType);
             }
-            if (Optional.IsDefined(AffectedResourceSubtype))
+            if (AffectedResourceSubtype != null)
             {
                 writer.WritePropertyName("affectedResourceSubtype"u8);
                 writer.WriteStringValue(AffectedResourceSubtype);
             }
-            if (Optional.IsCollectionDefined(AffectedResourceCorrelationIds))
+            if (!(AffectedResourceCorrelationIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("affectedResourceCorrelationIds"u8);
                 writer.WriteStartArray();
@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> summaryCode = default;
-            Optional<HealthErrorCategory> category = default;
-            Optional<SiteRecoveryErrorSeverity> severity = default;
-            Optional<string> summaryMessage = default;
-            Optional<string> affectedResourceType = default;
-            Optional<string> affectedResourceSubtype = default;
-            Optional<IReadOnlyList<string>> affectedResourceCorrelationIds = default;
+            string summaryCode = default;
+            HealthErrorCategory? category = default;
+            SiteRecoveryErrorSeverity? severity = default;
+            string summaryMessage = default;
+            string affectedResourceType = default;
+            string affectedResourceSubtype = default;
+            IReadOnlyList<string> affectedResourceCorrelationIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthErrorSummary(summaryCode.Value, Optional.ToNullable(category), Optional.ToNullable(severity), summaryMessage.Value, affectedResourceType.Value, affectedResourceSubtype.Value, Optional.ToList(affectedResourceCorrelationIds), serializedAdditionalRawData);
+            return new HealthErrorSummary(
+                summaryCode,
+                category,
+                severity,
+                summaryMessage,
+                affectedResourceType,
+                affectedResourceSubtype,
+                affectedResourceCorrelationIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthErrorSummary>.Write(ModelReaderWriterOptions options)

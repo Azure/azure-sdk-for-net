@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             IReadOnlyList<SynapseSparkConfigurationData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSparkConfigurationListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new SynapseSparkConfigurationListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSparkConfigurationListResult>.Write(ModelReaderWriterOptions options)

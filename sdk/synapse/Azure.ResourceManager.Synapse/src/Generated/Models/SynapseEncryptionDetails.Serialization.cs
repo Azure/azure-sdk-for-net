@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IsDoubleEncryptionEnabled))
+            if (options.Format != "W" && IsDoubleEncryptionEnabled.HasValue)
             {
                 writer.WritePropertyName("doubleEncryptionEnabled"u8);
                 writer.WriteBooleanValue(IsDoubleEncryptionEnabled.Value);
             }
-            if (Optional.IsDefined(Cmk))
+            if (Cmk != null)
             {
                 writer.WritePropertyName("cmk"u8);
                 writer.WriteObjectValue(Cmk);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<bool> doubleEncryptionEnabled = default;
-            Optional<WorkspaceCustomerManagedKeyDetails> cmk = default;
+            bool? doubleEncryptionEnabled = default;
+            WorkspaceCustomerManagedKeyDetails cmk = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseEncryptionDetails(Optional.ToNullable(doubleEncryptionEnabled), cmk.Value, serializedAdditionalRawData);
+            return new SynapseEncryptionDetails(doubleEncryptionEnabled, cmk, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseEncryptionDetails>.Write(ModelReaderWriterOptions options)

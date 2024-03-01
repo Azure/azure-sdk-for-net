@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReplicaVmDeletionStatus))
+            if (ReplicaVmDeletionStatus != null)
             {
                 writer.WritePropertyName("replicaVmDeletionStatus"u8);
                 writer.WriteStringValue(ReplicaVmDeletionStatus);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> replicaVmDeletionStatus = default;
+            string replicaVmDeletionStatus = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageDisableProtectionProviderSpecificContent(instanceType, serializedAdditionalRawData, replicaVmDeletionStatus.Value);
+            return new InMageDisableProtectionProviderSpecificContent(instanceType, serializedAdditionalRawData, replicaVmDeletionStatus);
         }
 
         BinaryData IPersistableModel<InMageDisableProtectionProviderSpecificContent>.Write(ModelReaderWriterOptions options)

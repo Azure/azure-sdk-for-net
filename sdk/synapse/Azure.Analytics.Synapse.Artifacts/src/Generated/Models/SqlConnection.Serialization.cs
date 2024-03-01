@@ -19,22 +19,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Type))
+            if (Type.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(PoolName))
+            if (PoolName != null)
             {
                 writer.WritePropertyName("poolName"u8);
                 writer.WriteStringValue(PoolName);
             }
-            if (Optional.IsDefined(DatabaseName))
+            if (DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
@@ -53,10 +53,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<SqlConnectionType> type = default;
-            Optional<string> name = default;
-            Optional<string> poolName = default;
-            Optional<string> databaseName = default;
+            SqlConnectionType? type = default;
+            string name = default;
+            string poolName = default;
+            string databaseName = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlConnection(Optional.ToNullable(type), name.Value, poolName.Value, databaseName.Value, additionalProperties);
+            return new SqlConnection(type, name, poolName, databaseName, additionalProperties);
         }
 
         internal partial class SqlConnectionConverter : JsonConverter<SqlConnection>

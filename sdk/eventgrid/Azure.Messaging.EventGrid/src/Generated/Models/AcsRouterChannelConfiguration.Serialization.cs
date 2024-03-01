@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,9 +17,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> channelId = default;
-            Optional<int> capacityCostPerJob = default;
-            Optional<int> maxNumberOfJobs = default;
+            string channelId = default;
+            int? capacityCostPerJob = default;
+            int? maxNumberOfJobs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("channelId"u8))
@@ -47,7 +46,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterChannelConfiguration(channelId.Value, Optional.ToNullable(capacityCostPerJob), Optional.ToNullable(maxNumberOfJobs));
+            return new AcsRouterChannelConfiguration(channelId, capacityCostPerJob, maxNumberOfJobs);
         }
     }
 }

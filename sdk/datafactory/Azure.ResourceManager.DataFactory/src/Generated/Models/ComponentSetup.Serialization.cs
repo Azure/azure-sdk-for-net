@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("componentName"u8);
             writer.WriteStringValue(ComponentName);
-            if (Optional.IsDefined(LicenseKey))
+            if (LicenseKey != null)
             {
                 writer.WritePropertyName("licenseKey"u8);
                 JsonSerializer.Serialize(writer, LicenseKey);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string type = default;
             string componentName = default;
-            Optional<DataFactorySecretBaseDefinition> licenseKey = default;
+            DataFactorySecretBaseDefinition licenseKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

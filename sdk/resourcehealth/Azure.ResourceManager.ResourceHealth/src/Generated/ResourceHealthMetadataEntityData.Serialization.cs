@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ApplicableScenarios))
+            if (!(ApplicableScenarios is ChangeTrackingList<MetadataEntityScenario> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("applicableScenarios"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SupportedValues))
+            if (!(SupportedValues is ChangeTrackingList<MetadataSupportedValueDetail> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("supportedValues"u8);
                 writer.WriteStartArray();
@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.ResourceHealth
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> dependsOn = default;
-            Optional<IReadOnlyList<MetadataEntityScenario>> applicableScenarios = default;
-            Optional<IReadOnlyList<MetadataSupportedValueDetail>> supportedValues = default;
+            SystemData systemData = default;
+            string displayName = default;
+            IReadOnlyList<string> dependsOn = default;
+            IReadOnlyList<MetadataEntityScenario> applicableScenarios = default;
+            IReadOnlyList<MetadataSupportedValueDetail> supportedValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +225,16 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthMetadataEntityData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(dependsOn), Optional.ToList(applicableScenarios), Optional.ToList(supportedValues), serializedAdditionalRawData);
+            return new ResourceHealthMetadataEntityData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                applicableScenarios ?? new ChangeTrackingList<MetadataEntityScenario>(),
+                supportedValues ?? new ChangeTrackingList<MetadataSupportedValueDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthMetadataEntityData>.Write(ModelReaderWriterOptions options)

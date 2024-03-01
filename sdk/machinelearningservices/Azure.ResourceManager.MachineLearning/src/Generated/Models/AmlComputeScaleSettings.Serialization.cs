@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("maxNodeCount"u8);
             writer.WriteNumberValue(MaxNodeCount);
-            if (Optional.IsDefined(MinNodeCount))
+            if (MinNodeCount.HasValue)
             {
                 writer.WritePropertyName("minNodeCount"u8);
                 writer.WriteNumberValue(MinNodeCount.Value);
             }
-            if (Optional.IsDefined(NodeIdleTimeBeforeScaleDown))
+            if (NodeIdleTimeBeforeScaleDown.HasValue)
             {
                 if (NodeIdleTimeBeforeScaleDown != null)
                 {
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             int maxNodeCount = default;
-            Optional<int> minNodeCount = default;
-            Optional<TimeSpan?> nodeIdleTimeBeforeScaleDown = default;
+            int? minNodeCount = default;
+            TimeSpan? nodeIdleTimeBeforeScaleDown = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlComputeScaleSettings(maxNodeCount, Optional.ToNullable(minNodeCount), Optional.ToNullable(nodeIdleTimeBeforeScaleDown), serializedAdditionalRawData);
+            return new AmlComputeScaleSettings(maxNodeCount, minNodeCount, nodeIdleTimeBeforeScaleDown, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlComputeScaleSettings>.Write(ModelReaderWriterOptions options)

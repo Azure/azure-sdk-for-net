@@ -19,8 +19,8 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SasDefinitionItem>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SasDefinitionItem> value = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new SasDefinitionListResult(Optional.ToList(value), nextLink.Value);
+            return new SasDefinitionListResult(value ?? new ChangeTrackingList<SasDefinitionItem>(), nextLink);
         }
     }
 }

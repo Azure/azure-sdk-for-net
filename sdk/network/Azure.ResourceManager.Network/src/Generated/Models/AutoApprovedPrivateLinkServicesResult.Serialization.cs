@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AutoApprovedPrivateLinkService> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutoApprovedPrivateLinkService>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AutoApprovedPrivateLinkService> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoApprovedPrivateLinkServicesResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AutoApprovedPrivateLinkServicesResult(value ?? new ChangeTrackingList<AutoApprovedPrivateLinkService>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoApprovedPrivateLinkServicesResult>.Write(ModelReaderWriterOptions options)

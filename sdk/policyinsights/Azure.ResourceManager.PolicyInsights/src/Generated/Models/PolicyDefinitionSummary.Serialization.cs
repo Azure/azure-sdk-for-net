@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicyDefinitionId))
+            if (PolicyDefinitionId != null)
             {
                 writer.WritePropertyName("policyDefinitionId"u8);
                 writer.WriteStringValue(PolicyDefinitionId);
             }
-            if (Optional.IsDefined(PolicyDefinitionReferenceId))
+            if (PolicyDefinitionReferenceId != null)
             {
                 writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
             }
-            if (Optional.IsCollectionDefined(PolicyDefinitionGroupNames))
+            if (!(PolicyDefinitionGroupNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policyDefinitionGroupNames"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Effect))
+            if (Effect != null)
             {
                 writer.WritePropertyName("effect"u8);
                 writer.WriteStringValue(Effect);
             }
-            if (Optional.IsDefined(Results))
+            if (Results != null)
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteObjectValue(Results);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> policyDefinitionId = default;
-            Optional<string> policyDefinitionReferenceId = default;
-            Optional<IReadOnlyList<string>> policyDefinitionGroupNames = default;
-            Optional<string> effect = default;
-            Optional<PolicySummaryResults> results = default;
+            ResourceIdentifier policyDefinitionId = default;
+            string policyDefinitionReferenceId = default;
+            IReadOnlyList<string> policyDefinitionGroupNames = default;
+            string effect = default;
+            PolicySummaryResults results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyDefinitionSummary(policyDefinitionId.Value, policyDefinitionReferenceId.Value, Optional.ToList(policyDefinitionGroupNames), effect.Value, results.Value, serializedAdditionalRawData);
+            return new PolicyDefinitionSummary(
+                policyDefinitionId,
+                policyDefinitionReferenceId,
+                policyDefinitionGroupNames ?? new ChangeTrackingList<string>(),
+                effect,
+                results,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyDefinitionSummary>.Write(ModelReaderWriterOptions options)

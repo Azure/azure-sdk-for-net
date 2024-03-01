@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,47 +44,47 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxSizeBytes))
+            if (MaxSizeBytes.HasValue)
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
-            if (Optional.IsDefined(MinCapacity))
+            if (MinCapacity.HasValue)
             {
                 writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
             }
-            if (Optional.IsDefined(PerDatabaseSettings))
+            if (PerDatabaseSettings != null)
             {
                 writer.WritePropertyName("perDatabaseSettings"u8);
                 writer.WriteObjectValue(PerDatabaseSettings);
             }
-            if (Optional.IsDefined(IsZoneRedundant))
+            if (IsZoneRedundant.HasValue)
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (Optional.IsDefined(LicenseType))
+            if (LicenseType.HasValue)
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(MaintenanceConfigurationId))
+            if (MaintenanceConfigurationId != null)
             {
                 writer.WritePropertyName("maintenanceConfigurationId"u8);
                 writer.WriteStringValue(MaintenanceConfigurationId);
             }
-            if (Optional.IsDefined(HighAvailabilityReplicaCount))
+            if (HighAvailabilityReplicaCount.HasValue)
             {
                 writer.WritePropertyName("highAvailabilityReplicaCount"u8);
                 writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
             }
-            if (Optional.IsDefined(PreferredEnclaveType))
+            if (PreferredEnclaveType.HasValue)
             {
                 writer.WritePropertyName("preferredEnclaveType"u8);
                 writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
             }
-            if (Optional.IsDefined(AvailabilityZone))
+            if (AvailabilityZone.HasValue)
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone.Value.ToString());
@@ -128,17 +128,17 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<long> maxSizeBytes = default;
-            Optional<double> minCapacity = default;
-            Optional<ElasticPoolPerDatabaseSettings> perDatabaseSettings = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<ElasticPoolLicenseType> licenseType = default;
-            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
-            Optional<int> highAvailabilityReplicaCount = default;
-            Optional<SqlAlwaysEncryptedEnclaveType> preferredEnclaveType = default;
-            Optional<SqlAvailabilityZoneType> availabilityZone = default;
+            SqlSku sku = default;
+            IDictionary<string, string> tags = default;
+            long? maxSizeBytes = default;
+            double? minCapacity = default;
+            ElasticPoolPerDatabaseSettings perDatabaseSettings = default;
+            bool? zoneRedundant = default;
+            ElasticPoolLicenseType? licenseType = default;
+            ResourceIdentifier maintenanceConfigurationId = default;
+            int? highAvailabilityReplicaCount = default;
+            SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default;
+            SqlAvailabilityZoneType? availabilityZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -265,7 +265,19 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolPatch(sku.Value, Optional.ToDictionary(tags), Optional.ToNullable(maxSizeBytes), Optional.ToNullable(minCapacity), perDatabaseSettings.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), maintenanceConfigurationId.Value, Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(preferredEnclaveType), Optional.ToNullable(availabilityZone), serializedAdditionalRawData);
+            return new ElasticPoolPatch(
+                sku,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                maxSizeBytes,
+                minCapacity,
+                perDatabaseSettings,
+                zoneRedundant,
+                licenseType,
+                maintenanceConfigurationId,
+                highAvailabilityReplicaCount,
+                preferredEnclaveType,
+                availabilityZone,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolPatch>.Write(ModelReaderWriterOptions options)

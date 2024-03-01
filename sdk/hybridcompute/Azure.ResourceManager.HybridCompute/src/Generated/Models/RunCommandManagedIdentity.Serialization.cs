@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
+            if (ClientId.HasValue)
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId.Value);
             }
-            if (Optional.IsDefined(ObjectId))
+            if (ObjectId.HasValue)
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<Guid> clientId = default;
-            Optional<Guid> objectId = default;
+            Guid? clientId = default;
+            Guid? objectId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunCommandManagedIdentity(Optional.ToNullable(clientId), Optional.ToNullable(objectId), serializedAdditionalRawData);
+            return new RunCommandManagedIdentity(clientId, objectId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunCommandManagedIdentity>.Write(ModelReaderWriterOptions options)

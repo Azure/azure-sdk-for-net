@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(MinimalSeverity))
+            if (MinimalSeverity.HasValue)
             {
                 writer.WritePropertyName("minimalSeverity"u8);
                 writer.WriteStringValue(MinimalSeverity.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<SecurityAlertNotificationState> state = default;
-            Optional<SecurityAlertMinimalSeverity> minimalSeverity = default;
+            SecurityAlertNotificationState? state = default;
+            SecurityAlertMinimalSeverity? minimalSeverity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityContactPropertiesAlertNotifications(Optional.ToNullable(state), Optional.ToNullable(minimalSeverity), serializedAdditionalRawData);
+            return new SecurityContactPropertiesAlertNotifications(state, minimalSeverity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityContactPropertiesAlertNotifications>.Write(ModelReaderWriterOptions options)

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteNumberValue(Priority);
             writer.WritePropertyName("action"u8);
             writer.WriteObjectValue(Action);
-            if (Optional.IsCollectionDefined(MatchConditions))
+            if (!(MatchConditions is ChangeTrackingList<RulesEngineMatchCondition> collection && collection.IsUndefined))
             {
                 if (MatchConditions != null)
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     writer.WriteNull("matchConditions");
                 }
             }
-            if (Optional.IsDefined(MatchProcessingBehavior))
+            if (MatchProcessingBehavior.HasValue)
             {
                 if (MatchProcessingBehavior != null)
                 {
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string name = default;
             int priority = default;
             RulesEngineAction action = default;
-            Optional<IList<RulesEngineMatchCondition>> matchConditions = default;
-            Optional<MatchProcessingBehavior?> matchProcessingBehavior = default;
+            IList<RulesEngineMatchCondition> matchConditions = default;
+            MatchProcessingBehavior? matchProcessingBehavior = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulesEngineRule(name, priority, action, Optional.ToList(matchConditions), Optional.ToNullable(matchProcessingBehavior), serializedAdditionalRawData);
+            return new RulesEngineRule(
+                name,
+                priority,
+                action,
+                matchConditions ?? new ChangeTrackingList<RulesEngineMatchCondition>(),
+                matchProcessingBehavior,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulesEngineRule>.Write(ModelReaderWriterOptions options)

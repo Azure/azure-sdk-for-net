@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceIP))
+            if (SourceIP != null)
             {
                 writer.WritePropertyName("sourceIp"u8);
                 writer.WriteStringValue(SourceIP.ToString());
             }
-            if (Optional.IsDefined(Latitude))
+            if (Latitude.HasValue)
             {
                 writer.WritePropertyName("latitude"u8);
                 writer.WriteNumberValue(Latitude.Value);
             }
-            if (Optional.IsDefined(Longitude))
+            if (Longitude.HasValue)
             {
                 writer.WritePropertyName("longitude"u8);
                 writer.WriteNumberValue(Longitude.Value);
             }
-            if (Optional.IsCollectionDefined(QueryExperiences))
+            if (!(QueryExperiences is ChangeTrackingList<TrafficManagerHeatMapQueryExperience> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("queryExperiences"u8);
                 writer.WriteStartArray();
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Optional<IPAddress> sourceIP = default;
-            Optional<double> latitude = default;
-            Optional<double> longitude = default;
-            Optional<IList<TrafficManagerHeatMapQueryExperience>> queryExperiences = default;
+            IPAddress sourceIP = default;
+            double? latitude = default;
+            double? longitude = default;
+            IList<TrafficManagerHeatMapQueryExperience> queryExperiences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerHeatMapTrafficFlow(sourceIP.Value, Optional.ToNullable(latitude), Optional.ToNullable(longitude), Optional.ToList(queryExperiences), serializedAdditionalRawData);
+            return new TrafficManagerHeatMapTrafficFlow(sourceIP, latitude, longitude, queryExperiences ?? new ChangeTrackingList<TrafficManagerHeatMapQueryExperience>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficManagerHeatMapTrafficFlow>.Write(ModelReaderWriterOptions options)

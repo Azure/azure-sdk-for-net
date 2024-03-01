@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("mountPath"u8);
             writer.WriteStringValue(MountPath);
-            if (Optional.IsDefined(IsReadOnly))
+            if (IsReadOnly.HasValue)
             {
                 writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             string name = default;
             string mountPath = default;
-            Optional<bool> readOnly = default;
+            bool? readOnly = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerVolumeMount(name, mountPath, Optional.ToNullable(readOnly), serializedAdditionalRawData);
+            return new ContainerVolumeMount(name, mountPath, readOnly, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerVolumeMount>.Write(ModelReaderWriterOptions options)

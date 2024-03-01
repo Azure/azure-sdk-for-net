@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Specification))
+            if (Specification != null)
             {
                 writer.WritePropertyName("specification"u8);
                 writer.WriteObjectValue(Specification);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<ProviderHubProvisioningState> provisioningState = default;
-            Optional<DefaultRolloutSpecification> specification = default;
-            Optional<DefaultRolloutStatus> status = default;
+            ProviderHubProvisioningState? provisioningState = default;
+            DefaultRolloutSpecification specification = default;
+            DefaultRolloutStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefaultRolloutProperties(Optional.ToNullable(provisioningState), specification.Value, status.Value, serializedAdditionalRawData);
+            return new DefaultRolloutProperties(provisioningState, specification, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefaultRolloutProperties>.Write(ModelReaderWriterOptions options)

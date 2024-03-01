@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(P1Y))
+            if (P1Y != null)
             {
                 writer.WritePropertyName("p1Y"u8);
                 writer.WriteObjectValue(P1Y);
             }
-            if (Optional.IsDefined(P3Y))
+            if (P3Y != null)
             {
                 writer.WritePropertyName("p3Y"u8);
                 writer.WriteObjectValue(P3Y);
             }
-            if (Optional.IsDefined(P5Y))
+            if (P5Y != null)
             {
                 writer.WritePropertyName("p5Y"u8);
                 writer.WriteObjectValue(P5Y);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<PurchasePrice> p1Y = default;
-            Optional<PurchasePrice> p3Y = default;
-            Optional<PurchasePrice> p5Y = default;
+            PurchasePrice p1Y = default;
+            PurchasePrice p3Y = default;
+            PurchasePrice p5Y = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationCatalogMsrp(p1Y.Value, p3Y.Value, p5Y.Value, serializedAdditionalRawData);
+            return new ReservationCatalogMsrp(p1Y, p3Y, p5Y, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationCatalogMsrp>.Write(ModelReaderWriterOptions options)

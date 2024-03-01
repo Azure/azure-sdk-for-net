@@ -27,59 +27,59 @@ namespace Azure.ResourceManager.Orbital.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Spacecraft))
+            if (Spacecraft != null)
             {
                 writer.WritePropertyName("spacecraft"u8);
                 JsonSerializer.Serialize(writer, Spacecraft);
             }
-            if (options.Format != "W" && Optional.IsDefined(GroundStationName))
+            if (options.Format != "W" && GroundStationName != null)
             {
                 writer.WritePropertyName("groundStationName"u8);
                 writer.WriteStringValue(GroundStationName);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MaximumElevationDegrees))
+            if (options.Format != "W" && MaximumElevationDegrees.HasValue)
             {
                 writer.WritePropertyName("maximumElevationDegrees"u8);
                 writer.WriteNumberValue(MaximumElevationDegrees.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TxStartOn))
+            if (options.Format != "W" && TxStartOn.HasValue)
             {
                 writer.WritePropertyName("txStartTime"u8);
                 writer.WriteStringValue(TxStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(TxEndOn))
+            if (options.Format != "W" && TxEndOn.HasValue)
             {
                 writer.WritePropertyName("txEndTime"u8);
                 writer.WriteStringValue(TxEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RxStartOn))
+            if (options.Format != "W" && RxStartOn.HasValue)
             {
                 writer.WritePropertyName("rxStartTime"u8);
                 writer.WriteStringValue(RxStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RxEndOn))
+            if (options.Format != "W" && RxEndOn.HasValue)
             {
                 writer.WritePropertyName("rxEndTime"u8);
                 writer.WriteStringValue(RxEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(StartAzimuthDegrees))
+            if (options.Format != "W" && StartAzimuthDegrees.HasValue)
             {
                 writer.WritePropertyName("startAzimuthDegrees"u8);
                 writer.WriteNumberValue(StartAzimuthDegrees.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndAzimuthDegrees))
+            if (options.Format != "W" && EndAzimuthDegrees.HasValue)
             {
                 writer.WritePropertyName("endAzimuthDegrees"u8);
                 writer.WriteNumberValue(EndAzimuthDegrees.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartElevationDegrees))
+            if (options.Format != "W" && StartElevationDegrees.HasValue)
             {
                 writer.WritePropertyName("startElevationDegrees"u8);
                 writer.WriteNumberValue(StartElevationDegrees.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndElevationDegrees))
+            if (options.Format != "W" && EndElevationDegrees.HasValue)
             {
                 writer.WritePropertyName("endElevationDegrees"u8);
                 writer.WriteNumberValue(EndElevationDegrees.Value);
@@ -123,17 +123,17 @@ namespace Azure.ResourceManager.Orbital.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> spacecraft = default;
-            Optional<string> groundStationName = default;
-            Optional<float> maximumElevationDegrees = default;
-            Optional<DateTimeOffset> txStartTime = default;
-            Optional<DateTimeOffset> txEndTime = default;
-            Optional<DateTimeOffset> rxStartTime = default;
-            Optional<DateTimeOffset> rxEndTime = default;
-            Optional<float> startAzimuthDegrees = default;
-            Optional<float> endAzimuthDegrees = default;
-            Optional<float> startElevationDegrees = default;
-            Optional<float> endElevationDegrees = default;
+            WritableSubResource spacecraft = default;
+            string groundStationName = default;
+            float? maximumElevationDegrees = default;
+            DateTimeOffset? txStartTime = default;
+            DateTimeOffset? txEndTime = default;
+            DateTimeOffset? rxStartTime = default;
+            DateTimeOffset? rxEndTime = default;
+            float? startAzimuthDegrees = default;
+            float? endAzimuthDegrees = default;
+            float? startElevationDegrees = default;
+            float? endElevationDegrees = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,7 +251,19 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalAvailableContact(spacecraft, groundStationName.Value, Optional.ToNullable(maximumElevationDegrees), Optional.ToNullable(txStartTime), Optional.ToNullable(txEndTime), Optional.ToNullable(rxStartTime), Optional.ToNullable(rxEndTime), Optional.ToNullable(startAzimuthDegrees), Optional.ToNullable(endAzimuthDegrees), Optional.ToNullable(startElevationDegrees), Optional.ToNullable(endElevationDegrees), serializedAdditionalRawData);
+            return new OrbitalAvailableContact(
+                spacecraft,
+                groundStationName,
+                maximumElevationDegrees,
+                txStartTime,
+                txEndTime,
+                rxStartTime,
+                rxEndTime,
+                startAzimuthDegrees,
+                endAzimuthDegrees,
+                startElevationDegrees,
+                endElevationDegrees,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalAvailableContact>.Write(ModelReaderWriterOptions options)

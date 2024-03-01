@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -46,32 +46,32 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdministratorLogin))
+            if (AdministratorLogin != null)
             {
                 writer.WritePropertyName("administratorLogin"u8);
                 writer.WriteStringValue(AdministratorLogin);
             }
-            if (Optional.IsDefined(AdministratorLoginPassword))
+            if (AdministratorLoginPassword != null)
             {
                 writer.WritePropertyName("administratorLoginPassword"u8);
                 writer.WriteStringValue(AdministratorLoginPassword);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedDomainName))
+            if (options.Format != "W" && FullyQualifiedDomainName != null)
             {
                 writer.WritePropertyName("fullyQualifiedDomainName"u8);
                 writer.WriteStringValue(FullyQualifiedDomainName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<SqlServerPrivateEndpointConnection> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -81,52 +81,52 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MinTlsVersion))
+            if (MinTlsVersion.HasValue)
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinTlsVersion.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(WorkspaceFeature))
+            if (options.Format != "W" && WorkspaceFeature.HasValue)
             {
                 writer.WritePropertyName("workspaceFeature"u8);
                 writer.WriteStringValue(WorkspaceFeature.Value.ToString());
             }
-            if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
+            if (PrimaryUserAssignedIdentityId != null)
             {
                 writer.WritePropertyName("primaryUserAssignedIdentityId"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentityId);
             }
-            if (Optional.IsDefined(FederatedClientId))
+            if (FederatedClientId.HasValue)
             {
                 writer.WritePropertyName("federatedClientId"u8);
                 writer.WriteStringValue(FederatedClientId.Value);
             }
-            if (Optional.IsDefined(KeyId))
+            if (KeyId != null)
             {
                 writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId.AbsoluteUri);
             }
-            if (Optional.IsDefined(Administrators))
+            if (Administrators != null)
             {
                 writer.WritePropertyName("administrators"u8);
                 writer.WriteObjectValue(Administrators);
             }
-            if (Optional.IsDefined(RestrictOutboundNetworkAccess))
+            if (RestrictOutboundNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
                 writer.WriteStringValue(RestrictOutboundNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(IsIPv6Enabled))
+            if (IsIPv6Enabled.HasValue)
             {
                 writer.WritePropertyName("isIPv6Enabled"u8);
                 writer.WriteStringValue(IsIPv6Enabled.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ExternalGovernanceStatus))
+            if (options.Format != "W" && ExternalGovernanceStatus.HasValue)
             {
                 writer.WritePropertyName("externalGovernanceStatus"u8);
                 writer.WriteStringValue(ExternalGovernanceStatus.Value.ToString());
@@ -170,24 +170,24 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> administratorLogin = default;
-            Optional<string> administratorLoginPassword = default;
-            Optional<string> version = default;
-            Optional<string> state = default;
-            Optional<string> fullyQualifiedDomainName = default;
-            Optional<IReadOnlyList<SqlServerPrivateEndpointConnection>> privateEndpointConnections = default;
-            Optional<SqlMinimalTlsVersion> minimalTlsVersion = default;
-            Optional<ServerNetworkAccessFlag> publicNetworkAccess = default;
-            Optional<ServerWorkspaceFeature> workspaceFeature = default;
-            Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
-            Optional<Guid> federatedClientId = default;
-            Optional<Uri> keyId = default;
-            Optional<ServerExternalAdministrator> administrators = default;
-            Optional<ServerNetworkAccessFlag> restrictOutboundNetworkAccess = default;
-            Optional<ServerNetworkAccessFlag> isIPv6Enabled = default;
-            Optional<ExternalGovernanceStatus> externalGovernanceStatus = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            string administratorLogin = default;
+            string administratorLoginPassword = default;
+            string version = default;
+            string state = default;
+            string fullyQualifiedDomainName = default;
+            IReadOnlyList<SqlServerPrivateEndpointConnection> privateEndpointConnections = default;
+            SqlMinimalTlsVersion? minimalTlsVersion = default;
+            ServerNetworkAccessFlag? publicNetworkAccess = default;
+            ServerWorkspaceFeature? workspaceFeature = default;
+            ResourceIdentifier primaryUserAssignedIdentityId = default;
+            Guid? federatedClientId = default;
+            Uri keyId = default;
+            ServerExternalAdministrator administrators = default;
+            ServerNetworkAccessFlag? restrictOutboundNetworkAccess = default;
+            ServerNetworkAccessFlag? isIPv6Enabled = default;
+            ExternalGovernanceStatus? externalGovernanceStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -363,7 +363,26 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerPatch(identity, Optional.ToDictionary(tags), administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToNullable(isIPv6Enabled), Optional.ToNullable(externalGovernanceStatus), serializedAdditionalRawData);
+            return new SqlServerPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                administratorLogin,
+                administratorLoginPassword,
+                version,
+                state,
+                fullyQualifiedDomainName,
+                privateEndpointConnections ?? new ChangeTrackingList<SqlServerPrivateEndpointConnection>(),
+                minimalTlsVersion,
+                publicNetworkAccess,
+                workspaceFeature,
+                primaryUserAssignedIdentityId,
+                federatedClientId,
+                keyId,
+                administrators,
+                restrictOutboundNetworkAccess,
+                isIPv6Enabled,
+                externalGovernanceStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerPatch>.Write(ModelReaderWriterOptions options)

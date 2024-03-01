@@ -19,7 +19,7 @@ namespace Azure.Security.Attestation
             {
                 return null;
             }
-            Optional<IReadOnlyList<JsonWebKey>> keys = default;
+            IReadOnlyList<JsonWebKey> keys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keys"u8))
@@ -37,7 +37,7 @@ namespace Azure.Security.Attestation
                     continue;
                 }
             }
-            return new JsonWebKeySet(Optional.ToList(keys));
+            return new JsonWebKeySet(keys ?? new ChangeTrackingList<JsonWebKey>());
         }
     }
 }

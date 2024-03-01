@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BfdConfiguration))
+            if (BfdConfiguration != null)
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
                 writer.WriteObjectValue(BfdConfiguration);
             }
-            if (Optional.IsCollectionDefined(IPv4Routes))
+            if (!(IPv4Routes is ChangeTrackingList<StaticRouteProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipv4Routes"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPv6Routes))
+            if (!(IPv6Routes is ChangeTrackingList<StaticRouteProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipv6Routes"u8);
                 writer.WriteStartArray();
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<BfdConfiguration> bfdConfiguration = default;
-            Optional<IList<StaticRouteProperties>> ipv4Routes = default;
-            Optional<IList<StaticRouteProperties>> ipv6Routes = default;
+            BfdConfiguration bfdConfiguration = default;
+            IList<StaticRouteProperties> ipv4Routes = default;
+            IList<StaticRouteProperties> ipv6Routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NpbStaticRouteConfiguration(bfdConfiguration.Value, Optional.ToList(ipv4Routes), Optional.ToList(ipv6Routes), serializedAdditionalRawData);
+            return new NpbStaticRouteConfiguration(bfdConfiguration, ipv4Routes ?? new ChangeTrackingList<StaticRouteProperties>(), ipv6Routes ?? new ChangeTrackingList<StaticRouteProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NpbStaticRouteConfiguration>.Write(ModelReaderWriterOptions options)

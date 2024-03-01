@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PassedControls))
+            if (options.Format != "W" && PassedControls.HasValue)
             {
                 writer.WritePropertyName("passedControls"u8);
                 writer.WriteNumberValue(PassedControls.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FailedControls))
+            if (options.Format != "W" && FailedControls.HasValue)
             {
                 writer.WritePropertyName("failedControls"u8);
                 writer.WriteNumberValue(FailedControls.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SkippedControls))
+            if (options.Format != "W" && SkippedControls.HasValue)
             {
                 writer.WritePropertyName("skippedControls"u8);
                 writer.WriteNumberValue(SkippedControls.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(UnsupportedControls))
+            if (options.Format != "W" && UnsupportedControls.HasValue)
             {
                 writer.WritePropertyName("unsupportedControls"u8);
                 writer.WriteNumberValue(UnsupportedControls.Value);
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RegulatoryComplianceState> state = default;
-            Optional<int> passedControls = default;
-            Optional<int> failedControls = default;
-            Optional<int> skippedControls = default;
-            Optional<int> unsupportedControls = default;
+            SystemData systemData = default;
+            RegulatoryComplianceState? state = default;
+            int? passedControls = default;
+            int? failedControls = default;
+            int? skippedControls = default;
+            int? unsupportedControls = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegulatoryComplianceStandardData(id, name, type, systemData.Value, Optional.ToNullable(state), Optional.ToNullable(passedControls), Optional.ToNullable(failedControls), Optional.ToNullable(skippedControls), Optional.ToNullable(unsupportedControls), serializedAdditionalRawData);
+            return new RegulatoryComplianceStandardData(
+                id,
+                name,
+                type,
+                systemData,
+                state,
+                passedControls,
+                failedControls,
+                skippedControls,
+                unsupportedControls,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegulatoryComplianceStandardData>.Write(ModelReaderWriterOptions options)

@@ -27,27 +27,27 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Authentication))
+            if (Authentication != null)
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (Optional.IsDefined(DocumentCount))
+            if (DocumentCount.HasValue)
             {
                 writer.WritePropertyName("topNDocuments"u8);
                 writer.WriteNumberValue(DocumentCount.Value);
             }
-            if (Optional.IsDefined(ShouldRestrictResultScope))
+            if (ShouldRestrictResultScope.HasValue)
             {
                 writer.WritePropertyName("inScope"u8);
                 writer.WriteBooleanValue(ShouldRestrictResultScope.Value);
             }
-            if (Optional.IsDefined(Strictness))
+            if (Strictness.HasValue)
             {
                 writer.WritePropertyName("strictness"u8);
                 writer.WriteNumberValue(Strictness.Value);
             }
-            if (Optional.IsDefined(RoleInformation))
+            if (RoleInformation != null)
             {
                 writer.WritePropertyName("roleInformation"u8);
                 writer.WriteStringValue(RoleInformation);
@@ -56,42 +56,42 @@ namespace Azure.AI.OpenAI
             writer.WriteStringValue(SearchEndpoint.AbsoluteUri);
             writer.WritePropertyName("indexName"u8);
             writer.WriteStringValue(IndexName);
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (Optional.IsDefined(FieldMappingOptions))
+            if (FieldMappingOptions != null)
             {
                 writer.WritePropertyName("fieldsMapping"u8);
                 writer.WriteObjectValue(FieldMappingOptions);
             }
-            if (Optional.IsDefined(QueryType))
+            if (QueryType.HasValue)
             {
                 writer.WritePropertyName("queryType"u8);
                 writer.WriteStringValue(QueryType.Value.ToString());
             }
-            if (Optional.IsDefined(SemanticConfiguration))
+            if (SemanticConfiguration != null)
             {
                 writer.WritePropertyName("semanticConfiguration"u8);
                 writer.WriteStringValue(SemanticConfiguration);
             }
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (Optional.IsDefined(EmbeddingEndpoint))
+            if (EmbeddingEndpoint != null)
             {
                 writer.WritePropertyName("embeddingEndpoint"u8);
                 writer.WriteStringValue(EmbeddingEndpoint.AbsoluteUri);
             }
-            if (Optional.IsDefined(EmbeddingKey))
+            if (EmbeddingKey != null)
             {
                 writer.WritePropertyName("embeddingKey"u8);
                 writer.WriteStringValue(EmbeddingKey);
             }
-            if (Optional.IsDefined(EmbeddingDependency))
+            if (EmbeddingDependency != null)
             {
                 writer.WritePropertyName("embeddingDependency"u8);
                 writer.WriteObjectValue(EmbeddingDependency);
@@ -134,21 +134,21 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<OnYourDataAuthenticationOptions> authentication = default;
-            Optional<int> topNDocuments = default;
-            Optional<bool> inScope = default;
-            Optional<int> strictness = default;
-            Optional<string> roleInformation = default;
+            OnYourDataAuthenticationOptions authentication = default;
+            int? topNDocuments = default;
+            bool? inScope = default;
+            int? strictness = default;
+            string roleInformation = default;
             Uri endpoint = default;
             string indexName = default;
-            Optional<string> key = default;
-            Optional<AzureCognitiveSearchIndexFieldMappingOptions> fieldsMapping = default;
-            Optional<AzureCognitiveSearchQueryType> queryType = default;
-            Optional<string> semanticConfiguration = default;
-            Optional<string> filter = default;
-            Optional<Uri> embeddingEndpoint = default;
-            Optional<string> embeddingKey = default;
-            Optional<OnYourDataVectorizationSource> embeddingDependency = default;
+            string key = default;
+            AzureCognitiveSearchIndexFieldMappingOptions fieldsMapping = default;
+            AzureCognitiveSearchQueryType? queryType = default;
+            string semanticConfiguration = default;
+            string filter = default;
+            Uri embeddingEndpoint = default;
+            string embeddingKey = default;
+            OnYourDataVectorizationSource embeddingDependency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -266,7 +266,23 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCognitiveSearchChatExtensionParameters(authentication.Value, Optional.ToNullable(topNDocuments), Optional.ToNullable(inScope), Optional.ToNullable(strictness), roleInformation.Value, endpoint, indexName, key.Value, fieldsMapping.Value, Optional.ToNullable(queryType), semanticConfiguration.Value, filter.Value, embeddingEndpoint.Value, embeddingKey.Value, embeddingDependency.Value, serializedAdditionalRawData);
+            return new AzureCognitiveSearchChatExtensionParameters(
+                authentication,
+                topNDocuments,
+                inScope,
+                strictness,
+                roleInformation,
+                endpoint,
+                indexName,
+                key,
+                fieldsMapping,
+                queryType,
+                semanticConfiguration,
+                filter,
+                embeddingEndpoint,
+                embeddingKey,
+                embeddingDependency,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureCognitiveSearchChatExtensionParameters>.Write(ModelReaderWriterOptions options)

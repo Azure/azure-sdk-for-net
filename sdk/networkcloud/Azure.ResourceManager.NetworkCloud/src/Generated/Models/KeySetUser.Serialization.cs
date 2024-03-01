@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartObject();
             writer.WritePropertyName("azureUserName"u8);
             writer.WriteStringValue(AzureUserName);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             string azureUserName = default;
-            Optional<string> description = default;
+            string description = default;
             NetworkCloudSshPublicKey sshPublicKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeySetUser(azureUserName, description.Value, sshPublicKey, serializedAdditionalRawData);
+            return new KeySetUser(azureUserName, description, sshPublicKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeySetUser>.Write(ModelReaderWriterOptions options)

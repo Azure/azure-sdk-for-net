@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsAdminUserEnabled))
+            if (IsAdminUserEnabled.HasValue)
             {
                 writer.WritePropertyName("adminUserEnabled"u8);
                 writer.WriteBooleanValue(IsAdminUserEnabled.Value);
             }
-            if (Optional.IsDefined(NetworkRuleSet))
+            if (NetworkRuleSet != null)
             {
                 writer.WritePropertyName("networkRuleSet"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
             }
-            if (Optional.IsDefined(Policies))
+            if (Policies != null)
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteObjectValue(Policies);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(IsDataEndpointEnabled))
+            if (IsDataEndpointEnabled.HasValue)
             {
                 writer.WritePropertyName("dataEndpointEnabled"u8);
                 writer.WriteBooleanValue(IsDataEndpointEnabled.Value);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(NetworkRuleBypassOptions))
+            if (NetworkRuleBypassOptions.HasValue)
             {
                 writer.WritePropertyName("networkRuleBypassOptions"u8);
                 writer.WriteStringValue(NetworkRuleBypassOptions.Value.ToString());
@@ -124,16 +124,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ContainerRegistrySku> sku = default;
-            Optional<bool> adminUserEnabled = default;
-            Optional<ContainerRegistryNetworkRuleSet> networkRuleSet = default;
-            Optional<ContainerRegistryPolicies> policies = default;
-            Optional<ContainerRegistryEncryption> encryption = default;
-            Optional<bool> dataEndpointEnabled = default;
-            Optional<ContainerRegistryPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<ContainerRegistryNetworkRuleBypassOption> networkRuleBypassOptions = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            ContainerRegistrySku sku = default;
+            bool? adminUserEnabled = default;
+            ContainerRegistryNetworkRuleSet networkRuleSet = default;
+            ContainerRegistryPolicies policies = default;
+            ContainerRegistryEncryption encryption = default;
+            bool? dataEndpointEnabled = default;
+            ContainerRegistryPublicNetworkAccess? publicNetworkAccess = default;
+            ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,7 +251,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryPatch(identity, Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(adminUserEnabled), networkRuleSet.Value, policies.Value, encryption.Value, Optional.ToNullable(dataEndpointEnabled), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(networkRuleBypassOptions), serializedAdditionalRawData);
+            return new ContainerRegistryPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
+                adminUserEnabled,
+                networkRuleSet,
+                policies,
+                encryption,
+                dataEndpointEnabled,
+                publicNetworkAccess,
+                networkRuleBypassOptions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryPatch>.Write(ModelReaderWriterOptions options)

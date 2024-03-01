@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(DeliveryConfiguration))
+            if (DeliveryConfiguration != null)
             {
                 writer.WritePropertyName("deliveryConfiguration"u8);
                 writer.WriteObjectValue(DeliveryConfiguration);
             }
-            if (Optional.IsDefined(EventDeliverySchema))
+            if (EventDeliverySchema.HasValue)
             {
                 writer.WritePropertyName("eventDeliverySchema"u8);
                 writer.WriteStringValue(EventDeliverySchema.Value.ToString());
             }
-            if (Optional.IsDefined(FiltersConfiguration))
+            if (FiltersConfiguration != null)
             {
                 writer.WritePropertyName("filtersConfiguration"u8);
                 writer.WriteObjectValue(FiltersConfiguration);
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubscriptionProvisioningState> provisioningState = default;
-            Optional<DeliveryConfiguration> deliveryConfiguration = default;
-            Optional<DeliverySchema> eventDeliverySchema = default;
-            Optional<FiltersConfiguration> filtersConfiguration = default;
+            SystemData systemData = default;
+            SubscriptionProvisioningState? provisioningState = default;
+            DeliveryConfiguration deliveryConfiguration = default;
+            DeliverySchema? eventDeliverySchema = default;
+            FiltersConfiguration filtersConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NamespaceTopicEventSubscriptionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), deliveryConfiguration.Value, Optional.ToNullable(eventDeliverySchema), filtersConfiguration.Value, serializedAdditionalRawData);
+            return new NamespaceTopicEventSubscriptionData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                deliveryConfiguration,
+                eventDeliverySchema,
+                filtersConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NamespaceTopicEventSubscriptionData>.Write(ModelReaderWriterOptions options)

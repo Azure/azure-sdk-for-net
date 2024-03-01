@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,27 +39,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AggregatorOrSingleRackDefinition))
+            if (AggregatorOrSingleRackDefinition != null)
             {
                 writer.WritePropertyName("aggregatorOrSingleRackDefinition"u8);
                 writer.WriteObjectValue(AggregatorOrSingleRackDefinition);
             }
-            if (Optional.IsDefined(ClusterLocation))
+            if (ClusterLocation != null)
             {
                 writer.WritePropertyName("clusterLocation"u8);
                 writer.WriteStringValue(ClusterLocation);
             }
-            if (Optional.IsDefined(ClusterServicePrincipal))
+            if (ClusterServicePrincipal != null)
             {
                 writer.WritePropertyName("clusterServicePrincipal"u8);
                 writer.WriteObjectValue(ClusterServicePrincipal);
             }
-            if (Optional.IsDefined(ComputeDeploymentThreshold))
+            if (ComputeDeploymentThreshold != null)
             {
                 writer.WritePropertyName("computeDeploymentThreshold"u8);
                 writer.WriteObjectValue(ComputeDeploymentThreshold);
             }
-            if (Optional.IsCollectionDefined(ComputeRackDefinitions))
+            if (!(ComputeRackDefinitions is ChangeTrackingList<NetworkCloudRackDefinition> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("computeRackDefinitions"u8);
                 writer.WriteStartArray();
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<NetworkCloudRackDefinition> aggregatorOrSingleRackDefinition = default;
-            Optional<string> clusterLocation = default;
-            Optional<ServicePrincipalInformation> clusterServicePrincipal = default;
-            Optional<ValidationThreshold> computeDeploymentThreshold = default;
-            Optional<IList<NetworkCloudRackDefinition>> computeRackDefinitions = default;
+            IDictionary<string, string> tags = default;
+            NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = default;
+            string clusterLocation = default;
+            ServicePrincipalInformation clusterServicePrincipal = default;
+            ValidationThreshold computeDeploymentThreshold = default;
+            IList<NetworkCloudRackDefinition> computeRackDefinitions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudClusterPatch(Optional.ToDictionary(tags), aggregatorOrSingleRackDefinition.Value, clusterLocation.Value, clusterServicePrincipal.Value, computeDeploymentThreshold.Value, Optional.ToList(computeRackDefinitions), serializedAdditionalRawData);
+            return new NetworkCloudClusterPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                aggregatorOrSingleRackDefinition,
+                clusterLocation,
+                clusterServicePrincipal,
+                computeDeploymentThreshold,
+                computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudClusterPatch>.Write(ModelReaderWriterOptions options)

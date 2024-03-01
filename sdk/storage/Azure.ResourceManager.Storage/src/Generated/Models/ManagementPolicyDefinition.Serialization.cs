@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("actions"u8);
             writer.WriteObjectValue(Actions);
-            if (Optional.IsDefined(Filters))
+            if (Filters != null)
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             ManagementPolicyAction actions = default;
-            Optional<ManagementPolicyFilter> filters = default;
+            ManagementPolicyFilter filters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementPolicyDefinition(actions, filters.Value, serializedAdditionalRawData);
+            return new ManagementPolicyDefinition(actions, filters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementPolicyDefinition>.Write(ModelReaderWriterOptions options)

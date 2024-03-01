@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Findings))
+            if (!(Findings is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("findings"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> findings = default;
+            IReadOnlyList<string> findings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnoseVirtualNetworkResult(Optional.ToList(findings), serializedAdditionalRawData);
+            return new DiagnoseVirtualNetworkResult(findings ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnoseVirtualNetworkResult>.Write(ModelReaderWriterOptions options)

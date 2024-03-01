@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,19 +39,19 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MediaServiceId))
+            if (options.Format != "W" && MediaServiceId.HasValue)
             {
                 writer.WritePropertyName("mediaServiceId"u8);
                 writer.WriteStringValue(MediaServiceId.Value);
             }
-            if (Optional.IsCollectionDefined(StorageAccounts))
+            if (!(StorageAccounts is ChangeTrackingList<MediaServicesStorageAccount> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StorageAuthentication))
+            if (StorageAuthentication.HasValue)
             {
                 if (StorageAuthentication != null)
                 {
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("storageAuthentication");
                 }
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(KeyDelivery))
+            if (KeyDelivery != null)
             {
                 writer.WritePropertyName("keyDelivery"u8);
                 writer.WriteObjectValue(KeyDelivery);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 if (PublicNetworkAccess != null)
                 {
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("publicNetworkAccess");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<MediaServicesPrivateEndpointConnectionData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MinimumTlsVersion))
+            if (MinimumTlsVersion.HasValue)
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
@@ -154,17 +154,17 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<Guid> mediaServiceId = default;
-            Optional<IList<MediaServicesStorageAccount>> storageAccounts = default;
-            Optional<MediaStorageAuthentication?> storageAuthentication = default;
-            Optional<AccountEncryption> encryption = default;
-            Optional<MediaKeyDelivery> keyDelivery = default;
-            Optional<MediaServicesPublicNetworkAccess?> publicNetworkAccess = default;
-            Optional<MediaServicesProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<MediaServicesPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<MediaServicesMinimumTlsVersion> minimumTlsVersion = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            Guid? mediaServiceId = default;
+            IList<MediaServicesStorageAccount> storageAccounts = default;
+            MediaStorageAuthentication? storageAuthentication = default;
+            AccountEncryption encryption = default;
+            MediaKeyDelivery keyDelivery = default;
+            MediaServicesPublicNetworkAccess? publicNetworkAccess = default;
+            MediaServicesProvisioningState? provisioningState = default;
+            IReadOnlyList<MediaServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
+            MediaServicesMinimumTlsVersion? minimumTlsVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -303,7 +303,19 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaServicesAccountPatch(Optional.ToDictionary(tags), identity, Optional.ToNullable(mediaServiceId), Optional.ToList(storageAccounts), Optional.ToNullable(storageAuthentication), encryption.Value, keyDelivery.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), Optional.ToNullable(minimumTlsVersion), serializedAdditionalRawData);
+            return new MediaServicesAccountPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                mediaServiceId,
+                storageAccounts ?? new ChangeTrackingList<MediaServicesStorageAccount>(),
+                storageAuthentication,
+                encryption,
+                keyDelivery,
+                publicNetworkAccess,
+                provisioningState,
+                privateEndpointConnections ?? new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>(),
+                minimumTlsVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaServicesAccountPatch>.Write(ModelReaderWriterOptions options)

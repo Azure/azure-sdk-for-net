@@ -36,22 +36,22 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteEndArray();
             writer.WritePropertyName("granularity"u8);
             writer.WriteStringValue(Granularity.ToString());
-            if (Optional.IsDefined(CustomInterval))
+            if (CustomInterval.HasValue)
             {
                 writer.WritePropertyName("customInterval"u8);
                 writer.WriteNumberValue(CustomInterval.Value);
             }
-            if (Optional.IsDefined(Period))
+            if (Period.HasValue)
             {
                 writer.WritePropertyName("period"u8);
                 writer.WriteNumberValue(Period.Value);
             }
-            if (Optional.IsDefined(StableTrendWindow))
+            if (StableTrendWindow.HasValue)
             {
                 writer.WritePropertyName("stableTrendWindow"u8);
                 writer.WriteNumberValue(StableTrendWindow.Value);
             }
-            if (Optional.IsDefined(Threshold))
+            if (Threshold.HasValue)
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
@@ -96,10 +96,10 @@ namespace Azure.AI.AnomalyDetector
             }
             IList<TimeSeriesPoint> series = default;
             TimeGranularity granularity = default;
-            Optional<int> customInterval = default;
-            Optional<int> period = default;
-            Optional<int> stableTrendWindow = default;
-            Optional<float> threshold = default;
+            int? customInterval = default;
+            int? period = default;
+            int? stableTrendWindow = default;
+            float? threshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,14 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnivariateChangePointDetectionOptions(series, granularity, Optional.ToNullable(customInterval), Optional.ToNullable(period), Optional.ToNullable(stableTrendWindow), Optional.ToNullable(threshold), serializedAdditionalRawData);
+            return new UnivariateChangePointDetectionOptions(
+                series,
+                granularity,
+                customInterval,
+                period,
+                stableTrendWindow,
+                threshold,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UnivariateChangePointDetectionOptions>.Write(ModelReaderWriterOptions options)

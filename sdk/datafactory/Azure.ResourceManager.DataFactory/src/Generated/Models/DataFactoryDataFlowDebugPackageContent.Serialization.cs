@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SessionId))
+            if (SessionId.HasValue)
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
-            if (Optional.IsDefined(DataFlow))
+            if (DataFlow != null)
             {
                 writer.WritePropertyName("dataFlow"u8);
                 writer.WriteObjectValue(DataFlow);
             }
-            if (Optional.IsCollectionDefined(DataFlows))
+            if (!(DataFlows is ChangeTrackingList<DataFactoryDataFlowDebugInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataFlows"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Datasets))
+            if (!(Datasets is ChangeTrackingList<DataFactoryDatasetDebugInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LinkedServices))
+            if (!(LinkedServices is ChangeTrackingList<DataFactoryLinkedServiceDebugInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("linkedServices"u8);
                 writer.WriteStartArray();
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Staging))
+            if (Staging != null)
             {
                 writer.WritePropertyName("staging"u8);
                 writer.WriteObjectValue(Staging);
             }
-            if (Optional.IsDefined(DebugSettings))
+            if (DebugSettings != null)
             {
                 writer.WritePropertyName("debugSettings"u8);
                 writer.WriteObjectValue(DebugSettings);
@@ -111,13 +111,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<Guid> sessionId = default;
-            Optional<DataFactoryDataFlowDebugInfo> dataFlow = default;
-            Optional<IList<DataFactoryDataFlowDebugInfo>> dataFlows = default;
-            Optional<IList<DataFactoryDatasetDebugInfo>> datasets = default;
-            Optional<IList<DataFactoryLinkedServiceDebugInfo>> linkedServices = default;
-            Optional<DataFlowStagingInfo> staging = default;
-            Optional<DataFlowDebugPackageDebugSettings> debugSettings = default;
+            Guid? sessionId = default;
+            DataFactoryDataFlowDebugInfo dataFlow = default;
+            IList<DataFactoryDataFlowDebugInfo> dataFlows = default;
+            IList<DataFactoryDatasetDebugInfo> datasets = default;
+            IList<DataFactoryLinkedServiceDebugInfo> linkedServices = default;
+            DataFlowStagingInfo staging = default;
+            DataFlowDebugPackageDebugSettings debugSettings = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryDataFlowDebugPackageContent(Optional.ToNullable(sessionId), dataFlow.Value, Optional.ToList(dataFlows), Optional.ToList(datasets), Optional.ToList(linkedServices), staging.Value, debugSettings.Value, additionalProperties);
+            return new DataFactoryDataFlowDebugPackageContent(
+                sessionId,
+                dataFlow,
+                dataFlows ?? new ChangeTrackingList<DataFactoryDataFlowDebugInfo>(),
+                datasets ?? new ChangeTrackingList<DataFactoryDatasetDebugInfo>(),
+                linkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceDebugInfo>(),
+                staging,
+                debugSettings,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryDataFlowDebugPackageContent>.Write(ModelReaderWriterOptions options)

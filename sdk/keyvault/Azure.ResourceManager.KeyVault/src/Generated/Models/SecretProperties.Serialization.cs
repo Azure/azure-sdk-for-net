@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(ContentType))
+            if (ContentType != null)
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (Optional.IsDefined(Attributes))
+            if (Attributes != null)
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(Attributes);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecretUri))
+            if (options.Format != "W" && SecretUri != null)
             {
                 writer.WritePropertyName("secretUri"u8);
                 writer.WriteStringValue(SecretUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecretUriWithVersion))
+            if (options.Format != "W" && SecretUriWithVersion != null)
             {
                 writer.WritePropertyName("secretUriWithVersion"u8);
                 writer.WriteStringValue(SecretUriWithVersion);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<string> value = default;
-            Optional<string> contentType = default;
-            Optional<SecretAttributes> attributes = default;
-            Optional<Uri> secretUri = default;
-            Optional<string> secretUriWithVersion = default;
+            string value = default;
+            string contentType = default;
+            SecretAttributes attributes = default;
+            Uri secretUri = default;
+            string secretUriWithVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecretProperties(value.Value, contentType.Value, attributes.Value, secretUri.Value, secretUriWithVersion.Value, serializedAdditionalRawData);
+            return new SecretProperties(
+                value,
+                contentType,
+                attributes,
+                secretUri,
+                secretUriWithVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecretProperties>.Write(ModelReaderWriterOptions options)

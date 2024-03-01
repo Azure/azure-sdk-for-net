@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CanDelete))
+            if (CanDelete.HasValue)
             {
                 writer.WritePropertyName("canDelete"u8);
                 writer.WriteBooleanValue(CanDelete.Value);
             }
-            if (Optional.IsDefined(ShardKey))
+            if (ShardKey != null)
             {
                 writer.WritePropertyName("shardKey"u8);
                 writer.WriteObjectValue(ShardKey);
             }
-            if (Optional.IsDefined(TargetRUs))
+            if (TargetRUs.HasValue)
             {
                 writer.WritePropertyName("targetRUs"u8);
                 writer.WriteNumberValue(TargetRUs.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<bool> canDelete = default;
-            Optional<MongoDBShardKeySetting> shardKey = default;
-            Optional<int> targetRUs = default;
+            bool? canDelete = default;
+            MongoDBShardKeySetting shardKey = default;
+            int? targetRUs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBCollectionSettings(Optional.ToNullable(canDelete), shardKey.Value, Optional.ToNullable(targetRUs), serializedAdditionalRawData);
+            return new MongoDBCollectionSettings(canDelete, shardKey, targetRUs, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBCollectionSettings>.Write(ModelReaderWriterOptions options)

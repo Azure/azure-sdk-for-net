@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Hci
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
@@ -53,69 +53,69 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HardwareProfile))
+            if (HardwareProfile != null)
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (Optional.IsDefined(NetworkProfile))
+            if (NetworkProfile != null)
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Optional.IsDefined(OSProfile))
+            if (OSProfile != null)
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (Optional.IsDefined(SecurityProfile))
+            if (SecurityProfile != null)
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (Optional.IsDefined(StorageProfile))
+            if (StorageProfile != null)
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (Optional.IsDefined(HttpProxyConfig))
+            if (HttpProxyConfig != null)
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
                 writer.WriteObjectValue(HttpProxyConfig);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceView))
+            if (options.Format != "W" && InstanceView != null)
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (Optional.IsDefined(GuestAgentInstallStatus))
+            if (GuestAgentInstallStatus != null)
             {
                 writer.WritePropertyName("guestAgentInstallStatus"u8);
                 writer.WriteObjectValue(GuestAgentInstallStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(VmId))
+            if (options.Format != "W" && VmId != null)
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId);
             }
-            if (Optional.IsDefined(ResourceUid))
+            if (ResourceUid != null)
             {
                 writer.WritePropertyName("resourceUid"u8);
                 writer.WriteStringValue(ResourceUid);
@@ -159,24 +159,24 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<ArcVmExtendedLocation> extendedLocation = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            ArcVmExtendedLocation extendedLocation = default;
+            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<VirtualMachineInstancePropertiesHardwareProfile> hardwareProfile = default;
-            Optional<VirtualMachineInstancePropertiesNetworkProfile> networkProfile = default;
-            Optional<VirtualMachineInstancePropertiesOSProfile> osProfile = default;
-            Optional<VirtualMachineInstancePropertiesSecurityProfile> securityProfile = default;
-            Optional<VirtualMachineInstancePropertiesStorageProfile> storageProfile = default;
-            Optional<HttpProxyConfiguration> httpProxyConfig = default;
-            Optional<ProvisioningStateEnum> provisioningState = default;
-            Optional<VirtualMachineInstanceView> instanceView = default;
-            Optional<VirtualMachineInstanceStatus> status = default;
-            Optional<GuestAgentInstallStatus> guestAgentInstallStatus = default;
-            Optional<string> vmId = default;
-            Optional<string> resourceUid = default;
+            SystemData systemData = default;
+            VirtualMachineInstancePropertiesHardwareProfile hardwareProfile = default;
+            VirtualMachineInstancePropertiesNetworkProfile networkProfile = default;
+            VirtualMachineInstancePropertiesOSProfile osProfile = default;
+            VirtualMachineInstancePropertiesSecurityProfile securityProfile = default;
+            VirtualMachineInstancePropertiesStorageProfile storageProfile = default;
+            HttpProxyConfiguration httpProxyConfig = default;
+            ProvisioningStateEnum? provisioningState = default;
+            VirtualMachineInstanceView instanceView = default;
+            VirtualMachineInstanceStatus status = default;
+            GuestAgentInstallStatus guestAgentInstallStatus = default;
+            string vmId = default;
+            string resourceUid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -341,7 +341,26 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstanceData(id, name, type, systemData.Value, extendedLocation.Value, identity, hardwareProfile.Value, networkProfile.Value, osProfile.Value, securityProfile.Value, storageProfile.Value, httpProxyConfig.Value, Optional.ToNullable(provisioningState), instanceView.Value, status.Value, guestAgentInstallStatus.Value, vmId.Value, resourceUid.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstanceData(
+                id,
+                name,
+                type,
+                systemData,
+                extendedLocation,
+                identity,
+                hardwareProfile,
+                networkProfile,
+                osProfile,
+                securityProfile,
+                storageProfile,
+                httpProxyConfig,
+                provisioningState,
+                instanceView,
+                status,
+                guestAgentInstallStatus,
+                vmId,
+                resourceUid,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstanceData>.Write(ModelReaderWriterOptions options)

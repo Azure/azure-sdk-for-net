@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,34 +48,34 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(OrderId))
+            if (options.Format != "W" && OrderId != null)
             {
                 writer.WritePropertyName("orderId"u8);
                 writer.WriteStringValue(OrderId);
             }
-            if (Optional.IsDefined(ContactInformation))
+            if (ContactInformation != null)
             {
                 writer.WritePropertyName("contactInformation"u8);
                 writer.WriteObjectValue(ContactInformation);
             }
-            if (Optional.IsDefined(ShippingAddress))
+            if (ShippingAddress != null)
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentStatus))
+            if (options.Format != "W" && CurrentStatus != null)
             {
                 writer.WritePropertyName("currentStatus"u8);
                 writer.WriteObjectValue(CurrentStatus);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OrderHistory))
+            if (options.Format != "W" && !(OrderHistory is ChangeTrackingList<DataBoxEdgeOrderStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("orderHistory"u8);
                 writer.WriteStartArray();
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
+            if (options.Format != "W" && SerialNumber != null)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DeliveryTrackingInfo))
+            if (options.Format != "W" && !(DeliveryTrackingInfo is ChangeTrackingList<DataBoxEdgeTrackingInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("deliveryTrackingInfo"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReturnTrackingInfo))
+            if (options.Format != "W" && !(ReturnTrackingInfo is ChangeTrackingList<DataBoxEdgeTrackingInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("returnTrackingInfo"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ShipmentType))
+            if (ShipmentType.HasValue)
             {
                 writer.WritePropertyName("shipmentType"u8);
                 writer.WriteStringValue(ShipmentType.Value.ToString());
@@ -154,20 +154,20 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> orderId = default;
-            Optional<DataBoxEdgeContactDetails> contactInformation = default;
-            Optional<DataBoxEdgeShippingAddress> shippingAddress = default;
-            Optional<DataBoxEdgeOrderStatus> currentStatus = default;
-            Optional<IReadOnlyList<DataBoxEdgeOrderStatus>> orderHistory = default;
-            Optional<string> serialNumber = default;
-            Optional<IReadOnlyList<DataBoxEdgeTrackingInfo>> deliveryTrackingInfo = default;
-            Optional<IReadOnlyList<DataBoxEdgeTrackingInfo>> returnTrackingInfo = default;
-            Optional<DataBoxEdgeShipmentType> shipmentType = default;
+            SystemData systemData = default;
+            string orderId = default;
+            DataBoxEdgeContactDetails contactInformation = default;
+            DataBoxEdgeShippingAddress shippingAddress = default;
+            DataBoxEdgeOrderStatus currentStatus = default;
+            IReadOnlyList<DataBoxEdgeOrderStatus> orderHistory = default;
+            string serialNumber = default;
+            IReadOnlyList<DataBoxEdgeTrackingInfo> deliveryTrackingInfo = default;
+            IReadOnlyList<DataBoxEdgeTrackingInfo> returnTrackingInfo = default;
+            DataBoxEdgeShipmentType? shipmentType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -307,7 +307,22 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeOrderData(id, name, type, systemData.Value, kind.Value, orderId.Value, contactInformation.Value, shippingAddress.Value, currentStatus.Value, Optional.ToList(orderHistory), serialNumber.Value, Optional.ToList(deliveryTrackingInfo), Optional.ToList(returnTrackingInfo), Optional.ToNullable(shipmentType), serializedAdditionalRawData);
+            return new DataBoxEdgeOrderData(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                orderId,
+                contactInformation,
+                shippingAddress,
+                currentStatus,
+                orderHistory ?? new ChangeTrackingList<DataBoxEdgeOrderStatus>(),
+                serialNumber,
+                deliveryTrackingInfo ?? new ChangeTrackingList<DataBoxEdgeTrackingInfo>(),
+                returnTrackingInfo ?? new ChangeTrackingList<DataBoxEdgeTrackingInfo>(),
+                shipmentType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeOrderData>.Write(ModelReaderWriterOptions options)

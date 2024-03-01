@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DaysOfTheMonth))
+            if (!(DaysOfTheMonth is ChangeTrackingList<BackupDay> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("daysOfTheMonth"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<BackupDay>> daysOfTheMonth = default;
+            IList<BackupDay> daysOfTheMonth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DailyRetentionFormat(Optional.ToList(daysOfTheMonth), serializedAdditionalRawData);
+            return new DailyRetentionFormat(daysOfTheMonth ?? new ChangeTrackingList<BackupDay>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DailyRetentionFormat>.Write(ModelReaderWriterOptions options)

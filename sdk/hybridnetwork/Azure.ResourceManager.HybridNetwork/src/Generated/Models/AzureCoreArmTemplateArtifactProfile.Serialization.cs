@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TemplateArtifactProfile))
+            if (TemplateArtifactProfile != null)
             {
                 writer.WritePropertyName("templateArtifactProfile"u8);
                 writer.WriteObjectValue(TemplateArtifactProfile);
             }
-            if (Optional.IsDefined(ArtifactStore))
+            if (ArtifactStore != null)
             {
                 writer.WritePropertyName("artifactStore"u8);
                 JsonSerializer.Serialize(writer, ArtifactStore);
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ArmTemplateArtifactProfile> templateArtifactProfile = default;
-            Optional<WritableSubResource> artifactStore = default;
+            ArmTemplateArtifactProfile templateArtifactProfile = default;
+            WritableSubResource artifactStore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCoreArmTemplateArtifactProfile(artifactStore, serializedAdditionalRawData, templateArtifactProfile.Value);
+            return new AzureCoreArmTemplateArtifactProfile(artifactStore, serializedAdditionalRawData, templateArtifactProfile);
         }
 
         BinaryData IPersistableModel<AzureCoreArmTemplateArtifactProfile>.Write(ModelReaderWriterOptions options)

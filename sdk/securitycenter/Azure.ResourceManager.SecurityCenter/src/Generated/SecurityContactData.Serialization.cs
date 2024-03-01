@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Emails))
+            if (Emails != null)
             {
                 writer.WritePropertyName("emails"u8);
                 writer.WriteStringValue(Emails);
             }
-            if (Optional.IsDefined(Phone))
+            if (Phone != null)
             {
                 writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);
             }
-            if (Optional.IsDefined(AlertNotifications))
+            if (AlertNotifications != null)
             {
                 writer.WritePropertyName("alertNotifications"u8);
                 writer.WriteObjectValue(AlertNotifications);
             }
-            if (Optional.IsDefined(NotificationsByRole))
+            if (NotificationsByRole != null)
             {
                 writer.WritePropertyName("notificationsByRole"u8);
                 writer.WriteObjectValue(NotificationsByRole);
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> emails = default;
-            Optional<string> phone = default;
-            Optional<SecurityContactPropertiesAlertNotifications> alertNotifications = default;
-            Optional<SecurityContactPropertiesNotificationsByRole> notificationsByRole = default;
+            SystemData systemData = default;
+            string emails = default;
+            string phone = default;
+            SecurityContactPropertiesAlertNotifications alertNotifications = default;
+            SecurityContactPropertiesNotificationsByRole notificationsByRole = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityContactData(id, name, type, systemData.Value, emails.Value, phone.Value, alertNotifications.Value, notificationsByRole.Value, serializedAdditionalRawData);
+            return new SecurityContactData(
+                id,
+                name,
+                type,
+                systemData,
+                emails,
+                phone,
+                alertNotifications,
+                notificationsByRole,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityContactData>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LivenessRoute))
+            if (LivenessRoute != null)
             {
                 writer.WritePropertyName("livenessRoute"u8);
                 writer.WriteObjectValue(LivenessRoute);
             }
-            if (Optional.IsDefined(ReadinessRoute))
+            if (ReadinessRoute != null)
             {
                 writer.WritePropertyName("readinessRoute"u8);
                 writer.WriteObjectValue(ReadinessRoute);
             }
-            if (Optional.IsDefined(ScoringRoute))
+            if (ScoringRoute != null)
             {
                 writer.WritePropertyName("scoringRoute"u8);
                 writer.WriteObjectValue(ScoringRoute);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningInferenceContainerRoute> livenessRoute = default;
-            Optional<MachineLearningInferenceContainerRoute> readinessRoute = default;
-            Optional<MachineLearningInferenceContainerRoute> scoringRoute = default;
+            MachineLearningInferenceContainerRoute livenessRoute = default;
+            MachineLearningInferenceContainerRoute readinessRoute = default;
+            MachineLearningInferenceContainerRoute scoringRoute = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningInferenceContainerProperties(livenessRoute.Value, readinessRoute.Value, scoringRoute.Value, serializedAdditionalRawData);
+            return new MachineLearningInferenceContainerProperties(livenessRoute, readinessRoute, scoringRoute, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningInferenceContainerProperties>.Write(ModelReaderWriterOptions options)

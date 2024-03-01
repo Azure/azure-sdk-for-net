@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AssignedUser))
+            if (AssignedUser != null)
             {
                 writer.WritePropertyName("assignedUser"u8);
                 writer.WriteObjectValue(AssignedUser);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningComputeInstanceAssignedUser> assignedUser = default;
+            MachineLearningComputeInstanceAssignedUser assignedUser = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PersonalComputeInstanceSettings(assignedUser.Value, serializedAdditionalRawData);
+            return new PersonalComputeInstanceSettings(assignedUser, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PersonalComputeInstanceSettings>.Write(ModelReaderWriterOptions options)
