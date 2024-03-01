@@ -69,17 +69,20 @@ namespace Azure.Core.Pipeline
             protected internal override void AddHeader(string name, string value)
                 => _pipelineRequest.Headers.Add(name, value);
 
-            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
-                => _pipelineRequest.Headers.TryGetValue(name, out value);
-
-            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
-                => _pipelineRequest.Headers.TryGetValues(name, out values);
-
             protected internal override bool ContainsHeader(string name)
                 => _pipelineRequest.Headers.TryGetValue(name, out _);
 
             protected internal override bool RemoveHeader(string name)
                 => _pipelineRequest.Headers.Remove(name);
+
+            protected internal override void SetHeader(string name, string value)
+                => _pipelineRequest.Headers.Set(name, value);
+
+            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
+                => _pipelineRequest.Headers.TryGetValue(name, out value);
+
+            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
+                => _pipelineRequest.Headers.TryGetValues(name, out values);
 
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
             {
