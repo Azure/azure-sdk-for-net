@@ -101,7 +101,7 @@ namespace Azure.Core.Pipeline
             {
                 if (message.HasResponse)
                 {
-                    throw new RequestFailedException(message.Response, innerException: e.InnerException);
+                    throw await RequestFailedException.CreateAsync(message.Response, innerException: e.InnerException).ConfigureAwait(false);
                 }
                 else
                 {
