@@ -81,8 +81,6 @@ namespace Azure.Core
             RehydrationToken? rehydrationToken,
             string? apiVersionOverride = null)
         {
-            Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
-
             var lroDetails = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json).ToObjectFromJson<Dictionary<string, string>>();
             if (!Uri.TryCreate(lroDetails["initialUri"], UriKind.Absolute, out var startRequestUri))
             {
@@ -132,13 +130,6 @@ namespace Azure.Core
             OperationFinalStateVia finalStateVia,
             string? apiVersion)
         {
-            Argument.AssertNotNull(pipeline, nameof(pipeline));
-            Argument.AssertNotNull(requestMethod, nameof(requestMethod));
-            Argument.AssertNotNull(startRequestUri, nameof(startRequestUri));
-            Argument.AssertNotNull(nextRequestUri, nameof(nextRequestUri));
-            Argument.AssertNotNull(headerSource, nameof(headerSource));
-            Argument.AssertNotNull(finalStateVia, nameof(finalStateVia));
-
             _requestMethod = requestMethod;
             _headerSource = headerSource;
             _startRequestUri = startRequestUri;
