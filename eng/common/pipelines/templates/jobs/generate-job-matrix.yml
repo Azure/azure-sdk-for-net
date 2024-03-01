@@ -46,13 +46,14 @@ parameters:
 - name: Pools
   type: object
   default:
-    - name: LinuxPool
+    - name: Linux
+      filter: .*Linux.*Pool$
       os: linux
-    - name: LinuxNextPool
-      os: linux
-    - name: WindowsPool
+    - name: Windows
+      filter: .*Windows.*Pool$
       os: windows
-    - name: MacPool
+    - name: Mac
+      filter: .*MacPool$
       os: macOS
 
 jobs:
@@ -94,7 +95,7 @@ jobs:
                 -ConfigPath ${{ config.Path }}
                 -Selection ${{ config.Selection }}
                 -DisplayNameFilter '$(displayNameFilter)'
-                -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=^$', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}', 'Pool=.*${{ pool.name }}$'
+                -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=^$', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}', 'Pool=${{ pool.filter }}'
                 -Replace '${{ join(''',''', parameters.MatrixReplace) }}'
                 -NonSparseParameters '${{ join(''',''', config.NonSparseParameters) }}'
             displayName: Create ${{ pool.name }} Matrix ${{ config.Name }}
@@ -109,7 +110,7 @@ jobs:
                 -ConfigPath ${{ config.Path }}
                 -Selection ${{ config.Selection }}
                 -DisplayNameFilter '$(displayNameFilter)'
-                -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=^$', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}', 'Pool=.*${{ pool.name }}$'
+                -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=^$', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}', 'Pool=${{ pool.filter }}'
                 -NonSparseParameters '${{ join(''',''', config.NonSparseParameters) }}'
             displayName: Create ${{ pool.name }} Container Matrix ${{ config.Name }}
             name: container_job_matrix_${{ config.Name }}_${{ pool.name }}
