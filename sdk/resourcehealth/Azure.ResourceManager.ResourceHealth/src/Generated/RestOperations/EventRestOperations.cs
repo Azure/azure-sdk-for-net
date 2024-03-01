@@ -36,6 +36,26 @@ namespace Azure.ResourceManager.ResourceHealth
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetBySubscriptionIdAndTrackingIdRequestUri(string subscriptionId, string eventTrackingId, string filter, string queryStartTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ResourceHealth/events/", false);
+            uri.AppendPath(eventTrackingId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (queryStartTime != null)
+            {
+                uri.AppendQuery("queryStartTime", queryStartTime, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetBySubscriptionIdAndTrackingIdRequest(string subscriptionId, string eventTrackingId, string filter, string queryStartTime)
         {
             var message = _pipeline.CreateMessage();
@@ -152,6 +172,19 @@ namespace Azure.ResourceManager.ResourceHealth
             }
         }
 
+        internal RequestUriBuilder CreateFetchDetailsBySubscriptionIdAndTrackingIdRequestUri(string subscriptionId, string eventTrackingId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ResourceHealth/events/", false);
+            uri.AppendPath(eventTrackingId, true);
+            uri.AppendPath("/fetchEventDetails", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateFetchDetailsBySubscriptionIdAndTrackingIdRequest(string subscriptionId, string eventTrackingId)
         {
             var message = _pipeline.CreateMessage();
@@ -253,6 +286,24 @@ namespace Azure.ResourceManager.ResourceHealth
             }
         }
 
+        internal RequestUriBuilder CreateGetByTenantIdAndTrackingIdRequestUri(string eventTrackingId, string filter, string queryStartTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.ResourceHealth/events/", false);
+            uri.AppendPath(eventTrackingId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (queryStartTime != null)
+            {
+                uri.AppendQuery("queryStartTime", queryStartTime, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetByTenantIdAndTrackingIdRequest(string eventTrackingId, string filter, string queryStartTime)
         {
             var message = _pipeline.CreateMessage();
@@ -347,6 +398,17 @@ namespace Azure.ResourceManager.ResourceHealth
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateFetchDetailsByTenantIdAndTrackingIdRequestUri(string eventTrackingId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.ResourceHealth/events/", false);
+            uri.AppendPath(eventTrackingId, true);
+            uri.AppendPath("/fetchEventDetails", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateFetchDetailsByTenantIdAndTrackingIdRequest(string eventTrackingId)

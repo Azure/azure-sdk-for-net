@@ -206,7 +206,9 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _serviceBusNetworkRuleSetNamespacesRestClient.CreateOrUpdateNetworkRuleSetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceBusArmOperation<ServiceBusNetworkRuleSetResource>(Response.FromValue(new ServiceBusNetworkRuleSetResource(Client, response), response.GetRawResponse()));
+                var uri = _serviceBusNetworkRuleSetNamespacesRestClient.CreateCreateOrUpdateNetworkRuleSetRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ServiceBusArmOperation<ServiceBusNetworkRuleSetResource>(Response.FromValue(new ServiceBusNetworkRuleSetResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -255,7 +257,9 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _serviceBusNetworkRuleSetNamespacesRestClient.CreateOrUpdateNetworkRuleSet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new ServiceBusArmOperation<ServiceBusNetworkRuleSetResource>(Response.FromValue(new ServiceBusNetworkRuleSetResource(Client, response), response.GetRawResponse()));
+                var uri = _serviceBusNetworkRuleSetNamespacesRestClient.CreateCreateOrUpdateNetworkRuleSetRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ServiceBusArmOperation<ServiceBusNetworkRuleSetResource>(Response.FromValue(new ServiceBusNetworkRuleSetResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

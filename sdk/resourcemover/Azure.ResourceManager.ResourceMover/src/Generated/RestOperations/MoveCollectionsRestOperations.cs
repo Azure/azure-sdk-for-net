@@ -37,6 +37,20 @@ namespace Azure.ResourceManager.ResourceMover
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverResourceSetData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverResourceSetData data)
         {
             var message = _pipeline.CreateMessage();
@@ -173,6 +187,20 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverResourceSetPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverResourceSetPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -307,6 +335,20 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName)
         {
             var message = _pipeline.CreateMessage();
@@ -431,6 +473,21 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
+        internal RequestUriBuilder CreatePrepareRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverPrepareContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/prepare", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePrepareRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverPrepareContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -551,6 +608,21 @@ namespace Azure.ResourceManager.ResourceMover
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateInitiateMoveRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverResourceMoveContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/initiateMove", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateInitiateMoveRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverResourceMoveContent content)
@@ -675,6 +747,21 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
+        internal RequestUriBuilder CreateCommitRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverCommitContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/commit", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCommitRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverCommitContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -795,6 +882,21 @@ namespace Azure.ResourceManager.ResourceMover
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDiscardRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverDiscardContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/discard", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDiscardRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverDiscardContent content)
@@ -919,6 +1021,21 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
+        internal RequestUriBuilder CreateResolveDependenciesRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/resolveDependencies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateResolveDependenciesRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName)
         {
             var message = _pipeline.CreateMessage();
@@ -1030,6 +1147,21 @@ namespace Azure.ResourceManager.ResourceMover
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateBulkRemoveRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverBulkRemoveContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/bulkRemove", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateBulkRemoveRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverBulkRemoveContent content)
@@ -1154,6 +1286,17 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
+        internal RequestUriBuilder CreateListMoveCollectionsBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListMoveCollectionsBySubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -1233,6 +1376,19 @@ namespace Azure.ResourceManager.ResourceMover
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMoveCollectionsByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListMoveCollectionsByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -1334,6 +1490,22 @@ namespace Azure.ResourceManager.ResourceMover
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequiredForRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, ResourceIdentifier sourceId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/requiredFor", false);
+            uri.AppendQuery("sourceId", sourceId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequiredForRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, ResourceIdentifier sourceId)
@@ -1468,6 +1640,14 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
+        internal RequestUriBuilder CreateListMoveCollectionsBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListMoveCollectionsBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -1554,6 +1734,14 @@ namespace Azure.ResourceManager.ResourceMover
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMoveCollectionsByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListMoveCollectionsByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)

@@ -290,7 +290,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _governanceRuleRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(new GovernanceRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _governanceRuleRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(new GovernanceRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -339,7 +341,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _governanceRuleRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(new GovernanceRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _governanceRuleRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(new GovernanceRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

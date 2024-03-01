@@ -100,7 +100,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerJobTargetGroupJobTargetGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerJobTargetGroupResource>(Response.FromValue(new SqlServerJobTargetGroupResource(Client, response), response.GetRawResponse()));
+                var uri = _sqlServerJobTargetGroupJobTargetGroupsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SqlArmOperation<SqlServerJobTargetGroupResource>(Response.FromValue(new SqlServerJobTargetGroupResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -159,7 +161,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerJobTargetGroupJobTargetGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerJobTargetGroupResource>(Response.FromValue(new SqlServerJobTargetGroupResource(Client, response), response.GetRawResponse()));
+                var uri = _sqlServerJobTargetGroupJobTargetGroupsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SqlArmOperation<SqlServerJobTargetGroupResource>(Response.FromValue(new SqlServerJobTargetGroupResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

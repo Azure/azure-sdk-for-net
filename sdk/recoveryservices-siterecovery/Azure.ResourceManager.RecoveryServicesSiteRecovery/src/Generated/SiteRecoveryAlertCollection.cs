@@ -107,7 +107,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _siteRecoveryAlertReplicationAlertSettingsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, alertSettingName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryAlertResource>(Response.FromValue(new SiteRecoveryAlertResource(Client, response), response.GetRawResponse()));
+                var uri = _siteRecoveryAlertReplicationAlertSettingsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, alertSettingName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryAlertResource>(Response.FromValue(new SiteRecoveryAlertResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -166,7 +168,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _siteRecoveryAlertReplicationAlertSettingsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, alertSettingName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryAlertResource>(Response.FromValue(new SiteRecoveryAlertResource(Client, response), response.GetRawResponse()));
+                var uri = _siteRecoveryAlertReplicationAlertSettingsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, alertSettingName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryAlertResource>(Response.FromValue(new SiteRecoveryAlertResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
