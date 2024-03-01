@@ -31,7 +31,7 @@ namespace Azure.Provisioning.Storage
                 resourceType: ResourceTypeName,
                 location: Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 sku: new StorageSku(sku),
-                kind: StorageKind.StorageV2))
+                kind: kind))
         {
             AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
