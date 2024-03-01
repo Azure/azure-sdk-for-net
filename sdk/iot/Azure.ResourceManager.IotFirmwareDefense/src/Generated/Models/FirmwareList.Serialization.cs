@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<FirmwareData> collection && collection.IsUndefined))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<IotFirmwareData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            IReadOnlyList<FirmwareData> value = default;
+            IReadOnlyList<IotFirmwareData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    List<FirmwareData> array = new List<FirmwareData>();
+                    List<IotFirmwareData> array = new List<IotFirmwareData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirmwareData.DeserializeFirmwareData(item, options));
+                        array.Add(IotFirmwareData.DeserializeIotFirmwareData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareList(value ?? new ChangeTrackingList<FirmwareData>(), nextLink, serializedAdditionalRawData);
+            return new FirmwareList(value ?? new ChangeTrackingList<IotFirmwareData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareList>.Write(ModelReaderWriterOptions options)

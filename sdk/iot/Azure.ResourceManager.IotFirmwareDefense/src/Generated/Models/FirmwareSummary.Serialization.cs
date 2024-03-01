@@ -110,6 +110,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("rootFileSystems");
                 }
             }
+            writer.WritePropertyName("summaryType"u8);
+            writer.WriteStringValue(SummaryType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -155,6 +157,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             long? binaryCount = default;
             long? analysisTimeSeconds = default;
             long? rootFileSystems = default;
+            FirmwareAnalysisSummaryType summaryType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,6 +232,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     rootFileSystems = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("summaryType"u8))
+                {
+                    summaryType = new FirmwareAnalysisSummaryType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -236,14 +244,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FirmwareSummary(
+                summaryType,
+                serializedAdditionalRawData,
                 extractedSize,
                 fileSize,
                 extractedFileCount,
                 componentCount,
                 binaryCount,
                 analysisTimeSeconds,
-                rootFileSystems,
-                serializedAdditionalRawData);
+                rootFileSystems);
         }
 
         BinaryData IPersistableModel<FirmwareSummary>.Write(ModelReaderWriterOptions options)
