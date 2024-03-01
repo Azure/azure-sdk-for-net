@@ -519,12 +519,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         /// If function execution succeeds when the listener is shutting down, we should not checkpoint.
         /// </summary>
         [Test]
-        public async Task ProcessEvents_Succeeds_ListenerStopping_DoesNotCheckpoint()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ProcessEvents_ListenerStopping_DoesNotCheckpoint(bool executionResult)
         {
             var partitionContext = EventHubTests.GetPartitionContext();
             var options = new EventHubOptions();
 
-            using var listenerRunningCancellationSource = new CancellationTokenSource();
+            using var listenerCancellationSource = new CancellationTokenSource();
 
             var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
             processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
@@ -536,65 +538,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             for (int i = 0; i < 10; i++)
             {
                 events.Add(new EventData(new byte[0]));
-                results.Add(new FunctionResult(true));
+                results.Add(new FunctionResult(executionResult));
             }
 
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             int execution = 0;
             var loggerMock = new Mock<ILogger>();
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true, listenerRunningCancellationSource.Token, default);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true, listenerCancellationSource.Token, default);
 
             executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
             {
                 if (execution == 0)
                 {
-                    listenerRunningCancellationSource.Cancel();
-                }
-                var result = results[execution++];
-                return result;
-            });
-
-            await eventProcessor.ProcessEventsAsync(partitionContext, events);
-
-            processor.Verify(
-                p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
-                Times.Never);
-        }
-
-        /// <summary>
-        /// If function execution fails when the listener is shutting down, we should not checkpoint.
-        /// </summary>
-        [Test]
-        public async Task ProcessEvents_Fails_ListenerStopping_DoesNotCheckpoint()
-        {
-            var partitionContext = EventHubTests.GetPartitionContext();
-            var options = new EventHubOptions();
-
-            using var listenerRunningCancellationSource = new CancellationTokenSource();
-
-            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
-            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
-            processor.Setup(p => p.GetLastReadCheckpoint(It.IsAny<string>())).Returns(default(CheckpointInfo));
-            partitionContext.ProcessorHost = processor.Object;
-
-            List<EventData> events = new List<EventData>();
-            List<FunctionResult> results = new List<FunctionResult>();
-            for (int i = 0; i < 10; i++)
-            {
-                events.Add(new EventData(new byte[0]));
-                results.Add(new FunctionResult(false));
-            }
-
-            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
-            int execution = 0;
-            var loggerMock = new Mock<ILogger>();
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true, listenerRunningCancellationSource.Token, default);
-
-            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
-            {
-                if (execution == 0)
-                {
-                    listenerRunningCancellationSource.Cancel();
+                    listenerCancellationSource.Cancel();
                 }
                 var result = results[execution++];
                 return result;
