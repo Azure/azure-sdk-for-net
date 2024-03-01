@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<Uri> endpointUri = default;
+            Uri endpointUri = default;
             IList<ResourceTypeExtensionCategory> extensionCategories = default;
-            Optional<TimeSpan> timeout = default;
+            TimeSpan? timeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeExtension(endpointUri.Value, extensionCategories ?? new ChangeTrackingList<ResourceTypeExtensionCategory>(), Optional.ToNullable(timeout), serializedAdditionalRawData);
+            return new ResourceTypeExtension(endpointUri, extensionCategories ?? new ChangeTrackingList<ResourceTypeExtensionCategory>(), timeout, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeExtension>.Write(ModelReaderWriterOptions options)

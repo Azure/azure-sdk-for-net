@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> kerberosKeytab = default;
+            string kerberosKeytab = default;
             SecretsType secretsType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KerberosKeytabSecrets(secretsType, serializedAdditionalRawData, kerberosKeytab.Value);
+            return new KerberosKeytabSecrets(secretsType, serializedAdditionalRawData, kerberosKeytab);
         }
 
         BinaryData IPersistableModel<KerberosKeytabSecrets>.Write(ModelReaderWriterOptions options)

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> certificateData = default;
+            string certificateData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightSshPublicKey(certificateData.Value, serializedAdditionalRawData);
+            return new HDInsightSshPublicKey(certificateData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightSshPublicKey>.Write(ModelReaderWriterOptions options)

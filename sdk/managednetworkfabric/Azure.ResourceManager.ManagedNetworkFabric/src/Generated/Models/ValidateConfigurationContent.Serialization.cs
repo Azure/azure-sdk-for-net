@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<NetworkFabricValidateAction> validateAction = default;
+            NetworkFabricValidateAction? validateAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ValidateConfigurationContent(Optional.ToNullable(validateAction), serializedAdditionalRawData);
+            return new ValidateConfigurationContent(validateAction, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ValidateConfigurationContent>.Write(ModelReaderWriterOptions options)

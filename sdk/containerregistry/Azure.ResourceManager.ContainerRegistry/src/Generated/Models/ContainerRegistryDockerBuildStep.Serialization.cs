@@ -124,15 +124,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             IList<string> imageNames = default;
-            Optional<bool> isPushEnabled = default;
-            Optional<bool> noCache = default;
+            bool? isPushEnabled = default;
+            bool? noCache = default;
             string dockerFilePath = default;
-            Optional<string> target = default;
+            string target = default;
             IList<ContainerRegistryRunArgument> arguments = default;
             ContainerRegistryTaskStepType type = default;
             IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies = default;
-            Optional<string> contextPath = default;
-            Optional<string> contextAccessToken = default;
+            string contextPath = default;
+            string contextAccessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryDockerBuildStep(
                 type,
                 baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryBaseImageDependency>(),
-                contextPath.Value,
-                contextAccessToken.Value,
+                contextPath,
+                contextAccessToken,
                 serializedAdditionalRawData,
                 imageNames ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(isPushEnabled),
-                Optional.ToNullable(noCache),
+                isPushEnabled,
+                noCache,
                 dockerFilePath,
-                target.Value,
+                target,
                 arguments ?? new ChangeTrackingList<ContainerRegistryRunArgument>());
         }
 

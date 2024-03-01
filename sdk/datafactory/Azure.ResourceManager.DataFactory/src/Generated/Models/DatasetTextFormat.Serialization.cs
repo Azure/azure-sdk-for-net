@@ -119,18 +119,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> columnDelimiter = default;
-            Optional<DataFactoryElement<string>> rowDelimiter = default;
-            Optional<DataFactoryElement<string>> escapeChar = default;
-            Optional<DataFactoryElement<string>> quoteChar = default;
-            Optional<DataFactoryElement<string>> nullValue = default;
-            Optional<DataFactoryElement<string>> encodingName = default;
-            Optional<DataFactoryElement<bool>> treatEmptyAsNull = default;
-            Optional<DataFactoryElement<int>> skipLineCount = default;
-            Optional<DataFactoryElement<bool>> firstRowAsHeader = default;
+            DataFactoryElement<string> columnDelimiter = default;
+            DataFactoryElement<string> rowDelimiter = default;
+            DataFactoryElement<string> escapeChar = default;
+            DataFactoryElement<string> quoteChar = default;
+            DataFactoryElement<string> nullValue = default;
+            DataFactoryElement<string> encodingName = default;
+            DataFactoryElement<bool> treatEmptyAsNull = default;
+            DataFactoryElement<int> skipLineCount = default;
+            DataFactoryElement<bool> firstRowAsHeader = default;
             string type = default;
-            Optional<DataFactoryElement<string>> serializer = default;
-            Optional<DataFactoryElement<string>> deserializer = default;
+            DataFactoryElement<string> serializer = default;
+            DataFactoryElement<string> deserializer = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,18 +244,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DatasetTextFormat(
                 type,
-                serializer.Value,
-                deserializer.Value,
+                serializer,
+                deserializer,
                 additionalProperties,
-                columnDelimiter.Value,
-                rowDelimiter.Value,
-                escapeChar.Value,
-                quoteChar.Value,
-                nullValue.Value,
-                encodingName.Value,
-                treatEmptyAsNull.Value,
-                skipLineCount.Value,
-                firstRowAsHeader.Value);
+                columnDelimiter,
+                rowDelimiter,
+                escapeChar,
+                quoteChar,
+                nullValue,
+                encodingName,
+                treatEmptyAsNull,
+                skipLineCount,
+                firstRowAsHeader);
         }
 
         BinaryData IPersistableModel<DatasetTextFormat>.Write(ModelReaderWriterOptions options)

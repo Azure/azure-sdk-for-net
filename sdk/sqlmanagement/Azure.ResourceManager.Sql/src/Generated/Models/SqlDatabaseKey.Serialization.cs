@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlDatabaseKeyType> type = default;
-            Optional<string> thumbprint = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<string> subregion = default;
+            SqlDatabaseKeyType? type = default;
+            string thumbprint = default;
+            DateTimeOffset? creationDate = default;
+            string subregion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDatabaseKey(Optional.ToNullable(type), thumbprint.Value, Optional.ToNullable(creationDate), subregion.Value, serializedAdditionalRawData);
+            return new SqlDatabaseKey(type, thumbprint, creationDate, subregion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDatabaseKey>.Write(ModelReaderWriterOptions options)

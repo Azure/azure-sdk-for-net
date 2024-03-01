@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryLinkedServiceReference linkedServiceName = default;
-            Optional<DataFactoryElement<string>> path = default;
+            DataFactoryElement<string> path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogLocationSettings(linkedServiceName, path.Value, serializedAdditionalRawData);
+            return new LogLocationSettings(linkedServiceName, path, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogLocationSettings>.Write(ModelReaderWriterOptions options)

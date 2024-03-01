@@ -164,18 +164,18 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<AddressSpace> vpnClientAddressPool = default;
+            AddressSpace vpnClientAddressPool = default;
             IList<VpnClientRootCertificate> vpnClientRootCertificates = default;
             IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates = default;
             IList<VpnClientProtocol> vpnClientProtocols = default;
             IList<VpnAuthenticationType> vpnAuthenticationTypes = default;
             IList<IPsecPolicy> vpnClientIPsecPolicies = default;
-            Optional<string> radiusServerAddress = default;
-            Optional<string> radiusServerSecret = default;
+            string radiusServerAddress = default;
+            string radiusServerSecret = default;
             IList<RadiusServer> radiusServers = default;
-            Optional<string> aadTenant = default;
-            Optional<string> aadAudience = default;
-            Optional<string> aadIssuer = default;
+            string aadTenant = default;
+            string aadAudience = default;
+            string aadIssuer = default;
             IList<VngClientConnectionConfiguration> vngClientConnectionConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -320,18 +320,18 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VpnClientConfiguration(
-                vpnClientAddressPool.Value,
+                vpnClientAddressPool,
                 vpnClientRootCertificates ?? new ChangeTrackingList<VpnClientRootCertificate>(),
                 vpnClientRevokedCertificates ?? new ChangeTrackingList<VpnClientRevokedCertificate>(),
                 vpnClientProtocols ?? new ChangeTrackingList<VpnClientProtocol>(),
                 vpnAuthenticationTypes ?? new ChangeTrackingList<VpnAuthenticationType>(),
                 vpnClientIPsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
-                radiusServerAddress.Value,
-                radiusServerSecret.Value,
+                radiusServerAddress,
+                radiusServerSecret,
                 radiusServers ?? new ChangeTrackingList<RadiusServer>(),
-                aadTenant.Value,
-                aadAudience.Value,
-                aadIssuer.Value,
+                aadTenant,
+                aadAudience,
+                aadIssuer,
                 vngClientConnectionConfigurations ?? new ChangeTrackingList<VngClientConnectionConfiguration>(),
                 serializedAdditionalRawData);
         }

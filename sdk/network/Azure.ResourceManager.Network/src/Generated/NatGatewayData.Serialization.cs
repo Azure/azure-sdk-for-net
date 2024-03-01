@@ -166,20 +166,20 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<NatGatewaySku> sku = default;
+            NatGatewaySku sku = default;
             IList<string> zones = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<int> idleTimeoutInMinutes = default;
+            int? idleTimeoutInMinutes = default;
             IList<WritableSubResource> publicIPAddresses = default;
             IList<WritableSubResource> publicIPPrefixes = default;
             IReadOnlyList<WritableSubResource> subnets = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -350,21 +350,21 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NatGatewayData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                sku.Value,
+                sku,
                 zones ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(etag),
-                Optional.ToNullable(idleTimeoutInMinutes),
+                etag,
+                idleTimeoutInMinutes,
                 publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>(),
                 publicIPPrefixes ?? new ChangeTrackingList<WritableSubResource>(),
                 subnets ?? new ChangeTrackingList<WritableSubResource>(),
-                Optional.ToNullable(resourceGuid),
-                Optional.ToNullable(provisioningState));
+                resourceGuid,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<NatGatewayData>.Write(ModelReaderWriterOptions options)

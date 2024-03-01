@@ -121,15 +121,15 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> fetchAaddsResource = default;
-            Optional<AzureLocation> location = default;
+            string name = default;
+            string type = default;
+            Guid? tenantId = default;
+            bool? fetchAaddsResource = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IList<string> zones = default;
-            Optional<HDInsightClusterCreateOrUpdateProperties> properties = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            HDInsightClusterCreateOrUpdateProperties properties = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,16 +224,16 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HDInsightClusterCreationValidateContent(
-                Optional.ToNullable(location),
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 zones ?? new ChangeTrackingList<string>(),
-                properties.Value,
+                properties,
                 identity,
                 serializedAdditionalRawData,
-                name.Value,
-                type.Value,
-                Optional.ToNullable(tenantId),
-                Optional.ToNullable(fetchAaddsResource));
+                name,
+                type,
+                tenantId,
+                fetchAaddsResource);
         }
 
         BinaryData IPersistableModel<HDInsightClusterCreationValidateContent>.Write(ModelReaderWriterOptions options)

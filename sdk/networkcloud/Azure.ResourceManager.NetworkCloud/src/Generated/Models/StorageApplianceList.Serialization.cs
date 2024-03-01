@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<NetworkCloudStorageApplianceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageApplianceList(nextLink.Value, value ?? new ChangeTrackingList<NetworkCloudStorageApplianceData>(), serializedAdditionalRawData);
+            return new StorageApplianceList(nextLink, value ?? new ChangeTrackingList<NetworkCloudStorageApplianceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageApplianceList>.Write(ModelReaderWriterOptions options)

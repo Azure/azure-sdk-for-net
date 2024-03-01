@@ -103,14 +103,14 @@ namespace Azure.ResourceManager.Monitor.Models
             DynamicThresholdOperator @operator = default;
             DynamicThresholdSensitivity alertSensitivity = default;
             DynamicThresholdFailingPeriods failingPeriods = default;
-            Optional<DateTimeOffset> ignoreDataBefore = default;
+            DateTimeOffset? ignoreDataBefore = default;
             CriterionType criterionType = default;
             string name = default;
             string metricName = default;
-            Optional<string> metricNamespace = default;
+            string metricNamespace = default;
             MetricCriteriaTimeAggregationType timeAggregation = default;
             IList<MetricDimension> dimensions = default;
-            Optional<bool> skipMetricValidation = default;
+            bool? skipMetricValidation = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,15 +194,15 @@ namespace Azure.ResourceManager.Monitor.Models
                 criterionType,
                 name,
                 metricName,
-                metricNamespace.Value,
+                metricNamespace,
                 timeAggregation,
                 dimensions ?? new ChangeTrackingList<MetricDimension>(),
-                Optional.ToNullable(skipMetricValidation),
+                skipMetricValidation,
                 additionalProperties,
                 @operator,
                 alertSensitivity,
                 failingPeriods,
-                Optional.ToNullable(ignoreDataBefore));
+                ignoreDataBefore);
         }
 
         BinaryData IPersistableModel<DynamicMetricCriteria>.Write(ModelReaderWriterOptions options)

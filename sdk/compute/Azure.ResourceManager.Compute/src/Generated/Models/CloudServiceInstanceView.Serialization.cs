@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<InstanceViewStatusesSummary> roleInstance = default;
-            Optional<string> sdkVersion = default;
+            InstanceViewStatusesSummary roleInstance = default;
+            string sdkVersion = default;
             IReadOnlyList<string> privateIds = default;
             IReadOnlyList<ResourceInstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceInstanceView(roleInstance.Value, sdkVersion.Value, privateIds ?? new ChangeTrackingList<string>(), statuses ?? new ChangeTrackingList<ResourceInstanceViewStatus>(), serializedAdditionalRawData);
+            return new CloudServiceInstanceView(roleInstance, sdkVersion, privateIds ?? new ChangeTrackingList<string>(), statuses ?? new ChangeTrackingList<ResourceInstanceViewStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceInstanceView>.Write(ModelReaderWriterOptions options)

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<long> count = default;
-            Optional<long> sizeGB = default;
-            Optional<SapDiskSku> sku = default;
+            long? count = default;
+            long? sizeGB = default;
+            SapDiskSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskVolumeConfiguration(Optional.ToNullable(count), Optional.ToNullable(sizeGB), sku.Value, serializedAdditionalRawData);
+            return new DiskVolumeConfiguration(count, sizeGB, sku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskVolumeConfiguration>.Write(ModelReaderWriterOptions options)

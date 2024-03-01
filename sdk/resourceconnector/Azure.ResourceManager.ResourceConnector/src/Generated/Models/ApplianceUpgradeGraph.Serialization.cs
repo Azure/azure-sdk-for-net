@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<ApplianceUpgradeGraphProperties> properties = default;
+            string id = default;
+            string name = default;
+            ApplianceUpgradeGraphProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceUpgradeGraph(id.Value, name.Value, properties.Value, serializedAdditionalRawData);
+            return new ApplianceUpgradeGraph(id, name, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceUpgradeGraph>.Write(ModelReaderWriterOptions options)

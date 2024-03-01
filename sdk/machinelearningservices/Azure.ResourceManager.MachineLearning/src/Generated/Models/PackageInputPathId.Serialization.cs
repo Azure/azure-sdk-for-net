@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
+            ResourceIdentifier resourceId = default;
             InputPathType inputPathType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PackageInputPathId(inputPathType, serializedAdditionalRawData, resourceId.Value);
+            return new PackageInputPathId(inputPathType, serializedAdditionalRawData, resourceId);
         }
 
         BinaryData IPersistableModel<PackageInputPathId>.Write(ModelReaderWriterOptions options)

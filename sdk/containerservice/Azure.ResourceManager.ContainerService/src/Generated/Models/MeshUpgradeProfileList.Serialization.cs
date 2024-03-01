@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             IReadOnlyList<MeshUpgradeProfileData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MeshUpgradeProfileList(value ?? new ChangeTrackingList<MeshUpgradeProfileData>(), nextLink.Value, serializedAdditionalRawData);
+            return new MeshUpgradeProfileList(value ?? new ChangeTrackingList<MeshUpgradeProfileData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MeshUpgradeProfileList>.Write(ModelReaderWriterOptions options)

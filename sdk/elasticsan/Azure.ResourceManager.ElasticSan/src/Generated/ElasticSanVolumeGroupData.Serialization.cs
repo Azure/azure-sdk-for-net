@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ElasticSanProvisioningState> provisioningState = default;
-            Optional<ElasticSanStorageTargetType> protocolType = default;
-            Optional<ElasticSanEncryptionType> encryption = default;
-            Optional<ElasticSanEncryptionProperties> encryptionProperties = default;
-            Optional<NetworkRuleSet> networkAcls = default;
+            SystemData systemData = default;
+            ElasticSanProvisioningState? provisioningState = default;
+            ElasticSanStorageTargetType? protocolType = default;
+            ElasticSanEncryptionType? encryption = default;
+            ElasticSanEncryptionProperties encryptionProperties = default;
+            NetworkRuleSet networkAcls = default;
             IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -258,13 +258,13 @@ namespace Azure.ResourceManager.ElasticSan
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 identity,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(protocolType),
-                Optional.ToNullable(encryption),
-                encryptionProperties.Value,
-                networkAcls.Value,
+                provisioningState,
+                protocolType,
+                encryption,
+                encryptionProperties,
+                networkAcls,
                 privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(),
                 serializedAdditionalRawData);
         }

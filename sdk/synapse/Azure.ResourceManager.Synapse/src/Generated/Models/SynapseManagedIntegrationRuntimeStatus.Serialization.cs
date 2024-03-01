@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             IntegrationRuntimeType type = default;
-            Optional<string> dataFactoryName = default;
-            Optional<SynapseIntegrationRuntimeState> state = default;
-            Optional<DateTimeOffset> createTime = default;
+            string dataFactoryName = default;
+            SynapseIntegrationRuntimeState? state = default;
+            DateTimeOffset? createTime = default;
             IReadOnlyList<SynapseManagedIntegrationRuntimeNode> nodes = default;
             IReadOnlyList<SynapseManagedIntegrationRuntimeError> otherErrors = default;
-            Optional<SynapseManagedIntegrationRuntimeOperationResult> lastOperation = default;
+            SynapseManagedIntegrationRuntimeOperationResult lastOperation = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,13 +199,13 @@ namespace Azure.ResourceManager.Synapse.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseManagedIntegrationRuntimeStatus(
                 type,
-                dataFactoryName.Value,
-                Optional.ToNullable(state),
+                dataFactoryName,
+                state,
                 additionalProperties,
-                Optional.ToNullable(createTime),
+                createTime,
                 nodes ?? new ChangeTrackingList<SynapseManagedIntegrationRuntimeNode>(),
                 otherErrors ?? new ChangeTrackingList<SynapseManagedIntegrationRuntimeError>(),
-                lastOperation.Value);
+                lastOperation);
         }
 
         BinaryData IPersistableModel<SynapseManagedIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)

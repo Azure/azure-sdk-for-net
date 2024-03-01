@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             string text = default;
             string category = default;
-            Optional<string> subcategory = default;
+            string subcategory = default;
             int offset = default;
             int length = default;
             double confidenceScore = default;
@@ -81,7 +81,7 @@ namespace Azure.AI.TextAnalytics.Models
             return new Entity(
                 text,
                 category,
-                subcategory.Value,
+                subcategory,
                 offset,
                 length,
                 confidenceScore);

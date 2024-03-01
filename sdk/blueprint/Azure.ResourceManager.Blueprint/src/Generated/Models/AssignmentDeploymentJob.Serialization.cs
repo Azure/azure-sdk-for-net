@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<string> action = default;
-            Optional<string> jobId = default;
-            Optional<string> jobState = default;
-            Optional<AssignmentDeploymentJobResult> result = default;
+            string kind = default;
+            string action = default;
+            string jobId = default;
+            string jobState = default;
+            AssignmentDeploymentJobResult result = default;
             IList<AssignmentDeploymentJobResult> history = default;
-            Optional<Uri> requestUri = default;
+            Uri requestUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,13 +174,13 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AssignmentDeploymentJob(
-                kind.Value,
-                action.Value,
-                jobId.Value,
-                jobState.Value,
-                result.Value,
+                kind,
+                action,
+                jobId,
+                jobState,
+                result,
                 history ?? new ChangeTrackingList<AssignmentDeploymentJobResult>(),
-                requestUri.Value,
+                requestUri,
                 serializedAdditionalRawData);
         }
 

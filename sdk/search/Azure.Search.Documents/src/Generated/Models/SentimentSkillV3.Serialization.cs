@@ -85,13 +85,13 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> defaultLanguageCode = default;
-            Optional<bool> includeOpinionMining = default;
-            Optional<string> modelVersion = default;
+            string defaultLanguageCode = default;
+            bool? includeOpinionMining = default;
+            string modelVersion = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -168,14 +168,14 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new SentimentSkillV3(
                 odataType,
-                name.Value,
-                description.Value,
-                context.Value,
+                name,
+                description,
+                context,
                 inputs,
                 outputs,
-                defaultLanguageCode.Value,
-                Optional.ToNullable(includeOpinionMining),
-                modelVersion.Value);
+                defaultLanguageCode,
+                includeOpinionMining,
+                modelVersion);
         }
     }
 }

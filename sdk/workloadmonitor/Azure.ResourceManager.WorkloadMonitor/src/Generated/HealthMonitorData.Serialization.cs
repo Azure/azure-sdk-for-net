@@ -161,18 +161,18 @@ namespace Azure.ResourceManager.WorkloadMonitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> monitorName = default;
-            Optional<string> monitorType = default;
-            Optional<string> monitoredObject = default;
-            Optional<string> parentMonitorName = default;
-            Optional<HealthState> previousMonitorState = default;
-            Optional<HealthState> currentMonitorState = default;
-            Optional<string> evaluationTimestamp = default;
-            Optional<string> currentStateFirstObservedTimestamp = default;
-            Optional<string> lastReportedTimestamp = default;
-            Optional<BinaryData> evidence = default;
-            Optional<BinaryData> monitorConfiguration = default;
+            SystemData systemData = default;
+            string monitorName = default;
+            string monitorType = default;
+            string monitoredObject = default;
+            string parentMonitorName = default;
+            HealthState? previousMonitorState = default;
+            HealthState? currentMonitorState = default;
+            string evaluationTimestamp = default;
+            string currentStateFirstObservedTimestamp = default;
+            string lastReportedTimestamp = default;
+            BinaryData evidence = default;
+            BinaryData monitorConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -294,18 +294,18 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 id,
                 name,
                 type,
-                systemData.Value,
-                monitorName.Value,
-                monitorType.Value,
-                monitoredObject.Value,
-                parentMonitorName.Value,
-                Optional.ToNullable(previousMonitorState),
-                Optional.ToNullable(currentMonitorState),
-                evaluationTimestamp.Value,
-                currentStateFirstObservedTimestamp.Value,
-                lastReportedTimestamp.Value,
-                evidence.Value,
-                monitorConfiguration.Value,
+                systemData,
+                monitorName,
+                monitorType,
+                monitoredObject,
+                parentMonitorName,
+                previousMonitorState,
+                currentMonitorState,
+                evaluationTimestamp,
+                currentStateFirstObservedTimestamp,
+                lastReportedTimestamp,
+                evidence,
+                monitorConfiguration,
                 serializedAdditionalRawData);
         }
 

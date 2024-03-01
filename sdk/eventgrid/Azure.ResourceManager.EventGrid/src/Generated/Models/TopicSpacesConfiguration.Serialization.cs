@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<TopicSpacesConfigurationState> state = default;
-            Optional<string> routeTopicResourceId = default;
-            Optional<string> hostname = default;
-            Optional<RoutingEnrichments> routingEnrichments = default;
-            Optional<ClientAuthenticationSettings> clientAuthentication = default;
-            Optional<int> maximumSessionExpiryInHours = default;
-            Optional<int> maximumClientSessionsPerAuthenticationName = default;
-            Optional<RoutingIdentityInfo> routingIdentityInfo = default;
+            TopicSpacesConfigurationState? state = default;
+            string routeTopicResourceId = default;
+            string hostname = default;
+            RoutingEnrichments routingEnrichments = default;
+            ClientAuthenticationSettings clientAuthentication = default;
+            int? maximumSessionExpiryInHours = default;
+            int? maximumClientSessionsPerAuthenticationName = default;
+            RoutingIdentityInfo routingIdentityInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TopicSpacesConfiguration(
-                Optional.ToNullable(state),
-                routeTopicResourceId.Value,
-                hostname.Value,
-                routingEnrichments.Value,
-                clientAuthentication.Value,
-                Optional.ToNullable(maximumSessionExpiryInHours),
-                Optional.ToNullable(maximumClientSessionsPerAuthenticationName),
-                routingIdentityInfo.Value,
+                state,
+                routeTopicResourceId,
+                hostname,
+                routingEnrichments,
+                clientAuthentication,
+                maximumSessionExpiryInHours,
+                maximumClientSessionsPerAuthenticationName,
+                routingIdentityInfo,
                 serializedAdditionalRawData);
         }
 

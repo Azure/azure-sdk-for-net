@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Relay.Models
             {
                 return null;
             }
-            Optional<RelayPrivateLinkConnectionStatus> status = default;
-            Optional<string> description = default;
+            RelayPrivateLinkConnectionStatus? status = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Relay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, serializedAdditionalRawData);
+            return new RelayPrivateLinkServiceConnectionState(status, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayPrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options)

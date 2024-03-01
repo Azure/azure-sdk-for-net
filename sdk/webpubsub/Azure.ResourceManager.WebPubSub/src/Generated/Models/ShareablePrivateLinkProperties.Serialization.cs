@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> groupId = default;
-            Optional<string> type = default;
+            string description = default;
+            string groupId = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareablePrivateLinkProperties(description.Value, groupId.Value, type.Value, serializedAdditionalRawData);
+            return new ShareablePrivateLinkProperties(description, groupId, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareablePrivateLinkProperties>.Write(ModelReaderWriterOptions options)

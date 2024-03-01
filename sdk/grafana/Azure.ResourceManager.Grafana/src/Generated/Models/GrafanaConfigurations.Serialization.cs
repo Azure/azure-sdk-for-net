@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<Smtp> smtp = default;
+            Smtp smtp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GrafanaConfigurations(smtp.Value, serializedAdditionalRawData);
+            return new GrafanaConfigurations(smtp, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GrafanaConfigurations>.Write(ModelReaderWriterOptions options)

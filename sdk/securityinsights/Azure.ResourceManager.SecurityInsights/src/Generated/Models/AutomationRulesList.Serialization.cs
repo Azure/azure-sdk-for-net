@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             IReadOnlyList<SecurityInsightsAutomationRuleData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRulesList(value ?? new ChangeTrackingList<SecurityInsightsAutomationRuleData>(), nextLink.Value, serializedAdditionalRawData);
+            return new AutomationRulesList(value ?? new ChangeTrackingList<SecurityInsightsAutomationRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRulesList>.Write(ModelReaderWriterOptions options)

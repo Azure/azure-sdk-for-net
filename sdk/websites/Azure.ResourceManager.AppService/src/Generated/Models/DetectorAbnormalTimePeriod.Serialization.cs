@@ -124,13 +124,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> message = default;
-            Optional<string> source = default;
-            Optional<double> priority = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string message = default;
+            string source = default;
+            double? priority = default;
             IList<IList<AppServiceNameValuePair>> metaData = default;
-            Optional<DetectorIssueType> type = default;
+            DetectorIssueType? type = default;
             IList<DiagnosticSolution> solutions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -229,13 +229,13 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DetectorAbnormalTimePeriod(
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                message.Value,
-                source.Value,
-                Optional.ToNullable(priority),
+                startTime,
+                endTime,
+                message,
+                source,
+                priority,
                 metaData ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
-                Optional.ToNullable(type),
+                type,
                 solutions ?? new ChangeTrackingList<DiagnosticSolution>(),
                 serializedAdditionalRawData);
         }

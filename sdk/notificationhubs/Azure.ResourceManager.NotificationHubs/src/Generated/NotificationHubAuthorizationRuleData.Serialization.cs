@@ -157,22 +157,22 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 return null;
             }
-            Optional<NotificationHubSku> sku = default;
+            NotificationHubSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<AuthorizationRuleAccessRight> rights = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<string> keyName = default;
-            Optional<string> claimType = default;
-            Optional<string> claimValue = default;
-            Optional<DateTimeOffset> modifiedTime = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<int> revision = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            string keyName = default;
+            string claimType = default;
+            string claimValue = default;
+            DateTimeOffset? modifiedTime = default;
+            DateTimeOffset? createdTime = default;
+            int? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -317,19 +317,19 @@ namespace Azure.ResourceManager.NotificationHubs
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 rights ?? new ChangeTrackingList<AuthorizationRuleAccessRight>(),
-                primaryKey.Value,
-                secondaryKey.Value,
-                keyName.Value,
-                claimType.Value,
-                claimValue.Value,
-                Optional.ToNullable(modifiedTime),
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(revision),
-                sku.Value,
+                primaryKey,
+                secondaryKey,
+                keyName,
+                claimType,
+                claimValue,
+                modifiedTime,
+                createdTime,
+                revision,
+                sku,
                 serializedAdditionalRawData);
         }
 

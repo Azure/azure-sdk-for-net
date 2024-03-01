@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<string> subject = default;
-            Optional<DateTimeOffset> expiry = default;
-            Optional<string> thumbprint = default;
-            Optional<bool> isVerified = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<string> verificationCode = default;
-            Optional<BinaryData> certificate = default;
+            string subject = default;
+            DateTimeOffset? expiry = default;
+            string thumbprint = default;
+            bool? isVerified = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? updated = default;
+            string verificationCode = default;
+            BinaryData certificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,14 +190,14 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IotHubCertificatePropertiesWithNonce(
-                subject.Value,
-                Optional.ToNullable(expiry),
-                thumbprint.Value,
-                Optional.ToNullable(isVerified),
-                Optional.ToNullable(created),
-                Optional.ToNullable(updated),
-                verificationCode.Value,
-                certificate.Value,
+                subject,
+                expiry,
+                thumbprint,
+                isVerified,
+                created,
+                updated,
+                verificationCode,
+                certificate,
                 serializedAdditionalRawData);
         }
 

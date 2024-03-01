@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> kind = default;
+            AzureLocation? location = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ServerConnectionType> connectionType = default;
+            SystemData systemData = default;
+            ServerConnectionType? connectionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                kind.Value,
-                Optional.ToNullable(connectionType),
+                systemData,
+                location,
+                kind,
+                connectionType,
                 serializedAdditionalRawData);
         }
 

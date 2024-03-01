@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             }
             ScrubbingRuleEntryMatchVariable matchVariable = default;
             ScrubbingRuleEntryMatchOperator selectorMatchOperator = default;
-            Optional<string> selector = default;
-            Optional<ScrubbingRuleEntryState> state = default;
+            string selector = default;
+            ScrubbingRuleEntryState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebApplicationFirewallScrubbingRules(matchVariable, selectorMatchOperator, selector.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new WebApplicationFirewallScrubbingRules(matchVariable, selectorMatchOperator, selector, state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebApplicationFirewallScrubbingRules>.Write(ModelReaderWriterOptions options)

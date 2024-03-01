@@ -111,15 +111,15 @@ namespace Azure.ResourceManager.Reservations
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<int> etag = default;
-            Optional<ReservationsSkuName> sku = default;
-            Optional<ReservationProperties> properties = default;
-            Optional<ReservationKind> kind = default;
+            AzureLocation? location = default;
+            int? etag = default;
+            ReservationsSkuName sku = default;
+            ReservationProperties properties = default;
+            ReservationKind? kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,12 +203,12 @@ namespace Azure.ResourceManager.Reservations
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                Optional.ToNullable(etag),
-                sku.Value,
-                properties.Value,
-                Optional.ToNullable(kind),
+                systemData,
+                location,
+                etag,
+                sku,
+                properties,
+                kind,
                 serializedAdditionalRawData);
         }
 

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> vmSize = default;
+            string vmSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HardwareProfile(vmSize.Value, serializedAdditionalRawData);
+            return new HardwareProfile(vmSize, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HardwareProfile>.Write(ModelReaderWriterOptions options)

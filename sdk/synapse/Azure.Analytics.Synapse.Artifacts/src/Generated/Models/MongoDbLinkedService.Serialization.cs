@@ -119,20 +119,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object server = default;
-            Optional<MongoDbAuthenticationType> authenticationType = default;
+            MongoDbAuthenticationType? authenticationType = default;
             object databaseName = default;
-            Optional<object> username = default;
-            Optional<SecretBase> password = default;
-            Optional<object> authSource = default;
-            Optional<object> port = default;
-            Optional<object> enableSsl = default;
-            Optional<object> allowSelfSignedServerCert = default;
-            Optional<object> encryptedCredential = default;
+            object username = default;
+            SecretBase password = default;
+            object authSource = default;
+            object port = default;
+            object enableSsl = default;
+            object allowSelfSignedServerCert = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -290,21 +290,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new MongoDbLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
                 server,
-                Optional.ToNullable(authenticationType),
+                authenticationType,
                 databaseName,
-                username.Value,
-                password.Value,
-                authSource.Value,
-                port.Value,
-                enableSsl.Value,
-                allowSelfSignedServerCert.Value,
-                encryptedCredential.Value);
+                username,
+                password,
+                authSource,
+                port,
+                enableSsl,
+                allowSelfSignedServerCert,
+                encryptedCredential);
         }
 
         internal partial class MongoDbLinkedServiceConverter : JsonConverter<MongoDbLinkedService>

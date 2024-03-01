@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> thumbprint = default;
-            Optional<string> appName = default;
-            Optional<string> certName = default;
-            Optional<AppPlatformCustomDomainProvisioningState> provisioningState = default;
+            string thumbprint = default;
+            string appName = default;
+            string certName = default;
+            AppPlatformCustomDomainProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformCustomDomainProperties(thumbprint.Value, appName.Value, certName.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AppPlatformCustomDomainProperties(thumbprint, appName, certName, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformCustomDomainProperties>.Write(ModelReaderWriterOptions options)

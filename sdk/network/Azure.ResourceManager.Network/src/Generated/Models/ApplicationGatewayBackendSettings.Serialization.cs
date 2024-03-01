@@ -134,18 +134,18 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<int> port = default;
-            Optional<ApplicationGatewayProtocol> protocol = default;
-            Optional<int> timeout = default;
-            Optional<WritableSubResource> probe = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            int? port = default;
+            ApplicationGatewayProtocol? protocol = default;
+            int? timeout = default;
+            WritableSubResource probe = default;
             IList<WritableSubResource> trustedRootCertificates = default;
-            Optional<string> hostName = default;
-            Optional<bool> pickHostNameFromBackendAddress = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            string hostName = default;
+            bool? pickHostNameFromBackendAddress = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -274,19 +274,19 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationGatewayBackendSettings(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(port),
-                Optional.ToNullable(protocol),
-                Optional.ToNullable(timeout),
+                etag,
+                port,
+                protocol,
+                timeout,
                 probe,
                 trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>(),
-                hostName.Value,
-                Optional.ToNullable(pickHostNameFromBackendAddress),
-                Optional.ToNullable(provisioningState));
+                hostName,
+                pickHostNameFromBackendAddress,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendSettings>.Write(ModelReaderWriterOptions options)

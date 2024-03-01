@@ -169,24 +169,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> agentPoolId = default;
-            Optional<string> availabilityZone = default;
-            Optional<string> bareMetalMachineId = default;
-            Optional<long> cpuCores = default;
-            Optional<KubernetesClusterNodeDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<long> diskSizeGB = default;
-            Optional<string> image = default;
-            Optional<string> kubernetesVersion = default;
+            string agentPoolId = default;
+            string availabilityZone = default;
+            string bareMetalMachineId = default;
+            long? cpuCores = default;
+            KubernetesClusterNodeDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            long? diskSizeGB = default;
+            string image = default;
+            string kubernetesVersion = default;
             IReadOnlyList<KubernetesLabel> labels = default;
-            Optional<long> memorySizeGB = default;
-            Optional<NetworkCloudAgentPoolMode> mode = default;
-            Optional<string> name = default;
+            long? memorySizeGB = default;
+            NetworkCloudAgentPoolMode? mode = default;
+            string name = default;
             IReadOnlyList<NetworkAttachment> networkAttachments = default;
-            Optional<KubernetesNodePowerState> powerState = default;
-            Optional<KubernetesNodeRole> role = default;
+            KubernetesNodePowerState? powerState = default;
+            KubernetesNodeRole? role = default;
             IReadOnlyList<KubernetesLabel> taints = default;
-            Optional<string> vmSkuName = default;
+            string vmSkuName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -343,24 +343,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new KubernetesClusterNode(
-                agentPoolId.Value,
-                availabilityZone.Value,
-                bareMetalMachineId.Value,
-                Optional.ToNullable(cpuCores),
-                Optional.ToNullable(detailedStatus),
-                detailedStatusMessage.Value,
-                Optional.ToNullable(diskSizeGB),
-                image.Value,
-                kubernetesVersion.Value,
+                agentPoolId,
+                availabilityZone,
+                bareMetalMachineId,
+                cpuCores,
+                detailedStatus,
+                detailedStatusMessage,
+                diskSizeGB,
+                image,
+                kubernetesVersion,
                 labels ?? new ChangeTrackingList<KubernetesLabel>(),
-                Optional.ToNullable(memorySizeGB),
-                Optional.ToNullable(mode),
-                name.Value,
+                memorySizeGB,
+                mode,
+                name,
                 networkAttachments ?? new ChangeTrackingList<NetworkAttachment>(),
-                Optional.ToNullable(powerState),
-                Optional.ToNullable(role),
+                powerState,
+                role,
                 taints ?? new ChangeTrackingList<KubernetesLabel>(),
-                vmSkuName.Value,
+                vmSkuName,
                 serializedAdditionalRawData);
         }
 

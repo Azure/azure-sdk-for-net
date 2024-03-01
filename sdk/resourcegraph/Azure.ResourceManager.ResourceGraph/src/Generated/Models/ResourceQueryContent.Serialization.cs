@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             IList<string> subscriptions = default;
             IList<string> managementGroups = default;
             string query = default;
-            Optional<ResourceQueryRequestOptions> options0 = default;
+            ResourceQueryRequestOptions options0 = default;
             IList<FacetRequest> facets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 subscriptions ?? new ChangeTrackingList<string>(),
                 managementGroups ?? new ChangeTrackingList<string>(),
                 query,
-                options0.Value,
+                options0,
                 facets ?? new ChangeTrackingList<FacetRequest>(),
                 serializedAdditionalRawData);
         }

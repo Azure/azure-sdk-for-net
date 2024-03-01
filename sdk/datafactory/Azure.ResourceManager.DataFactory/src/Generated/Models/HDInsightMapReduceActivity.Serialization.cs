@@ -205,21 +205,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             IList<DataFactoryLinkedServiceReference> storageLinkedServices = default;
             IList<BinaryData> arguments = default;
-            Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
+            HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default;
             DataFactoryElement<string> className = default;
             DataFactoryElement<string> jarFilePath = default;
-            Optional<DataFactoryLinkedServiceReference> jarLinkedService = default;
+            DataFactoryLinkedServiceReference jarLinkedService = default;
             IList<BinaryData> jarLibs = default;
             IDictionary<string, BinaryData> defines = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -428,17 +428,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new HDInsightMapReduceActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
                 additionalProperties,
                 linkedServiceName,
-                policy.Value,
+                policy,
                 storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
                 arguments ?? new ChangeTrackingList<BinaryData>(),
-                Optional.ToNullable(getDebugInfo),
+                getDebugInfo,
                 className,
                 jarFilePath,
                 jarLinkedService,

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.Sms
 {
@@ -19,11 +18,11 @@ namespace Azure.Communication.Sms
                 return null;
             }
             string to = default;
-            Optional<string> messageId = default;
+            string messageId = default;
             int httpStatusCode = default;
-            Optional<SmsSendResponseItemRepeatabilityResult> repeatabilityResult = default;
+            SmsSendResponseItemRepeatabilityResult? repeatabilityResult = default;
             bool successful = default;
-            Optional<string> errorMessage = default;
+            string errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("to"u8))
@@ -63,11 +62,11 @@ namespace Azure.Communication.Sms
             }
             return new SmsSendResult(
                 to,
-                messageId.Value,
+                messageId,
                 httpStatusCode,
-                Optional.ToNullable(repeatabilityResult),
+                repeatabilityResult,
                 successful,
-                errorMessage.Value);
+                errorMessage);
         }
     }
 }

@@ -252,30 +252,30 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<AzureLocation> location = default;
+            string kind = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> recommendationReason = default;
-            Optional<DateTimeOffset> validSince = default;
-            Optional<DateTimeOffset> lastRefresh = default;
-            Optional<RecommendedActionStateInfo> state = default;
-            Optional<bool> isExecutableAction = default;
-            Optional<bool> isRevertableAction = default;
-            Optional<bool> isArchivedAction = default;
-            Optional<DateTimeOffset> executeActionStartTime = default;
-            Optional<TimeSpan> executeActionDuration = default;
-            Optional<DateTimeOffset> revertActionStartTime = default;
-            Optional<TimeSpan> revertActionDuration = default;
-            Optional<RecommendedActionInitiatedBy> executeActionInitiatedBy = default;
-            Optional<DateTimeOffset> executeActionInitiatedTime = default;
-            Optional<RecommendedActionInitiatedBy> revertActionInitiatedBy = default;
-            Optional<DateTimeOffset> revertActionInitiatedTime = default;
-            Optional<int> score = default;
-            Optional<RecommendedActionImplementationInfo> implementationDetails = default;
-            Optional<RecommendedActionErrorInfo> errorDetails = default;
+            SystemData systemData = default;
+            string recommendationReason = default;
+            DateTimeOffset? validSince = default;
+            DateTimeOffset? lastRefresh = default;
+            RecommendedActionStateInfo state = default;
+            bool? isExecutableAction = default;
+            bool? isRevertableAction = default;
+            bool? isArchivedAction = default;
+            DateTimeOffset? executeActionStartTime = default;
+            TimeSpan? executeActionDuration = default;
+            DateTimeOffset? revertActionStartTime = default;
+            TimeSpan? revertActionDuration = default;
+            RecommendedActionInitiatedBy? executeActionInitiatedBy = default;
+            DateTimeOffset? executeActionInitiatedTime = default;
+            RecommendedActionInitiatedBy? revertActionInitiatedBy = default;
+            DateTimeOffset? revertActionInitiatedTime = default;
+            int? score = default;
+            RecommendedActionImplementationInfo implementationDetails = default;
+            RecommendedActionErrorInfo errorDetails = default;
             IReadOnlyList<RecommendedActionImpactRecord> estimatedImpact = default;
             IReadOnlyList<RecommendedActionImpactRecord> observedImpact = default;
             IReadOnlyList<RecommendedActionMetricInfo> timeSeries = default;
@@ -580,27 +580,27 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                kind.Value,
-                Optional.ToNullable(location),
-                recommendationReason.Value,
-                Optional.ToNullable(validSince),
-                Optional.ToNullable(lastRefresh),
-                state.Value,
-                Optional.ToNullable(isExecutableAction),
-                Optional.ToNullable(isRevertableAction),
-                Optional.ToNullable(isArchivedAction),
-                Optional.ToNullable(executeActionStartTime),
-                Optional.ToNullable(executeActionDuration),
-                Optional.ToNullable(revertActionStartTime),
-                Optional.ToNullable(revertActionDuration),
-                Optional.ToNullable(executeActionInitiatedBy),
-                Optional.ToNullable(executeActionInitiatedTime),
-                Optional.ToNullable(revertActionInitiatedBy),
-                Optional.ToNullable(revertActionInitiatedTime),
-                Optional.ToNullable(score),
-                implementationDetails.Value,
-                errorDetails.Value,
+                systemData,
+                kind,
+                location,
+                recommendationReason,
+                validSince,
+                lastRefresh,
+                state,
+                isExecutableAction,
+                isRevertableAction,
+                isArchivedAction,
+                executeActionStartTime,
+                executeActionDuration,
+                revertActionStartTime,
+                revertActionDuration,
+                executeActionInitiatedBy,
+                executeActionInitiatedTime,
+                revertActionInitiatedBy,
+                revertActionInitiatedTime,
+                score,
+                implementationDetails,
+                errorDetails,
                 estimatedImpact ?? new ChangeTrackingList<RecommendedActionImpactRecord>(),
                 observedImpact ?? new ChangeTrackingList<RecommendedActionImpactRecord>(),
                 timeSeries ?? new ChangeTrackingList<RecommendedActionMetricInfo>(),

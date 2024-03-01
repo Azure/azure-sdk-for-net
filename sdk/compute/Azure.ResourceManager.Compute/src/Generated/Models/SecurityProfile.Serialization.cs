@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<UefiSettings> uefiSettings = default;
-            Optional<bool> encryptionAtHost = default;
-            Optional<SecurityType> securityType = default;
-            Optional<EncryptionIdentity> encryptionIdentity = default;
-            Optional<ProxyAgentSettings> proxyAgentSettings = default;
+            UefiSettings uefiSettings = default;
+            bool? encryptionAtHost = default;
+            SecurityType? securityType = default;
+            EncryptionIdentity encryptionIdentity = default;
+            ProxyAgentSettings proxyAgentSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecurityProfile(
-                uefiSettings.Value,
-                Optional.ToNullable(encryptionAtHost),
-                Optional.ToNullable(securityType),
-                encryptionIdentity.Value,
-                proxyAgentSettings.Value,
+                uefiSettings,
+                encryptionAtHost,
+                securityType,
+                encryptionIdentity,
+                proxyAgentSettings,
                 serializedAdditionalRawData);
         }
 

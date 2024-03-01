@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             {
                 return null;
             }
-            Optional<IngestionType> ingestionType = default;
+            IngestionType? ingestionType = default;
             IList<IngestionSourcesPropertiesFormat> ingestionSources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IngestionPolicyPropertiesFormat(Optional.ToNullable(ingestionType), ingestionSources ?? new ChangeTrackingList<IngestionSourcesPropertiesFormat>(), serializedAdditionalRawData);
+            return new IngestionPolicyPropertiesFormat(ingestionType, ingestionSources ?? new ChangeTrackingList<IngestionSourcesPropertiesFormat>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IngestionPolicyPropertiesFormat>.Write(ModelReaderWriterOptions options)

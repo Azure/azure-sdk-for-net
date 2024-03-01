@@ -70,13 +70,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> columnMappings = default;
-            Optional<object> schemaMapping = default;
-            Optional<object> collectionReference = default;
-            Optional<object> mapComplexValuesToString = default;
-            Optional<object> mappings = default;
-            Optional<object> typeConversion = default;
-            Optional<TypeConversionSettings> typeConversionSettings = default;
+            object columnMappings = default;
+            object schemaMapping = default;
+            object collectionReference = default;
+            object mapComplexValuesToString = default;
+            object mappings = default;
+            object typeConversion = default;
+            TypeConversionSettings typeConversionSettings = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -156,13 +156,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new TabularTranslator(
                 type,
                 additionalProperties,
-                columnMappings.Value,
-                schemaMapping.Value,
-                collectionReference.Value,
-                mapComplexValuesToString.Value,
-                mappings.Value,
-                typeConversion.Value,
-                typeConversionSettings.Value);
+                columnMappings,
+                schemaMapping,
+                collectionReference,
+                mapComplexValuesToString,
+                mappings,
+                typeConversion,
+                typeConversionSettings);
         }
 
         internal partial class TabularTranslatorConverter : JsonConverter<TabularTranslator>

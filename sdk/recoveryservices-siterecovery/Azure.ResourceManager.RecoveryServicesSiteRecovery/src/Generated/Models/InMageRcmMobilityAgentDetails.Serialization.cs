@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> version = default;
-            Optional<string> latestVersion = default;
-            Optional<string> latestAgentReleaseDate = default;
-            Optional<string> driverVersion = default;
-            Optional<string> latestUpgradableVersionWithoutReboot = default;
-            Optional<DateTimeOffset> agentVersionExpireOn = default;
-            Optional<DateTimeOffset> driverVersionExpireOn = default;
-            Optional<DateTimeOffset> lastHeartbeatUtc = default;
+            string version = default;
+            string latestVersion = default;
+            string latestAgentReleaseDate = default;
+            string driverVersion = default;
+            string latestUpgradableVersionWithoutReboot = default;
+            DateTimeOffset? agentVersionExpireOn = default;
+            DateTimeOffset? driverVersionExpireOn = default;
+            DateTimeOffset? lastHeartbeatUtc = default;
             IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade = default;
-            Optional<string> isUpgradeable = default;
+            string isUpgradeable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,16 +211,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new InMageRcmMobilityAgentDetails(
-                version.Value,
-                latestVersion.Value,
-                latestAgentReleaseDate.Value,
-                driverVersion.Value,
-                latestUpgradableVersionWithoutReboot.Value,
-                Optional.ToNullable(agentVersionExpireOn),
-                Optional.ToNullable(driverVersionExpireOn),
-                Optional.ToNullable(lastHeartbeatUtc),
+                version,
+                latestVersion,
+                latestAgentReleaseDate,
+                driverVersion,
+                latestUpgradableVersionWithoutReboot,
+                agentVersionExpireOn,
+                driverVersionExpireOn,
+                lastHeartbeatUtc,
                 reasonsBlockingUpgrade ?? new ChangeTrackingList<AgentUpgradeBlockedReason>(),
-                isUpgradeable.Value,
+                isUpgradeable,
                 serializedAdditionalRawData);
         }
 

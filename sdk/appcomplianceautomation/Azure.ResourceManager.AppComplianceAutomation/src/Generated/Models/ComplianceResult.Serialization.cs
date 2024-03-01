@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> complianceName = default;
+            string complianceName = default;
             IReadOnlyList<Category> categories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComplianceResult(complianceName.Value, categories ?? new ChangeTrackingList<Category>(), serializedAdditionalRawData);
+            return new ComplianceResult(complianceName, categories ?? new ChangeTrackingList<Category>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComplianceResult>.Write(ModelReaderWriterOptions options)

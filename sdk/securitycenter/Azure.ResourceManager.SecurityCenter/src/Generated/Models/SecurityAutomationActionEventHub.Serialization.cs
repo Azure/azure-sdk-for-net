@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> eventHubResourceId = default;
-            Optional<string> sasPolicyName = default;
-            Optional<string> connectionString = default;
+            ResourceIdentifier eventHubResourceId = default;
+            string sasPolicyName = default;
+            string connectionString = default;
             ActionType actionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAutomationActionEventHub(actionType, serializedAdditionalRawData, eventHubResourceId.Value, sasPolicyName.Value, connectionString.Value);
+            return new SecurityAutomationActionEventHub(actionType, serializedAdditionalRawData, eventHubResourceId, sasPolicyName, connectionString);
         }
 
         BinaryData IPersistableModel<SecurityAutomationActionEventHub>.Write(ModelReaderWriterOptions options)

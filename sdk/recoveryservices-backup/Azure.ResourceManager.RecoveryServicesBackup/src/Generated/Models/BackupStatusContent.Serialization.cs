@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupDataSourceType> resourceType = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> poLogicalName = default;
+            BackupDataSourceType? resourceType = default;
+            ResourceIdentifier resourceId = default;
+            string poLogicalName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupStatusContent(Optional.ToNullable(resourceType), resourceId.Value, poLogicalName.Value, serializedAdditionalRawData);
+            return new BackupStatusContent(resourceType, resourceId, poLogicalName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupStatusContent>.Write(ModelReaderWriterOptions options)

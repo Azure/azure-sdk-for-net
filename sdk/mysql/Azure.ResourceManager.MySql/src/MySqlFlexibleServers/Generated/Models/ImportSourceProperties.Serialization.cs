@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<ImportSourceStorageType> storageType = default;
-            Optional<Uri> storageUrl = default;
-            Optional<string> sasToken = default;
-            Optional<string> dataDirPath = default;
+            ImportSourceStorageType? storageType = default;
+            Uri storageUrl = default;
+            string sasToken = default;
+            string dataDirPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImportSourceProperties(Optional.ToNullable(storageType), storageUrl.Value, sasToken.Value, dataDirPath.Value, serializedAdditionalRawData);
+            return new ImportSourceProperties(storageType, storageUrl, sasToken, dataDirPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImportSourceProperties>.Write(ModelReaderWriterOptions options)

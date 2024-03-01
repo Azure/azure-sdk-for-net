@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             ForecastType type = default;
             ForecastTimeframe timeframe = default;
-            Optional<ForecastTimePeriod> timePeriod = default;
+            ForecastTimePeriod timePeriod = default;
             ForecastDataset dataset = default;
-            Optional<bool> includeActualCost = default;
-            Optional<bool> includeFreshPartialCost = default;
+            bool? includeActualCost = default;
+            bool? includeFreshPartialCost = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new ForecastDefinition(
                 type,
                 timeframe,
-                timePeriod.Value,
+                timePeriod,
                 dataset,
-                Optional.ToNullable(includeActualCost),
-                Optional.ToNullable(includeFreshPartialCost),
+                includeActualCost,
+                includeFreshPartialCost,
                 serializedAdditionalRawData);
         }
 

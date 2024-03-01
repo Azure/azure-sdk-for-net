@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<AvailabilityLifecycle> availabilityLifecycle = default;
-            Optional<string> version = default;
+            AvailabilityLifecycle? availabilityLifecycle = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableUpgrade(Optional.ToNullable(availabilityLifecycle), version.Value, serializedAdditionalRawData);
+            return new AvailableUpgrade(availabilityLifecycle, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableUpgrade>.Write(ModelReaderWriterOptions options)

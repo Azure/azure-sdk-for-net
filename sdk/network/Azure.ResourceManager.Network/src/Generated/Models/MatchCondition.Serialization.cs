@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             IList<MatchVariable> matchVariables = default;
             WebApplicationFirewallOperator @operator = default;
-            Optional<bool> negationConditon = default;
+            bool? negationConditon = default;
             IList<string> matchValues = default;
             IList<WebApplicationFirewallTransform> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
             return new MatchCondition(
                 matchVariables,
                 @operator,
-                Optional.ToNullable(negationConditon),
+                negationConditon,
                 matchValues,
                 transforms ?? new ChangeTrackingList<WebApplicationFirewallTransform>(),
                 serializedAdditionalRawData);

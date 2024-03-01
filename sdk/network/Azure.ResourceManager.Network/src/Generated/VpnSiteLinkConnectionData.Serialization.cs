@@ -200,26 +200,26 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> vpnSiteLink = default;
-            Optional<int> routingWeight = default;
-            Optional<VpnLinkConnectionMode> vpnLinkConnectionMode = default;
-            Optional<VpnConnectionStatus> connectionStatus = default;
-            Optional<VirtualNetworkGatewayConnectionProtocol> vpnConnectionProtocolType = default;
-            Optional<long> ingressBytesTransferred = default;
-            Optional<long> egressBytesTransferred = default;
-            Optional<int> connectionBandwidth = default;
-            Optional<string> sharedKey = default;
-            Optional<bool> enableBgp = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource vpnSiteLink = default;
+            int? routingWeight = default;
+            VpnLinkConnectionMode? vpnLinkConnectionMode = default;
+            VpnConnectionStatus? connectionStatus = default;
+            VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType = default;
+            long? ingressBytesTransferred = default;
+            long? egressBytesTransferred = default;
+            int? connectionBandwidth = default;
+            string sharedKey = default;
+            bool? enableBgp = default;
             IList<GatewayCustomBgpIPAddressIPConfiguration> vpnGatewayCustomBgpAddresses = default;
-            Optional<bool> usePolicyBasedTrafficSelectors = default;
+            bool? usePolicyBasedTrafficSelectors = default;
             IList<IPsecPolicy> ipsecPolicies = default;
-            Optional<bool> enableRateLimiting = default;
-            Optional<bool> useLocalAzureIPAddress = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            bool? enableRateLimiting = default;
+            bool? useLocalAzureIPAddress = default;
+            NetworkProvisioningState? provisioningState = default;
             IList<WritableSubResource> ingressNatRules = default;
             IList<WritableSubResource> egressNatRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -455,27 +455,27 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VpnSiteLinkConnectionData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 vpnSiteLink,
-                Optional.ToNullable(routingWeight),
-                Optional.ToNullable(vpnLinkConnectionMode),
-                Optional.ToNullable(connectionStatus),
-                Optional.ToNullable(vpnConnectionProtocolType),
-                Optional.ToNullable(ingressBytesTransferred),
-                Optional.ToNullable(egressBytesTransferred),
-                Optional.ToNullable(connectionBandwidth),
-                sharedKey.Value,
-                Optional.ToNullable(enableBgp),
+                routingWeight,
+                vpnLinkConnectionMode,
+                connectionStatus,
+                vpnConnectionProtocolType,
+                ingressBytesTransferred,
+                egressBytesTransferred,
+                connectionBandwidth,
+                sharedKey,
+                enableBgp,
                 vpnGatewayCustomBgpAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>(),
-                Optional.ToNullable(usePolicyBasedTrafficSelectors),
+                usePolicyBasedTrafficSelectors,
                 ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
-                Optional.ToNullable(enableRateLimiting),
-                Optional.ToNullable(useLocalAzureIPAddress),
-                Optional.ToNullable(provisioningState),
+                enableRateLimiting,
+                useLocalAzureIPAddress,
+                provisioningState,
                 ingressNatRules ?? new ChangeTrackingList<WritableSubResource>(),
                 egressNatRules ?? new ChangeTrackingList<WritableSubResource>());
         }

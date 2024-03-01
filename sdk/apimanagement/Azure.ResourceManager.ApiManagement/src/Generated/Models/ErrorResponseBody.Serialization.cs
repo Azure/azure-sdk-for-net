@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
+            string code = default;
+            string message = default;
             IList<ErrorFieldContract> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ErrorResponseBody(code.Value, message.Value, details ?? new ChangeTrackingList<ErrorFieldContract>(), serializedAdditionalRawData);
+            return new ErrorResponseBody(code, message, details ?? new ChangeTrackingList<ErrorFieldContract>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ErrorResponseBody>.Write(ModelReaderWriterOptions options)

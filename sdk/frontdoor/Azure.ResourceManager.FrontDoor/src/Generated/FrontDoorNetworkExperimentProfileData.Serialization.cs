@@ -118,15 +118,15 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetworkExperimentResourceState> resourceState = default;
-            Optional<FrontDoorExperimentState> enabledState = default;
+            SystemData systemData = default;
+            NetworkExperimentResourceState? resourceState = default;
+            FrontDoorExperimentState? enabledState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,12 +223,12 @@ namespace Azure.ResourceManager.FrontDoor
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(resourceState),
-                Optional.ToNullable(enabledState),
+                etag,
+                resourceState,
+                enabledState,
                 serializedAdditionalRawData);
         }
 

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> resourceName = default;
+            string resourceName = default;
             ResponseError warning = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserFacingWarningDetail(resourceName.Value, warning, serializedAdditionalRawData);
+            return new UserFacingWarningDetail(resourceName, warning, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserFacingWarningDetail>.Write(ModelReaderWriterOptions options)

@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<string> supportedGeoBackupRegions = default;
             IReadOnlyList<ServerEditionCapabilityV2> supportedFlexibleServerEditions = default;
             IReadOnlyList<ServerVersionCapabilityV2> supportedServerVersions = default;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 supportedGeoBackupRegions ?? new ChangeTrackingList<string>(),
                 supportedFlexibleServerEditions ?? new ChangeTrackingList<ServerEditionCapabilityV2>(),
                 supportedServerVersions ?? new ChangeTrackingList<ServerVersionCapabilityV2>(),

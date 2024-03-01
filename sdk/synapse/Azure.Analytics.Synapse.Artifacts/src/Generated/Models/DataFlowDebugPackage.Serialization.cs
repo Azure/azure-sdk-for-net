@@ -83,13 +83,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> sessionId = default;
-            Optional<DataFlowDebugResource> dataFlow = default;
+            string sessionId = default;
+            DataFlowDebugResource dataFlow = default;
             IList<DataFlowDebugResource> dataFlows = default;
             IList<DatasetDebugResource> datasets = default;
             IList<LinkedServiceDebugResource> linkedServices = default;
-            Optional<DataFlowStagingInfo> staging = default;
-            Optional<DataFlowDebugPackageDebugSettings> debugSettings = default;
+            DataFlowStagingInfo staging = default;
+            DataFlowDebugPackageDebugSettings debugSettings = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -172,13 +172,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DataFlowDebugPackage(
-                sessionId.Value,
-                dataFlow.Value,
+                sessionId,
+                dataFlow,
                 dataFlows ?? new ChangeTrackingList<DataFlowDebugResource>(),
                 datasets ?? new ChangeTrackingList<DatasetDebugResource>(),
                 linkedServices ?? new ChangeTrackingList<LinkedServiceDebugResource>(),
-                staging.Value,
-                debugSettings.Value,
+                staging,
+                debugSettings,
                 additionalProperties);
         }
 

@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IReadOnlyList<string> supportedVersionsToUpgrade = default;
-            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            PostgreSqlFlexbileServerCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerServerVersionCapability(Optional.ToNullable(status), reason.Value, serializedAdditionalRawData, name.Value, supportedVersionsToUpgrade ?? new ChangeTrackingList<string>());
+            return new PostgreSqlFlexibleServerServerVersionCapability(status, reason, serializedAdditionalRawData, name, supportedVersionsToUpgrade ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerServerVersionCapability>.Write(ModelReaderWriterOptions options)

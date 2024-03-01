@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,8 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> refreshStatus = default;
-            Optional<string> errorMessage = default;
+            string refreshStatus = default;
+            string errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("refreshStatus"u8))
@@ -36,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkConnectionRefreshStatus(refreshStatus.Value, errorMessage.Value);
+            return new LinkConnectionRefreshStatus(refreshStatus, errorMessage);
         }
 
         internal partial class LinkConnectionRefreshStatusConverter : JsonConverter<LinkConnectionRefreshStatus>

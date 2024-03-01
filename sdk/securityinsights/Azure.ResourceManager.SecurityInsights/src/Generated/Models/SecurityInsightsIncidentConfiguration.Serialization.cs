@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             bool createIncident = default;
-            Optional<SecurityInsightsGroupingConfiguration> groupingConfiguration = default;
+            SecurityInsightsGroupingConfiguration groupingConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIncidentConfiguration(createIncident, groupingConfiguration.Value, serializedAdditionalRawData);
+            return new SecurityInsightsIncidentConfiguration(createIncident, groupingConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIncidentConfiguration>.Write(ModelReaderWriterOptions options)

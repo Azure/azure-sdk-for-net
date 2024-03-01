@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> unit = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> timeGrain = default;
+            string name = default;
+            string unit = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string timeGrain = default;
             IList<DiagnosticMetricSample> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DiagnosticMetricSet(
-                name.Value,
-                unit.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                timeGrain.Value,
+                name,
+                unit,
+                startTime,
+                endTime,
+                timeGrain,
                 values ?? new ChangeTrackingList<DiagnosticMetricSample>(),
                 serializedAdditionalRawData);
         }

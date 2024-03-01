@@ -202,29 +202,29 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<AppServiceSkuDescription> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> kind = default;
+            AppServiceSkuDescription sku = default;
+            ManagedServiceIdentity identity = default;
+            string kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> defaultHostname = default;
-            Optional<Uri> repositoryUrl = default;
-            Optional<string> branch = default;
+            SystemData systemData = default;
+            string defaultHostname = default;
+            Uri repositoryUrl = default;
+            string branch = default;
             IReadOnlyList<string> customDomains = default;
-            Optional<string> repositoryToken = default;
-            Optional<StaticSiteBuildProperties> buildProperties = default;
+            string repositoryToken = default;
+            StaticSiteBuildProperties buildProperties = default;
             IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = default;
-            Optional<StagingEnvironmentPolicy> stagingEnvironmentPolicy = default;
-            Optional<bool> allowConfigFileUpdates = default;
-            Optional<StaticSiteTemplate> templateProperties = default;
-            Optional<string> contentDistributionEndpoint = default;
-            Optional<string> keyVaultReferenceIdentity = default;
+            StagingEnvironmentPolicy? stagingEnvironmentPolicy = default;
+            bool? allowConfigFileUpdates = default;
+            StaticSiteTemplate templateProperties = default;
+            string contentDistributionEndpoint = default;
+            string keyVaultReferenceIdentity = default;
             IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default;
-            Optional<string> provider = default;
+            string provider = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -434,26 +434,26 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku.Value,
+                sku,
                 identity,
-                defaultHostname.Value,
-                repositoryUrl.Value,
-                branch.Value,
+                defaultHostname,
+                repositoryUrl,
+                branch,
                 customDomains ?? new ChangeTrackingList<string>(),
-                repositoryToken.Value,
-                buildProperties.Value,
+                repositoryToken,
+                buildProperties,
                 privateEndpointConnections ?? new ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>(),
-                Optional.ToNullable(stagingEnvironmentPolicy),
-                Optional.ToNullable(allowConfigFileUpdates),
-                templateProperties.Value,
-                contentDistributionEndpoint.Value,
-                keyVaultReferenceIdentity.Value,
+                stagingEnvironmentPolicy,
+                allowConfigFileUpdates,
+                templateProperties,
+                contentDistributionEndpoint,
+                keyVaultReferenceIdentity,
                 userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>(),
-                provider.Value,
-                kind.Value,
+                provider,
+                kind,
                 serializedAdditionalRawData);
         }
 

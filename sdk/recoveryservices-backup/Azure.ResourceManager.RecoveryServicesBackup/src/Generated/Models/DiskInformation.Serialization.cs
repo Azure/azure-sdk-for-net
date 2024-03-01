@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> lun = default;
-            Optional<string> name = default;
+            int? lun = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskInformation(Optional.ToNullable(lun), name.Value, serializedAdditionalRawData);
+            return new DiskInformation(lun, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskInformation>.Write(ModelReaderWriterOptions options)

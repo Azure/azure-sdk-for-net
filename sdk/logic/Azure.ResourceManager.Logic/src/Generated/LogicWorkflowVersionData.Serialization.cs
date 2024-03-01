@@ -180,18 +180,18 @@ namespace Azure.ResourceManager.Logic
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LogicWorkflowProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> changedTime = default;
-            Optional<LogicWorkflowState> state = default;
-            Optional<string> version = default;
-            Optional<string> accessEndpoint = default;
-            Optional<FlowEndpointsConfiguration> endpointsConfiguration = default;
-            Optional<FlowAccessControlConfiguration> accessControl = default;
-            Optional<LogicSku> sku = default;
-            Optional<LogicResourceReference> integrationAccount = default;
-            Optional<BinaryData> definition = default;
+            SystemData systemData = default;
+            LogicWorkflowProvisioningState? provisioningState = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? changedTime = default;
+            LogicWorkflowState? state = default;
+            string version = default;
+            string accessEndpoint = default;
+            FlowEndpointsConfiguration endpointsConfiguration = default;
+            FlowAccessControlConfiguration accessControl = default;
+            LogicSku sku = default;
+            LogicResourceReference integrationAccount = default;
+            BinaryData definition = default;
             IDictionary<string, LogicWorkflowParameterInfo> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -367,20 +367,20 @@ namespace Azure.ResourceManager.Logic
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(changedTime),
-                Optional.ToNullable(state),
-                version.Value,
-                accessEndpoint.Value,
-                endpointsConfiguration.Value,
-                accessControl.Value,
-                sku.Value,
-                integrationAccount.Value,
-                definition.Value,
+                provisioningState,
+                createdTime,
+                changedTime,
+                state,
+                version,
+                accessEndpoint,
+                endpointsConfiguration,
+                accessControl,
+                sku,
+                integrationAccount,
+                definition,
                 parameters ?? new ChangeTrackingDictionary<string, LogicWorkflowParameterInfo>(),
                 serializedAdditionalRawData);
         }

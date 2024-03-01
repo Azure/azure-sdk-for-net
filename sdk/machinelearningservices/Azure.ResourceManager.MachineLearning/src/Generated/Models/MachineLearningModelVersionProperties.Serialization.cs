@@ -218,16 +218,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IDictionary<string, MachineLearningFlavorData> flavors = default;
-            Optional<IntellectualProperty> intellectualProperty = default;
-            Optional<string> jobName = default;
-            Optional<string> modelType = default;
-            Optional<Uri> modelUri = default;
-            Optional<RegistryAssetProvisioningState> provisioningState = default;
-            Optional<string> stage = default;
-            Optional<AutoDeleteSetting> autoDeleteSetting = default;
-            Optional<bool> isAnonymous = default;
-            Optional<bool> isArchived = default;
-            Optional<string> description = default;
+            IntellectualProperty intellectualProperty = default;
+            string jobName = default;
+            string modelType = default;
+            Uri modelUri = default;
+            RegistryAssetProvisioningState? provisioningState = default;
+            string stage = default;
+            AutoDeleteSetting autoDeleteSetting = default;
+            bool? isAnonymous = default;
+            bool? isArchived = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -383,20 +383,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningModelVersionProperties(
-                description.Value,
+                description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                autoDeleteSetting.Value,
-                Optional.ToNullable(isAnonymous),
-                Optional.ToNullable(isArchived),
+                autoDeleteSetting,
+                isAnonymous,
+                isArchived,
                 flavors ?? new ChangeTrackingDictionary<string, MachineLearningFlavorData>(),
-                intellectualProperty.Value,
-                jobName.Value,
-                modelType.Value,
-                modelUri.Value,
-                Optional.ToNullable(provisioningState),
-                stage.Value);
+                intellectualProperty,
+                jobName,
+                modelType,
+                modelUri,
+                provisioningState,
+                stage);
         }
 
         BinaryData IPersistableModel<MachineLearningModelVersionProperties>.Write(ModelReaderWriterOptions options)

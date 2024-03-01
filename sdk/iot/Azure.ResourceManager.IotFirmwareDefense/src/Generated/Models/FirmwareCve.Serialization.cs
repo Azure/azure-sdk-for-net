@@ -192,18 +192,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<string> cveId = default;
-            Optional<BinaryData> component = default;
-            Optional<string> severity = default;
-            Optional<string> name = default;
-            Optional<string> cvssScore = default;
-            Optional<string> cvssVersion = default;
-            Optional<string> cvssV2Score = default;
-            Optional<string> cvssV3Score = default;
-            Optional<DateTimeOffset> publishDate = default;
-            Optional<DateTimeOffset> updatedDate = default;
+            string cveId = default;
+            BinaryData component = default;
+            string severity = default;
+            string name = default;
+            string cvssScore = default;
+            string cvssVersion = default;
+            string cvssV2Score = default;
+            string cvssV3Score = default;
+            DateTimeOffset? publishDate = default;
+            DateTimeOffset? updatedDate = default;
             IReadOnlyList<CveLink> links = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -336,18 +336,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FirmwareCve(
-                cveId.Value,
-                component.Value,
-                severity.Value,
-                name.Value,
-                cvssScore.Value,
-                cvssVersion.Value,
-                cvssV2Score.Value,
-                cvssV3Score.Value,
-                Optional.ToNullable(publishDate),
-                Optional.ToNullable(updatedDate),
+                cveId,
+                component,
+                severity,
+                name,
+                cvssScore,
+                cvssVersion,
+                cvssV2Score,
+                cvssV3Score,
+                publishDate,
+                updatedDate,
                 links ?? new ChangeTrackingList<CveLink>(),
-                description.Value,
+                description,
                 serializedAdditionalRawData);
         }
 

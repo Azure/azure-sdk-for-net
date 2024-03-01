@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<ReportableException> error = default;
+            ReportableException error = default;
             IReadOnlyList<SyncMigrationDatabaseErrorEvent> events = default;
-            Optional<string> id = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(id.Value, resultType, serializedAdditionalRawData, error.Value, events ?? new ChangeTrackingList<SyncMigrationDatabaseErrorEvent>());
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(id, resultType, serializedAdditionalRawData, error, events ?? new ChangeTrackingList<SyncMigrationDatabaseErrorEvent>());
         }
 
         BinaryData IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError>.Write(ModelReaderWriterOptions options)

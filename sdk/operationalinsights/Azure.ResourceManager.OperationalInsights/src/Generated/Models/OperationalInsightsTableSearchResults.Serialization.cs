@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<string> query = default;
-            Optional<string> description = default;
-            Optional<int> limit = default;
-            Optional<DateTimeOffset> startSearchTime = default;
-            Optional<DateTimeOffset> endSearchTime = default;
-            Optional<string> sourceTable = default;
-            Optional<Guid> azureAsyncOperationId = default;
+            string query = default;
+            string description = default;
+            int? limit = default;
+            DateTimeOffset? startSearchTime = default;
+            DateTimeOffset? endSearchTime = default;
+            string sourceTable = default;
+            Guid? azureAsyncOperationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,13 +168,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new OperationalInsightsTableSearchResults(
-                query.Value,
-                description.Value,
-                Optional.ToNullable(limit),
-                Optional.ToNullable(startSearchTime),
-                Optional.ToNullable(endSearchTime),
-                sourceTable.Value,
-                Optional.ToNullable(azureAsyncOperationId),
+                query,
+                description,
+                limit,
+                startSearchTime,
+                endSearchTime,
+                sourceTable,
+                azureAsyncOperationId,
                 serializedAdditionalRawData);
         }
 

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             IReadOnlyList<ManagedInstanceKeyData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceKeyListResult(value ?? new ChangeTrackingList<ManagedInstanceKeyData>(), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedInstanceKeyListResult(value ?? new ChangeTrackingList<ManagedInstanceKeyData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceKeyListResult>.Write(ModelReaderWriterOptions options)

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> value = default;
+            string name = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchSkuCapability(name.Value, value.Value, serializedAdditionalRawData);
+            return new BatchSkuCapability(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchSkuCapability>.Write(ModelReaderWriterOptions options)

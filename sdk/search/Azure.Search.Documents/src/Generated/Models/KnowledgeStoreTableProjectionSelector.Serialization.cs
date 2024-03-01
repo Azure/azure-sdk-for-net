@@ -58,10 +58,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string tableName = default;
-            Optional<string> referenceKeyName = default;
-            Optional<string> generatedKeyName = default;
-            Optional<string> source = default;
-            Optional<string> sourceContext = default;
+            string referenceKeyName = default;
+            string generatedKeyName = default;
+            string source = default;
+            string sourceContext = default;
             IList<InputFieldMappingEntry> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -106,10 +106,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new KnowledgeStoreTableProjectionSelector(
-                referenceKeyName.Value,
-                generatedKeyName.Value,
-                source.Value,
-                sourceContext.Value,
+                referenceKeyName,
+                generatedKeyName,
+                source,
+                sourceContext,
                 inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
                 tableName);
         }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             IReadOnlyList<BackupJobData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupJobListResult(value ?? new ChangeTrackingList<BackupJobData>(), nextLink.Value, serializedAdditionalRawData);
+            return new BackupJobListResult(value ?? new ChangeTrackingList<BackupJobData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupJobListResult>.Write(ModelReaderWriterOptions options)

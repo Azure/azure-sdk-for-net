@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<AppServiceOperationStatus> status = default;
+            string id = default;
+            string name = default;
+            AppServiceOperationStatus? status = default;
             IReadOnlyList<ResponseError> errors = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> modifiedTime = default;
-            Optional<DateTimeOffset> expirationTime = default;
-            Optional<Guid> geoMasterOperationId = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? modifiedTime = default;
+            DateTimeOffset? expirationTime = default;
+            Guid? geoMasterOperationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,14 +198,14 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppServiceOperation(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(status),
+                id,
+                name,
+                status,
                 errors ?? new ChangeTrackingList<ResponseError>(),
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(modifiedTime),
-                Optional.ToNullable(expirationTime),
-                Optional.ToNullable(geoMasterOperationId),
+                createdTime,
+                modifiedTime,
+                expirationTime,
+                geoMasterOperationId,
                 serializedAdditionalRawData);
         }
 

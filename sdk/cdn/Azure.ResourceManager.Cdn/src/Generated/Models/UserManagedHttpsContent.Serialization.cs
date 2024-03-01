@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
             KeyVaultCertificateSource certificateSourceParameters = default;
             CertificateSource certificateSource = default;
             SecureDeliveryProtocolType protocolType = default;
-            Optional<CdnMinimumTlsVersion> minimumTlsVersion = default;
+            CdnMinimumTlsVersion? minimumTlsVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserManagedHttpsContent(certificateSource, protocolType, Optional.ToNullable(minimumTlsVersion), serializedAdditionalRawData, certificateSourceParameters);
+            return new UserManagedHttpsContent(certificateSource, protocolType, minimumTlsVersion, serializedAdditionalRawData, certificateSourceParameters);
         }
 
         BinaryData IPersistableModel<UserManagedHttpsContent>.Write(ModelReaderWriterOptions options)

@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> apiEndpoint = default;
-            Optional<string> webEndpoint = default;
-            Optional<string> provisioningState = default;
-            Optional<int> tenantFeatures = default;
-            Optional<HubBillingInfoFormat> hubBillingInfo = default;
+            SystemData systemData = default;
+            string apiEndpoint = default;
+            string webEndpoint = default;
+            string provisioningState = default;
+            int? tenantFeatures = default;
+            HubBillingInfoFormat hubBillingInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,14 +240,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                apiEndpoint.Value,
-                webEndpoint.Value,
-                provisioningState.Value,
-                Optional.ToNullable(tenantFeatures),
-                hubBillingInfo.Value,
+                apiEndpoint,
+                webEndpoint,
+                provisioningState,
+                tenantFeatures,
+                hubBillingInfo,
                 serializedAdditionalRawData);
         }
 

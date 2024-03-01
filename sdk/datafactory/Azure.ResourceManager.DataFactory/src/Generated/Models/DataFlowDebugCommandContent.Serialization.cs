@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<Guid> sessionId = default;
-            Optional<DataFlowDebugCommandType> command = default;
-            Optional<DataFlowDebugCommandPayload> commandPayload = default;
+            Guid? sessionId = default;
+            DataFlowDebugCommandType? command = default;
+            DataFlowDebugCommandPayload commandPayload = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFlowDebugCommandContent(Optional.ToNullable(sessionId), Optional.ToNullable(command), commandPayload.Value, serializedAdditionalRawData);
+            return new DataFlowDebugCommandContent(sessionId, command, commandPayload, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFlowDebugCommandContent>.Write(ModelReaderWriterOptions options)

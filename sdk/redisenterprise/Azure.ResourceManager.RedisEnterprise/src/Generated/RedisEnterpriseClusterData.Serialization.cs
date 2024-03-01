@@ -161,19 +161,19 @@ namespace Azure.ResourceManager.RedisEnterprise
             }
             RedisEnterpriseSku sku = default;
             IList<string> zones = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RedisEnterpriseTlsVersion> minimumTlsVersion = default;
-            Optional<ClusterPropertiesEncryption> encryption = default;
-            Optional<string> hostName = default;
-            Optional<RedisEnterpriseProvisioningStatus> provisioningState = default;
-            Optional<RedisEnterpriseClusterResourceState> resourceState = default;
-            Optional<string> redisVersion = default;
+            SystemData systemData = default;
+            RedisEnterpriseTlsVersion? minimumTlsVersion = default;
+            ClusterPropertiesEncryption encryption = default;
+            string hostName = default;
+            RedisEnterpriseProvisioningStatus? provisioningState = default;
+            RedisEnterpriseClusterResourceState? resourceState = default;
+            string redisVersion = default;
             IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -332,18 +332,18 @@ namespace Azure.ResourceManager.RedisEnterprise
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 sku,
                 zones ?? new ChangeTrackingList<string>(),
                 identity,
-                Optional.ToNullable(minimumTlsVersion),
-                encryption.Value,
-                hostName.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(resourceState),
-                redisVersion.Value,
+                minimumTlsVersion,
+                encryption,
+                hostName,
+                provisioningState,
+                resourceState,
+                redisVersion,
                 privateEndpointConnections ?? new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>(),
                 serializedAdditionalRawData);
         }

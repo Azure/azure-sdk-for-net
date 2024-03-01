@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<double> cpu = default;
-            Optional<string> memory = default;
-            Optional<string> ephemeralStorage = default;
+            double? cpu = default;
+            string memory = default;
+            string ephemeralStorage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppContainerResources(Optional.ToNullable(cpu), memory.Value, ephemeralStorage.Value, serializedAdditionalRawData);
+            return new AppContainerResources(cpu, memory, ephemeralStorage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppContainerResources>.Write(ModelReaderWriterOptions options)

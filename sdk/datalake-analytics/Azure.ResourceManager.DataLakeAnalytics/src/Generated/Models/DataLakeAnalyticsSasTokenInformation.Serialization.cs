@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             {
                 return null;
             }
-            Optional<string> accessToken = default;
+            string accessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsSasTokenInformation(accessToken.Value, serializedAdditionalRawData);
+            return new DataLakeAnalyticsSasTokenInformation(accessToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsSasTokenInformation>.Write(ModelReaderWriterOptions options)

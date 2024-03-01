@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<VmInstanceHardwareProfile> hardwareProfile = default;
-            Optional<StorageProfileUpdate> storageProfile = default;
-            Optional<VMwareNetworkProfileUpdate> networkProfile = default;
+            VmInstanceHardwareProfile hardwareProfile = default;
+            StorageProfileUpdate storageProfile = default;
+            VMwareNetworkProfileUpdate networkProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareVmInstancePatch(hardwareProfile.Value, storageProfile.Value, networkProfile.Value, serializedAdditionalRawData);
+            return new VMwareVmInstancePatch(hardwareProfile, storageProfile, networkProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareVmInstancePatch>.Write(ModelReaderWriterOptions options)

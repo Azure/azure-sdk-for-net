@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<SecurityInsightsDataTypeConnectionState> state = default;
+            SecurityInsightsDataTypeConnectionState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OfficeDataConnectorDataTypesSharePoint(Optional.ToNullable(state), serializedAdditionalRawData);
+            return new OfficeDataConnectorDataTypesSharePoint(state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OfficeDataConnectorDataTypesSharePoint>.Write(ModelReaderWriterOptions options)

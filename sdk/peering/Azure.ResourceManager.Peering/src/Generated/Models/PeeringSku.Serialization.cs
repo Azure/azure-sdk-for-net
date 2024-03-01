@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<PeeringTier> tier = default;
-            Optional<PeeringFamily> family = default;
-            Optional<PeeringSize> size = default;
+            string name = default;
+            PeeringTier? tier = default;
+            PeeringFamily? family = default;
+            PeeringSize? size = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringSku(name.Value, Optional.ToNullable(tier), Optional.ToNullable(family), Optional.ToNullable(size), serializedAdditionalRawData);
+            return new PeeringSku(name, tier, family, size, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringSku>.Write(ModelReaderWriterOptions options)

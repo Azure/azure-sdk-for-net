@@ -118,14 +118,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ResourceType> linkedResourceType = default;
-            Optional<ResourceIdentifier> link = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<bool> allowDelete = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            ResourceType? linkedResourceType = default;
+            ResourceIdentifier link = default;
+            NetworkProvisioningState? provisioningState = default;
+            bool? allowDelete = default;
             IList<AzureLocation> locations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -232,15 +232,15 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ServiceAssociationLink(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(linkedResourceType),
-                link.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(allowDelete),
+                etag,
+                linkedResourceType,
+                link,
+                provisioningState,
+                allowDelete,
                 locations ?? new ChangeTrackingList<AzureLocation>());
         }
 

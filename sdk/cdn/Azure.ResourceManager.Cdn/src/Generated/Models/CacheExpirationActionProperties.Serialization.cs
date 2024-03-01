@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Cdn.Models
             CacheExpirationActionType typeName = default;
             CacheBehaviorSetting cacheBehavior = default;
             CdnCacheLevel cacheType = default;
-            Optional<TimeSpan?> cacheDuration = default;
+            TimeSpan? cacheDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CacheExpirationActionProperties(typeName, cacheBehavior, cacheType, Optional.ToNullable(cacheDuration), serializedAdditionalRawData);
+            return new CacheExpirationActionProperties(typeName, cacheBehavior, cacheType, cacheDuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CacheExpirationActionProperties>.Write(ModelReaderWriterOptions options)

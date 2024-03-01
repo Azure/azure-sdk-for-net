@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<AzureLocation?> location = default;
+            ResourceIdentifier id = default;
+            AzureLocation? location = default;
             IList<string> groupIds = default;
-            Optional<RegistryPrivateEndpoint> privateEndpoint = default;
-            Optional<RegistryPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<string> provisioningState = default;
+            RegistryPrivateEndpoint privateEndpoint = default;
+            RegistryPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,12 +238,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RegistryPrivateEndpointConnection(
-                id.Value,
-                Optional.ToNullable(location),
+                id,
+                location,
                 groupIds ?? new ChangeTrackingList<string>(),
-                privateEndpoint.Value,
-                privateLinkServiceConnectionState.Value,
-                provisioningState.Value,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

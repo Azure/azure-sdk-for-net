@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 return null;
             }
             IReadOnlyList<PostgreSqlServerSecurityAlertPolicyData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerSecurityAlertPolicyListResult(value ?? new ChangeTrackingList<PostgreSqlServerSecurityAlertPolicyData>(), nextLink.Value, serializedAdditionalRawData);
+            return new PostgreSqlServerSecurityAlertPolicyListResult(value ?? new ChangeTrackingList<PostgreSqlServerSecurityAlertPolicyData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerSecurityAlertPolicyListResult>.Write(ModelReaderWriterOptions options)

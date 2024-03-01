@@ -126,17 +126,17 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string category = default;
             string displayName = default;
             string query = default;
-            Optional<string> functionAlias = default;
-            Optional<string> functionParameters = default;
-            Optional<long> version = default;
+            string functionAlias = default;
+            string functionParameters = default;
+            long? version = default;
             IList<OperationalInsightsTag> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -245,14 +245,14 @@ namespace Azure.ResourceManager.OperationalInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(etag),
+                systemData,
+                etag,
                 category,
                 displayName,
                 query,
-                functionAlias.Value,
-                functionParameters.Value,
-                Optional.ToNullable(version),
+                functionAlias,
+                functionParameters,
+                version,
                 tags ?? new ChangeTrackingList<OperationalInsightsTag>(),
                 serializedAdditionalRawData);
         }

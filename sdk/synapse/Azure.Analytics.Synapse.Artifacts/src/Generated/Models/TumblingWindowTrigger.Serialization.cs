@@ -95,16 +95,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             TriggerPipelineReference pipeline = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<TriggerRuntimeState> runtimeState = default;
+            string description = default;
+            TriggerRuntimeState? runtimeState = default;
             IList<object> annotations = default;
             TumblingWindowFrequency frequency = default;
             int interval = default;
             DateTimeOffset startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<object> delay = default;
+            DateTimeOffset? endTime = default;
+            object delay = default;
             int maxConcurrency = default;
-            Optional<RetryPolicy> retryPolicy = default;
+            RetryPolicy retryPolicy = default;
             IList<DependencyReference> dependsOn = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -233,18 +233,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new TumblingWindowTrigger(
                 type,
-                description.Value,
-                Optional.ToNullable(runtimeState),
+                description,
+                runtimeState,
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
                 pipeline,
                 frequency,
                 interval,
                 startTime,
-                Optional.ToNullable(endTime),
-                delay.Value,
+                endTime,
+                delay,
                 maxConcurrency,
-                retryPolicy.Value,
+                retryPolicy,
                 dependsOn ?? new ChangeTrackingList<DependencyReference>());
         }
 

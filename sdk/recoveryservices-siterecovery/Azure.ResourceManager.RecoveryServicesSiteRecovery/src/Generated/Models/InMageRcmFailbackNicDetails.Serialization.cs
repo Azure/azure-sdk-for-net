@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> macAddress = default;
-            Optional<string> networkName = default;
-            Optional<string> adapterType = default;
-            Optional<IPAddress> sourceIPAddress = default;
+            string macAddress = default;
+            string networkName = default;
+            string adapterType = default;
+            IPAddress sourceIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackNicDetails(macAddress.Value, networkName.Value, adapterType.Value, sourceIPAddress.Value, serializedAdditionalRawData);
+            return new InMageRcmFailbackNicDetails(macAddress, networkName, adapterType, sourceIPAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackNicDetails>.Write(ModelReaderWriterOptions options)

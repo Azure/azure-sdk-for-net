@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             IList<LogAnalyticsDestination> logAnalytics = default;
             IList<MonitoringAccountDestination> monitoringAccounts = default;
-            Optional<DestinationsSpecAzureMonitorMetrics> azureMonitorMetrics = default;
+            DestinationsSpecAzureMonitorMetrics azureMonitorMetrics = default;
             IList<DataCollectionRuleEventHubDestination> eventHubs = default;
             IList<DataCollectionRuleEventHubDirectDestination> eventHubsDirect = default;
             IList<DataCollectionRuleStorageBlobDestination> storageBlobsDirect = default;
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DataCollectionRuleDestinations(
                 logAnalytics ?? new ChangeTrackingList<LogAnalyticsDestination>(),
                 monitoringAccounts ?? new ChangeTrackingList<MonitoringAccountDestination>(),
-                azureMonitorMetrics.Value,
+                azureMonitorMetrics,
                 eventHubs ?? new ChangeTrackingList<DataCollectionRuleEventHubDestination>(),
                 eventHubsDirect ?? new ChangeTrackingList<DataCollectionRuleEventHubDirectDestination>(),
                 storageBlobsDirect ?? new ChangeTrackingList<DataCollectionRuleStorageBlobDestination>(),

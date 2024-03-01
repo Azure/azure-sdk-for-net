@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<ControlImpact> controlImpact = default;
-            Optional<string> expectedDuration = default;
-            Optional<string> impactDescription = default;
-            Optional<DateTimeOffset> supportExpiryDate = default;
-            Optional<string> targetClusterVersion = default;
-            Optional<WorkloadImpact> workloadImpact = default;
+            ControlImpact? controlImpact = default;
+            string expectedDuration = default;
+            string impactDescription = default;
+            DateTimeOffset? supportExpiryDate = default;
+            string targetClusterVersion = default;
+            WorkloadImpact? workloadImpact = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +153,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ClusterAvailableUpgradeVersion(
-                Optional.ToNullable(controlImpact),
-                expectedDuration.Value,
-                impactDescription.Value,
-                Optional.ToNullable(supportExpiryDate),
-                targetClusterVersion.Value,
-                Optional.ToNullable(workloadImpact),
+                controlImpact,
+                expectedDuration,
+                impactDescription,
+                supportExpiryDate,
+                targetClusterVersion,
+                workloadImpact,
                 serializedAdditionalRawData);
         }
 

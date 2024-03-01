@@ -146,20 +146,20 @@ namespace Azure.ResourceManager.AppService.Models
             string name = default;
             ValidateResourceType type = default;
             AzureLocation location = default;
-            Optional<ResourceIdentifier> serverFarmId = default;
-            Optional<string> skuName = default;
-            Optional<bool> needLinuxWorkers = default;
-            Optional<bool> isSpot = default;
-            Optional<int> capacity = default;
-            Optional<string> hostingEnvironment = default;
-            Optional<bool> isXenon = default;
-            Optional<Uri> containerRegistryBaseUrl = default;
-            Optional<string> containerRegistryUsername = default;
-            Optional<string> containerRegistryPassword = default;
-            Optional<string> containerImageRepository = default;
-            Optional<string> containerImageTag = default;
-            Optional<string> containerImagePlatform = default;
-            Optional<AppServiceEnvironmentProperties> appServiceEnvironment = default;
+            ResourceIdentifier serverFarmId = default;
+            string skuName = default;
+            bool? needLinuxWorkers = default;
+            bool? isSpot = default;
+            int? capacity = default;
+            string hostingEnvironment = default;
+            bool? isXenon = default;
+            Uri containerRegistryBaseUrl = default;
+            string containerRegistryUsername = default;
+            string containerRegistryPassword = default;
+            string containerImageRepository = default;
+            string containerImageTag = default;
+            string containerImagePlatform = default;
+            AppServiceEnvironmentProperties appServiceEnvironment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -299,20 +299,20 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 type,
                 location,
-                serverFarmId.Value,
-                skuName.Value,
-                Optional.ToNullable(needLinuxWorkers),
-                Optional.ToNullable(isSpot),
-                Optional.ToNullable(capacity),
-                hostingEnvironment.Value,
-                Optional.ToNullable(isXenon),
-                containerRegistryBaseUrl.Value,
-                containerRegistryUsername.Value,
-                containerRegistryPassword.Value,
-                containerImageRepository.Value,
-                containerImageTag.Value,
-                containerImagePlatform.Value,
-                appServiceEnvironment.Value,
+                serverFarmId,
+                skuName,
+                needLinuxWorkers,
+                isSpot,
+                capacity,
+                hostingEnvironment,
+                isXenon,
+                containerRegistryBaseUrl,
+                containerRegistryUsername,
+                containerRegistryPassword,
+                containerImageRepository,
+                containerImageTag,
+                containerImagePlatform,
+                appServiceEnvironment,
                 serializedAdditionalRawData);
         }
 

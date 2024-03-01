@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.Avs.Models
             }
             IList<string> serverAddresses = default;
             DhcpTypeEnum dhcpType = default;
-            Optional<string> displayName = default;
+            string displayName = default;
             IReadOnlyList<string> segments = default;
-            Optional<WorkloadNetworkDhcpProvisioningState> provisioningState = default;
-            Optional<long> revision = default;
+            WorkloadNetworkDhcpProvisioningState? provisioningState = default;
+            long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.Avs.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new WorkloadNetworkDhcpRelay(
                 dhcpType,
-                displayName.Value,
+                displayName,
                 segments ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(revision),
+                provisioningState,
+                revision,
                 serializedAdditionalRawData,
                 serverAddresses ?? new ChangeTrackingList<string>());
         }

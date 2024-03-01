@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> preprocessingComponentId = default;
+            string preprocessingComponentId = default;
             DateTimeOffset windowEnd = default;
             DateTimeOffset windowStart = default;
             IDictionary<string, string> columns = default;
-            Optional<string> dataContext = default;
+            string dataContext = default;
             MonitoringInputDataType inputDataType = default;
             JobInputType jobInputType = default;
             Uri uri = default;
@@ -196,12 +196,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StaticInputData(
                 columns ?? new ChangeTrackingDictionary<string, string>(),
-                dataContext.Value,
+                dataContext,
                 inputDataType,
                 jobInputType,
                 uri,
                 serializedAdditionalRawData,
-                preprocessingComponentId.Value,
+                preprocessingComponentId,
                 windowEnd,
                 windowStart);
         }

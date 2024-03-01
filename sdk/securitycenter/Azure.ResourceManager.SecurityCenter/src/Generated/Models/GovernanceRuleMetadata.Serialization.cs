@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> createdBy = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<string> updatedBy = default;
-            Optional<DateTimeOffset> updatedOn = default;
+            string createdBy = default;
+            DateTimeOffset? createdOn = default;
+            string updatedBy = default;
+            DateTimeOffset? updatedOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GovernanceRuleMetadata(createdBy.Value, Optional.ToNullable(createdOn), updatedBy.Value, Optional.ToNullable(updatedOn), serializedAdditionalRawData);
+            return new GovernanceRuleMetadata(createdBy, createdOn, updatedBy, updatedOn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GovernanceRuleMetadata>.Write(ModelReaderWriterOptions options)

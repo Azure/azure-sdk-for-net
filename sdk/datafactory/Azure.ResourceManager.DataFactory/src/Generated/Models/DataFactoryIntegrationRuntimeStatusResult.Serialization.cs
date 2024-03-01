@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IntegrationRuntimeStatus properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryIntegrationRuntimeStatusResult(name.Value, properties, serializedAdditionalRawData);
+            return new DataFactoryIntegrationRuntimeStatusResult(name, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryIntegrationRuntimeStatusResult>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<ServiceAlertData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAlertListResult(nextLink.Value, value ?? new ChangeTrackingList<ServiceAlertData>(), serializedAdditionalRawData);
+            return new ServiceAlertListResult(nextLink, value ?? new ChangeTrackingList<ServiceAlertData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertListResult>.Write(ModelReaderWriterOptions options)

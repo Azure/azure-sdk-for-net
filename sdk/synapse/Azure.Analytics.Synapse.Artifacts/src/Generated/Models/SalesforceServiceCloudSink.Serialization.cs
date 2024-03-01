@@ -75,15 +75,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<SalesforceSinkWriteBehavior> writeBehavior = default;
-            Optional<object> externalIdFieldName = default;
-            Optional<object> ignoreNullValues = default;
+            SalesforceSinkWriteBehavior? writeBehavior = default;
+            object externalIdFieldName = default;
+            object ignoreNullValues = default;
             string type = default;
-            Optional<object> writeBatchSize = default;
-            Optional<object> writeBatchTimeout = default;
-            Optional<object> sinkRetryCount = default;
-            Optional<object> sinkRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object writeBatchSize = default;
+            object writeBatchTimeout = default;
+            object sinkRetryCount = default;
+            object sinkRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -170,15 +170,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SalesforceServiceCloudSink(
                 type,
-                writeBatchSize.Value,
-                writeBatchTimeout.Value,
-                sinkRetryCount.Value,
-                sinkRetryWait.Value,
-                maxConcurrentConnections.Value,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
                 additionalProperties,
-                Optional.ToNullable(writeBehavior),
-                externalIdFieldName.Value,
-                ignoreNullValues.Value);
+                writeBehavior,
+                externalIdFieldName,
+                ignoreNullValues);
         }
 
         internal partial class SalesforceServiceCloudSinkConverter : JsonConverter<SalesforceServiceCloudSink>

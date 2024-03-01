@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> accountKey = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            string accountName = default;
+            string accountKey = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobStorageAccount(accountName.Value, accountKey.Value, Optional.ToNullable(authenticationMode), serializedAdditionalRawData);
+            return new StreamingJobStorageAccount(accountName, accountKey, authenticationMode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobStorageAccount>.Write(ModelReaderWriterOptions options)

@@ -100,6 +100,30 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("disableShowmount");
                 }
             }
+            if (NfsV4IdDomain != null)
+            {
+                if (NfsV4IdDomain != null)
+                {
+                    writer.WritePropertyName("nfsV4IDDomain"u8);
+                    writer.WriteStringValue(NfsV4IdDomain);
+                }
+                else
+                {
+                    writer.WriteNull("nfsV4IDDomain");
+                }
+            }
+            if (options.Format != "W" && IsMultiAdEnabled.HasValue)
+            {
+                if (IsMultiAdEnabled != null)
+                {
+                    writer.WritePropertyName("isMultiAdEnabled"u8);
+                    writer.WriteBooleanValue(IsMultiAdEnabled.Value);
+                }
+                else
+                {
+                    writer.WriteNull("isMultiAdEnabled");
+                }
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -139,17 +163,19 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            string provisioningState = default;
             IList<NetAppAccountActiveDirectory> activeDirectories = default;
-            Optional<NetAppAccountEncryption> encryption = default;
-            Optional<bool?> disableShowmount = default;
+            NetAppAccountEncryption encryption = default;
+            bool? disableShowmount = default;
+            string nfsV4IdDomain = default;
+            bool? isMultiAdEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,6 +280,26 @@ namespace Azure.ResourceManager.NetApp.Models
                             disableShowmount = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("nfsV4IDDomain"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                nfsV4IdDomain = null;
+                                continue;
+                            }
+                            nfsV4IdDomain = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("isMultiAdEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                isMultiAdEnabled = null;
+                                continue;
+                            }
+                            isMultiAdEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -267,14 +313,16 @@ namespace Azure.ResourceManager.NetApp.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                provisioningState.Value,
+                provisioningState,
                 activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
-                encryption.Value,
-                Optional.ToNullable(disableShowmount),
+                encryption,
+                disableShowmount,
+                nfsV4IdDomain,
+                isMultiAdEnabled,
                 serializedAdditionalRawData);
         }
 

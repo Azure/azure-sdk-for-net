@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> targetDatabaseName = default;
+            string name = default;
+            string targetDatabaseName = default;
             IDictionary<string, string> migrationSetting = default;
             IDictionary<string, string> sourceSetting = default;
             IDictionary<string, string> targetSetting = default;
@@ -201,8 +201,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MigrateMySqlAzureDBForMySqlSyncDatabaseInput(
-                name.Value,
-                targetDatabaseName.Value,
+                name,
+                targetDatabaseName,
                 migrationSetting ?? new ChangeTrackingDictionary<string, string>(),
                 sourceSetting ?? new ChangeTrackingDictionary<string, string>(),
                 targetSetting ?? new ChangeTrackingDictionary<string, string>(),

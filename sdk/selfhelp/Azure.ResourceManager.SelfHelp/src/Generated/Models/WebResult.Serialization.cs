@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> replacementKey = default;
+            string replacementKey = default;
             IList<SearchResult> searchResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebResult(replacementKey.Value, searchResults ?? new ChangeTrackingList<SearchResult>(), serializedAdditionalRawData);
+            return new WebResult(replacementKey, searchResults ?? new ChangeTrackingList<SearchResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebResult>.Write(ModelReaderWriterOptions options)

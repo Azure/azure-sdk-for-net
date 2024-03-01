@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecurityAssessmentMetadataData : ResourceData
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void DeserializePolicyDefinitionId(JsonProperty property, ref Optional<ResourceIdentifier> policyDefinitionId)
+        internal static void DeserializePolicyDefinitionId(JsonProperty property, ref ResourceIdentifier policyDefinitionId)
         {
             if (property.Value.ValueKind == JsonValueKind.Null)
             {

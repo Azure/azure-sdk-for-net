@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IList<string> linkedReadProperties = default;
             IList<string> linkedWriteProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new APIKeyContent(name.Value, linkedReadProperties ?? new ChangeTrackingList<string>(), linkedWriteProperties ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new APIKeyContent(name, linkedReadProperties ?? new ChangeTrackingList<string>(), linkedWriteProperties ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<APIKeyContent>.Write(ModelReaderWriterOptions options)

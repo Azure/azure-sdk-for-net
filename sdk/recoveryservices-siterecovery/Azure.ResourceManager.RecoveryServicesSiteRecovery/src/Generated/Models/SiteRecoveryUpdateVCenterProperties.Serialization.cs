@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<Guid> processServerId = default;
-            Optional<string> port = default;
-            Optional<string> runAsAccountId = default;
+            string friendlyName = default;
+            IPAddress ipAddress = default;
+            Guid? processServerId = default;
+            string port = default;
+            string runAsAccountId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryUpdateVCenterProperties(
-                friendlyName.Value,
-                ipAddress.Value,
-                Optional.ToNullable(processServerId),
-                port.Value,
-                runAsAccountId.Value,
+                friendlyName,
+                ipAddress,
+                processServerId,
+                port,
+                runAsAccountId,
                 serializedAdditionalRawData);
         }
 

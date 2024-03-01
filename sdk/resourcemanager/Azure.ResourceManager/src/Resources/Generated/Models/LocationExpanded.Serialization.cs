@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> name = default;
-            Optional<LocationType> type = default;
-            Optional<string> displayName = default;
-            Optional<string> regionalDisplayName = default;
-            Optional<LocationMetadata> metadata = default;
+            string id = default;
+            string subscriptionId = default;
+            string name = default;
+            LocationType? type = default;
+            string displayName = default;
+            string regionalDisplayName = default;
+            LocationMetadata metadata = default;
             IReadOnlyList<AvailabilityZoneMappings> availabilityZoneMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -185,13 +185,13 @@ namespace Azure.ResourceManager.Resources.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LocationExpanded(
-                id.Value,
-                subscriptionId.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                displayName.Value,
-                regionalDisplayName.Value,
-                metadata.Value,
+                id,
+                subscriptionId,
+                name,
+                type,
+                displayName,
+                regionalDisplayName,
+                metadata,
                 availabilityZoneMappings ?? new ChangeTrackingList<AvailabilityZoneMappings>(),
                 serializedAdditionalRawData);
         }

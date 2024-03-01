@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             DateTimeOffset startTime = default;
-            Optional<DateTimeOffset?> expiryTime = default;
-            Optional<BinaryData> interval = default;
+            DateTimeOffset? expiryTime = default;
+            BinaryData interval = default;
             AutomationScheduleFrequency frequency = default;
-            Optional<string> timeZone = default;
-            Optional<AutomationAdvancedSchedule> advancedSchedule = default;
+            string timeZone = default;
+            AutomationAdvancedSchedule advancedSchedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,13 +197,13 @@ namespace Azure.ResourceManager.Automation.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AutomationScheduleCreateOrUpdateContent(
                 name,
-                description.Value,
+                description,
                 startTime,
-                Optional.ToNullable(expiryTime),
-                interval.Value,
+                expiryTime,
+                interval,
                 frequency,
-                timeZone.Value,
-                advancedSchedule.Value,
+                timeZone,
+                advancedSchedule,
                 serializedAdditionalRawData);
         }
 

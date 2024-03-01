@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> dataCollectionFrequency = default;
-            Optional<string> dataReportingFrequency = default;
-            Optional<TimeSpan> maxAllowedUnreportedUsageDuration = default;
-            Optional<EdgeUsageDataEventHub> eventHubDetails = default;
+            string dataCollectionFrequency = default;
+            string dataReportingFrequency = default;
+            TimeSpan? maxAllowedUnreportedUsageDuration = default;
+            EdgeUsageDataEventHub eventHubDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeUsageDataCollectionPolicy(dataCollectionFrequency.Value, dataReportingFrequency.Value, Optional.ToNullable(maxAllowedUnreportedUsageDuration), eventHubDetails.Value, serializedAdditionalRawData);
+            return new EdgeUsageDataCollectionPolicy(dataCollectionFrequency, dataReportingFrequency, maxAllowedUnreportedUsageDuration, eventHubDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeUsageDataCollectionPolicy>.Write(ModelReaderWriterOptions options)

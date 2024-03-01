@@ -19,9 +19,9 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> resourceId = default;
-            Optional<StorageAccountAttributes> attributes = default;
+            string id = default;
+            string resourceId = default;
+            StorageAccountAttributes attributes = default;
             IReadOnlyDictionary<string, string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new StorageAccountItem(id.Value, resourceId.Value, attributes.Value, tags ?? new ChangeTrackingDictionary<string, string>());
+            return new StorageAccountItem(id, resourceId, attributes, tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

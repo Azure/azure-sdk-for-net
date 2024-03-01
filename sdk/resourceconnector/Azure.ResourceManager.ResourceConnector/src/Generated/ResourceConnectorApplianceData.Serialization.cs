@@ -137,19 +137,19 @@ namespace Azure.ResourceManager.ResourceConnector
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceConnectorDistro> distro = default;
-            Optional<AppliancePropertiesInfrastructureConfig> infrastructureConfig = default;
-            Optional<string> provisioningState = default;
-            Optional<string> publicKey = default;
-            Optional<ResourceConnectorStatus> status = default;
-            Optional<string> version = default;
+            SystemData systemData = default;
+            ResourceConnectorDistro? distro = default;
+            AppliancePropertiesInfrastructureConfig infrastructureConfig = default;
+            string provisioningState = default;
+            string publicKey = default;
+            ResourceConnectorStatus? status = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -270,16 +270,16 @@ namespace Azure.ResourceManager.ResourceConnector
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                Optional.ToNullable(distro),
-                infrastructureConfig.Value,
-                provisioningState.Value,
-                publicKey.Value,
-                Optional.ToNullable(status),
-                version.Value,
+                distro,
+                infrastructureConfig,
+                provisioningState,
+                publicKey,
+                status,
+                version,
                 serializedAdditionalRawData);
         }
 

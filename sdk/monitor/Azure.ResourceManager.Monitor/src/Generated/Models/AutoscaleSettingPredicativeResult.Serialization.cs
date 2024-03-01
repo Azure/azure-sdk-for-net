@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> timespan = default;
-            Optional<TimeSpan> interval = default;
-            Optional<string> metricName = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
+            string timespan = default;
+            TimeSpan? interval = default;
+            string metricName = default;
+            ResourceIdentifier targetResourceId = default;
             IReadOnlyList<PredictiveValue> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AutoscaleSettingPredicativeResult(
-                timespan.Value,
-                Optional.ToNullable(interval),
-                metricName.Value,
-                targetResourceId.Value,
+                timespan,
+                interval,
+                metricName,
+                targetResourceId,
                 data ?? new ChangeTrackingList<PredictiveValue>(),
                 serializedAdditionalRawData);
         }
