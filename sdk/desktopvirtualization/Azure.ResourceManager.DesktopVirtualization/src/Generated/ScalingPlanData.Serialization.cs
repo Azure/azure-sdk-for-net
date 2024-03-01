@@ -29,37 +29,37 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagedBy))
+            if (ManagedBy != null)
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Plan))
+            if (Plan != null)
             {
                 writer.WritePropertyName("plan"u8);
                 JsonSerializer.Serialize(writer, Plan);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -87,41 +87,41 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ObjectId))
+            if (options.Format != "W" && ObjectId != null)
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             writer.WritePropertyName("timeZone"u8);
             writer.WriteStringValue(TimeZone);
-            if (Optional.IsDefined(ScalingHostPoolType))
+            if (ScalingHostPoolType.HasValue)
             {
                 writer.WritePropertyName("hostPoolType"u8);
                 writer.WriteStringValue(ScalingHostPoolType.Value.ToString());
             }
-            if (Optional.IsDefined(ExclusionTag))
+            if (ExclusionTag != null)
             {
                 writer.WritePropertyName("exclusionTag"u8);
                 writer.WriteStringValue(ExclusionTag);
             }
-            if (Optional.IsCollectionDefined(Schedules))
+            if (!(Schedules is ChangeTrackingList<ScalingSchedule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("schedules"u8);
                 writer.WriteStartArray();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(HostPoolReferences))
+            if (!(HostPoolReferences is ChangeTrackingList<ScalingHostPoolReference> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("hostPoolReferences"u8);
                 writer.WriteStartArray();
@@ -180,26 +180,26 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 return null;
             }
-            Optional<ResourceIdentifier> managedBy = default;
-            Optional<string> kind = default;
-            Optional<ETag> etag = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<DesktopVirtualizationSku> sku = default;
-            Optional<ArmPlan> plan = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ResourceIdentifier managedBy = default;
+            string kind = default;
+            ETag? etag = default;
+            ManagedServiceIdentity identity = default;
+            DesktopVirtualizationSku sku = default;
+            ArmPlan plan = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> objectId = default;
-            Optional<string> description = default;
-            Optional<string> friendlyName = default;
+            SystemData systemData = default;
+            string objectId = default;
+            string description = default;
+            string friendlyName = default;
             string timeZone = default;
-            Optional<ScalingHostPoolType> hostPoolType = default;
-            Optional<string> exclusionTag = default;
-            Optional<IList<ScalingSchedule>> schedules = default;
-            Optional<IList<ScalingHostPoolReference>> hostPoolReferences = default;
+            ScalingHostPoolType? hostPoolType = default;
+            string exclusionTag = default;
+            IList<ScalingSchedule> schedules = default;
+            IList<ScalingHostPoolReference> hostPoolReferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -377,7 +377,28 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScalingPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, timeZone, Optional.ToNullable(hostPoolType), exclusionTag.Value, Optional.ToList(schedules), Optional.ToList(hostPoolReferences), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan, serializedAdditionalRawData);
+            return new ScalingPlanData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                objectId,
+                description,
+                friendlyName,
+                timeZone,
+                hostPoolType,
+                exclusionTag,
+                schedules ?? new ChangeTrackingList<ScalingSchedule>(),
+                hostPoolReferences ?? new ChangeTrackingList<ScalingHostPoolReference>(),
+                managedBy,
+                kind,
+                etag,
+                identity,
+                sku,
+                plan,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScalingPlanData>.Write(ModelReaderWriterOptions options)

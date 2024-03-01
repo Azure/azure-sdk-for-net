@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AttachedNetworkConfiguration))
+            if (AttachedNetworkConfiguration != null)
             {
                 writer.WritePropertyName("attachedNetworkConfiguration"u8);
                 writer.WriteObjectValue(AttachedNetworkConfiguration);
             }
-            if (Optional.IsDefined(BgpServiceLoadBalancerConfiguration))
+            if (BgpServiceLoadBalancerConfiguration != null)
             {
                 writer.WritePropertyName("bgpServiceLoadBalancerConfiguration"u8);
                 writer.WriteObjectValue(BgpServiceLoadBalancerConfiguration);
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(CloudServicesNetworkId);
             writer.WritePropertyName("cniNetworkId"u8);
             writer.WriteStringValue(CniNetworkId);
-            if (Optional.IsDefined(DnsServiceIP))
+            if (DnsServiceIP != null)
             {
                 writer.WritePropertyName("dnsServiceIp"u8);
                 writer.WriteStringValue(DnsServiceIP.ToString());
             }
-            if (Optional.IsCollectionDefined(PodCidrs))
+            if (!(PodCidrs is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("podCidrs"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceCidrs))
+            if (!(ServiceCidrs is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("serviceCidrs"u8);
                 writer.WriteStartArray();
@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<AttachedNetworkConfiguration> attachedNetworkConfiguration = default;
-            Optional<BgpServiceLoadBalancerConfiguration> bgpServiceLoadBalancerConfiguration = default;
+            AttachedNetworkConfiguration attachedNetworkConfiguration = default;
+            BgpServiceLoadBalancerConfiguration bgpServiceLoadBalancerConfiguration = default;
             ResourceIdentifier cloudServicesNetworkId = default;
             ResourceIdentifier cniNetworkId = default;
-            Optional<IPAddress> dnsServiceIP = default;
-            Optional<IList<string>> podCidrs = default;
-            Optional<IList<string>> serviceCidrs = default;
+            IPAddress dnsServiceIP = default;
+            IList<string> podCidrs = default;
+            IList<string> serviceCidrs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterNetworkConfiguration(attachedNetworkConfiguration.Value, bgpServiceLoadBalancerConfiguration.Value, cloudServicesNetworkId, cniNetworkId, dnsServiceIP.Value, Optional.ToList(podCidrs), Optional.ToList(serviceCidrs), serializedAdditionalRawData);
+            return new KubernetesClusterNetworkConfiguration(
+                attachedNetworkConfiguration,
+                bgpServiceLoadBalancerConfiguration,
+                cloudServicesNetworkId,
+                cniNetworkId,
+                dnsServiceIP,
+                podCidrs ?? new ChangeTrackingList<string>(),
+                serviceCidrs ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterNetworkConfiguration>.Write(ModelReaderWriterOptions options)

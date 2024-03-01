@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OfferId))
+            if (OfferId != null)
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(PlansContext))
+            if (!(PlansContext is ChangeTrackingList<ContextAndPlansDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("plansContext"u8);
                 writer.WriteStartArray();
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> offerId = default;
-            Optional<ETag> eTag = default;
-            Optional<IList<ContextAndPlansDetails>> plansContext = default;
+            string offerId = default;
+            ETag? eTag = default;
+            IList<ContextAndPlansDetails> plansContext = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MultiContextAndPlansContent(offerId.Value, Optional.ToNullable(eTag), Optional.ToList(plansContext), serializedAdditionalRawData);
+            return new MultiContextAndPlansContent(offerId, eTag, plansContext ?? new ChangeTrackingList<ContextAndPlansDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MultiContextAndPlansContent>.Write(ModelReaderWriterOptions options)

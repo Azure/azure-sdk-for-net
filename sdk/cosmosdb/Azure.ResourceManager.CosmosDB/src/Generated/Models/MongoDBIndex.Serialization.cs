@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteObjectValue(Key);
             }
-            if (Optional.IsDefined(Options))
+            if (Options != null)
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteObjectValue(Options);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<MongoIndexKeys> key = default;
-            Optional<MongoDBIndexConfig> options0 = default;
+            MongoIndexKeys key = default;
+            MongoDBIndexConfig options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBIndex(key.Value, options0.Value, serializedAdditionalRawData);
+            return new MongoDBIndex(key, options0, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBIndex>.Write(ModelReaderWriterOptions options)

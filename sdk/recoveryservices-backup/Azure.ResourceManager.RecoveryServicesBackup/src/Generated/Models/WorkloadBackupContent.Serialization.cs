@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackupType))
+            if (BackupType.HasValue)
             {
                 writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType.Value.ToString());
             }
-            if (Optional.IsDefined(EnableCompression))
+            if (EnableCompression.HasValue)
             {
                 writer.WritePropertyName("enableCompression"u8);
                 writer.WriteBooleanValue(EnableCompression.Value);
             }
-            if (Optional.IsDefined(RecoveryPointExpireOn))
+            if (RecoveryPointExpireOn.HasValue)
             {
                 writer.WritePropertyName("recoveryPointExpiryTimeInUTC"u8);
                 writer.WriteStringValue(RecoveryPointExpireOn.Value, "O");
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupType> backupType = default;
-            Optional<bool> enableCompression = default;
-            Optional<DateTimeOffset> recoveryPointExpiryTimeInUTC = default;
+            BackupType? backupType = default;
+            bool? enableCompression = default;
+            DateTimeOffset? recoveryPointExpiryTimeInUTC = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadBackupContent(objectType, serializedAdditionalRawData, Optional.ToNullable(backupType), Optional.ToNullable(enableCompression), Optional.ToNullable(recoveryPointExpiryTimeInUTC));
+            return new WorkloadBackupContent(objectType, serializedAdditionalRawData, backupType, enableCompression, recoveryPointExpiryTimeInUTC);
         }
 
         BinaryData IPersistableModel<WorkloadBackupContent>.Write(ModelReaderWriterOptions options)

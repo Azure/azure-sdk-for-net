@@ -30,37 +30,37 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Endpoint))
+            if (Endpoint != null)
             {
                 writer.WritePropertyName("endpointUrl"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(BaseEndpoint))
+            if (options.Format != "W" && BaseEndpoint != null)
             {
                 writer.WritePropertyName("endpointBaseUrl"u8);
                 writer.WriteStringValue(BaseEndpoint.AbsoluteUri);
             }
-            if (Optional.IsDefined(MaxEventsPerBatch))
+            if (MaxEventsPerBatch.HasValue)
             {
                 writer.WritePropertyName("maxEventsPerBatch"u8);
                 writer.WriteNumberValue(MaxEventsPerBatch.Value);
             }
-            if (Optional.IsDefined(PreferredBatchSizeInKilobytes))
+            if (PreferredBatchSizeInKilobytes.HasValue)
             {
                 writer.WritePropertyName("preferredBatchSizeInKilobytes"u8);
                 writer.WriteNumberValue(PreferredBatchSizeInKilobytes.Value);
             }
-            if (Optional.IsDefined(AzureActiveDirectoryTenantId))
+            if (AzureActiveDirectoryTenantId.HasValue)
             {
                 writer.WritePropertyName("azureActiveDirectoryTenantId"u8);
                 writer.WriteStringValue(AzureActiveDirectoryTenantId.Value);
             }
-            if (Optional.IsDefined(UriOrAzureActiveDirectoryApplicationId))
+            if (UriOrAzureActiveDirectoryApplicationId != null)
             {
                 writer.WritePropertyName("azureActiveDirectoryApplicationIdOrUri"u8);
                 writer.WriteStringValue(UriOrAzureActiveDirectoryApplicationId);
             }
-            if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
+            if (!(DeliveryAttributeMappings is ChangeTrackingList<DeliveryAttributeMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("deliveryAttributeMappings"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MinimumTlsVersionAllowed))
+            if (MinimumTlsVersionAllowed.HasValue)
             {
                 writer.WritePropertyName("minimumTlsVersionAllowed"u8);
                 writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
@@ -115,14 +115,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Optional<Uri> endpointUri = default;
-            Optional<Uri> endpointBaseUri = default;
-            Optional<int> maxEventsPerBatch = default;
-            Optional<int> preferredBatchSizeInKilobytes = default;
-            Optional<Guid> azureActiveDirectoryTenantId = default;
-            Optional<string> azureActiveDirectoryApplicationIdOrUri = default;
-            Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
-            Optional<TlsVersion> minimumTlsVersionAllowed = default;
+            Uri endpointUri = default;
+            Uri endpointBaseUri = default;
+            int? maxEventsPerBatch = default;
+            int? preferredBatchSizeInKilobytes = default;
+            Guid? azureActiveDirectoryTenantId = default;
+            string azureActiveDirectoryApplicationIdOrUri = default;
+            IList<DeliveryAttributeMapping> deliveryAttributeMappings = default;
+            TlsVersion? minimumTlsVersionAllowed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +223,17 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebHookEventSubscriptionDestination(endpointType, serializedAdditionalRawData, endpointUri.Value, endpointBaseUri.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), Optional.ToNullable(azureActiveDirectoryTenantId), azureActiveDirectoryApplicationIdOrUri.Value, Optional.ToList(deliveryAttributeMappings), Optional.ToNullable(minimumTlsVersionAllowed));
+            return new WebHookEventSubscriptionDestination(
+                endpointType,
+                serializedAdditionalRawData,
+                endpointUri,
+                endpointBaseUri,
+                maxEventsPerBatch,
+                preferredBatchSizeInKilobytes,
+                azureActiveDirectoryTenantId,
+                azureActiveDirectoryApplicationIdOrUri,
+                deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>(),
+                minimumTlsVersionAllowed);
         }
 
         BinaryData IPersistableModel<WebHookEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)

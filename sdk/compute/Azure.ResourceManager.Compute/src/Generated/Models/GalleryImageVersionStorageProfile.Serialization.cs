@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GallerySource))
+            if (GallerySource != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(GallerySource);
             }
-            if (Optional.IsDefined(OSDiskImage))
+            if (OSDiskImage != null)
             {
                 writer.WritePropertyName("osDiskImage"u8);
                 writer.WriteObjectValue(OSDiskImage);
             }
-            if (Optional.IsCollectionDefined(DataDiskImages))
+            if (!(DataDiskImages is ChangeTrackingList<GalleryDataDiskImage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataDiskImages"u8);
                 writer.WriteStartArray();
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<GalleryArtifactVersionFullSource> source = default;
-            Optional<GalleryOSDiskImage> osDiskImage = default;
-            Optional<IList<GalleryDataDiskImage>> dataDiskImages = default;
+            GalleryArtifactVersionFullSource source = default;
+            GalleryOSDiskImage osDiskImage = default;
+            IList<GalleryDataDiskImage> dataDiskImages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageVersionStorageProfile(source.Value, osDiskImage.Value, Optional.ToList(dataDiskImages), serializedAdditionalRawData);
+            return new GalleryImageVersionStorageProfile(source, osDiskImage, dataDiskImages ?? new ChangeTrackingList<GalleryDataDiskImage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageVersionStorageProfile>.Write(ModelReaderWriterOptions options)

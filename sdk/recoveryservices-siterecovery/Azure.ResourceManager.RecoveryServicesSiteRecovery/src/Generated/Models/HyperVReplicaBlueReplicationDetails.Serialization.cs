@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastReplicatedOn))
+            if (LastReplicatedOn.HasValue)
             {
                 writer.WritePropertyName("lastReplicatedTime"u8);
                 writer.WriteStringValue(LastReplicatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(VmNics))
+            if (!(VmNics is ChangeTrackingList<VmNicDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
@@ -41,27 +41,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VmId))
+            if (VmId != null)
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId);
             }
-            if (Optional.IsDefined(VmProtectionState))
+            if (VmProtectionState != null)
             {
                 writer.WritePropertyName("vmProtectionState"u8);
                 writer.WriteStringValue(VmProtectionState);
             }
-            if (Optional.IsDefined(VmProtectionStateDescription))
+            if (VmProtectionStateDescription != null)
             {
                 writer.WritePropertyName("vmProtectionStateDescription"u8);
                 writer.WriteStringValue(VmProtectionStateDescription);
             }
-            if (Optional.IsDefined(InitialReplicationDetails))
+            if (InitialReplicationDetails != null)
             {
                 writer.WritePropertyName("initialReplicationDetails"u8);
                 writer.WriteObjectValue(InitialReplicationDetails);
             }
-            if (Optional.IsCollectionDefined(VmDiskDetails))
+            if (!(VmDiskDetails is ChangeTrackingList<SiteRecoveryDiskDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vMDiskDetails"u8);
                 writer.WriteStartArray();
@@ -111,13 +111,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastReplicatedTime = default;
-            Optional<IReadOnlyList<VmNicDetails>> vmNics = default;
-            Optional<string> vmId = default;
-            Optional<string> vmProtectionState = default;
-            Optional<string> vmProtectionStateDescription = default;
-            Optional<InitialReplicationDetails> initialReplicationDetails = default;
-            Optional<IReadOnlyList<SiteRecoveryDiskDetails>> vmDiskDetails = default;
+            DateTimeOffset? lastReplicatedTime = default;
+            IReadOnlyList<VmNicDetails> vmNics = default;
+            string vmId = default;
+            string vmProtectionState = default;
+            string vmProtectionStateDescription = default;
+            InitialReplicationDetails initialReplicationDetails = default;
+            IReadOnlyList<SiteRecoveryDiskDetails> vmDiskDetails = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaBlueReplicationDetails(instanceType, serializedAdditionalRawData, Optional.ToNullable(lastReplicatedTime), Optional.ToList(vmNics), vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, initialReplicationDetails.Value, Optional.ToList(vmDiskDetails));
+            return new HyperVReplicaBlueReplicationDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                lastReplicatedTime,
+                vmNics ?? new ChangeTrackingList<VmNicDetails>(),
+                vmId,
+                vmProtectionState,
+                vmProtectionStateDescription,
+                initialReplicationDetails,
+                vmDiskDetails ?? new ChangeTrackingList<SiteRecoveryDiskDetails>());
         }
 
         BinaryData IPersistableModel<HyperVReplicaBlueReplicationDetails>.Write(ModelReaderWriterOptions options)

@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Optional.IsDefined(GracefulDecommissionTimeout))
+            if (GracefulDecommissionTimeout.HasValue)
             {
                 writer.WritePropertyName("gracefulDecommissionTimeout"u8);
                 writer.WriteNumberValue(GracefulDecommissionTimeout.Value);
             }
-            if (Optional.IsDefined(AutoscaleType))
+            if (AutoscaleType.HasValue)
             {
                 writer.WritePropertyName("autoscaleType"u8);
                 writer.WriteStringValue(AutoscaleType.Value.ToString());
             }
-            if (Optional.IsDefined(ScheduleBasedConfig))
+            if (ScheduleBasedConfig != null)
             {
                 writer.WritePropertyName("scheduleBasedConfig"u8);
                 writer.WriteObjectValue(ScheduleBasedConfig);
             }
-            if (Optional.IsDefined(LoadBasedConfig))
+            if (LoadBasedConfig != null)
             {
                 writer.WritePropertyName("loadBasedConfig"u8);
                 writer.WriteObjectValue(LoadBasedConfig);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             bool enabled = default;
-            Optional<int> gracefulDecommissionTimeout = default;
-            Optional<ClusterAutoscaleType> autoscaleType = default;
-            Optional<ScheduleBasedConfig> scheduleBasedConfig = default;
-            Optional<LoadBasedConfig> loadBasedConfig = default;
+            int? gracefulDecommissionTimeout = default;
+            ClusterAutoscaleType? autoscaleType = default;
+            ScheduleBasedConfig scheduleBasedConfig = default;
+            LoadBasedConfig loadBasedConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterAutoscaleProfile(enabled, Optional.ToNullable(gracefulDecommissionTimeout), Optional.ToNullable(autoscaleType), scheduleBasedConfig.Value, loadBasedConfig.Value, serializedAdditionalRawData);
+            return new ClusterAutoscaleProfile(
+                enabled,
+                gracefulDecommissionTimeout,
+                autoscaleType,
+                scheduleBasedConfig,
+                loadBasedConfig,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterAutoscaleProfile>.Write(ModelReaderWriterOptions options)

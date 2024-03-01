@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IgnoreScripts))
+            if (!(IgnoreScripts is ChangeTrackingList<CjkBigramTokenFilterScripts> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ignoreScripts"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OutputUnigrams))
+            if (OutputUnigrams.HasValue)
             {
                 writer.WritePropertyName("outputUnigrams"u8);
                 writer.WriteBooleanValue(OutputUnigrams.Value);
@@ -44,8 +44,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<CjkBigramTokenFilterScripts>> ignoreScripts = default;
-            Optional<bool> outputUnigrams = default;
+            IList<CjkBigramTokenFilterScripts> ignoreScripts = default;
+            bool? outputUnigrams = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -84,7 +84,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CjkBigramTokenFilter(odataType, name, Optional.ToList(ignoreScripts), Optional.ToNullable(outputUnigrams));
+            return new CjkBigramTokenFilter(odataType, name, ignoreScripts ?? new ChangeTrackingList<CjkBigramTokenFilterScripts>(), outputUnigrams);
         }
     }
 }

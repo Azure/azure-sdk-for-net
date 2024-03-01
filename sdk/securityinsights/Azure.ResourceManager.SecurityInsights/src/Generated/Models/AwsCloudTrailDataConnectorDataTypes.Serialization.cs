@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Logs))
+            if (Logs != null)
             {
                 writer.WritePropertyName("logs"u8);
                 writer.WriteObjectValue(Logs);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<AwsCloudTrailDataConnectorDataTypesLogs> logs = default;
+            AwsCloudTrailDataConnectorDataTypesLogs logs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AwsCloudTrailDataConnectorDataTypes(logs.Value, serializedAdditionalRawData);
+            return new AwsCloudTrailDataConnectorDataTypes(logs, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AwsCloudTrailDataConnectorDataTypes>.Write(ModelReaderWriterOptions options)

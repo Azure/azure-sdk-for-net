@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AssetId))
+            if (options.Format != "W" && AssetId != null)
             {
                 writer.WritePropertyName("assetId"u8);
                 writer.WriteStringValue(AssetId);
             }
-            if (Optional.IsDefined(AvailableCapacity))
+            if (AvailableCapacity != null)
             {
                 writer.WritePropertyName("availableCapacity"u8);
                 writer.WriteObjectValue(AvailableCapacity);
             }
-            if (Optional.IsCollectionDefined(Statuses))
+            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> assetId = default;
-            Optional<DedicatedHostAvailableCapacity> availableCapacity = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            string assetId = default;
+            DedicatedHostAvailableCapacity availableCapacity = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedHostInstanceView(assetId.Value, availableCapacity.Value, Optional.ToList(statuses), serializedAdditionalRawData);
+            return new DedicatedHostInstanceView(assetId, availableCapacity, statuses ?? new ChangeTrackingList<InstanceViewStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DedicatedHostInstanceView>.Write(ModelReaderWriterOptions options)

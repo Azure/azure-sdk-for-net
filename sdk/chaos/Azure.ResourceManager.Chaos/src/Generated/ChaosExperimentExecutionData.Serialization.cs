@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.Chaos
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && StartedOn.HasValue)
             {
                 writer.WritePropertyName("startedAt"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(StoppedOn))
+            if (options.Format != "W" && StoppedOn.HasValue)
             {
                 writer.WritePropertyName("stoppedAt"u8);
                 writer.WriteStringValue(StoppedOn.Value, "O");
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Chaos
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startedAt = default;
-            Optional<DateTimeOffset> stoppedAt = default;
+            SystemData systemData = default;
+            string status = default;
+            DateTimeOffset? startedAt = default;
+            DateTimeOffset? stoppedAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.Chaos
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosExperimentExecutionData(id, name, type, systemData.Value, status.Value, Optional.ToNullable(startedAt), Optional.ToNullable(stoppedAt), serializedAdditionalRawData);
+            return new ChaosExperimentExecutionData(
+                id,
+                name,
+                type,
+                systemData,
+                status,
+                startedAt,
+                stoppedAt,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosExperimentExecutionData>.Write(ModelReaderWriterOptions options)

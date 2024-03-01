@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogAnalyticsWorkspaceResourceId))
+            if (LogAnalyticsWorkspaceResourceId != null)
             {
                 writer.WritePropertyName("logAnalyticsWorkspaceResourceId"u8);
                 writer.WriteStringValue(LogAnalyticsWorkspaceResourceId);
             }
-            if (Optional.IsDefined(SecurityMonitoring))
+            if (SecurityMonitoring != null)
             {
                 writer.WritePropertyName("securityMonitoring"u8);
                 writer.WriteObjectValue(SecurityMonitoring);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> logAnalyticsWorkspaceResourceId = default;
-            Optional<ManagedClusterSecurityProfileDefenderSecurityMonitoring> securityMonitoring = default;
+            ResourceIdentifier logAnalyticsWorkspaceResourceId = default;
+            ManagedClusterSecurityProfileDefenderSecurityMonitoring securityMonitoring = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterSecurityProfileDefender(logAnalyticsWorkspaceResourceId.Value, securityMonitoring.Value, serializedAdditionalRawData);
+            return new ManagedClusterSecurityProfileDefender(logAnalyticsWorkspaceResourceId, securityMonitoring, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterSecurityProfileDefender>.Write(ModelReaderWriterOptions options)

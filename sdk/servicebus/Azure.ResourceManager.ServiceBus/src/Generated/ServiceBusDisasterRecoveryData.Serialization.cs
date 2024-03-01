@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,34 +48,34 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PendingReplicationOperationsCount))
+            if (options.Format != "W" && PendingReplicationOperationsCount.HasValue)
             {
                 writer.WritePropertyName("pendingReplicationOperationsCount"u8);
                 writer.WriteNumberValue(PendingReplicationOperationsCount.Value);
             }
-            if (Optional.IsDefined(PartnerNamespace))
+            if (PartnerNamespace != null)
             {
                 writer.WritePropertyName("partnerNamespace"u8);
                 writer.WriteStringValue(PartnerNamespace);
             }
-            if (Optional.IsDefined(AlternateName))
+            if (AlternateName != null)
             {
                 writer.WritePropertyName("alternateName"u8);
                 writer.WriteStringValue(AlternateName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Role))
+            if (options.Format != "W" && Role.HasValue)
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToSerialString());
@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ServiceBusDisasterRecoveryProvisioningState> provisioningState = default;
-            Optional<long> pendingReplicationOperationsCount = default;
-            Optional<string> partnerNamespace = default;
-            Optional<string> alternateName = default;
-            Optional<ServiceBusDisasterRecoveryRole> role = default;
+            SystemData systemData = default;
+            ServiceBusDisasterRecoveryProvisioningState? provisioningState = default;
+            long? pendingReplicationOperationsCount = default;
+            string partnerNamespace = default;
+            string alternateName = default;
+            ServiceBusDisasterRecoveryRole? role = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.ServiceBus
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusDisasterRecoveryData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(pendingReplicationOperationsCount), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ServiceBusDisasterRecoveryData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                pendingReplicationOperationsCount,
+                partnerNamespace,
+                alternateName,
+                role,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusDisasterRecoveryData>.Write(ModelReaderWriterOptions options)

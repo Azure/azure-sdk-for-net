@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackendHttpSettings))
+            if (BackendHttpSettings != null)
             {
                 writer.WritePropertyName("backendHttpSettings"u8);
                 writer.WriteObjectValue(BackendHttpSettings);
             }
-            if (Optional.IsCollectionDefined(Servers))
+            if (!(Servers is ChangeTrackingList<ApplicationGatewayBackendHealthServer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("servers"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ApplicationGatewayBackendHttpSettings> backendHttpSettings = default;
-            Optional<IReadOnlyList<ApplicationGatewayBackendHealthServer>> servers = default;
+            ApplicationGatewayBackendHttpSettings backendHttpSettings = default;
+            IReadOnlyList<ApplicationGatewayBackendHealthServer> servers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayBackendHealthHttpSettings(backendHttpSettings.Value, Optional.ToList(servers), serializedAdditionalRawData);
+            return new ApplicationGatewayBackendHealthHttpSettings(backendHttpSettings, servers ?? new ChangeTrackingList<ApplicationGatewayBackendHealthServer>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendHealthHttpSettings>.Write(ModelReaderWriterOptions options)

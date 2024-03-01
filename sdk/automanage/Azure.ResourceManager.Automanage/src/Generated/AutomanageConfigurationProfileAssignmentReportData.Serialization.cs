@@ -44,49 +44,49 @@ namespace Azure.ResourceManager.Automanage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Duration))
+            if (options.Format != "W" && Duration.HasValue)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationProfileAssignmentProcessingType))
+            if (options.Format != "W" && ConfigurationProfileAssignmentProcessingType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ConfigurationProfileAssignmentProcessingType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationProfile))
+            if (options.Format != "W" && ConfigurationProfile != null)
             {
                 writer.WritePropertyName("configurationProfile"u8);
                 writer.WriteStringValue(ConfigurationProfile);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Resources))
+            if (options.Format != "W" && !(Resources is ChangeTrackingList<ConfigurationProfileAssignmentReportResourceDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.Automanage
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReportFormatVersion))
+            if (options.Format != "W" && ReportFormatVersion != null)
             {
                 writer.WritePropertyName("reportFormatVersion"u8);
                 writer.WriteStringValue(ReportFormatVersion);
@@ -148,17 +148,17 @@ namespace Azure.ResourceManager.Automanage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<TimeSpan> duration = default;
-            Optional<string> type0 = default;
-            Optional<string> status = default;
-            Optional<string> configurationProfile = default;
-            Optional<IReadOnlyList<ConfigurationProfileAssignmentReportResourceDetails>> resources = default;
-            Optional<ResponseError> error = default;
-            Optional<string> reportFormatVersion = default;
+            SystemData systemData = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            TimeSpan? duration = default;
+            string type0 = default;
+            string status = default;
+            string configurationProfile = default;
+            IReadOnlyList<ConfigurationProfileAssignmentReportResourceDetails> resources = default;
+            ResponseError error = default;
+            string reportFormatVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -284,7 +284,22 @@ namespace Azure.ResourceManager.Automanage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomanageConfigurationProfileAssignmentReportData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(duration), type0.Value, status.Value, configurationProfile.Value, Optional.ToList(resources), error.Value, reportFormatVersion.Value, serializedAdditionalRawData);
+            return new AutomanageConfigurationProfileAssignmentReportData(
+                id,
+                name,
+                type,
+                systemData,
+                startTime,
+                endTime,
+                lastModifiedTime,
+                duration,
+                type0,
+                status,
+                configurationProfile,
+                resources ?? new ChangeTrackingList<ConfigurationProfileAssignmentReportResourceDetails>(),
+                error,
+                reportFormatVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomanageConfigurationProfileAssignmentReportData>.Write(ModelReaderWriterOptions options)

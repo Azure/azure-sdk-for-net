@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmConfigAgentVersion))
+            if (VmConfigAgentVersion != null)
             {
                 writer.WritePropertyName("vmConfigAgentVersion"u8);
                 writer.WriteStringValue(VmConfigAgentVersion);
             }
-            if (Optional.IsCollectionDefined(Statuses))
+            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> vmConfigAgentVersion = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            string vmConfigAgentVersion = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineConfigAgentInstanceView(vmConfigAgentVersion.Value, Optional.ToList(statuses), serializedAdditionalRawData);
+            return new VirtualMachineConfigAgentInstanceView(vmConfigAgentVersion, statuses ?? new ChangeTrackingList<InstanceViewStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineConfigAgentInstanceView>.Write(ModelReaderWriterOptions options)

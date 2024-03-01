@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Consumption
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,44 +49,44 @@ namespace Azure.ResourceManager.Consumption
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Category))
+            if (Category.HasValue)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Optional.IsDefined(Amount))
+            if (Amount.HasValue)
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
             }
-            if (Optional.IsDefined(TimeGrain))
+            if (TimeGrain.HasValue)
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain.Value.ToString());
             }
-            if (Optional.IsDefined(TimePeriod))
+            if (TimePeriod != null)
             {
                 writer.WritePropertyName("timePeriod"u8);
                 writer.WriteObjectValue(TimePeriod);
             }
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentSpend))
+            if (options.Format != "W" && CurrentSpend != null)
             {
                 writer.WritePropertyName("currentSpend"u8);
                 writer.WriteObjectValue(CurrentSpend);
             }
-            if (Optional.IsCollectionDefined(Notifications))
+            if (!(Notifications is ChangeTrackingDictionary<string, BudgetAssociatedNotification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("notifications"u8);
                 writer.WriteStartObject();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Consumption
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(ForecastSpend))
+            if (options.Format != "W" && ForecastSpend != null)
             {
                 writer.WritePropertyName("forecastSpend"u8);
                 writer.WriteObjectValue(ForecastSpend);
@@ -141,19 +141,19 @@ namespace Azure.ResourceManager.Consumption
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<BudgetCategory> category = default;
-            Optional<decimal> amount = default;
-            Optional<BudgetTimeGrainType> timeGrain = default;
-            Optional<BudgetTimePeriod> timePeriod = default;
-            Optional<ConsumptionBudgetFilter> filter = default;
-            Optional<BudgetCurrentSpend> currentSpend = default;
-            Optional<IDictionary<string, BudgetAssociatedNotification>> notifications = default;
-            Optional<BudgetForecastSpend> forecastSpend = default;
+            SystemData systemData = default;
+            BudgetCategory? category = default;
+            decimal? amount = default;
+            BudgetTimeGrainType? timeGrain = default;
+            BudgetTimePeriod timePeriod = default;
+            ConsumptionBudgetFilter filter = default;
+            BudgetCurrentSpend currentSpend = default;
+            IDictionary<string, BudgetAssociatedNotification> notifications = default;
+            BudgetForecastSpend forecastSpend = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -286,7 +286,21 @@ namespace Azure.ResourceManager.Consumption
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionBudgetData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(amount), Optional.ToNullable(timeGrain), timePeriod.Value, filter.Value, currentSpend.Value, Optional.ToDictionary(notifications), forecastSpend.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new ConsumptionBudgetData(
+                id,
+                name,
+                type,
+                systemData,
+                category,
+                amount,
+                timeGrain,
+                timePeriod,
+                filter,
+                currentSpend,
+                notifications ?? new ChangeTrackingDictionary<string, BudgetAssociatedNotification>(),
+                forecastSpend,
+                eTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionBudgetData>.Write(ModelReaderWriterOptions options)

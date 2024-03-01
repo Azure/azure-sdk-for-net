@@ -43,64 +43,64 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(CurrentValue))
+            if (CurrentValue != null)
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteStringValue(CurrentValue);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(DocumentationLink))
+            if (options.Format != "W" && DocumentationLink != null)
             {
                 writer.WritePropertyName("documentationLink"u8);
                 writer.WriteStringValue(DocumentationLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultValue))
+            if (options.Format != "W" && DefaultValue != null)
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataType))
+            if (options.Format != "W" && DataType != null)
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
-            if (options.Format != "W" && Optional.IsDefined(AllowedValues))
+            if (options.Format != "W" && AllowedValues != null)
             {
                 writer.WritePropertyName("allowedValues"u8);
                 writer.WriteStringValue(AllowedValues);
             }
-            if (Optional.IsDefined(Source))
+            if (Source.HasValue)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IsReadOnly))
+            if (options.Format != "W" && IsReadOnly.HasValue)
             {
                 writer.WritePropertyName("isReadOnly"u8);
                 writer.WriteStringValue(IsReadOnly.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IsConfigPendingRestart))
+            if (options.Format != "W" && IsConfigPendingRestart.HasValue)
             {
                 writer.WritePropertyName("isConfigPendingRestart"u8);
                 writer.WriteStringValue(IsConfigPendingRestart.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IsDynamicConfig))
+            if (options.Format != "W" && IsDynamicConfig.HasValue)
             {
                 writer.WritePropertyName("isDynamicConfig"u8);
                 writer.WriteStringValue(IsDynamicConfig.Value.ToString());
@@ -147,18 +147,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> value = default;
-            Optional<string> currentValue = default;
-            Optional<string> description = default;
-            Optional<string> documentationLink = default;
-            Optional<string> defaultValue = default;
-            Optional<string> dataType = default;
-            Optional<string> allowedValues = default;
-            Optional<MySqlFlexibleServerConfigurationSource> source = default;
-            Optional<MySqlFlexibleServerConfigReadOnlyState> isReadOnly = default;
-            Optional<MySqlFlexibleServerConfigPendingRestartState> isConfigPendingRestart = default;
-            Optional<MySqlFlexibleServerConfigDynamicState> isDynamicConfig = default;
+            SystemData systemData = default;
+            string value = default;
+            string currentValue = default;
+            string description = default;
+            string documentationLink = default;
+            string defaultValue = default;
+            string dataType = default;
+            string allowedValues = default;
+            MySqlFlexibleServerConfigurationSource? source = default;
+            MySqlFlexibleServerConfigReadOnlyState? isReadOnly = default;
+            MySqlFlexibleServerConfigPendingRestartState? isConfigPendingRestart = default;
+            MySqlFlexibleServerConfigDynamicState? isDynamicConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -276,7 +276,23 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerConfigurationData(id, name, type, systemData.Value, value.Value, currentValue.Value, description.Value, documentationLink.Value, defaultValue.Value, dataType.Value, allowedValues.Value, Optional.ToNullable(source), Optional.ToNullable(isReadOnly), Optional.ToNullable(isConfigPendingRestart), Optional.ToNullable(isDynamicConfig), serializedAdditionalRawData);
+            return new MySqlFlexibleServerConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                value,
+                currentValue,
+                description,
+                documentationLink,
+                defaultValue,
+                dataType,
+                allowedValues,
+                source,
+                isReadOnly,
+                isConfigPendingRestart,
+                isDynamicConfig,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerConfigurationData>.Write(ModelReaderWriterOptions options)

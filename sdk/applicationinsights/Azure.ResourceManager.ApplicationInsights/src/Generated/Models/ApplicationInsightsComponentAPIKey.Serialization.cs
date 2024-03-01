@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(ApiKey))
+            if (options.Format != "W" && ApiKey != null)
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Optional.IsDefined(CreatedDate))
+            if (CreatedDate != null)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedDate);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(LinkedReadProperties))
+            if (!(LinkedReadProperties is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("linkedReadProperties"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LinkedWriteProperties))
+            if (!(LinkedWriteProperties is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("linkedWriteProperties"u8);
                 writer.WriteStartArray();
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> apiKey = default;
-            Optional<string> createdDate = default;
-            Optional<string> name = default;
-            Optional<IReadOnlyList<string>> linkedReadProperties = default;
-            Optional<IReadOnlyList<string>> linkedWriteProperties = default;
+            string id = default;
+            string apiKey = default;
+            string createdDate = default;
+            string name = default;
+            IReadOnlyList<string> linkedReadProperties = default;
+            IReadOnlyList<string> linkedWriteProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentAPIKey(id.Value, apiKey.Value, createdDate.Value, name.Value, Optional.ToList(linkedReadProperties), Optional.ToList(linkedWriteProperties), serializedAdditionalRawData);
+            return new ApplicationInsightsComponentAPIKey(
+                id,
+                apiKey,
+                createdDate,
+                name,
+                linkedReadProperties ?? new ChangeTrackingList<string>(),
+                linkedWriteProperties ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentAPIKey>.Write(ModelReaderWriterOptions options)

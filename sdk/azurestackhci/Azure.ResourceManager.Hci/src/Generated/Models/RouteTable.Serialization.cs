@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag != null)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(RouteTableType))
+            if (options.Format != "W" && RouteTableType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RouteTableType);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Routes))
+            if (!(Routes is ChangeTrackingList<Route> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> etag = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<IList<Route>> routes = default;
+            string etag = default;
+            string name = default;
+            string type = default;
+            IList<Route> routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteTable(etag.Value, name.Value, type.Value, Optional.ToList(routes), serializedAdditionalRawData);
+            return new RouteTable(etag, name, type, routes ?? new ChangeTrackingList<Route>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteTable>.Write(ModelReaderWriterOptions options)

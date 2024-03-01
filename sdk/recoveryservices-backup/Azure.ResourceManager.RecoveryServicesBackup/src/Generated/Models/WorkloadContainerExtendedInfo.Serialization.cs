@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HostServerName))
+            if (HostServerName != null)
             {
                 writer.WritePropertyName("hostServerName"u8);
                 writer.WriteStringValue(HostServerName);
             }
-            if (Optional.IsDefined(InquiryInfo))
+            if (InquiryInfo != null)
             {
                 writer.WritePropertyName("inquiryInfo"u8);
                 writer.WriteObjectValue(InquiryInfo);
             }
-            if (Optional.IsCollectionDefined(NodesList))
+            if (!(NodesList is ChangeTrackingList<DistributedNodesInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodesList"u8);
                 writer.WriteStartArray();
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> hostServerName = default;
-            Optional<WorkloadContainerInquiryInfo> inquiryInfo = default;
-            Optional<IList<DistributedNodesInfo>> nodesList = default;
+            string hostServerName = default;
+            WorkloadContainerInquiryInfo inquiryInfo = default;
+            IList<DistributedNodesInfo> nodesList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadContainerExtendedInfo(hostServerName.Value, inquiryInfo.Value, Optional.ToList(nodesList), serializedAdditionalRawData);
+            return new WorkloadContainerExtendedInfo(hostServerName, inquiryInfo, nodesList ?? new ChangeTrackingList<DistributedNodesInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadContainerExtendedInfo>.Write(ModelReaderWriterOptions options)

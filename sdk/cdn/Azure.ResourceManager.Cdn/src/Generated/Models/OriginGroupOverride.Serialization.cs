@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OriginGroup))
+            if (OriginGroup != null)
             {
                 writer.WritePropertyName("originGroup"u8);
                 JsonSerializer.Serialize(writer, OriginGroup);
             }
-            if (Optional.IsDefined(ForwardingProtocol))
+            if (ForwardingProtocol.HasValue)
             {
                 writer.WritePropertyName("forwardingProtocol"u8);
                 writer.WriteStringValue(ForwardingProtocol.Value.ToString());
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> originGroup = default;
-            Optional<ForwardingProtocol> forwardingProtocol = default;
+            WritableSubResource originGroup = default;
+            ForwardingProtocol? forwardingProtocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OriginGroupOverride(originGroup, Optional.ToNullable(forwardingProtocol), serializedAdditionalRawData);
+            return new OriginGroupOverride(originGroup, forwardingProtocol, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OriginGroupOverride>.Write(ModelReaderWriterOptions options)

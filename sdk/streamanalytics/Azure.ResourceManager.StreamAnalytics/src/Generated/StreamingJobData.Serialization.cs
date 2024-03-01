@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,89 +63,89 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && Optional.IsDefined(JobId))
+            if (options.Format != "W" && JobId.HasValue)
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(JobState))
+            if (options.Format != "W" && JobState != null)
             {
                 writer.WritePropertyName("jobState"u8);
                 writer.WriteStringValue(JobState);
             }
-            if (Optional.IsDefined(JobType))
+            if (JobType.HasValue)
             {
                 writer.WritePropertyName("jobType"u8);
                 writer.WriteStringValue(JobType.Value.ToString());
             }
-            if (Optional.IsDefined(OutputStartMode))
+            if (OutputStartMode.HasValue)
             {
                 writer.WritePropertyName("outputStartMode"u8);
                 writer.WriteStringValue(OutputStartMode.Value.ToString());
             }
-            if (Optional.IsDefined(OutputStartOn))
+            if (OutputStartOn.HasValue)
             {
                 writer.WritePropertyName("outputStartTime"u8);
                 writer.WriteStringValue(OutputStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastOutputEventOn))
+            if (options.Format != "W" && LastOutputEventOn.HasValue)
             {
                 writer.WritePropertyName("lastOutputEventTime"u8);
                 writer.WriteStringValue(LastOutputEventOn.Value, "O");
             }
-            if (Optional.IsDefined(EventsOutOfOrderPolicy))
+            if (EventsOutOfOrderPolicy.HasValue)
             {
                 writer.WritePropertyName("eventsOutOfOrderPolicy"u8);
                 writer.WriteStringValue(EventsOutOfOrderPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(OutputErrorPolicy))
+            if (OutputErrorPolicy.HasValue)
             {
                 writer.WritePropertyName("outputErrorPolicy"u8);
                 writer.WriteStringValue(OutputErrorPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(EventsOutOfOrderMaxDelayInSeconds))
+            if (EventsOutOfOrderMaxDelayInSeconds.HasValue)
             {
                 writer.WritePropertyName("eventsOutOfOrderMaxDelayInSeconds"u8);
                 writer.WriteNumberValue(EventsOutOfOrderMaxDelayInSeconds.Value);
             }
-            if (Optional.IsDefined(EventsLateArrivalMaxDelayInSeconds))
+            if (EventsLateArrivalMaxDelayInSeconds.HasValue)
             {
                 writer.WritePropertyName("eventsLateArrivalMaxDelayInSeconds"u8);
                 writer.WriteNumberValue(EventsLateArrivalMaxDelayInSeconds.Value);
             }
-            if (Optional.IsDefined(DataLocalion))
+            if (DataLocalion.HasValue)
             {
                 writer.WritePropertyName("dataLocale"u8);
                 writer.WriteStringValue(DataLocalion.Value);
             }
-            if (Optional.IsDefined(CompatibilityLevel))
+            if (CompatibilityLevel.HasValue)
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteStringValue(CompatibilityLevel.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingList<StreamingJobInputData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -155,12 +155,12 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Transformation))
+            if (Transformation != null)
             {
                 writer.WritePropertyName("transformation"u8);
                 writer.WriteObjectValue(Transformation);
             }
-            if (Optional.IsCollectionDefined(Outputs))
+            if (!(Outputs is ChangeTrackingList<StreamingJobOutputData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Functions))
+            if (!(Functions is ChangeTrackingList<StreamingJobFunctionData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(JobStorageAccount))
+            if (JobStorageAccount != null)
             {
                 if (JobStorageAccount != null)
                 {
@@ -197,17 +197,17 @@ namespace Azure.ResourceManager.StreamAnalytics
                     writer.WriteNull("jobStorageAccount");
                 }
             }
-            if (Optional.IsDefined(ContentStoragePolicy))
+            if (ContentStoragePolicy.HasValue)
             {
                 writer.WritePropertyName("contentStoragePolicy"u8);
                 writer.WriteStringValue(ContentStoragePolicy.Value.ToString());
             }
-            if (Optional.IsDefined(Externals))
+            if (Externals != null)
             {
                 writer.WritePropertyName("externals"u8);
                 writer.WriteObjectValue(Externals);
             }
-            if (Optional.IsDefined(Cluster))
+            if (Cluster != null)
             {
                 if (Cluster != null)
                 {
@@ -258,37 +258,37 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<StreamAnalyticsSku> sku = default;
-            Optional<Guid> jobId = default;
-            Optional<string> provisioningState = default;
-            Optional<string> jobState = default;
-            Optional<StreamingJobType> jobType = default;
-            Optional<StreamingJobOutputStartMode> outputStartMode = default;
-            Optional<DateTimeOffset> outputStartTime = default;
-            Optional<DateTimeOffset> lastOutputEventTime = default;
-            Optional<EventsOutOfOrderPolicy> eventsOutOfOrderPolicy = default;
-            Optional<StreamingJobOutputErrorPolicy> outputErrorPolicy = default;
-            Optional<int> eventsOutOfOrderMaxDelayInSeconds = default;
-            Optional<int> eventsLateArrivalMaxDelayInSeconds = default;
-            Optional<AzureLocation> dataLocale = default;
-            Optional<StreamingJobCompatibilityLevel> compatibilityLevel = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<IList<StreamingJobInputData>> inputs = default;
-            Optional<StreamingJobTransformationData> transformation = default;
-            Optional<IList<StreamingJobOutputData>> outputs = default;
-            Optional<IList<StreamingJobFunctionData>> functions = default;
-            Optional<ETag> etag = default;
-            Optional<StreamingJobStorageAccount> jobStorageAccount = default;
-            Optional<StreamingJobContentStoragePolicy> contentStoragePolicy = default;
-            Optional<StreamingJobExternal> externals = default;
-            Optional<ClusterInfo> cluster = default;
+            SystemData systemData = default;
+            StreamAnalyticsSku sku = default;
+            Guid? jobId = default;
+            string provisioningState = default;
+            string jobState = default;
+            StreamingJobType? jobType = default;
+            StreamingJobOutputStartMode? outputStartMode = default;
+            DateTimeOffset? outputStartTime = default;
+            DateTimeOffset? lastOutputEventTime = default;
+            EventsOutOfOrderPolicy? eventsOutOfOrderPolicy = default;
+            StreamingJobOutputErrorPolicy? outputErrorPolicy = default;
+            int? eventsOutOfOrderMaxDelayInSeconds = default;
+            int? eventsLateArrivalMaxDelayInSeconds = default;
+            AzureLocation? dataLocale = default;
+            StreamingJobCompatibilityLevel? compatibilityLevel = default;
+            DateTimeOffset? createdDate = default;
+            IList<StreamingJobInputData> inputs = default;
+            StreamingJobTransformationData transformation = default;
+            IList<StreamingJobOutputData> outputs = default;
+            IList<StreamingJobFunctionData> functions = default;
+            ETag? etag = default;
+            StreamingJobStorageAccount jobStorageAccount = default;
+            StreamingJobContentStoragePolicy? contentStoragePolicy = default;
+            StreamingJobExternal externals = default;
+            ClusterInfo cluster = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -589,7 +589,39 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToNullable(jobId), provisioningState.Value, jobState.Value, Optional.ToNullable(jobType), Optional.ToNullable(outputStartMode), Optional.ToNullable(outputStartTime), Optional.ToNullable(lastOutputEventTime), Optional.ToNullable(eventsOutOfOrderPolicy), Optional.ToNullable(outputErrorPolicy), Optional.ToNullable(eventsOutOfOrderMaxDelayInSeconds), Optional.ToNullable(eventsLateArrivalMaxDelayInSeconds), Optional.ToNullable(dataLocale), Optional.ToNullable(compatibilityLevel), Optional.ToNullable(createdDate), Optional.ToList(inputs), transformation.Value, Optional.ToList(outputs), Optional.ToList(functions), Optional.ToNullable(etag), jobStorageAccount.Value, Optional.ToNullable(contentStoragePolicy), externals.Value, cluster.Value, serializedAdditionalRawData);
+            return new StreamingJobData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                sku,
+                jobId,
+                provisioningState,
+                jobState,
+                jobType,
+                outputStartMode,
+                outputStartTime,
+                lastOutputEventTime,
+                eventsOutOfOrderPolicy,
+                outputErrorPolicy,
+                eventsOutOfOrderMaxDelayInSeconds,
+                eventsLateArrivalMaxDelayInSeconds,
+                dataLocale,
+                compatibilityLevel,
+                createdDate,
+                inputs ?? new ChangeTrackingList<StreamingJobInputData>(),
+                transformation,
+                outputs ?? new ChangeTrackingList<StreamingJobOutputData>(),
+                functions ?? new ChangeTrackingList<StreamingJobFunctionData>(),
+                etag,
+                jobStorageAccount,
+                contentStoragePolicy,
+                externals,
+                cluster,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobData>.Write(ModelReaderWriterOptions options)

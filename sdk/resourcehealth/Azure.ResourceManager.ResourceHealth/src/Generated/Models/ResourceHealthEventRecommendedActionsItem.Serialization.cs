@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupId))
+            if (GroupId.HasValue)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteNumberValue(GroupId.Value);
             }
-            if (Optional.IsDefined(ActionText))
+            if (ActionText != null)
             {
                 writer.WritePropertyName("actionText"u8);
                 writer.WriteStringValue(ActionText);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<int> groupId = default;
-            Optional<string> actionText = default;
+            int? groupId = default;
+            string actionText = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventRecommendedActionsItem(Optional.ToNullable(groupId), actionText.Value, serializedAdditionalRawData);
+            return new ResourceHealthEventRecommendedActionsItem(groupId, actionText, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventRecommendedActionsItem>.Write(ModelReaderWriterOptions options)

@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPAddress))
+            if (IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (Optional.IsDefined(Port))
+            if (Port.HasValue)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(Latency))
+            if (Latency.HasValue)
             {
                 writer.WritePropertyName("latency"u8);
                 writer.WriteNumberValue(Latency.Value);
             }
-            if (Optional.IsDefined(IsAccessible))
+            if (IsAccessible.HasValue)
             {
                 writer.WritePropertyName("isAccessible"u8);
                 writer.WriteBooleanValue(IsAccessible.Value);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipAddress = default;
-            Optional<int> port = default;
-            Optional<double> latency = default;
-            Optional<bool> isAccessible = default;
+            IPAddress ipAddress = default;
+            int? port = default;
+            double? latency = default;
+            bool? isAccessible = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceEndpointDetail(ipAddress.Value, Optional.ToNullable(port), Optional.ToNullable(latency), Optional.ToNullable(isAccessible), serializedAdditionalRawData);
+            return new AppServiceEndpointDetail(ipAddress, port, latency, isAccessible, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceEndpointDetail>.Write(ModelReaderWriterOptions options)

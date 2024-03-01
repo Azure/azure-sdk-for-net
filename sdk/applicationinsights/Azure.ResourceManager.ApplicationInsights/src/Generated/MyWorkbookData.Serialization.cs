@@ -28,42 +28,42 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ETag))
+            if (!(ETag is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStartObject();
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(SerializedData))
+            if (SerializedData != null)
             {
                 if (SerializedData != null)
                 {
@@ -104,32 +104,32 @@ namespace Azure.ResourceManager.ApplicationInsights
                     writer.WriteNull("serializedData");
                 }
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeModified))
+            if (options.Format != "W" && TimeModified != null)
             {
                 writer.WritePropertyName("timeModified"u8);
                 writer.WriteStringValue(TimeModified);
             }
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && Optional.IsDefined(UserId))
+            if (options.Format != "W" && UserId != null)
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (Optional.IsDefined(SourceId))
+            if (SourceId != null)
             {
                 writer.WritePropertyName("sourceId"u8);
                 writer.WriteStringValue(SourceId);
             }
-            if (Optional.IsDefined(StorageUri))
+            if (StorageUri != null)
             {
                 if (StorageUri != null)
                 {
@@ -180,23 +180,23 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 return null;
             }
-            Optional<ApplicationInsightsKind> kind = default;
-            Optional<SystemData> systemData = default;
-            Optional<MyWorkbookManagedIdentity> identity = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IDictionary<string, string>> etag = default;
-            Optional<string> displayName = default;
-            Optional<string> serializedData = default;
-            Optional<string> version = default;
-            Optional<string> timeModified = default;
-            Optional<string> category = default;
-            Optional<string> userId = default;
-            Optional<string> sourceId = default;
-            Optional<Uri> storageUri = default;
+            ApplicationInsightsKind? kind = default;
+            SystemData systemData = default;
+            MyWorkbookManagedIdentity identity = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            IDictionary<string, string> etag = default;
+            string displayName = default;
+            string serializedData = default;
+            string version = default;
+            string timeModified = default;
+            string category = default;
+            string userId = default;
+            string sourceId = default;
+            Uri storageUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -348,7 +348,25 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MyWorkbookData(identity.Value, id.Value, name.Value, type.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToDictionary(etag), serializedAdditionalRawData, Optional.ToNullable(kind), systemData, displayName.Value, serializedData.Value, version.Value, timeModified.Value, category.Value, userId.Value, sourceId.Value, storageUri.Value);
+            return new MyWorkbookData(
+                identity,
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                etag ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                kind,
+                systemData,
+                displayName,
+                serializedData,
+                version,
+                timeModified,
+                category,
+                userId,
+                sourceId,
+                storageUri);
         }
 
         BinaryData IPersistableModel<MyWorkbookData>.Write(ModelReaderWriterOptions options)

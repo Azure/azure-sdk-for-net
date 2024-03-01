@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DataSourceType))
+            if (options.Format != "W" && DataSourceType.HasValue)
             {
                 writer.WritePropertyName("dataSourceType"u8);
                 writer.WriteStringValue(DataSourceType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(StorageAccountIds))
+            if (!(StorageAccountIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("storageAccountIds"u8);
                 writer.WriteStartArray();
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.OperationalInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<OperationalInsightsDataSourceType> dataSourceType = default;
-            Optional<IList<ResourceIdentifier>> storageAccountIds = default;
+            SystemData systemData = default;
+            OperationalInsightsDataSourceType? dataSourceType = default;
+            IList<ResourceIdentifier> storageAccountIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +191,14 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsLinkedStorageAccountsData(id, name, type, systemData.Value, Optional.ToNullable(dataSourceType), Optional.ToList(storageAccountIds), serializedAdditionalRawData);
+            return new OperationalInsightsLinkedStorageAccountsData(
+                id,
+                name,
+                type,
+                systemData,
+                dataSourceType,
+                storageAccountIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsLinkedStorageAccountsData>.Write(ModelReaderWriterOptions options)

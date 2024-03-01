@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(MetricSpecifications))
+            if (!(MetricSpecifications is ChangeTrackingList<MetricSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metricSpecifications"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LogSpecifications))
+            if (!(LogSpecifications is ChangeTrackingList<LogSpecification> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("logSpecifications"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MetricSpecification>> metricSpecifications = default;
-            Optional<IReadOnlyList<LogSpecification>> logSpecifications = default;
+            IReadOnlyList<MetricSpecification> metricSpecifications = default;
+            IReadOnlyList<LogSpecification> logSpecifications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceSpecification(Optional.ToList(metricSpecifications), Optional.ToList(logSpecifications), serializedAdditionalRawData);
+            return new ServiceSpecification(metricSpecifications ?? new ChangeTrackingList<MetricSpecification>(), logSpecifications ?? new ChangeTrackingList<LogSpecification>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceSpecification>.Write(ModelReaderWriterOptions options)

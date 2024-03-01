@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Advisor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Category))
+            if (Category.HasValue)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Optional.IsDefined(Impact))
+            if (Impact.HasValue)
             {
                 writer.WritePropertyName("impact"u8);
                 writer.WriteStringValue(Impact.Value.ToString());
             }
-            if (Optional.IsDefined(ImpactedField))
+            if (ImpactedField != null)
             {
                 writer.WritePropertyName("impactedField"u8);
                 writer.WriteStringValue(ImpactedField);
             }
-            if (Optional.IsDefined(ImpactedValue))
+            if (ImpactedValue != null)
             {
                 writer.WritePropertyName("impactedValue"u8);
                 writer.WriteStringValue(ImpactedValue);
             }
-            if (Optional.IsDefined(LastUpdated))
+            if (LastUpdated.HasValue)
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -98,22 +98,22 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(RecommendationTypeId))
+            if (RecommendationTypeId != null)
             {
                 writer.WritePropertyName("recommendationTypeId"u8);
                 writer.WriteStringValue(RecommendationTypeId);
             }
-            if (Optional.IsDefined(Risk))
+            if (Risk.HasValue)
             {
                 writer.WritePropertyName("risk"u8);
                 writer.WriteStringValue(Risk.Value.ToString());
             }
-            if (Optional.IsDefined(ShortDescription))
+            if (ShortDescription != null)
             {
                 writer.WritePropertyName("shortDescription"u8);
                 writer.WriteObjectValue(ShortDescription);
             }
-            if (Optional.IsCollectionDefined(SuppressionIds))
+            if (!(SuppressionIds is ChangeTrackingList<Guid> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("suppressionIds"u8);
                 writer.WriteStartArray();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExtendedProperties))
+            if (!(ExtendedProperties is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteStartObject();
@@ -134,32 +134,32 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ResourceMetadata))
+            if (ResourceMetadata != null)
             {
                 writer.WritePropertyName("resourceMetadata"u8);
                 writer.WriteObjectValue(ResourceMetadata);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Optional.IsDefined(LearnMoreLink))
+            if (LearnMoreLink != null)
             {
                 writer.WritePropertyName("learnMoreLink"u8);
                 writer.WriteStringValue(LearnMoreLink);
             }
-            if (Optional.IsDefined(PotentialBenefits))
+            if (PotentialBenefits != null)
             {
                 writer.WritePropertyName("potentialBenefits"u8);
                 writer.WriteStringValue(PotentialBenefits);
             }
-            if (Optional.IsCollectionDefined(Actions))
+            if (!(Actions is ChangeTrackingList<IDictionary<string, BinaryData>> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Remediation))
+            if (!(Remediation is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("remediation"u8);
                 writer.WriteStartObject();
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ExposedMetadataProperties))
+            if (!(ExposedMetadataProperties is ChangeTrackingDictionary<string, BinaryData> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("exposedMetadataProperties"u8);
                 writer.WriteStartObject();
@@ -280,26 +280,26 @@ namespace Azure.ResourceManager.Advisor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Category> category = default;
-            Optional<Impact> impact = default;
-            Optional<string> impactedField = default;
-            Optional<string> impactedValue = default;
-            Optional<DateTimeOffset> lastUpdated = default;
-            Optional<IDictionary<string, BinaryData>> metadata = default;
-            Optional<string> recommendationTypeId = default;
-            Optional<Risk> risk = default;
-            Optional<ShortDescription> shortDescription = default;
-            Optional<IList<Guid>> suppressionIds = default;
-            Optional<IDictionary<string, string>> extendedProperties = default;
-            Optional<ResourceMetadata> resourceMetadata = default;
-            Optional<string> description = default;
-            Optional<string> label = default;
-            Optional<string> learnMoreLink = default;
-            Optional<string> potentialBenefits = default;
-            Optional<IList<IDictionary<string, BinaryData>>> actions = default;
-            Optional<IDictionary<string, BinaryData>> remediation = default;
-            Optional<IDictionary<string, BinaryData>> exposedMetadataProperties = default;
+            SystemData systemData = default;
+            Category? category = default;
+            Impact? impact = default;
+            string impactedField = default;
+            string impactedValue = default;
+            DateTimeOffset? lastUpdated = default;
+            IDictionary<string, BinaryData> metadata = default;
+            string recommendationTypeId = default;
+            Risk? risk = default;
+            ShortDescription shortDescription = default;
+            IList<Guid> suppressionIds = default;
+            IDictionary<string, string> extendedProperties = default;
+            ResourceMetadata resourceMetadata = default;
+            string description = default;
+            string label = default;
+            string learnMoreLink = default;
+            string potentialBenefits = default;
+            IList<IDictionary<string, BinaryData>> actions = default;
+            IDictionary<string, BinaryData> remediation = default;
+            IDictionary<string, BinaryData> exposedMetadataProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -559,7 +559,31 @@ namespace Azure.ResourceManager.Advisor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceRecommendationBaseData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(impact), impactedField.Value, impactedValue.Value, Optional.ToNullable(lastUpdated), Optional.ToDictionary(metadata), recommendationTypeId.Value, Optional.ToNullable(risk), shortDescription.Value, Optional.ToList(suppressionIds), Optional.ToDictionary(extendedProperties), resourceMetadata.Value, description.Value, label.Value, learnMoreLink.Value, potentialBenefits.Value, Optional.ToList(actions), Optional.ToDictionary(remediation), Optional.ToDictionary(exposedMetadataProperties), serializedAdditionalRawData);
+            return new ResourceRecommendationBaseData(
+                id,
+                name,
+                type,
+                systemData,
+                category,
+                impact,
+                impactedField,
+                impactedValue,
+                lastUpdated,
+                metadata ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                recommendationTypeId,
+                risk,
+                shortDescription,
+                suppressionIds ?? new ChangeTrackingList<Guid>(),
+                extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
+                resourceMetadata,
+                description,
+                label,
+                learnMoreLink,
+                potentialBenefits,
+                actions ?? new ChangeTrackingList<IDictionary<string, BinaryData>>(),
+                remediation ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                exposedMetadataProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceRecommendationBaseData>.Write(ModelReaderWriterOptions options)

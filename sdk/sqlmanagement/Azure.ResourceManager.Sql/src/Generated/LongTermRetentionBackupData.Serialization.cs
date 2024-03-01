@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ServerName))
+            if (options.Format != "W" && ServerName != null)
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerCreateOn))
+            if (options.Format != "W" && ServerCreateOn.HasValue)
             {
                 writer.WritePropertyName("serverCreateTime"u8);
                 writer.WriteStringValue(ServerCreateOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseDeletedOn))
+            if (options.Format != "W" && DatabaseDeletedOn.HasValue)
             {
                 writer.WritePropertyName("databaseDeletionTime"u8);
                 writer.WriteStringValue(DatabaseDeletedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupOn))
+            if (options.Format != "W" && BackupOn.HasValue)
             {
                 writer.WritePropertyName("backupTime"u8);
                 writer.WriteStringValue(BackupOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupExpireOn))
+            if (options.Format != "W" && BackupExpireOn.HasValue)
             {
                 writer.WritePropertyName("backupExpirationTime"u8);
                 writer.WriteStringValue(BackupExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupStorageRedundancy))
+            if (options.Format != "W" && BackupStorageRedundancy.HasValue)
             {
                 writer.WritePropertyName("backupStorageRedundancy"u8);
                 writer.WriteStringValue(BackupStorageRedundancy.Value.ToString());
             }
-            if (Optional.IsDefined(RequestedBackupStorageRedundancy))
+            if (RequestedBackupStorageRedundancy.HasValue)
             {
                 writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
-            if (Optional.IsDefined(IsBackupImmutable))
+            if (IsBackupImmutable.HasValue)
             {
                 writer.WritePropertyName("isBackupImmutable"u8);
                 writer.WriteBooleanValue(IsBackupImmutable.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupStorageAccessTier))
+            if (options.Format != "W" && BackupStorageAccessTier.HasValue)
             {
                 writer.WritePropertyName("backupStorageAccessTier"u8);
                 writer.WriteStringValue(BackupStorageAccessTier.Value.ToString());
@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> serverName = default;
-            Optional<DateTimeOffset> serverCreateTime = default;
-            Optional<string> databaseName = default;
-            Optional<DateTimeOffset> databaseDeletionTime = default;
-            Optional<DateTimeOffset> backupTime = default;
-            Optional<DateTimeOffset> backupExpirationTime = default;
-            Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
-            Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
-            Optional<bool> isBackupImmutable = default;
-            Optional<SqlBackupStorageAccessTier> backupStorageAccessTier = default;
+            SystemData systemData = default;
+            string serverName = default;
+            DateTimeOffset? serverCreateTime = default;
+            string databaseName = default;
+            DateTimeOffset? databaseDeletionTime = default;
+            DateTimeOffset? backupTime = default;
+            DateTimeOffset? backupExpirationTime = default;
+            SqlBackupStorageRedundancy? backupStorageRedundancy = default;
+            SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default;
+            bool? isBackupImmutable = default;
+            SqlBackupStorageAccessTier? backupStorageAccessTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -281,7 +281,22 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LongTermRetentionBackupData(id, name, type, systemData.Value, serverName.Value, Optional.ToNullable(serverCreateTime), databaseName.Value, Optional.ToNullable(databaseDeletionTime), Optional.ToNullable(backupTime), Optional.ToNullable(backupExpirationTime), Optional.ToNullable(backupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(isBackupImmutable), Optional.ToNullable(backupStorageAccessTier), serializedAdditionalRawData);
+            return new LongTermRetentionBackupData(
+                id,
+                name,
+                type,
+                systemData,
+                serverName,
+                serverCreateTime,
+                databaseName,
+                databaseDeletionTime,
+                backupTime,
+                backupExpirationTime,
+                backupStorageRedundancy,
+                requestedBackupStorageRedundancy,
+                isBackupImmutable,
+                backupStorageAccessTier,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LongTermRetentionBackupData>.Write(ModelReaderWriterOptions options)

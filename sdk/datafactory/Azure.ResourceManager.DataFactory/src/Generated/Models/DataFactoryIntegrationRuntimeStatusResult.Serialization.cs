@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IntegrationRuntimeStatus properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryIntegrationRuntimeStatusResult(name.Value, properties, serializedAdditionalRawData);
+            return new DataFactoryIntegrationRuntimeStatusResult(name, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryIntegrationRuntimeStatusResult>.Write(ModelReaderWriterOptions options)

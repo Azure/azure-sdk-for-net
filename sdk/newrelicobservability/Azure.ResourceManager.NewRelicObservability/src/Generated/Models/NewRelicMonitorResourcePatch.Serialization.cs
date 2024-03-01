@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,27 +45,27 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NewRelicAccountProperties))
+            if (NewRelicAccountProperties != null)
             {
                 writer.WritePropertyName("newRelicAccountProperties"u8);
                 writer.WriteObjectValue(NewRelicAccountProperties);
             }
-            if (Optional.IsDefined(UserInfo))
+            if (UserInfo != null)
             {
                 writer.WritePropertyName("userInfo"u8);
                 writer.WriteObjectValue(UserInfo);
             }
-            if (Optional.IsDefined(PlanData))
+            if (PlanData != null)
             {
                 writer.WritePropertyName("planData"u8);
                 writer.WriteObjectValue(PlanData);
             }
-            if (Optional.IsDefined(OrgCreationSource))
+            if (OrgCreationSource.HasValue)
             {
                 writer.WritePropertyName("orgCreationSource"u8);
                 writer.WriteStringValue(OrgCreationSource.Value.ToString());
             }
-            if (Optional.IsDefined(AccountCreationSource))
+            if (AccountCreationSource.HasValue)
             {
                 writer.WritePropertyName("accountCreationSource"u8);
                 writer.WriteStringValue(AccountCreationSource.Value.ToString());
@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<NewRelicAccountProperties> newRelicAccountProperties = default;
-            Optional<NewRelicObservabilityUserInfo> userInfo = default;
-            Optional<NewRelicPlanDetails> planData = default;
-            Optional<NewRelicObservabilityOrgCreationSource> orgCreationSource = default;
-            Optional<NewRelicObservabilityAccountCreationSource> accountCreationSource = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            NewRelicAccountProperties newRelicAccountProperties = default;
+            NewRelicObservabilityUserInfo userInfo = default;
+            NewRelicPlanDetails planData = default;
+            NewRelicObservabilityOrgCreationSource? orgCreationSource = default;
+            NewRelicObservabilityAccountCreationSource? accountCreationSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +206,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicMonitorResourcePatch(identity, Optional.ToDictionary(tags), newRelicAccountProperties.Value, userInfo.Value, planData.Value, Optional.ToNullable(orgCreationSource), Optional.ToNullable(accountCreationSource), serializedAdditionalRawData);
+            return new NewRelicMonitorResourcePatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                newRelicAccountProperties,
+                userInfo,
+                planData,
+                orgCreationSource,
+                accountCreationSource,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicMonitorResourcePatch>.Write(ModelReaderWriterOptions options)

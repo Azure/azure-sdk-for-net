@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,34 +55,34 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperatingSystem))
+            if (OperatingSystem != null)
             {
                 writer.WritePropertyName("operatingSystem"u8);
                 writer.WriteStringValue(OperatingSystem);
             }
-            if (Optional.IsDefined(ComputeRole))
+            if (ComputeRole != null)
             {
                 writer.WritePropertyName("computeRole"u8);
                 writer.WriteStringValue(ComputeRole);
             }
-            if (Optional.IsDefined(HandlerSchema))
+            if (HandlerSchema != null)
             {
                 writer.WritePropertyName("handlerSchema"u8);
                 writer.WriteStringValue(HandlerSchema);
             }
-            if (Optional.IsDefined(VirtualMachineScaleSetEnabled))
+            if (VirtualMachineScaleSetEnabled.HasValue)
             {
                 writer.WritePropertyName("vmScaleSetEnabled"u8);
                 writer.WriteBooleanValue(VirtualMachineScaleSetEnabled.Value);
             }
-            if (Optional.IsDefined(SupportsMultipleExtensions))
+            if (SupportsMultipleExtensions.HasValue)
             {
                 writer.WritePropertyName("supportsMultipleExtensions"u8);
                 writer.WriteBooleanValue(SupportsMultipleExtensions.Value);
@@ -126,17 +126,17 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> operatingSystem = default;
-            Optional<string> computeRole = default;
-            Optional<string> handlerSchema = default;
-            Optional<bool> virtualMachineScaleSetEnabled = default;
-            Optional<bool> supportsMultipleExtensions = default;
+            SystemData systemData = default;
+            string operatingSystem = default;
+            string computeRole = default;
+            string handlerSchema = default;
+            bool? virtualMachineScaleSetEnabled = default;
+            bool? supportsMultipleExtensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -235,7 +235,19 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineExtensionImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, operatingSystem.Value, computeRole.Value, handlerSchema.Value, Optional.ToNullable(virtualMachineScaleSetEnabled), Optional.ToNullable(supportsMultipleExtensions), serializedAdditionalRawData);
+            return new VirtualMachineExtensionImageData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                operatingSystem,
+                computeRole,
+                handlerSchema,
+                virtualMachineScaleSetEnabled,
+                supportsMultipleExtensions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineExtensionImageData>.Write(ModelReaderWriterOptions options)

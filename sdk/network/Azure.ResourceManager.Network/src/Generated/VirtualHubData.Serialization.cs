@@ -29,37 +29,37 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,57 +72,57 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualWan))
+            if (VirtualWan != null)
             {
                 writer.WritePropertyName("virtualWan"u8);
                 JsonSerializer.Serialize(writer, VirtualWan);
             }
-            if (Optional.IsDefined(VpnGateway))
+            if (VpnGateway != null)
             {
                 writer.WritePropertyName("vpnGateway"u8);
                 JsonSerializer.Serialize(writer, VpnGateway);
             }
-            if (Optional.IsDefined(P2SVpnGateway))
+            if (P2SVpnGateway != null)
             {
                 writer.WritePropertyName("p2SVpnGateway"u8);
                 JsonSerializer.Serialize(writer, P2SVpnGateway);
             }
-            if (Optional.IsDefined(ExpressRouteGateway))
+            if (ExpressRouteGateway != null)
             {
                 writer.WritePropertyName("expressRouteGateway"u8);
                 JsonSerializer.Serialize(writer, ExpressRouteGateway);
             }
-            if (Optional.IsDefined(AzureFirewall))
+            if (AzureFirewall != null)
             {
                 writer.WritePropertyName("azureFirewall"u8);
                 JsonSerializer.Serialize(writer, AzureFirewall);
             }
-            if (Optional.IsDefined(SecurityPartnerProvider))
+            if (SecurityPartnerProvider != null)
             {
                 writer.WritePropertyName("securityPartnerProvider"u8);
                 JsonSerializer.Serialize(writer, SecurityPartnerProvider);
             }
-            if (Optional.IsDefined(AddressPrefix))
+            if (AddressPrefix != null)
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (Optional.IsDefined(RouteTable))
+            if (RouteTable != null)
             {
                 writer.WritePropertyName("routeTable"u8);
                 writer.WriteObjectValue(RouteTable);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(SecurityProviderName))
+            if (SecurityProviderName != null)
             {
                 writer.WritePropertyName("securityProviderName"u8);
                 writer.WriteStringValue(SecurityProviderName);
             }
-            if (Optional.IsCollectionDefined(VirtualHubRouteTableV2S))
+            if (!(VirtualHubRouteTableV2S is ChangeTrackingList<VirtualHubRouteTableV2Data> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("virtualHubRouteTableV2s"u8);
                 writer.WriteStartArray();
@@ -132,17 +132,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (options.Format != "W" && Optional.IsDefined(RoutingState))
+            if (options.Format != "W" && RoutingState.HasValue)
             {
                 writer.WritePropertyName("routingState"u8);
                 writer.WriteStringValue(RoutingState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(BgpConnections))
+            if (options.Format != "W" && !(BgpConnections is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("bgpConnections"u8);
                 writer.WriteStartArray();
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
+            if (options.Format != "W" && !(IPConfigurations is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RouteMaps))
+            if (options.Format != "W" && !(RouteMaps is ChangeTrackingList<WritableSubResource> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("routeMaps"u8);
                 writer.WriteStartArray();
@@ -172,12 +172,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VirtualRouterAsn))
+            if (VirtualRouterAsn.HasValue)
             {
                 writer.WritePropertyName("virtualRouterAsn"u8);
                 writer.WriteNumberValue(VirtualRouterAsn.Value);
             }
-            if (Optional.IsCollectionDefined(VirtualRouterIPs))
+            if (!(VirtualRouterIPs is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("virtualRouterIps"u8);
                 writer.WriteStartArray();
@@ -187,22 +187,22 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllowBranchToBranchTraffic))
+            if (AllowBranchToBranchTraffic.HasValue)
             {
                 writer.WritePropertyName("allowBranchToBranchTraffic"u8);
                 writer.WriteBooleanValue(AllowBranchToBranchTraffic.Value);
             }
-            if (Optional.IsDefined(PreferredRoutingGateway))
+            if (PreferredRoutingGateway.HasValue)
             {
                 writer.WritePropertyName("preferredRoutingGateway"u8);
                 writer.WriteStringValue(PreferredRoutingGateway.Value.ToString());
             }
-            if (Optional.IsDefined(HubRoutingPreference))
+            if (HubRoutingPreference.HasValue)
             {
                 writer.WritePropertyName("hubRoutingPreference"u8);
                 writer.WriteStringValue(HubRoutingPreference.Value.ToString());
             }
-            if (Optional.IsDefined(VirtualRouterAutoScaleConfiguration))
+            if (VirtualRouterAutoScaleConfiguration != null)
             {
                 writer.WritePropertyName("virtualRouterAutoScaleConfiguration"u8);
                 writer.WriteObjectValue(VirtualRouterAutoScaleConfiguration);
@@ -246,35 +246,35 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<string> kind = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<WritableSubResource> virtualWan = default;
-            Optional<WritableSubResource> vpnGateway = default;
-            Optional<WritableSubResource> p2sVpnGateway = default;
-            Optional<WritableSubResource> expressRouteGateway = default;
-            Optional<WritableSubResource> azureFirewall = default;
-            Optional<WritableSubResource> securityPartnerProvider = default;
-            Optional<string> addressPrefix = default;
-            Optional<VirtualHubRouteTable> routeTable = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> securityProviderName = default;
-            Optional<IList<VirtualHubRouteTableV2Data>> virtualHubRouteTableV2s = default;
-            Optional<string> sku = default;
-            Optional<RoutingState> routingState = default;
-            Optional<IReadOnlyList<WritableSubResource>> bgpConnections = default;
-            Optional<IReadOnlyList<WritableSubResource>> ipConfigurations = default;
-            Optional<IReadOnlyList<WritableSubResource>> routeMaps = default;
-            Optional<long> virtualRouterAsn = default;
-            Optional<IList<string>> virtualRouterIPs = default;
-            Optional<bool> allowBranchToBranchTraffic = default;
-            Optional<PreferredRoutingGateway> preferredRoutingGateway = default;
-            Optional<HubRoutingPreference> hubRoutingPreference = default;
-            Optional<VirtualRouterAutoScaleConfiguration> virtualRouterAutoScaleConfiguration = default;
+            ETag? etag = default;
+            string kind = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            WritableSubResource virtualWan = default;
+            WritableSubResource vpnGateway = default;
+            WritableSubResource p2sVpnGateway = default;
+            WritableSubResource expressRouteGateway = default;
+            WritableSubResource azureFirewall = default;
+            WritableSubResource securityPartnerProvider = default;
+            string addressPrefix = default;
+            VirtualHubRouteTable routeTable = default;
+            NetworkProvisioningState? provisioningState = default;
+            string securityProviderName = default;
+            IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2s = default;
+            string sku = default;
+            RoutingState? routingState = default;
+            IReadOnlyList<WritableSubResource> bgpConnections = default;
+            IReadOnlyList<WritableSubResource> ipConfigurations = default;
+            IReadOnlyList<WritableSubResource> routeMaps = default;
+            long? virtualRouterAsn = default;
+            IList<string> virtualRouterIPs = default;
+            bool? allowBranchToBranchTraffic = default;
+            PreferredRoutingGateway? preferredRoutingGateway = default;
+            HubRoutingPreference? hubRoutingPreference = default;
+            VirtualRouterAutoScaleConfiguration virtualRouterAutoScaleConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -568,7 +568,37 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHubData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), kind.Value, virtualWan, vpnGateway, p2sVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, Optional.ToList(virtualHubRouteTableV2s), sku.Value, Optional.ToNullable(routingState), Optional.ToList(bgpConnections), Optional.ToList(ipConfigurations), Optional.ToList(routeMaps), Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIPs), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway), Optional.ToNullable(hubRoutingPreference), virtualRouterAutoScaleConfiguration.Value);
+            return new VirtualHubData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                kind,
+                virtualWan,
+                vpnGateway,
+                p2sVpnGateway,
+                expressRouteGateway,
+                azureFirewall,
+                securityPartnerProvider,
+                addressPrefix,
+                routeTable,
+                provisioningState,
+                securityProviderName,
+                virtualHubRouteTableV2s ?? new ChangeTrackingList<VirtualHubRouteTableV2Data>(),
+                sku,
+                routingState,
+                bgpConnections ?? new ChangeTrackingList<WritableSubResource>(),
+                ipConfigurations ?? new ChangeTrackingList<WritableSubResource>(),
+                routeMaps ?? new ChangeTrackingList<WritableSubResource>(),
+                virtualRouterAsn,
+                virtualRouterIPs ?? new ChangeTrackingList<string>(),
+                allowBranchToBranchTraffic,
+                preferredRoutingGateway,
+                hubRoutingPreference,
+                virtualRouterAutoScaleConfiguration);
         }
 
         BinaryData IPersistableModel<VirtualHubData>.Write(ModelReaderWriterOptions options)

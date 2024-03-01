@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,24 +38,24 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagementCluster))
+            if (ManagementCluster != null)
             {
                 writer.WritePropertyName("managementCluster"u8);
                 writer.WriteObjectValue(ManagementCluster);
             }
-            if (Optional.IsDefined(Internet))
+            if (Internet.HasValue)
             {
                 writer.WritePropertyName("internet"u8);
                 writer.WriteStringValue(Internet.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IdentitySources))
+            if (!(IdentitySources is ChangeTrackingList<SingleSignOnIdentitySource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("identitySources"u8);
                 writer.WriteStartArray();
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Availability))
+            if (Availability != null)
             {
                 writer.WritePropertyName("availability"u8);
                 writer.WriteObjectValue(Availability);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
+            if (!(ExtendedNetworkBlocks is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("extendedNetworkBlocks"u8);
                 writer.WriteStartArray();
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<AvsManagementCluster> managementCluster = default;
-            Optional<InternetConnectivityState> internet = default;
-            Optional<IList<SingleSignOnIdentitySource>> identitySources = default;
-            Optional<PrivateCloudAvailabilityProperties> availability = default;
-            Optional<CustomerManagedEncryption> encryption = default;
-            Optional<IList<string>> extendedNetworkBlocks = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            AvsManagementCluster managementCluster = default;
+            InternetConnectivityState? internet = default;
+            IList<SingleSignOnIdentitySource> identitySources = default;
+            PrivateCloudAvailabilityProperties availability = default;
+            CustomerManagedEncryption encryption = default;
+            IList<string> extendedNetworkBlocks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,7 +241,16 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsPrivateCloudPatch(Optional.ToDictionary(tags), identity, managementCluster.Value, Optional.ToNullable(internet), Optional.ToList(identitySources), availability.Value, encryption.Value, Optional.ToList(extendedNetworkBlocks), serializedAdditionalRawData);
+            return new AvsPrivateCloudPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                managementCluster,
+                internet,
+                identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>(),
+                availability,
+                encryption,
+                extendedNetworkBlocks ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudPatch>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(InitContainers))
+            if (!(InitContainers is ChangeTrackingList<ContainerAppInitContainer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Containers))
+            if (!(Containers is ChangeTrackingList<ContainerAppContainer> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Volumes))
+            if (!(Volumes is ChangeTrackingList<ContainerAppVolume> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<IList<ContainerAppInitContainer>> initContainers = default;
-            Optional<IList<ContainerAppContainer>> containers = default;
-            Optional<IList<ContainerAppVolume>> volumes = default;
+            IList<ContainerAppInitContainer> initContainers = default;
+            IList<ContainerAppContainer> containers = default;
+            IList<ContainerAppVolume> volumes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppJobTemplate(Optional.ToList(initContainers), Optional.ToList(containers), Optional.ToList(volumes), serializedAdditionalRawData);
+            return new ContainerAppJobTemplate(initContainers ?? new ChangeTrackingList<ContainerAppInitContainer>(), containers ?? new ChangeTrackingList<ContainerAppContainer>(), volumes ?? new ChangeTrackingList<ContainerAppVolume>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppJobTemplate>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,44 +56,44 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DefaultStorageAccount))
+            if (options.Format != "W" && DefaultStorageAccount != null)
             {
                 writer.WritePropertyName("defaultStorageAccount"u8);
                 writer.WriteStringValue(DefaultStorageAccount);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultPremiumStorageAccount))
+            if (options.Format != "W" && DefaultPremiumStorageAccount != null)
             {
                 writer.WritePropertyName("defaultPremiumStorageAccount"u8);
                 writer.WriteStringValue(DefaultPremiumStorageAccount);
             }
-            if (options.Format != "W" && Optional.IsDefined(ArtifactsStorageAccount))
+            if (options.Format != "W" && ArtifactsStorageAccount != null)
             {
                 writer.WritePropertyName("artifactsStorageAccount"u8);
                 writer.WriteStringValue(ArtifactsStorageAccount);
             }
-            if (options.Format != "W" && Optional.IsDefined(PremiumDataDiskStorageAccount))
+            if (options.Format != "W" && PremiumDataDiskStorageAccount != null)
             {
                 writer.WritePropertyName("premiumDataDiskStorageAccount"u8);
                 writer.WriteStringValue(PremiumDataDiskStorageAccount);
             }
-            if (options.Format != "W" && Optional.IsDefined(VaultName))
+            if (options.Format != "W" && VaultName != null)
             {
                 writer.WritePropertyName("vaultName"u8);
                 writer.WriteStringValue(VaultName);
             }
-            if (Optional.IsDefined(LabStorageType))
+            if (LabStorageType.HasValue)
             {
                 writer.WritePropertyName("labStorageType"u8);
                 writer.WriteStringValue(LabStorageType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(MandatoryArtifactsResourceIdsLinux))
+            if (!(MandatoryArtifactsResourceIdsLinux is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("mandatoryArtifactsResourceIdsLinux"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MandatoryArtifactsResourceIdsWindows))
+            if (!(MandatoryArtifactsResourceIdsWindows is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("mandatoryArtifactsResourceIdsWindows"u8);
                 writer.WriteStartArray();
@@ -113,52 +113,52 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(PremiumDataDisks))
+            if (PremiumDataDisks.HasValue)
             {
                 writer.WritePropertyName("premiumDataDisks"u8);
                 writer.WriteStringValue(PremiumDataDisks.Value.ToString());
             }
-            if (Optional.IsDefined(EnvironmentPermission))
+            if (EnvironmentPermission.HasValue)
             {
                 writer.WritePropertyName("environmentPermission"u8);
                 writer.WriteStringValue(EnvironmentPermission.Value.ToString());
             }
-            if (Optional.IsDefined(Announcement))
+            if (Announcement != null)
             {
                 writer.WritePropertyName("announcement"u8);
                 writer.WriteObjectValue(Announcement);
             }
-            if (Optional.IsDefined(Support))
+            if (Support != null)
             {
                 writer.WritePropertyName("support"u8);
                 writer.WriteObjectValue(Support);
             }
-            if (options.Format != "W" && Optional.IsDefined(VmCreationResourceGroup))
+            if (options.Format != "W" && VmCreationResourceGroup != null)
             {
                 writer.WritePropertyName("vmCreationResourceGroup"u8);
                 writer.WriteStringValue(VmCreationResourceGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIPId))
+            if (options.Format != "W" && PublicIPId != null)
             {
                 writer.WritePropertyName("publicIpId"u8);
                 writer.WriteStringValue(PublicIPId);
             }
-            if (options.Format != "W" && Optional.IsDefined(LoadBalancerId))
+            if (options.Format != "W" && LoadBalancerId != null)
             {
                 writer.WritePropertyName("loadBalancerId"u8);
                 writer.WriteStringValue(LoadBalancerId);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkSecurityGroupId))
+            if (options.Format != "W" && NetworkSecurityGroupId != null)
             {
                 writer.WritePropertyName("networkSecurityGroupId"u8);
                 writer.WriteStringValue(NetworkSecurityGroupId);
             }
-            if (Optional.IsCollectionDefined(ExtendedProperties))
+            if (!(ExtendedProperties is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteStartObject();
@@ -169,12 +169,12 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
+            if (options.Format != "W" && UniqueIdentifier.HasValue)
             {
                 writer.WritePropertyName("uniqueIdentifier"u8);
                 writer.WriteStringValue(UniqueIdentifier.Value);
@@ -218,32 +218,32 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> defaultStorageAccount = default;
-            Optional<string> defaultPremiumStorageAccount = default;
-            Optional<string> artifactsStorageAccount = default;
-            Optional<string> premiumDataDiskStorageAccount = default;
-            Optional<string> vaultName = default;
-            Optional<DevTestLabStorageType> labStorageType = default;
-            Optional<IList<string>> mandatoryArtifactsResourceIdsLinux = default;
-            Optional<IList<string>> mandatoryArtifactsResourceIdsWindows = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<DevTestLabPremiumDataDisk> premiumDataDisks = default;
-            Optional<DevTestLabEnvironmentPermission> environmentPermission = default;
-            Optional<DevTestLabAnnouncement> announcement = default;
-            Optional<DevTestLabSupport> support = default;
-            Optional<string> vmCreationResourceGroup = default;
-            Optional<string> publicIPId = default;
-            Optional<string> loadBalancerId = default;
-            Optional<string> networkSecurityGroupId = default;
-            Optional<IDictionary<string, string>> extendedProperties = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            SystemData systemData = default;
+            string defaultStorageAccount = default;
+            string defaultPremiumStorageAccount = default;
+            string artifactsStorageAccount = default;
+            string premiumDataDiskStorageAccount = default;
+            string vaultName = default;
+            DevTestLabStorageType? labStorageType = default;
+            IList<string> mandatoryArtifactsResourceIdsLinux = default;
+            IList<string> mandatoryArtifactsResourceIdsWindows = default;
+            DateTimeOffset? createdDate = default;
+            DevTestLabPremiumDataDisk? premiumDataDisks = default;
+            DevTestLabEnvironmentPermission? environmentPermission = default;
+            DevTestLabAnnouncement announcement = default;
+            DevTestLabSupport support = default;
+            string vmCreationResourceGroup = default;
+            string publicIPId = default;
+            string loadBalancerId = default;
+            string networkSecurityGroupId = default;
+            IDictionary<string, string> extendedProperties = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -464,7 +464,34 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, defaultStorageAccount.Value, defaultPremiumStorageAccount.Value, artifactsStorageAccount.Value, premiumDataDiskStorageAccount.Value, vaultName.Value, Optional.ToNullable(labStorageType), Optional.ToList(mandatoryArtifactsResourceIdsLinux), Optional.ToList(mandatoryArtifactsResourceIdsWindows), Optional.ToNullable(createdDate), Optional.ToNullable(premiumDataDisks), Optional.ToNullable(environmentPermission), announcement.Value, support.Value, vmCreationResourceGroup.Value, publicIPId.Value, loadBalancerId.Value, networkSecurityGroupId.Value, Optional.ToDictionary(extendedProperties), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                defaultStorageAccount,
+                defaultPremiumStorageAccount,
+                artifactsStorageAccount,
+                premiumDataDiskStorageAccount,
+                vaultName,
+                labStorageType,
+                mandatoryArtifactsResourceIdsLinux ?? new ChangeTrackingList<string>(),
+                mandatoryArtifactsResourceIdsWindows ?? new ChangeTrackingList<string>(),
+                createdDate,
+                premiumDataDisks,
+                environmentPermission,
+                announcement,
+                support,
+                vmCreationResourceGroup,
+                publicIPId,
+                loadBalancerId,
+                networkSecurityGroupId,
+                extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabData>.Write(ModelReaderWriterOptions options)

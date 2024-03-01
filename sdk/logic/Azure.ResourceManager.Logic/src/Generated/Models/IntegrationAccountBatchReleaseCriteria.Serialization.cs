@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MessageCount))
+            if (MessageCount.HasValue)
             {
                 writer.WritePropertyName("messageCount"u8);
                 writer.WriteNumberValue(MessageCount.Value);
             }
-            if (Optional.IsDefined(BatchSize))
+            if (BatchSize.HasValue)
             {
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
             }
-            if (Optional.IsDefined(Recurrence))
+            if (Recurrence != null)
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteObjectValue(Recurrence);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<int> messageCount = default;
-            Optional<int> batchSize = default;
-            Optional<LogicWorkflowTriggerRecurrence> recurrence = default;
+            int? messageCount = default;
+            int? batchSize = default;
+            LogicWorkflowTriggerRecurrence recurrence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountBatchReleaseCriteria(Optional.ToNullable(messageCount), Optional.ToNullable(batchSize), recurrence.Value, serializedAdditionalRawData);
+            return new IntegrationAccountBatchReleaseCriteria(messageCount, batchSize, recurrence, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountBatchReleaseCriteria>.Write(ModelReaderWriterOptions options)

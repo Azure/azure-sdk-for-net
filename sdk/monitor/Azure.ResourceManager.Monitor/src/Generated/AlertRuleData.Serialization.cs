@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(AlertRuleName);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("condition"u8);
             writer.WriteObjectValue(Condition);
-            if (Optional.IsDefined(Action))
+            if (Action != null)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action);
             }
-            if (Optional.IsCollectionDefined(Actions))
+            if (!(Actions is ChangeTrackingList<AlertRuleAction> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
@@ -138,20 +138,20 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string name0 = default;
-            Optional<string> description = default;
-            Optional<string> provisioningState = default;
+            string description = default;
+            string provisioningState = default;
             bool isEnabled = default;
             AlertRuleCondition condition = default;
-            Optional<AlertRuleAction> action = default;
-            Optional<IList<AlertRuleAction>> actions = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
+            AlertRuleAction action = default;
+            IList<AlertRuleAction> actions = default;
+            DateTimeOffset? lastUpdatedTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -274,7 +274,22 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0, description.Value, provisioningState.Value, isEnabled, condition, action.Value, Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime), serializedAdditionalRawData);
+            return new AlertRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                name0,
+                description,
+                provisioningState,
+                isEnabled,
+                condition,
+                action,
+                actions ?? new ChangeTrackingList<AlertRuleAction>(),
+                lastUpdatedTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertRuleData>.Write(ModelReaderWriterOptions options)

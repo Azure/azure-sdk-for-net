@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingList<StreamAnalyticsQueryInput> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Functions))
+            if (!(Functions is ChangeTrackingList<StreamAnalyticsQueryFunction> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType.ToString());
-            if (Optional.IsDefined(CompatibilityLevel))
+            if (CompatibilityLevel.HasValue)
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteStringValue(CompatibilityLevel.Value.ToString());
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string query = default;
-            Optional<IList<StreamAnalyticsQueryInput>> inputs = default;
-            Optional<IList<StreamAnalyticsQueryFunction>> functions = default;
+            IList<StreamAnalyticsQueryInput> inputs = default;
+            IList<StreamAnalyticsQueryFunction> functions = default;
             StreamingJobType jobType = default;
-            Optional<StreamingJobCompatibilityLevel> compatibilityLevel = default;
+            StreamingJobCompatibilityLevel? compatibilityLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsCompileQuery(query, Optional.ToList(inputs), Optional.ToList(functions), jobType, Optional.ToNullable(compatibilityLevel), serializedAdditionalRawData);
+            return new StreamAnalyticsCompileQuery(
+                query,
+                inputs ?? new ChangeTrackingList<StreamAnalyticsQueryInput>(),
+                functions ?? new ChangeTrackingList<StreamAnalyticsQueryFunction>(),
+                jobType,
+                compatibilityLevel,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsCompileQuery>.Write(ModelReaderWriterOptions options)

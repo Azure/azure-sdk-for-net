@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Limit))
+            if (Limit.HasValue)
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentValue))
+            if (options.Format != "W" && CurrentValue.HasValue)
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (Optional.IsDefined(Unit))
+            if (Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Optional.IsDefined(ResourceName))
+            if (ResourceName != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(ResourceName);
             }
-            if (Optional.IsDefined(ResourceTypeName))
+            if (ResourceTypeName.HasValue)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceTypeName.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(QuotaPeriod))
+            if (options.Format != "W" && QuotaPeriod != null)
             {
                 writer.WritePropertyName("quotaPeriod"u8);
                 writer.WriteStringValue(QuotaPeriod);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<int> limit = default;
-            Optional<int> currentValue = default;
-            Optional<string> unit = default;
-            Optional<ReservationResourceName> name = default;
-            Optional<ResourceTypeName> resourceType = default;
-            Optional<string> quotaPeriod = default;
-            Optional<BinaryData> properties = default;
+            int? limit = default;
+            int? currentValue = default;
+            string unit = default;
+            ReservationResourceName name = default;
+            ResourceTypeName? resourceType = default;
+            string quotaPeriod = default;
+            BinaryData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,15 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaProperties(Optional.ToNullable(limit), Optional.ToNullable(currentValue), unit.Value, name.Value, Optional.ToNullable(resourceType), quotaPeriod.Value, properties.Value, serializedAdditionalRawData);
+            return new QuotaProperties(
+                limit,
+                currentValue,
+                unit,
+                name,
+                resourceType,
+                quotaPeriod,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaProperties>.Write(ModelReaderWriterOptions options)

@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,29 +62,29 @@ namespace Azure.ResourceManager.DeviceUpdate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(HostName))
+            if (options.Format != "W" && HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (!(PrivateEndpointConnections is ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku.HasValue)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku.Value.ToString());
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<DeviceUpdateAccountLocationDetail> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -153,20 +153,20 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DeviceUpdateProvisioningState> provisioningState = default;
-            Optional<string> hostName = default;
-            Optional<DeviceUpdatePublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<DeviceUpdatePrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<DeviceUpdateSku> sku = default;
-            Optional<DeviceUpdateEncryption> encryption = default;
-            Optional<IReadOnlyList<DeviceUpdateAccountLocationDetail>> locations = default;
+            SystemData systemData = default;
+            DeviceUpdateProvisioningState? provisioningState = default;
+            string hostName = default;
+            DeviceUpdatePublicNetworkAccess? publicNetworkAccess = default;
+            IList<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections = default;
+            DeviceUpdateSku? sku = default;
+            DeviceUpdateEncryption encryption = default;
+            IReadOnlyList<DeviceUpdateAccountLocationDetail> locations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -311,7 +311,22 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToNullable(sku), encryption.Value, Optional.ToList(locations), serializedAdditionalRawData);
+            return new DeviceUpdateAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState,
+                hostName,
+                publicNetworkAccess,
+                privateEndpointConnections ?? new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionData>(),
+                sku,
+                encryption,
+                locations ?? new ChangeTrackingList<DeviceUpdateAccountLocationDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdateAccountData>.Write(ModelReaderWriterOptions options)

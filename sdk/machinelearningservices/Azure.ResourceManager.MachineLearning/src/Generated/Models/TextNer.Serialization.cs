@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PrimaryMetric))
+            if (options.Format != "W" && PrimaryMetric.HasValue)
             {
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
-            if (Optional.IsDefined(FeaturizationSettings))
+            if (FeaturizationSettings != null)
             {
                 if (FeaturizationSettings != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featurizationSettings");
                 }
             }
-            if (Optional.IsDefined(FixedParameters))
+            if (FixedParameters != null)
             {
                 if (FixedParameters != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("fixedParameters");
                 }
             }
-            if (Optional.IsDefined(LimitSettings))
+            if (LimitSettings != null)
             {
                 if (LimitSettings != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("limitSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(SearchSpace))
+            if (!(SearchSpace is ChangeTrackingList<NlpParameterSubspace> collection && collection.IsUndefined))
             {
                 if (SearchSpace != null)
                 {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("searchSpace");
                 }
             }
-            if (Optional.IsDefined(SweepSettings))
+            if (SweepSettings != null)
             {
                 if (SweepSettings != null)
                 {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sweepSettings");
                 }
             }
-            if (Optional.IsDefined(ValidationData))
+            if (ValidationData != null)
             {
                 if (ValidationData != null)
                 {
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationData");
                 }
             }
-            if (Optional.IsDefined(LogVerbosity))
+            if (LogVerbosity.HasValue)
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (Optional.IsDefined(TargetColumnName))
+            if (TargetColumnName != null)
             {
                 if (TargetColumnName != null)
                 {
@@ -167,15 +167,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ClassificationPrimaryMetric> primaryMetric = default;
-            Optional<NlpVerticalFeaturizationSettings> featurizationSettings = default;
-            Optional<NlpFixedParameters> fixedParameters = default;
-            Optional<NlpVerticalLimitSettings> limitSettings = default;
-            Optional<IList<NlpParameterSubspace>> searchSpace = default;
-            Optional<NlpSweepSettings> sweepSettings = default;
-            Optional<MachineLearningTableJobInput> validationData = default;
-            Optional<MachineLearningLogVerbosity> logVerbosity = default;
-            Optional<string> targetColumnName = default;
+            ClassificationPrimaryMetric? primaryMetric = default;
+            NlpVerticalFeaturizationSettings featurizationSettings = default;
+            NlpFixedParameters fixedParameters = default;
+            NlpVerticalLimitSettings limitSettings = default;
+            IList<NlpParameterSubspace> searchSpace = default;
+            NlpSweepSettings sweepSettings = default;
+            MachineLearningTableJobInput validationData = default;
+            MachineLearningLogVerbosity? logVerbosity = default;
+            string targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -291,7 +291,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TextNer(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, Optional.ToNullable(primaryMetric), featurizationSettings.Value, fixedParameters.Value, limitSettings.Value, Optional.ToList(searchSpace), sweepSettings.Value, validationData.Value);
+            return new TextNer(
+                logVerbosity,
+                targetColumnName,
+                taskType,
+                trainingData,
+                serializedAdditionalRawData,
+                primaryMetric,
+                featurizationSettings,
+                fixedParameters,
+                limitSettings,
+                searchSpace ?? new ChangeTrackingList<NlpParameterSubspace>(),
+                sweepSettings,
+                validationData);
         }
 
         BinaryData IPersistableModel<TextNer>.Write(ModelReaderWriterOptions options)

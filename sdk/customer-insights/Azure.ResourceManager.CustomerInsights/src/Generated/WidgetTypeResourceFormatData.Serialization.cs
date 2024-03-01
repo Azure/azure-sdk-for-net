@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(WidgetTypeName))
+            if (options.Format != "W" && WidgetTypeName != null)
             {
                 writer.WritePropertyName("widgetTypeName"u8);
                 writer.WriteStringValue(WidgetTypeName);
             }
-            if (Optional.IsDefined(Definition))
+            if (Definition != null)
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteStringValue(Definition);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -75,27 +75,27 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ImageUri))
+            if (ImageUri != null)
             {
                 writer.WritePropertyName("imageUrl"u8);
                 writer.WriteStringValue(ImageUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(WidgetVersion))
+            if (WidgetVersion != null)
             {
                 writer.WritePropertyName("widgetVersion"u8);
                 writer.WriteStringValue(WidgetVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(Changed))
+            if (options.Format != "W" && Changed.HasValue)
             {
                 writer.WritePropertyName("changed"u8);
                 writer.WriteStringValue(Changed.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Created))
+            if (options.Format != "W" && Created.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created.Value, "O");
@@ -142,16 +142,16 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> widgetTypeName = default;
-            Optional<string> definition = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> displayName = default;
-            Optional<Uri> imageUrl = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> widgetVersion = default;
-            Optional<DateTimeOffset> changed = default;
-            Optional<DateTimeOffset> created = default;
+            SystemData systemData = default;
+            string widgetTypeName = default;
+            string definition = default;
+            string description = default;
+            IDictionary<string, string> displayName = default;
+            Uri imageUrl = default;
+            Guid? tenantId = default;
+            string widgetVersion = default;
+            DateTimeOffset? changed = default;
+            DateTimeOffset? created = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -268,7 +268,21 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WidgetTypeResourceFormatData(id, name, type, systemData.Value, widgetTypeName.Value, definition.Value, description.Value, Optional.ToDictionary(displayName), imageUrl.Value, Optional.ToNullable(tenantId), widgetVersion.Value, Optional.ToNullable(changed), Optional.ToNullable(created), serializedAdditionalRawData);
+            return new WidgetTypeResourceFormatData(
+                id,
+                name,
+                type,
+                systemData,
+                widgetTypeName,
+                definition,
+                description,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                imageUrl,
+                tenantId,
+                widgetVersion,
+                changed,
+                created,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WidgetTypeResourceFormatData>.Write(ModelReaderWriterOptions options)

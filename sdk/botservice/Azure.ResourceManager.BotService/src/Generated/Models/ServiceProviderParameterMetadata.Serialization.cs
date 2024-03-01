@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Constraints))
+            if (Constraints != null)
             {
                 writer.WritePropertyName("constraints"u8);
                 writer.WriteObjectValue(Constraints);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<ServiceProviderParameterMetadataConstraints> constraints = default;
+            ServiceProviderParameterMetadataConstraints constraints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceProviderParameterMetadata(constraints.Value, serializedAdditionalRawData);
+            return new ServiceProviderParameterMetadata(constraints, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceProviderParameterMetadata>.Write(ModelReaderWriterOptions options)

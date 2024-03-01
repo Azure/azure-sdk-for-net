@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Media
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,29 +61,29 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ScaleUnits))
+            if (ScaleUnits.HasValue)
             {
                 writer.WritePropertyName("scaleUnits"u8);
                 writer.WriteNumberValue(ScaleUnits.Value);
             }
-            if (Optional.IsDefined(AvailabilitySetName))
+            if (AvailabilitySetName != null)
             {
                 writer.WritePropertyName("availabilitySetName"u8);
                 writer.WriteStringValue(AvailabilitySetName);
             }
-            if (Optional.IsDefined(AccessControl))
+            if (AccessControl != null)
             {
                 if (AccessControl != null)
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("accessControl");
                 }
             }
-            if (Optional.IsDefined(MaxCacheAge))
+            if (MaxCacheAge.HasValue)
             {
                 if (MaxCacheAge != null)
                 {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("maxCacheAge");
                 }
             }
-            if (Optional.IsCollectionDefined(CustomHostNames))
+            if (!(CustomHostNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customHostNames"u8);
                 writer.WriteStartArray();
@@ -117,37 +117,37 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(HostName))
+            if (options.Format != "W" && HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(IsCdnEnabled))
+            if (IsCdnEnabled.HasValue)
             {
                 writer.WritePropertyName("cdnEnabled"u8);
                 writer.WriteBooleanValue(IsCdnEnabled.Value);
             }
-            if (Optional.IsDefined(CdnProvider))
+            if (CdnProvider != null)
             {
                 writer.WritePropertyName("cdnProvider"u8);
                 writer.WriteStringValue(CdnProvider);
             }
-            if (Optional.IsDefined(CdnProfile))
+            if (CdnProfile != null)
             {
                 writer.WritePropertyName("cdnProfile"u8);
                 writer.WriteStringValue(CdnProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (Optional.IsDefined(CrossSiteAccessPolicies))
+            if (CrossSiteAccessPolicies != null)
             {
                 if (CrossSiteAccessPolicies != null)
                 {
@@ -159,17 +159,17 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("crossSiteAccessPolicies");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(FreeTrialEndOn))
+            if (options.Format != "W" && FreeTrialEndOn.HasValue)
             {
                 writer.WritePropertyName("freeTrialEndTime"u8);
                 writer.WriteStringValue(FreeTrialEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -213,29 +213,29 @@ namespace Azure.ResourceManager.Media
             {
                 return null;
             }
-            Optional<StreamingEndpointCurrentSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            StreamingEndpointCurrentSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<int> scaleUnits = default;
-            Optional<string> availabilitySetName = default;
-            Optional<StreamingEndpointAccessControl> accessControl = default;
-            Optional<long?> maxCacheAge = default;
-            Optional<IList<string>> customHostNames = default;
-            Optional<string> hostName = default;
-            Optional<bool> cdnEnabled = default;
-            Optional<string> cdnProvider = default;
-            Optional<string> cdnProfile = default;
-            Optional<string> provisioningState = default;
-            Optional<StreamingEndpointResourceState> resourceState = default;
-            Optional<CrossSiteAccessPolicies> crossSiteAccessPolicies = default;
-            Optional<DateTimeOffset> freeTrialEndTime = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
+            SystemData systemData = default;
+            string description = default;
+            int? scaleUnits = default;
+            string availabilitySetName = default;
+            StreamingEndpointAccessControl accessControl = default;
+            long? maxCacheAge = default;
+            IList<string> customHostNames = default;
+            string hostName = default;
+            bool? cdnEnabled = default;
+            string cdnProvider = default;
+            string cdnProfile = default;
+            string provisioningState = default;
+            StreamingEndpointResourceState? resourceState = default;
+            CrossSiteAccessPolicies crossSiteAccessPolicies = default;
+            DateTimeOffset? freeTrialEndTime = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? lastModified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -438,7 +438,31 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, description.Value, Optional.ToNullable(scaleUnits), availabilitySetName.Value, accessControl.Value, Optional.ToNullable(maxCacheAge), Optional.ToList(customHostNames), hostName.Value, Optional.ToNullable(cdnEnabled), cdnProvider.Value, cdnProfile.Value, provisioningState.Value, Optional.ToNullable(resourceState), crossSiteAccessPolicies.Value, Optional.ToNullable(freeTrialEndTime), Optional.ToNullable(created), Optional.ToNullable(lastModified), serializedAdditionalRawData);
+            return new StreamingEndpointData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                description,
+                scaleUnits,
+                availabilitySetName,
+                accessControl,
+                maxCacheAge,
+                customHostNames ?? new ChangeTrackingList<string>(),
+                hostName,
+                cdnEnabled,
+                cdnProvider,
+                cdnProfile,
+                provisioningState,
+                resourceState,
+                crossSiteAccessPolicies,
+                freeTrialEndTime,
+                created,
+                lastModified,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingEndpointData>.Write(ModelReaderWriterOptions options)

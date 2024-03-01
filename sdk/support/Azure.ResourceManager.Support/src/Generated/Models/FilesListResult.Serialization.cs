@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SupportFileDetailData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SupportFileDetailData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SupportFileDetailData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FilesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new FilesListResult(value ?? new ChangeTrackingList<SupportFileDetailData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FilesListResult>.Write(ModelReaderWriterOptions options)

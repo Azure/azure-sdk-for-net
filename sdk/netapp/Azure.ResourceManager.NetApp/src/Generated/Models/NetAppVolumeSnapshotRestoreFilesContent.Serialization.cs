@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(DestinationPath))
+            if (DestinationPath != null)
             {
                 writer.WritePropertyName("destinationPath"u8);
                 writer.WriteStringValue(DestinationPath);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             IList<string> filePaths = default;
-            Optional<string> destinationPath = default;
+            string destinationPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeSnapshotRestoreFilesContent(filePaths, destinationPath.Value, serializedAdditionalRawData);
+            return new NetAppVolumeSnapshotRestoreFilesContent(filePaths, destinationPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeSnapshotRestoreFilesContent>.Write(ModelReaderWriterOptions options)

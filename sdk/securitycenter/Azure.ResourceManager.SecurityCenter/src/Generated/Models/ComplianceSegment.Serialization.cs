@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SegmentType))
+            if (options.Format != "W" && SegmentType != null)
             {
                 writer.WritePropertyName("segmentType"u8);
                 writer.WriteStringValue(SegmentType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Percentage))
+            if (options.Format != "W" && Percentage.HasValue)
             {
                 writer.WritePropertyName("percentage"u8);
                 writer.WriteNumberValue(Percentage.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> segmentType = default;
-            Optional<double> percentage = default;
+            string segmentType = default;
+            double? percentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComplianceSegment(segmentType.Value, Optional.ToNullable(percentage), serializedAdditionalRawData);
+            return new ComplianceSegment(segmentType, percentage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComplianceSegment>.Write(ModelReaderWriterOptions options)

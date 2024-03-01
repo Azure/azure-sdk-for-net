@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,29 +57,29 @@ namespace Azure.ResourceManager.ManagedNetwork
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteObjectValue(Scope);
             }
-            if (options.Format != "W" && Optional.IsDefined(Connectivity))
+            if (options.Format != "W" && Connectivity != null)
             {
                 writer.WritePropertyName("connectivity"u8);
                 writer.WriteObjectValue(Connectivity);
@@ -123,16 +123,16 @@ namespace Azure.ResourceManager.ManagedNetwork
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ETag> etag = default;
-            Optional<Scope> scope = default;
-            Optional<ConnectivityCollection> connectivity = default;
+            SystemData systemData = default;
+            ProvisioningState? provisioningState = default;
+            ETag? etag = default;
+            Scope scope = default;
+            ConnectivityCollection connectivity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -234,7 +234,18 @@ namespace Azure.ResourceManager.ManagedNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(etag), scope.Value, connectivity.Value, serializedAdditionalRawData);
+            return new ManagedNetworkData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                etag,
+                scope,
+                connectivity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedNetworkData>.Write(ModelReaderWriterOptions options)

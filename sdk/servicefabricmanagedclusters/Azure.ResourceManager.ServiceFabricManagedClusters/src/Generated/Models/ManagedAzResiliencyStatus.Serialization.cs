@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(BaseResourceStatus))
+            if (!(BaseResourceStatus is ChangeTrackingList<ResourceAzStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("baseResourceStatus"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsClusterZoneResilient))
+            if (options.Format != "W" && IsClusterZoneResilient.HasValue)
             {
                 writer.WritePropertyName("isClusterZoneResilient"u8);
                 writer.WriteBooleanValue(IsClusterZoneResilient.Value);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourceAzStatus>> baseResourceStatus = default;
-            Optional<bool> isClusterZoneResilient = default;
+            IReadOnlyList<ResourceAzStatus> baseResourceStatus = default;
+            bool? isClusterZoneResilient = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedAzResiliencyStatus(Optional.ToList(baseResourceStatus), Optional.ToNullable(isClusterZoneResilient), serializedAdditionalRawData);
+            return new ManagedAzResiliencyStatus(baseResourceStatus ?? new ChangeTrackingList<ResourceAzStatus>(), isClusterZoneResilient, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedAzResiliencyStatus>.Write(ModelReaderWriterOptions options)

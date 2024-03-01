@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinInstanceCount))
+            if (MinInstanceCount.HasValue)
             {
                 writer.WritePropertyName("minInstanceCount"u8);
                 writer.WriteNumberValue(MinInstanceCount.Value);
             }
-            if (Optional.IsDefined(MaxInstanceCount))
+            if (MaxInstanceCount.HasValue)
             {
                 writer.WritePropertyName("maxInstanceCount"u8);
                 writer.WriteNumberValue(MaxInstanceCount.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<int> minInstanceCount = default;
-            Optional<int> maxInstanceCount = default;
+            int? minInstanceCount = default;
+            int? maxInstanceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightAutoScaleCapacity(Optional.ToNullable(minInstanceCount), Optional.ToNullable(maxInstanceCount), serializedAdditionalRawData);
+            return new HDInsightAutoScaleCapacity(minInstanceCount, maxInstanceCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightAutoScaleCapacity>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,54 +48,54 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecommendationName))
+            if (RecommendationName != null)
             {
                 writer.WritePropertyName("recommendationName"u8);
                 writer.WriteStringValue(RecommendationName);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(RecommendationId))
+            if (RecommendationId.HasValue)
             {
                 writer.WritePropertyName("recommendationId"u8);
                 writer.WriteStringValue(RecommendationId.Value);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ActionName))
+            if (ActionName != null)
             {
                 writer.WritePropertyName("actionName"u8);
                 writer.WriteStringValue(ActionName);
             }
-            if (Optional.IsDefined(Level))
+            if (Level.HasValue)
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Channels))
+            if (Channels.HasValue)
             {
                 writer.WritePropertyName("channels"u8);
                 writer.WriteStringValue(Channels.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CategoryTags))
+            if (options.Format != "W" && !(CategoryTags is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categoryTags"u8);
                 writer.WriteStartArray();
@@ -105,22 +105,22 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsDynamic))
+            if (IsDynamic.HasValue)
             {
                 writer.WritePropertyName("isDynamic"u8);
                 writer.WriteBooleanValue(IsDynamic.Value);
             }
-            if (Optional.IsDefined(ExtensionName))
+            if (ExtensionName != null)
             {
                 writer.WritePropertyName("extensionName"u8);
                 writer.WriteStringValue(ExtensionName);
             }
-            if (Optional.IsDefined(BladeName))
+            if (BladeName != null)
             {
                 writer.WritePropertyName("bladeName"u8);
                 writer.WriteStringValue(BladeName);
             }
-            if (Optional.IsDefined(ForwardLink))
+            if (ForwardLink != null)
             {
                 writer.WritePropertyName("forwardLink"u8);
                 writer.WriteStringValue(ForwardLink);
@@ -164,24 +164,24 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> recommendationName = default;
-            Optional<string> displayName = default;
-            Optional<string> message = default;
-            Optional<Guid> recommendationId = default;
-            Optional<string> description = default;
-            Optional<string> actionName = default;
-            Optional<NotificationLevel> level = default;
-            Optional<RecommendationChannel> channels = default;
-            Optional<IReadOnlyList<string>> categoryTags = default;
-            Optional<bool> isDynamic = default;
-            Optional<string> extensionName = default;
-            Optional<string> bladeName = default;
-            Optional<string> forwardLink = default;
+            SystemData systemData = default;
+            string recommendationName = default;
+            string displayName = default;
+            string message = default;
+            Guid? recommendationId = default;
+            string description = default;
+            string actionName = default;
+            NotificationLevel? level = default;
+            RecommendationChannel? channels = default;
+            IReadOnlyList<string> categoryTags = default;
+            bool? isDynamic = default;
+            string extensionName = default;
+            string bladeName = default;
+            string forwardLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -323,7 +323,26 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendationRuleData(id, name, type, systemData.Value, recommendationName.Value, displayName.Value, message.Value, Optional.ToNullable(recommendationId), description.Value, actionName.Value, Optional.ToNullable(level), Optional.ToNullable(channels), Optional.ToList(categoryTags), Optional.ToNullable(isDynamic), extensionName.Value, bladeName.Value, forwardLink.Value, kind.Value, serializedAdditionalRawData);
+            return new RecommendationRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                recommendationName,
+                displayName,
+                message,
+                recommendationId,
+                description,
+                actionName,
+                level,
+                channels,
+                categoryTags ?? new ChangeTrackingList<string>(),
+                isDynamic,
+                extensionName,
+                bladeName,
+                forwardLink,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendationRuleData>.Write(ModelReaderWriterOptions options)

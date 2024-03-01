@@ -29,7 +29,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsCollectionDefined(Errors))
+            if (!(Errors is ChangeTrackingList<ErrorResponse> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VariableStates))
+            if (!(VariableStates is ChangeTrackingList<VariableState> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("variableStates"u8);
                 writer.WriteStartArray();
@@ -90,8 +90,8 @@ namespace Azure.AI.AnomalyDetector
                 return null;
             }
             MultivariateBatchDetectionStatus status = default;
-            Optional<IReadOnlyList<ErrorResponse>> errors = default;
-            Optional<IReadOnlyList<VariableState>> variableStates = default;
+            IReadOnlyList<ErrorResponse> errors = default;
+            IReadOnlyList<VariableState> variableStates = default;
             MultivariateBatchDetectionOptions setupInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,7 +141,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MultivariateBatchDetectionResultSummary(status, Optional.ToList(errors), Optional.ToList(variableStates), setupInfo, serializedAdditionalRawData);
+            return new MultivariateBatchDetectionResultSummary(status, errors ?? new ChangeTrackingList<ErrorResponse>(), variableStates ?? new ChangeTrackingList<VariableState>(), setupInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MultivariateBatchDetectionResultSummary>.Write(ModelReaderWriterOptions options)

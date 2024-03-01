@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Fields))
+            if (!(Fields is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 if (Fields != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("fields");
                 }
             }
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 if (Parameters != null)
                 {
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<string>> fields = default;
-            Optional<BinaryData> parameters = default;
+            IList<string> fields = default;
+            BinaryData parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ColumnTransformer(Optional.ToList(fields), parameters.Value, serializedAdditionalRawData);
+            return new ColumnTransformer(fields ?? new ChangeTrackingList<string>(), parameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ColumnTransformer>.Write(ModelReaderWriterOptions options)

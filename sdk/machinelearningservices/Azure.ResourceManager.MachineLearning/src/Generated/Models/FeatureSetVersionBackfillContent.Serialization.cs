@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(FeatureWindow))
+            if (FeatureWindow != null)
             {
                 if (FeatureWindow != null)
                 {
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featureWindow");
                 }
             }
-            if (Optional.IsDefined(Resource))
+            if (Resource != null)
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteObjectValue(Resource);
             }
-            if (Optional.IsCollectionDefined(SparkConfiguration))
+            if (!(SparkConfiguration is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sparkConfiguration"u8);
                 writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<FeatureWindow> featureWindow = default;
-            Optional<MaterializationComputeResource> resource = default;
-            Optional<IDictionary<string, string>> sparkConfiguration = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string description = default;
+            string displayName = default;
+            FeatureWindow featureWindow = default;
+            MaterializationComputeResource resource = default;
+            IDictionary<string, string> sparkConfiguration = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeatureSetVersionBackfillContent(description.Value, displayName.Value, featureWindow.Value, resource.Value, Optional.ToDictionary(sparkConfiguration), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new FeatureSetVersionBackfillContent(
+                description,
+                displayName,
+                featureWindow,
+                resource,
+                sparkConfiguration ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeatureSetVersionBackfillContent>.Write(ModelReaderWriterOptions options)

@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Scope))
+            if (Scope.HasValue)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope.Value.ToString());
             }
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsDefined(SourceKind))
+            if (SourceKind.HasValue)
             {
                 writer.WritePropertyName("sourceKind"u8);
                 writer.WriteStringValue(SourceKind.Value.ToString());
             }
-            if (Optional.IsDefined(IsReconciliationSuspended))
+            if (IsReconciliationSuspended.HasValue)
             {
                 writer.WritePropertyName("suspend"u8);
                 writer.WriteBooleanValue(IsReconciliationSuspended.Value);
             }
-            if (Optional.IsDefined(GitRepository))
+            if (GitRepository != null)
             {
                 if (GitRepository != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("gitRepository");
                 }
             }
-            if (Optional.IsDefined(Bucket))
+            if (Bucket != null)
             {
                 if (Bucket != null)
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("bucket");
                 }
             }
-            if (Optional.IsDefined(AzureBlob))
+            if (AzureBlob != null)
             {
                 if (AzureBlob != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("azureBlob");
                 }
             }
-            if (Optional.IsCollectionDefined(Kustomizations))
+            if (!(Kustomizations is ChangeTrackingDictionary<string, Kustomization> collection && collection.IsUndefined))
             {
                 if (Kustomizations != null)
                 {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("kustomizations");
                 }
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
+            if (!(ConfigurationProtectedSettings is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (ConfigurationProtectedSettings != null)
                 {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("configurationProtectedSettings");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
+            if (options.Format != "W" && !(Statuses is ChangeTrackingList<KubernetesObjectStatus> collection1 && collection1.IsUndefined))
             {
                 if (Statuses != null)
                 {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("statuses");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(RepositoryPublicKey))
+            if (options.Format != "W" && RepositoryPublicKey != null)
             {
                 if (RepositoryPublicKey != null)
                 {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("repositoryPublicKey");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceSyncedCommitId))
+            if (options.Format != "W" && SourceSyncedCommitId != null)
             {
                 if (SourceSyncedCommitId != null)
                 {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("sourceSyncedCommitId");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceUpdatedOn))
+            if (options.Format != "W" && SourceUpdatedOn.HasValue)
             {
                 if (SourceUpdatedOn != null)
                 {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("sourceUpdatedAt");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusUpdatedOn))
+            if (options.Format != "W" && StatusUpdatedOn.HasValue)
             {
                 if (StatusUpdatedOn != null)
                 {
@@ -207,17 +207,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("statusUpdatedAt");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ComplianceState))
+            if (options.Format != "W" && ComplianceState.HasValue)
             {
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && ErrorMessage != null)
             {
                 if (ErrorMessage != null)
                 {
@@ -271,24 +271,24 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KubernetesConfigurationScope> scope = default;
-            Optional<string> @namespace = default;
-            Optional<KubernetesConfigurationSourceKind> sourceKind = default;
-            Optional<bool> suspend = default;
-            Optional<KubernetesGitRepository> gitRepository = default;
-            Optional<KubernetesBucket> bucket = default;
-            Optional<KubernetesAzureBlob> azureBlob = default;
-            Optional<IDictionary<string, Kustomization>> kustomizations = default;
-            Optional<IDictionary<string, string>> configurationProtectedSettings = default;
-            Optional<IReadOnlyList<KubernetesObjectStatus>> statuses = default;
-            Optional<string> repositoryPublicKey = default;
-            Optional<string> sourceSyncedCommitId = default;
-            Optional<DateTimeOffset?> sourceUpdatedAt = default;
-            Optional<DateTimeOffset?> statusUpdatedAt = default;
-            Optional<KubernetesFluxComplianceState> complianceState = default;
-            Optional<KubernetesConfigurationProvisioningState> provisioningState = default;
-            Optional<string> errorMessage = default;
+            SystemData systemData = default;
+            KubernetesConfigurationScope? scope = default;
+            string @namespace = default;
+            KubernetesConfigurationSourceKind? sourceKind = default;
+            bool? suspend = default;
+            KubernetesGitRepository gitRepository = default;
+            KubernetesBucket bucket = default;
+            KubernetesAzureBlob azureBlob = default;
+            IDictionary<string, Kustomization> kustomizations = default;
+            IDictionary<string, string> configurationProtectedSettings = default;
+            IReadOnlyList<KubernetesObjectStatus> statuses = default;
+            string repositoryPublicKey = default;
+            string sourceSyncedCommitId = default;
+            DateTimeOffset? sourceUpdatedAt = default;
+            DateTimeOffset? statusUpdatedAt = default;
+            KubernetesFluxComplianceState? complianceState = default;
+            KubernetesConfigurationProvisioningState? provisioningState = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -510,7 +510,29 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesFluxConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(scope), @namespace.Value, Optional.ToNullable(sourceKind), Optional.ToNullable(suspend), gitRepository.Value, bucket.Value, azureBlob.Value, Optional.ToDictionary(kustomizations), Optional.ToDictionary(configurationProtectedSettings), Optional.ToList(statuses), repositoryPublicKey.Value, sourceSyncedCommitId.Value, Optional.ToNullable(sourceUpdatedAt), Optional.ToNullable(statusUpdatedAt), Optional.ToNullable(complianceState), Optional.ToNullable(provisioningState), errorMessage.Value, serializedAdditionalRawData);
+            return new KubernetesFluxConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                scope,
+                @namespace,
+                sourceKind,
+                suspend,
+                gitRepository,
+                bucket,
+                azureBlob,
+                kustomizations ?? new ChangeTrackingDictionary<string, Kustomization>(),
+                configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
+                statuses ?? new ChangeTrackingList<KubernetesObjectStatus>(),
+                repositoryPublicKey,
+                sourceSyncedCommitId,
+                sourceUpdatedAt,
+                statusUpdatedAt,
+                complianceState,
+                provisioningState,
+                errorMessage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesFluxConfigurationData>.Write(ModelReaderWriterOptions options)

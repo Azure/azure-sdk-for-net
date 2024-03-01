@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(EmailAddress))
+            if (EmailAddress != null)
             {
                 writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
             }
-            if (Optional.IsDefined(PhoneNumber))
+            if (PhoneNumber != null)
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> emailAddress = default;
-            Optional<string> phoneNumber = default;
+            string name = default;
+            string emailAddress = default;
+            string phoneNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserInfo(name.Value, emailAddress.Value, phoneNumber.Value, serializedAdditionalRawData);
+            return new UserInfo(name, emailAddress, phoneNumber, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserInfo>.Write(ModelReaderWriterOptions options)

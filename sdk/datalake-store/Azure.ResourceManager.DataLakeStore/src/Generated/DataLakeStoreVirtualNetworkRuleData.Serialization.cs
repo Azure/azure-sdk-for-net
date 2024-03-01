@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.DataLakeStore
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SubnetId))
+            if (options.Format != "W" && SubnetId != null)
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.DataLakeStore
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> subnetId = default;
+            SystemData systemData = default;
+            ResourceIdentifier subnetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.DataLakeStore
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreVirtualNetworkRuleData(id, name, type, systemData.Value, subnetId.Value, serializedAdditionalRawData);
+            return new DataLakeStoreVirtualNetworkRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                subnetId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreVirtualNetworkRuleData>.Write(ModelReaderWriterOptions options)

@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteBooleanValue(IsSystemCollection);
             writer.WritePropertyName("isView"u8);
             writer.WriteBooleanValue(IsView);
-            if (Optional.IsDefined(ShardKey))
+            if (ShardKey != null)
             {
                 writer.WritePropertyName("shardKey"u8);
                 writer.WriteObjectValue(ShardKey);
             }
             writer.WritePropertyName("supportsSharding"u8);
             writer.WriteBooleanValue(SupportsSharding);
-            if (Optional.IsDefined(ViewOf))
+            if (ViewOf != null)
             {
                 writer.WritePropertyName("viewOf"u8);
                 writer.WriteStringValue(ViewOf);
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             bool isCapped = default;
             bool isSystemCollection = default;
             bool isView = default;
-            Optional<MongoDBShardKeyInfo> shardKey = default;
+            MongoDBShardKeyInfo shardKey = default;
             bool supportsSharding = default;
-            Optional<string> viewOf = default;
+            string viewOf = default;
             long averageDocumentSize = default;
             long dataSize = default;
             long documentCount = default;
@@ -180,7 +180,20 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBCollectionInfo(averageDocumentSize, dataSize, documentCount, name, qualifiedName, serializedAdditionalRawData, databaseName, isCapped, isSystemCollection, isView, shardKey.Value, supportsSharding, viewOf.Value);
+            return new MongoDBCollectionInfo(
+                averageDocumentSize,
+                dataSize,
+                documentCount,
+                name,
+                qualifiedName,
+                serializedAdditionalRawData,
+                databaseName,
+                isCapped,
+                isSystemCollection,
+                isView,
+                shardKey,
+                supportsSharding,
+                viewOf);
         }
 
         BinaryData IPersistableModel<MongoDBCollectionInfo>.Write(ModelReaderWriterOptions options)

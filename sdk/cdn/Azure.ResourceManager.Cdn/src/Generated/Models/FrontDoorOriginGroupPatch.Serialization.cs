@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProfileName))
+            if (options.Format != "W" && ProfileName != null)
             {
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (Optional.IsDefined(LoadBalancingSettings))
+            if (LoadBalancingSettings != null)
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
                 writer.WriteObjectValue(LoadBalancingSettings);
             }
-            if (Optional.IsDefined(HealthProbeSettings))
+            if (HealthProbeSettings != null)
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
                 writer.WriteObjectValue(HealthProbeSettings);
             }
-            if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
+            if (TrafficRestorationTimeInMinutes.HasValue)
             {
                 if (TrafficRestorationTimeInMinutes != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
                 }
             }
-            if (Optional.IsDefined(SessionAffinityState))
+            if (SessionAffinityState.HasValue)
             {
                 writer.WritePropertyName("sessionAffinityState"u8);
                 writer.WriteStringValue(SessionAffinityState.Value.ToString());
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> profileName = default;
-            Optional<LoadBalancingSettings> loadBalancingSettings = default;
-            Optional<HealthProbeSettings> healthProbeSettings = default;
-            Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
-            Optional<EnabledState> sessionAffinityState = default;
+            string profileName = default;
+            LoadBalancingSettings loadBalancingSettings = default;
+            HealthProbeSettings healthProbeSettings = default;
+            int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
+            EnabledState? sessionAffinityState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorOriginGroupPatch(profileName.Value, loadBalancingSettings.Value, healthProbeSettings.Value, Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), Optional.ToNullable(sessionAffinityState), serializedAdditionalRawData);
+            return new FrontDoorOriginGroupPatch(
+                profileName,
+                loadBalancingSettings,
+                healthProbeSettings,
+                trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
+                sessionAffinityState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorOriginGroupPatch>.Write(ModelReaderWriterOptions options)

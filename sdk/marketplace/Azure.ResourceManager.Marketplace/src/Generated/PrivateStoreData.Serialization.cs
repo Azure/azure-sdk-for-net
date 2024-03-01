@@ -44,44 +44,44 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Availability))
+            if (Availability.HasValue)
             {
                 writer.WritePropertyName("availability"u8);
                 writer.WriteStringValue(Availability.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateStoreId))
+            if (options.Format != "W" && PrivateStoreId.HasValue)
             {
                 writer.WritePropertyName("privateStoreId"u8);
                 writer.WriteStringValue(PrivateStoreId.Value);
             }
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(PrivateStoreName))
+            if (PrivateStoreName != null)
             {
                 writer.WritePropertyName("privateStoreName"u8);
                 writer.WriteStringValue(PrivateStoreName);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(IsGov))
+            if (IsGov.HasValue)
             {
                 writer.WritePropertyName("isGov"u8);
                 writer.WriteBooleanValue(IsGov.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CollectionIds))
+            if (options.Format != "W" && !(CollectionIds is ChangeTrackingList<Guid> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("collectionIds"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Branding))
+            if (!(Branding is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("branding"u8);
                 writer.WriteStartObject();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Marketplace
             }
             writer.WritePropertyName("notificationsSettings"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Recipients))
+            if (!(Recipients is ChangeTrackingList<NotificationRecipient> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("recipients"u8);
                 writer.WriteStartArray();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SendToAllMarketplaceAdmins))
+            if (SendToAllMarketplaceAdmins.HasValue)
             {
                 writer.WritePropertyName("sendToAllMarketplaceAdmins"u8);
                 writer.WriteBooleanValue(SendToAllMarketplaceAdmins.Value);
@@ -162,17 +162,17 @@ namespace Azure.ResourceManager.Marketplace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PrivateStoreAvailability> availability = default;
-            Optional<Guid> privateStoreId = default;
-            Optional<ETag> eTag = default;
-            Optional<string> privateStoreName = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> isGov = default;
-            Optional<IReadOnlyList<Guid>> collectionIds = default;
-            Optional<IDictionary<string, string>> branding = default;
-            Optional<IList<NotificationRecipient>> recipients = default;
-            Optional<bool> sendToAllMarketplaceAdmins = default;
+            SystemData systemData = default;
+            PrivateStoreAvailability? availability = default;
+            Guid? privateStoreId = default;
+            ETag? eTag = default;
+            string privateStoreName = default;
+            Guid? tenantId = default;
+            bool? isGov = default;
+            IReadOnlyList<Guid> collectionIds = default;
+            IDictionary<string, string> branding = default;
+            IList<NotificationRecipient> recipients = default;
+            bool? sendToAllMarketplaceAdmins = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -332,7 +332,22 @@ namespace Azure.ResourceManager.Marketplace
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateStoreData(id, name, type, systemData.Value, Optional.ToNullable(availability), Optional.ToNullable(privateStoreId), Optional.ToNullable(eTag), privateStoreName.Value, Optional.ToNullable(tenantId), Optional.ToNullable(isGov), Optional.ToList(collectionIds), Optional.ToDictionary(branding), Optional.ToList(recipients), Optional.ToNullable(sendToAllMarketplaceAdmins), serializedAdditionalRawData);
+            return new PrivateStoreData(
+                id,
+                name,
+                type,
+                systemData,
+                availability,
+                privateStoreId,
+                eTag,
+                privateStoreName,
+                tenantId,
+                isGov,
+                collectionIds ?? new ChangeTrackingList<Guid>(),
+                branding ?? new ChangeTrackingDictionary<string, string>(),
+                recipients ?? new ChangeTrackingList<NotificationRecipient>(),
+                sendToAllMarketplaceAdmins,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateStoreData>.Write(ModelReaderWriterOptions options)

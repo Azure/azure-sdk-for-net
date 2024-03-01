@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Language))
+            if (Language != null)
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsDefined(MarkingRef))
+            if (MarkingRef.HasValue)
             {
                 writer.WritePropertyName("markingRef"u8);
                 writer.WriteNumberValue(MarkingRef.Value);
             }
-            if (Optional.IsCollectionDefined(Selectors))
+            if (!(Selectors is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("selectors"u8);
                 writer.WriteStartArray();
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> language = default;
-            Optional<int> markingRef = default;
-            Optional<IList<string>> selectors = default;
+            string language = default;
+            int? markingRef = default;
+            IList<string> selectors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreatIntelligenceGranularMarkingEntity(language.Value, Optional.ToNullable(markingRef), Optional.ToList(selectors), serializedAdditionalRawData);
+            return new ThreatIntelligenceGranularMarkingEntity(language, markingRef, selectors ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreatIntelligenceGranularMarkingEntity>.Write(ModelReaderWriterOptions options)

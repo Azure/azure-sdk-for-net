@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
+            if (options.Format != "W" && ManagedBy != null)
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
@@ -48,54 +48,54 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SchemaName))
+            if (options.Format != "W" && SchemaName != null)
             {
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TableName))
+            if (options.Format != "W" && TableName != null)
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ColumnName))
+            if (options.Format != "W" && ColumnName != null)
             {
                 writer.WritePropertyName("columnName"u8);
                 writer.WriteStringValue(ColumnName);
             }
-            if (Optional.IsDefined(LabelName))
+            if (LabelName != null)
             {
                 writer.WritePropertyName("labelName"u8);
                 writer.WriteStringValue(LabelName);
             }
-            if (Optional.IsDefined(LabelId))
+            if (LabelId != null)
             {
                 writer.WritePropertyName("labelId"u8);
                 writer.WriteStringValue(LabelId);
             }
-            if (Optional.IsDefined(InformationType))
+            if (InformationType != null)
             {
                 writer.WritePropertyName("informationType"u8);
                 writer.WriteStringValue(InformationType);
             }
-            if (Optional.IsDefined(InformationTypeId))
+            if (InformationTypeId != null)
             {
                 writer.WritePropertyName("informationTypeId"u8);
                 writer.WriteStringValue(InformationTypeId);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsDisabled))
+            if (options.Format != "W" && IsDisabled.HasValue)
             {
                 writer.WritePropertyName("isDisabled"u8);
                 writer.WriteBooleanValue(IsDisabled.Value);
             }
-            if (Optional.IsDefined(Rank))
+            if (Rank.HasValue)
             {
                 writer.WritePropertyName("rank"u8);
                 writer.WriteStringValue(Rank.Value.ToSerialString());
@@ -139,20 +139,20 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<string> managedBy = default;
+            string managedBy = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> schemaName = default;
-            Optional<string> tableName = default;
-            Optional<string> columnName = default;
-            Optional<string> labelName = default;
-            Optional<string> labelId = default;
-            Optional<string> informationType = default;
-            Optional<string> informationTypeId = default;
-            Optional<bool> isDisabled = default;
-            Optional<SensitivityLabelRank> rank = default;
+            SystemData systemData = default;
+            string schemaName = default;
+            string tableName = default;
+            string columnName = default;
+            string labelName = default;
+            string labelId = default;
+            string informationType = default;
+            string informationTypeId = default;
+            bool? isDisabled = default;
+            SensitivityLabelRank? rank = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +257,22 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensitivityLabelData(id, name, type, systemData.Value, managedBy.Value, schemaName.Value, tableName.Value, columnName.Value, labelName.Value, labelId.Value, informationType.Value, informationTypeId.Value, Optional.ToNullable(isDisabled), Optional.ToNullable(rank), serializedAdditionalRawData);
+            return new SensitivityLabelData(
+                id,
+                name,
+                type,
+                systemData,
+                managedBy,
+                schemaName,
+                tableName,
+                columnName,
+                labelName,
+                labelId,
+                informationType,
+                informationTypeId,
+                isDisabled,
+                rank,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SensitivityLabelData>.Write(ModelReaderWriterOptions options)

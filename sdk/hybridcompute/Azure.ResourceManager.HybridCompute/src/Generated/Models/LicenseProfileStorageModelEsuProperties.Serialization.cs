@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AssignedLicenseImmutableId))
+            if (options.Format != "W" && AssignedLicenseImmutableId.HasValue)
             {
                 writer.WritePropertyName("assignedLicenseImmutableId"u8);
                 writer.WriteStringValue(AssignedLicenseImmutableId.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EsuKeys))
+            if (options.Format != "W" && !(EsuKeys is ChangeTrackingList<EsuKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("esuKeys"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<Guid> assignedLicenseImmutableId = default;
-            Optional<IReadOnlyList<EsuKey>> esuKeys = default;
+            Guid? assignedLicenseImmutableId = default;
+            IReadOnlyList<EsuKey> esuKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LicenseProfileStorageModelEsuProperties(Optional.ToNullable(assignedLicenseImmutableId), Optional.ToList(esuKeys), serializedAdditionalRawData);
+            return new LicenseProfileStorageModelEsuProperties(assignedLicenseImmutableId, esuKeys ?? new ChangeTrackingList<EsuKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LicenseProfileStorageModelEsuProperties>.Write(ModelReaderWriterOptions options)

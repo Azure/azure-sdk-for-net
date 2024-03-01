@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Href))
+            if (Href != null)
             {
                 if (Href != null)
                 {
                     writer.WritePropertyName("href"u8);
-                    writer.WriteStringValue(Href);
+                    writer.WriteStringValue(Href.AbsoluteUri);
                 }
                 else
                 {
                     writer.WriteNull("href");
                 }
             }
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 if (Label != null)
                 {
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<string> href = default;
-            Optional<string> label = default;
+            Uri href = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         href = null;
                         continue;
                     }
-                    href = property.Value.GetString();
+                    href = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("label"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CveLink(href.Value, label.Value, serializedAdditionalRawData);
+            return new CveLink(href, label, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CveLink>.Write(ModelReaderWriterOptions options)

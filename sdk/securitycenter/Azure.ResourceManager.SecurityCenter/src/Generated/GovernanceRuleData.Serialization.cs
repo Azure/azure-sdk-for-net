@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(RemediationTimeframe))
+            if (RemediationTimeframe != null)
             {
                 writer.WritePropertyName("remediationTimeframe"u8);
                 writer.WriteStringValue(RemediationTimeframe);
             }
-            if (Optional.IsDefined(IsGracePeriod))
+            if (IsGracePeriod.HasValue)
             {
                 writer.WritePropertyName("isGracePeriod"u8);
                 writer.WriteBooleanValue(IsGracePeriod.Value);
             }
-            if (Optional.IsDefined(RulePriority))
+            if (RulePriority.HasValue)
             {
                 writer.WritePropertyName("rulePriority"u8);
                 writer.WriteNumberValue(RulePriority.Value);
             }
-            if (Optional.IsDefined(IsDisabled))
+            if (IsDisabled.HasValue)
             {
                 writer.WritePropertyName("isDisabled"u8);
                 writer.WriteBooleanValue(IsDisabled.Value);
             }
-            if (Optional.IsDefined(RuleType))
+            if (RuleType.HasValue)
             {
                 writer.WritePropertyName("ruleType"u8);
                 writer.WriteStringValue(RuleType.Value.ToString());
             }
-            if (Optional.IsDefined(SourceResourceType))
+            if (SourceResourceType.HasValue)
             {
                 writer.WritePropertyName("sourceResourceType"u8);
                 writer.WriteStringValue(SourceResourceType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExcludedScopes))
+            if (!(ExcludedScopes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("excludedScopes"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ConditionSets))
+            if (!(ConditionSets is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("conditionSets"u8);
                 writer.WriteStartArray();
@@ -127,22 +127,22 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IncludeMemberScopes))
+            if (IncludeMemberScopes.HasValue)
             {
                 writer.WritePropertyName("includeMemberScopes"u8);
                 writer.WriteBooleanValue(IncludeMemberScopes.Value);
             }
-            if (Optional.IsDefined(OwnerSource))
+            if (OwnerSource != null)
             {
                 writer.WritePropertyName("ownerSource"u8);
                 writer.WriteObjectValue(OwnerSource);
             }
-            if (Optional.IsDefined(GovernanceEmailNotification))
+            if (GovernanceEmailNotification != null)
             {
                 writer.WritePropertyName("governanceEmailNotification"u8);
                 writer.WriteObjectValue(GovernanceEmailNotification);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
@@ -189,22 +189,22 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> remediationTimeframe = default;
-            Optional<bool> isGracePeriod = default;
-            Optional<int> rulePriority = default;
-            Optional<bool> isDisabled = default;
-            Optional<GovernanceRuleType> ruleType = default;
-            Optional<GovernanceRuleSourceResourceType> sourceResourceType = default;
-            Optional<IList<string>> excludedScopes = default;
-            Optional<IList<BinaryData>> conditionSets = default;
-            Optional<bool> includeMemberScopes = default;
-            Optional<GovernanceRuleOwnerSource> ownerSource = default;
-            Optional<GovernanceRuleEmailNotification> governanceEmailNotification = default;
-            Optional<GovernanceRuleMetadata> metadata = default;
+            SystemData systemData = default;
+            Guid? tenantId = default;
+            string displayName = default;
+            string description = default;
+            string remediationTimeframe = default;
+            bool? isGracePeriod = default;
+            int? rulePriority = default;
+            bool? isDisabled = default;
+            GovernanceRuleType? ruleType = default;
+            GovernanceRuleSourceResourceType? sourceResourceType = default;
+            IList<string> excludedScopes = default;
+            IList<BinaryData> conditionSets = default;
+            bool? includeMemberScopes = default;
+            GovernanceRuleOwnerSource ownerSource = default;
+            GovernanceRuleEmailNotification governanceEmailNotification = default;
+            GovernanceRuleMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -391,7 +391,27 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GovernanceRuleData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, description.Value, remediationTimeframe.Value, Optional.ToNullable(isGracePeriod), Optional.ToNullable(rulePriority), Optional.ToNullable(isDisabled), Optional.ToNullable(ruleType), Optional.ToNullable(sourceResourceType), Optional.ToList(excludedScopes), Optional.ToList(conditionSets), Optional.ToNullable(includeMemberScopes), ownerSource.Value, governanceEmailNotification.Value, metadata.Value, serializedAdditionalRawData);
+            return new GovernanceRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                tenantId,
+                displayName,
+                description,
+                remediationTimeframe,
+                isGracePeriod,
+                rulePriority,
+                isDisabled,
+                ruleType,
+                sourceResourceType,
+                excludedScopes ?? new ChangeTrackingList<string>(),
+                conditionSets ?? new ChangeTrackingList<BinaryData>(),
+                includeMemberScopes,
+                ownerSource,
+                governanceEmailNotification,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GovernanceRuleData>.Write(ModelReaderWriterOptions options)

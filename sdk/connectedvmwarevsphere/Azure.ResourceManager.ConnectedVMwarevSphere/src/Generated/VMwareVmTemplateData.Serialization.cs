@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,69 +67,69 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Uuid))
+            if (options.Format != "W" && Uuid != null)
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (Optional.IsDefined(VCenterId))
+            if (VCenterId != null)
             {
                 writer.WritePropertyName("vCenterId"u8);
                 writer.WriteStringValue(VCenterId);
             }
-            if (Optional.IsDefined(MoRefId))
+            if (MoRefId != null)
             {
                 writer.WritePropertyName("moRefId"u8);
                 writer.WriteStringValue(MoRefId);
             }
-            if (Optional.IsDefined(InventoryItemId))
+            if (InventoryItemId != null)
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MoName))
+            if (options.Format != "W" && MoName != null)
             {
                 writer.WritePropertyName("moName"u8);
                 writer.WriteStringValue(MoName);
             }
-            if (options.Format != "W" && Optional.IsDefined(MemorySizeMB))
+            if (options.Format != "W" && MemorySizeMB.HasValue)
             {
                 writer.WritePropertyName("memorySizeMB"u8);
                 writer.WriteNumberValue(MemorySizeMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumCpus))
+            if (options.Format != "W" && NumCpus.HasValue)
             {
                 writer.WritePropertyName("numCPUs"u8);
                 writer.WriteNumberValue(NumCpus.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumCoresPerSocket))
+            if (options.Format != "W" && NumCoresPerSocket.HasValue)
             {
                 writer.WritePropertyName("numCoresPerSocket"u8);
                 writer.WriteNumberValue(NumCoresPerSocket.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSType))
+            if (options.Format != "W" && OSType.HasValue)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(OSName))
+            if (options.Format != "W" && OSName != null)
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
-            if (options.Format != "W" && Optional.IsDefined(FolderPath))
+            if (options.Format != "W" && FolderPath != null)
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkInterfaces))
+            if (options.Format != "W" && !(NetworkInterfaces is ChangeTrackingList<VMwareNetworkInterface> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Disks))
+            if (options.Format != "W" && !(Disks is ChangeTrackingList<VMwareVirtualDisk> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -149,27 +149,27 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomResourceName))
+            if (options.Format != "W" && CustomResourceName != null)
             {
                 writer.WritePropertyName("customResourceName"u8);
                 writer.WriteStringValue(CustomResourceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ToolsVersionStatus))
+            if (options.Format != "W" && ToolsVersionStatus != null)
             {
                 writer.WritePropertyName("toolsVersionStatus"u8);
                 writer.WriteStringValue(ToolsVersionStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(ToolsVersion))
+            if (options.Format != "W" && ToolsVersion != null)
             {
                 writer.WritePropertyName("toolsVersion"u8);
                 writer.WriteStringValue(ToolsVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(FirmwareType))
+            if (options.Format != "W" && FirmwareType.HasValue)
             {
                 writer.WritePropertyName("firmwareType"u8);
                 writer.WriteStringValue(FirmwareType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
+            if (options.Format != "W" && !(Statuses is ChangeTrackingList<VMwareResourceStatus> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -223,33 +223,33 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ExtendedLocation extendedLocation = default;
+            string kind = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uuid = default;
-            Optional<string> vCenterId = default;
-            Optional<string> moRefId = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> moName = default;
-            Optional<int> memorySizeMB = default;
-            Optional<int> numCpus = default;
-            Optional<int> numCoresPerSocket = default;
-            Optional<VMwareOSType> osType = default;
-            Optional<string> osName = default;
-            Optional<string> folderPath = default;
-            Optional<IReadOnlyList<VMwareNetworkInterface>> networkInterfaces = default;
-            Optional<IReadOnlyList<VMwareVirtualDisk>> disks = default;
-            Optional<string> customResourceName = default;
-            Optional<string> toolsVersionStatus = default;
-            Optional<string> toolsVersion = default;
-            Optional<VMwareFirmwareType> firmwareType = default;
-            Optional<IReadOnlyList<VMwareResourceStatus>> statuses = default;
-            Optional<VMwareResourceProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string uuid = default;
+            string vCenterId = default;
+            string moRefId = default;
+            string inventoryItemId = default;
+            string moName = default;
+            int? memorySizeMB = default;
+            int? numCpus = default;
+            int? numCoresPerSocket = default;
+            VMwareOSType? osType = default;
+            string osName = default;
+            string folderPath = default;
+            IReadOnlyList<VMwareNetworkInterface> networkInterfaces = default;
+            IReadOnlyList<VMwareVirtualDisk> disks = default;
+            string customResourceName = default;
+            string toolsVersionStatus = default;
+            string toolsVersion = default;
+            VMwareFirmwareType? firmwareType = default;
+            IReadOnlyList<VMwareResourceStatus> statuses = default;
+            VMwareResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -475,7 +475,35 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareVmTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToNullable(memorySizeMB), Optional.ToNullable(numCpus), Optional.ToNullable(numCoresPerSocket), Optional.ToNullable(osType), osName.Value, folderPath.Value, Optional.ToList(networkInterfaces), Optional.ToList(disks), customResourceName.Value, toolsVersionStatus.Value, toolsVersion.Value, Optional.ToNullable(firmwareType), Optional.ToList(statuses), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VMwareVmTemplateData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                kind,
+                uuid,
+                vCenterId,
+                moRefId,
+                inventoryItemId,
+                moName,
+                memorySizeMB,
+                numCpus,
+                numCoresPerSocket,
+                osType,
+                osName,
+                folderPath,
+                networkInterfaces ?? new ChangeTrackingList<VMwareNetworkInterface>(),
+                disks ?? new ChangeTrackingList<VMwareVirtualDisk>(),
+                customResourceName,
+                toolsVersionStatus,
+                toolsVersion,
+                firmwareType,
+                statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareVmTemplateData>.Write(ModelReaderWriterOptions options)

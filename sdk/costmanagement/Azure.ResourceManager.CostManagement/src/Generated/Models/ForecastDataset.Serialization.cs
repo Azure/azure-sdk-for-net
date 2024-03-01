@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Granularity))
+            if (Granularity.HasValue)
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<GranularityType> granularity = default;
-            Optional<ForecastDatasetConfiguration> configuration = default;
+            GranularityType? granularity = default;
+            ForecastDatasetConfiguration configuration = default;
             IDictionary<string, ForecastAggregation> aggregation = default;
-            Optional<ForecastFilter> filter = default;
+            ForecastFilter filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastDataset(Optional.ToNullable(granularity), configuration.Value, aggregation, filter.Value, serializedAdditionalRawData);
+            return new ForecastDataset(granularity, configuration, aggregation, filter, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForecastDataset>.Write(ModelReaderWriterOptions options)

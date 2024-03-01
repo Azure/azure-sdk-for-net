@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -54,27 +54,27 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -87,32 +87,32 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublicIPAllocationMethod))
+            if (PublicIPAllocationMethod.HasValue)
             {
                 writer.WritePropertyName("publicIPAllocationMethod"u8);
                 writer.WriteStringValue(PublicIPAllocationMethod.Value.ToString());
             }
-            if (Optional.IsDefined(PublicIPAddressVersion))
+            if (PublicIPAddressVersion.HasValue)
             {
                 writer.WritePropertyName("publicIPAddressVersion"u8);
                 writer.WriteStringValue(PublicIPAddressVersion.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IPConfiguration))
+            if (options.Format != "W" && IPConfiguration != null)
             {
                 writer.WritePropertyName("ipConfiguration"u8);
                 writer.WriteObjectValue(IPConfiguration);
             }
-            if (Optional.IsDefined(DnsSettings))
+            if (DnsSettings != null)
             {
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings);
             }
-            if (Optional.IsDefined(DdosSettings))
+            if (DdosSettings != null)
             {
                 writer.WritePropertyName("ddosSettings"u8);
                 writer.WriteObjectValue(DdosSettings);
             }
-            if (Optional.IsCollectionDefined(IPTags))
+            if (!(IPTags is ChangeTrackingList<IPTag> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
@@ -122,52 +122,52 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IPAddress))
+            if (IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (Optional.IsDefined(PublicIPPrefix))
+            if (PublicIPPrefix != null)
             {
                 writer.WritePropertyName("publicIPPrefix"u8);
                 JsonSerializer.Serialize(writer, PublicIPPrefix);
             }
-            if (Optional.IsDefined(IdleTimeoutInMinutes))
+            if (IdleTimeoutInMinutes.HasValue)
             {
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            if (options.Format != "W" && ResourceGuid.HasValue)
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ServicePublicIPAddress))
+            if (ServicePublicIPAddress != null)
             {
                 writer.WritePropertyName("servicePublicIPAddress"u8);
                 writer.WriteObjectValue(ServicePublicIPAddress);
             }
-            if (Optional.IsDefined(NatGateway))
+            if (NatGateway != null)
             {
                 writer.WritePropertyName("natGateway"u8);
                 writer.WriteObjectValue(NatGateway);
             }
-            if (Optional.IsDefined(MigrationPhase))
+            if (MigrationPhase.HasValue)
             {
                 writer.WritePropertyName("migrationPhase"u8);
                 writer.WriteStringValue(MigrationPhase.Value.ToString());
             }
-            if (Optional.IsDefined(LinkedPublicIPAddress))
+            if (LinkedPublicIPAddress != null)
             {
                 writer.WritePropertyName("linkedPublicIPAddress"u8);
                 writer.WriteObjectValue(LinkedPublicIPAddress);
             }
-            if (Optional.IsDefined(DeleteOption))
+            if (DeleteOption.HasValue)
             {
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
@@ -211,31 +211,31 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<PublicIPAddressSku> sku = default;
-            Optional<ETag> etag = default;
-            Optional<IList<string>> zones = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<NetworkIPAllocationMethod> publicIPAllocationMethod = default;
-            Optional<NetworkIPVersion> publicIPAddressVersion = default;
-            Optional<NetworkIPConfiguration> ipConfiguration = default;
-            Optional<PublicIPAddressDnsSettings> dnsSettings = default;
-            Optional<DdosSettings> ddosSettings = default;
-            Optional<IList<IPTag>> ipTags = default;
-            Optional<string> ipAddress = default;
-            Optional<WritableSubResource> publicIPPrefix = default;
-            Optional<int> idleTimeoutInMinutes = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<PublicIPAddressData> servicePublicIPAddress = default;
-            Optional<NatGatewayData> natGateway = default;
-            Optional<PublicIPAddressMigrationPhase> migrationPhase = default;
-            Optional<PublicIPAddressData> linkedPublicIPAddress = default;
-            Optional<IPAddressDeleteOption> deleteOption = default;
+            ExtendedLocation extendedLocation = default;
+            PublicIPAddressSku sku = default;
+            ETag? etag = default;
+            IList<string> zones = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            NetworkIPAllocationMethod? publicIPAllocationMethod = default;
+            NetworkIPVersion? publicIPAddressVersion = default;
+            NetworkIPConfiguration ipConfiguration = default;
+            PublicIPAddressDnsSettings dnsSettings = default;
+            DdosSettings ddosSettings = default;
+            IList<IPTag> ipTags = default;
+            string ipAddress = default;
+            WritableSubResource publicIPPrefix = default;
+            int? idleTimeoutInMinutes = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            PublicIPAddressData servicePublicIPAddress = default;
+            NatGatewayData natGateway = default;
+            PublicIPAddressMigrationPhase? migrationPhase = default;
+            PublicIPAddressData linkedPublicIPAddress = default;
+            IPAddressDeleteOption? deleteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -490,7 +490,33 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublicIPAddressData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, sku.Value, Optional.ToNullable(etag), Optional.ToList(zones), Optional.ToNullable(publicIPAllocationMethod), Optional.ToNullable(publicIPAddressVersion), ipConfiguration.Value, dnsSettings.Value, ddosSettings.Value, Optional.ToList(ipTags), ipAddress.Value, publicIPPrefix, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), servicePublicIPAddress.Value, natGateway.Value, Optional.ToNullable(migrationPhase), linkedPublicIPAddress.Value, Optional.ToNullable(deleteOption));
+            return new PublicIPAddressData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                extendedLocation,
+                sku,
+                etag,
+                zones ?? new ChangeTrackingList<string>(),
+                publicIPAllocationMethod,
+                publicIPAddressVersion,
+                ipConfiguration,
+                dnsSettings,
+                ddosSettings,
+                ipTags ?? new ChangeTrackingList<IPTag>(),
+                ipAddress,
+                publicIPPrefix,
+                idleTimeoutInMinutes,
+                resourceGuid,
+                provisioningState,
+                servicePublicIPAddress,
+                natGateway,
+                migrationPhase,
+                linkedPublicIPAddress,
+                deleteOption);
         }
 
         BinaryData IPersistableModel<PublicIPAddressData>.Write(ModelReaderWriterOptions options)

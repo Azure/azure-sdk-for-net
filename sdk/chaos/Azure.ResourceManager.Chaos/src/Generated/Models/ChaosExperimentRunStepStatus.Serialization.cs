@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(StepName))
+            if (options.Format != "W" && StepName != null)
             {
                 writer.WritePropertyName("stepName"u8);
                 writer.WriteStringValue(StepName);
             }
-            if (options.Format != "W" && Optional.IsDefined(StepId))
+            if (options.Format != "W" && StepId != null)
             {
                 writer.WritePropertyName("stepId"u8);
                 writer.WriteStringValue(StepId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Branches))
+            if (options.Format != "W" && !(Branches is ChangeTrackingList<ChaosExperimentRunBranchStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("branches"u8);
                 writer.WriteStartArray();
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<string> stepName = default;
-            Optional<string> stepId = default;
-            Optional<string> status = default;
-            Optional<IReadOnlyList<ChaosExperimentRunBranchStatus>> branches = default;
+            string stepName = default;
+            string stepId = default;
+            string status = default;
+            IReadOnlyList<ChaosExperimentRunBranchStatus> branches = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosExperimentRunStepStatus(stepName.Value, stepId.Value, status.Value, Optional.ToList(branches), serializedAdditionalRawData);
+            return new ChaosExperimentRunStepStatus(stepName, stepId, status, branches ?? new ChangeTrackingList<ChaosExperimentRunBranchStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosExperimentRunStepStatus>.Write(ModelReaderWriterOptions options)

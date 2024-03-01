@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Text))
+            if (Text != null)
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Subexpressions))
+            if (!(Subexpressions is ChangeTrackingList<LogicExpression> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subexpressions"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> text = default;
-            Optional<BinaryData> value = default;
-            Optional<IReadOnlyList<LogicExpression>> subexpressions = default;
-            Optional<LogicExpressionErrorInfo> error = default;
+            string text = default;
+            BinaryData value = default;
+            IReadOnlyList<LogicExpression> subexpressions = default;
+            LogicExpressionErrorInfo error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicExpression(text.Value, value.Value, Optional.ToList(subexpressions), error.Value, serializedAdditionalRawData);
+            return new LogicExpression(text, value, subexpressions ?? new ChangeTrackingList<LogicExpression>(), error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicExpression>.Write(ModelReaderWriterOptions options)

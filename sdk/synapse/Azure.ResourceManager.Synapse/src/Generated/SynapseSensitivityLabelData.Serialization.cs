@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Synapse
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
+            if (options.Format != "W" && ManagedBy != null)
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
@@ -48,54 +48,54 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SchemaName))
+            if (options.Format != "W" && SchemaName != null)
             {
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TableName))
+            if (options.Format != "W" && TableName != null)
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ColumnName))
+            if (options.Format != "W" && ColumnName != null)
             {
                 writer.WritePropertyName("columnName"u8);
                 writer.WriteStringValue(ColumnName);
             }
-            if (Optional.IsDefined(LabelName))
+            if (LabelName != null)
             {
                 writer.WritePropertyName("labelName"u8);
                 writer.WriteStringValue(LabelName);
             }
-            if (Optional.IsDefined(LabelId))
+            if (LabelId.HasValue)
             {
                 writer.WritePropertyName("labelId"u8);
                 writer.WriteStringValue(LabelId.Value);
             }
-            if (Optional.IsDefined(InformationType))
+            if (InformationType != null)
             {
                 writer.WritePropertyName("informationType"u8);
                 writer.WriteStringValue(InformationType);
             }
-            if (Optional.IsDefined(InformationTypeId))
+            if (InformationTypeId.HasValue)
             {
                 writer.WritePropertyName("informationTypeId"u8);
                 writer.WriteStringValue(InformationTypeId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsDisabled))
+            if (options.Format != "W" && IsDisabled.HasValue)
             {
                 writer.WritePropertyName("isDisabled"u8);
                 writer.WriteBooleanValue(IsDisabled.Value);
             }
-            if (Optional.IsDefined(Rank))
+            if (Rank.HasValue)
             {
                 writer.WritePropertyName("rank"u8);
                 writer.WriteStringValue(Rank.Value.ToSerialString());
@@ -139,20 +139,20 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<string> managedBy = default;
+            string managedBy = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> schemaName = default;
-            Optional<string> tableName = default;
-            Optional<string> columnName = default;
-            Optional<string> labelName = default;
-            Optional<Guid> labelId = default;
-            Optional<string> informationType = default;
-            Optional<Guid> informationTypeId = default;
-            Optional<bool> isDisabled = default;
-            Optional<SynapseSensitivityLabelRank> rank = default;
+            SystemData systemData = default;
+            string schemaName = default;
+            string tableName = default;
+            string columnName = default;
+            string labelName = default;
+            Guid? labelId = default;
+            string informationType = default;
+            Guid? informationTypeId = default;
+            bool? isDisabled = default;
+            SynapseSensitivityLabelRank? rank = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -265,7 +265,22 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSensitivityLabelData(id, name, type, systemData.Value, managedBy.Value, schemaName.Value, tableName.Value, columnName.Value, labelName.Value, Optional.ToNullable(labelId), informationType.Value, Optional.ToNullable(informationTypeId), Optional.ToNullable(isDisabled), Optional.ToNullable(rank), serializedAdditionalRawData);
+            return new SynapseSensitivityLabelData(
+                id,
+                name,
+                type,
+                systemData,
+                managedBy,
+                schemaName,
+                tableName,
+                columnName,
+                labelName,
+                labelId,
+                informationType,
+                informationTypeId,
+                isDisabled,
+                rank,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSensitivityLabelData>.Write(ModelReaderWriterOptions options)

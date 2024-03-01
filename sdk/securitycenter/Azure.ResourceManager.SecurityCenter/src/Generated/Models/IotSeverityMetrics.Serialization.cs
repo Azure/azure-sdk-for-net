@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(High))
+            if (High.HasValue)
             {
                 writer.WritePropertyName("high"u8);
                 writer.WriteNumberValue(High.Value);
             }
-            if (Optional.IsDefined(Medium))
+            if (Medium.HasValue)
             {
                 writer.WritePropertyName("medium"u8);
                 writer.WriteNumberValue(Medium.Value);
             }
-            if (Optional.IsDefined(Low))
+            if (Low.HasValue)
             {
                 writer.WritePropertyName("low"u8);
                 writer.WriteNumberValue(Low.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<long> high = default;
-            Optional<long> medium = default;
-            Optional<long> low = default;
+            long? high = default;
+            long? medium = default;
+            long? low = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSeverityMetrics(Optional.ToNullable(high), Optional.ToNullable(medium), Optional.ToNullable(low), serializedAdditionalRawData);
+            return new IotSeverityMetrics(high, medium, low, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotSeverityMetrics>.Write(ModelReaderWriterOptions options)

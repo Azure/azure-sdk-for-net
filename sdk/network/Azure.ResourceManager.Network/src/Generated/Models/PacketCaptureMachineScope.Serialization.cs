@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Include))
+            if (!(Include is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("include"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Exclude))
+            if (!(Exclude is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("exclude"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> include = default;
-            Optional<IList<string>> exclude = default;
+            IList<string> include = default;
+            IList<string> exclude = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCaptureMachineScope(Optional.ToList(include), Optional.ToList(exclude), serializedAdditionalRawData);
+            return new PacketCaptureMachineScope(include ?? new ChangeTrackingList<string>(), exclude ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCaptureMachineScope>.Write(ModelReaderWriterOptions options)

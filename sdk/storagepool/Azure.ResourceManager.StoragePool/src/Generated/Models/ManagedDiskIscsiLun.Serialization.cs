@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("managedDiskAzureResourceId"u8);
             writer.WriteStringValue(ManagedDiskAzureResourceId);
-            if (options.Format != "W" && Optional.IsDefined(Lun))
+            if (options.Format != "W" && Lun.HasValue)
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
             string name = default;
             ResourceIdentifier managedDiskAzureResourceId = default;
-            Optional<int> lun = default;
+            int? lun = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDiskIscsiLun(name, managedDiskAzureResourceId, Optional.ToNullable(lun), serializedAdditionalRawData);
+            return new ManagedDiskIscsiLun(name, managedDiskAzureResourceId, lun, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDiskIscsiLun>.Write(ModelReaderWriterOptions options)

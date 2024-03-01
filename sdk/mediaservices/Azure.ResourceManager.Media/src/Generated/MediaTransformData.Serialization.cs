@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Outputs))
+            if (!(Outputs is ChangeTrackingList<MediaTransformOutput> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<IList<MediaTransformOutput>> outputs = default;
+            SystemData systemData = default;
+            DateTimeOffset? created = default;
+            string description = default;
+            DateTimeOffset? lastModified = default;
+            IList<MediaTransformOutput> outputs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaTransformData(id, name, type, systemData.Value, Optional.ToNullable(created), description.Value, Optional.ToNullable(lastModified), Optional.ToList(outputs), serializedAdditionalRawData);
+            return new MediaTransformData(
+                id,
+                name,
+                type,
+                systemData,
+                created,
+                description,
+                lastModified,
+                outputs ?? new ChangeTrackingList<MediaTransformOutput>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaTransformData>.Write(ModelReaderWriterOptions options)

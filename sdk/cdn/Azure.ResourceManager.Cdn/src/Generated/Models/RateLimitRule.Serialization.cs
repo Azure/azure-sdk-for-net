@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteNumberValue(RateLimitDurationInMinutes);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(EnabledState))
+            if (EnabledState.HasValue)
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Models
             int rateLimitThreshold = default;
             int rateLimitDurationInMinutes = default;
             string name = default;
-            Optional<CustomRuleEnabledState> enabledState = default;
+            CustomRuleEnabledState? enabledState = default;
             int priority = default;
             IList<CustomRuleMatchCondition> matchConditions = default;
             OverrideActionType action = default;
@@ -147,7 +147,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RateLimitRule(name, Optional.ToNullable(enabledState), priority, matchConditions, action, serializedAdditionalRawData, rateLimitThreshold, rateLimitDurationInMinutes);
+            return new RateLimitRule(
+                name,
+                enabledState,
+                priority,
+                matchConditions,
+                action,
+                serializedAdditionalRawData,
+                rateLimitThreshold,
+                rateLimitDurationInMinutes);
         }
 
         BinaryData IPersistableModel<RateLimitRule>.Write(ModelReaderWriterOptions options)

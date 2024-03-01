@@ -28,32 +28,32 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,42 +66,42 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetResourceId))
+            if (TargetResourceId != null)
             {
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetResourceGuid))
+            if (options.Format != "W" && TargetResourceGuid.HasValue)
             {
                 writer.WritePropertyName("targetResourceGuid"u8);
                 writer.WriteStringValue(TargetResourceGuid.Value);
             }
-            if (Optional.IsDefined(StorageId))
+            if (StorageId != null)
             {
                 writer.WritePropertyName("storageId"u8);
                 writer.WriteStringValue(StorageId);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Enabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(RetentionPolicy))
+            if (RetentionPolicy != null)
             {
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
-            if (Optional.IsDefined(Format))
+            if (Format != null)
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format);
             }
-            if (Optional.IsDefined(FlowAnalyticsConfiguration))
+            if (FlowAnalyticsConfiguration != null)
             {
                 writer.WritePropertyName("flowAnalyticsConfiguration"u8);
                 writer.WriteObjectValue(FlowAnalyticsConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -145,20 +145,20 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
-            Optional<Guid> targetResourceGuid = default;
-            Optional<ResourceIdentifier> storageId = default;
-            Optional<bool> enabled = default;
-            Optional<RetentionPolicyParameters> retentionPolicy = default;
-            Optional<FlowLogProperties> format = default;
-            Optional<TrafficAnalyticsProperties> flowAnalyticsConfiguration = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            ResourceIdentifier targetResourceId = default;
+            Guid? targetResourceGuid = default;
+            ResourceIdentifier storageId = default;
+            bool? enabled = default;
+            RetentionPolicyParameters retentionPolicy = default;
+            FlowLogProperties format = default;
+            TrafficAnalyticsProperties flowAnalyticsConfiguration = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -308,7 +308,22 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlowLogData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), targetResourceId.Value, Optional.ToNullable(targetResourceGuid), storageId.Value, Optional.ToNullable(enabled), retentionPolicy.Value, format.Value, flowAnalyticsConfiguration.Value, Optional.ToNullable(provisioningState));
+            return new FlowLogData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                targetResourceId,
+                targetResourceGuid,
+                storageId,
+                enabled,
+                retentionPolicy,
+                format,
+                flowAnalyticsConfiguration,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<FlowLogData>.Write(ModelReaderWriterOptions options)

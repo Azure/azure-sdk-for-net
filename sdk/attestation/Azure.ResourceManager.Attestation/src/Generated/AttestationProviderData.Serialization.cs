@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Attestation
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,34 +56,34 @@ namespace Azure.ResourceManager.Attestation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TrustModel))
+            if (TrustModel != null)
             {
                 writer.WritePropertyName("trustModel"u8);
                 writer.WriteStringValue(TrustModel);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(AttestUri))
+            if (AttestUri != null)
             {
                 writer.WritePropertyName("attestUri"u8);
                 writer.WriteStringValue(AttestUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<AttestationPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -132,17 +132,17 @@ namespace Azure.ResourceManager.Attestation
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> trustModel = default;
-            Optional<AttestationServiceStatus> status = default;
-            Optional<Uri> attestUri = default;
-            Optional<PublicNetworkAccessType> publicNetworkAccess = default;
-            Optional<IReadOnlyList<AttestationPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            SystemData systemData = default;
+            string trustModel = default;
+            AttestationServiceStatus? status = default;
+            Uri attestUri = default;
+            PublicNetworkAccessType? publicNetworkAccess = default;
+            IReadOnlyList<AttestationPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.Attestation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttestationProviderData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, trustModel.Value, Optional.ToNullable(status), attestUri.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
+            return new AttestationProviderData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                trustModel,
+                status,
+                attestUri,
+                publicNetworkAccess,
+                privateEndpointConnections ?? new ChangeTrackingList<AttestationPrivateEndpointConnectionData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationProviderData>.Write(ModelReaderWriterOptions options)

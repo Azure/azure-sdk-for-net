@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DnsResolver
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DnsResolver
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WriteStartObject();
             writer.WritePropertyName("virtualNetwork"u8);
             JsonSerializer.Serialize(writer, VirtualNetwork);
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DnsResolver
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             WritableSubResource virtualNetwork = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<DnsResolverProvisioningState> provisioningState = default;
+            IDictionary<string, string> metadata = default;
+            DnsResolverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.DnsResolver
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsForwardingRulesetVirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToNullable(etag), virtualNetwork, Optional.ToDictionary(metadata), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DnsForwardingRulesetVirtualNetworkLinkData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                virtualNetwork,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>.Write(ModelReaderWriterOptions options)

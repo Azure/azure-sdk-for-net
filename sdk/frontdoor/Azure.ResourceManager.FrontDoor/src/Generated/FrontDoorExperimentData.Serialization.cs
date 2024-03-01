@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.FrontDoor
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,44 +56,44 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ExperimentEndpointA))
+            if (ExperimentEndpointA != null)
             {
                 writer.WritePropertyName("endpointA"u8);
                 writer.WriteObjectValue(ExperimentEndpointA);
             }
-            if (Optional.IsDefined(ExperimentEndpointB))
+            if (ExperimentEndpointB != null)
             {
                 writer.WritePropertyName("endpointB"u8);
                 writer.WriteObjectValue(ExperimentEndpointB);
             }
-            if (Optional.IsDefined(EnabledState))
+            if (EnabledState.HasValue)
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScriptFileUri))
+            if (options.Format != "W" && ScriptFileUri != null)
             {
                 writer.WritePropertyName("scriptFileUri"u8);
                 writer.WriteStringValue(ScriptFileUri.AbsoluteUri);
@@ -137,19 +137,19 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<FrontDoorExperimentEndpointProperties> endpointA = default;
-            Optional<FrontDoorExperimentEndpointProperties> endpointB = default;
-            Optional<FrontDoorExperimentState> enabledState = default;
-            Optional<NetworkExperimentResourceState> resourceState = default;
-            Optional<string> status = default;
-            Optional<Uri> scriptFileUri = default;
+            SystemData systemData = default;
+            string description = default;
+            FrontDoorExperimentEndpointProperties endpointA = default;
+            FrontDoorExperimentEndpointProperties endpointB = default;
+            FrontDoorExperimentState? enabledState = default;
+            NetworkExperimentResourceState? resourceState = default;
+            string status = default;
+            Uri scriptFileUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -270,7 +270,21 @@ namespace Azure.ResourceManager.FrontDoor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorExperimentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, endpointA.Value, endpointB.Value, Optional.ToNullable(enabledState), Optional.ToNullable(resourceState), status.Value, scriptFileUri.Value, serializedAdditionalRawData);
+            return new FrontDoorExperimentData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description,
+                endpointA,
+                endpointB,
+                enabledState,
+                resourceState,
+                status,
+                scriptFileUri,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorExperimentData>.Write(ModelReaderWriterOptions options)

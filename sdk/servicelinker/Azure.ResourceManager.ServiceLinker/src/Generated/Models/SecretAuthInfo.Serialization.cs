@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 if (Name != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("name");
                 }
             }
-            if (Optional.IsDefined(SecretInfo))
+            if (SecretInfo != null)
             {
                 if (SecretInfo != null)
                 {
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<SecretBaseInfo> secretInfo = default;
+            string name = default;
+            SecretBaseInfo secretInfo = default;
             LinkerAuthType authType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecretAuthInfo(authType, serializedAdditionalRawData, name.Value, secretInfo.Value);
+            return new SecretAuthInfo(authType, serializedAdditionalRawData, name, secretInfo);
         }
 
         BinaryData IPersistableModel<SecretAuthInfo>.Write(ModelReaderWriterOptions options)

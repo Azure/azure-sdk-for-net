@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CustomerInsights
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,34 +56,34 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ApiEndpoint))
+            if (options.Format != "W" && ApiEndpoint != null)
             {
                 writer.WritePropertyName("apiEndpoint"u8);
                 writer.WriteStringValue(ApiEndpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(WebEndpoint))
+            if (options.Format != "W" && WebEndpoint != null)
             {
                 writer.WritePropertyName("webEndpoint"u8);
                 writer.WriteStringValue(WebEndpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(TenantFeatures))
+            if (TenantFeatures.HasValue)
             {
                 writer.WritePropertyName("tenantFeatures"u8);
                 writer.WriteNumberValue(TenantFeatures.Value);
             }
-            if (Optional.IsDefined(HubBillingInfo))
+            if (HubBillingInfo != null)
             {
                 writer.WritePropertyName("hubBillingInfo"u8);
                 writer.WriteObjectValue(HubBillingInfo);
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.CustomerInsights
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> apiEndpoint = default;
-            Optional<string> webEndpoint = default;
-            Optional<string> provisioningState = default;
-            Optional<int> tenantFeatures = default;
-            Optional<HubBillingInfoFormat> hubBillingInfo = default;
+            SystemData systemData = default;
+            string apiEndpoint = default;
+            string webEndpoint = default;
+            string provisioningState = default;
+            int? tenantFeatures = default;
+            HubBillingInfoFormat hubBillingInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,7 +236,19 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HubData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, apiEndpoint.Value, webEndpoint.Value, provisioningState.Value, Optional.ToNullable(tenantFeatures), hubBillingInfo.Value, serializedAdditionalRawData);
+            return new HubData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                apiEndpoint,
+                webEndpoint,
+                provisioningState,
+                tenantFeatures,
+                hubBillingInfo,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HubData>.Write(ModelReaderWriterOptions options)

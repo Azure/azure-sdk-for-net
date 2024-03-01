@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WriteObjectValue(Condition);
             writer.WritePropertyName("action"u8);
             writer.WriteObjectValue(Action);
-            if (Optional.IsDefined(Annotation))
+            if (Annotation != null)
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             long sequenceNumber = default;
             StatementConditionProperties condition = default;
             StatementActionProperties action = default;
-            Optional<string> annotation = default;
+            string annotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutePolicyStatementProperties(annotation.Value, serializedAdditionalRawData, sequenceNumber, condition, action);
+            return new RoutePolicyStatementProperties(annotation, serializedAdditionalRawData, sequenceNumber, condition, action);
         }
 
         BinaryData IPersistableModel<RoutePolicyStatementProperties>.Write(ModelReaderWriterOptions options)

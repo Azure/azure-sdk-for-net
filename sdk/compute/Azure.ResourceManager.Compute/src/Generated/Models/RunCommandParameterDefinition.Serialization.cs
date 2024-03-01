@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunCommandParameterDefinitionType);
-            if (Optional.IsDefined(DefaultValue))
+            if (DefaultValue != null)
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
-            if (Optional.IsDefined(Required))
+            if (Required.HasValue)
             {
                 writer.WritePropertyName("required"u8);
                 writer.WriteBooleanValue(Required.Value);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string name = default;
             string type = default;
-            Optional<string> defaultValue = default;
-            Optional<bool> required = default;
+            string defaultValue = default;
+            bool? required = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunCommandParameterDefinition(name, type, defaultValue.Value, Optional.ToNullable(required), serializedAdditionalRawData);
+            return new RunCommandParameterDefinition(name, type, defaultValue, required, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunCommandParameterDefinition>.Write(ModelReaderWriterOptions options)

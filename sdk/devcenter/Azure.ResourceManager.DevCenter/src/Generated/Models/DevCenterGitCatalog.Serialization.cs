@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Branch))
+            if (Branch != null)
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Optional.IsDefined(SecretIdentifier))
+            if (SecretIdentifier != null)
             {
                 writer.WritePropertyName("secretIdentifier"u8);
                 writer.WriteStringValue(SecretIdentifier);
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<Uri> uri = default;
-            Optional<string> branch = default;
-            Optional<string> secretIdentifier = default;
-            Optional<string> path = default;
+            Uri uri = default;
+            string branch = default;
+            string secretIdentifier = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterGitCatalog(uri.Value, branch.Value, secretIdentifier.Value, path.Value, serializedAdditionalRawData);
+            return new DevCenterGitCatalog(uri, branch, secretIdentifier, path, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterGitCatalog>.Write(ModelReaderWriterOptions options)

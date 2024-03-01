@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.FrontDoor
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsCollectionDefined(RoutingRules))
+            if (!(RoutingRules is ChangeTrackingList<RoutingRuleData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("routingRules"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LoadBalancingSettings))
+            if (!(LoadBalancingSettings is ChangeTrackingList<FrontDoorLoadBalancingSettingsData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(HealthProbeSettings))
+            if (!(HealthProbeSettings is ChangeTrackingList<FrontDoorHealthProbeSettingsData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BackendPools))
+            if (!(BackendPools is ChangeTrackingList<FrontDoorBackendPool> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("backendPools"u8);
                 writer.WriteStartArray();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FrontendEndpoints))
+            if (!(FrontendEndpoints is ChangeTrackingList<FrontendEndpointData> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("frontendEndpoints"u8);
                 writer.WriteStartArray();
@@ -118,37 +118,37 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BackendPoolsSettings))
+            if (BackendPoolsSettings != null)
             {
                 writer.WritePropertyName("backendPoolsSettings"u8);
                 writer.WriteObjectValue(BackendPoolsSettings);
             }
-            if (Optional.IsDefined(EnabledState))
+            if (EnabledState.HasValue)
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(Cname))
+            if (options.Format != "W" && Cname != null)
             {
                 writer.WritePropertyName("cname"u8);
                 writer.WriteStringValue(Cname);
             }
-            if (options.Format != "W" && Optional.IsDefined(FrontdoorId))
+            if (options.Format != "W" && FrontdoorId != null)
             {
                 writer.WritePropertyName("frontdoorId"u8);
                 writer.WriteStringValue(FrontdoorId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RulesEngines))
+            if (options.Format != "W" && !(RulesEngines is ChangeTrackingList<FrontDoorRulesEngineData> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("rulesEngines"u8);
                 writer.WriteStartArray();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExtendedProperties))
+            if (options.Format != "W" && !(ExtendedProperties is ChangeTrackingDictionary<string, string> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteStartObject();
@@ -208,26 +208,26 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> friendlyName = default;
-            Optional<IList<RoutingRuleData>> routingRules = default;
-            Optional<IList<FrontDoorLoadBalancingSettingsData>> loadBalancingSettings = default;
-            Optional<IList<FrontDoorHealthProbeSettingsData>> healthProbeSettings = default;
-            Optional<IList<FrontDoorBackendPool>> backendPools = default;
-            Optional<IList<FrontendEndpointData>> frontendEndpoints = default;
-            Optional<BackendPoolsSettings> backendPoolsSettings = default;
-            Optional<FrontDoorEnabledState> enabledState = default;
-            Optional<FrontDoorResourceState> resourceState = default;
-            Optional<string> provisioningState = default;
-            Optional<string> cname = default;
-            Optional<string> frontdoorId = default;
-            Optional<IReadOnlyList<FrontDoorRulesEngineData>> rulesEngines = default;
-            Optional<IReadOnlyDictionary<string, string>> extendedProperties = default;
+            SystemData systemData = default;
+            string friendlyName = default;
+            IList<RoutingRuleData> routingRules = default;
+            IList<FrontDoorLoadBalancingSettingsData> loadBalancingSettings = default;
+            IList<FrontDoorHealthProbeSettingsData> healthProbeSettings = default;
+            IList<FrontDoorBackendPool> backendPools = default;
+            IList<FrontendEndpointData> frontendEndpoints = default;
+            BackendPoolsSettings backendPoolsSettings = default;
+            FrontDoorEnabledState? enabledState = default;
+            FrontDoorResourceState? resourceState = default;
+            string provisioningState = default;
+            string cname = default;
+            string frontdoorId = default;
+            IReadOnlyList<FrontDoorRulesEngineData> rulesEngines = default;
+            IReadOnlyDictionary<string, string> extendedProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -438,7 +438,28 @@ namespace Azure.ResourceManager.FrontDoor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, friendlyName.Value, Optional.ToList(routingRules), Optional.ToList(loadBalancingSettings), Optional.ToList(healthProbeSettings), Optional.ToList(backendPools), Optional.ToList(frontendEndpoints), backendPoolsSettings.Value, Optional.ToNullable(enabledState), Optional.ToNullable(resourceState), provisioningState.Value, cname.Value, frontdoorId.Value, Optional.ToList(rulesEngines), Optional.ToDictionary(extendedProperties), serializedAdditionalRawData);
+            return new FrontDoorData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                friendlyName,
+                routingRules ?? new ChangeTrackingList<RoutingRuleData>(),
+                loadBalancingSettings ?? new ChangeTrackingList<FrontDoorLoadBalancingSettingsData>(),
+                healthProbeSettings ?? new ChangeTrackingList<FrontDoorHealthProbeSettingsData>(),
+                backendPools ?? new ChangeTrackingList<FrontDoorBackendPool>(),
+                frontendEndpoints ?? new ChangeTrackingList<FrontendEndpointData>(),
+                backendPoolsSettings,
+                enabledState,
+                resourceState,
+                provisioningState,
+                cname,
+                frontdoorId,
+                rulesEngines ?? new ChangeTrackingList<FrontDoorRulesEngineData>(),
+                extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorData>.Write(ModelReaderWriterOptions options)

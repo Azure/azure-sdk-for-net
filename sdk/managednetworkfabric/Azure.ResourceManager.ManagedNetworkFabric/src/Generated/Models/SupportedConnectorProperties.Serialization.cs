@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectorType))
+            if (ConnectorType != null)
             {
                 writer.WritePropertyName("connectorType"u8);
                 writer.WriteStringValue(ConnectorType);
             }
-            if (Optional.IsDefined(MaxSpeedInMbps))
+            if (MaxSpeedInMbps.HasValue)
             {
                 writer.WritePropertyName("maxSpeedInMbps"u8);
                 writer.WriteNumberValue(MaxSpeedInMbps.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> connectorType = default;
-            Optional<int> maxSpeedInMbps = default;
+            string connectorType = default;
+            int? maxSpeedInMbps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportedConnectorProperties(connectorType.Value, Optional.ToNullable(maxSpeedInMbps), serializedAdditionalRawData);
+            return new SupportedConnectorProperties(connectorType, maxSpeedInMbps, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportedConnectorProperties>.Write(ModelReaderWriterOptions options)

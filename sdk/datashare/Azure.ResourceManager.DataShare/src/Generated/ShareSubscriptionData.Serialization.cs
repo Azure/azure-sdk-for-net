@@ -43,78 +43,78 @@ namespace Azure.ResourceManager.DataShare
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
             writer.WritePropertyName("invitationId"u8);
             writer.WriteStringValue(InvitationId);
-            if (options.Format != "W" && Optional.IsDefined(ProviderEmail))
+            if (options.Format != "W" && ProviderEmail != null)
             {
                 writer.WritePropertyName("providerEmail"u8);
                 writer.WriteStringValue(ProviderEmail);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProviderName))
+            if (options.Format != "W" && ProviderName != null)
             {
                 writer.WritePropertyName("providerName"u8);
                 writer.WriteStringValue(ProviderName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProviderTenantName))
+            if (options.Format != "W" && ProviderTenantName != null)
             {
                 writer.WritePropertyName("providerTenantName"u8);
                 writer.WriteStringValue(ProviderTenantName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ShareDescription))
+            if (options.Format != "W" && ShareDescription != null)
             {
                 writer.WritePropertyName("shareDescription"u8);
                 writer.WriteStringValue(ShareDescription);
             }
-            if (options.Format != "W" && Optional.IsDefined(ShareKind))
+            if (options.Format != "W" && ShareKind.HasValue)
             {
                 writer.WritePropertyName("shareKind"u8);
                 writer.WriteStringValue(ShareKind.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ShareName))
+            if (options.Format != "W" && ShareName != null)
             {
                 writer.WritePropertyName("shareName"u8);
                 writer.WriteStringValue(ShareName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ShareSubscriptionStatus))
+            if (options.Format != "W" && ShareSubscriptionStatus.HasValue)
             {
                 writer.WritePropertyName("shareSubscriptionStatus"u8);
                 writer.WriteStringValue(ShareSubscriptionStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ShareTerms))
+            if (options.Format != "W" && ShareTerms != null)
             {
                 writer.WritePropertyName("shareTerms"u8);
                 writer.WriteStringValue(ShareTerms);
             }
             writer.WritePropertyName("sourceShareLocation"u8);
             writer.WriteStringValue(SourceShareLocation);
-            if (options.Format != "W" && Optional.IsDefined(UserEmail))
+            if (options.Format != "W" && UserEmail != null)
             {
                 writer.WritePropertyName("userEmail"u8);
                 writer.WriteStringValue(UserEmail);
             }
-            if (options.Format != "W" && Optional.IsDefined(UserName))
+            if (options.Format != "W" && UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
@@ -161,22 +161,22 @@ namespace Azure.ResourceManager.DataShare
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> expirationDate = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? expirationDate = default;
             Guid invitationId = default;
-            Optional<string> providerEmail = default;
-            Optional<string> providerName = default;
-            Optional<string> providerTenantName = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
-            Optional<string> shareDescription = default;
-            Optional<DataShareKind> shareKind = default;
-            Optional<string> shareName = default;
-            Optional<ShareSubscriptionStatus> shareSubscriptionStatus = default;
-            Optional<string> shareTerms = default;
+            string providerEmail = default;
+            string providerName = default;
+            string providerTenantName = default;
+            DataShareProvisioningState? provisioningState = default;
+            string shareDescription = default;
+            DataShareKind? shareKind = default;
+            string shareName = default;
+            ShareSubscriptionStatus? shareSubscriptionStatus = default;
+            string shareTerms = default;
             AzureLocation sourceShareLocation = default;
-            Optional<string> userEmail = default;
-            Optional<string> userName = default;
+            string userEmail = default;
+            string userName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -318,7 +318,27 @@ namespace Azure.ResourceManager.DataShare
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareSubscriptionData(id, name, type, systemData.Value, Optional.ToNullable(createdAt), Optional.ToNullable(expirationDate), invitationId, providerEmail.Value, providerName.Value, providerTenantName.Value, Optional.ToNullable(provisioningState), shareDescription.Value, Optional.ToNullable(shareKind), shareName.Value, Optional.ToNullable(shareSubscriptionStatus), shareTerms.Value, sourceShareLocation, userEmail.Value, userName.Value, serializedAdditionalRawData);
+            return new ShareSubscriptionData(
+                id,
+                name,
+                type,
+                systemData,
+                createdAt,
+                expirationDate,
+                invitationId,
+                providerEmail,
+                providerName,
+                providerTenantName,
+                provisioningState,
+                shareDescription,
+                shareKind,
+                shareName,
+                shareSubscriptionStatus,
+                shareTerms,
+                sourceShareLocation,
+                userEmail,
+                userName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareSubscriptionData>.Write(ModelReaderWriterOptions options)

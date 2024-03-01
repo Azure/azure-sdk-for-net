@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PointInTimeUTC))
+            if (PointInTimeUTC.HasValue)
             {
                 writer.WritePropertyName("pointInTimeUTC"u8);
                 writer.WriteStringValue(PointInTimeUTC.Value, "O");
             }
-            if (Optional.IsDefined(SourceResourceId))
+            if (SourceResourceId != null)
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> pointInTimeUTC = default;
-            Optional<string> sourceResourceId = default;
+            DateTimeOffset? pointInTimeUTC = default;
+            string sourceResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoClusterRestoreParameters(Optional.ToNullable(pointInTimeUTC), sourceResourceId.Value, serializedAdditionalRawData);
+            return new MongoClusterRestoreParameters(pointInTimeUTC, sourceResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoClusterRestoreParameters>.Write(ModelReaderWriterOptions options)

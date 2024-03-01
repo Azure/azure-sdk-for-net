@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TargetResourceType))
+            if (options.Format != "W" && TargetResourceType != null)
             {
                 writer.WritePropertyName("targetResourceType"u8);
                 writer.WriteStringValue(TargetResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(FarmBeatsExtensionId))
+            if (options.Format != "W" && FarmBeatsExtensionId != null)
             {
                 writer.WritePropertyName("farmBeatsExtensionId"u8);
                 writer.WriteStringValue(FarmBeatsExtensionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(FarmBeatsExtensionName))
+            if (options.Format != "W" && FarmBeatsExtensionName != null)
             {
                 writer.WritePropertyName("farmBeatsExtensionName"u8);
                 writer.WriteStringValue(FarmBeatsExtensionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(FarmBeatsExtensionVersion))
+            if (options.Format != "W" && FarmBeatsExtensionVersion != null)
             {
                 writer.WritePropertyName("farmBeatsExtensionVersion"u8);
                 writer.WriteStringValue(FarmBeatsExtensionVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherId))
+            if (options.Format != "W" && PublisherId != null)
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtensionCategory))
+            if (options.Format != "W" && ExtensionCategory != null)
             {
                 writer.WritePropertyName("extensionCategory"u8);
                 writer.WriteStringValue(ExtensionCategory);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtensionAuthLink))
+            if (options.Format != "W" && ExtensionAuthLink != null)
             {
                 writer.WritePropertyName("extensionAuthLink"u8);
                 writer.WriteStringValue(ExtensionAuthLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtensionApiDocsLink))
+            if (options.Format != "W" && ExtensionApiDocsLink != null)
             {
                 writer.WritePropertyName("extensionApiDocsLink"u8);
                 writer.WriteStringValue(ExtensionApiDocsLink);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DetailedInformation))
+            if (options.Format != "W" && !(DetailedInformation is ChangeTrackingList<DetailedInformation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("detailedInformation"u8);
                 writer.WriteStartArray();
@@ -147,17 +147,17 @@ namespace Azure.ResourceManager.AgFoodPlatform
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> targetResourceType = default;
-            Optional<string> farmBeatsExtensionId = default;
-            Optional<string> farmBeatsExtensionName = default;
-            Optional<string> farmBeatsExtensionVersion = default;
-            Optional<string> publisherId = default;
-            Optional<string> description = default;
-            Optional<string> extensionCategory = default;
-            Optional<string> extensionAuthLink = default;
-            Optional<string> extensionApiDocsLink = default;
-            Optional<IReadOnlyList<DetailedInformation>> detailedInformation = default;
+            SystemData systemData = default;
+            string targetResourceType = default;
+            string farmBeatsExtensionId = default;
+            string farmBeatsExtensionName = default;
+            string farmBeatsExtensionVersion = default;
+            string publisherId = default;
+            string description = default;
+            string extensionCategory = default;
+            string extensionAuthLink = default;
+            string extensionApiDocsLink = default;
+            IReadOnlyList<DetailedInformation> detailedInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,7 +263,22 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FarmBeatsExtensionData(id, name, type, systemData.Value, targetResourceType.Value, farmBeatsExtensionId.Value, farmBeatsExtensionName.Value, farmBeatsExtensionVersion.Value, publisherId.Value, description.Value, extensionCategory.Value, extensionAuthLink.Value, extensionApiDocsLink.Value, Optional.ToList(detailedInformation), serializedAdditionalRawData);
+            return new FarmBeatsExtensionData(
+                id,
+                name,
+                type,
+                systemData,
+                targetResourceType,
+                farmBeatsExtensionId,
+                farmBeatsExtensionName,
+                farmBeatsExtensionVersion,
+                publisherId,
+                description,
+                extensionCategory,
+                extensionAuthLink,
+                extensionApiDocsLink,
+                detailedInformation ?? new ChangeTrackingList<DetailedInformation>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FarmBeatsExtensionData>.Write(ModelReaderWriterOptions options)

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (options.Format != "W" && SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataFactoryName))
+            if (options.Format != "W" && DataFactoryName != null)
             {
                 writer.WritePropertyName("dataFactoryName"u8);
                 writer.WriteStringValue(DataFactoryName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataFactoryLocation))
+            if (options.Format != "W" && DataFactoryLocation.HasValue)
             {
                 writer.WritePropertyName("dataFactoryLocation"u8);
                 writer.WriteStringValue(DataFactoryLocation.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> dataFactoryName = default;
-            Optional<AzureLocation> dataFactoryLocation = default;
-            Optional<DateTimeOffset> createTime = default;
+            string name = default;
+            string subscriptionId = default;
+            string dataFactoryName = default;
+            AzureLocation? dataFactoryLocation = default;
+            DateTimeOffset? createTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkedIntegrationRuntime(name.Value, subscriptionId.Value, dataFactoryName.Value, Optional.ToNullable(dataFactoryLocation), Optional.ToNullable(createTime), serializedAdditionalRawData);
+            return new LinkedIntegrationRuntime(
+                name,
+                subscriptionId,
+                dataFactoryName,
+                dataFactoryLocation,
+                createTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkedIntegrationRuntime>.Write(ModelReaderWriterOptions options)

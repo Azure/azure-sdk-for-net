@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Synapse
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -53,69 +53,69 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RuleId))
+            if (options.Format != "W" && RuleId != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(RuleId);
             }
-            if (Optional.IsDefined(AliasName))
+            if (AliasName != null)
             {
                 writer.WritePropertyName("aliasName"u8);
                 writer.WriteStringValue(AliasName);
             }
-            if (Optional.IsDefined(RuleState))
+            if (RuleState.HasValue)
             {
                 writer.WritePropertyName("ruleState"u8);
                 writer.WriteStringValue(RuleState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SchemaName))
+            if (SchemaName != null)
             {
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
-            if (Optional.IsDefined(TableName))
+            if (TableName != null)
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (Optional.IsDefined(ColumnName))
+            if (ColumnName != null)
             {
                 writer.WritePropertyName("columnName"u8);
                 writer.WriteStringValue(ColumnName);
             }
-            if (Optional.IsDefined(MaskingFunction))
+            if (MaskingFunction.HasValue)
             {
                 writer.WritePropertyName("maskingFunction"u8);
                 writer.WriteStringValue(MaskingFunction.Value.ToSerialString());
             }
-            if (Optional.IsDefined(NumberFrom))
+            if (NumberFrom != null)
             {
                 writer.WritePropertyName("numberFrom"u8);
                 writer.WriteStringValue(NumberFrom);
             }
-            if (Optional.IsDefined(NumberTo))
+            if (NumberTo != null)
             {
                 writer.WritePropertyName("numberTo"u8);
                 writer.WriteStringValue(NumberTo);
             }
-            if (Optional.IsDefined(PrefixSize))
+            if (PrefixSize != null)
             {
                 writer.WritePropertyName("prefixSize"u8);
                 writer.WriteStringValue(PrefixSize);
             }
-            if (Optional.IsDefined(SuffixSize))
+            if (SuffixSize != null)
             {
                 writer.WritePropertyName("suffixSize"u8);
                 writer.WriteStringValue(SuffixSize);
             }
-            if (Optional.IsDefined(ReplacementString))
+            if (ReplacementString != null)
             {
                 writer.WritePropertyName("replacementString"u8);
                 writer.WriteStringValue(ReplacementString);
@@ -159,24 +159,24 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> kind = default;
+            AzureLocation? location = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> id0 = default;
-            Optional<string> aliasName = default;
-            Optional<SynapseDataMaskingRuleState> ruleState = default;
-            Optional<string> schemaName = default;
-            Optional<string> tableName = default;
-            Optional<string> columnName = default;
-            Optional<SynapseDataMaskingFunction> maskingFunction = default;
-            Optional<string> numberFrom = default;
-            Optional<string> numberTo = default;
-            Optional<string> prefixSize = default;
-            Optional<string> suffixSize = default;
-            Optional<string> replacementString = default;
+            SystemData systemData = default;
+            string id0 = default;
+            string aliasName = default;
+            SynapseDataMaskingRuleState? ruleState = default;
+            string schemaName = default;
+            string tableName = default;
+            string columnName = default;
+            SynapseDataMaskingFunction? maskingFunction = default;
+            string numberFrom = default;
+            string numberTo = default;
+            string prefixSize = default;
+            string suffixSize = default;
+            string replacementString = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -305,7 +305,26 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseDataMaskingRuleData(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, id0.Value, aliasName.Value, Optional.ToNullable(ruleState), schemaName.Value, tableName.Value, columnName.Value, Optional.ToNullable(maskingFunction), numberFrom.Value, numberTo.Value, prefixSize.Value, suffixSize.Value, replacementString.Value, serializedAdditionalRawData);
+            return new SynapseDataMaskingRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                id0,
+                aliasName,
+                ruleState,
+                schemaName,
+                tableName,
+                columnName,
+                maskingFunction,
+                numberFrom,
+                numberTo,
+                prefixSize,
+                suffixSize,
+                replacementString,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDataMaskingRuleData>.Write(ModelReaderWriterOptions options)

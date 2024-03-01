@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.OperationalInsights
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Containers))
+            if (!(Containers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tables))
+            if (!(Tables is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StorageAccount))
+            if (StorageAccount != null)
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteObjectValue(StorageAccount);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -136,16 +136,16 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? eTag = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<string>> containers = default;
-            Optional<IList<string>> tables = default;
-            Optional<OperationalInsightsStorageAccount> storageAccount = default;
-            Optional<StorageInsightStatus> status = default;
+            SystemData systemData = default;
+            IList<string> containers = default;
+            IList<string> tables = default;
+            OperationalInsightsStorageAccount storageAccount = default;
+            StorageInsightStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,7 +261,18 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageInsightData(id, name, type, systemData.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags), Optional.ToList(containers), Optional.ToList(tables), storageAccount.Value, status.Value, serializedAdditionalRawData);
+            return new StorageInsightData(
+                id,
+                name,
+                type,
+                systemData,
+                eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                containers ?? new ChangeTrackingList<string>(),
+                tables ?? new ChangeTrackingList<string>(),
+                storageAccount,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageInsightData>.Write(ModelReaderWriterOptions options)

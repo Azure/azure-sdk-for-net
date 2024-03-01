@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteObjectValue(Schedule);
             writer.WritePropertyName("durationHours"u8);
             writer.WriteNumberValue(DurationHours);
-            if (Optional.IsDefined(UtcOffset))
+            if (UtcOffset != null)
             {
                 writer.WritePropertyName("utcOffset"u8);
                 writer.WriteStringValue(UtcOffset);
             }
-            if (Optional.IsDefined(StartDate))
+            if (StartDate != null)
             {
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartDate);
             }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime);
-            if (Optional.IsCollectionDefined(NotAllowedDates))
+            if (!(NotAllowedDates is ChangeTrackingList<ContainerServiceDateSpan> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("notAllowedDates"u8);
                 writer.WriteStartArray();
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             ContainerServiceMaintenanceSchedule schedule = default;
             int durationHours = default;
-            Optional<string> utcOffset = default;
-            Optional<string> startDate = default;
+            string utcOffset = default;
+            string startDate = default;
             string startTime = default;
-            Optional<IList<ContainerServiceDateSpan>> notAllowedDates = default;
+            IList<ContainerServiceDateSpan> notAllowedDates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceMaintenanceWindow(schedule, durationHours, utcOffset.Value, startDate.Value, startTime, Optional.ToList(notAllowedDates), serializedAdditionalRawData);
+            return new ContainerServiceMaintenanceWindow(
+                schedule,
+                durationHours,
+                utcOffset,
+                startDate,
+                startTime,
+                notAllowedDates ?? new ChangeTrackingList<ContainerServiceDateSpan>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceMaintenanceWindow>.Write(ModelReaderWriterOptions options)

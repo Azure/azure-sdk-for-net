@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceDetails))
+            if (ResourceDetails != null)
             {
                 writer.WritePropertyName("resourceDetails"u8);
                 writer.WriteObjectValue(ResourceDetails);
             }
-            if (Optional.IsCollectionDefined(PendingFields))
+            if (!(PendingFields is ChangeTrackingList<PendingField> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("pendingFields"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<CheckRestrictionsResourceDetails> resourceDetails = default;
-            Optional<IList<PendingField>> pendingFields = default;
+            CheckRestrictionsResourceDetails resourceDetails = default;
+            IList<PendingField> pendingFields = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CheckManagementGroupPolicyRestrictionsContent(resourceDetails.Value, Optional.ToList(pendingFields), serializedAdditionalRawData);
+            return new CheckManagementGroupPolicyRestrictionsContent(resourceDetails, pendingFields ?? new ChangeTrackingList<PendingField>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CheckManagementGroupPolicyRestrictionsContent>.Write(ModelReaderWriterOptions options)

@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ActiveQueriesCount))
+            if (options.Format != "W" && ActiveQueriesCount.HasValue)
             {
                 writer.WritePropertyName("activeQueriesCount"u8);
                 writer.WriteNumberValue(ActiveQueriesCount.Value);
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> activeQueriesCount = default;
+            SystemData systemData = default;
+            int? activeQueriesCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseDataWarehouseUserActivityData(id, name, type, systemData.Value, Optional.ToNullable(activeQueriesCount), serializedAdditionalRawData);
+            return new SynapseDataWarehouseUserActivityData(
+                id,
+                name,
+                type,
+                systemData,
+                activeQueriesCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDataWarehouseUserActivityData>.Write(ModelReaderWriterOptions options)

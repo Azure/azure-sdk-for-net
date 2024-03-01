@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.AppConfiguration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Key))
+            if (options.Format != "W" && Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (options.Format != "W" && Optional.IsDefined(Label))
+            if (options.Format != "W" && Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(ContentType))
+            if (ContentType != null)
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(IsLocked))
+            if (options.Format != "W" && IsLocked.HasValue)
             {
                 writer.WritePropertyName("locked"u8);
                 writer.WriteBooleanValue(IsLocked.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -138,15 +138,15 @@ namespace Azure.ResourceManager.AppConfiguration
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> key = default;
-            Optional<string> label = default;
-            Optional<string> value = default;
-            Optional<string> contentType = default;
-            Optional<ETag> eTag = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<bool> locked = default;
-            Optional<IDictionary<string, string>> tags = default;
+            SystemData systemData = default;
+            string key = default;
+            string label = default;
+            string value = default;
+            string contentType = default;
+            ETag? eTag = default;
+            DateTimeOffset? lastModified = default;
+            bool? locked = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,7 +254,20 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationKeyValueData(id, name, type, systemData.Value, key.Value, label.Value, value.Value, contentType.Value, Optional.ToNullable(eTag), Optional.ToNullable(lastModified), Optional.ToNullable(locked), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new AppConfigurationKeyValueData(
+                id,
+                name,
+                type,
+                systemData,
+                key,
+                label,
+                value,
+                contentType,
+                eTag,
+                lastModified,
+                locked,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationKeyValueData>.Write(ModelReaderWriterOptions options)

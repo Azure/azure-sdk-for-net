@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPFirewallRules))
+            if (!(IPFirewallRules is ChangeTrackingDictionary<string, SynapseIPFirewallRuleProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipFirewallRules"u8);
                 writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, SynapseIPFirewallRuleProperties>> ipFirewallRules = default;
+            IDictionary<string, SynapseIPFirewallRuleProperties> ipFirewallRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplaceAllIPFirewallRulesContent(Optional.ToDictionary(ipFirewallRules), serializedAdditionalRawData);
+            return new ReplaceAllIPFirewallRulesContent(ipFirewallRules ?? new ChangeTrackingDictionary<string, SynapseIPFirewallRuleProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplaceAllIPFirewallRulesContent>.Write(ModelReaderWriterOptions options)

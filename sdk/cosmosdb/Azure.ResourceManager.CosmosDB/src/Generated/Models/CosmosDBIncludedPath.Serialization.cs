@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsCollectionDefined(Indexes))
+            if (!(Indexes is ChangeTrackingList<CosmosDBPathIndexes> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("indexes"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<IList<CosmosDBPathIndexes>> indexes = default;
+            string path = default;
+            IList<CosmosDBPathIndexes> indexes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBIncludedPath(path.Value, Optional.ToList(indexes), serializedAdditionalRawData);
+            return new CosmosDBIncludedPath(path, indexes ?? new ChangeTrackingList<CosmosDBPathIndexes>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBIncludedPath>.Write(ModelReaderWriterOptions options)

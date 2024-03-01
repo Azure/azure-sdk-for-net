@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AnalyticsWorkspaceId))
+            if (AnalyticsWorkspaceId != null)
             {
                 writer.WritePropertyName("analyticsWorkspaceId"u8);
                 writer.WriteStringValue(AnalyticsWorkspaceId);
             }
-            if (Optional.IsCollectionDefined(AvailabilityZones))
+            if (!(AvailabilityZones is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ClusterVersions))
+            if (options.Format != "W" && !(ClusterVersions is ChangeTrackingList<ClusterAvailableVersion> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("clusterVersions"u8);
                 writer.WriteStartArray();
@@ -88,34 +88,34 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
+            if (options.Format != "W" && DetailedStatus.HasValue)
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
+            if (options.Format != "W" && DetailedStatusMessage != null)
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
             writer.WritePropertyName("fabricControllerId"u8);
             writer.WriteStringValue(FabricControllerId);
-            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
+            if (ManagedResourceGroupConfiguration != null)
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagerExtendedLocation))
+            if (options.Format != "W" && ManagerExtendedLocation != null)
             {
                 writer.WritePropertyName("managerExtendedLocation"u8);
                 writer.WriteObjectValue(ManagerExtendedLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(VmSize))
+            if (VmSize != null)
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
@@ -159,22 +159,22 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> analyticsWorkspaceId = default;
-            Optional<IList<string>> availabilityZones = default;
-            Optional<IReadOnlyList<ClusterAvailableVersion>> clusterVersions = default;
-            Optional<ClusterManagerDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
+            SystemData systemData = default;
+            ResourceIdentifier analyticsWorkspaceId = default;
+            IList<string> availabilityZones = default;
+            IReadOnlyList<ClusterAvailableVersion> clusterVersions = default;
+            ClusterManagerDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
             ResourceIdentifier fabricControllerId = default;
-            Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
-            Optional<ExtendedLocation> managerExtendedLocation = default;
-            Optional<ClusterManagerProvisioningState> provisioningState = default;
-            Optional<string> vmSize = default;
+            ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
+            ExtendedLocation managerExtendedLocation = default;
+            ClusterManagerProvisioningState? provisioningState = default;
+            string vmSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -328,7 +328,24 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudClusterManagerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, analyticsWorkspaceId.Value, Optional.ToList(availabilityZones), Optional.ToList(clusterVersions), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, fabricControllerId, managedResourceGroupConfiguration.Value, managerExtendedLocation.Value, Optional.ToNullable(provisioningState), vmSize.Value, serializedAdditionalRawData);
+            return new NetworkCloudClusterManagerData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                analyticsWorkspaceId,
+                availabilityZones ?? new ChangeTrackingList<string>(),
+                clusterVersions ?? new ChangeTrackingList<ClusterAvailableVersion>(),
+                detailedStatus,
+                detailedStatusMessage,
+                fabricControllerId,
+                managedResourceGroupConfiguration,
+                managerExtendedLocation,
+                provisioningState,
+                vmSize,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudClusterManagerData>.Write(ModelReaderWriterOptions options)

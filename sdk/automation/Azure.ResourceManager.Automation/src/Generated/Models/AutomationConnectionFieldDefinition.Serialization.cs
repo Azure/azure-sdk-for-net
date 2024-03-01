@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEncrypted))
+            if (IsEncrypted.HasValue)
             {
                 writer.WritePropertyName("isEncrypted"u8);
                 writer.WriteBooleanValue(IsEncrypted.Value);
             }
-            if (Optional.IsDefined(IsOptional))
+            if (IsOptional.HasValue)
             {
                 writer.WritePropertyName("isOptional"u8);
                 writer.WriteBooleanValue(IsOptional.Value);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<bool> isEncrypted = default;
-            Optional<bool> isOptional = default;
+            bool? isEncrypted = default;
+            bool? isOptional = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationConnectionFieldDefinition(Optional.ToNullable(isEncrypted), Optional.ToNullable(isOptional), type, serializedAdditionalRawData);
+            return new AutomationConnectionFieldDefinition(isEncrypted, isOptional, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationConnectionFieldDefinition>.Write(ModelReaderWriterOptions options)

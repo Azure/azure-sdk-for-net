@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ActivationKey))
+            if (options.Format != "W" && ActivationKey != null)
             {
                 writer.WritePropertyName("activationKey"u8);
                 writer.WriteStringValue(ActivationKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> activationKey = default;
-            Optional<HcxEnterpriseSiteStatus> status = default;
+            SystemData systemData = default;
+            string activationKey = default;
+            HcxEnterpriseSiteStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HcxEnterpriseSiteData(id, name, type, systemData.Value, activationKey.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new HcxEnterpriseSiteData(
+                id,
+                name,
+                type,
+                systemData,
+                activationKey,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HcxEnterpriseSiteData>.Write(ModelReaderWriterOptions options)

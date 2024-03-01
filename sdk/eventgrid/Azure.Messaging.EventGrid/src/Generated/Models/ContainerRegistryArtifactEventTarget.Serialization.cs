@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,13 +17,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> mediaType = default;
-            Optional<long> size = default;
-            Optional<string> digest = default;
-            Optional<string> repository = default;
-            Optional<string> tag = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
+            string mediaType = default;
+            long? size = default;
+            string digest = default;
+            string repository = default;
+            string tag = default;
+            string name = default;
+            string version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"u8))
@@ -67,7 +66,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ContainerRegistryArtifactEventTarget(mediaType.Value, Optional.ToNullable(size), digest.Value, repository.Value, tag.Value, name.Value, version.Value);
+            return new ContainerRegistryArtifactEventTarget(
+                mediaType,
+                size,
+                digest,
+                repository,
+                tag,
+                name,
+                version);
         }
     }
 }

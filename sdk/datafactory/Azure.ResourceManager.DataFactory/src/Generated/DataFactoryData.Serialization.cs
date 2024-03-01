@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.DataFactory
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -68,39 +68,39 @@ namespace Azure.ResourceManager.DataFactory
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(PurviewConfiguration))
+            if (PurviewConfiguration != null)
             {
                 writer.WritePropertyName("purviewConfiguration"u8);
                 writer.WriteObjectValue(PurviewConfiguration);
             }
-            if (Optional.IsDefined(RepoConfiguration))
+            if (RepoConfiguration != null)
             {
                 writer.WritePropertyName("repoConfiguration"u8);
                 writer.WriteObjectValue(RepoConfiguration);
             }
-            if (Optional.IsCollectionDefined(GlobalParameters))
+            if (!(GlobalParameters is ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("globalParameters"u8);
                 writer.WriteStartObject();
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -157,22 +157,22 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> eTag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            ETag? eTag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<string> version = default;
-            Optional<DataFactoryPurviewConfiguration> purviewConfiguration = default;
-            Optional<FactoryRepoConfiguration> repoConfiguration = default;
-            Optional<IDictionary<string, DataFactoryGlobalParameterProperties>> globalParameters = default;
-            Optional<DataFactoryEncryptionConfiguration> encryption = default;
-            Optional<DataFactoryPublicNetworkAccess> publicNetworkAccess = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            DateTimeOffset? createTime = default;
+            string version = default;
+            DataFactoryPurviewConfiguration purviewConfiguration = default;
+            FactoryRepoConfiguration repoConfiguration = default;
+            IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters = default;
+            DataFactoryEncryptionConfiguration encryption = default;
+            DataFactoryPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -323,7 +323,24 @@ namespace Azure.ResourceManager.DataFactory
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, Optional.ToNullable(createTime), version.Value, purviewConfiguration.Value, repoConfiguration.Value, Optional.ToDictionary(globalParameters), encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eTag), additionalProperties);
+            return new DataFactoryData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState,
+                createTime,
+                version,
+                purviewConfiguration,
+                repoConfiguration,
+                globalParameters ?? new ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>(),
+                encryption,
+                publicNetworkAccess,
+                eTag,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryData>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Chaos
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,49 +48,49 @@ namespace Azure.ResourceManager.Chaos
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Publisher))
+            if (options.Format != "W" && Publisher != null)
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetType))
+            if (options.Format != "W" && TargetType != null)
             {
                 writer.WritePropertyName("targetType"u8);
                 writer.WriteStringValue(TargetType);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(ParametersSchema))
+            if (options.Format != "W" && ParametersSchema != null)
             {
                 writer.WritePropertyName("parametersSchema"u8);
                 writer.WriteStringValue(ParametersSchema);
             }
-            if (options.Format != "W" && Optional.IsDefined(Urn))
+            if (options.Format != "W" && Urn != null)
             {
                 writer.WritePropertyName("urn"u8);
                 writer.WriteStringValue(Urn);
             }
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(AzureRbacActions))
+            if (!(AzureRbacActions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("azureRbacActions"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Chaos
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AzureRbacDataActions))
+            if (!(AzureRbacDataActions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("azureRbacDataActions"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Chaos
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RuntimeProperties))
+            if (RuntimeProperties != null)
             {
                 writer.WritePropertyName("runtimeProperties"u8);
                 writer.WriteObjectValue(RuntimeProperties);
@@ -154,21 +154,21 @@ namespace Azure.ResourceManager.Chaos
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> publisher = default;
-            Optional<string> targetType = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> parametersSchema = default;
-            Optional<string> urn = default;
-            Optional<string> kind = default;
-            Optional<IList<string>> azureRbacActions = default;
-            Optional<IList<string>> azureRbacDataActions = default;
-            Optional<ChaosCapabilityTypeRuntimeProperties> runtimeProperties = default;
+            SystemData systemData = default;
+            string publisher = default;
+            string targetType = default;
+            string displayName = default;
+            string description = default;
+            string parametersSchema = default;
+            string urn = default;
+            string kind = default;
+            IList<string> azureRbacActions = default;
+            IList<string> azureRbacDataActions = default;
+            ChaosCapabilityTypeRuntimeProperties runtimeProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -296,7 +296,23 @@ namespace Azure.ResourceManager.Chaos
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosCapabilityTypeData(id, name, type, systemData.Value, Optional.ToNullable(location), publisher.Value, targetType.Value, displayName.Value, description.Value, parametersSchema.Value, urn.Value, kind.Value, Optional.ToList(azureRbacActions), Optional.ToList(azureRbacDataActions), runtimeProperties.Value, serializedAdditionalRawData);
+            return new ChaosCapabilityTypeData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                publisher,
+                targetType,
+                displayName,
+                description,
+                parametersSchema,
+                urn,
+                kind,
+                azureRbacActions ?? new ChangeTrackingList<string>(),
+                azureRbacDataActions ?? new ChangeTrackingList<string>(),
+                runtimeProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosCapabilityTypeData>.Write(ModelReaderWriterOptions options)

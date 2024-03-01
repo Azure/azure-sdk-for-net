@@ -27,27 +27,27 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Authentication))
+            if (Authentication != null)
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (Optional.IsDefined(DocumentCount))
+            if (DocumentCount.HasValue)
             {
                 writer.WritePropertyName("topNDocuments"u8);
                 writer.WriteNumberValue(DocumentCount.Value);
             }
-            if (Optional.IsDefined(ShouldRestrictResultScope))
+            if (ShouldRestrictResultScope.HasValue)
             {
                 writer.WritePropertyName("inScope"u8);
                 writer.WriteBooleanValue(ShouldRestrictResultScope.Value);
             }
-            if (Optional.IsDefined(Strictness))
+            if (Strictness.HasValue)
             {
                 writer.WritePropertyName("strictness"u8);
                 writer.WriteNumberValue(Strictness.Value);
             }
-            if (Optional.IsDefined(RoleInformation))
+            if (RoleInformation != null)
             {
                 writer.WritePropertyName("roleInformation"u8);
                 writer.WriteStringValue(RoleInformation);
@@ -56,17 +56,17 @@ namespace Azure.AI.OpenAI
             writer.WriteStringValue(Endpoint.AbsoluteUri);
             writer.WritePropertyName("indexName"u8);
             writer.WriteStringValue(IndexName);
-            if (Optional.IsDefined(FieldMappingOptions))
+            if (FieldMappingOptions != null)
             {
                 writer.WritePropertyName("fieldsMapping"u8);
                 writer.WriteObjectValue(FieldMappingOptions);
             }
-            if (Optional.IsDefined(QueryType))
+            if (QueryType.HasValue)
             {
                 writer.WritePropertyName("queryType"u8);
                 writer.WriteStringValue(QueryType.Value.ToString());
             }
-            if (Optional.IsDefined(EmbeddingDependency))
+            if (EmbeddingDependency != null)
             {
                 writer.WritePropertyName("embeddingDependency"u8);
                 writer.WriteObjectValue(EmbeddingDependency);
@@ -109,16 +109,16 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<OnYourDataAuthenticationOptions> authentication = default;
-            Optional<int> topNDocuments = default;
-            Optional<bool> inScope = default;
-            Optional<int> strictness = default;
-            Optional<string> roleInformation = default;
+            OnYourDataAuthenticationOptions authentication = default;
+            int? topNDocuments = default;
+            bool? inScope = default;
+            int? strictness = default;
+            string roleInformation = default;
             Uri endpoint = default;
             string indexName = default;
-            Optional<ElasticsearchIndexFieldMappingOptions> fieldsMapping = default;
-            Optional<ElasticsearchQueryType> queryType = default;
-            Optional<OnYourDataVectorizationSource> embeddingDependency = default;
+            ElasticsearchIndexFieldMappingOptions fieldsMapping = default;
+            ElasticsearchQueryType? queryType = default;
+            OnYourDataVectorizationSource embeddingDependency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +207,18 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticsearchChatExtensionParameters(authentication.Value, Optional.ToNullable(topNDocuments), Optional.ToNullable(inScope), Optional.ToNullable(strictness), roleInformation.Value, endpoint, indexName, fieldsMapping.Value, Optional.ToNullable(queryType), embeddingDependency.Value, serializedAdditionalRawData);
+            return new ElasticsearchChatExtensionParameters(
+                authentication,
+                topNDocuments,
+                inScope,
+                strictness,
+                roleInformation,
+                endpoint,
+                indexName,
+                fieldsMapping,
+                queryType,
+                embeddingDependency,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticsearchChatExtensionParameters>.Write(ModelReaderWriterOptions options)

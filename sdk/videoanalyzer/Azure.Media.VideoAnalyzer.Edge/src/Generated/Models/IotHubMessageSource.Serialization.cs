@@ -15,7 +15,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(HubInputName))
+            if (HubInputName != null)
             {
                 writer.WritePropertyName("hubInputName"u8);
                 writer.WriteStringValue(HubInputName);
@@ -33,7 +33,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> hubInputName = default;
+            string hubInputName = default;
             string type = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -54,7 +54,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new IotHubMessageSource(type, name, hubInputName.Value);
+            return new IotHubMessageSource(type, name, hubInputName);
         }
     }
 }

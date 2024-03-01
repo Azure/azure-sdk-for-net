@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupShortName))
+            if (GroupShortName != null)
             {
                 writer.WritePropertyName("groupShortName"u8);
                 writer.WriteStringValue(GroupShortName);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(EmailReceivers))
+            if (!(EmailReceivers is ChangeTrackingList<MonitorEmailReceiver> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("emailReceivers"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SmsReceivers))
+            if (!(SmsReceivers is ChangeTrackingList<MonitorSmsReceiver> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("smsReceivers"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WebhookReceivers))
+            if (!(WebhookReceivers is ChangeTrackingList<MonitorWebhookReceiver> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("webhookReceivers"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ItsmReceivers))
+            if (!(ItsmReceivers is ChangeTrackingList<MonitorItsmReceiver> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("itsmReceivers"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AzureAppPushReceivers))
+            if (!(AzureAppPushReceivers is ChangeTrackingList<MonitorAzureAppPushReceiver> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("azureAppPushReceivers"u8);
                 writer.WriteStartArray();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AutomationRunbookReceivers))
+            if (!(AutomationRunbookReceivers is ChangeTrackingList<MonitorAutomationRunbookReceiver> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("automationRunbookReceivers"u8);
                 writer.WriteStartArray();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VoiceReceivers))
+            if (!(VoiceReceivers is ChangeTrackingList<MonitorVoiceReceiver> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("voiceReceivers"u8);
                 writer.WriteStartArray();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LogicAppReceivers))
+            if (!(LogicAppReceivers is ChangeTrackingList<MonitorLogicAppReceiver> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("logicAppReceivers"u8);
                 writer.WriteStartArray();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AzureFunctionReceivers))
+            if (!(AzureFunctionReceivers is ChangeTrackingList<MonitorAzureFunctionReceiver> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("azureFunctionReceivers"u8);
                 writer.WriteStartArray();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ArmRoleReceivers))
+            if (!(ArmRoleReceivers is ChangeTrackingList<MonitorArmRoleReceiver> collection9 && collection9.IsUndefined))
             {
                 writer.WritePropertyName("armRoleReceivers"u8);
                 writer.WriteStartArray();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EventHubReceivers))
+            if (!(EventHubReceivers is ChangeTrackingList<MonitorEventHubReceiver> collection10 && collection10.IsUndefined))
             {
                 writer.WritePropertyName("eventHubReceivers"u8);
                 writer.WriteStartArray();
@@ -222,25 +222,25 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupShortName = default;
-            Optional<bool> enabled = default;
-            Optional<IList<MonitorEmailReceiver>> emailReceivers = default;
-            Optional<IList<MonitorSmsReceiver>> smsReceivers = default;
-            Optional<IList<MonitorWebhookReceiver>> webhookReceivers = default;
-            Optional<IList<MonitorItsmReceiver>> itsmReceivers = default;
-            Optional<IList<MonitorAzureAppPushReceiver>> azureAppPushReceivers = default;
-            Optional<IList<MonitorAutomationRunbookReceiver>> automationRunbookReceivers = default;
-            Optional<IList<MonitorVoiceReceiver>> voiceReceivers = default;
-            Optional<IList<MonitorLogicAppReceiver>> logicAppReceivers = default;
-            Optional<IList<MonitorAzureFunctionReceiver>> azureFunctionReceivers = default;
-            Optional<IList<MonitorArmRoleReceiver>> armRoleReceivers = default;
-            Optional<IList<MonitorEventHubReceiver>> eventHubReceivers = default;
+            SystemData systemData = default;
+            string groupShortName = default;
+            bool? enabled = default;
+            IList<MonitorEmailReceiver> emailReceivers = default;
+            IList<MonitorSmsReceiver> smsReceivers = default;
+            IList<MonitorWebhookReceiver> webhookReceivers = default;
+            IList<MonitorItsmReceiver> itsmReceivers = default;
+            IList<MonitorAzureAppPushReceiver> azureAppPushReceivers = default;
+            IList<MonitorAutomationRunbookReceiver> automationRunbookReceivers = default;
+            IList<MonitorVoiceReceiver> voiceReceivers = default;
+            IList<MonitorLogicAppReceiver> logicAppReceivers = default;
+            IList<MonitorAzureFunctionReceiver> azureFunctionReceivers = default;
+            IList<MonitorArmRoleReceiver> armRoleReceivers = default;
+            IList<MonitorEventHubReceiver> eventHubReceivers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -474,7 +474,27 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActionGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, groupShortName.Value, Optional.ToNullable(enabled), Optional.ToList(emailReceivers), Optional.ToList(smsReceivers), Optional.ToList(webhookReceivers), Optional.ToList(itsmReceivers), Optional.ToList(azureAppPushReceivers), Optional.ToList(automationRunbookReceivers), Optional.ToList(voiceReceivers), Optional.ToList(logicAppReceivers), Optional.ToList(azureFunctionReceivers), Optional.ToList(armRoleReceivers), Optional.ToList(eventHubReceivers), serializedAdditionalRawData);
+            return new ActionGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                groupShortName,
+                enabled,
+                emailReceivers ?? new ChangeTrackingList<MonitorEmailReceiver>(),
+                smsReceivers ?? new ChangeTrackingList<MonitorSmsReceiver>(),
+                webhookReceivers ?? new ChangeTrackingList<MonitorWebhookReceiver>(),
+                itsmReceivers ?? new ChangeTrackingList<MonitorItsmReceiver>(),
+                azureAppPushReceivers ?? new ChangeTrackingList<MonitorAzureAppPushReceiver>(),
+                automationRunbookReceivers ?? new ChangeTrackingList<MonitorAutomationRunbookReceiver>(),
+                voiceReceivers ?? new ChangeTrackingList<MonitorVoiceReceiver>(),
+                logicAppReceivers ?? new ChangeTrackingList<MonitorLogicAppReceiver>(),
+                azureFunctionReceivers ?? new ChangeTrackingList<MonitorAzureFunctionReceiver>(),
+                armRoleReceivers ?? new ChangeTrackingList<MonitorArmRoleReceiver>(),
+                eventHubReceivers ?? new ChangeTrackingList<MonitorEventHubReceiver>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActionGroupData>.Write(ModelReaderWriterOptions options)

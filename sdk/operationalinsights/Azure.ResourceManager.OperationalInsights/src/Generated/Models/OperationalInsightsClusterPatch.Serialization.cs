@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (KeyVaultProperties != null)
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Optional.IsDefined(BillingType))
+            if (BillingType.HasValue)
             {
                 writer.WritePropertyName("billingType"u8);
                 writer.WriteStringValue(BillingType.Value.ToString());
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<OperationalInsightsClusterSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<OperationalInsightsKeyVaultProperties> keyVaultProperties = default;
-            Optional<OperationalInsightsBillingType> billingType = default;
+            ManagedServiceIdentity identity = default;
+            OperationalInsightsClusterSku sku = default;
+            IDictionary<string, string> tags = default;
+            OperationalInsightsKeyVaultProperties keyVaultProperties = default;
+            OperationalInsightsBillingType? billingType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,7 +176,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsClusterPatch(identity, sku.Value, Optional.ToDictionary(tags), keyVaultProperties.Value, Optional.ToNullable(billingType), serializedAdditionalRawData);
+            return new OperationalInsightsClusterPatch(
+                identity,
+                sku,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                keyVaultProperties,
+                billingType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsClusterPatch>.Write(ModelReaderWriterOptions options)

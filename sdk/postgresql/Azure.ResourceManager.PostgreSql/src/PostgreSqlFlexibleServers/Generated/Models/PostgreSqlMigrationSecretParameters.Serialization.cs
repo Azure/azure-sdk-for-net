@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("adminCredentials"u8);
             writer.WriteObjectValue(AdminCredentials);
-            if (Optional.IsDefined(SourceServerUsername))
+            if (SourceServerUsername != null)
             {
                 writer.WritePropertyName("sourceServerUsername"u8);
                 writer.WriteStringValue(SourceServerUsername);
             }
-            if (Optional.IsDefined(TargetServerUsername))
+            if (TargetServerUsername != null)
             {
                 writer.WritePropertyName("targetServerUsername"u8);
                 writer.WriteStringValue(TargetServerUsername);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             PostgreSqlMigrationAdminCredentials adminCredentials = default;
-            Optional<string> sourceServerUsername = default;
-            Optional<string> targetServerUsername = default;
+            string sourceServerUsername = default;
+            string targetServerUsername = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlMigrationSecretParameters(adminCredentials, sourceServerUsername.Value, targetServerUsername.Value, serializedAdditionalRawData);
+            return new PostgreSqlMigrationSecretParameters(adminCredentials, sourceServerUsername, targetServerUsername, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlMigrationSecretParameters>.Write(ModelReaderWriterOptions options)

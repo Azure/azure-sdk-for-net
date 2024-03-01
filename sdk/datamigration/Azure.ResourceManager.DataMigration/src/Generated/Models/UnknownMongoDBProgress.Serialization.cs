@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteNumberValue(EventsPending);
             writer.WritePropertyName("eventsReplayed"u8);
             writer.WriteNumberValue(EventsReplayed);
-            if (Optional.IsDefined(LastEventOn))
+            if (LastEventOn.HasValue)
             {
                 writer.WritePropertyName("lastEventTime"u8);
                 writer.WriteStringValue(LastEventOn.Value, "O");
             }
-            if (Optional.IsDefined(LastReplayOn))
+            if (LastReplayOn.HasValue)
             {
                 writer.WritePropertyName("lastReplayTime"u8);
                 writer.WriteStringValue(LastReplayOn.Value, "O");
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(QualifiedName))
+            if (QualifiedName != null)
             {
                 writer.WritePropertyName("qualifiedName"u8);
                 writer.WriteStringValue(QualifiedName);
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             IReadOnlyDictionary<string, MongoDBError> errors = default;
             long eventsPending = default;
             long eventsReplayed = default;
-            Optional<DateTimeOffset> lastEventTime = default;
-            Optional<DateTimeOffset> lastReplayTime = default;
-            Optional<string> name = default;
-            Optional<string> qualifiedName = default;
+            DateTimeOffset? lastEventTime = default;
+            DateTimeOffset? lastReplayTime = default;
+            string name = default;
+            string qualifiedName = default;
             MongoDBProgressResultType resultType = "Unknown";
             MongoDBMigrationState state = default;
             long totalBytes = default;
@@ -217,7 +217,22 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownMongoDBProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, Optional.ToNullable(lastEventTime), Optional.ToNullable(lastReplayTime), name.Value, qualifiedName.Value, resultType, state, totalBytes, totalDocuments, serializedAdditionalRawData);
+            return new UnknownMongoDBProgress(
+                bytesCopied,
+                documentsCopied,
+                elapsedTime,
+                errors,
+                eventsPending,
+                eventsReplayed,
+                lastEventTime,
+                lastReplayTime,
+                name,
+                qualifiedName,
+                resultType,
+                state,
+                totalBytes,
+                totalDocuments,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBProgress>.Write(ModelReaderWriterOptions options)

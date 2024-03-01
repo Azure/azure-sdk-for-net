@@ -26,39 +26,39 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataSourceType))
+            if (DataSourceType != null)
             {
                 writer.WritePropertyName("datasourceType"u8);
                 writer.WriteStringValue(DataSourceType);
             }
-            if (Optional.IsDefined(ObjectType))
+            if (ObjectType != null)
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
             writer.WritePropertyName("resourceID"u8);
             writer.WriteStringValue(ResourceId);
-            if (Optional.IsDefined(ResourceLocation))
+            if (ResourceLocation.HasValue)
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation.Value);
             }
-            if (Optional.IsDefined(ResourceName))
+            if (ResourceName != null)
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(ResourceUriString))
+            if (ResourceUriString != null)
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceUriString);
             }
-            if (Optional.IsDefined(ResourceProperties))
+            if (ResourceProperties != null)
             {
                 writer.WritePropertyName("resourceProperties"u8);
                 writer.WriteObjectValue(ResourceProperties);
@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> datasourceType = default;
-            Optional<string> objectType = default;
+            string datasourceType = default;
+            string objectType = default;
             ResourceIdentifier resourceId = default;
-            Optional<AzureLocation> resourceLocation = default;
-            Optional<string> resourceName = default;
-            Optional<ResourceType> resourceType = default;
-            Optional<string> resourceUri = default;
-            Optional<BaseResourceProperties> resourceProperties = default;
+            AzureLocation? resourceLocation = default;
+            string resourceName = default;
+            ResourceType? resourceType = default;
+            string resourceUri = default;
+            BaseResourceProperties resourceProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataSourceInfo(datasourceType.Value, objectType.Value, resourceId, Optional.ToNullable(resourceLocation), resourceName.Value, Optional.ToNullable(resourceType), resourceUri.Value, resourceProperties.Value, serializedAdditionalRawData);
+            return new DataSourceInfo(
+                datasourceType,
+                objectType,
+                resourceId,
+                resourceLocation,
+                resourceName,
+                resourceType,
+                resourceUri,
+                resourceProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataSourceInfo>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VnetConfiguration))
+            if (VnetConfiguration != null)
             {
                 writer.WritePropertyName("vnetConfiguration"u8);
                 writer.WriteObjectValue(VnetConfiguration);
             }
-            if (Optional.IsDefined(VwanConfiguration))
+            if (VwanConfiguration != null)
             {
                 writer.WritePropertyName("vwanConfiguration"u8);
                 writer.WriteObjectValue(VwanConfiguration);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteEndArray();
             writer.WritePropertyName("enableEgressNat"u8);
             writer.WriteStringValue(EnableEgressNat.ToString());
-            if (Optional.IsCollectionDefined(EgressNatIP))
+            if (!(EgressNatIP is ChangeTrackingList<IPAddressInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("egressNatIp"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrustedRanges))
+            if (!(TrustedRanges is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("trustedRanges"u8);
                 writer.WriteStartArray();
@@ -105,13 +105,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<FirewallVnetConfiguration> vnetConfiguration = default;
-            Optional<FirewallVwanConfiguration> vwanConfiguration = default;
+            FirewallVnetConfiguration vnetConfiguration = default;
+            FirewallVwanConfiguration vwanConfiguration = default;
             FirewallNetworkType networkType = default;
             IList<IPAddressInfo> publicIPs = default;
             AllowEgressNatType enableEgressNat = default;
-            Optional<IList<IPAddressInfo>> egressNatIP = default;
-            Optional<IList<string>> trustedRanges = default;
+            IList<IPAddressInfo> egressNatIP = default;
+            IList<string> trustedRanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallNetworkProfile(vnetConfiguration.Value, vwanConfiguration.Value, networkType, publicIPs, enableEgressNat, Optional.ToList(egressNatIP), Optional.ToList(trustedRanges), serializedAdditionalRawData);
+            return new FirewallNetworkProfile(
+                vnetConfiguration,
+                vwanConfiguration,
+                networkType,
+                publicIPs,
+                enableEgressNat,
+                egressNatIP ?? new ChangeTrackingList<IPAddressInfo>(),
+                trustedRanges ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallNetworkProfile>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PeerAsnData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PeerAsnData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PeerAsnData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeerAsnListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PeerAsnListResult(value ?? new ChangeTrackingList<PeerAsnData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeerAsnListResult>.Write(ModelReaderWriterOptions options)

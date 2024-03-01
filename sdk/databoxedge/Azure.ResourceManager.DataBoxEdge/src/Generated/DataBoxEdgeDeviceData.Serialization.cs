@@ -29,27 +29,27 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -77,74 +77,74 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DataBoxEdgeDeviceStatus))
+            if (options.Format != "W" && DataBoxEdgeDeviceStatus.HasValue)
             {
                 writer.WritePropertyName("dataBoxEdgeDeviceStatus"u8);
                 writer.WriteStringValue(DataBoxEdgeDeviceStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
+            if (options.Format != "W" && SerialNumber != null)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(ModelDescription))
+            if (options.Format != "W" && ModelDescription != null)
             {
                 writer.WritePropertyName("modelDescription"u8);
                 writer.WriteStringValue(ModelDescription);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeviceType))
+            if (options.Format != "W" && DeviceType.HasValue)
             {
                 writer.WritePropertyName("deviceType"u8);
                 writer.WriteStringValue(DeviceType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
+            if (options.Format != "W" && FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Culture))
+            if (options.Format != "W" && Culture != null)
             {
                 writer.WritePropertyName("culture"u8);
                 writer.WriteStringValue(Culture);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeviceModel))
+            if (options.Format != "W" && DeviceModel != null)
             {
                 writer.WritePropertyName("deviceModel"u8);
                 writer.WriteStringValue(DeviceModel);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeviceSoftwareVersion))
+            if (options.Format != "W" && DeviceSoftwareVersion != null)
             {
                 writer.WritePropertyName("deviceSoftwareVersion"u8);
                 writer.WriteStringValue(DeviceSoftwareVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeviceLocalCapacity))
+            if (options.Format != "W" && DeviceLocalCapacity.HasValue)
             {
                 writer.WritePropertyName("deviceLocalCapacity"u8);
                 writer.WriteNumberValue(DeviceLocalCapacity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeZone))
+            if (options.Format != "W" && TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeviceHcsVersion))
+            if (options.Format != "W" && DeviceHcsVersion != null)
             {
                 writer.WritePropertyName("deviceHcsVersion"u8);
                 writer.WriteStringValue(DeviceHcsVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ConfiguredRoleTypes))
+            if (options.Format != "W" && !(ConfiguredRoleTypes is ChangeTrackingList<DataBoxEdgeRoleType> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("configuredRoleTypes"u8);
                 writer.WriteStartArray();
@@ -154,22 +154,22 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeCount))
+            if (options.Format != "W" && NodeCount.HasValue)
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceMoveDetails))
+            if (options.Format != "W" && ResourceMoveDetails != null)
             {
                 writer.WritePropertyName("resourceMoveDetails"u8);
                 writer.WriteObjectValue(ResourceMoveDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(EdgeProfile))
+            if (options.Format != "W" && EdgeProfile != null)
             {
                 writer.WritePropertyName("edgeProfile"u8);
                 writer.WriteObjectValue(EdgeProfile);
             }
-            if (Optional.IsDefined(DataResidency))
+            if (DataResidency != null)
             {
                 writer.WritePropertyName("dataResidency"u8);
                 writer.WriteObjectValue(DataResidency);
@@ -213,33 +213,33 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 return null;
             }
-            Optional<DataBoxEdgeSku> sku = default;
-            Optional<ETag> etag = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<DataBoxEdgeDeviceKind> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            DataBoxEdgeSku sku = default;
+            ETag? etag = default;
+            ManagedServiceIdentity identity = default;
+            DataBoxEdgeDeviceKind? kind = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DataBoxEdgeDeviceStatus> dataBoxEdgeDeviceStatus = default;
-            Optional<string> serialNumber = default;
-            Optional<string> description = default;
-            Optional<string> modelDescription = default;
-            Optional<DataBoxEdgeDeviceType> deviceType = default;
-            Optional<string> friendlyName = default;
-            Optional<string> culture = default;
-            Optional<string> deviceModel = default;
-            Optional<string> deviceSoftwareVersion = default;
-            Optional<long> deviceLocalCapacity = default;
-            Optional<string> timeZone = default;
-            Optional<string> deviceHcsVersion = default;
-            Optional<IReadOnlyList<DataBoxEdgeRoleType>> configuredRoleTypes = default;
-            Optional<int> nodeCount = default;
-            Optional<DataBoxEdgeResourceMoveDetails> resourceMoveDetails = default;
-            Optional<EdgeProfile> edgeProfile = default;
-            Optional<DataResidency> dataResidency = default;
+            SystemData systemData = default;
+            DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus = default;
+            string serialNumber = default;
+            string description = default;
+            string modelDescription = default;
+            DataBoxEdgeDeviceType? deviceType = default;
+            string friendlyName = default;
+            string culture = default;
+            string deviceModel = default;
+            string deviceSoftwareVersion = default;
+            long? deviceLocalCapacity = default;
+            string timeZone = default;
+            string deviceHcsVersion = default;
+            IReadOnlyList<DataBoxEdgeRoleType> configuredRoleTypes = default;
+            int? nodeCount = default;
+            DataBoxEdgeResourceMoveDetails resourceMoveDetails = default;
+            EdgeProfile edgeProfile = default;
+            DataResidency dataResidency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -463,7 +463,35 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDeviceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(etag), identity, Optional.ToNullable(kind), Optional.ToNullable(dataBoxEdgeDeviceStatus), serialNumber.Value, description.Value, modelDescription.Value, Optional.ToNullable(deviceType), friendlyName.Value, culture.Value, deviceModel.Value, deviceSoftwareVersion.Value, Optional.ToNullable(deviceLocalCapacity), timeZone.Value, deviceHcsVersion.Value, Optional.ToList(configuredRoleTypes), Optional.ToNullable(nodeCount), resourceMoveDetails.Value, edgeProfile.Value, dataResidency.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeDeviceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                etag,
+                identity,
+                kind,
+                dataBoxEdgeDeviceStatus,
+                serialNumber,
+                description,
+                modelDescription,
+                deviceType,
+                friendlyName,
+                culture,
+                deviceModel,
+                deviceSoftwareVersion,
+                deviceLocalCapacity,
+                timeZone,
+                deviceHcsVersion,
+                configuredRoleTypes ?? new ChangeTrackingList<DataBoxEdgeRoleType>(),
+                nodeCount,
+                resourceMoveDetails,
+                edgeProfile,
+                dataResidency,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDeviceData>.Write(ModelReaderWriterOptions options)

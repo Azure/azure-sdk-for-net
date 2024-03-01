@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ODataId))
+            if (ODataId != null)
             {
                 writer.WritePropertyName("@odata.id"u8);
                 writer.WriteStringValue(ODataId);
             }
-            if (Optional.IsDefined(ODataContext))
+            if (ODataContext != null)
             {
                 writer.WritePropertyName("@odata.context"u8);
                 writer.WriteStringValue(ODataContext);
             }
-            if (Optional.IsDefined(Results))
+            if (Results != null)
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteObjectValue(Results);
             }
-            if (Optional.IsCollectionDefined(PolicyAssignments))
+            if (!(PolicyAssignments is ChangeTrackingList<PolicyAssignmentSummary> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policyAssignments"u8);
                 writer.WriteStartArray();
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> odataId = default;
-            Optional<string> odataContext = default;
-            Optional<PolicySummaryResults> results = default;
-            Optional<IReadOnlyList<PolicyAssignmentSummary>> policyAssignments = default;
+            string odataId = default;
+            string odataContext = default;
+            PolicySummaryResults results = default;
+            IReadOnlyList<PolicyAssignmentSummary> policyAssignments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySummary(odataId.Value, odataContext.Value, results.Value, Optional.ToList(policyAssignments), serializedAdditionalRawData);
+            return new PolicySummary(odataId, odataContext, results, policyAssignments ?? new ChangeTrackingList<PolicyAssignmentSummary>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySummary>.Write(ModelReaderWriterOptions options)

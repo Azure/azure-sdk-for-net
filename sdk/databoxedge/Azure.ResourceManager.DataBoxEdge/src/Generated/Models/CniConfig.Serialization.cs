@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CniConfigType))
+            if (options.Format != "W" && CniConfigType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CniConfigType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(PodSubnet))
+            if (options.Format != "W" && PodSubnet != null)
             {
                 writer.WritePropertyName("podSubnet"u8);
                 writer.WriteStringValue(PodSubnet);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceSubnet))
+            if (options.Format != "W" && ServiceSubnet != null)
             {
                 writer.WritePropertyName("serviceSubnet"u8);
                 writer.WriteStringValue(ServiceSubnet);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> version = default;
-            Optional<string> podSubnet = default;
-            Optional<string> serviceSubnet = default;
+            string type = default;
+            string version = default;
+            string podSubnet = default;
+            string serviceSubnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CniConfig(type.Value, version.Value, podSubnet.Value, serviceSubnet.Value, serializedAdditionalRawData);
+            return new CniConfig(type, version, podSubnet, serviceSubnet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CniConfig>.Write(ModelReaderWriterOptions options)

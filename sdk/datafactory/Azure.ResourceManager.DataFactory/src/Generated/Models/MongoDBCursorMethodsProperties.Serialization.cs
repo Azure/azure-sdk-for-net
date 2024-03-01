@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Project))
+            if (Project != null)
             {
                 writer.WritePropertyName("project"u8);
                 JsonSerializer.Serialize(writer, Project);
             }
-            if (Optional.IsDefined(Sort))
+            if (Sort != null)
             {
                 writer.WritePropertyName("sort"u8);
                 JsonSerializer.Serialize(writer, Sort);
             }
-            if (Optional.IsDefined(Skip))
+            if (Skip != null)
             {
                 writer.WritePropertyName("skip"u8);
                 JsonSerializer.Serialize(writer, Skip);
             }
-            if (Optional.IsDefined(Limit))
+            if (Limit != null)
             {
                 writer.WritePropertyName("limit"u8);
                 JsonSerializer.Serialize(writer, Limit);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> project = default;
-            Optional<DataFactoryElement<string>> sort = default;
-            Optional<DataFactoryElement<int>> skip = default;
-            Optional<DataFactoryElement<int>> limit = default;
+            DataFactoryElement<string> project = default;
+            DataFactoryElement<string> sort = default;
+            DataFactoryElement<int> skip = default;
+            DataFactoryElement<int> limit = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MongoDBCursorMethodsProperties(project.Value, sort.Value, skip.Value, limit.Value, additionalProperties);
+            return new MongoDBCursorMethodsProperties(project, sort, skip, limit, additionalProperties);
         }
 
         BinaryData IPersistableModel<MongoDBCursorMethodsProperties>.Write(ModelReaderWriterOptions options)

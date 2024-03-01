@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {

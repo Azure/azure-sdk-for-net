@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ServiceObjectiveName))
+            if (options.Format != "W" && ServiceObjectiveName != null)
             {
                 writer.WritePropertyName("serviceObjectiveName"u8);
                 writer.WriteStringValue(ServiceObjectiveName);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsDefault))
+            if (options.Format != "W" && IsDefault.HasValue)
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsSystem))
+            if (options.Format != "W" && IsSystem.HasValue)
             {
                 writer.WritePropertyName("isSystem"u8);
                 writer.WriteBooleanValue(IsSystem.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
+            if (options.Format != "W" && IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> serviceObjectiveName = default;
-            Optional<bool> isDefault = default;
-            Optional<bool> isSystem = default;
-            Optional<string> description = default;
-            Optional<bool> enabled = default;
+            SystemData systemData = default;
+            string serviceObjectiveName = default;
+            bool? isDefault = default;
+            bool? isSystem = default;
+            string description = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,17 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceObjectiveData(id, name, type, systemData.Value, serviceObjectiveName.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isSystem), description.Value, Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new ServiceObjectiveData(
+                id,
+                name,
+                type,
+                systemData,
+                serviceObjectiveName,
+                isDefault,
+                isSystem,
+                description,
+                enabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceObjectiveData>.Write(ModelReaderWriterOptions options)

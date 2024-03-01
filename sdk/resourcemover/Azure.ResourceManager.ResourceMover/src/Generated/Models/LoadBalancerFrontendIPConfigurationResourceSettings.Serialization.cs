@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(PrivateIPAddressStringValue))
+            if (PrivateIPAddressStringValue != null)
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddressStringValue);
             }
-            if (Optional.IsDefined(PrivateIPAllocationMethod))
+            if (PrivateIPAllocationMethod != null)
             {
                 writer.WritePropertyName("privateIpAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod);
             }
-            if (Optional.IsDefined(Subnet))
+            if (Subnet != null)
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
-            if (Optional.IsDefined(Zones))
+            if (Zones != null)
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStringValue(Zones);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> privateIPAllocationMethod = default;
-            Optional<SubnetReferenceInfo> subnet = default;
-            Optional<string> zones = default;
+            string name = default;
+            string privateIPAddress = default;
+            string privateIPAllocationMethod = default;
+            SubnetReferenceInfo subnet = default;
+            string zones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerFrontendIPConfigurationResourceSettings(name.Value, privateIPAddress.Value, privateIPAllocationMethod.Value, subnet.Value, zones.Value, serializedAdditionalRawData);
+            return new LoadBalancerFrontendIPConfigurationResourceSettings(
+                name,
+                privateIPAddress,
+                privateIPAllocationMethod,
+                subnet,
+                zones,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadBalancerFrontendIPConfigurationResourceSettings>.Write(ModelReaderWriterOptions options)

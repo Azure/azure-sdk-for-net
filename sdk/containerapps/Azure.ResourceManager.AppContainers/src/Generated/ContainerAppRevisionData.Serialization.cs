@@ -43,64 +43,64 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastActiveOn))
+            if (options.Format != "W" && LastActiveOn.HasValue)
             {
                 writer.WritePropertyName("lastActiveTime"u8);
                 writer.WriteStringValue(LastActiveOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Fqdn))
+            if (options.Format != "W" && Fqdn != null)
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (options.Format != "W" && Optional.IsDefined(Template))
+            if (options.Format != "W" && Template != null)
             {
                 writer.WritePropertyName("template"u8);
                 writer.WriteObjectValue(Template);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsActive))
+            if (options.Format != "W" && IsActive.HasValue)
             {
                 writer.WritePropertyName("active"u8);
                 writer.WriteBooleanValue(IsActive.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Replicas))
+            if (options.Format != "W" && Replicas.HasValue)
             {
                 writer.WritePropertyName("replicas"u8);
                 writer.WriteNumberValue(Replicas.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TrafficWeight))
+            if (options.Format != "W" && TrafficWeight.HasValue)
             {
                 writer.WritePropertyName("trafficWeight"u8);
                 writer.WriteNumberValue(TrafficWeight.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningError))
+            if (options.Format != "W" && ProvisioningError != null)
             {
                 writer.WritePropertyName("provisioningError"u8);
                 writer.WriteStringValue(ProvisioningError);
             }
-            if (options.Format != "W" && Optional.IsDefined(HealthState))
+            if (options.Format != "W" && HealthState.HasValue)
             {
                 writer.WritePropertyName("healthState"u8);
                 writer.WriteStringValue(HealthState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RunningState))
+            if (options.Format != "W" && RunningState.HasValue)
             {
                 writer.WritePropertyName("runningState"u8);
                 writer.WriteStringValue(RunningState.Value.ToString());
@@ -147,18 +147,18 @@ namespace Azure.ResourceManager.AppContainers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> lastActiveTime = default;
-            Optional<string> fqdn = default;
-            Optional<ContainerAppTemplate> template = default;
-            Optional<bool> active = default;
-            Optional<int> replicas = default;
-            Optional<int> trafficWeight = default;
-            Optional<string> provisioningError = default;
-            Optional<ContainerAppRevisionHealthState> healthState = default;
-            Optional<ContainerAppRevisionProvisioningState> provisioningState = default;
-            Optional<RevisionRunningState> runningState = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? lastActiveTime = default;
+            string fqdn = default;
+            ContainerAppTemplate template = default;
+            bool? active = default;
+            int? replicas = default;
+            int? trafficWeight = default;
+            string provisioningError = default;
+            ContainerAppRevisionHealthState? healthState = default;
+            ContainerAppRevisionProvisioningState? provisioningState = default;
+            RevisionRunningState? runningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -296,7 +296,23 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppRevisionData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(lastActiveTime), fqdn.Value, template.Value, Optional.ToNullable(active), Optional.ToNullable(replicas), Optional.ToNullable(trafficWeight), provisioningError.Value, Optional.ToNullable(healthState), Optional.ToNullable(provisioningState), Optional.ToNullable(runningState), serializedAdditionalRawData);
+            return new ContainerAppRevisionData(
+                id,
+                name,
+                type,
+                systemData,
+                createdTime,
+                lastActiveTime,
+                fqdn,
+                template,
+                active,
+                replicas,
+                trafficWeight,
+                provisioningError,
+                healthState,
+                provisioningState,
+                runningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppRevisionData>.Write(ModelReaderWriterOptions options)

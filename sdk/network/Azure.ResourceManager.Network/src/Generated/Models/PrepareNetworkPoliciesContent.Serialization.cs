@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceName))
+            if (ServiceName != null)
             {
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
             }
-            if (Optional.IsCollectionDefined(NetworkIntentPolicyConfigurations))
+            if (!(NetworkIntentPolicyConfigurations is ChangeTrackingList<NetworkIntentPolicyConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkIntentPolicyConfigurations"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> serviceName = default;
-            Optional<IList<NetworkIntentPolicyConfiguration>> networkIntentPolicyConfigurations = default;
+            string serviceName = default;
+            IList<NetworkIntentPolicyConfiguration> networkIntentPolicyConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrepareNetworkPoliciesContent(serviceName.Value, Optional.ToList(networkIntentPolicyConfigurations), serializedAdditionalRawData);
+            return new PrepareNetworkPoliciesContent(serviceName, networkIntentPolicyConfigurations ?? new ChangeTrackingList<NetworkIntentPolicyConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrepareNetworkPoliciesContent>.Write(ModelReaderWriterOptions options)

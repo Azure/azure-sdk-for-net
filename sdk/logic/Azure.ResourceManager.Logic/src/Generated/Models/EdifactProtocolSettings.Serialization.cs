@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteObjectValue(MessageFilter);
             writer.WritePropertyName("processingSettings"u8);
             writer.WriteObjectValue(ProcessingSettings);
-            if (Optional.IsCollectionDefined(EnvelopeOverrides))
+            if (!(EnvelopeOverrides is ChangeTrackingList<EdifactEnvelopeOverride> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("envelopeOverrides"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MessageFilterList))
+            if (!(MessageFilterList is ChangeTrackingList<EdifactMessageIdentifier> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("messageFilterList"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(ValidationOverrides))
+            if (!(ValidationOverrides is ChangeTrackingList<EdifactValidationOverride> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("validationOverrides"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EdifactDelimiterOverrides))
+            if (!(EdifactDelimiterOverrides is ChangeTrackingList<EdifactDelimiterOverride> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("edifactDelimiterOverrides"u8);
                 writer.WriteStartArray();
@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.Logic.Models
             EdifactAcknowledgementSettings acknowledgementSettings = default;
             EdifactMessageFilter messageFilter = default;
             EdifactProcessingSettings processingSettings = default;
-            Optional<IList<EdifactEnvelopeOverride>> envelopeOverrides = default;
-            Optional<IList<EdifactMessageIdentifier>> messageFilterList = default;
+            IList<EdifactEnvelopeOverride> envelopeOverrides = default;
+            IList<EdifactMessageIdentifier> messageFilterList = default;
             IList<EdifactSchemaReference> schemaReferences = default;
-            Optional<IList<EdifactValidationOverride>> validationOverrides = default;
-            Optional<IList<EdifactDelimiterOverride>> edifactDelimiterOverrides = default;
+            IList<EdifactValidationOverride> validationOverrides = default;
+            IList<EdifactDelimiterOverride> edifactDelimiterOverrides = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,7 +240,19 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactProtocolSettings(validationSettings, framingSettings, envelopeSettings, acknowledgementSettings, messageFilter, processingSettings, Optional.ToList(envelopeOverrides), Optional.ToList(messageFilterList), schemaReferences, Optional.ToList(validationOverrides), Optional.ToList(edifactDelimiterOverrides), serializedAdditionalRawData);
+            return new EdifactProtocolSettings(
+                validationSettings,
+                framingSettings,
+                envelopeSettings,
+                acknowledgementSettings,
+                messageFilter,
+                processingSettings,
+                envelopeOverrides ?? new ChangeTrackingList<EdifactEnvelopeOverride>(),
+                messageFilterList ?? new ChangeTrackingList<EdifactMessageIdentifier>(),
+                schemaReferences,
+                validationOverrides ?? new ChangeTrackingList<EdifactValidationOverride>(),
+                edifactDelimiterOverrides ?? new ChangeTrackingList<EdifactDelimiterOverride>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactProtocolSettings>.Write(ModelReaderWriterOptions options)

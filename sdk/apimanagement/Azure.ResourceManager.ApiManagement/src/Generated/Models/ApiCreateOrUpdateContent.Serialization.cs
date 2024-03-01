@@ -28,102 +28,102 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(AuthenticationSettings))
+            if (AuthenticationSettings != null)
             {
                 writer.WritePropertyName("authenticationSettings"u8);
                 writer.WriteObjectValue(AuthenticationSettings);
             }
-            if (Optional.IsDefined(SubscriptionKeyParameterNames))
+            if (SubscriptionKeyParameterNames != null)
             {
                 writer.WritePropertyName("subscriptionKeyParameterNames"u8);
                 writer.WriteObjectValue(SubscriptionKeyParameterNames);
             }
-            if (Optional.IsDefined(ApiType))
+            if (ApiType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ApiType.Value.ToString());
             }
-            if (Optional.IsDefined(ApiRevision))
+            if (ApiRevision != null)
             {
                 writer.WritePropertyName("apiRevision"u8);
                 writer.WriteStringValue(ApiRevision);
             }
-            if (Optional.IsDefined(ApiVersion))
+            if (ApiVersion != null)
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (Optional.IsDefined(IsCurrent))
+            if (IsCurrent.HasValue)
             {
                 writer.WritePropertyName("isCurrent"u8);
                 writer.WriteBooleanValue(IsCurrent.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsOnline))
+            if (options.Format != "W" && IsOnline.HasValue)
             {
                 writer.WritePropertyName("isOnline"u8);
                 writer.WriteBooleanValue(IsOnline.Value);
             }
-            if (Optional.IsDefined(ApiRevisionDescription))
+            if (ApiRevisionDescription != null)
             {
                 writer.WritePropertyName("apiRevisionDescription"u8);
                 writer.WriteStringValue(ApiRevisionDescription);
             }
-            if (Optional.IsDefined(ApiVersionDescription))
+            if (ApiVersionDescription != null)
             {
                 writer.WritePropertyName("apiVersionDescription"u8);
                 writer.WriteStringValue(ApiVersionDescription);
             }
-            if (Optional.IsDefined(ApiVersionSetId))
+            if (ApiVersionSetId != null)
             {
                 writer.WritePropertyName("apiVersionSetId"u8);
                 writer.WriteStringValue(ApiVersionSetId);
             }
-            if (Optional.IsDefined(IsSubscriptionRequired))
+            if (IsSubscriptionRequired.HasValue)
             {
                 writer.WritePropertyName("subscriptionRequired"u8);
                 writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
-            if (Optional.IsDefined(TermsOfServiceUri))
+            if (TermsOfServiceUri != null)
             {
                 writer.WritePropertyName("termsOfServiceUrl"u8);
                 writer.WriteStringValue(TermsOfServiceUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Contact))
+            if (Contact != null)
             {
                 writer.WritePropertyName("contact"u8);
                 writer.WriteObjectValue(Contact);
             }
-            if (Optional.IsDefined(License))
+            if (License != null)
             {
                 writer.WritePropertyName("license"u8);
                 writer.WriteObjectValue(License);
             }
-            if (Optional.IsDefined(SourceApiId))
+            if (SourceApiId != null)
             {
                 writer.WritePropertyName("sourceApiId"u8);
                 writer.WriteStringValue(SourceApiId);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(ServiceUri))
+            if (ServiceUri != null)
             {
                 writer.WritePropertyName("serviceUrl"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsCollectionDefined(Protocols))
+            if (!(Protocols is ChangeTrackingList<ApiOperationInvokableProtocol> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("protocols"u8);
                 writer.WriteStartArray();
@@ -133,27 +133,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ApiVersionSet))
+            if (ApiVersionSet != null)
             {
                 writer.WritePropertyName("apiVersionSet"u8);
                 writer.WriteObjectValue(ApiVersionSet);
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(Format))
+            if (Format.HasValue)
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToString());
             }
-            if (Optional.IsDefined(WsdlSelector))
+            if (WsdlSelector != null)
             {
                 writer.WritePropertyName("wsdlSelector"u8);
                 writer.WriteObjectValue(WsdlSelector);
             }
-            if (Optional.IsDefined(SoapApiType))
+            if (SoapApiType.HasValue)
             {
                 writer.WritePropertyName("apiType"u8);
                 writer.WriteStringValue(SoapApiType.Value.ToString());
@@ -197,31 +197,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<AuthenticationSettingsContract> authenticationSettings = default;
-            Optional<SubscriptionKeyParameterNamesContract> subscriptionKeyParameterNames = default;
-            Optional<ApiType> type = default;
-            Optional<string> apiRevision = default;
-            Optional<string> apiVersion = default;
-            Optional<bool> isCurrent = default;
-            Optional<bool> isOnline = default;
-            Optional<string> apiRevisionDescription = default;
-            Optional<string> apiVersionDescription = default;
-            Optional<ResourceIdentifier> apiVersionSetId = default;
-            Optional<bool> subscriptionRequired = default;
-            Optional<Uri> termsOfServiceUri = default;
-            Optional<ApiContactInformation> contact = default;
-            Optional<ApiLicenseInformation> license = default;
-            Optional<ResourceIdentifier> sourceApiId = default;
-            Optional<string> displayName = default;
-            Optional<Uri> serviceUri = default;
-            Optional<string> path = default;
-            Optional<IList<ApiOperationInvokableProtocol>> protocols = default;
-            Optional<ApiVersionSetContractDetails> apiVersionSet = default;
-            Optional<string> value = default;
-            Optional<ContentFormat> format = default;
-            Optional<ApiCreateOrUpdatePropertiesWsdlSelector> wsdlSelector = default;
-            Optional<SoapApiType> apiType = default;
+            string description = default;
+            AuthenticationSettingsContract authenticationSettings = default;
+            SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default;
+            ApiType? type = default;
+            string apiRevision = default;
+            string apiVersion = default;
+            bool? isCurrent = default;
+            bool? isOnline = default;
+            string apiRevisionDescription = default;
+            string apiVersionDescription = default;
+            ResourceIdentifier apiVersionSetId = default;
+            bool? subscriptionRequired = default;
+            Uri termsOfServiceUri = default;
+            ApiContactInformation contact = default;
+            ApiLicenseInformation license = default;
+            ResourceIdentifier sourceApiId = default;
+            string displayName = default;
+            Uri serviceUri = default;
+            string path = default;
+            IList<ApiOperationInvokableProtocol> protocols = default;
+            ApiVersionSetContractDetails apiVersionSet = default;
+            string value = default;
+            ContentFormat? format = default;
+            ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = default;
+            SoapApiType? apiType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -442,7 +442,33 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiCreateOrUpdateContent(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, sourceApiId.Value, displayName.Value, serviceUri.Value, path.Value, Optional.ToList(protocols), apiVersionSet.Value, value.Value, Optional.ToNullable(format), wsdlSelector.Value, Optional.ToNullable(apiType), serializedAdditionalRawData);
+            return new ApiCreateOrUpdateContent(
+                description,
+                authenticationSettings,
+                subscriptionKeyParameterNames,
+                type,
+                apiRevision,
+                apiVersion,
+                isCurrent,
+                isOnline,
+                apiRevisionDescription,
+                apiVersionDescription,
+                apiVersionSetId,
+                subscriptionRequired,
+                termsOfServiceUri,
+                contact,
+                license,
+                sourceApiId,
+                displayName,
+                serviceUri,
+                path,
+                protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>(),
+                apiVersionSet,
+                value,
+                format,
+                wsdlSelector,
+                apiType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

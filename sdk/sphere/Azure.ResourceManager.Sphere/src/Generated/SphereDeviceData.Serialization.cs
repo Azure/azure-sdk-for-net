@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.Sphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeviceId))
+            if (DeviceId != null)
             {
                 writer.WritePropertyName("deviceId"u8);
                 writer.WriteStringValue(DeviceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ChipSku))
+            if (options.Format != "W" && ChipSku != null)
             {
                 writer.WritePropertyName("chipSku"u8);
                 writer.WriteStringValue(ChipSku);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastAvailableOSVersion))
+            if (options.Format != "W" && LastAvailableOSVersion != null)
             {
                 writer.WritePropertyName("lastAvailableOsVersion"u8);
                 writer.WriteStringValue(LastAvailableOSVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastInstalledOSVersion))
+            if (options.Format != "W" && LastInstalledOSVersion != null)
             {
                 writer.WritePropertyName("lastInstalledOsVersion"u8);
                 writer.WriteStringValue(LastInstalledOSVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastOSUpdateUtc))
+            if (options.Format != "W" && LastOSUpdateUtc.HasValue)
             {
                 writer.WritePropertyName("lastOsUpdateUtc"u8);
                 writer.WriteStringValue(LastOSUpdateUtc.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdateRequestUtc))
+            if (options.Format != "W" && LastUpdateRequestUtc.HasValue)
             {
                 writer.WritePropertyName("lastUpdateRequestUtc"u8);
                 writer.WriteStringValue(LastUpdateRequestUtc.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.Sphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> deviceId = default;
-            Optional<string> chipSku = default;
-            Optional<string> lastAvailableOSVersion = default;
-            Optional<string> lastInstalledOSVersion = default;
-            Optional<DateTimeOffset> lastOSUpdateUtc = default;
-            Optional<DateTimeOffset> lastUpdateRequestUtc = default;
-            Optional<SphereProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string deviceId = default;
+            string chipSku = default;
+            string lastAvailableOSVersion = default;
+            string lastInstalledOSVersion = default;
+            DateTimeOffset? lastOSUpdateUtc = default;
+            DateTimeOffset? lastUpdateRequestUtc = default;
+            SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,7 +228,19 @@ namespace Azure.ResourceManager.Sphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SphereDeviceData(id, name, type, systemData.Value, deviceId.Value, chipSku.Value, lastAvailableOSVersion.Value, lastInstalledOSVersion.Value, Optional.ToNullable(lastOSUpdateUtc), Optional.ToNullable(lastUpdateRequestUtc), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SphereDeviceData(
+                id,
+                name,
+                type,
+                systemData,
+                deviceId,
+                chipSku,
+                lastAvailableOSVersion,
+                lastInstalledOSVersion,
+                lastOSUpdateUtc,
+                lastUpdateRequestUtc,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SphereDeviceData>.Write(ModelReaderWriterOptions options)

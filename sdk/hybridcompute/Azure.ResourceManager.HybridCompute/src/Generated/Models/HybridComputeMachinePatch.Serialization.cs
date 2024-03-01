@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,32 +50,32 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LocationData))
+            if (LocationData != null)
             {
                 writer.WritePropertyName("locationData"u8);
                 writer.WriteObjectValue(LocationData);
             }
-            if (Optional.IsDefined(OSProfile))
+            if (OSProfile != null)
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (Optional.IsDefined(CloudMetadata))
+            if (CloudMetadata != null)
             {
                 writer.WritePropertyName("cloudMetadata"u8);
                 writer.WriteObjectValue(CloudMetadata);
             }
-            if (Optional.IsDefined(AgentUpgrade))
+            if (AgentUpgrade != null)
             {
                 writer.WritePropertyName("agentUpgrade"u8);
                 writer.WriteObjectValue(AgentUpgrade);
             }
-            if (Optional.IsDefined(ParentClusterResourceId))
+            if (ParentClusterResourceId != null)
             {
                 writer.WritePropertyName("parentClusterResourceId"u8);
                 writer.WriteStringValue(ParentClusterResourceId);
             }
-            if (Optional.IsDefined(PrivateLinkScopeResourceId))
+            if (PrivateLinkScopeResourceId != null)
             {
                 writer.WritePropertyName("privateLinkScopeResourceId"u8);
                 writer.WriteStringValue(PrivateLinkScopeResourceId);
@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ArcKindEnum> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<HybridComputeLocation> locationData = default;
-            Optional<HybridComputeOSProfile> osProfile = default;
-            Optional<HybridComputeCloudMetadata> cloudMetadata = default;
-            Optional<AgentUpgrade> agentUpgrade = default;
-            Optional<ResourceIdentifier> parentClusterResourceId = default;
-            Optional<ResourceIdentifier> privateLinkScopeResourceId = default;
+            ManagedServiceIdentity identity = default;
+            ArcKindEnum? kind = default;
+            IDictionary<string, string> tags = default;
+            HybridComputeLocation locationData = default;
+            HybridComputeOSProfile osProfile = default;
+            HybridComputeCloudMetadata cloudMetadata = default;
+            AgentUpgrade agentUpgrade = default;
+            ResourceIdentifier parentClusterResourceId = default;
+            ResourceIdentifier privateLinkScopeResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,7 +236,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeMachinePatch(Optional.ToDictionary(tags), serializedAdditionalRawData, identity, Optional.ToNullable(kind), locationData.Value, osProfile.Value, cloudMetadata.Value, agentUpgrade.Value, parentClusterResourceId.Value, privateLinkScopeResourceId.Value);
+            return new HybridComputeMachinePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                identity,
+                kind,
+                locationData,
+                osProfile,
+                cloudMetadata,
+                agentUpgrade,
+                parentClusterResourceId,
+                privateLinkScopeResourceId);
         }
 
         BinaryData IPersistableModel<HybridComputeMachinePatch>.Write(ModelReaderWriterOptions options)

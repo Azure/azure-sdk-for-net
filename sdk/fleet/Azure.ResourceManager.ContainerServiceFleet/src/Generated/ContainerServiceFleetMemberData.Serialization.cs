@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,24 +49,24 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterResourceId))
+            if (ClusterResourceId != null)
             {
                 writer.WritePropertyName("clusterResourceId"u8);
                 writer.WriteStringValue(ClusterResourceId);
             }
-            if (Optional.IsDefined(Group))
+            if (Group != null)
             {
                 writer.WritePropertyName("group"u8);
                 writer.WriteStringValue(Group);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> clusterResourceId = default;
-            Optional<string> group = default;
-            Optional<FleetMemberProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            ResourceIdentifier clusterResourceId = default;
+            string group = default;
+            FleetMemberProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetMemberData(id, name, type, systemData.Value, Optional.ToNullable(eTag), clusterResourceId.Value, group.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ContainerServiceFleetMemberData(
+                id,
+                name,
+                type,
+                systemData,
+                eTag,
+                clusterResourceId,
+                group,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetMemberData>.Write(ModelReaderWriterOptions options)

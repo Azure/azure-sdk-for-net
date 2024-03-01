@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTimeUtc"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(SecurityTaskParameters))
+            if (SecurityTaskParameters != null)
             {
                 writer.WritePropertyName("securityTaskParameters"u8);
                 writer.WriteObjectValue(SecurityTaskParameters);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStateChangedOn))
+            if (options.Format != "W" && LastStateChangedOn.HasValue)
             {
                 writer.WritePropertyName("lastStateChangeTimeUtc"u8);
                 writer.WriteStringValue(LastStateChangedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SubState))
+            if (options.Format != "W" && SubState != null)
             {
                 writer.WritePropertyName("subState"u8);
                 writer.WriteStringValue(SubState);
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> state = default;
-            Optional<DateTimeOffset> creationTimeUtc = default;
-            Optional<SecurityTaskProperties> securityTaskParameters = default;
-            Optional<DateTimeOffset> lastStateChangeTimeUtc = default;
-            Optional<string> subState = default;
+            SystemData systemData = default;
+            string state = default;
+            DateTimeOffset? creationTimeUtc = default;
+            SecurityTaskProperties securityTaskParameters = default;
+            DateTimeOffset? lastStateChangeTimeUtc = default;
+            string subState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +206,17 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityTaskData(id, name, type, systemData.Value, state.Value, Optional.ToNullable(creationTimeUtc), securityTaskParameters.Value, Optional.ToNullable(lastStateChangeTimeUtc), subState.Value, serializedAdditionalRawData);
+            return new SecurityTaskData(
+                id,
+                name,
+                type,
+                systemData,
+                state,
+                creationTimeUtc,
+                securityTaskParameters,
+                lastStateChangeTimeUtc,
+                subState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityTaskData>.Write(ModelReaderWriterOptions options)

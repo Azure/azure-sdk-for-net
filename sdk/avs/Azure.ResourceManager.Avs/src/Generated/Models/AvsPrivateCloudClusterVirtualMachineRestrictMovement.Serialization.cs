@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RestrictMovement))
+            if (RestrictMovement.HasValue)
             {
                 writer.WritePropertyName("restrictMovement"u8);
                 writer.WriteStringValue(RestrictMovement.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<VirtualMachineRestrictMovementState> restrictMovement = default;
+            VirtualMachineRestrictMovementState? restrictMovement = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsPrivateCloudClusterVirtualMachineRestrictMovement(Optional.ToNullable(restrictMovement), serializedAdditionalRawData);
+            return new AvsPrivateCloudClusterVirtualMachineRestrictMovement(restrictMovement, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudClusterVirtualMachineRestrictMovement>.Write(ModelReaderWriterOptions options)

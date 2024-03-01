@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeliveryMode))
+            if (DeliveryMode.HasValue)
             {
                 writer.WritePropertyName("deliveryMode"u8);
                 writer.WriteStringValue(DeliveryMode.Value.ToString());
             }
-            if (Optional.IsDefined(Queue))
+            if (Queue != null)
             {
                 writer.WritePropertyName("queue"u8);
                 writer.WriteObjectValue(Queue);
             }
-            if (Optional.IsDefined(Push))
+            if (Push != null)
             {
                 writer.WritePropertyName("push"u8);
                 writer.WriteObjectValue(Push);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<DeliveryMode> deliveryMode = default;
-            Optional<QueueInfo> queue = default;
-            Optional<PushInfo> push = default;
+            DeliveryMode? deliveryMode = default;
+            QueueInfo queue = default;
+            PushInfo push = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeliveryConfiguration(Optional.ToNullable(deliveryMode), queue.Value, push.Value, serializedAdditionalRawData);
+            return new DeliveryConfiguration(deliveryMode, queue, push, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeliveryConfiguration>.Write(ModelReaderWriterOptions options)

@@ -28,39 +28,39 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ContainerNetworkInterfaceConfiguration))
+            if (options.Format != "W" && ContainerNetworkInterfaceConfiguration != null)
             {
                 writer.WritePropertyName("containerNetworkInterfaceConfiguration"u8);
                 writer.WriteObjectValue(ContainerNetworkInterfaceConfiguration);
             }
-            if (Optional.IsDefined(Container))
+            if (Container != null)
             {
                 writer.WritePropertyName("container"u8);
                 JsonSerializer.Serialize(writer, Container);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
+            if (options.Format != "W" && !(IPConfigurations is ChangeTrackingList<ContainerNetworkInterfaceIPConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfiguration = default;
-            Optional<WritableSubResource> container = default;
-            Optional<IReadOnlyList<ContainerNetworkInterfaceIPConfiguration>> ipConfigurations = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration = default;
+            WritableSubResource container = default;
+            IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> ipConfigurations = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,7 +217,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerNetworkInterface(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), containerNetworkInterfaceConfiguration.Value, container, Optional.ToList(ipConfigurations), Optional.ToNullable(provisioningState));
+            return new ContainerNetworkInterface(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                containerNetworkInterfaceConfiguration,
+                container,
+                ipConfigurations ?? new ChangeTrackingList<ContainerNetworkInterfaceIPConfiguration>(),
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ContainerNetworkInterface>.Write(ModelReaderWriterOptions options)

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 return null;
             }
             IReadOnlyList<VoiceServicesTestLineData> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VoiceServicesTestLineListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new VoiceServicesTestLineListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VoiceServicesTestLineListResult>.Write(ModelReaderWriterOptions options)

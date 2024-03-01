@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.Peering
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Prefix))
+            if (Prefix != null)
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrefixValidationState))
+            if (options.Format != "W" && PrefixValidationState.HasValue)
             {
                 writer.WritePropertyName("prefixValidationState"u8);
                 writer.WriteStringValue(PrefixValidationState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PeeringServicePrefixKey))
+            if (options.Format != "W" && PeeringServicePrefixKey != null)
             {
                 writer.WritePropertyName("peeringServicePrefixKey"u8);
                 writer.WriteStringValue(PeeringServicePrefixKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.Peering
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> prefix = default;
-            Optional<PeeringPrefixValidationState> prefixValidationState = default;
-            Optional<string> peeringServicePrefixKey = default;
-            Optional<string> errorMessage = default;
-            Optional<PeeringProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string prefix = default;
+            PeeringPrefixValidationState? prefixValidationState = default;
+            string peeringServicePrefixKey = default;
+            string errorMessage = default;
+            PeeringProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,7 +202,17 @@ namespace Azure.ResourceManager.Peering
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringRegisteredPrefixData(id, name, type, systemData.Value, prefix.Value, Optional.ToNullable(prefixValidationState), peeringServicePrefixKey.Value, errorMessage.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PeeringRegisteredPrefixData(
+                id,
+                name,
+                type,
+                systemData,
+                prefix,
+                prefixValidationState,
+                peeringServicePrefixKey,
+                errorMessage,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringRegisteredPrefixData>.Write(ModelReaderWriterOptions options)

@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.FluidRelay
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(FrsTenantId))
+            if (options.Format != "W" && FrsTenantId.HasValue)
             {
                 writer.WritePropertyName("frsTenantId"u8);
                 writer.WriteStringValue(FrsTenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FrsContainerId))
+            if (options.Format != "W" && FrsContainerId.HasValue)
             {
                 writer.WritePropertyName("frsContainerId"u8);
                 writer.WriteStringValue(FrsContainerId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastAccessOn))
+            if (options.Format != "W" && LastAccessOn.HasValue)
             {
                 writer.WritePropertyName("lastAccessTime"u8);
                 writer.WriteStringValue(LastAccessOn.Value, "O");
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.FluidRelay
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> frsTenantId = default;
-            Optional<Guid> frsContainerId = default;
-            Optional<FluidRelayProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastAccessTime = default;
+            SystemData systemData = default;
+            Guid? frsTenantId = default;
+            Guid? frsContainerId = default;
+            FluidRelayProvisioningState? provisioningState = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastAccessTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.FluidRelay
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FluidRelayContainerData(id, name, type, systemData.Value, Optional.ToNullable(frsTenantId), Optional.ToNullable(frsContainerId), Optional.ToNullable(provisioningState), Optional.ToNullable(creationTime), Optional.ToNullable(lastAccessTime), serializedAdditionalRawData);
+            return new FluidRelayContainerData(
+                id,
+                name,
+                type,
+                systemData,
+                frsTenantId,
+                frsContainerId,
+                provisioningState,
+                creationTime,
+                lastAccessTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FluidRelayContainerData>.Write(ModelReaderWriterOptions options)

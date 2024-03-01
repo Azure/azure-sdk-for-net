@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(Capabilities))
+            if (Capabilities != null)
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteObjectValue(Capabilities);
             }
-            if (Optional.IsDefined(IsPreview))
+            if (IsPreview.HasValue)
             {
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
-            if (Optional.IsCollectionDefined(PatchVersions))
+            if (!(PatchVersions is ChangeTrackingDictionary<string, KubernetesPatchVersion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("patchVersions"u8);
                 writer.WriteStartObject();
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> version = default;
-            Optional<KubernetesVersionCapabilities> capabilities = default;
-            Optional<bool> isPreview = default;
-            Optional<IReadOnlyDictionary<string, KubernetesPatchVersion>> patchVersions = default;
+            string version = default;
+            KubernetesVersionCapabilities capabilities = default;
+            bool? isPreview = default;
+            IReadOnlyDictionary<string, KubernetesPatchVersion> patchVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesVersion(version.Value, capabilities.Value, Optional.ToNullable(isPreview), Optional.ToDictionary(patchVersions), serializedAdditionalRawData);
+            return new KubernetesVersion(version, capabilities, isPreview, patchVersions ?? new ChangeTrackingDictionary<string, KubernetesPatchVersion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesVersion>.Write(ModelReaderWriterOptions options)

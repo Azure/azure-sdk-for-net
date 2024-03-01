@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Automanage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AutomanageConfigurationProfileData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Automanage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomanageConfigurationProfileData>> value = default;
+            IReadOnlyList<AutomanageConfigurationProfileData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationProfileList(Optional.ToList(value), serializedAdditionalRawData);
+            return new ConfigurationProfileList(value ?? new ChangeTrackingList<AutomanageConfigurationProfileData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationProfileList>.Write(ModelReaderWriterOptions options)

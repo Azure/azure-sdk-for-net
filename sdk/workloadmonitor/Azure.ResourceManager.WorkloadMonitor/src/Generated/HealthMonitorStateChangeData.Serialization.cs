@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MonitorName))
+            if (MonitorName != null)
             {
                 writer.WritePropertyName("monitorName"u8);
                 writer.WriteStringValue(MonitorName);
             }
-            if (Optional.IsDefined(MonitorType))
+            if (MonitorType != null)
             {
                 writer.WritePropertyName("monitorType"u8);
                 writer.WriteStringValue(MonitorType);
             }
-            if (Optional.IsDefined(MonitoredObject))
+            if (MonitoredObject != null)
             {
                 writer.WritePropertyName("monitoredObject"u8);
                 writer.WriteStringValue(MonitoredObject);
             }
-            if (Optional.IsDefined(EvaluationTimestamp))
+            if (EvaluationTimestamp != null)
             {
                 writer.WritePropertyName("evaluationTimestamp"u8);
                 writer.WriteStringValue(EvaluationTimestamp);
             }
-            if (Optional.IsDefined(CurrentStateFirstObservedTimestamp))
+            if (CurrentStateFirstObservedTimestamp != null)
             {
                 writer.WritePropertyName("currentStateFirstObservedTimestamp"u8);
                 writer.WriteStringValue(CurrentStateFirstObservedTimestamp);
             }
-            if (options.Format != "W" && Optional.IsDefined(PreviousMonitorState))
+            if (options.Format != "W" && PreviousMonitorState.HasValue)
             {
                 writer.WritePropertyName("previousMonitorState"u8);
                 writer.WriteStringValue(PreviousMonitorState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentMonitorState))
+            if (options.Format != "W" && CurrentMonitorState.HasValue)
             {
                 writer.WritePropertyName("currentMonitorState"u8);
                 writer.WriteStringValue(CurrentMonitorState.Value.ToString());
             }
-            if (Optional.IsDefined(Evidence))
+            if (Evidence != null)
             {
                 writer.WritePropertyName("evidence"u8);
 #if NET6_0_OR_GREATER
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 }
 #endif
             }
-            if (Optional.IsDefined(MonitorConfiguration))
+            if (MonitorConfiguration != null)
             {
                 writer.WritePropertyName("monitorConfiguration"u8);
 #if NET6_0_OR_GREATER
@@ -151,16 +151,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> monitorName = default;
-            Optional<string> monitorType = default;
-            Optional<string> monitoredObject = default;
-            Optional<string> evaluationTimestamp = default;
-            Optional<string> currentStateFirstObservedTimestamp = default;
-            Optional<HealthState> previousMonitorState = default;
-            Optional<HealthState> currentMonitorState = default;
-            Optional<BinaryData> evidence = default;
-            Optional<BinaryData> monitorConfiguration = default;
+            SystemData systemData = default;
+            string monitorName = default;
+            string monitorType = default;
+            string monitoredObject = default;
+            string evaluationTimestamp = default;
+            string currentStateFirstObservedTimestamp = default;
+            HealthState? previousMonitorState = default;
+            HealthState? currentMonitorState = default;
+            BinaryData evidence = default;
+            BinaryData monitorConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -268,7 +268,21 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthMonitorStateChangeData(id, name, type, systemData.Value, monitorName.Value, monitorType.Value, monitoredObject.Value, evaluationTimestamp.Value, currentStateFirstObservedTimestamp.Value, Optional.ToNullable(previousMonitorState), Optional.ToNullable(currentMonitorState), evidence.Value, monitorConfiguration.Value, serializedAdditionalRawData);
+            return new HealthMonitorStateChangeData(
+                id,
+                name,
+                type,
+                systemData,
+                monitorName,
+                monitorType,
+                monitoredObject,
+                evaluationTimestamp,
+                currentStateFirstObservedTimestamp,
+                previousMonitorState,
+                currentMonitorState,
+                evidence,
+                monitorConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthMonitorStateChangeData>.Write(ModelReaderWriterOptions options)

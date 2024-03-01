@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.HybridContainerService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(Properties))
+            if (options.Format != "W" && Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 return null;
             }
-            Optional<HybridContainerServiceExtendedLocation> extendedLocation = default;
-            Optional<KubernetesVersionProfileProperties> properties = default;
+            HybridContainerServiceExtendedLocation extendedLocation = default;
+            KubernetesVersionProfileProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesVersionProfileData(id, name, type, systemData.Value, extendedLocation.Value, properties.Value, serializedAdditionalRawData);
+            return new KubernetesVersionProfileData(
+                id,
+                name,
+                type,
+                systemData,
+                extendedLocation,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesVersionProfileData>.Write(ModelReaderWriterOptions options)

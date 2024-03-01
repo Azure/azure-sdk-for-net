@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.PrivateDns
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,29 +63,29 @@ namespace Azure.ResourceManager.PrivateDns
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualNetwork))
+            if (VirtualNetwork != null)
             {
                 writer.WritePropertyName("virtualNetwork"u8);
                 JsonSerializer.Serialize(writer, VirtualNetwork);
             }
-            if (Optional.IsDefined(RegistrationEnabled))
+            if (RegistrationEnabled.HasValue)
             {
                 writer.WritePropertyName("registrationEnabled"u8);
                 writer.WriteBooleanValue(RegistrationEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VirtualNetworkLinkState))
+            if (options.Format != "W" && VirtualNetworkLinkState.HasValue)
             {
                 writer.WritePropertyName("virtualNetworkLinkState"u8);
                 writer.WriteStringValue(VirtualNetworkLinkState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateDnsProvisioningState))
+            if (options.Format != "W" && PrivateDnsProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(PrivateDnsProvisioningState.Value.ToString());
@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> virtualNetwork = default;
-            Optional<bool> registrationEnabled = default;
-            Optional<VirtualNetworkLinkState> virtualNetworkLinkState = default;
-            Optional<PrivateDnsProvisioningState> privateDnsProvisioningState = default;
+            SystemData systemData = default;
+            WritableSubResource virtualNetwork = default;
+            bool? registrationEnabled = default;
+            VirtualNetworkLinkState? virtualNetworkLinkState = default;
+            PrivateDnsProvisioningState? privateDnsProvisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +250,19 @@ namespace Azure.ResourceManager.PrivateDns
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), virtualNetwork, Optional.ToNullable(registrationEnabled), Optional.ToNullable(virtualNetworkLinkState), Optional.ToNullable(privateDnsProvisioningState), serializedAdditionalRawData);
+            return new VirtualNetworkLinkData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                virtualNetwork,
+                registrationEnabled,
+                virtualNetworkLinkState,
+                privateDnsProvisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkLinkData>.Write(ModelReaderWriterOptions options)

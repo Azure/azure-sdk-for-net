@@ -28,19 +28,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedInfo))
+            if (LinkedInfo != null)
             {
                 writer.WritePropertyName("linkedInfo"u8);
                 writer.WriteObjectValue(LinkedInfo);
             }
-            if (Optional.IsDefined(IsSelfContainedInteractiveAuthoringEnabled))
+            if (IsSelfContainedInteractiveAuthoringEnabled.HasValue)
             {
                 writer.WritePropertyName("selfContainedInteractiveAuthoringEnabled"u8);
                 writer.WriteBooleanValue(IsSelfContainedInteractiveAuthoringEnabled.Value);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             IntegrationRuntimeType type = default;
-            Optional<string> description = default;
-            Optional<LinkedIntegrationRuntimeType> linkedInfo = default;
-            Optional<bool> selfContainedInteractiveAuthoringEnabled = default;
+            string description = default;
+            LinkedIntegrationRuntimeType linkedInfo = default;
+            bool? selfContainedInteractiveAuthoringEnabled = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SelfHostedIntegrationRuntime(type, description.Value, additionalProperties, linkedInfo.Value, Optional.ToNullable(selfContainedInteractiveAuthoringEnabled));
+            return new SelfHostedIntegrationRuntime(type, description, additionalProperties, linkedInfo, selfContainedInteractiveAuthoringEnabled);
         }
 
         BinaryData IPersistableModel<SelfHostedIntegrationRuntime>.Write(ModelReaderWriterOptions options)

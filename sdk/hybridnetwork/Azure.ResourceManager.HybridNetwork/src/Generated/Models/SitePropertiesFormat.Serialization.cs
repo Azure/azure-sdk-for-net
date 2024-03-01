@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Nfvis))
+            if (!(Nfvis is ChangeTrackingList<NFVIs> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nfvis"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SiteNetworkServiceReferences))
+            if (options.Format != "W" && !(SiteNetworkServiceReferences is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("siteNetworkServiceReferences"u8);
                 writer.WriteStartArray();
@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<IList<NFVIs>> nfvis = default;
-            Optional<IReadOnlyList<WritableSubResource>> siteNetworkServiceReferences = default;
+            ProvisioningState? provisioningState = default;
+            IList<NFVIs> nfvis = default;
+            IReadOnlyList<WritableSubResource> siteNetworkServiceReferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SitePropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToList(nfvis), Optional.ToList(siteNetworkServiceReferences), serializedAdditionalRawData);
+            return new SitePropertiesFormat(provisioningState, nfvis ?? new ChangeTrackingList<NFVIs>(), siteNetworkServiceReferences ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SitePropertiesFormat>.Write(ModelReaderWriterOptions options)

@@ -43,84 +43,84 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ConnectorName))
+            if (options.Format != "W" && ConnectorName != null)
             {
                 writer.WritePropertyName("connectorName"u8);
                 writer.WriteStringValue(ConnectorName);
             }
-            if (Optional.IsDefined(ConnectorType))
+            if (ConnectorType.HasValue)
             {
                 writer.WritePropertyName("connectorType"u8);
                 writer.WriteStringValue(ConnectorType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Created))
+            if (options.Format != "W" && Created.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModified))
+            if (options.Format != "W" && LastModified.HasValue)
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModified.Value, "O");
             }
-            if (Optional.IsDefined(EntityType))
+            if (EntityType.HasValue)
             {
                 writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(EntityTypeName))
+            if (EntityTypeName != null)
             {
                 writer.WritePropertyName("entityTypeName"u8);
                 writer.WriteStringValue(EntityTypeName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectorMappingName))
+            if (options.Format != "W" && ConnectorMappingName != null)
             {
                 writer.WritePropertyName("connectorMappingName"u8);
                 writer.WriteStringValue(ConnectorMappingName);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataFormatId))
+            if (options.Format != "W" && DataFormatId != null)
             {
                 writer.WritePropertyName("dataFormatId"u8);
                 writer.WriteStringValue(DataFormatId);
             }
-            if (Optional.IsDefined(MappingProperties))
+            if (MappingProperties != null)
             {
                 writer.WritePropertyName("mappingProperties"u8);
                 writer.WriteObjectValue(MappingProperties);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextRunOn))
+            if (options.Format != "W" && NextRunOn.HasValue)
             {
                 writer.WritePropertyName("nextRunTime"u8);
                 writer.WriteStringValue(NextRunOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RunId))
+            if (options.Format != "W" && RunId != null)
             {
                 writer.WritePropertyName("runId"u8);
                 writer.WriteStringValue(RunId);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -167,22 +167,22 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> connectorName = default;
-            Optional<ConnectorType> connectorType = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<EntityType> entityType = default;
-            Optional<string> entityTypeName = default;
-            Optional<string> connectorMappingName = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> dataFormatId = default;
-            Optional<ConnectorMappingProperties> mappingProperties = default;
-            Optional<DateTimeOffset> nextRunTime = default;
-            Optional<string> runId = default;
-            Optional<ConnectorMappingState> state = default;
-            Optional<Guid> tenantId = default;
+            SystemData systemData = default;
+            string connectorName = default;
+            ConnectorType? connectorType = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? lastModified = default;
+            EntityType? entityType = default;
+            string entityTypeName = default;
+            string connectorMappingName = default;
+            string displayName = default;
+            string description = default;
+            string dataFormatId = default;
+            ConnectorMappingProperties mappingProperties = default;
+            DateTimeOffset? nextRunTime = default;
+            string runId = default;
+            ConnectorMappingState? state = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -336,7 +336,27 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectorMappingResourceFormatData(id, name, type, systemData.Value, connectorName.Value, Optional.ToNullable(connectorType), Optional.ToNullable(created), Optional.ToNullable(lastModified), Optional.ToNullable(entityType), entityTypeName.Value, connectorMappingName.Value, displayName.Value, description.Value, dataFormatId.Value, mappingProperties.Value, Optional.ToNullable(nextRunTime), runId.Value, Optional.ToNullable(state), Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new ConnectorMappingResourceFormatData(
+                id,
+                name,
+                type,
+                systemData,
+                connectorName,
+                connectorType,
+                created,
+                lastModified,
+                entityType,
+                entityTypeName,
+                connectorMappingName,
+                displayName,
+                description,
+                dataFormatId,
+                mappingProperties,
+                nextRunTime,
+                runId,
+                state,
+                tenantId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectorMappingResourceFormatData>.Write(ModelReaderWriterOptions options)

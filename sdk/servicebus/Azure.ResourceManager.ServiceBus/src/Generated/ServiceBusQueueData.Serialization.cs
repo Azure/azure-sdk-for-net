@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,119 +48,119 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CountDetails))
+            if (options.Format != "W" && CountDetails != null)
             {
                 writer.WritePropertyName("countDetails"u8);
                 writer.WriteObjectValue(CountDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(AccessedOn))
+            if (options.Format != "W" && AccessedOn.HasValue)
             {
                 writer.WritePropertyName("accessedAt"u8);
                 writer.WriteStringValue(AccessedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SizeInBytes))
+            if (options.Format != "W" && SizeInBytes.HasValue)
             {
                 writer.WritePropertyName("sizeInBytes"u8);
                 writer.WriteNumberValue(SizeInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MessageCount))
+            if (options.Format != "W" && MessageCount.HasValue)
             {
                 writer.WritePropertyName("messageCount"u8);
                 writer.WriteNumberValue(MessageCount.Value);
             }
-            if (Optional.IsDefined(LockDuration))
+            if (LockDuration.HasValue)
             {
                 writer.WritePropertyName("lockDuration"u8);
                 writer.WriteStringValue(LockDuration.Value, "P");
             }
-            if (Optional.IsDefined(MaxSizeInMegabytes))
+            if (MaxSizeInMegabytes.HasValue)
             {
                 writer.WritePropertyName("maxSizeInMegabytes"u8);
                 writer.WriteNumberValue(MaxSizeInMegabytes.Value);
             }
-            if (Optional.IsDefined(MaxMessageSizeInKilobytes))
+            if (MaxMessageSizeInKilobytes.HasValue)
             {
                 writer.WritePropertyName("maxMessageSizeInKilobytes"u8);
                 writer.WriteNumberValue(MaxMessageSizeInKilobytes.Value);
             }
-            if (Optional.IsDefined(RequiresDuplicateDetection))
+            if (RequiresDuplicateDetection.HasValue)
             {
                 writer.WritePropertyName("requiresDuplicateDetection"u8);
                 writer.WriteBooleanValue(RequiresDuplicateDetection.Value);
             }
-            if (Optional.IsDefined(RequiresSession))
+            if (RequiresSession.HasValue)
             {
                 writer.WritePropertyName("requiresSession"u8);
                 writer.WriteBooleanValue(RequiresSession.Value);
             }
-            if (Optional.IsDefined(DefaultMessageTimeToLive))
+            if (DefaultMessageTimeToLive.HasValue)
             {
                 writer.WritePropertyName("defaultMessageTimeToLive"u8);
                 writer.WriteStringValue(DefaultMessageTimeToLive.Value, "P");
             }
-            if (Optional.IsDefined(DeadLetteringOnMessageExpiration))
+            if (DeadLetteringOnMessageExpiration.HasValue)
             {
                 writer.WritePropertyName("deadLetteringOnMessageExpiration"u8);
                 writer.WriteBooleanValue(DeadLetteringOnMessageExpiration.Value);
             }
-            if (Optional.IsDefined(DuplicateDetectionHistoryTimeWindow))
+            if (DuplicateDetectionHistoryTimeWindow.HasValue)
             {
                 writer.WritePropertyName("duplicateDetectionHistoryTimeWindow"u8);
                 writer.WriteStringValue(DuplicateDetectionHistoryTimeWindow.Value, "P");
             }
-            if (Optional.IsDefined(MaxDeliveryCount))
+            if (MaxDeliveryCount.HasValue)
             {
                 writer.WritePropertyName("maxDeliveryCount"u8);
                 writer.WriteNumberValue(MaxDeliveryCount.Value);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(EnableBatchedOperations))
+            if (EnableBatchedOperations.HasValue)
             {
                 writer.WritePropertyName("enableBatchedOperations"u8);
                 writer.WriteBooleanValue(EnableBatchedOperations.Value);
             }
-            if (Optional.IsDefined(AutoDeleteOnIdle))
+            if (AutoDeleteOnIdle.HasValue)
             {
                 writer.WritePropertyName("autoDeleteOnIdle"u8);
                 writer.WriteStringValue(AutoDeleteOnIdle.Value, "P");
             }
-            if (Optional.IsDefined(EnablePartitioning))
+            if (EnablePartitioning.HasValue)
             {
                 writer.WritePropertyName("enablePartitioning"u8);
                 writer.WriteBooleanValue(EnablePartitioning.Value);
             }
-            if (Optional.IsDefined(EnableExpress))
+            if (EnableExpress.HasValue)
             {
                 writer.WritePropertyName("enableExpress"u8);
                 writer.WriteBooleanValue(EnableExpress.Value);
             }
-            if (Optional.IsDefined(ForwardTo))
+            if (ForwardTo != null)
             {
                 writer.WritePropertyName("forwardTo"u8);
                 writer.WriteStringValue(ForwardTo);
             }
-            if (Optional.IsDefined(ForwardDeadLetteredMessagesTo))
+            if (ForwardDeadLetteredMessagesTo != null)
             {
                 writer.WritePropertyName("forwardDeadLetteredMessagesTo"u8);
                 writer.WriteStringValue(ForwardDeadLetteredMessagesTo);
@@ -204,33 +204,33 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MessageCountDetails> countDetails = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<DateTimeOffset> accessedAt = default;
-            Optional<long> sizeInBytes = default;
-            Optional<long> messageCount = default;
-            Optional<TimeSpan> lockDuration = default;
-            Optional<int> maxSizeInMegabytes = default;
-            Optional<long> maxMessageSizeInKilobytes = default;
-            Optional<bool> requiresDuplicateDetection = default;
-            Optional<bool> requiresSession = default;
-            Optional<TimeSpan> defaultMessageTimeToLive = default;
-            Optional<bool> deadLetteringOnMessageExpiration = default;
-            Optional<TimeSpan> duplicateDetectionHistoryTimeWindow = default;
-            Optional<int> maxDeliveryCount = default;
-            Optional<ServiceBusMessagingEntityStatus> status = default;
-            Optional<bool> enableBatchedOperations = default;
-            Optional<TimeSpan> autoDeleteOnIdle = default;
-            Optional<bool> enablePartitioning = default;
-            Optional<bool> enableExpress = default;
-            Optional<string> forwardTo = default;
-            Optional<string> forwardDeadLetteredMessagesTo = default;
+            SystemData systemData = default;
+            MessageCountDetails countDetails = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
+            DateTimeOffset? accessedAt = default;
+            long? sizeInBytes = default;
+            long? messageCount = default;
+            TimeSpan? lockDuration = default;
+            int? maxSizeInMegabytes = default;
+            long? maxMessageSizeInKilobytes = default;
+            bool? requiresDuplicateDetection = default;
+            bool? requiresSession = default;
+            TimeSpan? defaultMessageTimeToLive = default;
+            bool? deadLetteringOnMessageExpiration = default;
+            TimeSpan? duplicateDetectionHistoryTimeWindow = default;
+            int? maxDeliveryCount = default;
+            ServiceBusMessagingEntityStatus? status = default;
+            bool? enableBatchedOperations = default;
+            TimeSpan? autoDeleteOnIdle = default;
+            bool? enablePartitioning = default;
+            bool? enableExpress = default;
+            string forwardTo = default;
+            string forwardDeadLetteredMessagesTo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -476,7 +476,35 @@ namespace Azure.ResourceManager.ServiceBus
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusQueueData(id, name, type, systemData.Value, countDetails.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(accessedAt), Optional.ToNullable(sizeInBytes), Optional.ToNullable(messageCount), Optional.ToNullable(lockDuration), Optional.ToNullable(maxSizeInMegabytes), Optional.ToNullable(maxMessageSizeInKilobytes), Optional.ToNullable(requiresDuplicateDetection), Optional.ToNullable(requiresSession), Optional.ToNullable(defaultMessageTimeToLive), Optional.ToNullable(deadLetteringOnMessageExpiration), Optional.ToNullable(duplicateDetectionHistoryTimeWindow), Optional.ToNullable(maxDeliveryCount), Optional.ToNullable(status), Optional.ToNullable(enableBatchedOperations), Optional.ToNullable(autoDeleteOnIdle), Optional.ToNullable(enablePartitioning), Optional.ToNullable(enableExpress), forwardTo.Value, forwardDeadLetteredMessagesTo.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ServiceBusQueueData(
+                id,
+                name,
+                type,
+                systemData,
+                countDetails,
+                createdAt,
+                updatedAt,
+                accessedAt,
+                sizeInBytes,
+                messageCount,
+                lockDuration,
+                maxSizeInMegabytes,
+                maxMessageSizeInKilobytes,
+                requiresDuplicateDetection,
+                requiresSession,
+                defaultMessageTimeToLive,
+                deadLetteringOnMessageExpiration,
+                duplicateDetectionHistoryTimeWindow,
+                maxDeliveryCount,
+                status,
+                enableBatchedOperations,
+                autoDeleteOnIdle,
+                enablePartitioning,
+                enableExpress,
+                forwardTo,
+                forwardDeadLetteredMessagesTo,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusQueueData>.Write(ModelReaderWriterOptions options)

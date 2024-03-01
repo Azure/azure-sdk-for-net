@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(ReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryPipelineReferenceType type = default;
             string referenceName = default;
-            Optional<string> name = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryPipelineReference(type, referenceName, name.Value, serializedAdditionalRawData);
+            return new DataFactoryPipelineReference(type, referenceName, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryPipelineReference>.Write(ModelReaderWriterOptions options)

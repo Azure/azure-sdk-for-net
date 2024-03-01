@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SelfHelpSolutionMetadata> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SelfHelpSolutionMetadata>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SelfHelpSolutionMetadata> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpDiscoverySolutionResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SelfHelpDiscoverySolutionResult(value ?? new ChangeTrackingList<SelfHelpSolutionMetadata>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpDiscoverySolutionResult>.Write(ModelReaderWriterOptions options)

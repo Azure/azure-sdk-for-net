@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.FrontDoor
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -68,29 +68,29 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicySettings))
+            if (PolicySettings != null)
             {
                 writer.WritePropertyName("policySettings"u8);
                 writer.WriteObjectValue(PolicySettings);
             }
-            if (Optional.IsDefined(CustomRuleList))
+            if (CustomRuleList != null)
             {
                 writer.WritePropertyName("customRules"u8);
                 writer.WriteObjectValue(CustomRuleList);
             }
-            if (Optional.IsDefined(ManagedRules))
+            if (ManagedRules != null)
             {
                 writer.WritePropertyName("managedRules"u8);
                 writer.WriteObjectValue(ManagedRules);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FrontendEndpointLinks))
+            if (options.Format != "W" && !(FrontendEndpointLinks is ChangeTrackingList<SubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("frontendEndpointLinks"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RoutingRuleLinks))
+            if (options.Format != "W" && !(RoutingRuleLinks is ChangeTrackingList<SubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("routingRuleLinks"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SecurityPolicyLinks))
+            if (options.Format != "W" && !(SecurityPolicyLinks is ChangeTrackingList<SubResource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("securityPolicyLinks"u8);
                 writer.WriteStartArray();
@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
@@ -169,22 +169,22 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<FrontDoorSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            FrontDoorSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<FrontDoorWebApplicationFirewallPolicySettings> policySettings = default;
-            Optional<CustomRuleList> customRules = default;
-            Optional<ManagedRuleSetList> managedRules = default;
-            Optional<IReadOnlyList<SubResource>> frontendEndpointLinks = default;
-            Optional<IReadOnlyList<SubResource>> routingRuleLinks = default;
-            Optional<IReadOnlyList<SubResource>> securityPolicyLinks = default;
-            Optional<string> provisioningState = default;
-            Optional<FrontDoorWebApplicationFirewallPolicyResourceState> resourceState = default;
+            SystemData systemData = default;
+            FrontDoorWebApplicationFirewallPolicySettings policySettings = default;
+            CustomRuleList customRules = default;
+            ManagedRuleSetList managedRules = default;
+            IReadOnlyList<SubResource> frontendEndpointLinks = default;
+            IReadOnlyList<SubResource> routingRuleLinks = default;
+            IReadOnlyList<SubResource> securityPolicyLinks = default;
+            string provisioningState = default;
+            FrontDoorWebApplicationFirewallPolicyResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -351,7 +351,24 @@ namespace Azure.ResourceManager.FrontDoor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorWebApplicationFirewallPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), sku.Value, policySettings.Value, customRules.Value, managedRules.Value, Optional.ToList(frontendEndpointLinks), Optional.ToList(routingRuleLinks), Optional.ToList(securityPolicyLinks), provisioningState.Value, Optional.ToNullable(resourceState), serializedAdditionalRawData);
+            return new FrontDoorWebApplicationFirewallPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                sku,
+                policySettings,
+                customRules,
+                managedRules,
+                frontendEndpointLinks ?? new ChangeTrackingList<SubResource>(),
+                routingRuleLinks ?? new ChangeTrackingList<SubResource>(),
+                securityPolicyLinks ?? new ChangeTrackingList<SubResource>(),
+                provisioningState,
+                resourceState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options)

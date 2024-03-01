@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicyType))
+            if (PolicyType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PolicyType.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistryTrustPolicyType> type = default;
-            Optional<ContainerRegistryPolicyStatus> status = default;
+            ContainerRegistryTrustPolicyType? type = default;
+            ContainerRegistryPolicyStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTrustPolicy(Optional.ToNullable(type), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new ContainerRegistryTrustPolicy(type, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTrustPolicy>.Write(ModelReaderWriterOptions options)

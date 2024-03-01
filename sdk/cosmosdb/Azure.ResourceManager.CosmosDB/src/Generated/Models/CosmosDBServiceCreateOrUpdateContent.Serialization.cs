@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(InstanceSize))
+            if (InstanceSize.HasValue)
             {
                 writer.WritePropertyName("instanceSize"u8);
                 writer.WriteStringValue(InstanceSize.Value.ToString());
             }
-            if (Optional.IsDefined(InstanceCount))
+            if (InstanceCount.HasValue)
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
-            if (Optional.IsDefined(ServiceType))
+            if (ServiceType.HasValue)
             {
                 writer.WritePropertyName("serviceType"u8);
                 writer.WriteStringValue(ServiceType.Value.ToString());
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<CosmosDBServiceSize> instanceSize = default;
-            Optional<int> instanceCount = default;
-            Optional<CosmosDBServiceType> serviceType = default;
+            CosmosDBServiceSize? instanceSize = default;
+            int? instanceCount = default;
+            CosmosDBServiceType? serviceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBServiceCreateOrUpdateContent(Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), Optional.ToNullable(serviceType), serializedAdditionalRawData);
+            return new CosmosDBServiceCreateOrUpdateContent(instanceSize, instanceCount, serviceType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBServiceCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

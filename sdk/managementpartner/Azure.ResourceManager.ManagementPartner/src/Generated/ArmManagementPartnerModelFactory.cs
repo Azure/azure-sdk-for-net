@@ -32,7 +32,21 @@ namespace Azure.ResourceManager.ManagementPartner.Models
         /// <returns> A new <see cref="ManagementPartner.PartnerResponseData"/> instance for mocking. </returns>
         public static PartnerResponseData PartnerResponseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? etag = null, string partnerId = null, string partnerName = null, Guid? tenantId = null, string objectId = null, int? version = null, DateTimeOffset? updatedOn = null, DateTimeOffset? createdOn = null, ManagementPartnerState? state = null)
         {
-            return new PartnerResponseData(id, name, resourceType, systemData, etag, partnerId, partnerName, tenantId, objectId, version, updatedOn, createdOn, state, serializedAdditionalRawData: null);
+            return new PartnerResponseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                partnerId,
+                partnerName,
+                tenantId,
+                objectId,
+                version,
+                updatedOn,
+                createdOn,
+                state,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationResponse"/>. </summary>

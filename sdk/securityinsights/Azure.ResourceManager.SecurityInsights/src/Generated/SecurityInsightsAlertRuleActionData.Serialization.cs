@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogicAppResourceId))
+            if (LogicAppResourceId != null)
             {
                 writer.WritePropertyName("logicAppResourceId"u8);
                 writer.WriteStringValue(LogicAppResourceId);
             }
-            if (Optional.IsDefined(WorkflowId))
+            if (WorkflowId != null)
             {
                 writer.WritePropertyName("workflowId"u8);
                 writer.WriteStringValue(WorkflowId);
@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> logicAppResourceId = default;
-            Optional<string> workflowId = default;
+            SystemData systemData = default;
+            ResourceIdentifier logicAppResourceId = default;
+            string workflowId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +180,15 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAlertRuleActionData(id, name, type, systemData.Value, Optional.ToNullable(etag), logicAppResourceId.Value, workflowId.Value, serializedAdditionalRawData);
+            return new SecurityInsightsAlertRuleActionData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                logicAppResourceId,
+                workflowId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAlertRuleActionData>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Benefits))
+            if (!(Benefits is ChangeTrackingList<BillingBenefitsSavingsPlanOrderAliasData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("benefits"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<IList<BillingBenefitsSavingsPlanOrderAliasData>> benefits = default;
+            IList<BillingBenefitsSavingsPlanOrderAliasData> benefits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanPurchaseValidateContent(Optional.ToList(benefits), serializedAdditionalRawData);
+            return new SavingsPlanPurchaseValidateContent(benefits ?? new ChangeTrackingList<BillingBenefitsSavingsPlanOrderAliasData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanPurchaseValidateContent>.Write(ModelReaderWriterOptions options)

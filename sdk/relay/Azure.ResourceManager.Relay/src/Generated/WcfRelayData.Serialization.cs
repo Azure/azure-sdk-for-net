@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Relay
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,49 +48,49 @@ namespace Azure.ResourceManager.Relay
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IsDynamic))
+            if (options.Format != "W" && IsDynamic.HasValue)
             {
                 writer.WritePropertyName("isDynamic"u8);
                 writer.WriteBooleanValue(IsDynamic.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ListenerCount))
+            if (options.Format != "W" && ListenerCount.HasValue)
             {
                 writer.WritePropertyName("listenerCount"u8);
                 writer.WriteNumberValue(ListenerCount.Value);
             }
-            if (Optional.IsDefined(RelayType))
+            if (RelayType.HasValue)
             {
                 writer.WritePropertyName("relayType"u8);
                 writer.WriteStringValue(RelayType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(IsClientAuthorizationRequired))
+            if (IsClientAuthorizationRequired.HasValue)
             {
                 writer.WritePropertyName("requiresClientAuthorization"u8);
                 writer.WriteBooleanValue(IsClientAuthorizationRequired.Value);
             }
-            if (Optional.IsDefined(IsTransportSecurityRequired))
+            if (IsTransportSecurityRequired.HasValue)
             {
                 writer.WritePropertyName("requiresTransportSecurity"u8);
                 writer.WriteBooleanValue(IsTransportSecurityRequired.Value);
             }
-            if (Optional.IsDefined(UserMetadata))
+            if (UserMetadata != null)
             {
                 writer.WritePropertyName("userMetadata"u8);
                 writer.WriteStringValue(UserMetadata);
@@ -134,19 +134,19 @@ namespace Azure.ResourceManager.Relay
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isDynamic = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<int> listenerCount = default;
-            Optional<RelayType> relayType = default;
-            Optional<bool> requiresClientAuthorization = default;
-            Optional<bool> requiresTransportSecurity = default;
-            Optional<string> userMetadata = default;
+            SystemData systemData = default;
+            bool? isDynamic = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
+            int? listenerCount = default;
+            RelayType? relayType = default;
+            bool? requiresClientAuthorization = default;
+            bool? requiresTransportSecurity = default;
+            string userMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -270,7 +270,21 @@ namespace Azure.ResourceManager.Relay
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WcfRelayData(id, name, type, systemData.Value, Optional.ToNullable(isDynamic), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(listenerCount), Optional.ToNullable(relayType), Optional.ToNullable(requiresClientAuthorization), Optional.ToNullable(requiresTransportSecurity), userMetadata.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new WcfRelayData(
+                id,
+                name,
+                type,
+                systemData,
+                isDynamic,
+                createdAt,
+                updatedAt,
+                listenerCount,
+                relayType,
+                requiresClientAuthorization,
+                requiresTransportSecurity,
+                userMetadata,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WcfRelayData>.Write(ModelReaderWriterOptions options)

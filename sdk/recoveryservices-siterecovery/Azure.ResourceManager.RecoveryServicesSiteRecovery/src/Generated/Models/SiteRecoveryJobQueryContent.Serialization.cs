@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (StartOn != null)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn);
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn != null)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn);
             }
-            if (Optional.IsDefined(FabricId))
+            if (FabricId != null)
             {
                 writer.WritePropertyName("fabricId"u8);
                 writer.WriteStringValue(FabricId);
             }
-            if (Optional.IsDefined(AffectedObjectTypes))
+            if (AffectedObjectTypes != null)
             {
                 writer.WritePropertyName("affectedObjectTypes"u8);
                 writer.WriteStringValue(AffectedObjectTypes);
             }
-            if (Optional.IsDefined(JobStatus))
+            if (JobStatus != null)
             {
                 writer.WritePropertyName("jobStatus"u8);
                 writer.WriteStringValue(JobStatus);
             }
-            if (Optional.IsDefined(JobOutputType))
+            if (JobOutputType.HasValue)
             {
                 writer.WritePropertyName("jobOutputType"u8);
                 writer.WriteStringValue(JobOutputType.Value.ToString());
             }
-            if (Optional.IsDefined(JobName))
+            if (JobName != null)
             {
                 writer.WritePropertyName("jobName"u8);
                 writer.WriteStringValue(JobName);
             }
-            if (Optional.IsDefined(TimezoneOffset))
+            if (TimezoneOffset.HasValue)
             {
                 writer.WritePropertyName("timezoneOffset"u8);
                 writer.WriteNumberValue(TimezoneOffset.Value);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
-            Optional<ResourceIdentifier> fabricId = default;
-            Optional<string> affectedObjectTypes = default;
-            Optional<string> jobStatus = default;
-            Optional<ExportJobOutputSerializationType> jobOutputType = default;
-            Optional<string> jobName = default;
-            Optional<double> timezoneOffset = default;
+            string startTime = default;
+            string endTime = default;
+            ResourceIdentifier fabricId = default;
+            string affectedObjectTypes = default;
+            string jobStatus = default;
+            ExportJobOutputSerializationType? jobOutputType = default;
+            string jobName = default;
+            double? timezoneOffset = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryJobQueryContent(startTime.Value, endTime.Value, fabricId.Value, affectedObjectTypes.Value, jobStatus.Value, Optional.ToNullable(jobOutputType), jobName.Value, Optional.ToNullable(timezoneOffset), serializedAdditionalRawData);
+            return new SiteRecoveryJobQueryContent(
+                startTime,
+                endTime,
+                fabricId,
+                affectedObjectTypes,
+                jobStatus,
+                jobOutputType,
+                jobName,
+                timezoneOffset,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobQueryContent>.Write(ModelReaderWriterOptions options)

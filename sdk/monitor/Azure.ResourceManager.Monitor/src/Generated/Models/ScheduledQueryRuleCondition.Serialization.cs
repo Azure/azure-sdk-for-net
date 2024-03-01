@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Query))
+            if (Query != null)
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (Optional.IsDefined(TimeAggregation))
+            if (TimeAggregation.HasValue)
             {
                 writer.WritePropertyName("timeAggregation"u8);
                 writer.WriteStringValue(TimeAggregation.Value.ToString());
             }
-            if (Optional.IsDefined(MetricMeasureColumn))
+            if (MetricMeasureColumn != null)
             {
                 writer.WritePropertyName("metricMeasureColumn"u8);
                 writer.WriteStringValue(MetricMeasureColumn);
             }
-            if (Optional.IsDefined(ResourceIdColumn))
+            if (ResourceIdColumn != null)
             {
                 writer.WritePropertyName("resourceIdColumn"u8);
                 writer.WriteStringValue(ResourceIdColumn);
             }
-            if (Optional.IsCollectionDefined(Dimensions))
+            if (!(Dimensions is ChangeTrackingList<MonitorDimension> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
@@ -56,22 +56,22 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Operator))
+            if (Operator.HasValue)
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Threshold))
+            if (Threshold.HasValue)
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
             }
-            if (Optional.IsDefined(FailingPeriods))
+            if (FailingPeriods != null)
             {
                 writer.WritePropertyName("failingPeriods"u8);
                 writer.WriteObjectValue(FailingPeriods);
             }
-            if (Optional.IsDefined(MetricName))
+            if (MetricName != null)
             {
                 writer.WritePropertyName("metricName"u8);
                 writer.WriteStringValue(MetricName);
@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> query = default;
-            Optional<ScheduledQueryRuleTimeAggregationType> timeAggregation = default;
-            Optional<string> metricMeasureColumn = default;
-            Optional<string> resourceIdColumn = default;
-            Optional<IList<MonitorDimension>> dimensions = default;
-            Optional<MonitorConditionOperator> @operator = default;
-            Optional<double> threshold = default;
-            Optional<ConditionFailingPeriods> failingPeriods = default;
-            Optional<string> metricName = default;
+            string query = default;
+            ScheduledQueryRuleTimeAggregationType? timeAggregation = default;
+            string metricMeasureColumn = default;
+            string resourceIdColumn = default;
+            IList<MonitorDimension> dimensions = default;
+            MonitorConditionOperator? @operator = default;
+            double? threshold = default;
+            ConditionFailingPeriods failingPeriods = default;
+            string metricName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledQueryRuleCondition(query.Value, Optional.ToNullable(timeAggregation), metricMeasureColumn.Value, resourceIdColumn.Value, Optional.ToList(dimensions), Optional.ToNullable(@operator), Optional.ToNullable(threshold), failingPeriods.Value, metricName.Value, serializedAdditionalRawData);
+            return new ScheduledQueryRuleCondition(
+                query,
+                timeAggregation,
+                metricMeasureColumn,
+                resourceIdColumn,
+                dimensions ?? new ChangeTrackingList<MonitorDimension>(),
+                @operator,
+                threshold,
+                failingPeriods,
+                metricName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScheduledQueryRuleCondition>.Write(ModelReaderWriterOptions options)

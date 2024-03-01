@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProviderSpecificContent))
+            if (ProviderSpecificContent != null)
             {
                 writer.WritePropertyName("providerSpecificInput"u8);
                 writer.WriteObjectValue(ProviderSpecificContent);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ReplicationProviderSpecificUpdateContainerMappingContent> providerSpecificContent = default;
+            ReplicationProviderSpecificUpdateContainerMappingContent providerSpecificContent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateProtectionContainerMappingContentProperties(providerSpecificContent.Value, serializedAdditionalRawData);
+            return new UpdateProtectionContainerMappingContentProperties(providerSpecificContent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateProtectionContainerMappingContentProperties>.Write(ModelReaderWriterOptions options)

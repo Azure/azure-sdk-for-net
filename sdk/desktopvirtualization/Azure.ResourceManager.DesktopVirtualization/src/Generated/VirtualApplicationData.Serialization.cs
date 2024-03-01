@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ObjectId))
+            if (options.Format != "W" && ObjectId != null)
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(FilePath))
+            if (FilePath != null)
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (Optional.IsDefined(MsixPackageFamilyName))
+            if (MsixPackageFamilyName != null)
             {
                 if (MsixPackageFamilyName != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     writer.WriteNull("msixPackageFamilyName");
                 }
             }
-            if (Optional.IsDefined(MsixPackageApplicationId))
+            if (MsixPackageApplicationId != null)
             {
                 if (MsixPackageApplicationId != null)
                 {
@@ -94,39 +94,39 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     writer.WriteNull("msixPackageApplicationId");
                 }
             }
-            if (Optional.IsDefined(ApplicationType))
+            if (ApplicationType.HasValue)
             {
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
             writer.WritePropertyName("commandLineSetting"u8);
             writer.WriteStringValue(CommandLineSetting.ToString());
-            if (Optional.IsDefined(CommandLineArguments))
+            if (CommandLineArguments != null)
             {
                 writer.WritePropertyName("commandLineArguments"u8);
                 writer.WriteStringValue(CommandLineArguments);
             }
-            if (Optional.IsDefined(ShowInPortal))
+            if (ShowInPortal.HasValue)
             {
                 writer.WritePropertyName("showInPortal"u8);
                 writer.WriteBooleanValue(ShowInPortal.Value);
             }
-            if (Optional.IsDefined(IconPath))
+            if (IconPath != null)
             {
                 writer.WritePropertyName("iconPath"u8);
                 writer.WriteStringValue(IconPath);
             }
-            if (Optional.IsDefined(IconIndex))
+            if (IconIndex.HasValue)
             {
                 writer.WritePropertyName("iconIndex"u8);
                 writer.WriteNumberValue(IconIndex.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IconHash))
+            if (options.Format != "W" && IconHash != null)
             {
                 writer.WritePropertyName("iconHash"u8);
                 writer.WriteStringValue(IconHash);
             }
-            if (options.Format != "W" && Optional.IsDefined(IconContent))
+            if (options.Format != "W" && IconContent != null)
             {
                 writer.WritePropertyName("iconContent"u8);
 #if NET6_0_OR_GREATER
@@ -180,21 +180,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> objectId = default;
-            Optional<string> description = default;
-            Optional<string> friendlyName = default;
-            Optional<string> filePath = default;
-            Optional<string> msixPackageFamilyName = default;
-            Optional<string> msixPackageApplicationId = default;
-            Optional<RemoteApplicationType> applicationType = default;
+            SystemData systemData = default;
+            string objectId = default;
+            string description = default;
+            string friendlyName = default;
+            string filePath = default;
+            string msixPackageFamilyName = default;
+            string msixPackageApplicationId = default;
+            RemoteApplicationType? applicationType = default;
             VirtualApplicationCommandLineSetting commandLineSetting = default;
-            Optional<string> commandLineArguments = default;
-            Optional<bool> showInPortal = default;
-            Optional<string> iconPath = default;
-            Optional<int> iconIndex = default;
-            Optional<string> iconHash = default;
-            Optional<BinaryData> iconContent = default;
+            string commandLineArguments = default;
+            bool? showInPortal = default;
+            string iconPath = default;
+            int? iconIndex = default;
+            string iconHash = default;
+            BinaryData iconContent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -337,7 +337,26 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualApplicationData(id, name, type, systemData.Value, objectId.Value, description.Value, friendlyName.Value, filePath.Value, msixPackageFamilyName.Value, msixPackageApplicationId.Value, Optional.ToNullable(applicationType), commandLineSetting, commandLineArguments.Value, Optional.ToNullable(showInPortal), iconPath.Value, Optional.ToNullable(iconIndex), iconHash.Value, iconContent.Value, serializedAdditionalRawData);
+            return new VirtualApplicationData(
+                id,
+                name,
+                type,
+                systemData,
+                objectId,
+                description,
+                friendlyName,
+                filePath,
+                msixPackageFamilyName,
+                msixPackageApplicationId,
+                applicationType,
+                commandLineSetting,
+                commandLineArguments,
+                showInPortal,
+                iconPath,
+                iconIndex,
+                iconHash,
+                iconContent,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualApplicationData>.Write(ModelReaderWriterOptions options)

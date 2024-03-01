@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -60,22 +60,22 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsSecret))
+            if (IsSecret.HasValue)
             {
                 writer.WritePropertyName("secret"u8);
                 writer.WriteBooleanValue(IsSecret.Value);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(KeyVaultDetails))
+            if (KeyVaultDetails != null)
             {
                 writer.WritePropertyName("keyVault"u8);
                 writer.WriteObjectValue(KeyVaultDetails);
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<string>> tags = default;
-            Optional<bool> secret = default;
-            Optional<string> displayName = default;
-            Optional<string> value = default;
-            Optional<KeyVaultContractProperties> keyVault = default;
+            SystemData systemData = default;
+            IList<string> tags = default;
+            bool? secret = default;
+            string displayName = default;
+            string value = default;
+            KeyVaultContractProperties keyVault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +216,17 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementNamedValueData(id, name, type, systemData.Value, Optional.ToList(tags), Optional.ToNullable(secret), displayName.Value, value.Value, keyVault.Value, serializedAdditionalRawData);
+            return new ApiManagementNamedValueData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingList<string>(),
+                secret,
+                displayName,
+                value,
+                keyVault,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementNamedValueData>.Write(ModelReaderWriterOptions options)

@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Publishers))
+            if (!(Publishers is ChangeTrackingList<PublisherInformation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("publishers"u8);
                 writer.WriteStartArray();
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.NetworkAnalytics
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetworkAnalyticsProvisioningState> provisioningState = default;
-            Optional<IList<PublisherInformation>> publishers = default;
+            SystemData systemData = default;
+            NetworkAnalyticsProvisioningState? provisioningState = default;
+            IList<PublisherInformation> publishers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProductsCatalogData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToList(publishers), serializedAdditionalRawData);
+            return new DataProductsCatalogData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                publishers ?? new ChangeTrackingList<PublisherInformation>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProductsCatalogData>.Write(ModelReaderWriterOptions options)

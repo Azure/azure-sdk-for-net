@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Synapse
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStringValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -78,22 +78,22 @@ namespace Azure.ResourceManager.Synapse
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Notes))
+            if (Notes != null)
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (Optional.IsDefined(CreatedBy))
+            if (CreatedBy != null)
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(ConfigMergeRule))
+            if (!(ConfigMergeRule is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("configMergeRule"u8);
                 writer.WriteStartObject();
@@ -143,18 +143,18 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string description = default;
             IDictionary<string, string> configs = default;
-            Optional<IList<string>> annotations = default;
-            Optional<string> notes = default;
-            Optional<string> createdBy = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<IDictionary<string, string>> configMergeRule = default;
+            IList<string> annotations = default;
+            string notes = default;
+            string createdBy = default;
+            DateTimeOffset? created = default;
+            IDictionary<string, string> configMergeRule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -272,7 +272,20 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSparkConfigurationData(id, name, type, systemData.Value, description.Value, configs, Optional.ToList(annotations), notes.Value, createdBy.Value, Optional.ToNullable(created), Optional.ToDictionary(configMergeRule), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SynapseSparkConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                configs,
+                annotations ?? new ChangeTrackingList<string>(),
+                notes,
+                createdBy,
+                created,
+                configMergeRule ?? new ChangeTrackingDictionary<string, string>(),
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSparkConfigurationData>.Write(ModelReaderWriterOptions options)

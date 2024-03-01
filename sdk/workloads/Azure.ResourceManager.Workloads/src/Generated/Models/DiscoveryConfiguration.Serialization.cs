@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CentralServerVmId))
+            if (CentralServerVmId != null)
             {
                 writer.WritePropertyName("centralServerVmId"u8);
                 writer.WriteStringValue(CentralServerVmId);
             }
-            if (Optional.IsDefined(ManagedRgStorageAccountName))
+            if (ManagedRgStorageAccountName != null)
             {
                 writer.WritePropertyName("managedRgStorageAccountName"u8);
                 writer.WriteStringValue(ManagedRgStorageAccountName);
             }
-            if (options.Format != "W" && Optional.IsDefined(AppLocation))
+            if (options.Format != "W" && AppLocation.HasValue)
             {
                 writer.WritePropertyName("appLocation"u8);
                 writer.WriteStringValue(AppLocation.Value);
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> centralServerVmId = default;
-            Optional<string> managedRgStorageAccountName = default;
-            Optional<AzureLocation> appLocation = default;
+            ResourceIdentifier centralServerVmId = default;
+            string managedRgStorageAccountName = default;
+            AzureLocation? appLocation = default;
             SapConfigurationType configurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiscoveryConfiguration(configurationType, serializedAdditionalRawData, centralServerVmId.Value, managedRgStorageAccountName.Value, Optional.ToNullable(appLocation));
+            return new DiscoveryConfiguration(configurationType, serializedAdditionalRawData, centralServerVmId, managedRgStorageAccountName, appLocation);
         }
 
         BinaryData IPersistableModel<DiscoveryConfiguration>.Write(ModelReaderWriterOptions options)

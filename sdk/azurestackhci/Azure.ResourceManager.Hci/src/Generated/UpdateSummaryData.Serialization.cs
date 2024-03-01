@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Hci
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,29 +48,29 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(OemFamily))
+            if (OemFamily != null)
             {
                 writer.WritePropertyName("oemFamily"u8);
                 writer.WriteStringValue(OemFamily);
             }
-            if (Optional.IsDefined(HardwareModel))
+            if (HardwareModel != null)
             {
                 writer.WritePropertyName("hardwareModel"u8);
                 writer.WriteStringValue(HardwareModel);
             }
-            if (Optional.IsCollectionDefined(PackageVersions))
+            if (!(PackageVersions is ChangeTrackingList<HciPackageVersionInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("packageVersions"u8);
                 writer.WriteStartArray();
@@ -80,27 +80,27 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CurrentVersion))
+            if (CurrentVersion != null)
             {
                 writer.WritePropertyName("currentVersion"u8);
                 writer.WriteStringValue(CurrentVersion);
             }
-            if (Optional.IsDefined(LastUpdated))
+            if (LastUpdated.HasValue)
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated.Value, "O");
             }
-            if (Optional.IsDefined(LastChecked))
+            if (LastChecked.HasValue)
             {
                 writer.WritePropertyName("lastChecked"u8);
                 writer.WriteStringValue(LastChecked.Value, "O");
             }
-            if (Optional.IsDefined(HealthState))
+            if (HealthState.HasValue)
             {
                 writer.WritePropertyName("healthState"u8);
                 writer.WriteStringValue(HealthState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(HealthCheckResult))
+            if (!(HealthCheckResult is ChangeTrackingList<HciPrecheckResult> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("healthCheckResult"u8);
                 writer.WriteStartArray();
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(HealthCheckOn))
+            if (HealthCheckOn.HasValue)
             {
                 writer.WritePropertyName("healthCheckDate"u8);
                 writer.WriteStringValue(HealthCheckOn.Value, "O");
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -159,22 +159,22 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HciProvisioningState> provisioningState = default;
-            Optional<string> oemFamily = default;
-            Optional<string> hardwareModel = default;
-            Optional<IList<HciPackageVersionInfo>> packageVersions = default;
-            Optional<string> currentVersion = default;
-            Optional<DateTimeOffset> lastUpdated = default;
-            Optional<DateTimeOffset> lastChecked = default;
-            Optional<HciHealthState> healthState = default;
-            Optional<IList<HciPrecheckResult>> healthCheckResult = default;
-            Optional<DateTimeOffset> healthCheckDate = default;
-            Optional<UpdateSummariesPropertiesState> state = default;
+            SystemData systemData = default;
+            HciProvisioningState? provisioningState = default;
+            string oemFamily = default;
+            string hardwareModel = default;
+            IList<HciPackageVersionInfo> packageVersions = default;
+            string currentVersion = default;
+            DateTimeOffset? lastUpdated = default;
+            DateTimeOffset? lastChecked = default;
+            HciHealthState? healthState = default;
+            IList<HciPrecheckResult> healthCheckResult = default;
+            DateTimeOffset? healthCheckDate = default;
+            UpdateSummariesPropertiesState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -327,7 +327,24 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateSummaryData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), oemFamily.Value, hardwareModel.Value, Optional.ToList(packageVersions), currentVersion.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(lastChecked), Optional.ToNullable(healthState), Optional.ToList(healthCheckResult), Optional.ToNullable(healthCheckDate), Optional.ToNullable(state), serializedAdditionalRawData);
+            return new UpdateSummaryData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                provisioningState,
+                oemFamily,
+                hardwareModel,
+                packageVersions ?? new ChangeTrackingList<HciPackageVersionInfo>(),
+                currentVersion,
+                lastUpdated,
+                lastChecked,
+                healthState,
+                healthCheckResult ?? new ChangeTrackingList<HciPrecheckResult>(),
+                healthCheckDate,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateSummaryData>.Write(ModelReaderWriterOptions options)

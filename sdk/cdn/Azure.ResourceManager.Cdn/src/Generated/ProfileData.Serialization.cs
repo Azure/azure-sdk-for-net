@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,29 +63,29 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FrontDoorId))
+            if (options.Format != "W" && FrontDoorId.HasValue)
             {
                 writer.WritePropertyName("frontDoorId"u8);
                 writer.WriteStringValue(FrontDoorId.Value);
             }
-            if (Optional.IsDefined(OriginResponseTimeoutSeconds))
+            if (OriginResponseTimeoutSeconds.HasValue)
             {
                 if (OriginResponseTimeoutSeconds != null)
                 {
@@ -137,17 +137,17 @@ namespace Azure.ResourceManager.Cdn
                 return null;
             }
             CdnSku sku = default;
-            Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string kind = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ProfileResourceState> resourceState = default;
-            Optional<ProfileProvisioningState> provisioningState = default;
-            Optional<Guid> frontDoorId = default;
-            Optional<int?> originResponseTimeoutSeconds = default;
+            SystemData systemData = default;
+            ProfileResourceState? resourceState = default;
+            ProfileProvisioningState? provisioningState = default;
+            Guid? frontDoorId = default;
+            int? originResponseTimeoutSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,7 +260,20 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProfileData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, kind.Value, Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState), Optional.ToNullable(frontDoorId), Optional.ToNullable(originResponseTimeoutSeconds), serializedAdditionalRawData);
+            return new ProfileData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                kind,
+                resourceState,
+                provisioningState,
+                frontDoorId,
+                originResponseTimeoutSeconds,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProfileData>.Write(ModelReaderWriterOptions options)

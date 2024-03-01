@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceDetails))
+            if (ResourceDetails != null)
             {
                 writer.WritePropertyName("resourceDetails"u8);
                 writer.WriteObjectValue(ResourceDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(AdditionalData))
+            if (!(AdditionalData is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -71,22 +71,22 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(Links))
+            if (options.Format != "W" && Links != null)
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteObjectValue(Links);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (Optional.IsDefined(PartnersData))
+            if (PartnersData != null)
             {
                 writer.WritePropertyName("partnersData"u8);
                 writer.WriteObjectValue(PartnersData);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SecurityCenterResourceDetails> resourceDetails = default;
-            Optional<string> displayName = default;
-            Optional<IDictionary<string, string>> additionalData = default;
-            Optional<AssessmentLinks> links = default;
-            Optional<SecurityAssessmentMetadataProperties> metadata = default;
-            Optional<SecurityAssessmentPartner> partnersData = default;
-            Optional<SecurityAssessmentStatusResult> status = default;
+            SystemData systemData = default;
+            SecurityCenterResourceDetails resourceDetails = default;
+            string displayName = default;
+            IDictionary<string, string> additionalData = default;
+            AssessmentLinks links = default;
+            SecurityAssessmentMetadataProperties metadata = default;
+            SecurityAssessmentPartner partnersData = default;
+            SecurityAssessmentStatusResult status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,7 +251,19 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentData(id, name, type, systemData.Value, resourceDetails.Value, displayName.Value, Optional.ToDictionary(additionalData), links.Value, metadata.Value, partnersData.Value, status.Value, serializedAdditionalRawData);
+            return new SecurityAssessmentData(
+                id,
+                name,
+                type,
+                systemData,
+                resourceDetails,
+                displayName,
+                additionalData ?? new ChangeTrackingDictionary<string, string>(),
+                links,
+                metadata,
+                partnersData,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAssessmentData>.Write(ModelReaderWriterOptions options)

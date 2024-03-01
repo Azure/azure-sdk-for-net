@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DtcEnabled))
+            if (DtcEnabled.HasValue)
             {
                 writer.WritePropertyName("dtcEnabled"u8);
                 writer.WriteBooleanValue(DtcEnabled.Value);
             }
-            if (Optional.IsDefined(SecuritySettings))
+            if (SecuritySettings != null)
             {
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings);
             }
-            if (Optional.IsCollectionDefined(ExternalDnsSuffixSearchList))
+            if (!(ExternalDnsSuffixSearchList is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("externalDnsSuffixSearchList"u8);
                 writer.WriteStartArray();
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(DtcHostNameDnsSuffix))
+            if (options.Format != "W" && DtcHostNameDnsSuffix != null)
             {
                 writer.WritePropertyName("dtcHostNameDnsSuffix"u8);
                 writer.WriteStringValue(DtcHostNameDnsSuffix);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> dtcEnabled = default;
-            Optional<ManagedInstanceDtcSecuritySettings> securitySettings = default;
-            Optional<IList<string>> externalDnsSuffixSearchList = default;
-            Optional<string> dtcHostNameDnsSuffix = default;
-            Optional<JobExecutionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            bool? dtcEnabled = default;
+            ManagedInstanceDtcSecuritySettings securitySettings = default;
+            IList<string> externalDnsSuffixSearchList = default;
+            string dtcHostNameDnsSuffix = default;
+            JobExecutionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,17 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceDtcData(id, name, type, systemData.Value, Optional.ToNullable(dtcEnabled), securitySettings.Value, Optional.ToList(externalDnsSuffixSearchList), dtcHostNameDnsSuffix.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ManagedInstanceDtcData(
+                id,
+                name,
+                type,
+                systemData,
+                dtcEnabled,
+                securitySettings,
+                externalDnsSuffixSearchList ?? new ChangeTrackingList<string>(),
+                dtcHostNameDnsSuffix,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceDtcData>.Write(ModelReaderWriterOptions options)

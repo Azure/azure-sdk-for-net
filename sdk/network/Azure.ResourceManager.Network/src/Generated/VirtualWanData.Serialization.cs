@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisableVpnEncryption))
+            if (DisableVpnEncryption.HasValue)
             {
                 writer.WritePropertyName("disableVpnEncryption"u8);
                 writer.WriteBooleanValue(DisableVpnEncryption.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualHubs))
+            if (options.Format != "W" && !(VirtualHubs is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("virtualHubs"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VpnSites))
+            if (options.Format != "W" && !(VpnSites is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("vpnSites"u8);
                 writer.WriteStartArray();
@@ -92,27 +92,27 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllowBranchToBranchTraffic))
+            if (AllowBranchToBranchTraffic.HasValue)
             {
                 writer.WritePropertyName("allowBranchToBranchTraffic"u8);
                 writer.WriteBooleanValue(AllowBranchToBranchTraffic.Value);
             }
-            if (Optional.IsDefined(AllowVnetToVnetTraffic))
+            if (AllowVnetToVnetTraffic.HasValue)
             {
                 writer.WritePropertyName("allowVnetToVnetTraffic"u8);
                 writer.WriteBooleanValue(AllowVnetToVnetTraffic.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Office365LocalBreakoutCategory))
+            if (options.Format != "W" && Office365LocalBreakoutCategory.HasValue)
             {
                 writer.WritePropertyName("office365LocalBreakoutCategory"u8);
                 writer.WriteStringValue(Office365LocalBreakoutCategory.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(VirtualWanType))
+            if (VirtualWanType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(VirtualWanType);
@@ -156,20 +156,20 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<bool> disableVpnEncryption = default;
-            Optional<IReadOnlyList<WritableSubResource>> virtualHubs = default;
-            Optional<IReadOnlyList<WritableSubResource>> vpnSites = default;
-            Optional<bool> allowBranchToBranchTraffic = default;
-            Optional<bool> allowVnetToVnetTraffic = default;
-            Optional<OfficeTrafficCategory> office365LocalBreakoutCategory = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> type0 = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            bool? disableVpnEncryption = default;
+            IReadOnlyList<WritableSubResource> virtualHubs = default;
+            IReadOnlyList<WritableSubResource> vpnSites = default;
+            bool? allowBranchToBranchTraffic = default;
+            bool? allowVnetToVnetTraffic = default;
+            OfficeTrafficCategory? office365LocalBreakoutCategory = default;
+            NetworkProvisioningState? provisioningState = default;
+            string type0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -325,7 +325,22 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualWanData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(disableVpnEncryption), Optional.ToList(virtualHubs), Optional.ToList(vpnSites), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(allowVnetToVnetTraffic), Optional.ToNullable(office365LocalBreakoutCategory), Optional.ToNullable(provisioningState), type0.Value);
+            return new VirtualWanData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                disableVpnEncryption,
+                virtualHubs ?? new ChangeTrackingList<WritableSubResource>(),
+                vpnSites ?? new ChangeTrackingList<WritableSubResource>(),
+                allowBranchToBranchTraffic,
+                allowVnetToVnetTraffic,
+                office365LocalBreakoutCategory,
+                provisioningState,
+                type0);
         }
 
         BinaryData IPersistableModel<VirtualWanData>.Write(ModelReaderWriterOptions options)

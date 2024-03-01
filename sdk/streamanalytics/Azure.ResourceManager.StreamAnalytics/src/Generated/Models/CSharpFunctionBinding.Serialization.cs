@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(FunctionBindingType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DllPath))
+            if (DllPath != null)
             {
                 writer.WritePropertyName("dllPath"u8);
                 writer.WriteStringValue(DllPath);
             }
-            if (Optional.IsDefined(Class))
+            if (Class != null)
             {
                 writer.WritePropertyName("class"u8);
                 writer.WriteStringValue(Class);
             }
-            if (Optional.IsDefined(Method))
+            if (Method != null)
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (Optional.IsDefined(UpdateMode))
+            if (UpdateMode.HasValue)
             {
                 writer.WritePropertyName("updateMode"u8);
                 writer.WriteStringValue(UpdateMode.Value.ToString());
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> dllPath = default;
-            Optional<string> @class = default;
-            Optional<string> method = default;
-            Optional<StreamingJobFunctionUpdateMode> updateMode = default;
+            string dllPath = default;
+            string @class = default;
+            string method = default;
+            StreamingJobFunctionUpdateMode? updateMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CSharpFunctionBinding(type, serializedAdditionalRawData, dllPath.Value, @class.Value, method.Value, Optional.ToNullable(updateMode));
+            return new CSharpFunctionBinding(
+                type,
+                serializedAdditionalRawData,
+                dllPath,
+                @class,
+                method,
+                updateMode);
         }
 
         BinaryData IPersistableModel<CSharpFunctionBinding>.Write(ModelReaderWriterOptions options)

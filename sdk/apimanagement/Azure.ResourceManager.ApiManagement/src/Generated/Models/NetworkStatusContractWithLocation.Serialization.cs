@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(NetworkStatus))
+            if (NetworkStatus != null)
             {
                 writer.WritePropertyName("networkStatus"u8);
                 writer.WriteObjectValue(NetworkStatus);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<NetworkStatusContract> networkStatus = default;
+            AzureLocation? location = default;
+            NetworkStatusContract networkStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkStatusContractWithLocation(Optional.ToNullable(location), networkStatus.Value, serializedAdditionalRawData);
+            return new NetworkStatusContractWithLocation(location, networkStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkStatusContractWithLocation>.Write(ModelReaderWriterOptions options)

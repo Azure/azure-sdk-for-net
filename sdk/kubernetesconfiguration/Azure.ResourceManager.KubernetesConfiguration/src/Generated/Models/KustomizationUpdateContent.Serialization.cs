@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 if (Path != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("path");
                 }
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 if (DependsOn != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("dependsOn");
                 }
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (TimeoutInSeconds.HasValue)
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("timeoutInSeconds");
                 }
             }
-            if (Optional.IsDefined(SyncIntervalInSeconds))
+            if (SyncIntervalInSeconds.HasValue)
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("syncIntervalInSeconds");
                 }
             }
-            if (Optional.IsDefined(RetryIntervalInSeconds))
+            if (RetryIntervalInSeconds.HasValue)
             {
                 if (RetryIntervalInSeconds != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("retryIntervalInSeconds");
                 }
             }
-            if (Optional.IsDefined(Prune))
+            if (Prune.HasValue)
             {
                 if (Prune != null)
                 {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("prune");
                 }
             }
-            if (Optional.IsDefined(Force))
+            if (Force.HasValue)
             {
                 if (Force != null)
                 {
@@ -153,13 +153,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<IList<string>> dependsOn = default;
-            Optional<long?> timeoutInSeconds = default;
-            Optional<long?> syncIntervalInSeconds = default;
-            Optional<long?> retryIntervalInSeconds = default;
-            Optional<bool?> prune = default;
-            Optional<bool?> force = default;
+            string path = default;
+            IList<string> dependsOn = default;
+            long? timeoutInSeconds = default;
+            long? syncIntervalInSeconds = default;
+            long? retryIntervalInSeconds = default;
+            bool? prune = default;
+            bool? force = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,7 +245,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustomizationUpdateContent(path.Value, Optional.ToList(dependsOn), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(prune), Optional.ToNullable(force), serializedAdditionalRawData);
+            return new KustomizationUpdateContent(
+                path,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                retryIntervalInSeconds,
+                prune,
+                force,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustomizationUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(FamilyName))
+            if (options.Format != "W" && FamilyName != null)
             {
                 writer.WritePropertyName("familyName"u8);
                 writer.WriteStringValue(FamilyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(FamilyType))
+            if (options.Format != "W" && FamilyType.HasValue)
             {
                 writer.WritePropertyName("familyType"u8);
                 writer.WriteStringValue(FamilyType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FamilyStatus))
+            if (options.Format != "W" && FamilyStatus.HasValue)
             {
                 writer.WritePropertyName("familyStatus"u8);
                 writer.WriteStringValue(FamilyStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Controls))
+            if (options.Format != "W" && !(Controls is ChangeTrackingList<Control> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("controls"u8);
                 writer.WriteStartArray();
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> familyName = default;
-            Optional<ControlFamilyType> familyType = default;
-            Optional<ControlFamilyStatus> familyStatus = default;
-            Optional<IReadOnlyList<Control>> controls = default;
+            string familyName = default;
+            ControlFamilyType? familyType = default;
+            ControlFamilyStatus? familyStatus = default;
+            IReadOnlyList<Control> controls = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControlFamily(familyName.Value, Optional.ToNullable(familyType), Optional.ToNullable(familyStatus), Optional.ToList(controls), serializedAdditionalRawData);
+            return new ControlFamily(familyName, familyType, familyStatus, controls ?? new ChangeTrackingList<Control>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControlFamily>.Write(ModelReaderWriterOptions options)

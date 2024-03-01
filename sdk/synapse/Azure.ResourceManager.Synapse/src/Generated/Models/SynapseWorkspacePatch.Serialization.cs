@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -46,37 +46,37 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SqlAdministratorLoginPassword))
+            if (SqlAdministratorLoginPassword != null)
             {
                 writer.WritePropertyName("sqlAdministratorLoginPassword"u8);
                 writer.WriteStringValue(SqlAdministratorLoginPassword);
             }
-            if (Optional.IsDefined(ManagedVirtualNetworkSettings))
+            if (ManagedVirtualNetworkSettings != null)
             {
                 writer.WritePropertyName("managedVirtualNetworkSettings"u8);
                 writer.WriteObjectValue(ManagedVirtualNetworkSettings);
             }
-            if (Optional.IsDefined(WorkspaceRepositoryConfiguration))
+            if (WorkspaceRepositoryConfiguration != null)
             {
                 writer.WritePropertyName("workspaceRepositoryConfiguration"u8);
                 writer.WriteObjectValue(WorkspaceRepositoryConfiguration);
             }
-            if (Optional.IsDefined(PurviewConfiguration))
+            if (PurviewConfiguration != null)
             {
                 writer.WritePropertyName("purviewConfiguration"u8);
                 writer.WriteObjectValue(PurviewConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -120,15 +120,15 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> sqlAdministratorLoginPassword = default;
-            Optional<SynapseManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
-            Optional<SynapseWorkspaceRepositoryConfiguration> workspaceRepositoryConfiguration = default;
-            Optional<PurviewConfiguration> purviewConfiguration = default;
-            Optional<string> provisioningState = default;
-            Optional<SynapseEncryptionDetails> encryption = default;
-            Optional<WorkspacePublicNetworkAccess> publicNetworkAccess = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            string sqlAdministratorLoginPassword = default;
+            SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings = default;
+            SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = default;
+            PurviewConfiguration purviewConfiguration = default;
+            string provisioningState = default;
+            SynapseEncryptionDetails encryption = default;
+            WorkspacePublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,7 +230,17 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkspacePatch(Optional.ToDictionary(tags), identity, sqlAdministratorLoginPassword.Value, managedVirtualNetworkSettings.Value, workspaceRepositoryConfiguration.Value, purviewConfiguration.Value, provisioningState.Value, encryption.Value, Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new SynapseWorkspacePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                sqlAdministratorLoginPassword,
+                managedVirtualNetworkSettings,
+                workspaceRepositoryConfiguration,
+                purviewConfiguration,
+                provisioningState,
+                encryption,
+                publicNetworkAccess,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseWorkspacePatch>.Write(ModelReaderWriterOptions options)

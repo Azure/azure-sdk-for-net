@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(UpdateHistory))
+            if (options.Format != "W" && !(UpdateHistory is ChangeTrackingList<UpdateHistoryEntry> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("updateHistory"u8);
                 writer.WriteStartArray();
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.Storage.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
+            if (ImmutabilityPeriodSinceCreationInDays.HasValue)
             {
                 writer.WritePropertyName("immutabilityPeriodSinceCreationInDays"u8);
                 writer.WriteNumberValue(ImmutabilityPeriodSinceCreationInDays.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(AllowProtectedAppendWrites))
+            if (AllowProtectedAppendWrites.HasValue)
             {
                 writer.WritePropertyName("allowProtectedAppendWrites"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWrites.Value);
             }
-            if (Optional.IsDefined(AllowProtectedAppendWritesAll))
+            if (AllowProtectedAppendWritesAll.HasValue)
             {
                 writer.WritePropertyName("allowProtectedAppendWritesAll"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWritesAll.Value);
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyList<UpdateHistoryEntry>> updateHistory = default;
-            Optional<int> immutabilityPeriodSinceCreationInDays = default;
-            Optional<ImmutabilityPolicyState> state = default;
-            Optional<bool> allowProtectedAppendWrites = default;
-            Optional<bool> allowProtectedAppendWritesAll = default;
+            ETag? etag = default;
+            IReadOnlyList<UpdateHistoryEntry> updateHistory = default;
+            int? immutabilityPeriodSinceCreationInDays = default;
+            ImmutabilityPolicyState? state = default;
+            bool? allowProtectedAppendWrites = default;
+            bool? allowProtectedAppendWritesAll = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,14 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobContainerImmutabilityPolicy(Optional.ToNullable(etag), Optional.ToList(updateHistory), Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(state), Optional.ToNullable(allowProtectedAppendWrites), Optional.ToNullable(allowProtectedAppendWritesAll), serializedAdditionalRawData);
+            return new BlobContainerImmutabilityPolicy(
+                etag,
+                updateHistory ?? new ChangeTrackingList<UpdateHistoryEntry>(),
+                immutabilityPeriodSinceCreationInDays,
+                state,
+                allowProtectedAppendWrites,
+                allowProtectedAppendWritesAll,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobContainerImmutabilityPolicy>.Write(ModelReaderWriterOptions options)

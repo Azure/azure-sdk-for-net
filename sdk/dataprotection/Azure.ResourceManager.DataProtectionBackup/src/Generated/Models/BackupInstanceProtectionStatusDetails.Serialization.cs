@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ErrorDetails))
+            if (ErrorDetails != null)
             {
                 writer.WritePropertyName("errorDetails"u8);
                 JsonSerializer.Serialize(writer, ErrorDetails);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<ResponseError> errorDetails = default;
-            Optional<BackupInstanceProtectionStatus> status = default;
+            ResponseError errorDetails = default;
+            BackupInstanceProtectionStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupInstanceProtectionStatusDetails(errorDetails.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new BackupInstanceProtectionStatusDetails(errorDetails, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupInstanceProtectionStatusDetails>.Write(ModelReaderWriterOptions options)

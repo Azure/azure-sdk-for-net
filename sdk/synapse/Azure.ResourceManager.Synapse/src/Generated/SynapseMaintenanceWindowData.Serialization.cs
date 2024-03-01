@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TimeRanges))
+            if (!(TimeRanges is ChangeTrackingList<SynapseMaintenanceWindowTimeRange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("timeRanges"u8);
                 writer.WriteStartArray();
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<SynapseMaintenanceWindowTimeRange>> timeRanges = default;
+            SystemData systemData = default;
+            IList<SynapseMaintenanceWindowTimeRange> timeRanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,13 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseMaintenanceWindowData(id, name, type, systemData.Value, Optional.ToList(timeRanges), serializedAdditionalRawData);
+            return new SynapseMaintenanceWindowData(
+                id,
+                name,
+                type,
+                systemData,
+                timeRanges ?? new ChangeTrackingList<SynapseMaintenanceWindowTimeRange>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseMaintenanceWindowData>.Write(ModelReaderWriterOptions options)

@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicyType))
+            if (PolicyType.HasValue)
             {
                 writer.WritePropertyName("policyType"u8);
                 writer.WriteStringValue(PolicyType.Value.ToString());
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ArmPolicyParameter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PolicyDefinitions))
+            if (!(PolicyDefinitions is ChangeTrackingList<PolicyDefinitionReference> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("policyDefinitions"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PolicyDefinitionGroups))
+            if (!(PolicyDefinitionGroups is ChangeTrackingList<PolicyDefinitionGroup> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("policyDefinitionGroups"u8);
                 writer.WriteStartArray();
@@ -150,14 +150,14 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PolicyType> policyType = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<BinaryData> metadata = default;
-            Optional<IDictionary<string, ArmPolicyParameter>> parameters = default;
-            Optional<IList<PolicyDefinitionReference>> policyDefinitions = default;
-            Optional<IList<PolicyDefinitionGroup>> policyDefinitionGroups = default;
+            SystemData systemData = default;
+            PolicyType? policyType = default;
+            string displayName = default;
+            string description = default;
+            BinaryData metadata = default;
+            IDictionary<string, ArmPolicyParameter> parameters = default;
+            IList<PolicyDefinitionReference> policyDefinitions = default;
+            IList<PolicyDefinitionGroup> policyDefinitionGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -274,7 +274,19 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySetDefinitionData(id, name, type, systemData.Value, Optional.ToNullable(policyType), displayName.Value, description.Value, metadata.Value, Optional.ToDictionary(parameters), Optional.ToList(policyDefinitions), Optional.ToList(policyDefinitionGroups), serializedAdditionalRawData);
+            return new PolicySetDefinitionData(
+                id,
+                name,
+                type,
+                systemData,
+                policyType,
+                displayName,
+                description,
+                metadata,
+                parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameter>(),
+                policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionReference>(),
+                policyDefinitionGroups ?? new ChangeTrackingList<PolicyDefinitionGroup>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySetDefinitionData>.Write(ModelReaderWriterOptions options)

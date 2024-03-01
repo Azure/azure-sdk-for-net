@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartObject();
             writer.WritePropertyName("docType"u8);
             writer.WriteStringValue(DocType);
-            if (Optional.IsCollectionDefined(BoundingRegions))
+            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Fields))
+            if (!(Fields is ChangeTrackingDictionary<string, DocumentField> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStartObject();
@@ -98,9 +98,9 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             string docType = default;
-            Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
+            IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            Optional<IReadOnlyDictionary<string, DocumentField>> fields = default;
+            IReadOnlyDictionary<string, DocumentField> fields = default;
             float confidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,7 +160,13 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalyzedDocument(docType, Optional.ToList(boundingRegions), spans, Optional.ToDictionary(fields), confidence, serializedAdditionalRawData);
+            return new AnalyzedDocument(
+                docType,
+                boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
+                spans,
+                fields ?? new ChangeTrackingDictionary<string, DocumentField>(),
+                confidence,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalyzedDocument>.Write(ModelReaderWriterOptions options)

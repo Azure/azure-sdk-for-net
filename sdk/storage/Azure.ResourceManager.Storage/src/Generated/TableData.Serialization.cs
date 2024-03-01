@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TableName))
+            if (options.Format != "W" && TableName != null)
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (Optional.IsCollectionDefined(SignedIdentifiers))
+            if (!(SignedIdentifiers is ChangeTrackingList<StorageTableSignedIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("signedIdentifiers"u8);
                 writer.WriteStartArray();
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> tableName = default;
-            Optional<IList<StorageTableSignedIdentifier>> signedIdentifiers = default;
+            SystemData systemData = default;
+            string tableName = default;
+            IList<StorageTableSignedIdentifier> signedIdentifiers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,14 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableData(id, name, type, systemData.Value, tableName.Value, Optional.ToList(signedIdentifiers), serializedAdditionalRawData);
+            return new TableData(
+                id,
+                name,
+                type,
+                systemData,
+                tableName,
+                signedIdentifiers ?? new ChangeTrackingList<StorageTableSignedIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TableData>.Write(ModelReaderWriterOptions options)

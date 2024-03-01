@@ -27,17 +27,17 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Email))
+            if (Email != null)
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Optional.IsDefined(Phone))
+            if (Phone != null)
             {
                 writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);
@@ -80,9 +80,9 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> email = default;
-            Optional<string> phone = default;
+            string name = default;
+            string email = default;
+            string phone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContactDetails(name.Value, email.Value, phone.Value, serializedAdditionalRawData);
+            return new ContactDetails(name, email, phone, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContactDetails>.Write(ModelReaderWriterOptions options)

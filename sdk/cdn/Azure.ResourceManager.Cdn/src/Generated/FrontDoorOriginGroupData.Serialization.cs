@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProfileName))
+            if (options.Format != "W" && ProfileName != null)
             {
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (Optional.IsDefined(LoadBalancingSettings))
+            if (LoadBalancingSettings != null)
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
                 writer.WriteObjectValue(LoadBalancingSettings);
             }
-            if (Optional.IsDefined(HealthProbeSettings))
+            if (HealthProbeSettings != null)
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
                 writer.WriteObjectValue(HealthProbeSettings);
             }
-            if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
+            if (TrafficRestorationTimeInMinutes.HasValue)
             {
                 if (TrafficRestorationTimeInMinutes != null)
                 {
@@ -77,17 +77,17 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
                 }
             }
-            if (Optional.IsDefined(SessionAffinityState))
+            if (SessionAffinityState.HasValue)
             {
                 writer.WritePropertyName("sessionAffinityState"u8);
                 writer.WriteStringValue(SessionAffinityState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
+            if (options.Format != "W" && DeploymentStatus.HasValue)
             {
                 writer.WritePropertyName("deploymentStatus"u8);
                 writer.WriteStringValue(DeploymentStatus.Value.ToString());
@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> profileName = default;
-            Optional<LoadBalancingSettings> loadBalancingSettings = default;
-            Optional<HealthProbeSettings> healthProbeSettings = default;
-            Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
-            Optional<EnabledState> sessionAffinityState = default;
-            Optional<FrontDoorProvisioningState> provisioningState = default;
-            Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
+            SystemData systemData = default;
+            string profileName = default;
+            LoadBalancingSettings loadBalancingSettings = default;
+            HealthProbeSettings healthProbeSettings = default;
+            int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
+            EnabledState? sessionAffinityState = default;
+            FrontDoorProvisioningState? provisioningState = default;
+            FrontDoorDeploymentStatus? deploymentStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -248,7 +248,19 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorOriginGroupData(id, name, type, systemData.Value, profileName.Value, loadBalancingSettings.Value, healthProbeSettings.Value, Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), Optional.ToNullable(sessionAffinityState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), serializedAdditionalRawData);
+            return new FrontDoorOriginGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                profileName,
+                loadBalancingSettings,
+                healthProbeSettings,
+                trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
+                sessionAffinityState,
+                provisioningState,
+                deploymentStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorOriginGroupData>.Write(ModelReaderWriterOptions options)

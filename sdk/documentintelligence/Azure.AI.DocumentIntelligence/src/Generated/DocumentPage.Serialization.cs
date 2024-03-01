@@ -29,22 +29,22 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartObject();
             writer.WritePropertyName("pageNumber"u8);
             writer.WriteNumberValue(PageNumber);
-            if (Optional.IsDefined(Angle))
+            if (Angle.HasValue)
             {
                 writer.WritePropertyName("angle"u8);
                 writer.WriteNumberValue(Angle.Value);
             }
-            if (Optional.IsDefined(Width))
+            if (Width.HasValue)
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteNumberValue(Width.Value);
             }
-            if (Optional.IsDefined(Height))
+            if (Height.HasValue)
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteNumberValue(Height.Value);
             }
-            if (Optional.IsDefined(Unit))
+            if (Unit.HasValue)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
@@ -56,7 +56,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Words))
+            if (!(Words is ChangeTrackingList<DocumentWord> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("words"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SelectionMarks))
+            if (!(SelectionMarks is ChangeTrackingList<DocumentSelectionMark> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("selectionMarks"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Lines))
+            if (!(Lines is ChangeTrackingList<DocumentLine> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("lines"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Barcodes))
+            if (!(Barcodes is ChangeTrackingList<DocumentBarcode> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("barcodes"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Formulas))
+            if (!(Formulas is ChangeTrackingList<DocumentFormula> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("formulas"u8);
                 writer.WriteStartArray();
@@ -145,16 +145,16 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             int pageNumber = default;
-            Optional<float> angle = default;
-            Optional<float> width = default;
-            Optional<float> height = default;
-            Optional<LengthUnit> unit = default;
+            float? angle = default;
+            float? width = default;
+            float? height = default;
+            LengthUnit? unit = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            Optional<IReadOnlyList<DocumentWord>> words = default;
-            Optional<IReadOnlyList<DocumentSelectionMark>> selectionMarks = default;
-            Optional<IReadOnlyList<DocumentLine>> lines = default;
-            Optional<IReadOnlyList<DocumentBarcode>> barcodes = default;
-            Optional<IReadOnlyList<DocumentFormula>> formulas = default;
+            IReadOnlyList<DocumentWord> words = default;
+            IReadOnlyList<DocumentSelectionMark> selectionMarks = default;
+            IReadOnlyList<DocumentLine> lines = default;
+            IReadOnlyList<DocumentBarcode> barcodes = default;
+            IReadOnlyList<DocumentFormula> formulas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -286,7 +286,19 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentPage(pageNumber, Optional.ToNullable(angle), Optional.ToNullable(width), Optional.ToNullable(height), Optional.ToNullable(unit), spans, Optional.ToList(words), Optional.ToList(selectionMarks), Optional.ToList(lines), Optional.ToList(barcodes), Optional.ToList(formulas), serializedAdditionalRawData);
+            return new DocumentPage(
+                pageNumber,
+                angle,
+                width,
+                height,
+                unit,
+                spans,
+                words ?? new ChangeTrackingList<DocumentWord>(),
+                selectionMarks ?? new ChangeTrackingList<DocumentSelectionMark>(),
+                lines ?? new ChangeTrackingList<DocumentLine>(),
+                barcodes ?? new ChangeTrackingList<DocumentBarcode>(),
+                formulas ?? new ChangeTrackingList<DocumentFormula>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentPage>.Write(ModelReaderWriterOptions options)

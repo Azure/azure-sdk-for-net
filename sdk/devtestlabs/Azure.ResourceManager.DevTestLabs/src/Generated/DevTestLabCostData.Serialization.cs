@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetCost))
+            if (TargetCost != null)
             {
                 writer.WritePropertyName("targetCost"u8);
                 writer.WriteObjectValue(TargetCost);
             }
-            if (options.Format != "W" && Optional.IsDefined(LabCostSummary))
+            if (options.Format != "W" && LabCostSummary != null)
             {
                 writer.WritePropertyName("labCostSummary"u8);
                 writer.WriteObjectValue(LabCostSummary);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LabCostDetails))
+            if (options.Format != "W" && !(LabCostDetails is ChangeTrackingList<DevTestLabCostDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("labCostDetails"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceCosts))
+            if (options.Format != "W" && !(ResourceCosts is ChangeTrackingList<DevTestLabResourceCost> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("resourceCosts"u8);
                 writer.WriteStartArray();
@@ -93,32 +93,32 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CurrencyCode))
+            if (CurrencyCode != null)
             {
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
+            if (options.Format != "W" && UniqueIdentifier.HasValue)
             {
                 writer.WritePropertyName("uniqueIdentifier"u8);
                 writer.WriteStringValue(UniqueIdentifier.Value);
@@ -162,22 +162,22 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevTestLabTargetCost> targetCost = default;
-            Optional<LabCostSummaryProperties> labCostSummary = default;
-            Optional<IReadOnlyList<DevTestLabCostDetails>> labCostDetails = default;
-            Optional<IReadOnlyList<DevTestLabResourceCost>> resourceCosts = default;
-            Optional<string> currencyCode = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> endDateTime = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            SystemData systemData = default;
+            DevTestLabTargetCost targetCost = default;
+            LabCostSummaryProperties labCostSummary = default;
+            IReadOnlyList<DevTestLabCostDetails> labCostDetails = default;
+            IReadOnlyList<DevTestLabResourceCost> resourceCosts = default;
+            string currencyCode = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? endDateTime = default;
+            DateTimeOffset? createdDate = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -335,7 +335,24 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabCostData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, targetCost.Value, labCostSummary.Value, Optional.ToList(labCostDetails), Optional.ToList(resourceCosts), currencyCode.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabCostData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                targetCost,
+                labCostSummary,
+                labCostDetails ?? new ChangeTrackingList<DevTestLabCostDetails>(),
+                resourceCosts ?? new ChangeTrackingList<DevTestLabResourceCost>(),
+                currencyCode,
+                startDateTime,
+                endDateTime,
+                createdDate,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabCostData>.Write(ModelReaderWriterOptions options)

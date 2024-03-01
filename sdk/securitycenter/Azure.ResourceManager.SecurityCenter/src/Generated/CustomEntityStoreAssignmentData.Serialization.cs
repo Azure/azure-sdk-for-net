@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Principal))
+            if (Principal != null)
             {
                 writer.WritePropertyName("principal"u8);
                 writer.WriteStringValue(Principal);
             }
-            if (Optional.IsDefined(EntityStoreDatabaseLink))
+            if (EntityStoreDatabaseLink != null)
             {
                 writer.WritePropertyName("entityStoreDatabaseLink"u8);
                 writer.WriteStringValue(EntityStoreDatabaseLink);
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> principal = default;
-            Optional<string> entityStoreDatabaseLink = default;
+            SystemData systemData = default;
+            string principal = default;
+            string entityStoreDatabaseLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomEntityStoreAssignmentData(id, name, type, systemData.Value, principal.Value, entityStoreDatabaseLink.Value, serializedAdditionalRawData);
+            return new CustomEntityStoreAssignmentData(
+                id,
+                name,
+                type,
+                systemData,
+                principal,
+                entityStoreDatabaseLink,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomEntityStoreAssignmentData>.Write(ModelReaderWriterOptions options)

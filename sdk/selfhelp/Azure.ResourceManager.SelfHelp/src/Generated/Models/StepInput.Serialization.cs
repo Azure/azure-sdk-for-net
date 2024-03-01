@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QuestionId))
+            if (QuestionId != null)
             {
                 writer.WritePropertyName("questionId"u8);
                 writer.WriteStringValue(QuestionId);
             }
-            if (Optional.IsDefined(QuestionType))
+            if (QuestionType != null)
             {
                 writer.WritePropertyName("questionType"u8);
                 writer.WriteStringValue(QuestionType);
             }
-            if (Optional.IsDefined(QuestionContent))
+            if (QuestionContent != null)
             {
                 writer.WritePropertyName("questionContent"u8);
                 writer.WriteStringValue(QuestionContent);
             }
-            if (Optional.IsDefined(QuestionContentType))
+            if (QuestionContentType.HasValue)
             {
                 writer.WritePropertyName("questionContentType"u8);
                 writer.WriteStringValue(QuestionContentType.Value.ToString());
             }
-            if (Optional.IsDefined(ResponseHint))
+            if (ResponseHint != null)
             {
                 writer.WritePropertyName("responseHint"u8);
                 writer.WriteStringValue(ResponseHint);
             }
-            if (Optional.IsDefined(RecommendedOption))
+            if (RecommendedOption != null)
             {
                 writer.WritePropertyName("recommendedOption"u8);
                 writer.WriteStringValue(RecommendedOption);
             }
-            if (Optional.IsDefined(SelectedOptionValue))
+            if (SelectedOptionValue != null)
             {
                 writer.WritePropertyName("selectedOptionValue"u8);
                 writer.WriteStringValue(SelectedOptionValue);
             }
-            if (Optional.IsDefined(ResponseValidationProperties))
+            if (ResponseValidationProperties != null)
             {
                 writer.WritePropertyName("responseValidationProperties"u8);
                 writer.WriteObjectValue(ResponseValidationProperties);
             }
-            if (Optional.IsCollectionDefined(ResponseOptions))
+            if (!(ResponseOptions is ChangeTrackingList<ResponseConfig> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("responseOptions"u8);
                 writer.WriteStartArray();
@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> questionId = default;
-            Optional<string> questionType = default;
-            Optional<string> questionContent = default;
-            Optional<QuestionContentType> questionContentType = default;
-            Optional<string> responseHint = default;
-            Optional<string> recommendedOption = default;
-            Optional<string> selectedOptionValue = default;
-            Optional<ResponseValidationProperties> responseValidationProperties = default;
-            Optional<IReadOnlyList<ResponseConfig>> responseOptions = default;
+            string questionId = default;
+            string questionType = default;
+            string questionContent = default;
+            QuestionContentType? questionContentType = default;
+            string responseHint = default;
+            string recommendedOption = default;
+            string selectedOptionValue = default;
+            ResponseValidationProperties responseValidationProperties = default;
+            IReadOnlyList<ResponseConfig> responseOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StepInput(questionId.Value, questionType.Value, questionContent.Value, Optional.ToNullable(questionContentType), responseHint.Value, recommendedOption.Value, selectedOptionValue.Value, responseValidationProperties.Value, Optional.ToList(responseOptions), serializedAdditionalRawData);
+            return new StepInput(
+                questionId,
+                questionType,
+                questionContent,
+                questionContentType,
+                responseHint,
+                recommendedOption,
+                selectedOptionValue,
+                responseValidationProperties,
+                responseOptions ?? new ChangeTrackingList<ResponseConfig>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StepInput>.Write(ModelReaderWriterOptions options)

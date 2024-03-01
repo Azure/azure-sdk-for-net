@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ComplianceName))
+            if (options.Format != "W" && ComplianceName != null)
             {
                 writer.WritePropertyName("complianceName"u8);
                 writer.WriteStringValue(ComplianceName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Categories))
+            if (options.Format != "W" && !(Categories is ChangeTrackingList<Category> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> complianceName = default;
-            Optional<IReadOnlyList<Category>> categories = default;
+            string complianceName = default;
+            IReadOnlyList<Category> categories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComplianceResult(complianceName.Value, Optional.ToList(categories), serializedAdditionalRawData);
+            return new ComplianceResult(complianceName, categories ?? new ChangeTrackingList<Category>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComplianceResult>.Write(ModelReaderWriterOptions options)

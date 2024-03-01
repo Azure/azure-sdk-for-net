@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Results))
+            if (!(Results is ChangeTrackingList<DevTestLabPolicySetResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevTestLabPolicySetResult>> results = default;
+            IReadOnlyList<DevTestLabPolicySetResult> results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabEvaluatePoliciesResult(Optional.ToList(results), serializedAdditionalRawData);
+            return new DevTestLabEvaluatePoliciesResult(results ?? new ChangeTrackingList<DevTestLabPolicySetResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabEvaluatePoliciesResult>.Write(ModelReaderWriterOptions options)

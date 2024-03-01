@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceTypes))
+            if (options.Format != "W" && !(ResourceTypes is ChangeTrackingList<ProviderResourceType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> @namespace = default;
-            Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
+            string @namespace = default;
+            IReadOnlyList<ProviderResourceType> resourceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantResourceProvider(@namespace.Value, Optional.ToList(resourceTypes), serializedAdditionalRawData);
+            return new TenantResourceProvider(@namespace, resourceTypes ?? new ChangeTrackingList<ProviderResourceType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TenantResourceProvider>.Write(ModelReaderWriterOptions options)

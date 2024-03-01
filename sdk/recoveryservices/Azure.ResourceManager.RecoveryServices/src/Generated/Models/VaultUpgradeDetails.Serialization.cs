@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(OperationId))
+            if (options.Format != "W" && OperationId != null)
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(TriggerType))
+            if (options.Format != "W" && TriggerType.HasValue)
             {
                 writer.WritePropertyName("triggerType"u8);
                 writer.WriteStringValue(TriggerType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(UpgradedResourceId))
+            if (options.Format != "W" && UpgradedResourceId != null)
             {
                 writer.WritePropertyName("upgradedResourceId"u8);
                 writer.WriteStringValue(UpgradedResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PreviousResourceId))
+            if (options.Format != "W" && PreviousResourceId != null)
             {
                 writer.WritePropertyName("previousResourceId"u8);
                 writer.WriteStringValue(PreviousResourceId);
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
-            Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<VaultUpgradeState> status = default;
-            Optional<string> message = default;
-            Optional<VaultUpgradeTriggerType> triggerType = default;
-            Optional<ResourceIdentifier> upgradedResourceId = default;
-            Optional<ResourceIdentifier> previousResourceId = default;
+            string operationId = default;
+            DateTimeOffset? startTimeUtc = default;
+            DateTimeOffset? lastUpdatedTimeUtc = default;
+            DateTimeOffset? endTimeUtc = default;
+            VaultUpgradeState? status = default;
+            string message = default;
+            VaultUpgradeTriggerType? triggerType = default;
+            ResourceIdentifier upgradedResourceId = default;
+            ResourceIdentifier previousResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultUpgradeDetails(operationId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(status), message.Value, Optional.ToNullable(triggerType), upgradedResourceId.Value, previousResourceId.Value, serializedAdditionalRawData);
+            return new VaultUpgradeDetails(
+                operationId,
+                startTimeUtc,
+                lastUpdatedTimeUtc,
+                endTimeUtc,
+                status,
+                message,
+                triggerType,
+                upgradedResourceId,
+                previousResourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultUpgradeDetails>.Write(ModelReaderWriterOptions options)

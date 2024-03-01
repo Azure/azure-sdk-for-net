@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Synapse
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -53,34 +53,34 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Subregion))
+            if (options.Format != "W" && Subregion != null)
             {
                 writer.WritePropertyName("subregion"u8);
                 writer.WriteStringValue(Subregion);
             }
-            if (Optional.IsDefined(ServerKeyName))
+            if (ServerKeyName != null)
             {
                 writer.WritePropertyName("serverKeyName"u8);
                 writer.WriteStringValue(ServerKeyName);
             }
-            if (Optional.IsDefined(ServerKeyType))
+            if (ServerKeyType.HasValue)
             {
                 writer.WritePropertyName("serverKeyType"u8);
                 writer.WriteStringValue(ServerKeyType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Uri))
+            if (options.Format != "W" && Uri != null)
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
+            if (options.Format != "W" && Thumbprint != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
@@ -131,17 +131,17 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<AzureLocation> location = default;
+            string kind = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> subregion = default;
-            Optional<string> serverKeyName = default;
-            Optional<SynapseServerKeyType> serverKeyType = default;
-            Optional<Uri> uri = default;
-            Optional<BinaryData> thumbprint = default;
+            SystemData systemData = default;
+            string subregion = default;
+            string serverKeyName = default;
+            SynapseServerKeyType? serverKeyType = default;
+            Uri uri = default;
+            BinaryData thumbprint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -239,7 +239,19 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseEncryptionProtectorData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), subregion.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, serializedAdditionalRawData);
+            return new SynapseEncryptionProtectorData(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                location,
+                subregion,
+                serverKeyName,
+                serverKeyType,
+                uri,
+                thumbprint,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseEncryptionProtectorData>.Write(ModelReaderWriterOptions options)

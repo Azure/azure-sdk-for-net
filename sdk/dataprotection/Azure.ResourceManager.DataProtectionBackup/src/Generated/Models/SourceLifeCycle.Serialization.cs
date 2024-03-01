@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteObjectValue(DeleteAfter);
             writer.WritePropertyName("sourceDataStore"u8);
             writer.WriteObjectValue(SourceDataStore);
-            if (Optional.IsCollectionDefined(TargetDataStoreCopySettings))
+            if (!(TargetDataStoreCopySettings is ChangeTrackingList<TargetCopySetting> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targetDataStoreCopySettings"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             DataProtectionBackupDeleteSetting deleteAfter = default;
             DataStoreInfoBase sourceDataStore = default;
-            Optional<IList<TargetCopySetting>> targetDataStoreCopySettings = default;
+            IList<TargetCopySetting> targetDataStoreCopySettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceLifeCycle(deleteAfter, sourceDataStore, Optional.ToList(targetDataStoreCopySettings), serializedAdditionalRawData);
+            return new SourceLifeCycle(deleteAfter, sourceDataStore, targetDataStoreCopySettings ?? new ChangeTrackingList<TargetCopySetting>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceLifeCycle>.Write(ModelReaderWriterOptions options)

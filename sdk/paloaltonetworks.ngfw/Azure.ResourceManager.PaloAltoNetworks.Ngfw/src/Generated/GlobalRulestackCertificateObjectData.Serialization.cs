@@ -44,36 +44,36 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CertificateSignerResourceId))
+            if (CertificateSignerResourceId != null)
             {
                 writer.WritePropertyName("certificateSignerResourceId"u8);
                 writer.WriteStringValue(CertificateSignerResourceId);
             }
             writer.WritePropertyName("certificateSelfSigned"u8);
             writer.WriteStringValue(CertificateSelfSigned.ToString());
-            if (Optional.IsDefined(AuditComment))
+            if (AuditComment != null)
             {
                 writer.WritePropertyName("auditComment"u8);
                 writer.WriteStringValue(AuditComment);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -120,13 +120,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> certificateSignerResourceId = default;
+            SystemData systemData = default;
+            string certificateSignerResourceId = default;
             FirewallBooleanType certificateSelfSigned = default;
-            Optional<string> auditComment = default;
-            Optional<string> description = default;
-            Optional<ETag> etag = default;
-            Optional<FirewallProvisioningState> provisioningState = default;
+            string auditComment = default;
+            string description = default;
+            ETag? etag = default;
+            FirewallProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,7 +211,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GlobalRulestackCertificateObjectData(id, name, type, systemData.Value, certificateSignerResourceId.Value, certificateSelfSigned, auditComment.Value, description.Value, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new GlobalRulestackCertificateObjectData(
+                id,
+                name,
+                type,
+                systemData,
+                certificateSignerResourceId,
+                certificateSelfSigned,
+                auditComment,
+                description,
+                etag,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GlobalRulestackCertificateObjectData>.Write(ModelReaderWriterOptions options)

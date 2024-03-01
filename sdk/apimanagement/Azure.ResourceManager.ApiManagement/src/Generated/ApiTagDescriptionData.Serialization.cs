@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ExternalDocsUri))
+            if (ExternalDocsUri != null)
             {
                 writer.WritePropertyName("externalDocsUrl"u8);
                 writer.WriteStringValue(ExternalDocsUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ExternalDocsDescription))
+            if (ExternalDocsDescription != null)
             {
                 writer.WritePropertyName("externalDocsDescription"u8);
                 writer.WriteStringValue(ExternalDocsDescription);
             }
-            if (Optional.IsDefined(TagId))
+            if (TagId != null)
             {
                 writer.WritePropertyName("tagId"u8);
                 writer.WriteStringValue(TagId);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<Uri> externalDocsUri = default;
-            Optional<string> externalDocsDescription = default;
-            Optional<string> tagId = default;
-            Optional<string> displayName = default;
+            SystemData systemData = default;
+            string description = default;
+            Uri externalDocsUri = default;
+            string externalDocsDescription = default;
+            string tagId = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiTagDescriptionData(id, name, type, systemData.Value, description.Value, externalDocsUri.Value, externalDocsDescription.Value, tagId.Value, displayName.Value, serializedAdditionalRawData);
+            return new ApiTagDescriptionData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                externalDocsUri,
+                externalDocsDescription,
+                tagId,
+                displayName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiTagDescriptionData>.Write(ModelReaderWriterOptions options)

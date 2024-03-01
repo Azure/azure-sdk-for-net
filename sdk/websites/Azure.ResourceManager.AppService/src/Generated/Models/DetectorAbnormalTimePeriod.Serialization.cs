@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsDefined(Priority))
+            if (Priority.HasValue)
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsCollectionDefined(MetaData))
+            if (!(MetaData is ChangeTrackingList<IList<AppServiceNameValuePair>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metaData"u8);
                 writer.WriteStartArray();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IssueType))
+            if (IssueType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IssueType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(Solutions))
+            if (!(Solutions is ChangeTrackingList<DiagnosticSolution> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> message = default;
-            Optional<string> source = default;
-            Optional<double> priority = default;
-            Optional<IList<IList<AppServiceNameValuePair>>> metaData = default;
-            Optional<DetectorIssueType> type = default;
-            Optional<IList<DiagnosticSolution>> solutions = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string message = default;
+            string source = default;
+            double? priority = default;
+            IList<IList<AppServiceNameValuePair>> metaData = default;
+            DetectorIssueType? type = default;
+            IList<DiagnosticSolution> solutions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,7 +228,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DetectorAbnormalTimePeriod(Optional.ToNullable(startTime), Optional.ToNullable(endTime), message.Value, source.Value, Optional.ToNullable(priority), Optional.ToList(metaData), Optional.ToNullable(type), Optional.ToList(solutions), serializedAdditionalRawData);
+            return new DetectorAbnormalTimePeriod(
+                startTime,
+                endTime,
+                message,
+                source,
+                priority,
+                metaData ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
+                type,
+                solutions ?? new ChangeTrackingList<DiagnosticSolution>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DetectorAbnormalTimePeriod>.Write(ModelReaderWriterOptions options)

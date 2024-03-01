@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(UniqueId))
+            if (options.Format != "W" && UniqueId.HasValue)
             {
                 writer.WritePropertyName("uniqueId"u8);
                 writer.WriteStringValue(UniqueId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SyncGroupStatus))
+            if (options.Format != "W" && SyncGroupStatus != null)
             {
                 writer.WritePropertyName("syncGroupStatus"u8);
                 writer.WriteStringValue(SyncGroupStatus);
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.StorageSync
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> uniqueId = default;
-            Optional<string> syncGroupStatus = default;
+            SystemData systemData = default;
+            Guid? uniqueId = default;
+            string syncGroupStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.StorageSync
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncGroupData(id, name, type, systemData.Value, Optional.ToNullable(uniqueId), syncGroupStatus.Value, serializedAdditionalRawData);
+            return new StorageSyncGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                uniqueId,
+                syncGroupStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncGroupData>.Write(ModelReaderWriterOptions options)

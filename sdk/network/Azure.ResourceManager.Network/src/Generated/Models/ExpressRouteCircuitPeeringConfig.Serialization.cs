@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AdvertisedPublicPrefixes))
+            if (!(AdvertisedPublicPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("advertisedPublicPrefixes"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdvertisedCommunities))
+            if (!(AdvertisedCommunities is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("advertisedCommunities"u8);
                 writer.WriteStartArray();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(AdvertisedPublicPrefixesState))
+            if (options.Format != "W" && AdvertisedPublicPrefixesState.HasValue)
             {
                 writer.WritePropertyName("advertisedPublicPrefixesState"u8);
                 writer.WriteStringValue(AdvertisedPublicPrefixesState.Value.ToString());
             }
-            if (Optional.IsDefined(LegacyMode))
+            if (LegacyMode.HasValue)
             {
                 writer.WritePropertyName("legacyMode"u8);
                 writer.WriteNumberValue(LegacyMode.Value);
             }
-            if (Optional.IsDefined(CustomerASN))
+            if (CustomerASN.HasValue)
             {
                 writer.WritePropertyName("customerASN"u8);
                 writer.WriteNumberValue(CustomerASN.Value);
             }
-            if (Optional.IsDefined(RoutingRegistryName))
+            if (RoutingRegistryName != null)
             {
                 writer.WritePropertyName("routingRegistryName"u8);
                 writer.WriteStringValue(RoutingRegistryName);
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> advertisedPublicPrefixes = default;
-            Optional<IList<string>> advertisedCommunities = default;
-            Optional<ExpressRouteCircuitPeeringAdvertisedPublicPrefixState> advertisedPublicPrefixesState = default;
-            Optional<int> legacyMode = default;
-            Optional<int> customerASN = default;
-            Optional<string> routingRegistryName = default;
+            IList<string> advertisedPublicPrefixes = default;
+            IList<string> advertisedCommunities = default;
+            ExpressRouteCircuitPeeringAdvertisedPublicPrefixState? advertisedPublicPrefixesState = default;
+            int? legacyMode = default;
+            int? customerASN = default;
+            string routingRegistryName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +180,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitPeeringConfig(Optional.ToList(advertisedPublicPrefixes), Optional.ToList(advertisedCommunities), Optional.ToNullable(advertisedPublicPrefixesState), Optional.ToNullable(legacyMode), Optional.ToNullable(customerASN), routingRegistryName.Value, serializedAdditionalRawData);
+            return new ExpressRouteCircuitPeeringConfig(
+                advertisedPublicPrefixes ?? new ChangeTrackingList<string>(),
+                advertisedCommunities ?? new ChangeTrackingList<string>(),
+                advertisedPublicPrefixesState,
+                legacyMode,
+                customerASN,
+                routingRegistryName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitPeeringConfig>.Write(ModelReaderWriterOptions options)

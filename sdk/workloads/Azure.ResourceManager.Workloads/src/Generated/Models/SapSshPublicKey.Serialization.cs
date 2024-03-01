@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyData))
+            if (KeyData != null)
             {
                 writer.WritePropertyName("keyData"u8);
                 writer.WriteStringValue(KeyData);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> keyData = default;
+            string keyData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapSshPublicKey(keyData.Value, serializedAdditionalRawData);
+            return new SapSshPublicKey(keyData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapSshPublicKey>.Write(ModelReaderWriterOptions options)

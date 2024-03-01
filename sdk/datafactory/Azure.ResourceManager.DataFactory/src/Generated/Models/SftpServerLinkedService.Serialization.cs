@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(ConnectVia))
+            if (ConnectVia != null)
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -76,52 +76,52 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
             JsonSerializer.Serialize(writer, Host);
-            if (Optional.IsDefined(Port))
+            if (Port != null)
             {
                 writer.WritePropertyName("port"u8);
                 JsonSerializer.Serialize(writer, Port);
             }
-            if (Optional.IsDefined(AuthenticationType))
+            if (AuthenticationType.HasValue)
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Optional.IsDefined(UserName))
+            if (UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 JsonSerializer.Serialize(writer, UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (EncryptedCredential != null)
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
             }
-            if (Optional.IsDefined(PrivateKeyPath))
+            if (PrivateKeyPath != null)
             {
                 writer.WritePropertyName("privateKeyPath"u8);
                 JsonSerializer.Serialize(writer, PrivateKeyPath);
             }
-            if (Optional.IsDefined(PrivateKeyContent))
+            if (PrivateKeyContent != null)
             {
                 writer.WritePropertyName("privateKeyContent"u8);
                 JsonSerializer.Serialize(writer, PrivateKeyContent);
             }
-            if (Optional.IsDefined(PassPhrase))
+            if (PassPhrase != null)
             {
                 writer.WritePropertyName("passPhrase"u8);
                 JsonSerializer.Serialize(writer, PassPhrase);
             }
-            if (Optional.IsDefined(SkipHostKeyValidation))
+            if (SkipHostKeyValidation != null)
             {
                 writer.WritePropertyName("skipHostKeyValidation"u8);
                 JsonSerializer.Serialize(writer, SkipHostKeyValidation);
             }
-            if (Optional.IsDefined(HostKeyFingerprint))
+            if (HostKeyFingerprint != null)
             {
                 writer.WritePropertyName("hostKeyFingerprint"u8);
                 JsonSerializer.Serialize(writer, HostKeyFingerprint);
@@ -163,21 +163,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
             DataFactoryElement<string> host = default;
-            Optional<DataFactoryElement<int>> port = default;
-            Optional<SftpAuthenticationType> authenticationType = default;
-            Optional<DataFactoryElement<string>> userName = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<string> encryptedCredential = default;
-            Optional<DataFactoryElement<string>> privateKeyPath = default;
-            Optional<DataFactorySecretBaseDefinition> privateKeyContent = default;
-            Optional<DataFactorySecretBaseDefinition> passPhrase = default;
-            Optional<DataFactoryElement<bool>> skipHostKeyValidation = default;
-            Optional<DataFactoryElement<string>> hostKeyFingerprint = default;
+            DataFactoryElement<int> port = default;
+            SftpAuthenticationType? authenticationType = default;
+            DataFactoryElement<string> userName = default;
+            DataFactorySecretBaseDefinition password = default;
+            string encryptedCredential = default;
+            DataFactoryElement<string> privateKeyPath = default;
+            DataFactorySecretBaseDefinition privateKeyContent = default;
+            DataFactorySecretBaseDefinition passPhrase = default;
+            DataFactoryElement<bool> skipHostKeyValidation = default;
+            DataFactoryElement<string> hostKeyFingerprint = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -342,7 +342,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SftpServerLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, port.Value, Optional.ToNullable(authenticationType), userName.Value, password, encryptedCredential.Value, privateKeyPath.Value, privateKeyContent, passPhrase, skipHostKeyValidation.Value, hostKeyFingerprint.Value);
+            return new SftpServerLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                host,
+                port,
+                authenticationType,
+                userName,
+                password,
+                encryptedCredential,
+                privateKeyPath,
+                privateKeyContent,
+                passPhrase,
+                skipHostKeyValidation,
+                hostKeyFingerprint);
         }
 
         BinaryData IPersistableModel<SftpServerLinkedService>.Write(ModelReaderWriterOptions options)

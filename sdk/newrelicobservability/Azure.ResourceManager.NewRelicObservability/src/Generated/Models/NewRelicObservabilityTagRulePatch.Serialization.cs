@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogRules))
+            if (LogRules != null)
             {
                 writer.WritePropertyName("logRules"u8);
                 writer.WriteObjectValue(LogRules);
             }
-            if (Optional.IsDefined(MetricRules))
+            if (MetricRules != null)
             {
                 writer.WritePropertyName("metricRules"u8);
                 writer.WriteObjectValue(MetricRules);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<NewRelicObservabilityLogRules> logRules = default;
-            Optional<NewRelicObservabilityMetricRules> metricRules = default;
+            NewRelicObservabilityLogRules logRules = default;
+            NewRelicObservabilityMetricRules metricRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicObservabilityTagRulePatch(logRules.Value, metricRules.Value, serializedAdditionalRawData);
+            return new NewRelicObservabilityTagRulePatch(logRules, metricRules, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicObservabilityTagRulePatch>.Write(ModelReaderWriterOptions options)

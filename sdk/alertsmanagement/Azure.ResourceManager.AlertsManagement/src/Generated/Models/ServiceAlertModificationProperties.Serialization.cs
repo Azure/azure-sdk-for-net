@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AlertId))
+            if (options.Format != "W" && AlertId.HasValue)
             {
                 writer.WritePropertyName("alertId"u8);
                 writer.WriteStringValue(AlertId.Value);
             }
-            if (Optional.IsCollectionDefined(Modifications))
+            if (!(Modifications is ChangeTrackingList<ServiceAlertModificationItemInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("modifications"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<Guid> alertId = default;
-            Optional<IList<ServiceAlertModificationItemInfo>> modifications = default;
+            Guid? alertId = default;
+            IList<ServiceAlertModificationItemInfo> modifications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAlertModificationProperties(Optional.ToNullable(alertId), Optional.ToList(modifications), serializedAdditionalRawData);
+            return new ServiceAlertModificationProperties(alertId, modifications ?? new ChangeTrackingList<ServiceAlertModificationItemInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertModificationProperties>.Write(ModelReaderWriterOptions options)

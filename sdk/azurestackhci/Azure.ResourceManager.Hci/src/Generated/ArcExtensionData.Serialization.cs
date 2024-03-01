@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AggregateState))
+            if (options.Format != "W" && AggregateState.HasValue)
             {
                 writer.WritePropertyName("aggregateState"u8);
                 writer.WriteStringValue(AggregateState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PerNodeExtensionDetails))
+            if (options.Format != "W" && !(PerNodeExtensionDetails is ChangeTrackingList<PerNodeExtensionState> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("perNodeExtensionDetails"u8);
                 writer.WriteStartArray();
@@ -72,32 +72,32 @@ namespace Azure.ResourceManager.Hci
             }
             writer.WritePropertyName("extensionParameters"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ForceUpdateTag))
+            if (ForceUpdateTag != null)
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
-            if (Optional.IsDefined(Publisher))
+            if (Publisher != null)
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(ArcExtensionType))
+            if (ArcExtensionType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ArcExtensionType);
             }
-            if (Optional.IsDefined(TypeHandlerVersion))
+            if (TypeHandlerVersion != null)
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsDefined(ShouldAutoUpgradeMinorVersion))
+            if (ShouldAutoUpgradeMinorVersion.HasValue)
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(ShouldAutoUpgradeMinorVersion.Value);
             }
-            if (Optional.IsDefined(Settings))
+            if (Settings != null)
             {
                 writer.WritePropertyName("settings"u8);
 #if NET6_0_OR_GREATER
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Hci
                 }
 #endif
             }
-            if (Optional.IsDefined(ProtectedSettings))
+            if (ProtectedSettings != null)
             {
                 writer.WritePropertyName("protectedSettings"u8);
 #if NET6_0_OR_GREATER
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Hci
                 }
 #endif
             }
-            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            if (EnableAutomaticUpgrade.HasValue)
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
@@ -169,18 +169,18 @@ namespace Azure.ResourceManager.Hci
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HciProvisioningState> provisioningState = default;
-            Optional<ArcExtensionAggregateState> aggregateState = default;
-            Optional<IReadOnlyList<PerNodeExtensionState>> perNodeExtensionDetails = default;
-            Optional<string> forceUpdateTag = default;
-            Optional<string> publisher = default;
-            Optional<string> type0 = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<BinaryData> settings = default;
-            Optional<BinaryData> protectedSettings = default;
-            Optional<bool> enableAutomaticUpgrade = default;
+            SystemData systemData = default;
+            HciProvisioningState? provisioningState = default;
+            ArcExtensionAggregateState? aggregateState = default;
+            IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails = default;
+            string forceUpdateTag = default;
+            string publisher = default;
+            string type0 = default;
+            string typeHandlerVersion = default;
+            bool? autoUpgradeMinorVersion = default;
+            BinaryData settings = default;
+            BinaryData protectedSettings = default;
+            bool? enableAutomaticUpgrade = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -327,7 +327,23 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArcExtensionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), Optional.ToList(perNodeExtensionDetails), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, Optional.ToNullable(enableAutomaticUpgrade), serializedAdditionalRawData);
+            return new ArcExtensionData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                aggregateState,
+                perNodeExtensionDetails ?? new ChangeTrackingList<PerNodeExtensionState>(),
+                forceUpdateTag,
+                publisher,
+                type0,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                settings,
+                protectedSettings,
+                enableAutomaticUpgrade,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArcExtensionData>.Write(ModelReaderWriterOptions options)

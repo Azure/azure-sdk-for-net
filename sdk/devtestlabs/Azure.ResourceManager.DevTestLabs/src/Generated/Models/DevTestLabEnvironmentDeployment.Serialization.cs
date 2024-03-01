@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArmTemplateId))
+            if (ArmTemplateId != null)
             {
                 writer.WritePropertyName("armTemplateId"u8);
                 writer.WriteStringValue(ArmTemplateId);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<DevTestLabArmTemplateParameter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> armTemplateId = default;
-            Optional<IList<DevTestLabArmTemplateParameter>> parameters = default;
+            ResourceIdentifier armTemplateId = default;
+            IList<DevTestLabArmTemplateParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabEnvironmentDeployment(armTemplateId.Value, Optional.ToList(parameters), serializedAdditionalRawData);
+            return new DevTestLabEnvironmentDeployment(armTemplateId, parameters ?? new ChangeTrackingList<DevTestLabArmTemplateParameter>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabEnvironmentDeployment>.Write(ModelReaderWriterOptions options)

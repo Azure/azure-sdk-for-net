@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,69 +48,69 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtensionId))
+            if (ExtensionId != null)
             {
                 writer.WritePropertyName("extension_id"u8);
                 writer.WriteStringValue(ExtensionId);
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(ExtensionType))
+            if (ExtensionType.HasValue)
             {
                 writer.WritePropertyName("extension_type"u8);
                 writer.WriteStringValue(ExtensionType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Summary))
+            if (Summary != null)
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(ExtensionUri))
+            if (ExtensionUri != null)
             {
                 writer.WritePropertyName("extension_url"u8);
                 writer.WriteStringValue(ExtensionUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ProjectUri))
+            if (ProjectUri != null)
             {
                 writer.WritePropertyName("project_url"u8);
                 writer.WriteStringValue(ProjectUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(IconUri))
+            if (IconUri != null)
             {
                 writer.WritePropertyName("icon_url"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(LicenseUri))
+            if (LicenseUri != null)
             {
                 writer.WritePropertyName("license_url"u8);
                 writer.WriteStringValue(LicenseUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(FeedUri))
+            if (FeedUri != null)
             {
                 writer.WritePropertyName("feed_url"u8);
                 writer.WriteStringValue(FeedUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Authors))
+            if (!(Authors is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("authors"u8);
                 writer.WriteStartArray();
@@ -120,42 +120,42 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(InstallerCommandLineParams))
+            if (InstallerCommandLineParams != null)
             {
                 writer.WritePropertyName("installer_command_line_params"u8);
                 writer.WriteStringValue(InstallerCommandLineParams);
             }
-            if (Optional.IsDefined(PublishedOn))
+            if (PublishedOn.HasValue)
             {
                 writer.WritePropertyName("published_date_time"u8);
                 writer.WriteStringValue(PublishedOn.Value, "O");
             }
-            if (Optional.IsDefined(DownloadCount))
+            if (DownloadCount.HasValue)
             {
                 writer.WritePropertyName("download_count"u8);
                 writer.WriteNumberValue(DownloadCount.Value);
             }
-            if (Optional.IsDefined(LocalIsLatestVersion))
+            if (LocalIsLatestVersion.HasValue)
             {
                 writer.WritePropertyName("local_is_latest_version"u8);
                 writer.WriteBooleanValue(LocalIsLatestVersion.Value);
             }
-            if (Optional.IsDefined(LocalPath))
+            if (LocalPath != null)
             {
                 writer.WritePropertyName("local_path"u8);
                 writer.WriteStringValue(LocalPath);
             }
-            if (Optional.IsDefined(InstalledOn))
+            if (InstalledOn.HasValue)
             {
                 writer.WritePropertyName("installed_date_time"u8);
                 writer.WriteStringValue(InstalledOn.Value, "O");
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(Comment))
+            if (Comment != null)
             {
                 writer.WritePropertyName("comment"u8);
                 writer.WriteStringValue(Comment);
@@ -199,31 +199,31 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> extensionId = default;
-            Optional<string> title = default;
-            Optional<SiteExtensionType> extensionType = default;
-            Optional<string> summary = default;
-            Optional<string> description = default;
-            Optional<string> version = default;
-            Optional<Uri> extensionUrl = default;
-            Optional<Uri> projectUrl = default;
-            Optional<Uri> iconUrl = default;
-            Optional<Uri> licenseUrl = default;
-            Optional<Uri> feedUrl = default;
-            Optional<IList<string>> authors = default;
-            Optional<string> installerCommandLineParams = default;
-            Optional<DateTimeOffset> publishedDateTime = default;
-            Optional<int> downloadCount = default;
-            Optional<bool> localIsLatestVersion = default;
-            Optional<string> localPath = default;
-            Optional<DateTimeOffset> installedDateTime = default;
-            Optional<string> provisioningState = default;
-            Optional<string> comment = default;
+            SystemData systemData = default;
+            string extensionId = default;
+            string title = default;
+            SiteExtensionType? extensionType = default;
+            string summary = default;
+            string description = default;
+            string version = default;
+            Uri extensionUrl = default;
+            Uri projectUrl = default;
+            Uri iconUrl = default;
+            Uri licenseUrl = default;
+            Uri feedUrl = default;
+            IList<string> authors = default;
+            string installerCommandLineParams = default;
+            DateTimeOffset? publishedDateTime = default;
+            int? downloadCount = default;
+            bool? localIsLatestVersion = default;
+            string localPath = default;
+            DateTimeOffset? installedDateTime = default;
+            string provisioningState = default;
+            string comment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -424,7 +424,33 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteExtensionInfoData(id, name, type, systemData.Value, extensionId.Value, title.Value, Optional.ToNullable(extensionType), summary.Value, description.Value, version.Value, extensionUrl.Value, projectUrl.Value, iconUrl.Value, licenseUrl.Value, feedUrl.Value, Optional.ToList(authors), installerCommandLineParams.Value, Optional.ToNullable(publishedDateTime), Optional.ToNullable(downloadCount), Optional.ToNullable(localIsLatestVersion), localPath.Value, Optional.ToNullable(installedDateTime), provisioningState.Value, comment.Value, kind.Value, serializedAdditionalRawData);
+            return new SiteExtensionInfoData(
+                id,
+                name,
+                type,
+                systemData,
+                extensionId,
+                title,
+                extensionType,
+                summary,
+                description,
+                version,
+                extensionUrl,
+                projectUrl,
+                iconUrl,
+                licenseUrl,
+                feedUrl,
+                authors ?? new ChangeTrackingList<string>(),
+                installerCommandLineParams,
+                publishedDateTime,
+                downloadCount,
+                localIsLatestVersion,
+                localPath,
+                installedDateTime,
+                provisioningState,
+                comment,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteExtensionInfoData>.Write(ModelReaderWriterOptions options)

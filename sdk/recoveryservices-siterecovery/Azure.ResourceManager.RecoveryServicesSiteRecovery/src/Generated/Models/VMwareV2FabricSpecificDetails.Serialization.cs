@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(VMwareSiteId))
+            if (options.Format != "W" && VMwareSiteId != null)
             {
                 writer.WritePropertyName("vmwareSiteId"u8);
                 writer.WriteStringValue(VMwareSiteId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PhysicalSiteId))
+            if (options.Format != "W" && PhysicalSiteId != null)
             {
                 writer.WritePropertyName("physicalSiteId"u8);
                 writer.WriteStringValue(PhysicalSiteId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MigrationSolutionId))
+            if (options.Format != "W" && MigrationSolutionId != null)
             {
                 writer.WritePropertyName("migrationSolutionId"u8);
                 writer.WriteStringValue(MigrationSolutionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceEndpoint))
+            if (options.Format != "W" && ServiceEndpoint != null)
             {
                 writer.WritePropertyName("serviceEndpoint"u8);
                 writer.WriteStringValue(ServiceEndpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceResourceId))
+            if (options.Format != "W" && ServiceResourceId != null)
             {
                 writer.WritePropertyName("serviceResourceId"u8);
                 writer.WriteStringValue(ServiceResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceContainerId))
+            if (options.Format != "W" && ServiceContainerId != null)
             {
                 writer.WritePropertyName("serviceContainerId"u8);
                 writer.WriteStringValue(ServiceContainerId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProcessServers))
+            if (options.Format != "W" && !(ProcessServers is ChangeTrackingList<SiteRecoveryProcessServerDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("processServers"u8);
                 writer.WriteStartArray();
@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> vmwareSiteId = default;
-            Optional<ResourceIdentifier> physicalSiteId = default;
-            Optional<ResourceIdentifier> migrationSolutionId = default;
-            Optional<string> serviceEndpoint = default;
-            Optional<ResourceIdentifier> serviceResourceId = default;
-            Optional<string> serviceContainerId = default;
-            Optional<IReadOnlyList<SiteRecoveryProcessServerDetails>> processServers = default;
+            ResourceIdentifier vmwareSiteId = default;
+            ResourceIdentifier physicalSiteId = default;
+            ResourceIdentifier migrationSolutionId = default;
+            string serviceEndpoint = default;
+            ResourceIdentifier serviceResourceId = default;
+            string serviceContainerId = default;
+            IReadOnlyList<SiteRecoveryProcessServerDetails> processServers = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -189,7 +189,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareV2FabricSpecificDetails(instanceType, serializedAdditionalRawData, vmwareSiteId.Value, physicalSiteId.Value, migrationSolutionId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, Optional.ToList(processServers));
+            return new VMwareV2FabricSpecificDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                vmwareSiteId,
+                physicalSiteId,
+                migrationSolutionId,
+                serviceEndpoint,
+                serviceResourceId,
+                serviceContainerId,
+                processServers ?? new ChangeTrackingList<SiteRecoveryProcessServerDetails>());
         }
 
         BinaryData IPersistableModel<VMwareV2FabricSpecificDetails>.Write(ModelReaderWriterOptions options)

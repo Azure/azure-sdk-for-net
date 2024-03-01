@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReplicationFrequencyInSeconds))
+            if (ReplicationFrequencyInSeconds.HasValue)
             {
                 writer.WritePropertyName("replicationFrequencyInSeconds"u8);
                 writer.WriteNumberValue(ReplicationFrequencyInSeconds.Value);
             }
-            if (Optional.IsDefined(RecoveryPoints))
+            if (RecoveryPoints.HasValue)
             {
                 writer.WritePropertyName("recoveryPoints"u8);
                 writer.WriteNumberValue(RecoveryPoints.Value);
             }
-            if (Optional.IsDefined(ApplicationConsistentSnapshotFrequencyInHours))
+            if (ApplicationConsistentSnapshotFrequencyInHours.HasValue)
             {
                 writer.WritePropertyName("applicationConsistentSnapshotFrequencyInHours"u8);
                 writer.WriteNumberValue(ApplicationConsistentSnapshotFrequencyInHours.Value);
             }
-            if (Optional.IsDefined(Compression))
+            if (Compression != null)
             {
                 writer.WritePropertyName("compression"u8);
                 writer.WriteStringValue(Compression);
             }
-            if (Optional.IsDefined(InitialReplicationMethod))
+            if (InitialReplicationMethod != null)
             {
                 writer.WritePropertyName("initialReplicationMethod"u8);
                 writer.WriteStringValue(InitialReplicationMethod);
             }
-            if (Optional.IsDefined(OnlineReplicationStartTime))
+            if (OnlineReplicationStartTime != null)
             {
                 writer.WritePropertyName("onlineReplicationStartTime"u8);
                 writer.WriteStringValue(OnlineReplicationStartTime);
             }
-            if (Optional.IsDefined(OfflineReplicationImportPath))
+            if (OfflineReplicationImportPath != null)
             {
                 writer.WritePropertyName("offlineReplicationImportPath"u8);
                 writer.WriteStringValue(OfflineReplicationImportPath);
             }
-            if (Optional.IsDefined(OfflineReplicationExportPath))
+            if (OfflineReplicationExportPath != null)
             {
                 writer.WritePropertyName("offlineReplicationExportPath"u8);
                 writer.WriteStringValue(OfflineReplicationExportPath);
             }
-            if (Optional.IsDefined(ReplicationPort))
+            if (ReplicationPort.HasValue)
             {
                 writer.WritePropertyName("replicationPort"u8);
                 writer.WriteNumberValue(ReplicationPort.Value);
             }
-            if (Optional.IsDefined(AllowedAuthenticationType))
+            if (AllowedAuthenticationType.HasValue)
             {
                 writer.WritePropertyName("allowedAuthenticationType"u8);
                 writer.WriteNumberValue(AllowedAuthenticationType.Value);
             }
-            if (Optional.IsDefined(ReplicaDeletion))
+            if (ReplicaDeletion != null)
             {
                 writer.WritePropertyName("replicaDeletion"u8);
                 writer.WriteStringValue(ReplicaDeletion);
@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> replicationFrequencyInSeconds = default;
-            Optional<int> recoveryPoints = default;
-            Optional<int> applicationConsistentSnapshotFrequencyInHours = default;
-            Optional<string> compression = default;
-            Optional<string> initialReplicationMethod = default;
-            Optional<string> onlineReplicationStartTime = default;
-            Optional<string> offlineReplicationImportPath = default;
-            Optional<string> offlineReplicationExportPath = default;
-            Optional<int> replicationPort = default;
-            Optional<int> allowedAuthenticationType = default;
-            Optional<string> replicaDeletion = default;
+            int? replicationFrequencyInSeconds = default;
+            int? recoveryPoints = default;
+            int? applicationConsistentSnapshotFrequencyInHours = default;
+            string compression = default;
+            string initialReplicationMethod = default;
+            string onlineReplicationStartTime = default;
+            string offlineReplicationImportPath = default;
+            string offlineReplicationExportPath = default;
+            int? replicationPort = default;
+            int? allowedAuthenticationType = default;
+            string replicaDeletion = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -223,7 +223,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaBluePolicyContent(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPoints), Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours), compression.Value, initialReplicationMethod.Value, onlineReplicationStartTime.Value, offlineReplicationImportPath.Value, offlineReplicationExportPath.Value, Optional.ToNullable(replicationPort), Optional.ToNullable(allowedAuthenticationType), replicaDeletion.Value, Optional.ToNullable(replicationFrequencyInSeconds));
+            return new HyperVReplicaBluePolicyContent(
+                instanceType,
+                serializedAdditionalRawData,
+                recoveryPoints,
+                applicationConsistentSnapshotFrequencyInHours,
+                compression,
+                initialReplicationMethod,
+                onlineReplicationStartTime,
+                offlineReplicationImportPath,
+                offlineReplicationExportPath,
+                replicationPort,
+                allowedAuthenticationType,
+                replicaDeletion,
+                replicationFrequencyInSeconds);
         }
 
         BinaryData IPersistableModel<HyperVReplicaBluePolicyContent>.Write(ModelReaderWriterOptions options)

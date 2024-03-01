@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(MigrationId))
+            if (options.Format != "W" && MigrationId != null)
             {
                 writer.WritePropertyName("migrationId"u8);
                 writer.WriteStringValue(MigrationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceDatabaseName))
+            if (options.Format != "W" && SourceDatabaseName != null)
             {
                 writer.WritePropertyName("sourceDatabaseName"u8);
                 writer.WriteStringValue(SourceDatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetDatabaseName))
+            if (options.Format != "W" && TargetDatabaseName != null)
             {
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && StartedOn.HasValue)
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndedOn))
+            if (options.Format != "W" && EndedOn.HasValue)
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> migrationId = default;
-            Optional<string> sourceDatabaseName = default;
-            Optional<string> targetDatabaseName = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<ValidationStatus> status = default;
+            string id = default;
+            string migrationId = default;
+            string sourceDatabaseName = default;
+            string targetDatabaseName = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            ValidationStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrationValidationDatabaseSummaryResult(id.Value, migrationId.Value, sourceDatabaseName.Value, targetDatabaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new MigrationValidationDatabaseSummaryResult(
+                id,
+                migrationId,
+                sourceDatabaseName,
+                targetDatabaseName,
+                startedOn,
+                endedOn,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrationValidationDatabaseSummaryResult>.Write(ModelReaderWriterOptions options)

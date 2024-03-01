@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExecutionCount))
+            if (ExecutionCount.HasValue)
             {
                 writer.WritePropertyName("executionCount"u8);
                 writer.WriteNumberValue(ExecutionCount.Value);
             }
-            if (Optional.IsDefined(CpuTimeMs))
+            if (CpuTimeMs.HasValue)
             {
                 writer.WritePropertyName("cpuTimeMs"u8);
                 writer.WriteNumberValue(CpuTimeMs.Value);
             }
-            if (Optional.IsDefined(ElapsedTimeMs))
+            if (ElapsedTimeMs.HasValue)
             {
                 writer.WritePropertyName("elapsedTimeMs"u8);
                 writer.WriteNumberValue(ElapsedTimeMs.Value);
             }
-            if (Optional.IsCollectionDefined(WaitStats))
+            if (!(WaitStats is ChangeTrackingDictionary<string, WaitStatistics> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("waitStats"u8);
                 writer.WriteStartObject();
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(HasErrors))
+            if (HasErrors.HasValue)
             {
                 writer.WritePropertyName("hasErrors"u8);
                 writer.WriteBooleanValue(HasErrors.Value);
             }
-            if (Optional.IsCollectionDefined(SqlErrors))
+            if (!(SqlErrors is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sqlErrors"u8);
                 writer.WriteStartArray();
@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<long> executionCount = default;
-            Optional<float> cpuTimeMs = default;
-            Optional<float> elapsedTimeMs = default;
-            Optional<IReadOnlyDictionary<string, WaitStatistics>> waitStats = default;
-            Optional<bool> hasErrors = default;
-            Optional<IReadOnlyList<string>> sqlErrors = default;
+            long? executionCount = default;
+            float? cpuTimeMs = default;
+            float? elapsedTimeMs = default;
+            IReadOnlyDictionary<string, WaitStatistics> waitStats = default;
+            bool? hasErrors = default;
+            IReadOnlyList<string> sqlErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +185,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExecutionStatistics(Optional.ToNullable(executionCount), Optional.ToNullable(cpuTimeMs), Optional.ToNullable(elapsedTimeMs), Optional.ToDictionary(waitStats), Optional.ToNullable(hasErrors), Optional.ToList(sqlErrors), serializedAdditionalRawData);
+            return new ExecutionStatistics(
+                executionCount,
+                cpuTimeMs,
+                elapsedTimeMs,
+                waitStats ?? new ChangeTrackingDictionary<string, WaitStatistics>(),
+                hasErrors,
+                sqlErrors ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExecutionStatistics>.Write(ModelReaderWriterOptions options)

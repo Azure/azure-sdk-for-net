@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.DefenderEasm
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Color))
+            if (Color != null)
             {
                 writer.WritePropertyName("color"u8);
                 writer.WriteStringValue(Color);
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.DefenderEasm
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EasmResourceProvisioningState> provisioningState = default;
-            Optional<string> displayName = default;
-            Optional<string> color = default;
+            SystemData systemData = default;
+            EasmResourceProvisioningState? provisioningState = default;
+            string displayName = default;
+            string color = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,7 +176,15 @@ namespace Azure.ResourceManager.DefenderEasm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EasmLabelData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), displayName.Value, color.Value, serializedAdditionalRawData);
+            return new EasmLabelData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                displayName,
+                color,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EasmLabelData>.Write(ModelReaderWriterOptions options)

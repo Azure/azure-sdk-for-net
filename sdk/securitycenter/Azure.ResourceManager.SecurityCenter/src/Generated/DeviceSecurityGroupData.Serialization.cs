@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ThresholdRules))
+            if (!(ThresholdRules is ChangeTrackingList<ThresholdCustomAlertRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("thresholdRules"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TimeWindowRules))
+            if (!(TimeWindowRules is ChangeTrackingList<TimeWindowCustomAlertRule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("timeWindowRules"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowlistRules))
+            if (!(AllowlistRules is ChangeTrackingList<AllowlistCustomAlertRule> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("allowlistRules"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DenylistRules))
+            if (!(DenylistRules is ChangeTrackingList<DenylistCustomAlertRule> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("denylistRules"u8);
                 writer.WriteStartArray();
@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<ThresholdCustomAlertRule>> thresholdRules = default;
-            Optional<IList<TimeWindowCustomAlertRule>> timeWindowRules = default;
-            Optional<IList<AllowlistCustomAlertRule>> allowlistRules = default;
-            Optional<IList<DenylistCustomAlertRule>> denylistRules = default;
+            SystemData systemData = default;
+            IList<ThresholdCustomAlertRule> thresholdRules = default;
+            IList<TimeWindowCustomAlertRule> timeWindowRules = default;
+            IList<AllowlistCustomAlertRule> allowlistRules = default;
+            IList<DenylistCustomAlertRule> denylistRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -239,7 +239,16 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceSecurityGroupData(id, name, type, systemData.Value, Optional.ToList(thresholdRules), Optional.ToList(timeWindowRules), Optional.ToList(allowlistRules), Optional.ToList(denylistRules), serializedAdditionalRawData);
+            return new DeviceSecurityGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                thresholdRules ?? new ChangeTrackingList<ThresholdCustomAlertRule>(),
+                timeWindowRules ?? new ChangeTrackingList<TimeWindowCustomAlertRule>(),
+                allowlistRules ?? new ChangeTrackingList<AllowlistCustomAlertRule>(),
+                denylistRules ?? new ChangeTrackingList<DenylistCustomAlertRule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceSecurityGroupData>.Write(ModelReaderWriterOptions options)

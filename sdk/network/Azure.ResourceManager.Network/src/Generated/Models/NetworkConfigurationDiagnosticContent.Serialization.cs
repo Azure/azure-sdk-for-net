@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
-            if (Optional.IsDefined(VerbosityLevel))
+            if (VerbosityLevel.HasValue)
             {
                 writer.WritePropertyName("verbosityLevel"u8);
                 writer.WriteStringValue(VerbosityLevel.Value.ToString());
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             ResourceIdentifier targetResourceId = default;
-            Optional<VerbosityLevel> verbosityLevel = default;
+            VerbosityLevel? verbosityLevel = default;
             IList<NetworkConfigurationDiagnosticProfile> profiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkConfigurationDiagnosticContent(targetResourceId, Optional.ToNullable(verbosityLevel), profiles, serializedAdditionalRawData);
+            return new NetworkConfigurationDiagnosticContent(targetResourceId, verbosityLevel, profiles, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkConfigurationDiagnosticContent>.Write(ModelReaderWriterOptions options)

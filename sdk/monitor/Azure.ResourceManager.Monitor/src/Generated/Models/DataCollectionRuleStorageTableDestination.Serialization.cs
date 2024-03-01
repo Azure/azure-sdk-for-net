@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TableName))
+            if (TableName != null)
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (Optional.IsDefined(StorageAccountResourceId))
+            if (StorageAccountResourceId != null)
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> tableName = default;
-            Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Optional<string> name = default;
+            string tableName = default;
+            ResourceIdentifier storageAccountResourceId = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionRuleStorageTableDestination(tableName.Value, storageAccountResourceId.Value, name.Value, serializedAdditionalRawData);
+            return new DataCollectionRuleStorageTableDestination(tableName, storageAccountResourceId, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleStorageTableDestination>.Write(ModelReaderWriterOptions options)

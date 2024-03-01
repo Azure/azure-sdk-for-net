@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (Optional.IsCollectionDefined(Events))
+            if (!(Events is ChangeTrackingList<SyncMigrationDatabaseErrorEvent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<ReportableException> error = default;
-            Optional<IReadOnlyList<SyncMigrationDatabaseErrorEvent>> events = default;
-            Optional<string> id = default;
+            ReportableException error = default;
+            IReadOnlyList<SyncMigrationDatabaseErrorEvent> events = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(id.Value, resultType, serializedAdditionalRawData, error.Value, Optional.ToList(events));
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(id, resultType, serializedAdditionalRawData, error, events ?? new ChangeTrackingList<SyncMigrationDatabaseErrorEvent>());
         }
 
         BinaryData IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError>.Write(ModelReaderWriterOptions options)

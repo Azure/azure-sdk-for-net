@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultAction))
+            if (DefaultAction.HasValue)
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetwork))
+            if (PublicNetwork != null)
             {
                 writer.WritePropertyName("publicNetwork"u8);
                 writer.WriteObjectValue(PublicNetwork);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpoints))
+            if (!(PrivateEndpoints is ChangeTrackingList<PrivateEndpointAcl> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpoints"u8);
                 writer.WriteStartArray();
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<AclAction> defaultAction = default;
-            Optional<PublicNetworkAcls> publicNetwork = default;
-            Optional<IList<PrivateEndpointAcl>> privateEndpoints = default;
+            AclAction? defaultAction = default;
+            PublicNetworkAcls publicNetwork = default;
+            IList<PrivateEndpointAcl> privateEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubNetworkAcls(Optional.ToNullable(defaultAction), publicNetwork.Value, Optional.ToList(privateEndpoints), serializedAdditionalRawData);
+            return new WebPubSubNetworkAcls(defaultAction, publicNetwork, privateEndpoints ?? new ChangeTrackingList<PrivateEndpointAcl>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubNetworkAcls>.Write(ModelReaderWriterOptions options)

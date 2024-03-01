@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(VmSize))
+            if (VmSize != null)
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
+            if (options.Format != "W" && KubernetesVersion != null)
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<int> count = default;
-            Optional<string> vmSize = default;
-            Optional<string> kubernetesVersion = default;
+            int? count = default;
+            string vmSize = default;
+            string kubernetesVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolUpdateProfile(Optional.ToNullable(count), vmSize.Value, kubernetesVersion.Value, serializedAdditionalRawData);
+            return new AgentPoolUpdateProfile(count, vmSize, kubernetesVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolUpdateProfile>.Write(ModelReaderWriterOptions options)

@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(FixedDate))
+            if (FixedDate != null)
             {
                 writer.WritePropertyName("fixedDate"u8);
                 writer.WriteObjectValue(FixedDate);
             }
-            if (Optional.IsDefined(Recurrence))
+            if (Recurrence != null)
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteObjectValue(Recurrence);
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.Monitor.Models
             string name = default;
             MonitorScaleCapacity capacity = default;
             IList<AutoscaleRule> rules = default;
-            Optional<MonitorTimeWindow> fixedDate = default;
-            Optional<MonitorRecurrence> recurrence = default;
+            MonitorTimeWindow fixedDate = default;
+            MonitorRecurrence recurrence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleProfile(name, capacity, rules, fixedDate.Value, recurrence.Value, serializedAdditionalRawData);
+            return new AutoscaleProfile(
+                name,
+                capacity,
+                rules,
+                fixedDate,
+                recurrence,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleProfile>.Write(ModelReaderWriterOptions options)

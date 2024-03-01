@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.PostgreSql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(DisabledAlerts))
+            if (!(DisabledAlerts is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disabledAlerts"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PostgreSql
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EmailAddresses))
+            if (!(EmailAddresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("emailAddresses"u8);
                 writer.WriteStartArray();
@@ -75,22 +75,22 @@ namespace Azure.ResourceManager.PostgreSql
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SendToEmailAccountAdmins))
+            if (SendToEmailAccountAdmins.HasValue)
             {
                 writer.WritePropertyName("emailAccountAdmins"u8);
                 writer.WriteBooleanValue(SendToEmailAccountAdmins.Value);
             }
-            if (Optional.IsDefined(StorageEndpoint))
+            if (StorageEndpoint != null)
             {
                 writer.WritePropertyName("storageEndpoint"u8);
                 writer.WriteStringValue(StorageEndpoint);
             }
-            if (Optional.IsDefined(StorageAccountAccessKey))
+            if (StorageAccountAccessKey != null)
             {
                 writer.WritePropertyName("storageAccountAccessKey"u8);
                 writer.WriteStringValue(StorageAccountAccessKey);
             }
-            if (Optional.IsDefined(RetentionDays))
+            if (RetentionDays.HasValue)
             {
                 writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.PostgreSql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PostgreSqlServerSecurityAlertPolicyState> state = default;
-            Optional<IList<string>> disabledAlerts = default;
-            Optional<IList<string>> emailAddresses = default;
-            Optional<bool> emailAccountAdmins = default;
-            Optional<string> storageEndpoint = default;
-            Optional<string> storageAccountAccessKey = default;
-            Optional<int> retentionDays = default;
+            SystemData systemData = default;
+            PostgreSqlServerSecurityAlertPolicyState? state = default;
+            IList<string> disabledAlerts = default;
+            IList<string> emailAddresses = default;
+            bool? emailAccountAdmins = default;
+            string storageEndpoint = default;
+            string storageAccountAccessKey = default;
+            int? retentionDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -256,7 +256,19 @@ namespace Azure.ResourceManager.PostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerSecurityAlertPolicyData(id, name, type, systemData.Value, Optional.ToNullable(state), Optional.ToList(disabledAlerts), Optional.ToList(emailAddresses), Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), serializedAdditionalRawData);
+            return new PostgreSqlServerSecurityAlertPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                state,
+                disabledAlerts ?? new ChangeTrackingList<string>(),
+                emailAddresses ?? new ChangeTrackingList<string>(),
+                emailAccountAdmins,
+                storageEndpoint,
+                storageAccountAccessKey,
+                retentionDays,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options)

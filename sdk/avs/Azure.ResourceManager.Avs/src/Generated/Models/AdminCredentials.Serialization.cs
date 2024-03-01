@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NsxtUsername))
+            if (options.Format != "W" && NsxtUsername != null)
             {
                 writer.WritePropertyName("nsxtUsername"u8);
                 writer.WriteStringValue(NsxtUsername);
             }
-            if (options.Format != "W" && Optional.IsDefined(NsxtPassword))
+            if (options.Format != "W" && NsxtPassword != null)
             {
                 writer.WritePropertyName("nsxtPassword"u8);
                 writer.WriteStringValue(NsxtPassword);
             }
-            if (options.Format != "W" && Optional.IsDefined(VCenterUsername))
+            if (options.Format != "W" && VCenterUsername != null)
             {
                 writer.WritePropertyName("vcenterUsername"u8);
                 writer.WriteStringValue(VCenterUsername);
             }
-            if (options.Format != "W" && Optional.IsDefined(VCenterPassword))
+            if (options.Format != "W" && VCenterPassword != null)
             {
                 writer.WritePropertyName("vcenterPassword"u8);
                 writer.WriteStringValue(VCenterPassword);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> nsxtUsername = default;
-            Optional<string> nsxtPassword = default;
-            Optional<string> vcenterUsername = default;
-            Optional<string> vcenterPassword = default;
+            string nsxtUsername = default;
+            string nsxtPassword = default;
+            string vcenterUsername = default;
+            string vcenterPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdminCredentials(nsxtUsername.Value, nsxtPassword.Value, vcenterUsername.Value, vcenterPassword.Value, serializedAdditionalRawData);
+            return new AdminCredentials(nsxtUsername, nsxtPassword, vcenterUsername, vcenterPassword, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdminCredentials>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Indicators))
+            if (Indicators != null)
             {
                 writer.WritePropertyName("indicators"u8);
                 writer.WriteObjectValue(Indicators);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<TIDataConnectorDataTypesIndicators> indicators = default;
+            TIDataConnectorDataTypesIndicators indicators = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TIDataConnectorDataTypes(indicators.Value, serializedAdditionalRawData);
+            return new TIDataConnectorDataTypes(indicators, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TIDataConnectorDataTypes>.Write(ModelReaderWriterOptions options)

@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(Domain))
+            if (!(Domain is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DnsServerIPs))
+            if (!(DnsServerIPs is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dnsServerIps"u8);
                 writer.WriteStartArray();
@@ -81,22 +81,22 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SourceIP))
+            if (SourceIP != null)
             {
                 writer.WritePropertyName("sourceIp"u8);
                 writer.WriteStringValue(SourceIP.ToString());
             }
-            if (Optional.IsDefined(DnsServices))
+            if (DnsServices.HasValue)
             {
                 writer.WritePropertyName("dnsServices"u8);
                 writer.WriteNumberValue(DnsServices.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Revision))
+            if (Revision.HasValue)
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
@@ -143,14 +143,14 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<IList<string>> domain = default;
-            Optional<IList<IPAddress>> dnsServerIPs = default;
-            Optional<IPAddress> sourceIP = default;
-            Optional<long> dnsServices = default;
-            Optional<WorkloadNetworkDnsZoneProvisioningState> provisioningState = default;
-            Optional<long> revision = default;
+            SystemData systemData = default;
+            string displayName = default;
+            IList<string> domain = default;
+            IList<IPAddress> dnsServerIPs = default;
+            IPAddress sourceIP = default;
+            long? dnsServices = default;
+            WorkloadNetworkDnsZoneProvisioningState? provisioningState = default;
+            long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -273,7 +273,19 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkDnsZoneData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(domain), Optional.ToList(dnsServerIPs), sourceIP.Value, Optional.ToNullable(dnsServices), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData);
+            return new WorkloadNetworkDnsZoneData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                domain ?? new ChangeTrackingList<string>(),
+                dnsServerIPs ?? new ChangeTrackingList<IPAddress>(),
+                sourceIP,
+                dnsServices,
+                provisioningState,
+                revision,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkDnsZoneData>.Write(ModelReaderWriterOptions options)

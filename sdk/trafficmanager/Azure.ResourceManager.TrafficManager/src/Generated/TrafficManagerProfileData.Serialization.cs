@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.TrafficManager
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,49 +38,49 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProfileStatus))
+            if (ProfileStatus.HasValue)
             {
                 writer.WritePropertyName("profileStatus"u8);
                 writer.WriteStringValue(ProfileStatus.Value.ToString());
             }
-            if (Optional.IsDefined(TrafficRoutingMethod))
+            if (TrafficRoutingMethod.HasValue)
             {
                 writer.WritePropertyName("trafficRoutingMethod"u8);
                 writer.WriteStringValue(TrafficRoutingMethod.Value.ToString());
             }
-            if (Optional.IsDefined(DnsConfig))
+            if (DnsConfig != null)
             {
                 writer.WritePropertyName("dnsConfig"u8);
                 writer.WriteObjectValue(DnsConfig);
             }
-            if (Optional.IsDefined(MonitorConfig))
+            if (MonitorConfig != null)
             {
                 writer.WritePropertyName("monitorConfig"u8);
                 writer.WriteObjectValue(MonitorConfig);
             }
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<TrafficManagerEndpointData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TrafficViewEnrollmentStatus))
+            if (TrafficViewEnrollmentStatus.HasValue)
             {
                 writer.WritePropertyName("trafficViewEnrollmentStatus"u8);
                 writer.WriteStringValue(TrafficViewEnrollmentStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AllowedEndpointRecordTypes))
+            if (!(AllowedEndpointRecordTypes is ChangeTrackingList<AllowedEndpointRecordType> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("allowedEndpointRecordTypes"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaxReturn))
+            if (MaxReturn.HasValue)
             {
                 if (MaxReturn != null)
                 {
@@ -156,19 +156,19 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<TrafficManagerProfileStatus> profileStatus = default;
-            Optional<TrafficRoutingMethod> trafficRoutingMethod = default;
-            Optional<TrafficManagerDnsConfig> dnsConfig = default;
-            Optional<TrafficManagerMonitorConfig> monitorConfig = default;
-            Optional<IList<TrafficManagerEndpointData>> endpoints = default;
-            Optional<TrafficViewEnrollmentStatus> trafficViewEnrollmentStatus = default;
-            Optional<IList<AllowedEndpointRecordType>> allowedEndpointRecordTypes = default;
-            Optional<long?> maxReturn = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation? location = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            TrafficManagerProfileStatus? profileStatus = default;
+            TrafficRoutingMethod? trafficRoutingMethod = default;
+            TrafficManagerDnsConfig dnsConfig = default;
+            TrafficManagerMonitorConfig monitorConfig = default;
+            IList<TrafficManagerEndpointData> endpoints = default;
+            TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus = default;
+            IList<AllowedEndpointRecordType> allowedEndpointRecordTypes = default;
+            long? maxReturn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -320,7 +320,21 @@ namespace Azure.ResourceManager.TrafficManager
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerProfileData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToDictionary(tags), Optional.ToNullable(location), Optional.ToNullable(profileStatus), Optional.ToNullable(trafficRoutingMethod), dnsConfig.Value, monitorConfig.Value, Optional.ToList(endpoints), Optional.ToNullable(trafficViewEnrollmentStatus), Optional.ToList(allowedEndpointRecordTypes), Optional.ToNullable(maxReturn));
+            return new TrafficManagerProfileData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                profileStatus,
+                trafficRoutingMethod,
+                dnsConfig,
+                monitorConfig,
+                endpoints ?? new ChangeTrackingList<TrafficManagerEndpointData>(),
+                trafficViewEnrollmentStatus,
+                allowedEndpointRecordTypes ?? new ChangeTrackingList<AllowedEndpointRecordType>(),
+                maxReturn);
         }
 
         BinaryData IPersistableModel<TrafficManagerProfileData>.Write(ModelReaderWriterOptions options)

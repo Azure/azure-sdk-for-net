@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Optional.IsDefined(ClientCredential))
+            if (ClientCredential != null)
             {
                 writer.WritePropertyName("clientCredential"u8);
                 writer.WriteObjectValue(ClientCredential);
             }
-            if (Optional.IsDefined(OpenIdConnectConfiguration))
+            if (OpenIdConnectConfiguration != null)
             {
                 writer.WritePropertyName("openIdConnectConfiguration"u8);
                 writer.WriteObjectValue(OpenIdConnectConfiguration);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<OpenIdConnectClientCredential> clientCredential = default;
-            Optional<OpenIdConnectConfig> openIdConnectConfiguration = default;
+            string clientId = default;
+            OpenIdConnectClientCredential clientCredential = default;
+            OpenIdConnectConfig openIdConnectConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OpenIdConnectRegistration(clientId.Value, clientCredential.Value, openIdConnectConfiguration.Value, serializedAdditionalRawData);
+            return new OpenIdConnectRegistration(clientId, clientCredential, openIdConnectConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OpenIdConnectRegistration>.Write(ModelReaderWriterOptions options)

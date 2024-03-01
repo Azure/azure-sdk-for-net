@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Roles))
+            if (!(Roles is ChangeTrackingDictionary<string, DevCenterEnvironmentRole> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, DevCenterEnvironmentRole>> roles = default;
+            IDictionary<string, DevCenterEnvironmentRole> roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterUserRoleAssignments(Optional.ToDictionary(roles), serializedAdditionalRawData);
+            return new DevCenterUserRoleAssignments(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterUserRoleAssignments>.Write(ModelReaderWriterOptions options)

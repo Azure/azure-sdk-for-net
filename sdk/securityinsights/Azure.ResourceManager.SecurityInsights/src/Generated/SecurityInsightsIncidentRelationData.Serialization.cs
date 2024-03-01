@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,29 +48,29 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RelatedResourceId))
+            if (RelatedResourceId != null)
             {
                 writer.WritePropertyName("relatedResourceId"u8);
                 writer.WriteStringValue(RelatedResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(RelatedResourceName))
+            if (options.Format != "W" && RelatedResourceName != null)
             {
                 writer.WritePropertyName("relatedResourceName"u8);
                 writer.WriteStringValue(RelatedResourceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(RelatedResourceType))
+            if (options.Format != "W" && RelatedResourceType.HasValue)
             {
                 writer.WritePropertyName("relatedResourceType"u8);
                 writer.WriteStringValue(RelatedResourceType.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RelatedResourceKind))
+            if (options.Format != "W" && RelatedResourceKind != null)
             {
                 writer.WritePropertyName("relatedResourceKind"u8);
                 writer.WriteStringValue(RelatedResourceKind);
@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> relatedResourceId = default;
-            Optional<string> relatedResourceName = default;
-            Optional<ResourceType> relatedResourceType = default;
-            Optional<string> relatedResourceKind = default;
+            SystemData systemData = default;
+            ResourceIdentifier relatedResourceId = default;
+            string relatedResourceName = default;
+            ResourceType? relatedResourceType = default;
+            string relatedResourceKind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +206,17 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIncidentRelationData(id, name, type, systemData.Value, relatedResourceId.Value, relatedResourceName.Value, Optional.ToNullable(relatedResourceType), relatedResourceKind.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityInsightsIncidentRelationData(
+                id,
+                name,
+                type,
+                systemData,
+                relatedResourceId,
+                relatedResourceName,
+                relatedResourceType,
+                relatedResourceKind,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIncidentRelationData>.Write(ModelReaderWriterOptions options)

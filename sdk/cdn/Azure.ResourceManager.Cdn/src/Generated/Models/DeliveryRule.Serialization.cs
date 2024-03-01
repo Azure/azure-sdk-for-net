@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("order"u8);
             writer.WriteNumberValue(Order);
-            if (Optional.IsCollectionDefined(Conditions))
+            if (!(Conditions is ChangeTrackingList<DeliveryRuleCondition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             int order = default;
-            Optional<IList<DeliveryRuleCondition>> conditions = default;
+            IList<DeliveryRuleCondition> conditions = default;
             IList<DeliveryRuleAction> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeliveryRule(name.Value, order, Optional.ToList(conditions), actions, serializedAdditionalRawData);
+            return new DeliveryRule(name, order, conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(), actions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeliveryRule>.Write(ModelReaderWriterOptions options)

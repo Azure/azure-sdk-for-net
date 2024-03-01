@@ -29,34 +29,34 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(TunnelInterfaces))
+            if (!(TunnelInterfaces is ChangeTrackingList<GatewayLoadBalancerTunnelInterface> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tunnelInterfaces"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LoadBalancerBackendAddresses))
+            if (!(LoadBalancerBackendAddresses is ChangeTrackingList<LoadBalancerBackendAddress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("loadBalancerBackendAddresses"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(BackendIPConfigurations))
+            if (options.Format != "W" && !(BackendIPConfigurations is ChangeTrackingList<NetworkInterfaceIPConfigurationData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("backendIPConfigurations"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LoadBalancingRules))
+            if (options.Format != "W" && !(LoadBalancingRules is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("loadBalancingRules"u8);
                 writer.WriteStartArray();
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(OutboundRule))
+            if (options.Format != "W" && OutboundRule != null)
             {
                 writer.WritePropertyName("outboundRule"u8);
                 JsonSerializer.Serialize(writer, OutboundRule);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OutboundRules))
+            if (options.Format != "W" && !(OutboundRules is ChangeTrackingList<WritableSubResource> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("outboundRules"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(InboundNatRules))
+            if (options.Format != "W" && !(InboundNatRules is ChangeTrackingList<WritableSubResource> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("inboundNatRules"u8);
                 writer.WriteStartArray();
@@ -121,22 +121,22 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(DrainPeriodInSeconds))
+            if (DrainPeriodInSeconds.HasValue)
             {
                 writer.WritePropertyName("drainPeriodInSeconds"u8);
                 writer.WriteNumberValue(DrainPeriodInSeconds.Value);
             }
-            if (Optional.IsDefined(VirtualNetwork))
+            if (VirtualNetwork != null)
             {
                 writer.WritePropertyName("virtualNetwork"u8);
                 JsonSerializer.Serialize(writer, VirtualNetwork);
             }
-            if (Optional.IsDefined(SyncMode))
+            if (SyncMode.HasValue)
             {
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
@@ -180,22 +180,22 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IList<GatewayLoadBalancerTunnelInterface>> tunnelInterfaces = default;
-            Optional<IList<LoadBalancerBackendAddress>> loadBalancerBackendAddresses = default;
-            Optional<IReadOnlyList<NetworkInterfaceIPConfigurationData>> backendIPConfigurations = default;
-            Optional<IReadOnlyList<WritableSubResource>> loadBalancingRules = default;
-            Optional<WritableSubResource> outboundRule = default;
-            Optional<IReadOnlyList<WritableSubResource>> outboundRules = default;
-            Optional<IReadOnlyList<WritableSubResource>> inboundNatRules = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<int> drainPeriodInSeconds = default;
-            Optional<WritableSubResource> virtualNetwork = default;
-            Optional<BackendAddressSyncMode> syncMode = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces = default;
+            IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses = default;
+            IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations = default;
+            IReadOnlyList<WritableSubResource> loadBalancingRules = default;
+            WritableSubResource outboundRule = default;
+            IReadOnlyList<WritableSubResource> outboundRules = default;
+            IReadOnlyList<WritableSubResource> inboundNatRules = default;
+            NetworkProvisioningState? provisioningState = default;
+            int? drainPeriodInSeconds = default;
+            WritableSubResource virtualNetwork = default;
+            BackendAddressSyncMode? syncMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -388,7 +388,24 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendAddressPoolData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(location), Optional.ToList(tunnelInterfaces), Optional.ToList(loadBalancerBackendAddresses), Optional.ToList(backendIPConfigurations), Optional.ToList(loadBalancingRules), outboundRule, Optional.ToList(outboundRules), Optional.ToList(inboundNatRules), Optional.ToNullable(provisioningState), Optional.ToNullable(drainPeriodInSeconds), virtualNetwork, Optional.ToNullable(syncMode));
+            return new BackendAddressPoolData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                location,
+                tunnelInterfaces ?? new ChangeTrackingList<GatewayLoadBalancerTunnelInterface>(),
+                loadBalancerBackendAddresses ?? new ChangeTrackingList<LoadBalancerBackendAddress>(),
+                backendIPConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>(),
+                loadBalancingRules ?? new ChangeTrackingList<WritableSubResource>(),
+                outboundRule,
+                outboundRules ?? new ChangeTrackingList<WritableSubResource>(),
+                inboundNatRules ?? new ChangeTrackingList<WritableSubResource>(),
+                provisioningState,
+                drainPeriodInSeconds,
+                virtualNetwork,
+                syncMode);
         }
 
         BinaryData IPersistableModel<BackendAddressPoolData>.Write(ModelReaderWriterOptions options)

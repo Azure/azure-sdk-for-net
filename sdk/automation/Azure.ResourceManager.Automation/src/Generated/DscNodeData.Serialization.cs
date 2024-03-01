@@ -44,54 +44,54 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastSeenOn))
+            if (LastSeenOn.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeenOn.Value, "O");
             }
-            if (Optional.IsDefined(RegistrationOn))
+            if (RegistrationOn.HasValue)
             {
                 writer.WritePropertyName("registrationTime"u8);
                 writer.WriteStringValue(RegistrationOn.Value, "O");
             }
-            if (Optional.IsDefined(IP))
+            if (IP != null)
             {
                 writer.WritePropertyName("ip"u8);
                 writer.WriteStringValue(IP);
             }
-            if (Optional.IsDefined(AccountId))
+            if (AccountId != null)
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(NodeId))
+            if (NodeId != null)
             {
                 writer.WritePropertyName("nodeId"u8);
                 writer.WriteStringValue(NodeId);
             }
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(TotalCount))
+            if (TotalCount.HasValue)
             {
                 writer.WritePropertyName("totalCount"u8);
                 writer.WriteNumberValue(TotalCount.Value);
             }
-            if (Optional.IsCollectionDefined(ExtensionHandler))
+            if (!(ExtensionHandler is ChangeTrackingList<DscNodeExtensionHandlerAssociationProperty> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("extensionHandler"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Automation
             }
             writer.WritePropertyName("nodeConfiguration"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NamePropertiesNodeConfigurationName))
+            if (NamePropertiesNodeConfigurationName != null)
             {
                 if (NamePropertiesNodeConfigurationName != null)
                 {
@@ -158,17 +158,17 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<DateTimeOffset> registrationTime = default;
-            Optional<string> ip = default;
-            Optional<string> accountId = default;
-            Optional<string> status = default;
-            Optional<string> nodeId = default;
-            Optional<ETag> etag = default;
-            Optional<int> totalCount = default;
-            Optional<IList<DscNodeExtensionHandlerAssociationProperty>> extensionHandler = default;
-            Optional<string> name0 = default;
+            SystemData systemData = default;
+            DateTimeOffset? lastSeen = default;
+            DateTimeOffset? registrationTime = default;
+            string ip = default;
+            string accountId = default;
+            string status = default;
+            string nodeId = default;
+            ETag? etag = default;
+            int? totalCount = default;
+            IList<DscNodeExtensionHandlerAssociationProperty> extensionHandler = default;
+            string name0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -307,7 +307,22 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscNodeData(id, name, type, systemData.Value, Optional.ToNullable(lastSeen), Optional.ToNullable(registrationTime), ip.Value, accountId.Value, status.Value, nodeId.Value, Optional.ToNullable(etag), Optional.ToNullable(totalCount), Optional.ToList(extensionHandler), name0.Value, serializedAdditionalRawData);
+            return new DscNodeData(
+                id,
+                name,
+                type,
+                systemData,
+                lastSeen,
+                registrationTime,
+                ip,
+                accountId,
+                status,
+                nodeId,
+                etag,
+                totalCount,
+                extensionHandler ?? new ChangeTrackingList<DscNodeExtensionHandlerAssociationProperty>(),
+                name0,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscNodeData>.Write(ModelReaderWriterOptions options)

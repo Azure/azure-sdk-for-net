@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HealthProbeSettings))
+            if (HealthProbeSettings != null)
             {
                 if (HealthProbeSettings != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("healthProbeSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(Origins))
+            if (!(Origins is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("origins"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
+            if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes.HasValue)
             {
                 if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
                 }
             }
-            if (Optional.IsDefined(ResponseBasedOriginErrorDetectionSettings))
+            if (ResponseBasedOriginErrorDetectionSettings != null)
             {
                 if (ResponseBasedOriginErrorDetectionSettings != null)
                 {
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             string name = default;
-            Optional<HealthProbeSettings> healthProbeSettings = default;
-            Optional<IList<WritableSubResource>> origins = default;
-            Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
-            Optional<ResponseBasedOriginErrorDetectionSettings> responseBasedOriginErrorDetectionSettings = default;
+            HealthProbeSettings healthProbeSettings = default;
+            IList<WritableSubResource> origins = default;
+            int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
+            ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,7 +192,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeepCreatedOriginGroup(name, healthProbeSettings.Value, Optional.ToList(origins), Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedOriginErrorDetectionSettings.Value, serializedAdditionalRawData);
+            return new DeepCreatedOriginGroup(
+                name,
+                healthProbeSettings,
+                origins ?? new ChangeTrackingList<WritableSubResource>(),
+                trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
+                responseBasedOriginErrorDetectionSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeepCreatedOriginGroup>.Write(ModelReaderWriterOptions options)

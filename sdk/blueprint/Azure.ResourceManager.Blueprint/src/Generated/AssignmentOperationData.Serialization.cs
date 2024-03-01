@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Blueprint
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(BlueprintVersion))
+            if (BlueprintVersion != null)
             {
                 writer.WritePropertyName("blueprintVersion"u8);
                 writer.WriteStringValue(BlueprintVersion);
             }
-            if (Optional.IsDefined(AssignmentState))
+            if (AssignmentState != null)
             {
                 writer.WritePropertyName("assignmentState"u8);
                 writer.WriteStringValue(AssignmentState);
             }
-            if (Optional.IsDefined(TimeCreated))
+            if (TimeCreated != null)
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated);
             }
-            if (Optional.IsDefined(TimeStarted))
+            if (TimeStarted != null)
             {
                 writer.WritePropertyName("timeStarted"u8);
                 writer.WriteStringValue(TimeStarted);
             }
-            if (Optional.IsDefined(TimeFinished))
+            if (TimeFinished != null)
             {
                 writer.WritePropertyName("timeFinished"u8);
                 writer.WriteStringValue(TimeFinished);
             }
-            if (Optional.IsCollectionDefined(Deployments))
+            if (!(Deployments is ChangeTrackingList<AssignmentDeploymentJob> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("deployments"u8);
                 writer.WriteStartArray();
@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.Blueprint
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> blueprintVersion = default;
-            Optional<string> assignmentState = default;
-            Optional<string> timeCreated = default;
-            Optional<string> timeStarted = default;
-            Optional<string> timeFinished = default;
-            Optional<IList<AssignmentDeploymentJob>> deployments = default;
+            SystemData systemData = default;
+            string blueprintVersion = default;
+            string assignmentState = default;
+            string timeCreated = default;
+            string timeStarted = default;
+            string timeFinished = default;
+            IList<AssignmentDeploymentJob> deployments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,7 +219,18 @@ namespace Azure.ResourceManager.Blueprint
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentOperationData(id, name, type, systemData.Value, blueprintVersion.Value, assignmentState.Value, timeCreated.Value, timeStarted.Value, timeFinished.Value, Optional.ToList(deployments), serializedAdditionalRawData);
+            return new AssignmentOperationData(
+                id,
+                name,
+                type,
+                systemData,
+                blueprintVersion,
+                assignmentState,
+                timeCreated,
+                timeStarted,
+                timeFinished,
+                deployments ?? new ChangeTrackingList<AssignmentDeploymentJob>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentOperationData>.Write(ModelReaderWriterOptions options)

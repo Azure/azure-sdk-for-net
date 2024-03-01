@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
-            if (Optional.IsDefined(BlobFilterDetails))
+            if (BlobFilterDetails != null)
             {
                 writer.WritePropertyName("blobFilterDetails"u8);
                 writer.WriteObjectValue(BlobFilterDetails);
             }
-            if (Optional.IsDefined(AzureFileFilterDetails))
+            if (AzureFileFilterDetails != null)
             {
                 writer.WritePropertyName("azureFileFilterDetails"u8);
                 writer.WriteObjectValue(AzureFileFilterDetails);
             }
-            if (Optional.IsCollectionDefined(FilterFileDetails))
+            if (!(FilterFileDetails is ChangeTrackingList<FilterFileDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filterFileDetails"u8);
                 writer.WriteStartArray();
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataAccountType dataAccountType = default;
-            Optional<BlobFilterDetails> blobFilterDetails = default;
-            Optional<AzureFileFilterDetails> azureFileFilterDetails = default;
-            Optional<IList<FilterFileDetails>> filterFileDetails = default;
+            BlobFilterDetails blobFilterDetails = default;
+            AzureFileFilterDetails azureFileFilterDetails = default;
+            IList<FilterFileDetails> filterFileDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransferFilterDetails(dataAccountType, blobFilterDetails.Value, azureFileFilterDetails.Value, Optional.ToList(filterFileDetails), serializedAdditionalRawData);
+            return new TransferFilterDetails(dataAccountType, blobFilterDetails, azureFileFilterDetails, filterFileDetails ?? new ChangeTrackingList<FilterFileDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TransferFilterDetails>.Write(ModelReaderWriterOptions options)

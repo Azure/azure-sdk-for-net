@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Lun))
+            if (options.Format != "W" && Lun.HasValue)
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Caching))
+            if (options.Format != "W" && Caching.HasValue)
             {
                 writer.WritePropertyName("caching"u8);
                 writer.WriteStringValue(Caching.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskSizeGB))
+            if (options.Format != "W" && DiskSizeGB.HasValue)
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(ManagedDisk))
+            if (ManagedDisk != null)
             {
                 writer.WritePropertyName("managedDisk"u8);
                 writer.WriteObjectValue(ManagedDisk);
             }
-            if (Optional.IsDefined(DiskRestorePoint))
+            if (DiskRestorePoint != null)
             {
                 writer.WritePropertyName("diskRestorePoint"u8);
                 writer.WriteObjectValue(DiskRestorePoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(WriteAcceleratorEnabled))
+            if (options.Format != "W" && WriteAcceleratorEnabled.HasValue)
             {
                 writer.WritePropertyName("writeAcceleratorEnabled"u8);
                 writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<int> lun = default;
-            Optional<string> name = default;
-            Optional<CachingType> caching = default;
-            Optional<int> diskSizeGB = default;
-            Optional<VirtualMachineManagedDisk> managedDisk = default;
-            Optional<DiskRestorePointAttributes> diskRestorePoint = default;
-            Optional<bool> writeAcceleratorEnabled = default;
+            int? lun = default;
+            string name = default;
+            CachingType? caching = default;
+            int? diskSizeGB = default;
+            VirtualMachineManagedDisk managedDisk = default;
+            DiskRestorePointAttributes diskRestorePoint = default;
+            bool? writeAcceleratorEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePointSourceVmDataDisk(Optional.ToNullable(lun), name.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint.Value, Optional.ToNullable(writeAcceleratorEnabled), serializedAdditionalRawData);
+            return new RestorePointSourceVmDataDisk(
+                lun,
+                name,
+                caching,
+                diskSizeGB,
+                managedDisk,
+                diskRestorePoint,
+                writeAcceleratorEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorePointSourceVmDataDisk>.Write(ModelReaderWriterOptions options)

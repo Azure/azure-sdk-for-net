@@ -26,69 +26,69 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventName))
+            if (EventName != null)
             {
                 writer.WritePropertyName("eventName"u8);
                 writer.WriteStringValue(EventName);
             }
-            if (Optional.IsDefined(EventSource))
+            if (EventSource != null)
             {
                 writer.WritePropertyName("eventSource"u8);
                 writer.WriteStringValue(EventSource);
             }
-            if (Optional.IsDefined(Level))
+            if (Level != null)
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level);
             }
-            if (Optional.IsDefined(OperationName))
+            if (OperationName != null)
             {
                 writer.WritePropertyName("operationName"u8);
                 writer.WriteStringValue(OperationName);
             }
-            if (Optional.IsDefined(ResourceGroupName))
+            if (ResourceGroupName != null)
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Optional.IsDefined(ResourceProviderName))
+            if (ResourceProviderName != null)
             {
                 writer.WritePropertyName("resourceProviderName"u8);
                 writer.WriteStringValue(ResourceProviderName);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(SubStatus))
+            if (SubStatus != null)
             {
                 writer.WritePropertyName("subStatus"u8);
                 writer.WriteStringValue(SubStatus);
             }
-            if (Optional.IsDefined(Claims))
+            if (Claims != null)
             {
                 writer.WritePropertyName("claims"u8);
                 writer.WriteObjectValue(Claims);
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(LegacyResourceId))
+            if (LegacyResourceId != null)
             {
                 writer.WritePropertyName("legacyResourceId"u8);
                 writer.WriteStringValue(LegacyResourceId);
             }
-            if (Optional.IsDefined(ResourceLocation))
+            if (ResourceLocation != null)
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation);
             }
-            if (Optional.IsDefined(MetricNamespace))
+            if (MetricNamespace != null)
             {
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
@@ -131,20 +131,20 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> eventName = default;
-            Optional<string> eventSource = default;
-            Optional<string> level = default;
-            Optional<string> operationName = default;
-            Optional<string> resourceGroupName = default;
-            Optional<string> resourceProviderName = default;
-            Optional<string> status = default;
-            Optional<string> subStatus = default;
-            Optional<RuleManagementEventClaimsDataSource> claims = default;
+            string eventName = default;
+            string eventSource = default;
+            string level = default;
+            string operationName = default;
+            string resourceGroupName = default;
+            string resourceProviderName = default;
+            string status = default;
+            string subStatus = default;
+            RuleManagementEventClaimsDataSource claims = default;
             string odataType = default;
-            Optional<ResourceIdentifier> resourceUri = default;
-            Optional<ResourceIdentifier> legacyResourceId = default;
-            Optional<string> resourceLocation = default;
-            Optional<string> metricNamespace = default;
+            ResourceIdentifier resourceUri = default;
+            ResourceIdentifier legacyResourceId = default;
+            string resourceLocation = default;
+            string metricNamespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -237,7 +237,22 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuleManagementEventDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value, serializedAdditionalRawData, eventName.Value, eventSource.Value, level.Value, operationName.Value, resourceGroupName.Value, resourceProviderName.Value, status.Value, subStatus.Value, claims.Value);
+            return new RuleManagementEventDataSource(
+                odataType,
+                resourceUri,
+                legacyResourceId,
+                resourceLocation,
+                metricNamespace,
+                serializedAdditionalRawData,
+                eventName,
+                eventSource,
+                level,
+                operationName,
+                resourceGroupName,
+                resourceProviderName,
+                status,
+                subStatus,
+                claims);
         }
 
         BinaryData IPersistableModel<RuleManagementEventDataSource>.Write(ModelReaderWriterOptions options)

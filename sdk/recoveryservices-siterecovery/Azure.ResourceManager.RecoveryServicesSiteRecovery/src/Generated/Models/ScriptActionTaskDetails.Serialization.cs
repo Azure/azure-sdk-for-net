@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(Output))
+            if (Output != null)
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStringValue(Output);
             }
-            if (Optional.IsDefined(IsPrimarySideScript))
+            if (IsPrimarySideScript.HasValue)
             {
                 writer.WritePropertyName("isPrimarySideScript"u8);
                 writer.WriteBooleanValue(IsPrimarySideScript.Value);
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> path = default;
-            Optional<string> output = default;
-            Optional<bool> isPrimarySideScript = default;
+            string name = default;
+            string path = default;
+            string output = default;
+            bool? isPrimarySideScript = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptActionTaskDetails(instanceType, serializedAdditionalRawData, name.Value, path.Value, output.Value, Optional.ToNullable(isPrimarySideScript));
+            return new ScriptActionTaskDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                name,
+                path,
+                output,
+                isPrimarySideScript);
         }
 
         BinaryData IPersistableModel<ScriptActionTaskDetails>.Write(ModelReaderWriterOptions options)

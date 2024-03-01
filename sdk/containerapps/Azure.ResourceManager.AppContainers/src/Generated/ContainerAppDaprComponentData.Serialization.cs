@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComponentType))
+            if (ComponentType != null)
             {
                 writer.WritePropertyName("componentType"u8);
                 writer.WriteStringValue(ComponentType);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(IgnoreErrors))
+            if (IgnoreErrors.HasValue)
             {
                 writer.WritePropertyName("ignoreErrors"u8);
                 writer.WriteBooleanValue(IgnoreErrors.Value);
             }
-            if (Optional.IsDefined(InitTimeout))
+            if (InitTimeout != null)
             {
                 writer.WritePropertyName("initTimeout"u8);
                 writer.WriteStringValue(InitTimeout);
             }
-            if (Optional.IsCollectionDefined(Secrets))
+            if (!(Secrets is ChangeTrackingList<ContainerAppWritableSecret> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SecretStoreComponent))
+            if (SecretStoreComponent != null)
             {
                 writer.WritePropertyName("secretStoreComponent"u8);
                 writer.WriteStringValue(SecretStoreComponent);
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingList<ContainerAppDaprMetadata> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Scopes))
+            if (!(Scopes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -147,15 +147,15 @@ namespace Azure.ResourceManager.AppContainers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> componentType = default;
-            Optional<string> version = default;
-            Optional<bool> ignoreErrors = default;
-            Optional<string> initTimeout = default;
-            Optional<IList<ContainerAppWritableSecret>> secrets = default;
-            Optional<string> secretStoreComponent = default;
-            Optional<IList<ContainerAppDaprMetadata>> metadata = default;
-            Optional<IList<string>> scopes = default;
+            SystemData systemData = default;
+            string componentType = default;
+            string version = default;
+            bool? ignoreErrors = default;
+            string initTimeout = default;
+            IList<ContainerAppWritableSecret> secrets = default;
+            string secretStoreComponent = default;
+            IList<ContainerAppDaprMetadata> metadata = default;
+            IList<string> scopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -273,7 +273,20 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDaprComponentData(id, name, type, systemData.Value, componentType.Value, version.Value, Optional.ToNullable(ignoreErrors), initTimeout.Value, Optional.ToList(secrets), secretStoreComponent.Value, Optional.ToList(metadata), Optional.ToList(scopes), serializedAdditionalRawData);
+            return new ContainerAppDaprComponentData(
+                id,
+                name,
+                type,
+                systemData,
+                componentType,
+                version,
+                ignoreErrors,
+                initTimeout,
+                secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(),
+                secretStoreComponent,
+                metadata ?? new ChangeTrackingList<ContainerAppDaprMetadata>(),
+                scopes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDaprComponentData>.Write(ModelReaderWriterOptions options)

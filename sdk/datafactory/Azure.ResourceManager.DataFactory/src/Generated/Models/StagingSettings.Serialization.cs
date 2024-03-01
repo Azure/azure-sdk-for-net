@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
             JsonSerializer.Serialize(writer, LinkedServiceName);
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 JsonSerializer.Serialize(writer, Path);
             }
-            if (Optional.IsDefined(EnableCompression))
+            if (EnableCompression != null)
             {
                 writer.WritePropertyName("enableCompression"u8);
                 JsonSerializer.Serialize(writer, EnableCompression);
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryLinkedServiceReference linkedServiceName = default;
-            Optional<DataFactoryElement<string>> path = default;
-            Optional<DataFactoryElement<bool>> enableCompression = default;
+            DataFactoryElement<string> path = default;
+            DataFactoryElement<bool> enableCompression = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new StagingSettings(linkedServiceName, path.Value, enableCompression.Value, additionalProperties);
+            return new StagingSettings(linkedServiceName, path, enableCompression, additionalProperties);
         }
 
         BinaryData IPersistableModel<StagingSettings>.Write(ModelReaderWriterOptions options)

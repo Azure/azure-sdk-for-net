@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryZone))
+            if (PrimaryZone != null)
             {
                 writer.WritePropertyName("primaryZone"u8);
                 writer.WriteStringValue(PrimaryZone);
             }
-            if (Optional.IsDefined(RecoveryZone))
+            if (RecoveryZone != null)
             {
                 writer.WritePropertyName("recoveryZone"u8);
                 writer.WriteStringValue(RecoveryZone);
             }
-            if (Optional.IsDefined(PrimaryExtendedLocation))
+            if (PrimaryExtendedLocation != null)
             {
                 writer.WritePropertyName("primaryExtendedLocation"u8);
                 writer.WriteObjectValue(PrimaryExtendedLocation);
             }
-            if (Optional.IsDefined(RecoveryExtendedLocation))
+            if (RecoveryExtendedLocation != null)
             {
                 writer.WritePropertyName("recoveryExtendedLocation"u8);
                 writer.WriteObjectValue(RecoveryExtendedLocation);
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> primaryZone = default;
-            Optional<string> recoveryZone = default;
-            Optional<SiteRecoveryExtendedLocation> primaryExtendedLocation = default;
-            Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
+            string primaryZone = default;
+            string recoveryZone = default;
+            SiteRecoveryExtendedLocation primaryExtendedLocation = default;
+            SiteRecoveryExtendedLocation recoveryExtendedLocation = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPlanA2AContent(instanceType, serializedAdditionalRawData, primaryZone.Value, recoveryZone.Value, primaryExtendedLocation.Value, recoveryExtendedLocation.Value);
+            return new RecoveryPlanA2AContent(
+                instanceType,
+                serializedAdditionalRawData,
+                primaryZone,
+                recoveryZone,
+                primaryExtendedLocation,
+                recoveryExtendedLocation);
         }
 
         BinaryData IPersistableModel<RecoveryPlanA2AContent>.Write(ModelReaderWriterOptions options)

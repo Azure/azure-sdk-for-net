@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TableName))
+            if (TableName != null)
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (Optional.IsCollectionDefined(Columns))
+            if (!(Columns is ChangeTrackingList<DataTableResponseColumn> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Rows))
+            if (!(Rows is ChangeTrackingList<IList<string>> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("rows"u8);
                 writer.WriteStartArray();
@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> tableName = default;
-            Optional<IList<DataTableResponseColumn>> columns = default;
-            Optional<IList<IList<string>>> rows = default;
+            string tableName = default;
+            IList<DataTableResponseColumn> columns = default;
+            IList<IList<string>> rows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataTableResponseObject(tableName.Value, Optional.ToList(columns), Optional.ToList(rows), serializedAdditionalRawData);
+            return new DataTableResponseObject(tableName, columns ?? new ChangeTrackingList<DataTableResponseColumn>(), rows ?? new ChangeTrackingList<IList<string>>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataTableResponseObject>.Write(ModelReaderWriterOptions options)

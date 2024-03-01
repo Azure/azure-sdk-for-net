@@ -43,36 +43,36 @@ namespace Azure.ResourceManager.ElasticSan
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(VolumeId))
+            if (options.Format != "W" && VolumeId.HasValue)
             {
                 writer.WritePropertyName("volumeId"u8);
                 writer.WriteStringValue(VolumeId.Value);
             }
-            if (Optional.IsDefined(CreationData))
+            if (CreationData != null)
             {
                 writer.WritePropertyName("creationData"u8);
                 writer.WriteObjectValue(CreationData);
             }
             writer.WritePropertyName("sizeGiB"u8);
             writer.WriteNumberValue(SizeGiB);
-            if (options.Format != "W" && Optional.IsDefined(StorageTarget))
+            if (options.Format != "W" && StorageTarget != null)
             {
                 writer.WritePropertyName("storageTarget"u8);
                 writer.WriteObjectValue(StorageTarget);
             }
-            if (Optional.IsDefined(ManagedBy))
+            if (ManagedBy != null)
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteObjectValue(ManagedBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -119,13 +119,13 @@ namespace Azure.ResourceManager.ElasticSan
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> volumeId = default;
-            Optional<ElasticSanVolumeDataSourceInfo> creationData = default;
+            SystemData systemData = default;
+            Guid? volumeId = default;
+            ElasticSanVolumeDataSourceInfo creationData = default;
             long sizeGiB = default;
-            Optional<IscsiTargetInfo> storageTarget = default;
-            Optional<ManagedByInfo> managedBy = default;
-            Optional<ElasticSanProvisioningState> provisioningState = default;
+            IscsiTargetInfo storageTarget = default;
+            ManagedByInfo managedBy = default;
+            ElasticSanProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -222,7 +222,18 @@ namespace Azure.ResourceManager.ElasticSan
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanVolumeData(id, name, type, systemData.Value, Optional.ToNullable(volumeId), creationData.Value, sizeGiB, storageTarget.Value, managedBy.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ElasticSanVolumeData(
+                id,
+                name,
+                type,
+                systemData,
+                volumeId,
+                creationData,
+                sizeGiB,
+                storageTarget,
+                managedBy,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanVolumeData>.Write(ModelReaderWriterOptions options)

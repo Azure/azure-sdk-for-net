@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImageReference))
+            if (ImageReference != null)
             {
                 writer.WritePropertyName("imageReference"u8);
                 writer.WriteObjectValue(ImageReference);
             }
-            if (Optional.IsDefined(OSDisk))
+            if (OSDisk != null)
             {
                 writer.WritePropertyName("osDisk"u8);
                 writer.WriteObjectValue(OSDisk);
             }
-            if (Optional.IsCollectionDefined(DataDisks))
+            if (!(DataDisks is ChangeTrackingList<VirtualMachineDataDisk> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DiskControllerType))
+            if (DiskControllerType.HasValue)
             {
                 writer.WritePropertyName("diskControllerType"u8);
                 writer.WriteStringValue(DiskControllerType.Value.ToString());
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ImageReference> imageReference = default;
-            Optional<VirtualMachineOSDisk> osDisk = default;
-            Optional<IList<VirtualMachineDataDisk>> dataDisks = default;
-            Optional<DiskControllerType> diskControllerType = default;
+            ImageReference imageReference = default;
+            VirtualMachineOSDisk osDisk = default;
+            IList<VirtualMachineDataDisk> dataDisks = default;
+            DiskControllerType? diskControllerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineStorageProfile(imageReference.Value, osDisk.Value, Optional.ToList(dataDisks), Optional.ToNullable(diskControllerType), serializedAdditionalRawData);
+            return new VirtualMachineStorageProfile(imageReference, osDisk, dataDisks ?? new ChangeTrackingList<VirtualMachineDataDisk>(), diskControllerType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineStorageProfile>.Write(ModelReaderWriterOptions options)

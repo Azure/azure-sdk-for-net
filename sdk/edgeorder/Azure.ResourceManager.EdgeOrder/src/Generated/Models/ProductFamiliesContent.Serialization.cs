@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            if (Optional.IsDefined(CustomerSubscriptionDetails))
+            if (CustomerSubscriptionDetails != null)
             {
                 writer.WritePropertyName("customerSubscriptionDetails"u8);
                 writer.WriteObjectValue(CustomerSubscriptionDetails);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             IDictionary<string, IList<FilterableProperty>> filterableProperties = default;
-            Optional<CustomerSubscriptionDetails> customerSubscriptionDetails = default;
+            CustomerSubscriptionDetails customerSubscriptionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductFamiliesContent(filterableProperties, customerSubscriptionDetails.Value, serializedAdditionalRawData);
+            return new ProductFamiliesContent(filterableProperties, customerSubscriptionDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductFamiliesContent>.Write(ModelReaderWriterOptions options)

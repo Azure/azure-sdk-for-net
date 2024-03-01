@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Metadatavalues))
+            if (!(Metadatavalues is ChangeTrackingList<MonitorMetadataValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadatavalues"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (!(Data is ChangeTrackingList<MonitorMetricValue> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MonitorMetadataValue>> metadatavalues = default;
-            Optional<IReadOnlyList<MonitorMetricValue>> data = default;
+            IReadOnlyList<MonitorMetadataValue> metadatavalues = default;
+            IReadOnlyList<MonitorMetricValue> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorTimeSeriesElement(Optional.ToList(metadatavalues), Optional.ToList(data), serializedAdditionalRawData);
+            return new MonitorTimeSeriesElement(metadatavalues ?? new ChangeTrackingList<MonitorMetadataValue>(), data ?? new ChangeTrackingList<MonitorMetricValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorTimeSeriesElement>.Write(ModelReaderWriterOptions options)

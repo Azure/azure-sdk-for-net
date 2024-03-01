@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GradeName))
+            if (GradeName != null)
             {
                 writer.WritePropertyName("gradeName"u8);
                 writer.WriteStringValue(GradeName);
             }
-            if (Optional.IsDefined(MinScoreThreshold))
+            if (MinScoreThreshold.HasValue)
             {
                 writer.WritePropertyName("minScoreThreshold"u8);
                 writer.WriteNumberValue(MinScoreThreshold.Value);
             }
-            if (Optional.IsDefined(MaxScoreThreshold))
+            if (MaxScoreThreshold.HasValue)
             {
                 writer.WritePropertyName("maxScoreThreshold"u8);
                 writer.WriteNumberValue(MaxScoreThreshold.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> gradeName = default;
-            Optional<int> minScoreThreshold = default;
-            Optional<int> maxScoreThreshold = default;
+            string gradeName = default;
+            int? minScoreThreshold = default;
+            int? maxScoreThreshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionGradesItem(gradeName.Value, Optional.ToNullable(minScoreThreshold), Optional.ToNullable(maxScoreThreshold), serializedAdditionalRawData);
+            return new PredictionGradesItem(gradeName, minScoreThreshold, maxScoreThreshold, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictionGradesItem>.Write(ModelReaderWriterOptions options)

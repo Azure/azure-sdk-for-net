@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<GatewayRoute> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GatewayRoute>> value = default;
+            IReadOnlyList<GatewayRoute> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayRouteListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new GatewayRouteListResult(value ?? new ChangeTrackingList<GatewayRoute>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayRouteListResult>.Write(ModelReaderWriterOptions options)

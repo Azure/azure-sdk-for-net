@@ -15,7 +15,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableVideoPreviewImage))
+            if (EnableVideoPreviewImage != null)
             {
                 writer.WritePropertyName("enableVideoPreviewImage"u8);
                 writer.WriteStringValue(EnableVideoPreviewImage);
@@ -29,7 +29,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> enableVideoPreviewImage = default;
+            string enableVideoPreviewImage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableVideoPreviewImage"u8))
@@ -38,7 +38,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new VideoPublishingOptions(enableVideoPreviewImage.Value);
+            return new VideoPublishingOptions(enableVideoPreviewImage);
         }
     }
 }

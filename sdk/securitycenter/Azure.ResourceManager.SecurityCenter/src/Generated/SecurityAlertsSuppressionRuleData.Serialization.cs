@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlertType))
+            if (AlertType != null)
             {
                 writer.WritePropertyName("alertType"u8);
                 writer.WriteStringValue(AlertType);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedUtc"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationDateUtc"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Comment))
+            if (Comment != null)
             {
                 writer.WritePropertyName("comment"u8);
                 writer.WriteStringValue(Comment);
             }
-            if (Optional.IsDefined(SuppressionAlertsScope))
+            if (SuppressionAlertsScope != null)
             {
                 writer.WritePropertyName("suppressionAlertsScope"u8);
                 writer.WriteObjectValue(SuppressionAlertsScope);
@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> alertType = default;
-            Optional<DateTimeOffset> lastModifiedUtc = default;
-            Optional<DateTimeOffset> expirationDateUtc = default;
-            Optional<string> reason = default;
-            Optional<SecurityAlertsSuppressionRuleState> state = default;
-            Optional<string> comment = default;
-            Optional<SuppressionAlertsScope> suppressionAlertsScope = default;
+            SystemData systemData = default;
+            string alertType = default;
+            DateTimeOffset? lastModifiedUtc = default;
+            DateTimeOffset? expirationDateUtc = default;
+            string reason = default;
+            SecurityAlertsSuppressionRuleState? state = default;
+            string comment = default;
+            SuppressionAlertsScope suppressionAlertsScope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,7 +232,19 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAlertsSuppressionRuleData(id, name, type, systemData.Value, alertType.Value, Optional.ToNullable(lastModifiedUtc), Optional.ToNullable(expirationDateUtc), reason.Value, Optional.ToNullable(state), comment.Value, suppressionAlertsScope.Value, serializedAdditionalRawData);
+            return new SecurityAlertsSuppressionRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                alertType,
+                lastModifiedUtc,
+                expirationDateUtc,
+                reason,
+                state,
+                comment,
+                suppressionAlertsScope,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAlertsSuppressionRuleData>.Write(ModelReaderWriterOptions options)

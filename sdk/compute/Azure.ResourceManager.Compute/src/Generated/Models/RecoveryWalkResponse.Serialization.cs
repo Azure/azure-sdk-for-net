@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(WalkPerformed))
+            if (options.Format != "W" && WalkPerformed.HasValue)
             {
                 writer.WritePropertyName("walkPerformed"u8);
                 writer.WriteBooleanValue(WalkPerformed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextPlatformUpdateDomain))
+            if (options.Format != "W" && NextPlatformUpdateDomain.HasValue)
             {
                 writer.WritePropertyName("nextPlatformUpdateDomain"u8);
                 writer.WriteNumberValue(NextPlatformUpdateDomain.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> walkPerformed = default;
-            Optional<int> nextPlatformUpdateDomain = default;
+            bool? walkPerformed = default;
+            int? nextPlatformUpdateDomain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryWalkResponse(Optional.ToNullable(walkPerformed), Optional.ToNullable(nextPlatformUpdateDomain), serializedAdditionalRawData);
+            return new RecoveryWalkResponse(walkPerformed, nextPlatformUpdateDomain, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryWalkResponse>.Write(ModelReaderWriterOptions options)

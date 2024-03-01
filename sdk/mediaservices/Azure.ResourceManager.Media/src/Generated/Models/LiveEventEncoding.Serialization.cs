@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncodingType))
+            if (EncodingType.HasValue)
             {
                 writer.WritePropertyName("encodingType"u8);
                 writer.WriteStringValue(EncodingType.Value.ToString());
             }
-            if (Optional.IsDefined(PresetName))
+            if (PresetName != null)
             {
                 writer.WritePropertyName("presetName"u8);
                 writer.WriteStringValue(PresetName);
             }
-            if (Optional.IsDefined(StretchMode))
+            if (StretchMode.HasValue)
             {
                 if (StretchMode != null)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("stretchMode");
                 }
             }
-            if (Optional.IsDefined(KeyFrameInterval))
+            if (KeyFrameInterval.HasValue)
             {
                 if (KeyFrameInterval != null)
                 {
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<LiveEventEncodingType> encodingType = default;
-            Optional<string> presetName = default;
-            Optional<InputVideoStretchMode?> stretchMode = default;
-            Optional<TimeSpan?> keyFrameInterval = default;
+            LiveEventEncodingType? encodingType = default;
+            string presetName = default;
+            InputVideoStretchMode? stretchMode = default;
+            TimeSpan? keyFrameInterval = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LiveEventEncoding(Optional.ToNullable(encodingType), presetName.Value, Optional.ToNullable(stretchMode), Optional.ToNullable(keyFrameInterval), serializedAdditionalRawData);
+            return new LiveEventEncoding(encodingType, presetName, stretchMode, keyFrameInterval, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LiveEventEncoding>.Write(ModelReaderWriterOptions options)

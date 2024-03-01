@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Redis
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.Redis
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<RedisPatchScheduleSetting> scheduleEntries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -172,7 +172,14 @@ namespace Azure.ResourceManager.Redis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisPatchScheduleData(id, name, type, systemData.Value, Optional.ToNullable(location), scheduleEntries, serializedAdditionalRawData);
+            return new RedisPatchScheduleData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                scheduleEntries,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisPatchScheduleData>.Write(ModelReaderWriterOptions options)

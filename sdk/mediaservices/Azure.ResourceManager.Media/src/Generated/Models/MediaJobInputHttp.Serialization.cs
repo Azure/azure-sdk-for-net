@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BaseUri))
+            if (BaseUri != null)
             {
                 writer.WritePropertyName("baseUri"u8);
                 writer.WriteStringValue(BaseUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Files))
+            if (!(Files is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Start))
+            if (Start != null)
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteObjectValue(Start);
             }
-            if (Optional.IsDefined(End))
+            if (End != null)
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteObjectValue(End);
             }
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Optional.IsCollectionDefined(InputDefinitions))
+            if (!(InputDefinitions is ChangeTrackingList<MediaJobInputDefinition> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("inputDefinitions"u8);
                 writer.WriteStartArray();
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<Uri> baseUri = default;
-            Optional<IList<string>> files = default;
-            Optional<ClipTime> start = default;
-            Optional<ClipTime> end = default;
-            Optional<string> label = default;
-            Optional<IList<MediaJobInputDefinition>> inputDefinitions = default;
+            Uri baseUri = default;
+            IList<string> files = default;
+            ClipTime start = default;
+            ClipTime end = default;
+            string label = default;
+            IList<MediaJobInputDefinition> inputDefinitions = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -188,7 +188,15 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaJobInputHttp(odataType, serializedAdditionalRawData, Optional.ToList(files), start.Value, end.Value, label.Value, Optional.ToList(inputDefinitions), baseUri.Value);
+            return new MediaJobInputHttp(
+                odataType,
+                serializedAdditionalRawData,
+                files ?? new ChangeTrackingList<string>(),
+                start,
+                end,
+                label,
+                inputDefinitions ?? new ChangeTrackingList<MediaJobInputDefinition>(),
+                baseUri);
         }
 
         BinaryData IPersistableModel<MediaJobInputHttp>.Write(ModelReaderWriterOptions options)

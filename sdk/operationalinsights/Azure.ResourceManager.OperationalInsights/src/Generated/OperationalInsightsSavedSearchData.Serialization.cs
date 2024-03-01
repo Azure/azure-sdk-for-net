@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.OperationalInsights
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -62,22 +62,22 @@ namespace Azure.ResourceManager.OperationalInsights
             writer.WriteStringValue(DisplayName);
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
-            if (Optional.IsDefined(FunctionAlias))
+            if (FunctionAlias != null)
             {
                 writer.WritePropertyName("functionAlias"u8);
                 writer.WriteStringValue(FunctionAlias);
             }
-            if (Optional.IsDefined(FunctionParameters))
+            if (FunctionParameters != null)
             {
                 writer.WritePropertyName("functionParameters"u8);
                 writer.WriteStringValue(FunctionParameters);
             }
-            if (Optional.IsDefined(Version))
+            if (Version.HasValue)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingList<OperationalInsightsTag> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -126,18 +126,18 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string category = default;
             string displayName = default;
             string query = default;
-            Optional<string> functionAlias = default;
-            Optional<string> functionParameters = default;
-            Optional<long> version = default;
-            Optional<IList<OperationalInsightsTag>> tags = default;
+            string functionAlias = default;
+            string functionParameters = default;
+            long? version = default;
+            IList<OperationalInsightsTag> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,7 +241,20 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsSavedSearchData(id, name, type, systemData.Value, Optional.ToNullable(etag), category, displayName, query, functionAlias.Value, functionParameters.Value, Optional.ToNullable(version), Optional.ToList(tags), serializedAdditionalRawData);
+            return new OperationalInsightsSavedSearchData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                category,
+                displayName,
+                query,
+                functionAlias,
+                functionParameters,
+                version,
+                tags ?? new ChangeTrackingList<OperationalInsightsTag>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsSavedSearchData>.Write(ModelReaderWriterOptions options)

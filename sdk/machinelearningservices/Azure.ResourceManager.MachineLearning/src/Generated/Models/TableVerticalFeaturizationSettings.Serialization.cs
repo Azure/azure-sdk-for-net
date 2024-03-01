@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(BlockedTransformers))
+            if (!(BlockedTransformers is ChangeTrackingList<BlockedTransformer> collection && collection.IsUndefined))
             {
                 if (BlockedTransformers != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blockedTransformers");
                 }
             }
-            if (Optional.IsCollectionDefined(ColumnNameAndTypes))
+            if (!(ColumnNameAndTypes is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (ColumnNameAndTypes != null)
                 {
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columnNameAndTypes");
                 }
             }
-            if (Optional.IsDefined(EnableDnnFeaturization))
+            if (EnableDnnFeaturization.HasValue)
             {
                 writer.WritePropertyName("enableDnnFeaturization"u8);
                 writer.WriteBooleanValue(EnableDnnFeaturization.Value);
             }
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(TransformerParams))
+            if (!(TransformerParams is ChangeTrackingDictionary<string, IList<ColumnTransformer>> collection1 && collection1.IsUndefined))
             {
                 if (TransformerParams != null)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("transformerParams");
                 }
             }
-            if (Optional.IsDefined(DatasetLanguage))
+            if (DatasetLanguage != null)
             {
                 if (DatasetLanguage != null)
                 {
@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<BlockedTransformer>> blockedTransformers = default;
-            Optional<IDictionary<string, string>> columnNameAndTypes = default;
-            Optional<bool> enableDnnFeaturization = default;
-            Optional<MachineLearningFeaturizationMode> mode = default;
-            Optional<IDictionary<string, IList<ColumnTransformer>>> transformerParams = default;
-            Optional<string> datasetLanguage = default;
+            IList<BlockedTransformer> blockedTransformers = default;
+            IDictionary<string, string> columnNameAndTypes = default;
+            bool? enableDnnFeaturization = default;
+            MachineLearningFeaturizationMode? mode = default;
+            IDictionary<string, IList<ColumnTransformer>> transformerParams = default;
+            string datasetLanguage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +250,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableVerticalFeaturizationSettings(datasetLanguage.Value, serializedAdditionalRawData, Optional.ToList(blockedTransformers), Optional.ToDictionary(columnNameAndTypes), Optional.ToNullable(enableDnnFeaturization), Optional.ToNullable(mode), Optional.ToDictionary(transformerParams));
+            return new TableVerticalFeaturizationSettings(
+                datasetLanguage,
+                serializedAdditionalRawData,
+                blockedTransformers ?? new ChangeTrackingList<BlockedTransformer>(),
+                columnNameAndTypes ?? new ChangeTrackingDictionary<string, string>(),
+                enableDnnFeaturization,
+                mode,
+                transformerParams ?? new ChangeTrackingDictionary<string, IList<ColumnTransformer>>());
         }
 
         BinaryData IPersistableModel<TableVerticalFeaturizationSettings>.Write(ModelReaderWriterOptions options)

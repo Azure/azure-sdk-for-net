@@ -42,49 +42,49 @@ namespace Azure.ResourceManager.MySql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdvisorName))
+            if (AdvisorName != null)
             {
                 writer.WritePropertyName("advisorName"u8);
                 writer.WriteStringValue(AdvisorName);
             }
-            if (Optional.IsDefined(SessionId))
+            if (SessionId.HasValue)
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
-            if (Optional.IsDefined(ActionId))
+            if (ActionId.HasValue)
             {
                 writer.WritePropertyName("actionId"u8);
                 writer.WriteNumberValue(ActionId.Value);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Optional.IsDefined(RecommendationType))
+            if (RecommendationType != null)
             {
                 writer.WritePropertyName("recommendationType"u8);
                 writer.WriteStringValue(RecommendationType);
             }
-            if (Optional.IsCollectionDefined(Details))
+            if (!(Details is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartObject();
@@ -137,15 +137,15 @@ namespace Azure.ResourceManager.MySql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> advisorName = default;
-            Optional<Guid> sessionId = default;
-            Optional<int> actionId = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> expirationTime = default;
-            Optional<string> reason = default;
-            Optional<string> recommendationType = default;
-            Optional<IDictionary<string, string>> details = default;
+            SystemData systemData = default;
+            string advisorName = default;
+            Guid? sessionId = default;
+            int? actionId = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? expirationTime = default;
+            string reason = default;
+            string recommendationType = default;
+            IDictionary<string, string> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +257,20 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlRecommendationActionData(id, name, type, systemData.Value, advisorName.Value, Optional.ToNullable(sessionId), Optional.ToNullable(actionId), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), reason.Value, recommendationType.Value, Optional.ToDictionary(details), serializedAdditionalRawData);
+            return new MySqlRecommendationActionData(
+                id,
+                name,
+                type,
+                systemData,
+                advisorName,
+                sessionId,
+                actionId,
+                createdTime,
+                expirationTime,
+                reason,
+                recommendationType,
+                details ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlRecommendationActionData>.Write(ModelReaderWriterOptions options)

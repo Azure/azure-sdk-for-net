@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -18,9 +17,9 @@ namespace Azure.Analytics.Synapse.Spark.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<string> errorCode = default;
-            Optional<SparkErrorSource> source = default;
+            string message = default;
+            string errorCode = default;
+            SparkErrorSource? source = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -43,7 +42,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkServiceError(message.Value, errorCode.Value, Optional.ToNullable(source));
+            return new SparkServiceError(message, errorCode, source);
         }
     }
 }

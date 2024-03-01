@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CpuUsage))
+            if (CpuUsage != null)
             {
                 writer.WritePropertyName("cpuUsage"u8);
                 writer.WriteObjectValue(CpuUsage);
             }
-            if (Optional.IsDefined(SystemCpuUsage))
+            if (SystemCpuUsage.HasValue)
             {
                 writer.WritePropertyName("systemCpuUsage"u8);
                 writer.WriteNumberValue(SystemCpuUsage.Value);
             }
-            if (Optional.IsDefined(OnlineCpuCount))
+            if (OnlineCpuCount.HasValue)
             {
                 writer.WritePropertyName("onlineCpuCount"u8);
                 writer.WriteNumberValue(OnlineCpuCount.Value);
             }
-            if (Optional.IsDefined(ThrottlingData))
+            if (ThrottlingData != null)
             {
                 writer.WritePropertyName("throttlingData"u8);
                 writer.WriteObjectValue(ThrottlingData);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<ContainerCpuUsage> cpuUsage = default;
-            Optional<long> systemCpuUsage = default;
-            Optional<int> onlineCpuCount = default;
-            Optional<ContainerThrottlingInfo> throttlingData = default;
+            ContainerCpuUsage cpuUsage = default;
+            long? systemCpuUsage = default;
+            int? onlineCpuCount = default;
+            ContainerThrottlingInfo throttlingData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerCpuStatistics(cpuUsage.Value, Optional.ToNullable(systemCpuUsage), Optional.ToNullable(onlineCpuCount), throttlingData.Value, serializedAdditionalRawData);
+            return new ContainerCpuStatistics(cpuUsage, systemCpuUsage, onlineCpuCount, throttlingData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerCpuStatistics>.Write(ModelReaderWriterOptions options)

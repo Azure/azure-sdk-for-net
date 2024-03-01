@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.EventGrid
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,29 +61,29 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsDefined(TopicType))
+            if (TopicType != null)
             {
                 writer.WritePropertyName("topicType"u8);
                 writer.WriteStringValue(TopicType);
             }
-            if (options.Format != "W" && Optional.IsDefined(MetricResourceId))
+            if (options.Format != "W" && MetricResourceId.HasValue)
             {
                 writer.WritePropertyName("metricResourceId"u8);
                 writer.WriteStringValue(MetricResourceId.Value);
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.EventGrid
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EventGridResourceProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> source = default;
-            Optional<string> topicType = default;
-            Optional<Guid> metricResourceId = default;
+            SystemData systemData = default;
+            EventGridResourceProvisioningState? provisioningState = default;
+            ResourceIdentifier source = default;
+            string topicType = default;
+            Guid? metricResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,7 +244,19 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SystemTopicData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), source.Value, topicType.Value, Optional.ToNullable(metricResourceId), serializedAdditionalRawData);
+            return new SystemTopicData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState,
+                source,
+                topicType,
+                metricResourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SystemTopicData>.Write(ModelReaderWriterOptions options)

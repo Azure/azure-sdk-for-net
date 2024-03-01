@@ -31,32 +31,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(NicId);
             writer.WritePropertyName("isPrimaryNic"u8);
             writer.WriteStringValue(IsPrimaryNic);
-            if (Optional.IsDefined(TargetSubnetName))
+            if (TargetSubnetName != null)
             {
                 writer.WritePropertyName("targetSubnetName"u8);
                 writer.WriteStringValue(TargetSubnetName);
             }
-            if (Optional.IsDefined(TargetStaticIPAddress))
+            if (TargetStaticIPAddress != null)
             {
                 writer.WritePropertyName("targetStaticIPAddress"u8);
                 writer.WriteStringValue(TargetStaticIPAddress.ToString());
             }
-            if (Optional.IsDefined(IsSelectedForMigration))
+            if (IsSelectedForMigration != null)
             {
                 writer.WritePropertyName("isSelectedForMigration"u8);
                 writer.WriteStringValue(IsSelectedForMigration);
             }
-            if (Optional.IsDefined(TargetNicName))
+            if (TargetNicName != null)
             {
                 writer.WritePropertyName("targetNicName"u8);
                 writer.WriteStringValue(TargetNicName);
             }
-            if (Optional.IsDefined(TestSubnetName))
+            if (TestSubnetName != null)
             {
                 writer.WritePropertyName("testSubnetName"u8);
                 writer.WriteStringValue(TestSubnetName);
             }
-            if (Optional.IsDefined(TestStaticIPAddress))
+            if (TestStaticIPAddress != null)
             {
                 writer.WritePropertyName("testStaticIPAddress"u8);
                 writer.WriteStringValue(TestStaticIPAddress.ToString());
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             string nicId = default;
             string isPrimaryNic = default;
-            Optional<string> targetSubnetName = default;
-            Optional<IPAddress> targetStaticIPAddress = default;
-            Optional<string> isSelectedForMigration = default;
-            Optional<string> targetNicName = default;
-            Optional<string> testSubnetName = default;
-            Optional<IPAddress> testStaticIPAddress = default;
+            string targetSubnetName = default;
+            IPAddress targetStaticIPAddress = default;
+            string isSelectedForMigration = default;
+            string targetNicName = default;
+            string testSubnetName = default;
+            IPAddress testStaticIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtNicContent(nicId, isPrimaryNic, targetSubnetName.Value, targetStaticIPAddress.Value, isSelectedForMigration.Value, targetNicName.Value, testSubnetName.Value, testStaticIPAddress.Value, serializedAdditionalRawData);
+            return new VMwareCbtNicContent(
+                nicId,
+                isPrimaryNic,
+                targetSubnetName,
+                targetStaticIPAddress,
+                isSelectedForMigration,
+                targetNicName,
+                testSubnetName,
+                testStaticIPAddress,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareCbtNicContent>.Write(ModelReaderWriterOptions options)

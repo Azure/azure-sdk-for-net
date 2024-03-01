@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Method))
+            if (options.Format != "W" && Method.HasValue)
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Script))
+            if (options.Format != "W" && Script != null)
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ImplementationMethod> method = default;
-            Optional<string> script = default;
+            ImplementationMethod? method = default;
+            string script = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendedActionImplementationInfo(Optional.ToNullable(method), script.Value, serializedAdditionalRawData);
+            return new RecommendedActionImplementationInfo(method, script, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendedActionImplementationInfo>.Write(ModelReaderWriterOptions options)

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeType))
+            if (ComputeType != null)
             {
                 writer.WritePropertyName("computeType"u8);
                 JsonSerializer.Serialize(writer, ComputeType);
             }
-            if (Optional.IsDefined(CoreCount))
+            if (CoreCount != null)
             {
                 writer.WritePropertyName("coreCount"u8);
                 JsonSerializer.Serialize(writer, CoreCount);
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> computeType = default;
-            Optional<DataFactoryElement<int>> coreCount = default;
+            DataFactoryElement<string> computeType = default;
+            DataFactoryElement<int> coreCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExecuteDataFlowActivityComputeType(computeType.Value, coreCount.Value, serializedAdditionalRawData);
+            return new ExecuteDataFlowActivityComputeType(computeType, coreCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExecuteDataFlowActivityComputeType>.Write(ModelReaderWriterOptions options)

@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Source))
+            if (options.Format != "W" && Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultValue))
+            if (options.Format != "W" && DefaultValue != null)
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataType))
+            if (options.Format != "W" && DataType.HasValue)
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AllowedValues))
+            if (options.Format != "W" && AllowedValues != null)
             {
                 writer.WritePropertyName("allowedValues"u8);
                 writer.WriteStringValue(AllowedValues);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsRestartRequired))
+            if (options.Format != "W" && IsRestartRequired.HasValue)
             {
                 writer.WritePropertyName("requiresRestart"u8);
                 writer.WriteBooleanValue(IsRestartRequired.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -132,15 +132,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> value = default;
-            Optional<string> source = default;
-            Optional<string> description = default;
-            Optional<string> defaultValue = default;
-            Optional<CosmosDBForPostgreSqlConfigurationDataType> dataType = default;
-            Optional<string> allowedValues = default;
-            Optional<bool> requiresRestart = default;
-            Optional<CosmosDBForPostgreSqlProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string value = default;
+            string source = default;
+            string description = default;
+            string defaultValue = default;
+            CosmosDBForPostgreSqlConfigurationDataType? dataType = default;
+            string allowedValues = default;
+            bool? requiresRestart = default;
+            CosmosDBForPostgreSqlProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -239,7 +239,20 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlServerConfigurationData(id, name, type, systemData.Value, value.Value, source.Value, description.Value, defaultValue.Value, Optional.ToNullable(dataType), allowedValues.Value, Optional.ToNullable(requiresRestart), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlServerConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                value,
+                source,
+                description,
+                defaultValue,
+                dataType,
+                allowedValues,
+                requiresRestart,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlServerConfigurationData>.Write(ModelReaderWriterOptions options)

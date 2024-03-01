@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.Purview
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConsumerGroup))
+            if (ConsumerGroup != null)
             {
                 writer.WritePropertyName("consumerGroup"u8);
                 writer.WriteStringValue(ConsumerGroup);
             }
-            if (Optional.IsDefined(Credentials))
+            if (Credentials != null)
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
-            if (Optional.IsDefined(EventHubPartitionId))
+            if (EventHubPartitionId != null)
             {
                 writer.WritePropertyName("eventHubPartitionId"u8);
                 writer.WriteStringValue(EventHubPartitionId);
             }
-            if (Optional.IsDefined(EventHubResourceId))
+            if (EventHubResourceId != null)
             {
                 writer.WritePropertyName("eventHubResourceId"u8);
                 writer.WriteStringValue(EventHubResourceId);
             }
-            if (Optional.IsDefined(EventHubType))
+            if (EventHubType.HasValue)
             {
                 writer.WritePropertyName("eventHubType"u8);
                 writer.WriteStringValue(EventHubType.Value.ToString());
             }
-            if (Optional.IsDefined(EventStreamingState))
+            if (EventStreamingState.HasValue)
             {
                 writer.WritePropertyName("eventStreamingState"u8);
                 writer.WriteStringValue(EventStreamingState.Value.ToString());
             }
-            if (Optional.IsDefined(EventStreamingType))
+            if (EventStreamingType.HasValue)
             {
                 writer.WritePropertyName("eventStreamingType"u8);
                 writer.WriteStringValue(EventStreamingType.Value.ToString());
@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.Purview
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> consumerGroup = default;
-            Optional<PurviewCredentials> credentials = default;
-            Optional<string> eventHubPartitionId = default;
-            Optional<ResourceIdentifier> eventHubResourceId = default;
-            Optional<PurviewKafkaEventHubType> eventHubType = default;
-            Optional<PurviewEventStreamingState> eventStreamingState = default;
-            Optional<PurviewEventStreamingType> eventStreamingType = default;
+            SystemData systemData = default;
+            string consumerGroup = default;
+            PurviewCredentials credentials = default;
+            string eventHubPartitionId = default;
+            ResourceIdentifier eventHubResourceId = default;
+            PurviewKafkaEventHubType? eventHubType = default;
+            PurviewEventStreamingState? eventStreamingState = default;
+            PurviewEventStreamingType? eventStreamingType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,7 +236,19 @@ namespace Azure.ResourceManager.Purview
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewKafkaConfigurationData(id, name, type, systemData.Value, consumerGroup.Value, credentials.Value, eventHubPartitionId.Value, eventHubResourceId.Value, Optional.ToNullable(eventHubType), Optional.ToNullable(eventStreamingState), Optional.ToNullable(eventStreamingType), serializedAdditionalRawData);
+            return new PurviewKafkaConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                consumerGroup,
+                credentials,
+                eventHubPartitionId,
+                eventHubResourceId,
+                eventHubType,
+                eventStreamingState,
+                eventStreamingType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewKafkaConfigurationData>.Write(ModelReaderWriterOptions options)

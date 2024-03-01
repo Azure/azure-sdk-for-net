@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.ServiceLinker
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetService))
+            if (TargetService != null)
             {
                 writer.WritePropertyName("targetService"u8);
                 writer.WriteObjectValue(TargetService);
             }
-            if (Optional.IsDefined(AuthInfo))
+            if (AuthInfo != null)
             {
                 writer.WritePropertyName("authInfo"u8);
                 writer.WriteObjectValue(AuthInfo);
             }
-            if (Optional.IsDefined(ClientType))
+            if (ClientType.HasValue)
             {
                 writer.WritePropertyName("clientType"u8);
                 writer.WriteStringValue(ClientType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(VnetSolution))
+            if (VnetSolution != null)
             {
                 if (VnetSolution != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceLinker
                     writer.WriteNull("vNetSolution");
                 }
             }
-            if (Optional.IsDefined(SecretStore))
+            if (SecretStore != null)
             {
                 if (SecretStore != null)
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceLinker
                     writer.WriteNull("secretStore");
                 }
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 if (Scope != null)
                 {
@@ -148,14 +148,14 @@ namespace Azure.ResourceManager.ServiceLinker
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<TargetServiceBaseInfo> targetService = default;
-            Optional<AuthBaseInfo> authInfo = default;
-            Optional<LinkerClientType> clientType = default;
-            Optional<string> provisioningState = default;
-            Optional<VnetSolution> vnetSolution = default;
-            Optional<LinkerSecretStore> secretStore = default;
-            Optional<string> scope = default;
+            SystemData systemData = default;
+            TargetServiceBaseInfo targetService = default;
+            AuthBaseInfo authInfo = default;
+            LinkerClientType? clientType = default;
+            string provisioningState = default;
+            VnetSolution vnetSolution = default;
+            LinkerSecretStore secretStore = default;
+            string scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,7 +264,19 @@ namespace Azure.ResourceManager.ServiceLinker
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkerResourceData(id, name, type, systemData.Value, targetService.Value, authInfo.Value, Optional.ToNullable(clientType), provisioningState.Value, vnetSolution.Value, secretStore.Value, scope.Value, serializedAdditionalRawData);
+            return new LinkerResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                targetService,
+                authInfo,
+                clientType,
+                provisioningState,
+                vnetSolution,
+                secretStore,
+                scope,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkerResourceData>.Write(ModelReaderWriterOptions options)

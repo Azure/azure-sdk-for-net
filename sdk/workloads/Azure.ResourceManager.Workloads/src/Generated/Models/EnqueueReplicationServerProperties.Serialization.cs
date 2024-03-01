@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ErsVersion))
+            if (options.Format != "W" && ErsVersion.HasValue)
             {
                 writer.WritePropertyName("ersVersion"u8);
                 writer.WriteStringValue(ErsVersion.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceNo))
+            if (options.Format != "W" && InstanceNo != null)
             {
                 writer.WritePropertyName("instanceNo"u8);
                 writer.WriteStringValue(InstanceNo);
             }
-            if (options.Format != "W" && Optional.IsDefined(Hostname))
+            if (options.Format != "W" && Hostname != null)
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (options.Format != "W" && Optional.IsDefined(KernelVersion))
+            if (options.Format != "W" && KernelVersion != null)
             {
                 writer.WritePropertyName("kernelVersion"u8);
                 writer.WriteStringValue(KernelVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(KernelPatch))
+            if (options.Format != "W" && KernelPatch != null)
             {
                 writer.WritePropertyName("kernelPatch"u8);
                 writer.WriteStringValue(KernelPatch);
             }
-            if (options.Format != "W" && Optional.IsDefined(IPAddress))
+            if (options.Format != "W" && IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(Health))
+            if (options.Format != "W" && Health.HasValue)
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<EnqueueReplicationServerType> ersVersion = default;
-            Optional<string> instanceNo = default;
-            Optional<string> hostname = default;
-            Optional<string> kernelVersion = default;
-            Optional<string> kernelPatch = default;
-            Optional<string> ipAddress = default;
-            Optional<SapHealthState> health = default;
+            EnqueueReplicationServerType? ersVersion = default;
+            string instanceNo = default;
+            string hostname = default;
+            string kernelVersion = default;
+            string kernelPatch = default;
+            string ipAddress = default;
+            SapHealthState? health = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,15 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnqueueReplicationServerProperties(Optional.ToNullable(ersVersion), instanceNo.Value, hostname.Value, kernelVersion.Value, kernelPatch.Value, ipAddress.Value, Optional.ToNullable(health), serializedAdditionalRawData);
+            return new EnqueueReplicationServerProperties(
+                ersVersion,
+                instanceNo,
+                hostname,
+                kernelVersion,
+                kernelPatch,
+                ipAddress,
+                health,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnqueueReplicationServerProperties>.Write(ModelReaderWriterOptions options)

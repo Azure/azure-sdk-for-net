@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.MySql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(QueryId))
+            if (QueryId != null)
             {
                 writer.WritePropertyName("queryId"u8);
                 writer.WriteStringValue(QueryId);
             }
-            if (Optional.IsDefined(QueryText))
+            if (QueryText != null)
             {
                 writer.WritePropertyName("queryText"u8);
                 writer.WriteStringValue(QueryText);
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.MySql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> queryId = default;
-            Optional<string> queryText = default;
+            SystemData systemData = default;
+            string queryId = default;
+            string queryText = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlQueryTextData(id, name, type, systemData.Value, queryId.Value, queryText.Value, serializedAdditionalRawData);
+            return new MySqlQueryTextData(
+                id,
+                name,
+                type,
+                systemData,
+                queryId,
+                queryText,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlQueryTextData>.Write(ModelReaderWriterOptions options)

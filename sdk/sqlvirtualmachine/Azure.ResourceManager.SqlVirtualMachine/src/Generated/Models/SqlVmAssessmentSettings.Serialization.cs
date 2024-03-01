@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(RunImmediately))
+            if (RunImmediately.HasValue)
             {
                 writer.WritePropertyName("runImmediately"u8);
                 writer.WriteBooleanValue(RunImmediately.Value);
             }
-            if (Optional.IsDefined(Schedule))
+            if (Schedule != null)
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<bool> enable = default;
-            Optional<bool> runImmediately = default;
-            Optional<SqlVmAssessmentSchedule> schedule = default;
+            bool? enable = default;
+            bool? runImmediately = default;
+            SqlVmAssessmentSchedule schedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmAssessmentSettings(Optional.ToNullable(enable), Optional.ToNullable(runImmediately), schedule.Value, serializedAdditionalRawData);
+            return new SqlVmAssessmentSettings(enable, runImmediately, schedule, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmAssessmentSettings>.Write(ModelReaderWriterOptions options)

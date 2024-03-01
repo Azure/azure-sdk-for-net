@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ResourceStatus))
+            if (options.Format != "W" && ResourceStatus.HasValue)
             {
                 writer.WritePropertyName("resourceStatus"u8);
                 writer.WriteStringValue(ResourceStatus.Value.ToString());
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SecurityAssessmentResourceStatus> resourceStatus = default;
+            SystemData systemData = default;
+            SecurityAssessmentResourceStatus? resourceStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComplianceResultData(id, name, type, systemData.Value, Optional.ToNullable(resourceStatus), serializedAdditionalRawData);
+            return new ComplianceResultData(
+                id,
+                name,
+                type,
+                systemData,
+                resourceStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComplianceResultData>.Write(ModelReaderWriterOptions options)

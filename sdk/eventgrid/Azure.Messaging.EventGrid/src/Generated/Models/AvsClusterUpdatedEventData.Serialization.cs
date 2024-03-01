@@ -22,10 +22,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<IReadOnlyList<string>> addedHostNames = default;
-            Optional<IReadOnlyList<string>> removedHostNames = default;
-            Optional<IReadOnlyList<string>> inMaintenanceHostNames = default;
+            string operationId = default;
+            IReadOnlyList<string> addedHostNames = default;
+            IReadOnlyList<string> removedHostNames = default;
+            IReadOnlyList<string> inMaintenanceHostNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
@@ -76,7 +76,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AvsClusterUpdatedEventData(operationId.Value, Optional.ToList(addedHostNames), Optional.ToList(removedHostNames), Optional.ToList(inMaintenanceHostNames));
+            return new AvsClusterUpdatedEventData(operationId, addedHostNames ?? new ChangeTrackingList<string>(), removedHostNames ?? new ChangeTrackingList<string>(), inMaintenanceHostNames ?? new ChangeTrackingList<string>());
         }
 
         internal partial class AvsClusterUpdatedEventDataConverter : JsonConverter<AvsClusterUpdatedEventData>

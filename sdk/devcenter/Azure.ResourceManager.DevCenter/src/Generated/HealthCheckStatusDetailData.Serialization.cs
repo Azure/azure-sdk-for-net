@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HealthChecks))
+            if (options.Format != "W" && !(HealthChecks is ChangeTrackingList<DevCenterHealthCheck> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthChecks"u8);
                 writer.WriteStartArray();
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> endDateTime = default;
-            Optional<IReadOnlyList<DevCenterHealthCheck>> healthChecks = default;
+            SystemData systemData = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? endDateTime = default;
+            IReadOnlyList<DevCenterHealthCheck> healthChecks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,15 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthCheckStatusDetailData(id, name, type, systemData.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToList(healthChecks), serializedAdditionalRawData);
+            return new HealthCheckStatusDetailData(
+                id,
+                name,
+                type,
+                systemData,
+                startDateTime,
+                endDateTime,
+                healthChecks ?? new ChangeTrackingList<DevCenterHealthCheck>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthCheckStatusDetailData>.Write(ModelReaderWriterOptions options)

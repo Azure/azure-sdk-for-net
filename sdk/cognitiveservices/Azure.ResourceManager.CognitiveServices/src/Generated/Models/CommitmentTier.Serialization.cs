@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(SkuName))
+            if (SkuName != null)
             {
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName);
             }
-            if (Optional.IsDefined(HostingModel))
+            if (HostingModel.HasValue)
             {
                 writer.WritePropertyName("hostingModel"u8);
                 writer.WriteStringValue(HostingModel.Value.ToString());
             }
-            if (Optional.IsDefined(PlanType))
+            if (PlanType != null)
             {
                 writer.WritePropertyName("planType"u8);
                 writer.WriteStringValue(PlanType);
             }
-            if (Optional.IsDefined(Tier))
+            if (Tier != null)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Optional.IsDefined(MaxCount))
+            if (MaxCount.HasValue)
             {
                 writer.WritePropertyName("maxCount"u8);
                 writer.WriteNumberValue(MaxCount.Value);
             }
-            if (Optional.IsDefined(Quota))
+            if (Quota != null)
             {
                 writer.WritePropertyName("quota"u8);
                 writer.WriteObjectValue(Quota);
             }
-            if (Optional.IsDefined(Cost))
+            if (Cost != null)
             {
                 writer.WritePropertyName("cost"u8);
                 writer.WriteObjectValue(Cost);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<string> skuName = default;
-            Optional<ServiceAccountHostingModel> hostingModel = default;
-            Optional<string> planType = default;
-            Optional<string> tier = default;
-            Optional<int> maxCount = default;
-            Optional<CommitmentQuota> quota = default;
-            Optional<CommitmentCost> cost = default;
+            string kind = default;
+            string skuName = default;
+            ServiceAccountHostingModel? hostingModel = default;
+            string planType = default;
+            string tier = default;
+            int? maxCount = default;
+            CommitmentQuota quota = default;
+            CommitmentCost cost = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommitmentTier(kind.Value, skuName.Value, Optional.ToNullable(hostingModel), planType.Value, tier.Value, Optional.ToNullable(maxCount), quota.Value, cost.Value, serializedAdditionalRawData);
+            return new CommitmentTier(
+                kind,
+                skuName,
+                hostingModel,
+                planType,
+                tier,
+                maxCount,
+                quota,
+                cost,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommitmentTier>.Write(ModelReaderWriterOptions options)

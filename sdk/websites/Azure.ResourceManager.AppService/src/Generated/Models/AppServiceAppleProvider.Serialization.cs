@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Registration))
+            if (Registration != null)
             {
                 writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
             }
-            if (Optional.IsDefined(Login))
+            if (Login != null)
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<AppServiceAppleRegistration> registration = default;
-            Optional<LoginScopes> login = default;
+            bool? enabled = default;
+            AppServiceAppleRegistration registration = default;
+            LoginScopes login = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceAppleProvider(Optional.ToNullable(enabled), registration.Value, login.Value, serializedAdditionalRawData);
+            return new AppServiceAppleProvider(enabled, registration, login, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceAppleProvider>.Write(ModelReaderWriterOptions options)

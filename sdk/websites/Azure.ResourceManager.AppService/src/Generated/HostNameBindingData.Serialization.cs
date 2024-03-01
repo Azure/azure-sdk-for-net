@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,54 +48,54 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SiteName))
+            if (SiteName != null)
             {
                 writer.WritePropertyName("siteName"u8);
                 writer.WriteStringValue(SiteName);
             }
-            if (Optional.IsDefined(DomainId))
+            if (DomainId != null)
             {
                 writer.WritePropertyName("domainId"u8);
                 writer.WriteStringValue(DomainId);
             }
-            if (Optional.IsDefined(AzureResourceName))
+            if (AzureResourceName != null)
             {
                 writer.WritePropertyName("azureResourceName"u8);
                 writer.WriteStringValue(AzureResourceName);
             }
-            if (Optional.IsDefined(AzureResourceType))
+            if (AzureResourceType.HasValue)
             {
                 writer.WritePropertyName("azureResourceType"u8);
                 writer.WriteStringValue(AzureResourceType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(CustomHostNameDnsRecordType))
+            if (CustomHostNameDnsRecordType.HasValue)
             {
                 writer.WritePropertyName("customHostNameDnsRecordType"u8);
                 writer.WriteStringValue(CustomHostNameDnsRecordType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(HostNameType))
+            if (HostNameType.HasValue)
             {
                 writer.WritePropertyName("hostNameType"u8);
                 writer.WriteStringValue(HostNameType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SslState))
+            if (SslState.HasValue)
             {
                 writer.WritePropertyName("sslState"u8);
                 writer.WriteStringValue(SslState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ThumbprintString))
+            if (ThumbprintString != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (options.Format != "W" && Optional.IsDefined(VirtualIP))
+            if (options.Format != "W" && VirtualIP != null)
             {
                 writer.WritePropertyName("virtualIP"u8);
                 writer.WriteStringValue(VirtualIP);
@@ -139,20 +139,20 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> siteName = default;
-            Optional<string> domainId = default;
-            Optional<string> azureResourceName = default;
-            Optional<AppServiceResourceType> azureResourceType = default;
-            Optional<CustomHostNameDnsRecordType> customHostNameDnsRecordType = default;
-            Optional<AppServiceHostNameType> hostNameType = default;
-            Optional<HostNameBindingSslState> sslState = default;
-            Optional<string> thumbprint = default;
-            Optional<string> virtualIP = default;
+            SystemData systemData = default;
+            string siteName = default;
+            string domainId = default;
+            string azureResourceName = default;
+            AppServiceResourceType? azureResourceType = default;
+            CustomHostNameDnsRecordType? customHostNameDnsRecordType = default;
+            AppServiceHostNameType? hostNameType = default;
+            HostNameBindingSslState? sslState = default;
+            string thumbprint = default;
+            string virtualIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -265,7 +265,22 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HostNameBindingData(id, name, type, systemData.Value, siteName.Value, domainId.Value, azureResourceName.Value, Optional.ToNullable(azureResourceType), Optional.ToNullable(customHostNameDnsRecordType), Optional.ToNullable(hostNameType), Optional.ToNullable(sslState), thumbprint.Value, virtualIP.Value, kind.Value, serializedAdditionalRawData);
+            return new HostNameBindingData(
+                id,
+                name,
+                type,
+                systemData,
+                siteName,
+                domainId,
+                azureResourceName,
+                azureResourceType,
+                customHostNameDnsRecordType,
+                hostNameType,
+                sslState,
+                thumbprint,
+                virtualIP,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HostNameBindingData>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureFileShare))
+            if (AzureFileShare != null)
             {
                 writer.WritePropertyName("azureFileShare"u8);
                 writer.WriteStringValue(AzureFileShare);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<string> azureFileShare = default;
+            string azureFileShare = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudEndpointBackupContent(azureFileShare.Value, serializedAdditionalRawData);
+            return new CloudEndpointBackupContent(azureFileShare, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudEndpointBackupContent>.Write(ModelReaderWriterOptions options)

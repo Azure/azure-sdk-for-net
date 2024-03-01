@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.ContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerServiceTrustedAccessRoleBindingProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            ContainerServiceTrustedAccessRoleBindingProvisioningState? provisioningState = default;
             ResourceIdentifier sourceResourceId = default;
             IList<string> roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -180,7 +180,15 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceTrustedAccessRoleBindingData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), sourceResourceId, roles, serializedAdditionalRawData);
+            return new ContainerServiceTrustedAccessRoleBindingData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                sourceResourceId,
+                roles,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceTrustedAccessRoleBindingData>.Write(ModelReaderWriterOptions options)

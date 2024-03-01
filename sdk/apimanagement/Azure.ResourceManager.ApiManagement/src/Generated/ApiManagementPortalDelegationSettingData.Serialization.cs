@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ValidationKey))
+            if (ValidationKey != null)
             {
                 writer.WritePropertyName("validationKey"u8);
                 writer.WriteStringValue(ValidationKey);
             }
-            if (Optional.IsDefined(Subscriptions))
+            if (Subscriptions != null)
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteObjectValue(Subscriptions);
             }
-            if (Optional.IsDefined(UserRegistration))
+            if (UserRegistration != null)
             {
                 writer.WritePropertyName("userRegistration"u8);
                 writer.WriteObjectValue(UserRegistration);
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> uri = default;
-            Optional<string> validationKey = default;
-            Optional<SubscriptionDelegationSettingProperties> subscriptions = default;
-            Optional<RegistrationDelegationSettingProperties> userRegistration = default;
+            SystemData systemData = default;
+            Uri uri = default;
+            string validationKey = default;
+            SubscriptionDelegationSettingProperties subscriptions = default;
+            RegistrationDelegationSettingProperties userRegistration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementPortalDelegationSettingData(id, name, type, systemData.Value, uri.Value, validationKey.Value, subscriptions.Value, userRegistration.Value, serializedAdditionalRawData);
+            return new ApiManagementPortalDelegationSettingData(
+                id,
+                name,
+                type,
+                systemData,
+                uri,
+                validationKey,
+                subscriptions,
+                userRegistration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementPortalDelegationSettingData>.Write(ModelReaderWriterOptions options)

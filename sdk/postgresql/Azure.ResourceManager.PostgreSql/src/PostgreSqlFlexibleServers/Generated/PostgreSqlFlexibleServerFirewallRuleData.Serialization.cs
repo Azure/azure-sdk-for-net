@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IPAddress startIPAddress = default;
             IPAddress endIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerFirewallRuleData(id, name, type, systemData.Value, startIPAddress, endIPAddress, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerFirewallRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                startIPAddress,
+                endIPAddress,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerFirewallRuleData>.Write(ModelReaderWriterOptions options)

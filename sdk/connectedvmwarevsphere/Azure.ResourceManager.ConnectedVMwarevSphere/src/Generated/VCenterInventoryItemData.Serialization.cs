@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -57,22 +57,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             writer.WriteStartObject();
             writer.WritePropertyName("inventoryType"u8);
             writer.WriteStringValue(InventoryType.ToString());
-            if (Optional.IsDefined(ManagedResourceId))
+            if (ManagedResourceId != null)
             {
                 writer.WritePropertyName("managedResourceId"u8);
                 writer.WriteStringValue(ManagedResourceId);
             }
-            if (Optional.IsDefined(MoRefId))
+            if (MoRefId != null)
             {
                 writer.WritePropertyName("moRefId"u8);
                 writer.WriteStringValue(MoRefId);
             }
-            if (Optional.IsDefined(MoName))
+            if (MoName != null)
             {
                 writer.WritePropertyName("moName"u8);
                 writer.WriteStringValue(MoName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             VCenterInventoryType inventoryType = default;
-            Optional<string> managedResourceId = default;
-            Optional<string> moRefId = default;
-            Optional<string> moName = default;
-            Optional<VMwareResourceProvisioningState> provisioningState = default;
+            string managedResourceId = default;
+            string moRefId = default;
+            string moName = default;
+            VMwareResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +206,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VCenterInventoryItemData(id, name, type, systemData.Value, kind.Value, inventoryType, managedResourceId.Value, moRefId.Value, moName.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VCenterInventoryItemData(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                inventoryType,
+                managedResourceId,
+                moRefId,
+                moName,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VCenterInventoryItemData>.Write(ModelReaderWriterOptions options)

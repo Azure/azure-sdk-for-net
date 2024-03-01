@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IP))
+            if (IP != null)
             {
                 writer.WritePropertyName("ip"u8);
                 writer.WriteStringValue(IP);
             }
-            if (Optional.IsDefined(RegisteredOn))
+            if (RegisteredOn.HasValue)
             {
                 writer.WritePropertyName("registeredDateTime"u8);
                 writer.WriteStringValue(RegisteredOn.Value, "O");
             }
-            if (Optional.IsDefined(LastSeenOn))
+            if (LastSeenOn.HasValue)
             {
                 writer.WritePropertyName("lastSeenDateTime"u8);
                 writer.WriteStringValue(LastSeenOn.Value, "O");
             }
-            if (Optional.IsDefined(VmResourceId))
+            if (VmResourceId != null)
             {
                 writer.WritePropertyName("vmResourceId"u8);
                 writer.WriteStringValue(VmResourceId);
             }
-            if (Optional.IsDefined(WorkerType))
+            if (WorkerType.HasValue)
             {
                 writer.WritePropertyName("workerType"u8);
                 writer.WriteStringValue(WorkerType.Value.ToString());
             }
-            if (Optional.IsDefined(WorkerName))
+            if (WorkerName != null)
             {
                 writer.WritePropertyName("workerName"u8);
                 writer.WriteStringValue(WorkerName);
@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> ip = default;
-            Optional<DateTimeOffset> registeredDateTime = default;
-            Optional<DateTimeOffset> lastSeenDateTime = default;
-            Optional<ResourceIdentifier> vmResourceId = default;
-            Optional<HybridWorkerType> workerType = default;
-            Optional<string> workerName = default;
+            SystemData systemData = default;
+            string ip = default;
+            DateTimeOffset? registeredDateTime = default;
+            DateTimeOffset? lastSeenDateTime = default;
+            ResourceIdentifier vmResourceId = default;
+            HybridWorkerType? workerType = default;
+            string workerName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridRunbookWorkerData(id, name, type, systemData.Value, ip.Value, Optional.ToNullable(registeredDateTime), Optional.ToNullable(lastSeenDateTime), vmResourceId.Value, Optional.ToNullable(workerType), workerName.Value, serializedAdditionalRawData);
+            return new HybridRunbookWorkerData(
+                id,
+                name,
+                type,
+                systemData,
+                ip,
+                registeredDateTime,
+                lastSeenDateTime,
+                vmResourceId,
+                workerType,
+                workerName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridRunbookWorkerData>.Write(ModelReaderWriterOptions options)

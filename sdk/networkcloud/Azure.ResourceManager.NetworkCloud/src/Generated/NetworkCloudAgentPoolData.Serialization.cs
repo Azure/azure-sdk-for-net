@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.NetworkCloud
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,29 +61,29 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdministratorConfiguration))
+            if (AdministratorConfiguration != null)
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
                 writer.WriteObjectValue(AdministratorConfiguration);
             }
-            if (Optional.IsDefined(AgentOptions))
+            if (AgentOptions != null)
             {
                 writer.WritePropertyName("agentOptions"u8);
                 writer.WriteObjectValue(AgentOptions);
             }
-            if (Optional.IsDefined(AttachedNetworkConfiguration))
+            if (AttachedNetworkConfiguration != null)
             {
                 writer.WritePropertyName("attachedNetworkConfiguration"u8);
                 writer.WriteObjectValue(AttachedNetworkConfiguration);
             }
-            if (Optional.IsCollectionDefined(AvailabilityZones))
+            if (!(AvailabilityZones is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -95,22 +95,22 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("count"u8);
             writer.WriteNumberValue(Count);
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
+            if (options.Format != "W" && DetailedStatus.HasValue)
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
+            if (options.Format != "W" && DetailedStatusMessage != null)
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
+            if (options.Format != "W" && KubernetesVersion != null)
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingList<KubernetesLabel> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Taints))
+            if (!(Taints is ChangeTrackingList<KubernetesLabel> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("taints"u8);
                 writer.WriteStartArray();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UpgradeSettings))
+            if (UpgradeSettings != null)
             {
                 writer.WritePropertyName("upgradeSettings"u8);
                 writer.WriteObjectValue(UpgradeSettings);
@@ -183,26 +183,26 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ExtendedLocation extendedLocation = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AdministratorConfiguration> administratorConfiguration = default;
-            Optional<NetworkCloudAgentConfiguration> agentOptions = default;
-            Optional<AttachedNetworkConfiguration> attachedNetworkConfiguration = default;
-            Optional<IList<string>> availabilityZones = default;
+            SystemData systemData = default;
+            AdministratorConfiguration administratorConfiguration = default;
+            NetworkCloudAgentConfiguration agentOptions = default;
+            AttachedNetworkConfiguration attachedNetworkConfiguration = default;
+            IList<string> availabilityZones = default;
             long count = default;
-            Optional<AgentPoolDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<string> kubernetesVersion = default;
-            Optional<IList<KubernetesLabel>> labels = default;
+            AgentPoolDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            string kubernetesVersion = default;
+            IList<KubernetesLabel> labels = default;
             NetworkCloudAgentPoolMode mode = default;
-            Optional<AgentPoolProvisioningState> provisioningState = default;
-            Optional<IList<KubernetesLabel>> taints = default;
-            Optional<AgentPoolUpgradeSettings> upgradeSettings = default;
+            AgentPoolProvisioningState? provisioningState = default;
+            IList<KubernetesLabel> taints = default;
+            AgentPoolUpgradeSettings upgradeSettings = default;
             string vmSkuName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -399,7 +399,29 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudAgentPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, administratorConfiguration.Value, agentOptions.Value, attachedNetworkConfiguration.Value, Optional.ToList(availabilityZones), count, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, kubernetesVersion.Value, Optional.ToList(labels), mode, Optional.ToNullable(provisioningState), Optional.ToList(taints), upgradeSettings.Value, vmSkuName, serializedAdditionalRawData);
+            return new NetworkCloudAgentPoolData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                administratorConfiguration,
+                agentOptions,
+                attachedNetworkConfiguration,
+                availabilityZones ?? new ChangeTrackingList<string>(),
+                count,
+                detailedStatus,
+                detailedStatusMessage,
+                kubernetesVersion,
+                labels ?? new ChangeTrackingList<KubernetesLabel>(),
+                mode,
+                provisioningState,
+                taints ?? new ChangeTrackingList<KubernetesLabel>(),
+                upgradeSettings,
+                vmSkuName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudAgentPoolData>.Write(ModelReaderWriterOptions options)

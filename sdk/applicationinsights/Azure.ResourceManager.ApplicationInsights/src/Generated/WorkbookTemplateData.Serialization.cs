@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Priority))
+            if (Priority.HasValue)
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsDefined(Author))
+            if (Author != null)
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (Optional.IsDefined(TemplateData))
+            if (TemplateData != null)
             {
                 writer.WritePropertyName("templateData"u8);
 #if NET6_0_OR_GREATER
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Galleries))
+            if (!(Galleries is ChangeTrackingList<WorkbookTemplateGallery> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("galleries"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LocalizedGalleries))
+            if (!(LocalizedGalleries is ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("localized"u8);
                 writer.WriteStartObject();
@@ -155,17 +155,17 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> priority = default;
-            Optional<string> author = default;
-            Optional<BinaryData> templateData = default;
-            Optional<IList<WorkbookTemplateGallery>> galleries = default;
-            Optional<IDictionary<string, IList<WorkbookTemplateLocalizedGallery>>> localized = default;
+            SystemData systemData = default;
+            int? priority = default;
+            string author = default;
+            BinaryData templateData = default;
+            IList<WorkbookTemplateGallery> galleries = default;
+            IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localized = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -294,7 +294,19 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkbookTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(priority), author.Value, templateData.Value, Optional.ToList(galleries), Optional.ToDictionary(localized), serializedAdditionalRawData);
+            return new WorkbookTemplateData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                priority,
+                author,
+                templateData,
+                galleries ?? new ChangeTrackingList<WorkbookTemplateGallery>(),
+                localized ?? new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkbookTemplateData>.Write(ModelReaderWriterOptions options)

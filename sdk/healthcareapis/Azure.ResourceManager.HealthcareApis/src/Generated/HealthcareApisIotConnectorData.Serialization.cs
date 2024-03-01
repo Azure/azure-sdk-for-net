@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.HealthcareApis
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -68,24 +68,24 @@ namespace Azure.ResourceManager.HealthcareApis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(IngestionEndpointConfiguration))
+            if (IngestionEndpointConfiguration != null)
             {
                 writer.WritePropertyName("ingestionEndpointConfiguration"u8);
                 writer.WriteObjectValue(IngestionEndpointConfiguration);
             }
-            if (Optional.IsDefined(DeviceMapping))
+            if (DeviceMapping != null)
             {
                 writer.WritePropertyName("deviceMapping"u8);
                 writer.WriteObjectValue(DeviceMapping);
@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HealthcareApisProvisioningState> provisioningState = default;
-            Optional<HealthcareApisIotConnectorEventHubIngestionConfiguration> ingestionEndpointConfiguration = default;
-            Optional<HealthcareApisIotMappingProperties> deviceMapping = default;
+            SystemData systemData = default;
+            HealthcareApisProvisioningState? provisioningState = default;
+            HealthcareApisIotConnectorEventHubIngestionConfiguration ingestionEndpointConfiguration = default;
+            HealthcareApisIotMappingProperties deviceMapping = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,7 +251,19 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisIotConnectorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), ingestionEndpointConfiguration.Value, deviceMapping.Value, identity, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new HealthcareApisIotConnectorData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                ingestionEndpointConfiguration,
+                deviceMapping,
+                identity,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisIotConnectorData>.Write(ModelReaderWriterOptions options)

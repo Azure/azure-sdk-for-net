@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(ConnectVia))
+            if (ConnectVia != null)
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -76,54 +76,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("project"u8);
             JsonSerializer.Serialize(writer, Project);
-            if (Optional.IsDefined(AdditionalProjects))
+            if (AdditionalProjects != null)
             {
                 writer.WritePropertyName("additionalProjects"u8);
                 JsonSerializer.Serialize(writer, AdditionalProjects);
             }
-            if (Optional.IsDefined(RequestGoogleDriveScope))
+            if (RequestGoogleDriveScope != null)
             {
                 writer.WritePropertyName("requestGoogleDriveScope"u8);
                 JsonSerializer.Serialize(writer, RequestGoogleDriveScope);
             }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
-            if (Optional.IsDefined(RefreshToken))
+            if (RefreshToken != null)
             {
                 writer.WritePropertyName("refreshToken"u8);
                 JsonSerializer.Serialize(writer, RefreshToken);
             }
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 writer.WritePropertyName("clientId"u8);
                 JsonSerializer.Serialize(writer, ClientId);
             }
-            if (Optional.IsDefined(ClientSecret))
+            if (ClientSecret != null)
             {
                 writer.WritePropertyName("clientSecret"u8);
                 JsonSerializer.Serialize(writer, ClientSecret);
             }
-            if (Optional.IsDefined(Email))
+            if (Email != null)
             {
                 writer.WritePropertyName("email"u8);
                 JsonSerializer.Serialize(writer, Email);
             }
-            if (Optional.IsDefined(KeyFilePath))
+            if (KeyFilePath != null)
             {
                 writer.WritePropertyName("keyFilePath"u8);
                 JsonSerializer.Serialize(writer, KeyFilePath);
             }
-            if (Optional.IsDefined(TrustedCertPath))
+            if (TrustedCertPath != null)
             {
                 writer.WritePropertyName("trustedCertPath"u8);
                 JsonSerializer.Serialize(writer, TrustedCertPath);
             }
-            if (Optional.IsDefined(UseSystemTrustStore))
+            if (UseSystemTrustStore != null)
             {
                 writer.WritePropertyName("useSystemTrustStore"u8);
                 JsonSerializer.Serialize(writer, UseSystemTrustStore);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (EncryptedCredential != null)
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -165,22 +165,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
             DataFactoryElement<string> project = default;
-            Optional<DataFactoryElement<string>> additionalProjects = default;
-            Optional<DataFactoryElement<bool>> requestGoogleDriveScope = default;
+            DataFactoryElement<string> additionalProjects = default;
+            DataFactoryElement<bool> requestGoogleDriveScope = default;
             GoogleBigQueryAuthenticationType authenticationType = default;
-            Optional<DataFactorySecretBaseDefinition> refreshToken = default;
-            Optional<DataFactoryElement<string>> clientId = default;
-            Optional<DataFactorySecretBaseDefinition> clientSecret = default;
-            Optional<DataFactoryElement<string>> email = default;
-            Optional<DataFactoryElement<string>> keyFilePath = default;
-            Optional<DataFactoryElement<string>> trustedCertPath = default;
-            Optional<DataFactoryElement<bool>> useSystemTrustStore = default;
-            Optional<string> encryptedCredential = default;
+            DataFactorySecretBaseDefinition refreshToken = default;
+            DataFactoryElement<string> clientId = default;
+            DataFactorySecretBaseDefinition clientSecret = default;
+            DataFactoryElement<string> email = default;
+            DataFactoryElement<string> keyFilePath = default;
+            DataFactoryElement<string> trustedCertPath = default;
+            DataFactoryElement<bool> useSystemTrustStore = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -350,7 +350,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GoogleBigQueryLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, project, additionalProjects.Value, requestGoogleDriveScope.Value, authenticationType, refreshToken, clientId.Value, clientSecret, email.Value, keyFilePath.Value, trustedCertPath.Value, useSystemTrustStore.Value, encryptedCredential.Value);
+            return new GoogleBigQueryLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                project,
+                additionalProjects,
+                requestGoogleDriveScope,
+                authenticationType,
+                refreshToken,
+                clientId,
+                clientSecret,
+                email,
+                keyFilePath,
+                trustedCertPath,
+                useSystemTrustStore,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<GoogleBigQueryLinkedService>.Write(ModelReaderWriterOptions options)

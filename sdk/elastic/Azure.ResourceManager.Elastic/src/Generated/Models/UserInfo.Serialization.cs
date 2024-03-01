@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FirstName))
+            if (FirstName != null)
             {
                 writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
-            if (Optional.IsDefined(LastName))
+            if (LastName != null)
             {
                 writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
-            if (Optional.IsDefined(CompanyName))
+            if (CompanyName != null)
             {
                 writer.WritePropertyName("companyName"u8);
                 writer.WriteStringValue(CompanyName);
             }
-            if (Optional.IsDefined(EmailAddress))
+            if (EmailAddress != null)
             {
                 writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
             }
-            if (Optional.IsDefined(CompanyInfo))
+            if (CompanyInfo != null)
             {
                 writer.WritePropertyName("companyInfo"u8);
                 writer.WriteObjectValue(CompanyInfo);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<string> firstName = default;
-            Optional<string> lastName = default;
-            Optional<string> companyName = default;
-            Optional<string> emailAddress = default;
-            Optional<CompanyInfo> companyInfo = default;
+            string firstName = default;
+            string lastName = default;
+            string companyName = default;
+            string emailAddress = default;
+            CompanyInfo companyInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserInfo(firstName.Value, lastName.Value, companyName.Value, emailAddress.Value, companyInfo.Value, serializedAdditionalRawData);
+            return new UserInfo(
+                firstName,
+                lastName,
+                companyName,
+                emailAddress,
+                companyInfo,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserInfo>.Write(ModelReaderWriterOptions options)

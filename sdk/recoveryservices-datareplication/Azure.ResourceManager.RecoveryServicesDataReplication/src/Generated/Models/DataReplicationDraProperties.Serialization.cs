@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
+            if (options.Format != "W" && CorrelationId != null)
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
@@ -39,27 +39,27 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteObjectValue(AuthenticationIdentity);
             writer.WritePropertyName("resourceAccessIdentity"u8);
             writer.WriteObjectValue(ResourceAccessIdentity);
-            if (options.Format != "W" && Optional.IsDefined(IsResponsive))
+            if (options.Format != "W" && IsResponsive.HasValue)
             {
                 writer.WritePropertyName("isResponsive"u8);
                 writer.WriteBooleanValue(IsResponsive.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastHeartbeatOn))
+            if (options.Format != "W" && LastHeartbeatOn.HasValue)
             {
                 writer.WritePropertyName("lastHeartbeat"u8);
                 writer.WriteStringValue(LastHeartbeatOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(VersionNumber))
+            if (options.Format != "W" && VersionNumber != null)
             {
                 writer.WritePropertyName("versionNumber"u8);
                 writer.WriteStringValue(VersionNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HealthErrors))
+            if (options.Format != "W" && !(HealthErrors is ChangeTrackingList<DataReplicationHealthErrorInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
@@ -109,16 +109,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> correlationId = default;
+            string correlationId = default;
             string machineId = default;
             string machineName = default;
             DataReplicationIdentity authenticationIdentity = default;
             DataReplicationIdentity resourceAccessIdentity = default;
-            Optional<bool> isResponsive = default;
-            Optional<DateTimeOffset> lastHeartbeat = default;
-            Optional<string> versionNumber = default;
-            Optional<DataReplicationProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<DataReplicationHealthErrorInfo>> healthErrors = default;
+            bool? isResponsive = default;
+            DateTimeOffset? lastHeartbeat = default;
+            string versionNumber = default;
+            DataReplicationProvisioningState? provisioningState = default;
+            IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             DraModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -206,7 +206,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationDraProperties(correlationId.Value, machineId, machineName, authenticationIdentity, resourceAccessIdentity, Optional.ToNullable(isResponsive), Optional.ToNullable(lastHeartbeat), versionNumber.Value, Optional.ToNullable(provisioningState), Optional.ToList(healthErrors), customProperties, serializedAdditionalRawData);
+            return new DataReplicationDraProperties(
+                correlationId,
+                machineId,
+                machineName,
+                authenticationIdentity,
+                resourceAccessIdentity,
+                isResponsive,
+                lastHeartbeat,
+                versionNumber,
+                provisioningState,
+                healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(),
+                customProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationDraProperties>.Write(ModelReaderWriterOptions options)

@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.Sphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Certificate))
+            if (options.Format != "W" && Certificate != null)
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteStringValue(Certificate);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Subject))
+            if (options.Format != "W" && Subject != null)
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
+            if (options.Format != "W" && Thumbprint != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpiryUtc))
+            if (options.Format != "W" && ExpiryUtc.HasValue)
             {
                 writer.WritePropertyName("expiryUtc"u8);
                 writer.WriteStringValue(ExpiryUtc.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(NotBeforeUtc))
+            if (options.Format != "W" && NotBeforeUtc.HasValue)
             {
                 writer.WritePropertyName("notBeforeUtc"u8);
                 writer.WriteStringValue(NotBeforeUtc.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.Sphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> certificate = default;
-            Optional<SphereCertificateStatus> status = default;
-            Optional<string> subject = default;
-            Optional<string> thumbprint = default;
-            Optional<DateTimeOffset> expiryUtc = default;
-            Optional<DateTimeOffset> notBeforeUtc = default;
-            Optional<SphereProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string certificate = default;
+            SphereCertificateStatus? status = default;
+            string subject = default;
+            string thumbprint = default;
+            DateTimeOffset? expiryUtc = default;
+            DateTimeOffset? notBeforeUtc = default;
+            SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,7 +232,19 @@ namespace Azure.ResourceManager.Sphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SphereCertificateData(id, name, type, systemData.Value, certificate.Value, Optional.ToNullable(status), subject.Value, thumbprint.Value, Optional.ToNullable(expiryUtc), Optional.ToNullable(notBeforeUtc), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SphereCertificateData(
+                id,
+                name,
+                type,
+                systemData,
+                certificate,
+                status,
+                subject,
+                thumbprint,
+                expiryUtc,
+                notBeforeUtc,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SphereCertificateData>.Write(ModelReaderWriterOptions options)

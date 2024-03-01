@@ -29,24 +29,24 @@ namespace Azure.ResourceManager.PowerBIDedicated
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,39 +57,39 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(SystemData))
+            if (SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 writer.WriteObjectValue(SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Administration))
+            if (Administration != null)
             {
                 writer.WritePropertyName("administration"u8);
                 writer.WriteObjectValue(Administration);
             }
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
+            if (options.Format != "W" && FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -134,18 +134,18 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 return null;
             }
             CapacitySku sku = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            string id = default;
+            string name = default;
+            string type = default;
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<SystemData> systemData = default;
-            Optional<DedicatedCapacityAdministrators> administration = default;
-            Optional<Mode> mode = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> friendlyName = default;
-            Optional<State> state = default;
-            Optional<CapacityProvisioningState> provisioningState = default;
+            IDictionary<string, string> tags = default;
+            SystemData systemData = default;
+            DedicatedCapacityAdministrators administration = default;
+            Mode? mode = default;
+            Guid? tenantId = default;
+            string friendlyName = default;
+            State? state = default;
+            CapacityProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -266,7 +266,21 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedCapacityData(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), systemData.Value, serializedAdditionalRawData, sku, administration.Value, Optional.ToNullable(mode), Optional.ToNullable(tenantId), friendlyName.Value, Optional.ToNullable(state), Optional.ToNullable(provisioningState));
+            return new DedicatedCapacityData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                systemData,
+                serializedAdditionalRawData,
+                sku,
+                administration,
+                mode,
+                tenantId,
+                friendlyName,
+                state,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<DedicatedCapacityData>.Write(ModelReaderWriterOptions options)

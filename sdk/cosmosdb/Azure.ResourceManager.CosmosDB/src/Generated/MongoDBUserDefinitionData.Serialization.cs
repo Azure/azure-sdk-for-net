@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserName))
+            if (UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(DatabaseName))
+            if (DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Optional.IsDefined(CustomData))
+            if (CustomData != null)
             {
                 writer.WritePropertyName("customData"u8);
                 writer.WriteStringValue(CustomData);
             }
-            if (Optional.IsCollectionDefined(Roles))
+            if (!(Roles is ChangeTrackingList<MongoDBRole> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Mechanisms))
+            if (Mechanisms != null)
             {
                 writer.WritePropertyName("mechanisms"u8);
                 writer.WriteStringValue(Mechanisms);
@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
-            Optional<string> databaseName = default;
-            Optional<string> customData = default;
-            Optional<IList<MongoDBRole>> roles = default;
-            Optional<string> mechanisms = default;
+            SystemData systemData = default;
+            string userName = default;
+            string password = default;
+            string databaseName = default;
+            string customData = default;
+            IList<MongoDBRole> roles = default;
+            string mechanisms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,7 +219,18 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBUserDefinitionData(id, name, type, systemData.Value, userName.Value, password.Value, databaseName.Value, customData.Value, Optional.ToList(roles), mechanisms.Value, serializedAdditionalRawData);
+            return new MongoDBUserDefinitionData(
+                id,
+                name,
+                type,
+                systemData,
+                userName,
+                password,
+                databaseName,
+                customData,
+                roles ?? new ChangeTrackingList<MongoDBRole>(),
+                mechanisms,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBUserDefinitionData>.Write(ModelReaderWriterOptions options)

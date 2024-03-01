@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConcurrentJobsLimit))
+            if (ConcurrentJobsLimit.HasValue)
             {
                 writer.WritePropertyName("concurrentJobsLimit"u8);
                 writer.WriteNumberValue(ConcurrentJobsLimit.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<int> concurrentJobsLimit = default;
+            int? concurrentJobsLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateIntegrationRuntimeNodeContent(Optional.ToNullable(concurrentJobsLimit), serializedAdditionalRawData);
+            return new UpdateIntegrationRuntimeNodeContent(concurrentJobsLimit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateIntegrationRuntimeNodeContent>.Write(ModelReaderWriterOptions options)

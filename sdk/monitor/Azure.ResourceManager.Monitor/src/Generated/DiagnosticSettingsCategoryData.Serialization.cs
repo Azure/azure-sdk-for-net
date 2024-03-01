@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CategoryType))
+            if (CategoryType.HasValue)
             {
                 writer.WritePropertyName("categoryType"u8);
                 writer.WriteStringValue(CategoryType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(CategoryGroups))
+            if (!(CategoryGroups is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categoryGroups"u8);
                 writer.WriteStartArray();
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MonitorCategoryType> categoryType = default;
-            Optional<IList<string>> categoryGroups = default;
+            SystemData systemData = default;
+            MonitorCategoryType? categoryType = default;
+            IList<string> categoryGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticSettingsCategoryData(id, name, type, systemData.Value, Optional.ToNullable(categoryType), Optional.ToList(categoryGroups), serializedAdditionalRawData);
+            return new DiagnosticSettingsCategoryData(
+                id,
+                name,
+                type,
+                systemData,
+                categoryType,
+                categoryGroups ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticSettingsCategoryData>.Write(ModelReaderWriterOptions options)

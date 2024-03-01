@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(KeyId))
+            if (KeyId != null)
             {
                 writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId);
             }
-            if (Optional.IsDefined(KeyVaultNetworkAccess))
+            if (KeyVaultNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("keyVaultNetworkAccess"u8);
                 writer.WriteStringValue(KeyVaultNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(KeyVaultResourceId))
+            if (KeyVaultResourceId != null)
             {
                 writer.WritePropertyName("keyVaultResourceId"u8);
                 writer.WriteStringValue(KeyVaultResourceId);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> keyId = default;
-            Optional<ManagedClusterKeyVaultNetworkAccessType> keyVaultNetworkAccess = default;
-            Optional<ResourceIdentifier> keyVaultResourceId = default;
+            bool? enabled = default;
+            string keyId = default;
+            ManagedClusterKeyVaultNetworkAccessType? keyVaultNetworkAccess = default;
+            ResourceIdentifier keyVaultResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterSecurityProfileKeyVaultKms(Optional.ToNullable(enabled), keyId.Value, Optional.ToNullable(keyVaultNetworkAccess), keyVaultResourceId.Value, serializedAdditionalRawData);
+            return new ManagedClusterSecurityProfileKeyVaultKms(enabled, keyId, keyVaultNetworkAccess, keyVaultResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterSecurityProfileKeyVaultKms>.Write(ModelReaderWriterOptions options)

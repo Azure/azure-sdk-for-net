@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,51 +56,51 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            if (Annotation != null)
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsDefined(RedistributeConnectedSubnets))
+            if (RedistributeConnectedSubnets.HasValue)
             {
                 writer.WritePropertyName("redistributeConnectedSubnets"u8);
                 writer.WriteStringValue(RedistributeConnectedSubnets.Value.ToString());
             }
-            if (Optional.IsDefined(RedistributeStaticRoutes))
+            if (RedistributeStaticRoutes.HasValue)
             {
                 writer.WritePropertyName("redistributeStaticRoutes"u8);
                 writer.WriteStringValue(RedistributeStaticRoutes.Value.ToString());
             }
-            if (Optional.IsDefined(AggregateRouteConfiguration))
+            if (AggregateRouteConfiguration != null)
             {
                 writer.WritePropertyName("aggregateRouteConfiguration"u8);
                 writer.WriteObjectValue(AggregateRouteConfiguration);
             }
-            if (Optional.IsDefined(ConnectedSubnetRoutePolicy))
+            if (ConnectedSubnetRoutePolicy != null)
             {
                 writer.WritePropertyName("connectedSubnetRoutePolicy"u8);
                 writer.WriteObjectValue(ConnectedSubnetRoutePolicy);
             }
             writer.WritePropertyName("networkFabricId"u8);
             writer.WriteStringValue(NetworkFabricId);
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
+            if (options.Format != "W" && ConfigurationState.HasValue)
             {
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
+            if (options.Format != "W" && AdministrativeState.HasValue)
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
@@ -144,21 +144,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
-            Optional<RedistributeConnectedSubnet> redistributeConnectedSubnets = default;
-            Optional<RedistributeStaticRoute> redistributeStaticRoutes = default;
-            Optional<AggregateRouteConfiguration> aggregateRouteConfiguration = default;
-            Optional<ConnectedSubnetRoutePolicy> connectedSubnetRoutePolicy = default;
+            SystemData systemData = default;
+            string annotation = default;
+            RedistributeConnectedSubnet? redistributeConnectedSubnets = default;
+            RedistributeStaticRoute? redistributeStaticRoutes = default;
+            AggregateRouteConfiguration aggregateRouteConfiguration = default;
+            ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = default;
             ResourceIdentifier networkFabricId = default;
-            Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -297,7 +297,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricL3IsolationDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(redistributeConnectedSubnets), Optional.ToNullable(redistributeStaticRoutes), aggregateRouteConfiguration.Value, connectedSubnetRoutePolicy.Value, networkFabricId, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkFabricL3IsolationDomainData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation,
+                redistributeConnectedSubnets,
+                redistributeStaticRoutes,
+                aggregateRouteConfiguration,
+                connectedSubnetRoutePolicy,
+                networkFabricId,
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricL3IsolationDomainData>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DeviceSerialNumber))
+            if (options.Format != "W" && DeviceSerialNumber != null)
             {
                 writer.WritePropertyName("deviceSerialNumber"u8);
                 writer.WriteStringValue(DeviceSerialNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(DevicePassword))
+            if (options.Format != "W" && DevicePassword != null)
             {
                 writer.WritePropertyName("devicePassword"u8);
                 writer.WriteStringValue(DevicePassword);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkConfigurations))
+            if (options.Format != "W" && !(NetworkConfigurations is ChangeTrackingList<ApplianceNetworkConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkConfigurations"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(EncodedValidationCertPubKey))
+            if (options.Format != "W" && EncodedValidationCertPubKey != null)
             {
                 writer.WritePropertyName("encodedValidationCertPubKey"u8);
                 writer.WriteStringValue(EncodedValidationCertPubKey);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AccountCredentialDetails))
+            if (options.Format != "W" && !(AccountCredentialDetails is ChangeTrackingList<DataBoxAccountCredentialDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("accountCredentialDetails"u8);
                 writer.WriteStartArray();
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> deviceSerialNumber = default;
-            Optional<string> devicePassword = default;
-            Optional<IReadOnlyList<ApplianceNetworkConfiguration>> networkConfigurations = default;
-            Optional<string> encodedValidationCertPubKey = default;
-            Optional<IReadOnlyList<DataBoxAccountCredentialDetails>> accountCredentialDetails = default;
+            string deviceSerialNumber = default;
+            string devicePassword = default;
+            IReadOnlyList<ApplianceNetworkConfiguration> networkConfigurations = default;
+            string encodedValidationCertPubKey = default;
+            IReadOnlyList<DataBoxAccountCredentialDetails> accountCredentialDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxHeavySecret(deviceSerialNumber.Value, devicePassword.Value, Optional.ToList(networkConfigurations), encodedValidationCertPubKey.Value, Optional.ToList(accountCredentialDetails), serializedAdditionalRawData);
+            return new DataBoxHeavySecret(
+                deviceSerialNumber,
+                devicePassword,
+                networkConfigurations ?? new ChangeTrackingList<ApplianceNetworkConfiguration>(),
+                encodedValidationCertPubKey,
+                accountCredentialDetails ?? new ChangeTrackingList<DataBoxAccountCredentialDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxHeavySecret>.Write(ModelReaderWriterOptions options)

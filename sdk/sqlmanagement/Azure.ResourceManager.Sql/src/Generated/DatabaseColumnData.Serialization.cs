@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ColumnType))
+            if (ColumnType.HasValue)
             {
                 writer.WritePropertyName("columnType"u8);
                 writer.WriteStringValue(ColumnType.Value.ToString());
             }
-            if (Optional.IsDefined(TemporalType))
+            if (TemporalType.HasValue)
             {
                 writer.WritePropertyName("temporalType"u8);
                 writer.WriteStringValue(TemporalType.Value.ToString());
             }
-            if (Optional.IsDefined(IsMemoryOptimized))
+            if (IsMemoryOptimized.HasValue)
             {
                 writer.WritePropertyName("memoryOptimized"u8);
                 writer.WriteBooleanValue(IsMemoryOptimized.Value);
             }
-            if (Optional.IsDefined(IsComputed))
+            if (IsComputed.HasValue)
             {
                 writer.WritePropertyName("isComputed"u8);
                 writer.WriteBooleanValue(IsComputed.Value);
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SqlColumnDataType> columnType = default;
-            Optional<TableTemporalType> temporalType = default;
-            Optional<bool> memoryOptimized = default;
-            Optional<bool> isComputed = default;
+            SystemData systemData = default;
+            SqlColumnDataType? columnType = default;
+            TableTemporalType? temporalType = default;
+            bool? memoryOptimized = default;
+            bool? isComputed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseColumnData(id, name, type, systemData.Value, Optional.ToNullable(columnType), Optional.ToNullable(temporalType), Optional.ToNullable(memoryOptimized), Optional.ToNullable(isComputed), serializedAdditionalRawData);
+            return new DatabaseColumnData(
+                id,
+                name,
+                type,
+                systemData,
+                columnType,
+                temporalType,
+                memoryOptimized,
+                isComputed,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseColumnData>.Write(ModelReaderWriterOptions options)

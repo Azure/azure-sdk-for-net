@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PassedAssessments))
+            if (options.Format != "W" && PassedAssessments.HasValue)
             {
                 writer.WritePropertyName("passedAssessments"u8);
                 writer.WriteNumberValue(PassedAssessments.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FailedAssessments))
+            if (options.Format != "W" && FailedAssessments.HasValue)
             {
                 writer.WritePropertyName("failedAssessments"u8);
                 writer.WriteNumberValue(FailedAssessments.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SkippedAssessments))
+            if (options.Format != "W" && SkippedAssessments.HasValue)
             {
                 writer.WritePropertyName("skippedAssessments"u8);
                 writer.WriteNumberValue(SkippedAssessments.Value);
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<RegulatoryComplianceState> state = default;
-            Optional<int> passedAssessments = default;
-            Optional<int> failedAssessments = default;
-            Optional<int> skippedAssessments = default;
+            SystemData systemData = default;
+            string description = default;
+            RegulatoryComplianceState? state = default;
+            int? passedAssessments = default;
+            int? failedAssessments = default;
+            int? skippedAssessments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,7 +210,17 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegulatoryComplianceControlData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(state), Optional.ToNullable(passedAssessments), Optional.ToNullable(failedAssessments), Optional.ToNullable(skippedAssessments), serializedAdditionalRawData);
+            return new RegulatoryComplianceControlData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                state,
+                passedAssessments,
+                failedAssessments,
+                skippedAssessments,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegulatoryComplianceControlData>.Write(ModelReaderWriterOptions options)

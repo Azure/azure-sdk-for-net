@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Placement))
+            if (Placement.HasValue)
             {
                 writer.WritePropertyName("placement"u8);
                 writer.WriteStringValue(Placement.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchDiffDiskPlacement> placement = default;
+            BatchDiffDiskPlacement? placement = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiffDiskSettings(Optional.ToNullable(placement), serializedAdditionalRawData);
+            return new DiffDiskSettings(placement, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiffDiskSettings>.Write(ModelReaderWriterOptions options)

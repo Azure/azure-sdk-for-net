@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("diskUri"u8);
             writer.WriteStringValue(DiskUri.AbsoluteUri);
-            if (Optional.IsDefined(RecoveryAzureStorageAccountCustomContent))
+            if (RecoveryAzureStorageAccountCustomContent != null)
             {
                 writer.WritePropertyName("recoveryAzureStorageAccountCustomInput"u8);
                 writer.WriteObjectValue(RecoveryAzureStorageAccountCustomContent);
             }
-            if (Optional.IsDefined(PrimaryStagingStorageAccountCustomContent))
+            if (PrimaryStagingStorageAccountCustomContent != null)
             {
                 writer.WritePropertyName("primaryStagingStorageAccountCustomInput"u8);
                 writer.WriteObjectValue(PrimaryStagingStorageAccountCustomContent);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Uri diskUri = default;
-            Optional<StorageAccountCustomDetails> recoveryAzureStorageAccountCustomContent = default;
-            Optional<StorageAccountCustomDetails> primaryStagingStorageAccountCustomContent = default;
+            StorageAccountCustomDetails recoveryAzureStorageAccountCustomContent = default;
+            StorageAccountCustomDetails primaryStagingStorageAccountCustomContent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AProtectionIntentDiskDetails(diskUri, recoveryAzureStorageAccountCustomContent.Value, primaryStagingStorageAccountCustomContent.Value, serializedAdditionalRawData);
+            return new A2AProtectionIntentDiskDetails(diskUri, recoveryAzureStorageAccountCustomContent, primaryStagingStorageAccountCustomContent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<A2AProtectionIntentDiskDetails>.Write(ModelReaderWriterOptions options)

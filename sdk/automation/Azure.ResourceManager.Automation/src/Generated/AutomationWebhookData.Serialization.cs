@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(LastInvokedOn))
+            if (LastInvokedOn.HasValue)
             {
                 if (LastInvokedOn != null)
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("lastInvokedTime");
                 }
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -88,32 +88,32 @@ namespace Azure.ResourceManager.Automation
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Runbook))
+            if (Runbook != null)
             {
                 writer.WritePropertyName("runbook"u8);
                 writer.WriteObjectValue(Runbook);
             }
-            if (Optional.IsDefined(RunOn))
+            if (RunOn != null)
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastModifiedBy))
+            if (LastModifiedBy != null)
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -160,18 +160,18 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isEnabled = default;
-            Optional<Uri> uri = default;
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<DateTimeOffset?> lastInvokedTime = default;
-            Optional<IDictionary<string, string>> parameters = default;
-            Optional<RunbookAssociationProperty> runbook = default;
-            Optional<string> runOn = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            bool? isEnabled = default;
+            Uri uri = default;
+            DateTimeOffset? expiryTime = default;
+            DateTimeOffset? lastInvokedTime = default;
+            IDictionary<string, string> parameters = default;
+            RunbookAssociationProperty runbook = default;
+            string runOn = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string lastModifiedBy = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -311,7 +311,23 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationWebhookData(id, name, type, systemData.Value, Optional.ToNullable(isEnabled), uri.Value, Optional.ToNullable(expiryTime), Optional.ToNullable(lastInvokedTime), Optional.ToDictionary(parameters), runbook.Value, runOn.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, description.Value, serializedAdditionalRawData);
+            return new AutomationWebhookData(
+                id,
+                name,
+                type,
+                systemData,
+                isEnabled,
+                uri,
+                expiryTime,
+                lastInvokedTime,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                runbook,
+                runOn,
+                creationTime,
+                lastModifiedTime,
+                lastModifiedBy,
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationWebhookData>.Write(ModelReaderWriterOptions options)

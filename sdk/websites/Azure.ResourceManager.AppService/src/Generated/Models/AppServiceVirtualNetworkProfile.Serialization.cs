@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Subnet))
+            if (Subnet != null)
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> subnet = default;
+            string name = default;
+            ResourceType? type = default;
+            string subnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceVirtualNetworkProfile(id, name.Value, Optional.ToNullable(type), subnet.Value, serializedAdditionalRawData);
+            return new AppServiceVirtualNetworkProfile(id, name, type, subnet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceVirtualNetworkProfile>.Write(ModelReaderWriterOptions options)

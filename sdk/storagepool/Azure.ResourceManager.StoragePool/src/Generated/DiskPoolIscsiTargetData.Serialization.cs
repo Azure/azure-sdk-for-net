@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.StoragePool
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
+            if (options.Format != "W" && ManagedBy != null)
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ManagedByExtended))
+            if (options.Format != "W" && !(ManagedByExtended is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("managedByExtended"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StoragePool
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StoragePool
             writer.WriteStartObject();
             writer.WritePropertyName("aclMode"u8);
             writer.WriteStringValue(AclMode.ToString());
-            if (Optional.IsCollectionDefined(StaticAcls))
+            if (!(StaticAcls is ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("staticAcls"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StoragePool
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Luns))
+            if (!(Luns is ChangeTrackingList<ManagedDiskIscsiLun> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.StoragePool
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.StoragePool
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Port))
+            if (Port.HasValue)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Sessions))
+            if (options.Format != "W" && !(Sessions is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("sessions"u8);
                 writer.WriteStartArray();
@@ -160,21 +160,21 @@ namespace Azure.ResourceManager.StoragePool
             {
                 return null;
             }
-            Optional<string> managedBy = default;
-            Optional<IReadOnlyList<string>> managedByExtended = default;
+            string managedBy = default;
+            IReadOnlyList<string> managedByExtended = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             DiskPoolIscsiTargetAclMode aclMode = default;
-            Optional<IList<DiskPoolIscsiTargetPortalGroupAcl>> staticAcls = default;
-            Optional<IList<ManagedDiskIscsiLun>> luns = default;
+            IList<DiskPoolIscsiTargetPortalGroupAcl> staticAcls = default;
+            IList<ManagedDiskIscsiLun> luns = default;
             string targetIqn = default;
             DiskPoolIscsiTargetProvisioningState provisioningState = default;
             StoragePoolOperationalStatus status = default;
-            Optional<IList<string>> endpoints = default;
-            Optional<int> port = default;
-            Optional<IReadOnlyList<string>> sessions = default;
+            IList<string> endpoints = default;
+            int? port = default;
+            IReadOnlyList<string> sessions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -325,7 +325,23 @@ namespace Azure.ResourceManager.StoragePool
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolIscsiTargetData(id, name, type, systemData.Value, managedBy.Value, Optional.ToList(managedByExtended), aclMode, Optional.ToList(staticAcls), Optional.ToList(luns), targetIqn, provisioningState, status, Optional.ToList(endpoints), Optional.ToNullable(port), Optional.ToList(sessions), serializedAdditionalRawData);
+            return new DiskPoolIscsiTargetData(
+                id,
+                name,
+                type,
+                systemData,
+                managedBy,
+                managedByExtended ?? new ChangeTrackingList<string>(),
+                aclMode,
+                staticAcls ?? new ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl>(),
+                luns ?? new ChangeTrackingList<ManagedDiskIscsiLun>(),
+                targetIqn,
+                provisioningState,
+                status,
+                endpoints ?? new ChangeTrackingList<string>(),
+                port,
+                sessions ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolIscsiTargetData>.Write(ModelReaderWriterOptions options)

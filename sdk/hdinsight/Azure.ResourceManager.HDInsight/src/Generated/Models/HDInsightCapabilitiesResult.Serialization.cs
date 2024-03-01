@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Versions))
+            if (!(Versions is ChangeTrackingDictionary<string, HDInsightVersionsCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("versions"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Regions))
+            if (!(Regions is ChangeTrackingDictionary<string, RegionsCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Features))
+            if (!(Features is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Quota))
+            if (options.Format != "W" && Quota != null)
             {
                 writer.WritePropertyName("quota"u8);
                 writer.WriteObjectValue(Quota);
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, HDInsightVersionsCapability>> versions = default;
-            Optional<IReadOnlyDictionary<string, RegionsCapability>> regions = default;
-            Optional<IReadOnlyList<string>> features = default;
-            Optional<QuotaCapability> quota = default;
+            IReadOnlyDictionary<string, HDInsightVersionsCapability> versions = default;
+            IReadOnlyDictionary<string, RegionsCapability> regions = default;
+            IReadOnlyList<string> features = default;
+            QuotaCapability quota = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightCapabilitiesResult(Optional.ToDictionary(versions), Optional.ToDictionary(regions), Optional.ToList(features), quota.Value, serializedAdditionalRawData);
+            return new HDInsightCapabilitiesResult(versions ?? new ChangeTrackingDictionary<string, HDInsightVersionsCapability>(), regions ?? new ChangeTrackingDictionary<string, RegionsCapability>(), features ?? new ChangeTrackingList<string>(), quota, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightCapabilitiesResult>.Write(ModelReaderWriterOptions options)

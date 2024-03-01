@@ -22,14 +22,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<IReadOnlyList<AcsRouterWorkerSelector>> expiredRequestedWorkerSelectors = default;
-            Optional<IReadOnlyList<AcsRouterWorkerSelector>> expiredAttachedWorkerSelectors = default;
-            Optional<string> queueId = default;
-            Optional<IReadOnlyDictionary<string, string>> labels = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<string> jobId = default;
-            Optional<string> channelReference = default;
-            Optional<string> channelId = default;
+            IReadOnlyList<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = default;
+            IReadOnlyList<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = default;
+            string queueId = default;
+            IReadOnlyDictionary<string, string> labels = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            string jobId = default;
+            string channelReference = default;
+            string channelId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expiredRequestedWorkerSelectors"u8))
@@ -109,7 +109,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterJobWorkerSelectorsExpiredEventData(jobId.Value, channelReference.Value, channelId.Value, queueId.Value, Optional.ToDictionary(labels), Optional.ToDictionary(tags), Optional.ToList(expiredRequestedWorkerSelectors), Optional.ToList(expiredAttachedWorkerSelectors));
+            return new AcsRouterJobWorkerSelectorsExpiredEventData(
+                jobId,
+                channelReference,
+                channelId,
+                queueId,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                expiredRequestedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>(),
+                expiredAttachedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>());
         }
 
         internal partial class AcsRouterJobWorkerSelectorsExpiredEventDataConverter : JsonConverter<AcsRouterJobWorkerSelectorsExpiredEventData>

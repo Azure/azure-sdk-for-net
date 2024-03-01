@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagedOutboundIPs))
+            if (ManagedOutboundIPs != null)
             {
                 writer.WritePropertyName("managedOutboundIPs"u8);
                 writer.WriteObjectValue(ManagedOutboundIPs);
             }
-            if (Optional.IsDefined(OutboundIPPrefixes))
+            if (OutboundIPPrefixes != null)
             {
                 writer.WritePropertyName("outboundIPPrefixes"u8);
                 writer.WriteObjectValue(OutboundIPPrefixes);
             }
-            if (Optional.IsDefined(OutboundIPs))
+            if (OutboundIPs != null)
             {
                 writer.WritePropertyName("outboundIPs"u8);
                 writer.WriteObjectValue(OutboundIPs);
             }
-            if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
+            if (!(EffectiveOutboundIPs is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("effectiveOutboundIPs"u8);
                 writer.WriteStartArray();
@@ -52,22 +52,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllocatedOutboundPorts))
+            if (AllocatedOutboundPorts.HasValue)
             {
                 writer.WritePropertyName("allocatedOutboundPorts"u8);
                 writer.WriteNumberValue(AllocatedOutboundPorts.Value);
             }
-            if (Optional.IsDefined(IdleTimeoutInMinutes))
+            if (IdleTimeoutInMinutes.HasValue)
             {
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
-            if (Optional.IsDefined(EnableMultipleStandardLoadBalancers))
+            if (EnableMultipleStandardLoadBalancers.HasValue)
             {
                 writer.WritePropertyName("enableMultipleStandardLoadBalancers"u8);
                 writer.WriteBooleanValue(EnableMultipleStandardLoadBalancers.Value);
             }
-            if (Optional.IsDefined(BackendPoolType))
+            if (BackendPoolType.HasValue)
             {
                 writer.WritePropertyName("backendPoolType"u8);
                 writer.WriteStringValue(BackendPoolType.Value.ToString());
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ManagedClusterLoadBalancerProfileManagedOutboundIPs> managedOutboundIPs = default;
-            Optional<ManagedClusterLoadBalancerProfileOutboundIPPrefixes> outboundIPPrefixes = default;
-            Optional<ManagedClusterLoadBalancerProfileOutboundIPs> outboundIPs = default;
-            Optional<IList<WritableSubResource>> effectiveOutboundIPs = default;
-            Optional<int> allocatedOutboundPorts = default;
-            Optional<int> idleTimeoutInMinutes = default;
-            Optional<bool> enableMultipleStandardLoadBalancers = default;
-            Optional<ManagedClusterLoadBalancerBackendPoolType> backendPoolType = default;
+            ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs = default;
+            ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes = default;
+            ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs = default;
+            IList<WritableSubResource> effectiveOutboundIPs = default;
+            int? allocatedOutboundPorts = default;
+            int? idleTimeoutInMinutes = default;
+            bool? enableMultipleStandardLoadBalancers = default;
+            ManagedClusterLoadBalancerBackendPoolType? backendPoolType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterLoadBalancerProfile(managedOutboundIPs.Value, outboundIPPrefixes.Value, outboundIPs.Value, Optional.ToList(effectiveOutboundIPs), Optional.ToNullable(allocatedOutboundPorts), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableMultipleStandardLoadBalancers), Optional.ToNullable(backendPoolType), serializedAdditionalRawData);
+            return new ManagedClusterLoadBalancerProfile(
+                managedOutboundIPs,
+                outboundIPPrefixes,
+                outboundIPs,
+                effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>(),
+                allocatedOutboundPorts,
+                idleTimeoutInMinutes,
+                enableMultipleStandardLoadBalancers,
+                backendPoolType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterLoadBalancerProfile>.Write(ModelReaderWriterOptions options)

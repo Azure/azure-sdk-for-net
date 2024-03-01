@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName);
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteObjectValue(Path);
             }
-            if (Optional.IsDefined(EnableCompression))
+            if (EnableCompression != null)
             {
                 writer.WritePropertyName("enableCompression"u8);
                 writer.WriteObjectValue(EnableCompression);
@@ -46,8 +46,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             LinkedServiceReference linkedServiceName = default;
-            Optional<object> path = default;
-            Optional<object> enableCompression = default;
+            object path = default;
+            object enableCompression = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new StagingSettings(linkedServiceName, path.Value, enableCompression.Value, additionalProperties);
+            return new StagingSettings(linkedServiceName, path, enableCompression, additionalProperties);
         }
 
         internal partial class StagingSettingsConverter : JsonConverter<StagingSettings>

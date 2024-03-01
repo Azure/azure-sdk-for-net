@@ -26,64 +26,64 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType.HasValue)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Optional.IsDefined(RegistrationStatus))
+            if (RegistrationStatus != null)
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
-            if (Optional.IsDefined(BackupEngineState))
+            if (BackupEngineState != null)
             {
                 writer.WritePropertyName("backupEngineState"u8);
                 writer.WriteStringValue(BackupEngineState);
             }
-            if (Optional.IsDefined(HealthStatus))
+            if (HealthStatus != null)
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
             writer.WritePropertyName("backupEngineType"u8);
             writer.WriteStringValue(BackupEngineType.ToString());
-            if (Optional.IsDefined(CanReRegister))
+            if (CanReRegister.HasValue)
             {
                 writer.WritePropertyName("canReRegister"u8);
                 writer.WriteBooleanValue(CanReRegister.Value);
             }
-            if (Optional.IsDefined(BackupEngineId))
+            if (BackupEngineId != null)
             {
                 writer.WritePropertyName("backupEngineId"u8);
                 writer.WriteStringValue(BackupEngineId);
             }
-            if (Optional.IsDefined(DpmVersion))
+            if (DpmVersion != null)
             {
                 writer.WritePropertyName("dpmVersion"u8);
                 writer.WriteStringValue(DpmVersion);
             }
-            if (Optional.IsDefined(AzureBackupAgentVersion))
+            if (AzureBackupAgentVersion != null)
             {
                 writer.WritePropertyName("azureBackupAgentVersion"u8);
                 writer.WriteStringValue(AzureBackupAgentVersion);
             }
-            if (Optional.IsDefined(IsAzureBackupAgentUpgradeAvailable))
+            if (IsAzureBackupAgentUpgradeAvailable.HasValue)
             {
                 writer.WritePropertyName("isAzureBackupAgentUpgradeAvailable"u8);
                 writer.WriteBooleanValue(IsAzureBackupAgentUpgradeAvailable.Value);
             }
-            if (Optional.IsDefined(IsDpmUpgradeAvailable))
+            if (IsDpmUpgradeAvailable.HasValue)
             {
                 writer.WritePropertyName("isDpmUpgradeAvailable"u8);
                 writer.WriteBooleanValue(IsDpmUpgradeAvailable.Value);
             }
-            if (Optional.IsDefined(ExtendedInfo))
+            if (ExtendedInfo != null)
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
@@ -126,19 +126,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> registrationStatus = default;
-            Optional<string> backupEngineState = default;
-            Optional<string> healthStatus = default;
+            string friendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string registrationStatus = default;
+            string backupEngineState = default;
+            string healthStatus = default;
             BackupEngineType backupEngineType = default;
-            Optional<bool> canReRegister = default;
-            Optional<string> backupEngineId = default;
-            Optional<string> dpmVersion = default;
-            Optional<string> azureBackupAgentVersion = default;
-            Optional<bool> isAzureBackupAgentUpgradeAvailable = default;
-            Optional<bool> isDpmUpgradeAvailable = default;
-            Optional<BackupEngineExtendedInfo> extendedInfo = default;
+            bool? canReRegister = default;
+            string backupEngineId = default;
+            string dpmVersion = default;
+            string azureBackupAgentVersion = default;
+            bool? isAzureBackupAgentUpgradeAvailable = default;
+            bool? isDpmUpgradeAvailable = default;
+            BackupEngineExtendedInfo extendedInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -234,7 +234,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DpmBackupEngine(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, backupEngineState.Value, healthStatus.Value, backupEngineType, Optional.ToNullable(canReRegister), backupEngineId.Value, dpmVersion.Value, azureBackupAgentVersion.Value, Optional.ToNullable(isAzureBackupAgentUpgradeAvailable), Optional.ToNullable(isDpmUpgradeAvailable), extendedInfo.Value, serializedAdditionalRawData);
+            return new DpmBackupEngine(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                backupEngineState,
+                healthStatus,
+                backupEngineType,
+                canReRegister,
+                backupEngineId,
+                dpmVersion,
+                azureBackupAgentVersion,
+                isAzureBackupAgentUpgradeAvailable,
+                isDpmUpgradeAvailable,
+                extendedInfo,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DpmBackupEngine>.Write(ModelReaderWriterOptions options)

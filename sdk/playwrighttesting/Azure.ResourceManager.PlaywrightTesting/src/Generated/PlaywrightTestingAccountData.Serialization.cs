@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,34 +56,34 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DashboardUri))
+            if (options.Format != "W" && DashboardUri != null)
             {
                 writer.WritePropertyName("dashboardUri"u8);
                 writer.WriteStringValue(DashboardUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(RegionalAffinity))
+            if (RegionalAffinity.HasValue)
             {
                 writer.WritePropertyName("regionalAffinity"u8);
                 writer.WriteStringValue(RegionalAffinity.Value.ToString());
             }
-            if (Optional.IsDefined(ScalableExecution))
+            if (ScalableExecution.HasValue)
             {
                 writer.WritePropertyName("scalableExecution"u8);
                 writer.WriteStringValue(ScalableExecution.Value.ToString());
             }
-            if (Optional.IsDefined(Reporting))
+            if (Reporting.HasValue)
             {
                 writer.WritePropertyName("reporting"u8);
                 writer.WriteStringValue(Reporting.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.PlaywrightTesting
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> dashboardUri = default;
-            Optional<EnablementStatus> regionalAffinity = default;
-            Optional<EnablementStatus> scalableExecution = default;
-            Optional<EnablementStatus> reporting = default;
-            Optional<PlaywrightTestingProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            Uri dashboardUri = default;
+            EnablementStatus? regionalAffinity = default;
+            EnablementStatus? scalableExecution = default;
+            EnablementStatus? reporting = default;
+            PlaywrightTestingProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -248,7 +248,19 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlaywrightTestingAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, dashboardUri.Value, Optional.ToNullable(regionalAffinity), Optional.ToNullable(scalableExecution), Optional.ToNullable(reporting), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PlaywrightTestingAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                dashboardUri,
+                regionalAffinity,
+                scalableExecution,
+                reporting,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlaywrightTestingAccountData>.Write(ModelReaderWriterOptions options)

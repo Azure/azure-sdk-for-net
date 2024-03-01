@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Frequency))
+            if (Frequency.HasValue)
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Optional.IsDefined(Interval))
+            if (Interval.HasValue)
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<MapperPolicyRecurrenceFrequencyType> frequency = default;
-            Optional<int> interval = default;
+            MapperPolicyRecurrenceFrequencyType? frequency = default;
+            int? interval = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperPolicyRecurrence(Optional.ToNullable(frequency), Optional.ToNullable(interval), serializedAdditionalRawData);
+            return new MapperPolicyRecurrence(frequency, interval, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperPolicyRecurrence>.Write(ModelReaderWriterOptions options)

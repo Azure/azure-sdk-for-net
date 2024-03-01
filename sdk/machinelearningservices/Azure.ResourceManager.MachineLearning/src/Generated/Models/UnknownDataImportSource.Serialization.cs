@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Connection))
+            if (Connection != null)
             {
                 if (Connection != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> connection = default;
+            string connection = default;
             DataImportSourceType sourceType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDataImportSource(connection.Value, sourceType, serializedAdditionalRawData);
+            return new UnknownDataImportSource(connection, sourceType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataImportSource>.Write(ModelReaderWriterOptions options)

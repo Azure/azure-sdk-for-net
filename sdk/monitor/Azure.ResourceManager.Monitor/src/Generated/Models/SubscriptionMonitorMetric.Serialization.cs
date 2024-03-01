@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(SubscriptionScopeMetricType);
             writer.WritePropertyName("name"u8);
             writer.WriteObjectValue(Name);
-            if (Optional.IsDefined(DisplayDescription))
+            if (DisplayDescription != null)
             {
                 writer.WritePropertyName("displayDescription"u8);
                 writer.WriteStringValue(DisplayDescription);
             }
-            if (Optional.IsDefined(ErrorCode))
+            if (ErrorCode != null)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.Monitor.Models
             string id = default;
             string type = default;
             MonitorLocalizableString name = default;
-            Optional<string> displayDescription = default;
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
+            string displayDescription = default;
+            string errorCode = default;
+            string errorMessage = default;
             MonitorMetricUnit unit = default;
             IReadOnlyList<MonitorTimeSeriesElement> timeseries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -157,7 +157,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionMonitorMetric(id, type, name, displayDescription.Value, errorCode.Value, errorMessage.Value, unit, timeseries, serializedAdditionalRawData);
+            return new SubscriptionMonitorMetric(
+                id,
+                type,
+                name,
+                displayDescription,
+                errorCode,
+                errorMessage,
+                unit,
+                timeseries,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionMonitorMetric>.Write(ModelReaderWriterOptions options)

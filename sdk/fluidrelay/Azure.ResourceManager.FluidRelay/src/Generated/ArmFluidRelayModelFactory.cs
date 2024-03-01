@@ -35,7 +35,20 @@ namespace Azure.ResourceManager.FluidRelay.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new FluidRelayServerData(id, name, resourceType, systemData, tags, location, identity, frsTenantId, fluidRelayEndpoints, provisioningState, customerManagedKeyEncryption != null ? new EncryptionProperties(customerManagedKeyEncryption, serializedAdditionalRawData: null) : null, storageSku, serializedAdditionalRawData: null);
+            return new FluidRelayServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                frsTenantId,
+                fluidRelayEndpoints,
+                provisioningState,
+                customerManagedKeyEncryption != null ? new EncryptionProperties(customerManagedKeyEncryption, serializedAdditionalRawData: null) : null,
+                storageSku,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FluidRelayEndpoints"/>. </summary>
@@ -74,7 +87,17 @@ namespace Azure.ResourceManager.FluidRelay.Models
         /// <returns> A new <see cref="FluidRelay.FluidRelayContainerData"/> instance for mocking. </returns>
         public static FluidRelayContainerData FluidRelayContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? frsTenantId = null, Guid? frsContainerId = null, FluidRelayProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastAccessOn = null)
         {
-            return new FluidRelayContainerData(id, name, resourceType, systemData, frsTenantId, frsContainerId, provisioningState, createdOn, lastAccessOn, serializedAdditionalRawData: null);
+            return new FluidRelayContainerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                frsTenantId,
+                frsContainerId,
+                provisioningState,
+                createdOn,
+                lastAccessOn,
+                serializedAdditionalRawData: null);
         }
     }
 }

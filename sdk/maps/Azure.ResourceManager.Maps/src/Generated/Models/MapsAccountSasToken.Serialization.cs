@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maps.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AccountSasToken))
+            if (options.Format != "W" && AccountSasToken != null)
             {
                 writer.WritePropertyName("accountSasToken"u8);
                 writer.WriteStringValue(AccountSasToken);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            Optional<string> accountSasToken = default;
+            string accountSasToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Maps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapsAccountSasToken(accountSasToken.Value, serializedAdditionalRawData);
+            return new MapsAccountSasToken(accountSasToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsAccountSasToken>.Write(ModelReaderWriterOptions options)

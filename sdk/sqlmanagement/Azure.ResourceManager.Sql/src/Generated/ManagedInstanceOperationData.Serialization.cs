@@ -43,84 +43,84 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ManagedInstanceName))
+            if (options.Format != "W" && ManagedInstanceName != null)
             {
                 writer.WritePropertyName("managedInstanceName"u8);
                 writer.WriteStringValue(ManagedInstanceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Operation))
+            if (options.Format != "W" && Operation != null)
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationFriendlyName))
+            if (options.Format != "W" && OperationFriendlyName != null)
             {
                 writer.WritePropertyName("operationFriendlyName"u8);
                 writer.WriteStringValue(OperationFriendlyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
+            if (options.Format != "W" && PercentComplete.HasValue)
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
+            if (options.Format != "W" && ErrorCode.HasValue)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorDescription))
+            if (options.Format != "W" && ErrorDescription != null)
             {
                 writer.WritePropertyName("errorDescription"u8);
                 writer.WriteStringValue(ErrorDescription);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorSeverity))
+            if (options.Format != "W" && ErrorSeverity.HasValue)
             {
                 writer.WritePropertyName("errorSeverity"u8);
                 writer.WriteNumberValue(ErrorSeverity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsUserError))
+            if (options.Format != "W" && IsUserError.HasValue)
             {
                 writer.WritePropertyName("isUserError"u8);
                 writer.WriteBooleanValue(IsUserError.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EstimatedCompleteOn))
+            if (options.Format != "W" && EstimatedCompleteOn.HasValue)
             {
                 writer.WritePropertyName("estimatedCompletionTime"u8);
                 writer.WriteStringValue(EstimatedCompleteOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsCancellable))
+            if (options.Format != "W" && IsCancellable.HasValue)
             {
                 writer.WritePropertyName("isCancellable"u8);
                 writer.WriteBooleanValue(IsCancellable.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationParameters))
+            if (options.Format != "W" && OperationParameters != null)
             {
                 writer.WritePropertyName("operationParameters"u8);
                 writer.WriteObjectValue(OperationParameters);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationSteps))
+            if (options.Format != "W" && OperationSteps != null)
             {
                 writer.WritePropertyName("operationSteps"u8);
                 writer.WriteObjectValue(OperationSteps);
@@ -167,22 +167,22 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> managedInstanceName = default;
-            Optional<string> operation = default;
-            Optional<string> operationFriendlyName = default;
-            Optional<int> percentComplete = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<ManagementOperationState> state = default;
-            Optional<int> errorCode = default;
-            Optional<string> errorDescription = default;
-            Optional<int> errorSeverity = default;
-            Optional<bool> isUserError = default;
-            Optional<DateTimeOffset> estimatedCompletionTime = default;
-            Optional<string> description = default;
-            Optional<bool> isCancellable = default;
-            Optional<ManagedInstanceOperationParametersPair> operationParameters = default;
-            Optional<ManagedInstanceOperationSteps> operationSteps = default;
+            SystemData systemData = default;
+            string managedInstanceName = default;
+            string operation = default;
+            string operationFriendlyName = default;
+            int? percentComplete = default;
+            DateTimeOffset? startTime = default;
+            ManagementOperationState? state = default;
+            int? errorCode = default;
+            string errorDescription = default;
+            int? errorSeverity = default;
+            bool? isUserError = default;
+            DateTimeOffset? estimatedCompletionTime = default;
+            string description = default;
+            bool? isCancellable = default;
+            ManagedInstanceOperationParametersPair operationParameters = default;
+            ManagedInstanceOperationSteps operationSteps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -344,7 +344,27 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceOperationData(id, name, type, systemData.Value, managedInstanceName.Value, operation.Value, operationFriendlyName.Value, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(state), Optional.ToNullable(errorCode), errorDescription.Value, Optional.ToNullable(errorSeverity), Optional.ToNullable(isUserError), Optional.ToNullable(estimatedCompletionTime), description.Value, Optional.ToNullable(isCancellable), operationParameters.Value, operationSteps.Value, serializedAdditionalRawData);
+            return new ManagedInstanceOperationData(
+                id,
+                name,
+                type,
+                systemData,
+                managedInstanceName,
+                operation,
+                operationFriendlyName,
+                percentComplete,
+                startTime,
+                state,
+                errorCode,
+                errorDescription,
+                errorSeverity,
+                isUserError,
+                estimatedCompletionTime,
+                description,
+                isCancellable,
+                operationParameters,
+                operationSteps,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceOperationData>.Write(ModelReaderWriterOptions options)

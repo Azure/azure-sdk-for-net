@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Offline))
+            if (options.Format != "W" && Offline.HasValue)
             {
                 writer.WritePropertyName("offline"u8);
                 writer.WriteBooleanValue(Offline.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<bool> offline = default;
+            bool? offline = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDBOfflineConfiguration(Optional.ToNullable(offline), serializedAdditionalRawData);
+            return new SqlDBOfflineConfiguration(offline, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDBOfflineConfiguration>.Write(ModelReaderWriterOptions options)

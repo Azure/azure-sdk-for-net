@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RetentionTimes))
+            if (!(RetentionTimes is ChangeTrackingList<DateTimeOffset> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("retentionTimes"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RetentionDuration))
+            if (RetentionDuration != null)
             {
                 writer.WritePropertyName("retentionDuration"u8);
                 writer.WriteObjectValue(RetentionDuration);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<DateTimeOffset>> retentionTimes = default;
-            Optional<RetentionDuration> retentionDuration = default;
+            IList<DateTimeOffset> retentionTimes = default;
+            RetentionDuration retentionDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DailyRetentionSchedule(Optional.ToList(retentionTimes), retentionDuration.Value, serializedAdditionalRawData);
+            return new DailyRetentionSchedule(retentionTimes ?? new ChangeTrackingList<DateTimeOffset>(), retentionDuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DailyRetentionSchedule>.Write(ModelReaderWriterOptions options)

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimarybytesIn))
+            if (PrimarybytesIn.HasValue)
             {
                 writer.WritePropertyName("primarybytesIn"u8);
                 writer.WriteNumberValue(PrimarybytesIn.Value);
             }
-            if (Optional.IsDefined(PrimarybytesOut))
+            if (PrimarybytesOut.HasValue)
             {
                 writer.WritePropertyName("primarybytesOut"u8);
                 writer.WriteNumberValue(PrimarybytesOut.Value);
             }
-            if (Optional.IsDefined(SecondarybytesIn))
+            if (SecondarybytesIn.HasValue)
             {
                 writer.WritePropertyName("secondarybytesIn"u8);
                 writer.WriteNumberValue(SecondarybytesIn.Value);
             }
-            if (Optional.IsDefined(SecondarybytesOut))
+            if (SecondarybytesOut.HasValue)
             {
                 writer.WritePropertyName("secondarybytesOut"u8);
                 writer.WriteNumberValue(SecondarybytesOut.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<long> primarybytesIn = default;
-            Optional<long> primarybytesOut = default;
-            Optional<long> secondarybytesIn = default;
-            Optional<long> secondarybytesOut = default;
+            long? primarybytesIn = default;
+            long? primarybytesOut = default;
+            long? secondarybytesIn = default;
+            long? secondarybytesOut = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitStats(Optional.ToNullable(primarybytesIn), Optional.ToNullable(primarybytesOut), Optional.ToNullable(secondarybytesIn), Optional.ToNullable(secondarybytesOut), serializedAdditionalRawData);
+            return new ExpressRouteCircuitStats(primarybytesIn, primarybytesOut, secondarybytesIn, secondarybytesOut, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitStats>.Write(ModelReaderWriterOptions options)

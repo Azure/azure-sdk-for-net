@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskEncryptionKey))
+            if (DiskEncryptionKey != null)
             {
                 writer.WritePropertyName("diskEncryptionKey"u8);
                 writer.WriteObjectValue(DiskEncryptionKey);
             }
-            if (Optional.IsDefined(KeyEncryptionKey))
+            if (KeyEncryptionKey != null)
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Enabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<KeyVaultSecretReference> diskEncryptionKey = default;
-            Optional<KeyVaultKeyReference> keyEncryptionKey = default;
-            Optional<bool> enabled = default;
+            KeyVaultSecretReference diskEncryptionKey = default;
+            KeyVaultKeyReference keyEncryptionKey = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskEncryptionSettings(diskEncryptionKey.Value, keyEncryptionKey.Value, Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new DiskEncryptionSettings(diskEncryptionKey, keyEncryptionKey, enabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskEncryptionSettings>.Write(ModelReaderWriterOptions options)

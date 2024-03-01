@@ -28,69 +28,69 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RouterName))
+            if (options.Format != "W" && RouterName != null)
             {
                 writer.WritePropertyName("routerName"u8);
                 writer.WriteStringValue(RouterName);
             }
-            if (options.Format != "W" && Optional.IsDefined(InterfaceName))
+            if (options.Format != "W" && InterfaceName != null)
             {
                 writer.WritePropertyName("interfaceName"u8);
                 writer.WriteStringValue(InterfaceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PatchPanelId))
+            if (options.Format != "W" && PatchPanelId != null)
             {
                 writer.WritePropertyName("patchPanelId"u8);
                 writer.WriteStringValue(PatchPanelId);
             }
-            if (options.Format != "W" && Optional.IsDefined(RackId))
+            if (options.Format != "W" && RackId != null)
             {
                 writer.WritePropertyName("rackId"u8);
                 writer.WriteStringValue(RackId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ColoLocation))
+            if (options.Format != "W" && ColoLocation != null)
             {
                 writer.WritePropertyName("coloLocation"u8);
                 writer.WriteStringValue(ColoLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectorType))
+            if (options.Format != "W" && ConnectorType.HasValue)
             {
                 writer.WritePropertyName("connectorType"u8);
                 writer.WriteStringValue(ConnectorType.Value.ToString());
             }
-            if (Optional.IsDefined(AdminState))
+            if (AdminState.HasValue)
             {
                 writer.WritePropertyName("adminState"u8);
                 writer.WriteStringValue(AdminState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(MacSecConfig))
+            if (MacSecConfig != null)
             {
                 writer.WritePropertyName("macSecConfig"u8);
                 writer.WriteObjectValue(MacSecConfig);
@@ -134,19 +134,19 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> routerName = default;
-            Optional<string> interfaceName = default;
-            Optional<string> patchPanelId = default;
-            Optional<string> rackId = default;
-            Optional<string> coloLocation = default;
-            Optional<ExpressRouteLinkConnectorType> connectorType = default;
-            Optional<ExpressRouteLinkAdminState> adminState = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<ExpressRouteLinkMacSecConfig> macSecConfig = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string routerName = default;
+            string interfaceName = default;
+            string patchPanelId = default;
+            string rackId = default;
+            string coloLocation = default;
+            ExpressRouteLinkConnectorType? connectorType = default;
+            ExpressRouteLinkAdminState? adminState = default;
+            NetworkProvisioningState? provisioningState = default;
+            ExpressRouteLinkMacSecConfig macSecConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -262,7 +262,21 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteLinkData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), routerName.Value, interfaceName.Value, patchPanelId.Value, rackId.Value, coloLocation.Value, Optional.ToNullable(connectorType), Optional.ToNullable(adminState), Optional.ToNullable(provisioningState), macSecConfig.Value);
+            return new ExpressRouteLinkData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                routerName,
+                interfaceName,
+                patchPanelId,
+                rackId,
+                coloLocation,
+                connectorType,
+                adminState,
+                provisioningState,
+                macSecConfig);
         }
 
         BinaryData IPersistableModel<ExpressRouteLinkData>.Write(ModelReaderWriterOptions options)

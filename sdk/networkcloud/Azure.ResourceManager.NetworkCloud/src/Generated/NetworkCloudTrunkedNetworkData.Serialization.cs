@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AssociatedResourceIds))
+            if (options.Format != "W" && !(AssociatedResourceIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("associatedResourceIds"u8);
                 writer.WriteStartArray();
@@ -75,22 +75,22 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterId))
+            if (options.Format != "W" && ClusterId != null)
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
+            if (options.Format != "W" && DetailedStatus.HasValue)
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
+            if (options.Format != "W" && DetailedStatusMessage != null)
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HybridAksClustersAssociatedIds))
+            if (options.Format != "W" && !(HybridAksClustersAssociatedIds is ChangeTrackingList<ResourceIdentifier> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("hybridAksClustersAssociatedIds"u8);
                 writer.WriteStartArray();
@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(HybridAksPluginType))
+            if (HybridAksPluginType.HasValue)
             {
                 writer.WritePropertyName("hybridAksPluginType"u8);
                 writer.WriteStringValue(HybridAksPluginType.Value.ToString());
             }
-            if (Optional.IsDefined(InterfaceName))
+            if (InterfaceName != null)
             {
                 writer.WritePropertyName("interfaceName"u8);
                 writer.WriteStringValue(InterfaceName);
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAssociatedIds))
+            if (options.Format != "W" && !(VirtualMachinesAssociatedIds is ChangeTrackingList<ResourceIdentifier> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("virtualMachinesAssociatedIds"u8);
                 writer.WriteStartArray();
@@ -194,22 +194,22 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<string>> associatedResourceIds = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<TrunkedNetworkDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> hybridAksClustersAssociatedIds = default;
-            Optional<HybridAksPluginType> hybridAksPluginType = default;
-            Optional<string> interfaceName = default;
+            SystemData systemData = default;
+            IReadOnlyList<string> associatedResourceIds = default;
+            ResourceIdentifier clusterId = default;
+            TrunkedNetworkDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds = default;
+            HybridAksPluginType? hybridAksPluginType = default;
+            string interfaceName = default;
             IList<ResourceIdentifier> isolationDomainIds = default;
-            Optional<TrunkedNetworkProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> virtualMachinesAssociatedIds = default;
+            TrunkedNetworkProvisioningState? provisioningState = default;
+            IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds = default;
             IList<long> vlans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -410,7 +410,26 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudTrunkedNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(associatedResourceIds), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToList(hybridAksClustersAssociatedIds), Optional.ToNullable(hybridAksPluginType), interfaceName.Value, isolationDomainIds, Optional.ToNullable(provisioningState), Optional.ToList(virtualMachinesAssociatedIds), vlans, serializedAdditionalRawData);
+            return new NetworkCloudTrunkedNetworkData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                associatedResourceIds ?? new ChangeTrackingList<string>(),
+                clusterId,
+                detailedStatus,
+                detailedStatusMessage,
+                hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                hybridAksPluginType,
+                interfaceName,
+                isolationDomainIds,
+                provisioningState,
+                virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                vlans,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudTrunkedNetworkData>.Write(ModelReaderWriterOptions options)

@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeviceId))
+            if (DeviceId != null)
             {
                 writer.WritePropertyName("deviceId"u8);
                 writer.WriteStringValue(DeviceId);
             }
-            if (Optional.IsDefined(OSPlatform))
+            if (OSPlatform != null)
             {
                 writer.WritePropertyName("osPlatform"u8);
                 writer.WriteStringValue(OSPlatform);
             }
-            if (Optional.IsDefined(Vendor))
+            if (Vendor != null)
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (Optional.IsDefined(SoftwareName))
+            if (SoftwareName != null)
             {
                 writer.WritePropertyName("softwareName"u8);
                 writer.WriteStringValue(SoftwareName);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(EndOfSupportStatus))
+            if (EndOfSupportStatus.HasValue)
             {
                 writer.WritePropertyName("endOfSupportStatus"u8);
                 writer.WriteStringValue(EndOfSupportStatus.Value.ToString());
             }
-            if (Optional.IsDefined(EndOfSupportDate))
+            if (EndOfSupportDate != null)
             {
                 writer.WritePropertyName("endOfSupportDate"u8);
                 writer.WriteStringValue(EndOfSupportDate);
             }
-            if (Optional.IsDefined(NumberOfKnownVulnerabilities))
+            if (NumberOfKnownVulnerabilities.HasValue)
             {
                 writer.WritePropertyName("numberOfKnownVulnerabilities"u8);
                 writer.WriteNumberValue(NumberOfKnownVulnerabilities.Value);
             }
-            if (Optional.IsDefined(FirstSeenOn))
+            if (FirstSeenOn.HasValue)
             {
                 writer.WritePropertyName("firstSeenAt"u8);
                 writer.WriteStringValue(FirstSeenOn.Value, "O");
@@ -137,16 +137,16 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> deviceId = default;
-            Optional<string> osPlatform = default;
-            Optional<string> vendor = default;
-            Optional<string> softwareName = default;
-            Optional<string> version = default;
-            Optional<EndOfSupportStatus> endOfSupportStatus = default;
-            Optional<string> endOfSupportDate = default;
-            Optional<int> numberOfKnownVulnerabilities = default;
-            Optional<DateTimeOffset> firstSeenAt = default;
+            SystemData systemData = default;
+            string deviceId = default;
+            string osPlatform = default;
+            string vendor = default;
+            string softwareName = default;
+            string version = default;
+            EndOfSupportStatus? endOfSupportStatus = default;
+            string endOfSupportDate = default;
+            int? numberOfKnownVulnerabilities = default;
+            DateTimeOffset? firstSeenAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +250,21 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareInventoryData(id, name, type, systemData.Value, deviceId.Value, osPlatform.Value, vendor.Value, softwareName.Value, version.Value, Optional.ToNullable(endOfSupportStatus), endOfSupportDate.Value, Optional.ToNullable(numberOfKnownVulnerabilities), Optional.ToNullable(firstSeenAt), serializedAdditionalRawData);
+            return new SoftwareInventoryData(
+                id,
+                name,
+                type,
+                systemData,
+                deviceId,
+                osPlatform,
+                vendor,
+                softwareName,
+                version,
+                endOfSupportStatus,
+                endOfSupportDate,
+                numberOfKnownVulnerabilities,
+                firstSeenAt,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareInventoryData>.Write(ModelReaderWriterOptions options)

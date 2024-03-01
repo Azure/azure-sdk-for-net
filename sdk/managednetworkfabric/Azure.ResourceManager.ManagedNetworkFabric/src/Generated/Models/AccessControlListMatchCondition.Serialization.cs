@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(EtherTypes))
+            if (!(EtherTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("etherTypes"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Fragments))
+            if (!(Fragments is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("fragments"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPLengths))
+            if (!(IPLengths is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("ipLengths"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TtlValues))
+            if (!(TtlValues is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("ttlValues"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DscpMarkings))
+            if (!(DscpMarkings is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("dscpMarkings"u8);
                 writer.WriteStartArray();
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PortCondition))
+            if (PortCondition != null)
             {
                 writer.WritePropertyName("portCondition"u8);
                 writer.WriteObjectValue(PortCondition);
             }
-            if (Optional.IsCollectionDefined(ProtocolTypes))
+            if (!(ProtocolTypes is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("protocolTypes"u8);
                 writer.WriteStartArray();
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VlanMatchCondition))
+            if (VlanMatchCondition != null)
             {
                 writer.WritePropertyName("vlanMatchCondition"u8);
                 writer.WriteObjectValue(VlanMatchCondition);
             }
-            if (Optional.IsDefined(IPCondition))
+            if (IPCondition != null)
             {
                 writer.WritePropertyName("ipCondition"u8);
                 writer.WriteObjectValue(IPCondition);
@@ -139,15 +139,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<string>> etherTypes = default;
-            Optional<IList<string>> fragments = default;
-            Optional<IList<string>> ipLengths = default;
-            Optional<IList<string>> ttlValues = default;
-            Optional<IList<string>> dscpMarkings = default;
-            Optional<AccessControlListPortCondition> portCondition = default;
-            Optional<IList<string>> protocolTypes = default;
-            Optional<VlanMatchCondition> vlanMatchCondition = default;
-            Optional<IPMatchCondition> ipCondition = default;
+            IList<string> etherTypes = default;
+            IList<string> fragments = default;
+            IList<string> ipLengths = default;
+            IList<string> ttlValues = default;
+            IList<string> dscpMarkings = default;
+            AccessControlListPortCondition portCondition = default;
+            IList<string> protocolTypes = default;
+            VlanMatchCondition vlanMatchCondition = default;
+            IPMatchCondition ipCondition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,7 +269,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessControlListMatchCondition(Optional.ToList(protocolTypes), vlanMatchCondition.Value, ipCondition.Value, serializedAdditionalRawData, Optional.ToList(etherTypes), Optional.ToList(fragments), Optional.ToList(ipLengths), Optional.ToList(ttlValues), Optional.ToList(dscpMarkings), portCondition.Value);
+            return new AccessControlListMatchCondition(
+                protocolTypes ?? new ChangeTrackingList<string>(),
+                vlanMatchCondition,
+                ipCondition,
+                serializedAdditionalRawData,
+                etherTypes ?? new ChangeTrackingList<string>(),
+                fragments ?? new ChangeTrackingList<string>(),
+                ipLengths ?? new ChangeTrackingList<string>(),
+                ttlValues ?? new ChangeTrackingList<string>(),
+                dscpMarkings ?? new ChangeTrackingList<string>(),
+                portCondition);
         }
 
         BinaryData IPersistableModel<AccessControlListMatchCondition>.Write(ModelReaderWriterOptions options)

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -54,37 +54,37 @@ namespace Azure.ResourceManager.Automation
             writer.WriteObjectValue(UpdateConfiguration);
             writer.WritePropertyName("scheduleInfo"u8);
             writer.WriteObjectValue(ScheduleInfo);
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
+            if (options.Format != "W" && CreatedBy != null)
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
+            if (options.Format != "W" && LastModifiedBy != null)
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (Optional.IsDefined(Tasks))
+            if (Tasks != null)
             {
                 writer.WritePropertyName("tasks"u8);
                 writer.WriteObjectValue(Tasks);
@@ -131,16 +131,16 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             SoftwareUpdateConfigurationSpecificProperties updateConfiguration = default;
             SoftwareUpdateConfigurationScheduleProperties scheduleInfo = default;
-            Optional<string> provisioningState = default;
-            Optional<AutomationResponseError> error = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<string> createdBy = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<SoftwareUpdateConfigurationTasks> tasks = default;
+            string provisioningState = default;
+            AutomationResponseError error = default;
+            DateTimeOffset? creationTime = default;
+            string createdBy = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string lastModifiedBy = default;
+            SoftwareUpdateConfigurationTasks tasks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -248,7 +248,21 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationData(id, name, type, systemData.Value, updateConfiguration, scheduleInfo, provisioningState.Value, error.Value, Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, tasks.Value, serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                updateConfiguration,
+                scheduleInfo,
+                provisioningState,
+                error,
+                creationTime,
+                createdBy,
+                lastModifiedTime,
+                lastModifiedBy,
+                tasks,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationData>.Write(ModelReaderWriterOptions options)

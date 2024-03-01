@@ -43,74 +43,74 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(JobVersion))
+            if (options.Format != "W" && JobVersion.HasValue)
             {
                 writer.WritePropertyName("jobVersion"u8);
                 writer.WriteNumberValue(JobVersion.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StepName))
+            if (options.Format != "W" && StepName != null)
             {
                 writer.WritePropertyName("stepName"u8);
                 writer.WriteStringValue(StepName);
             }
-            if (options.Format != "W" && Optional.IsDefined(StepId))
+            if (options.Format != "W" && StepId.HasValue)
             {
                 writer.WritePropertyName("stepId"u8);
                 writer.WriteNumberValue(StepId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(JobExecutionId))
+            if (options.Format != "W" && JobExecutionId.HasValue)
             {
                 writer.WritePropertyName("jobExecutionId"u8);
                 writer.WriteStringValue(JobExecutionId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Lifecycle))
+            if (options.Format != "W" && Lifecycle.HasValue)
             {
                 writer.WritePropertyName("lifecycle"u8);
                 writer.WriteStringValue(Lifecycle.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreateOn))
+            if (options.Format != "W" && CreateOn.HasValue)
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreateOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(CurrentAttempts))
+            if (CurrentAttempts.HasValue)
             {
                 writer.WritePropertyName("currentAttempts"u8);
                 writer.WriteNumberValue(CurrentAttempts.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentAttemptStartOn))
+            if (options.Format != "W" && CurrentAttemptStartOn.HasValue)
             {
                 writer.WritePropertyName("currentAttemptStartTime"u8);
                 writer.WriteStringValue(CurrentAttemptStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastMessage))
+            if (options.Format != "W" && LastMessage != null)
             {
                 writer.WritePropertyName("lastMessage"u8);
                 writer.WriteStringValue(LastMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(Target))
+            if (options.Format != "W" && Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
@@ -157,20 +157,20 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> jobVersion = default;
-            Optional<string> stepName = default;
-            Optional<int> stepId = default;
-            Optional<Guid> jobExecutionId = default;
-            Optional<JobExecutionLifecycle> lifecycle = default;
-            Optional<JobExecutionProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<int> currentAttempts = default;
-            Optional<DateTimeOffset> currentAttemptStartTime = default;
-            Optional<string> lastMessage = default;
-            Optional<JobExecutionTarget> target = default;
+            SystemData systemData = default;
+            int? jobVersion = default;
+            string stepName = default;
+            int? stepId = default;
+            Guid? jobExecutionId = default;
+            JobExecutionLifecycle? lifecycle = default;
+            JobExecutionProvisioningState? provisioningState = default;
+            DateTimeOffset? createTime = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            int? currentAttempts = default;
+            DateTimeOffset? currentAttemptStartTime = default;
+            string lastMessage = default;
+            JobExecutionTarget target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -326,7 +326,25 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerJobExecutionData(id, name, type, systemData.Value, Optional.ToNullable(jobVersion), stepName.Value, Optional.ToNullable(stepId), Optional.ToNullable(jobExecutionId), Optional.ToNullable(lifecycle), Optional.ToNullable(provisioningState), Optional.ToNullable(createTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(currentAttempts), Optional.ToNullable(currentAttemptStartTime), lastMessage.Value, target.Value, serializedAdditionalRawData);
+            return new SqlServerJobExecutionData(
+                id,
+                name,
+                type,
+                systemData,
+                jobVersion,
+                stepName,
+                stepId,
+                jobExecutionId,
+                lifecycle,
+                provisioningState,
+                createTime,
+                startTime,
+                endTime,
+                currentAttempts,
+                currentAttemptStartTime,
+                lastMessage,
+                target,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerJobExecutionData>.Write(ModelReaderWriterOptions options)

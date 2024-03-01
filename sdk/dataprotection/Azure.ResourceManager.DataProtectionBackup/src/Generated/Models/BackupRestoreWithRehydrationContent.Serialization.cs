@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteObjectValue(RestoreTargetInfo);
             writer.WritePropertyName("sourceDataStoreType"u8);
             writer.WriteStringValue(SourceDataStoreType.ToString());
-            if (Optional.IsDefined(SourceResourceId))
+            if (SourceResourceId != null)
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsDefined(IdentityDetails))
+            if (IdentityDetails != null)
             {
                 writer.WritePropertyName("identityDetails"u8);
                 writer.WriteObjectValue(IdentityDetails);
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string objectType = default;
             RestoreTargetInfoBase restoreTargetInfo = default;
             SourceDataStoreType sourceDataStoreType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<DataProtectionIdentityDetails> identityDetails = default;
+            ResourceIdentifier sourceResourceId = default;
+            DataProtectionIdentityDetails identityDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupRestoreWithRehydrationContent(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId.Value, identityDetails.Value, serializedAdditionalRawData, recoveryPointId, rehydrationPriority, rehydrationRetentionDuration);
+            return new BackupRestoreWithRehydrationContent(
+                objectType,
+                restoreTargetInfo,
+                sourceDataStoreType,
+                sourceResourceId,
+                identityDetails,
+                serializedAdditionalRawData,
+                recoveryPointId,
+                rehydrationPriority,
+                rehydrationRetentionDuration);
         }
 
         BinaryData IPersistableModel<BackupRestoreWithRehydrationContent>.Write(ModelReaderWriterOptions options)

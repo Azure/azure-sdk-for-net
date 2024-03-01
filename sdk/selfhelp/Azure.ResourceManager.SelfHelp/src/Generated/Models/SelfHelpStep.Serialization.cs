@@ -27,47 +27,47 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Guidance))
+            if (Guidance != null)
             {
                 writer.WritePropertyName("guidance"u8);
                 writer.WriteStringValue(Guidance);
             }
-            if (Optional.IsDefined(ExecutionStatus))
+            if (ExecutionStatus.HasValue)
             {
                 writer.WritePropertyName("executionStatus"u8);
                 writer.WriteStringValue(ExecutionStatus.Value.ToString());
             }
-            if (Optional.IsDefined(ExecutionStatusDescription))
+            if (ExecutionStatusDescription != null)
             {
                 writer.WritePropertyName("executionStatusDescription"u8);
                 writer.WriteStringValue(ExecutionStatusDescription);
             }
-            if (Optional.IsDefined(StepType))
+            if (StepType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(StepType.Value.ToString());
             }
-            if (Optional.IsDefined(IsLastStep))
+            if (IsLastStep.HasValue)
             {
                 writer.WritePropertyName("isLastStep"u8);
                 writer.WriteBooleanValue(IsLastStep.Value);
             }
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingList<StepInput> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AutomatedCheckResults))
+            if (AutomatedCheckResults != null)
             {
                 writer.WritePropertyName("automatedCheckResults"u8);
                 writer.WriteObjectValue(AutomatedCheckResults);
             }
-            if (Optional.IsCollectionDefined(Insights))
+            if (!(Insights is ChangeTrackingList<SelfHelpDiagnosticInsight> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("insights"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -135,18 +135,18 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<string> guidance = default;
-            Optional<ExecutionStatus> executionStatus = default;
-            Optional<string> executionStatusDescription = default;
-            Optional<SelfHelpType> type = default;
-            Optional<bool> isLastStep = default;
-            Optional<IReadOnlyList<StepInput>> inputs = default;
-            Optional<AutomatedCheckResult> automatedCheckResults = default;
-            Optional<IReadOnlyList<SelfHelpDiagnosticInsight>> insights = default;
-            Optional<ResponseError> error = default;
+            string id = default;
+            string title = default;
+            string description = default;
+            string guidance = default;
+            ExecutionStatus? executionStatus = default;
+            string executionStatusDescription = default;
+            SelfHelpType? type = default;
+            bool? isLastStep = default;
+            IReadOnlyList<StepInput> inputs = default;
+            AutomatedCheckResult automatedCheckResults = default;
+            IReadOnlyList<SelfHelpDiagnosticInsight> insights = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -255,7 +255,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpStep(id.Value, title.Value, description.Value, guidance.Value, Optional.ToNullable(executionStatus), executionStatusDescription.Value, Optional.ToNullable(type), Optional.ToNullable(isLastStep), Optional.ToList(inputs), automatedCheckResults.Value, Optional.ToList(insights), error.Value, serializedAdditionalRawData);
+            return new SelfHelpStep(
+                id,
+                title,
+                description,
+                guidance,
+                executionStatus,
+                executionStatusDescription,
+                type,
+                isLastStep,
+                inputs ?? new ChangeTrackingList<StepInput>(),
+                automatedCheckResults,
+                insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(),
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpStep>.Write(ModelReaderWriterOptions options)

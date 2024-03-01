@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Enabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled.Value.ToString());
             }
-            if (Optional.IsDefined(PortRange))
+            if (PortRange != null)
             {
                 writer.WritePropertyName("portRange"u8);
                 writer.WriteObjectValue(PortRange);
             }
-            if (Optional.IsDefined(PortReuseHoldTime))
+            if (PortReuseHoldTime != null)
             {
                 writer.WritePropertyName("portReuseHoldTime"u8);
                 writer.WriteObjectValue(PortReuseHoldTime);
             }
-            if (Optional.IsDefined(PinholeLimits))
+            if (PinholeLimits.HasValue)
             {
                 writer.WritePropertyName("pinholeLimits"u8);
                 writer.WriteNumberValue(PinholeLimits.Value);
             }
-            if (Optional.IsDefined(PinholeTimeouts))
+            if (PinholeTimeouts != null)
             {
                 writer.WritePropertyName("pinholeTimeouts"u8);
                 writer.WriteObjectValue(PinholeTimeouts);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<NaptState> enabled = default;
-            Optional<MobileNetworkPortRange> portRange = default;
-            Optional<MobileNetworkPortReuseHoldTimes> portReuseHoldTime = default;
-            Optional<int> pinholeLimits = default;
-            Optional<PinholeTimeouts> pinholeTimeouts = default;
+            NaptState? enabled = default;
+            MobileNetworkPortRange portRange = default;
+            MobileNetworkPortReuseHoldTimes portReuseHoldTime = default;
+            int? pinholeLimits = default;
+            PinholeTimeouts pinholeTimeouts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NaptConfiguration(Optional.ToNullable(enabled), portRange.Value, portReuseHoldTime.Value, Optional.ToNullable(pinholeLimits), pinholeTimeouts.Value, serializedAdditionalRawData);
+            return new NaptConfiguration(
+                enabled,
+                portRange,
+                portReuseHoldTime,
+                pinholeLimits,
+                pinholeTimeouts,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NaptConfiguration>.Write(ModelReaderWriterOptions options)

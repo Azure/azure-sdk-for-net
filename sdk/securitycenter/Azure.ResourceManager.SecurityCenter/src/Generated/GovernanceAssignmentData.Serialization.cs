@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Owner))
+            if (Owner != null)
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
-            if (Optional.IsDefined(RemediationDueOn))
+            if (RemediationDueOn.HasValue)
             {
                 writer.WritePropertyName("remediationDueDate"u8);
                 writer.WriteStringValue(RemediationDueOn.Value, "O");
             }
-            if (Optional.IsDefined(RemediationEta))
+            if (RemediationEta != null)
             {
                 writer.WritePropertyName("remediationEta"u8);
                 writer.WriteObjectValue(RemediationEta);
             }
-            if (Optional.IsDefined(IsGracePeriod))
+            if (IsGracePeriod.HasValue)
             {
                 writer.WritePropertyName("isGracePeriod"u8);
                 writer.WriteBooleanValue(IsGracePeriod.Value);
             }
-            if (Optional.IsDefined(GovernanceEmailNotification))
+            if (GovernanceEmailNotification != null)
             {
                 writer.WritePropertyName("governanceEmailNotification"u8);
                 writer.WriteObjectValue(GovernanceEmailNotification);
             }
-            if (Optional.IsDefined(AdditionalData))
+            if (AdditionalData != null)
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteObjectValue(AdditionalData);
@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> owner = default;
-            Optional<DateTimeOffset> remediationDueDate = default;
-            Optional<RemediationEta> remediationEta = default;
-            Optional<bool> isGracePeriod = default;
-            Optional<GovernanceEmailNotification> governanceEmailNotification = default;
-            Optional<GovernanceAssignmentAdditionalInfo> additionalData = default;
+            SystemData systemData = default;
+            string owner = default;
+            DateTimeOffset? remediationDueDate = default;
+            RemediationEta remediationEta = default;
+            bool? isGracePeriod = default;
+            GovernanceEmailNotification governanceEmailNotification = default;
+            GovernanceAssignmentAdditionalInfo additionalData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +225,18 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GovernanceAssignmentData(id, name, type, systemData.Value, owner.Value, Optional.ToNullable(remediationDueDate), remediationEta.Value, Optional.ToNullable(isGracePeriod), governanceEmailNotification.Value, additionalData.Value, serializedAdditionalRawData);
+            return new GovernanceAssignmentData(
+                id,
+                name,
+                type,
+                systemData,
+                owner,
+                remediationDueDate,
+                remediationEta,
+                isGracePeriod,
+                governanceEmailNotification,
+                additionalData,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GovernanceAssignmentData>.Write(ModelReaderWriterOptions options)

@@ -22,15 +22,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> dataFlowName = default;
-            Optional<string> computeType = default;
-            Optional<int> coreCount = default;
-            Optional<int> nodeCount = default;
-            Optional<string> integrationRuntimeName = default;
-            Optional<string> sessionId = default;
-            Optional<string> startTime = default;
-            Optional<int> timeToLiveInMinutes = default;
-            Optional<string> lastActivityTime = default;
+            string dataFlowName = default;
+            string computeType = default;
+            int? coreCount = default;
+            int? nodeCount = default;
+            string integrationRuntimeName = default;
+            string sessionId = default;
+            string startTime = default;
+            int? timeToLiveInMinutes = default;
+            string lastActivityTime = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowDebugSessionInfo(dataFlowName.Value, computeType.Value, Optional.ToNullable(coreCount), Optional.ToNullable(nodeCount), integrationRuntimeName.Value, sessionId.Value, startTime.Value, Optional.ToNullable(timeToLiveInMinutes), lastActivityTime.Value, additionalProperties);
+            return new DataFlowDebugSessionInfo(
+                dataFlowName,
+                computeType,
+                coreCount,
+                nodeCount,
+                integrationRuntimeName,
+                sessionId,
+                startTime,
+                timeToLiveInMinutes,
+                lastActivityTime,
+                additionalProperties);
         }
 
         internal partial class DataFlowDebugSessionInfoConverter : JsonConverter<DataFlowDebugSessionInfo>

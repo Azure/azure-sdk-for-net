@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,44 +55,44 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Endpoint))
+            if (Endpoint != null)
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startDateTimeUTC"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endDateTimeUTC"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(AggregationInterval))
+            if (AggregationInterval.HasValue)
             {
                 writer.WritePropertyName("aggregationInterval"u8);
                 writer.WriteStringValue(AggregationInterval.Value.ToString());
             }
-            if (Optional.IsDefined(TimeSeriesType))
+            if (TimeSeriesType.HasValue)
             {
                 writer.WritePropertyName("timeseriesType"u8);
                 writer.WriteStringValue(TimeSeriesType.Value.ToString());
             }
-            if (Optional.IsDefined(Country))
+            if (Country != null)
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (Optional.IsCollectionDefined(TimeSeriesData))
+            if (!(TimeSeriesData is ChangeTrackingList<FrontDoorTimeSeriesDataPoint> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("timeseriesData"u8);
                 writer.WriteStartArray();
@@ -141,19 +141,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> endpoint = default;
-            Optional<DateTimeOffset> startDateTimeUtc = default;
-            Optional<DateTimeOffset> endDateTimeUtc = default;
-            Optional<FrontDoorTimeSeriesInfoAggregationInterval> aggregationInterval = default;
-            Optional<FrontDoorTimeSeriesType> timeSeriesType = default;
-            Optional<string> country = default;
-            Optional<IList<FrontDoorTimeSeriesDataPoint>> timeSeriesData = default;
+            SystemData systemData = default;
+            Uri endpoint = default;
+            DateTimeOffset? startDateTimeUtc = default;
+            DateTimeOffset? endDateTimeUtc = default;
+            FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval = default;
+            FrontDoorTimeSeriesType? timeSeriesType = default;
+            string country = default;
+            IList<FrontDoorTimeSeriesDataPoint> timeSeriesData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -283,7 +283,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorTimeSeriesInfo(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, endpoint.Value, Optional.ToNullable(startDateTimeUtc), Optional.ToNullable(endDateTimeUtc), Optional.ToNullable(aggregationInterval), Optional.ToNullable(timeSeriesType), country.Value, Optional.ToList(timeSeriesData), serializedAdditionalRawData);
+            return new FrontDoorTimeSeriesInfo(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                endpoint,
+                startDateTimeUtc,
+                endDateTimeUtc,
+                aggregationInterval,
+                timeSeriesType,
+                country,
+                timeSeriesData ?? new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorTimeSeriesInfo>.Write(ModelReaderWriterOptions options)

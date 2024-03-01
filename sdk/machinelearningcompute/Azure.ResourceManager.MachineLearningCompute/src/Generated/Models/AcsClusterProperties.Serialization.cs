@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ClusterFqdn))
+            if (options.Format != "W" && ClusterFqdn != null)
             {
                 writer.WritePropertyName("clusterFqdn"u8);
                 writer.WriteStringValue(ClusterFqdn);
             }
             writer.WritePropertyName("orchestratorType"u8);
             writer.WriteStringValue(OrchestratorType.ToString());
-            if (Optional.IsDefined(OrchestratorProperties))
+            if (OrchestratorProperties != null)
             {
                 writer.WritePropertyName("orchestratorProperties"u8);
                 writer.WriteObjectValue(OrchestratorProperties);
             }
-            if (Optional.IsCollectionDefined(SystemServices))
+            if (!(SystemServices is ChangeTrackingList<SystemService> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("systemServices"u8);
                 writer.WriteStartArray();
@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MasterCount))
+            if (MasterCount.HasValue)
             {
                 writer.WritePropertyName("masterCount"u8);
                 writer.WriteNumberValue(MasterCount.Value);
             }
-            if (Optional.IsDefined(AgentCount))
+            if (AgentCount.HasValue)
             {
                 writer.WritePropertyName("agentCount"u8);
                 writer.WriteNumberValue(AgentCount.Value);
             }
-            if (Optional.IsDefined(AgentVmSize))
+            if (AgentVmSize.HasValue)
             {
                 writer.WritePropertyName("agentVmSize"u8);
                 writer.WriteStringValue(AgentVmSize.Value.ToString());
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<string> clusterFqdn = default;
+            string clusterFqdn = default;
             OrchestratorType orchestratorType = default;
-            Optional<KubernetesClusterProperties> orchestratorProperties = default;
-            Optional<IList<SystemService>> systemServices = default;
-            Optional<int> masterCount = default;
-            Optional<int> agentCount = default;
-            Optional<AgentVmSizeType> agentVmSize = default;
+            KubernetesClusterProperties orchestratorProperties = default;
+            IList<SystemService> systemServices = default;
+            int? masterCount = default;
+            int? agentCount = default;
+            AgentVmSizeType? agentVmSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,15 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AcsClusterProperties(clusterFqdn.Value, orchestratorType, orchestratorProperties.Value, Optional.ToList(systemServices), Optional.ToNullable(masterCount), Optional.ToNullable(agentCount), Optional.ToNullable(agentVmSize), serializedAdditionalRawData);
+            return new AcsClusterProperties(
+                clusterFqdn,
+                orchestratorType,
+                orchestratorProperties,
+                systemServices ?? new ChangeTrackingList<SystemService>(),
+                masterCount,
+                agentCount,
+                agentVmSize,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcsClusterProperties>.Write(ModelReaderWriterOptions options)

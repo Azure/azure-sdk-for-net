@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<CommitmentPlanAccountAssociationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<CommitmentPlanAccountAssociationData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<CommitmentPlanAccountAssociationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommitmentPlanAccountAssociationListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new CommitmentPlanAccountAssociationListResult(nextLink, value ?? new ChangeTrackingList<CommitmentPlanAccountAssociationData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommitmentPlanAccountAssociationListResult>.Write(ModelReaderWriterOptions options)

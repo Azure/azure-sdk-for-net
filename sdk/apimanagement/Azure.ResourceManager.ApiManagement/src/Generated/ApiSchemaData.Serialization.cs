@@ -42,26 +42,26 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContentType))
+            if (ContentType != null)
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
             writer.WritePropertyName("document"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(Definitions))
+            if (Definitions != null)
             {
                 writer.WritePropertyName("definitions"u8);
 #if NET6_0_OR_GREATER
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
 #endif
             }
-            if (Optional.IsDefined(Components))
+            if (Components != null)
             {
                 writer.WritePropertyName("components"u8);
 #if NET6_0_OR_GREATER
@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> contentType = default;
-            Optional<string> value = default;
-            Optional<BinaryData> definitions = default;
-            Optional<BinaryData> components = default;
+            SystemData systemData = default;
+            string contentType = default;
+            string value = default;
+            BinaryData definitions = default;
+            BinaryData components = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,7 +219,16 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiSchemaData(id, name, type, systemData.Value, contentType.Value, value.Value, definitions.Value, components.Value, serializedAdditionalRawData);
+            return new ApiSchemaData(
+                id,
+                name,
+                type,
+                systemData,
+                contentType,
+                value,
+                definitions,
+                components,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiSchemaData>.Write(ModelReaderWriterOptions options)

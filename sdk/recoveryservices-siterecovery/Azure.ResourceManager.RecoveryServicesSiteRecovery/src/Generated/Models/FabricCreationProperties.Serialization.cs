@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomDetails))
+            if (CustomDetails != null)
             {
                 writer.WritePropertyName("customDetails"u8);
                 writer.WriteObjectValue(CustomDetails);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<FabricSpecificCreationContent> customDetails = default;
+            FabricSpecificCreationContent customDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FabricCreationProperties(customDetails.Value, serializedAdditionalRawData);
+            return new FabricCreationProperties(customDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FabricCreationProperties>.Write(ModelReaderWriterOptions options)

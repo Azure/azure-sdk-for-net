@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConditionProperties))
+            if (ConditionProperties != null)
             {
                 writer.WritePropertyName("conditionProperties"u8);
                 writer.WriteObjectValue(ConditionProperties);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<AutomationRulePropertyArrayChangedValuesCondition> conditionProperties = default;
+            AutomationRulePropertyArrayChangedValuesCondition conditionProperties = default;
             ConditionType conditionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsPropertyArrayChangedConditionProperties(conditionType, serializedAdditionalRawData, conditionProperties.Value);
+            return new SecurityInsightsPropertyArrayChangedConditionProperties(conditionType, serializedAdditionalRawData, conditionProperties);
         }
 
         BinaryData IPersistableModel<SecurityInsightsPropertyArrayChangedConditionProperties>.Write(ModelReaderWriterOptions options)

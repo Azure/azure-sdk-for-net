@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.AppContainers
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,39 +62,39 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(EnvironmentId))
+            if (EnvironmentId != null)
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (Optional.IsDefined(WorkloadProfileName))
+            if (WorkloadProfileName != null)
             {
                 writer.WritePropertyName("workloadProfileName"u8);
                 writer.WriteStringValue(WorkloadProfileName);
             }
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (Optional.IsDefined(Template))
+            if (Template != null)
             {
                 writer.WritePropertyName("template"u8);
                 writer.WriteObjectValue(Template);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OutboundIPAddresses))
+            if (options.Format != "W" && !(OutboundIPAddresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(EventStreamEndpoint))
+            if (options.Format != "W" && EventStreamEndpoint != null)
             {
                 writer.WritePropertyName("eventStreamEndpoint"u8);
                 writer.WriteStringValue(EventStreamEndpoint);
@@ -148,20 +148,20 @@ namespace Azure.ResourceManager.AppContainers
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerAppJobProvisioningState> provisioningState = default;
-            Optional<string> environmentId = default;
-            Optional<string> workloadProfileName = default;
-            Optional<ContainerAppJobConfiguration> configuration = default;
-            Optional<ContainerAppJobTemplate> template = default;
-            Optional<IReadOnlyList<string>> outboundIPAddresses = default;
-            Optional<string> eventStreamEndpoint = default;
+            SystemData systemData = default;
+            ContainerAppJobProvisioningState? provisioningState = default;
+            string environmentId = default;
+            string workloadProfileName = default;
+            ContainerAppJobConfiguration configuration = default;
+            ContainerAppJobTemplate template = default;
+            IReadOnlyList<string> outboundIPAddresses = default;
+            string eventStreamEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -293,7 +293,22 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), environmentId.Value, workloadProfileName.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value, serializedAdditionalRawData);
+            return new ContainerAppJobData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState,
+                environmentId,
+                workloadProfileName,
+                configuration,
+                template,
+                outboundIPAddresses ?? new ChangeTrackingList<string>(),
+                eventStreamEndpoint,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppJobData>.Write(ModelReaderWriterOptions options)

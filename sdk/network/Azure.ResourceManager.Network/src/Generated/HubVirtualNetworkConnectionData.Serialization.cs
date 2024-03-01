@@ -29,54 +29,54 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RemoteVirtualNetwork))
+            if (RemoteVirtualNetwork != null)
             {
                 writer.WritePropertyName("remoteVirtualNetwork"u8);
                 JsonSerializer.Serialize(writer, RemoteVirtualNetwork);
             }
-            if (Optional.IsDefined(AllowHubToRemoteVnetTransit))
+            if (AllowHubToRemoteVnetTransit.HasValue)
             {
                 writer.WritePropertyName("allowHubToRemoteVnetTransit"u8);
                 writer.WriteBooleanValue(AllowHubToRemoteVnetTransit.Value);
             }
-            if (Optional.IsDefined(AllowRemoteVnetToUseHubVnetGateways))
+            if (AllowRemoteVnetToUseHubVnetGateways.HasValue)
             {
                 writer.WritePropertyName("allowRemoteVnetToUseHubVnetGateways"u8);
                 writer.WriteBooleanValue(AllowRemoteVnetToUseHubVnetGateways.Value);
             }
-            if (Optional.IsDefined(EnableInternetSecurity))
+            if (EnableInternetSecurity.HasValue)
             {
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (Optional.IsDefined(RoutingConfiguration))
+            if (RoutingConfiguration != null)
             {
                 writer.WritePropertyName("routingConfiguration"u8);
                 writer.WriteObjectValue(RoutingConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -120,16 +120,16 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> remoteVirtualNetwork = default;
-            Optional<bool> allowHubToRemoteVnetTransit = default;
-            Optional<bool> allowRemoteVnetToUseHubVnetGateways = default;
-            Optional<bool> enableInternetSecurity = default;
-            Optional<RoutingConfiguration> routingConfiguration = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource remoteVirtualNetwork = default;
+            bool? allowHubToRemoteVnetTransit = default;
+            bool? allowRemoteVnetToUseHubVnetGateways = default;
+            bool? enableInternetSecurity = default;
+            RoutingConfiguration routingConfiguration = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,7 +238,18 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HubVirtualNetworkConnectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), remoteVirtualNetwork, Optional.ToNullable(allowHubToRemoteVnetTransit), Optional.ToNullable(allowRemoteVnetToUseHubVnetGateways), Optional.ToNullable(enableInternetSecurity), routingConfiguration.Value, Optional.ToNullable(provisioningState));
+            return new HubVirtualNetworkConnectionData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                remoteVirtualNetwork,
+                allowHubToRemoteVnetTransit,
+                allowRemoteVnetToUseHubVnetGateways,
+                enableInternetSecurity,
+                routingConfiguration,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<HubVirtualNetworkConnectionData>.Write(ModelReaderWriterOptions options)

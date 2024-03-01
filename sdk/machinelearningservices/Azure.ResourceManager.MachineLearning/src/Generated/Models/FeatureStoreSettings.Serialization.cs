@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeRuntime))
+            if (ComputeRuntime != null)
             {
                 writer.WritePropertyName("computeRuntime"u8);
                 writer.WriteObjectValue(ComputeRuntime);
             }
-            if (Optional.IsDefined(OfflineStoreConnectionName))
+            if (OfflineStoreConnectionName != null)
             {
                 writer.WritePropertyName("offlineStoreConnectionName"u8);
                 writer.WriteStringValue(OfflineStoreConnectionName);
             }
-            if (Optional.IsDefined(OnlineStoreConnectionName))
+            if (OnlineStoreConnectionName != null)
             {
                 writer.WritePropertyName("onlineStoreConnectionName"u8);
                 writer.WriteStringValue(OnlineStoreConnectionName);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ComputeRuntimeDto> computeRuntime = default;
-            Optional<string> offlineStoreConnectionName = default;
-            Optional<string> onlineStoreConnectionName = default;
+            ComputeRuntimeDto computeRuntime = default;
+            string offlineStoreConnectionName = default;
+            string onlineStoreConnectionName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeatureStoreSettings(computeRuntime.Value, offlineStoreConnectionName.Value, onlineStoreConnectionName.Value, serializedAdditionalRawData);
+            return new FeatureStoreSettings(computeRuntime, offlineStoreConnectionName, onlineStoreConnectionName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeatureStoreSettings>.Write(ModelReaderWriterOptions options)

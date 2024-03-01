@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnabledState))
+            if (EnabledState.HasValue)
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToSerialString());
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<LabServicesEnableState> enabledState = default;
+            LabServicesEnableState? enabledState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineImagePatch(Optional.ToNullable(enabledState), serializedAdditionalRawData);
+            return new LabVirtualMachineImagePatch(enabledState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineImagePatch>.Write(ModelReaderWriterOptions options)

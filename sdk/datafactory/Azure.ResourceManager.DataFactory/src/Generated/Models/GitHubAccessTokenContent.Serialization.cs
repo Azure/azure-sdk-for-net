@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("gitHubAccessCode"u8);
             writer.WriteStringValue(GitHubAccessCode);
-            if (Optional.IsDefined(GitHubClientId))
+            if (GitHubClientId != null)
             {
                 writer.WritePropertyName("gitHubClientId"u8);
                 writer.WriteStringValue(GitHubClientId);
             }
-            if (Optional.IsDefined(GitHubClientSecret))
+            if (GitHubClientSecret != null)
             {
                 writer.WritePropertyName("gitHubClientSecret"u8);
                 writer.WriteObjectValue(GitHubClientSecret);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string gitHubAccessCode = default;
-            Optional<string> gitHubClientId = default;
-            Optional<FactoryGitHubClientSecret> gitHubClientSecret = default;
+            string gitHubClientId = default;
+            FactoryGitHubClientSecret gitHubClientSecret = default;
             Uri gitHubAccessTokenBaseUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitHubAccessTokenContent(gitHubAccessCode, gitHubClientId.Value, gitHubClientSecret.Value, gitHubAccessTokenBaseUrl, serializedAdditionalRawData);
+            return new GitHubAccessTokenContent(gitHubAccessCode, gitHubClientId, gitHubClientSecret, gitHubAccessTokenBaseUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitHubAccessTokenContent>.Write(ModelReaderWriterOptions options)

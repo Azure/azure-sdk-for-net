@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -39,32 +39,32 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ApplicationRuleCollections))
+            if (!(ApplicationRuleCollections is ChangeTrackingList<AzureFirewallApplicationRuleCollectionData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("applicationRuleCollections"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NatRuleCollections))
+            if (!(NatRuleCollections is ChangeTrackingList<AzureFirewallNatRuleCollectionData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("natRuleCollections"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NetworkRuleCollections))
+            if (!(NetworkRuleCollections is ChangeTrackingList<AzureFirewallNetworkRuleCollectionData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("networkRuleCollections"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPConfigurations))
+            if (!(IPConfigurations is ChangeTrackingList<AzureFirewallIPConfiguration> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -117,37 +117,37 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ManagementIPConfiguration))
+            if (ManagementIPConfiguration != null)
             {
                 writer.WritePropertyName("managementIpConfiguration"u8);
                 writer.WriteObjectValue(ManagementIPConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ThreatIntelMode))
+            if (ThreatIntelMode.HasValue)
             {
                 writer.WritePropertyName("threatIntelMode"u8);
                 writer.WriteStringValue(ThreatIntelMode.Value.ToString());
             }
-            if (Optional.IsDefined(VirtualHub))
+            if (VirtualHub != null)
             {
                 writer.WritePropertyName("virtualHub"u8);
                 JsonSerializer.Serialize(writer, VirtualHub);
             }
-            if (Optional.IsDefined(FirewallPolicy))
+            if (FirewallPolicy != null)
             {
                 writer.WritePropertyName("firewallPolicy"u8);
                 JsonSerializer.Serialize(writer, FirewallPolicy);
             }
-            if (Optional.IsDefined(HubIPAddresses))
+            if (HubIPAddresses != null)
             {
                 writer.WritePropertyName("hubIPAddresses"u8);
                 writer.WriteObjectValue(HubIPAddresses);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IPGroups))
+            if (options.Format != "W" && !(IPGroups is ChangeTrackingList<AzureFirewallIPGroups> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("ipGroups"u8);
                 writer.WriteStartArray();
@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(AdditionalProperties))
+            if (!(AdditionalProperties is ChangeTrackingDictionary<string, string> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("additionalProperties"u8);
                 writer.WriteStartObject();
@@ -212,26 +212,26 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<IList<string>> zones = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<AzureFirewallApplicationRuleCollectionData>> applicationRuleCollections = default;
-            Optional<IList<AzureFirewallNatRuleCollectionData>> natRuleCollections = default;
-            Optional<IList<AzureFirewallNetworkRuleCollectionData>> networkRuleCollections = default;
-            Optional<IList<AzureFirewallIPConfiguration>> ipConfigurations = default;
-            Optional<AzureFirewallIPConfiguration> managementIPConfiguration = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<AzureFirewallThreatIntelMode> threatIntelMode = default;
-            Optional<WritableSubResource> virtualHub = default;
-            Optional<WritableSubResource> firewallPolicy = default;
-            Optional<HubIPAddresses> hubIPAddresses = default;
-            Optional<IReadOnlyList<AzureFirewallIPGroups>> ipGroups = default;
-            Optional<AzureFirewallSku> sku = default;
-            Optional<IDictionary<string, string>> additionalProperties = default;
+            IList<string> zones = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            IList<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections = default;
+            IList<AzureFirewallNatRuleCollectionData> natRuleCollections = default;
+            IList<AzureFirewallNetworkRuleCollectionData> networkRuleCollections = default;
+            IList<AzureFirewallIPConfiguration> ipConfigurations = default;
+            AzureFirewallIPConfiguration managementIPConfiguration = default;
+            NetworkProvisioningState? provisioningState = default;
+            AzureFirewallThreatIntelMode? threatIntelMode = default;
+            WritableSubResource virtualHub = default;
+            WritableSubResource firewallPolicy = default;
+            HubIPAddresses hubIPAddresses = default;
+            IReadOnlyList<AzureFirewallIPGroups> ipGroups = default;
+            AzureFirewallSku sku = default;
+            IDictionary<string, string> additionalProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -470,7 +470,28 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToList(zones), Optional.ToNullable(etag), Optional.ToList(applicationRuleCollections), Optional.ToList(natRuleCollections), Optional.ToList(networkRuleCollections), Optional.ToList(ipConfigurations), managementIPConfiguration.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(threatIntelMode), virtualHub, firewallPolicy, hubIPAddresses.Value, Optional.ToList(ipGroups), sku.Value, Optional.ToDictionary(additionalProperties));
+            return new AzureFirewallData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                zones ?? new ChangeTrackingList<string>(),
+                etag,
+                applicationRuleCollections ?? new ChangeTrackingList<AzureFirewallApplicationRuleCollectionData>(),
+                natRuleCollections ?? new ChangeTrackingList<AzureFirewallNatRuleCollectionData>(),
+                networkRuleCollections ?? new ChangeTrackingList<AzureFirewallNetworkRuleCollectionData>(),
+                ipConfigurations ?? new ChangeTrackingList<AzureFirewallIPConfiguration>(),
+                managementIPConfiguration,
+                provisioningState,
+                threatIntelMode,
+                virtualHub,
+                firewallPolicy,
+                hubIPAddresses,
+                ipGroups ?? new ChangeTrackingList<AzureFirewallIPGroups>(),
+                sku,
+                additionalProperties ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<AzureFirewallData>.Write(ModelReaderWriterOptions options)

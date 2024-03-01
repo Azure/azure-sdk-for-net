@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NetworkFunctionApplications))
+            if (!(NetworkFunctionApplications is ChangeTrackingList<AzureCoreNetworkFunctionApplication> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkFunctionApplications"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<IList<AzureCoreNetworkFunctionApplication>> networkFunctionApplications = default;
+            IList<AzureCoreNetworkFunctionApplication> networkFunctionApplications = default;
             VirtualNetworkFunctionNfviType nfviType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCoreNetworkFunctionTemplate(nfviType, serializedAdditionalRawData, Optional.ToList(networkFunctionApplications));
+            return new AzureCoreNetworkFunctionTemplate(nfviType, serializedAdditionalRawData, networkFunctionApplications ?? new ChangeTrackingList<AzureCoreNetworkFunctionApplication>());
         }
 
         BinaryData IPersistableModel<AzureCoreNetworkFunctionTemplate>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFamilies))
+            if (options.Format != "W" && !(SupportedFamilies is ChangeTrackingList<InstancePoolFamilyCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedFamilies"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<InstancePoolFamilyCapability>> supportedFamilies = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            IReadOnlyList<InstancePoolFamilyCapability> supportedFamilies = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstancePoolEditionCapability(name.Value, Optional.ToList(supportedFamilies), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new InstancePoolEditionCapability(name, supportedFamilies ?? new ChangeTrackingList<InstancePoolFamilyCapability>(), status, reason, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstancePoolEditionCapability>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ShareablePrivateLinkResourceProperties> properties = default;
+            string name = default;
+            ShareablePrivateLinkResourceProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareablePrivateLinkResourceType(name.Value, properties.Value, serializedAdditionalRawData);
+            return new ShareablePrivateLinkResourceType(name, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareablePrivateLinkResourceType>.Write(ModelReaderWriterOptions options)

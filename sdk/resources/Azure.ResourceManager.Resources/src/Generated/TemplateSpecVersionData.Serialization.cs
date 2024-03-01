@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(LinkedTemplates))
+            if (!(LinkedTemplates is ChangeTrackingList<LinkedTemplateArtifact> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("linkedTemplates"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (Optional.IsDefined(MainTemplate))
+            if (MainTemplate != null)
             {
                 writer.WritePropertyName("mainTemplate"u8);
 #if NET6_0_OR_GREATER
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (Optional.IsDefined(UiFormDefinition))
+            if (UiFormDefinition != null)
             {
                 writer.WritePropertyName("uiFormDefinition"u8);
 #if NET6_0_OR_GREATER
@@ -154,16 +154,16 @@ namespace Azure.ResourceManager.Resources
                 return null;
             }
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<IList<LinkedTemplateArtifact>> linkedTemplates = default;
-            Optional<BinaryData> metadata = default;
-            Optional<BinaryData> mainTemplate = default;
-            Optional<BinaryData> uiFormDefinition = default;
+            SystemData systemData = default;
+            string description = default;
+            IList<LinkedTemplateArtifact> linkedTemplates = default;
+            BinaryData metadata = default;
+            BinaryData mainTemplate = default;
+            BinaryData uiFormDefinition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -275,7 +275,19 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TemplateSpecVersionData(id, name, type, systemData.Value, location, Optional.ToDictionary(tags), description.Value, Optional.ToList(linkedTemplates), metadata.Value, mainTemplate.Value, uiFormDefinition.Value, serializedAdditionalRawData);
+            return new TemplateSpecVersionData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description,
+                linkedTemplates ?? new ChangeTrackingList<LinkedTemplateArtifact>(),
+                metadata,
+                mainTemplate,
+                uiFormDefinition,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TemplateSpecVersionData>.Write(ModelReaderWriterOptions options)

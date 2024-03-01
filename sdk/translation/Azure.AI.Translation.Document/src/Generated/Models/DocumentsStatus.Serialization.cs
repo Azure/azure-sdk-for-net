@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Translation.Document;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
@@ -21,7 +20,7 @@ namespace Azure.AI.Translation.Document.Models
                 return null;
             }
             IReadOnlyList<DocumentStatusResult> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -40,7 +39,7 @@ namespace Azure.AI.Translation.Document.Models
                     continue;
                 }
             }
-            return new DocumentsStatus(value, nextLink.Value);
+            return new DocumentsStatus(value, nextLink);
         }
     }
 }

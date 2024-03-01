@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Analysis.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Tier))
+            if (Tier.HasValue)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (Optional.IsDefined(Capacity))
+            if (Capacity.HasValue)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Analysis.Models
                 return null;
             }
             string name = default;
-            Optional<AnalysisSkuTier> tier = default;
-            Optional<int> capacity = default;
+            AnalysisSkuTier? tier = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalysisResourceSku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new AnalysisResourceSku(name, tier, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalysisResourceSku>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(CollaborationBranch);
             writer.WritePropertyName("rootFolder"u8);
             writer.WriteStringValue(RootFolder);
-            if (Optional.IsDefined(LastCommitId))
+            if (LastCommitId != null)
             {
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
-            if (Optional.IsDefined(DisablePublish))
+            if (DisablePublish.HasValue)
             {
                 writer.WritePropertyName("disablePublish"u8);
                 writer.WriteBooleanValue(DisablePublish.Value);
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string projectName = default;
-            Optional<Guid> tenantId = default;
+            Guid? tenantId = default;
             string type = default;
             string accountName = default;
             string repositoryName = default;
             string collaborationBranch = default;
             string rootFolder = default;
-            Optional<string> lastCommitId = default;
-            Optional<bool> disablePublish = default;
+            string lastCommitId = default;
+            bool? disablePublish = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +163,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FactoryVstsConfiguration(type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId.Value, Optional.ToNullable(disablePublish), serializedAdditionalRawData, projectName, Optional.ToNullable(tenantId));
+            return new FactoryVstsConfiguration(
+                type,
+                accountName,
+                repositoryName,
+                collaborationBranch,
+                rootFolder,
+                lastCommitId,
+                disablePublish,
+                serializedAdditionalRawData,
+                projectName,
+                tenantId);
         }
 
         BinaryData IPersistableModel<FactoryVstsConfiguration>.Write(ModelReaderWriterOptions options)

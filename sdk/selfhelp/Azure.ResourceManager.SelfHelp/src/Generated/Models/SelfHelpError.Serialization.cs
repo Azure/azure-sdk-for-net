@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (options.Format != "W" && Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorType))
+            if (options.Format != "W" && ErrorType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ErrorType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsCollectionDefined(Details))
+            if (!(Details is ChangeTrackingList<SelfHelpError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> type = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<SelfHelpError>> details = default;
+            string code = default;
+            string type = default;
+            string message = default;
+            IReadOnlyList<SelfHelpError> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpError(code.Value, type.Value, message.Value, Optional.ToList(details), serializedAdditionalRawData);
+            return new SelfHelpError(code, type, message, details ?? new ChangeTrackingList<SelfHelpError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpError>.Write(ModelReaderWriterOptions options)

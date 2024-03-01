@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,39 +59,39 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsPrimary))
+            if (IsPrimary.HasValue)
             {
                 writer.WritePropertyName("isPrimary"u8);
                 writer.WriteBooleanValue(IsPrimary.Value);
             }
-            if (Optional.IsDefined(VmInstanceCount))
+            if (VmInstanceCount.HasValue)
             {
                 writer.WritePropertyName("vmInstanceCount"u8);
                 writer.WriteNumberValue(VmInstanceCount.Value);
             }
-            if (Optional.IsDefined(DataDiskSizeInGB))
+            if (DataDiskSizeInGB.HasValue)
             {
                 writer.WritePropertyName("dataDiskSizeGB"u8);
                 writer.WriteNumberValue(DataDiskSizeInGB.Value);
             }
-            if (Optional.IsDefined(DataDiskType))
+            if (DataDiskType.HasValue)
             {
                 writer.WritePropertyName("dataDiskType"u8);
                 writer.WriteStringValue(DataDiskType.Value.ToString());
             }
-            if (Optional.IsDefined(DataDiskLetter))
+            if (DataDiskLetter != null)
             {
                 writer.WritePropertyName("dataDiskLetter"u8);
                 writer.WriteStringValue(DataDiskLetter);
             }
-            if (Optional.IsCollectionDefined(PlacementProperties))
+            if (!(PlacementProperties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("placementProperties"u8);
                 writer.WriteStartObject();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Capacities))
+            if (!(Capacities is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("capacities"u8);
                 writer.WriteStartObject();
@@ -113,42 +113,42 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ApplicationPorts))
+            if (ApplicationPorts != null)
             {
                 writer.WritePropertyName("applicationPorts"u8);
                 writer.WriteObjectValue(ApplicationPorts);
             }
-            if (Optional.IsDefined(EphemeralPorts))
+            if (EphemeralPorts != null)
             {
                 writer.WritePropertyName("ephemeralPorts"u8);
                 writer.WriteObjectValue(EphemeralPorts);
             }
-            if (Optional.IsDefined(VmSize))
+            if (VmSize != null)
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (Optional.IsDefined(VmImagePublisher))
+            if (VmImagePublisher != null)
             {
                 writer.WritePropertyName("vmImagePublisher"u8);
                 writer.WriteStringValue(VmImagePublisher);
             }
-            if (Optional.IsDefined(VmImageOffer))
+            if (VmImageOffer != null)
             {
                 writer.WritePropertyName("vmImageOffer"u8);
                 writer.WriteStringValue(VmImageOffer);
             }
-            if (Optional.IsDefined(VmImageSku))
+            if (VmImageSku != null)
             {
                 writer.WritePropertyName("vmImageSku"u8);
                 writer.WriteStringValue(VmImageSku);
             }
-            if (Optional.IsDefined(VmImageVersion))
+            if (VmImageVersion != null)
             {
                 writer.WritePropertyName("vmImageVersion"u8);
                 writer.WriteStringValue(VmImageVersion);
             }
-            if (Optional.IsCollectionDefined(VmSecrets))
+            if (!(VmSecrets is ChangeTrackingList<NodeTypeVaultSecretGroup> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("vmSecrets"u8);
                 writer.WriteStartArray();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VmExtensions))
+            if (!(VmExtensions is ChangeTrackingList<NodeTypeVmssExtension> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("vmExtensions"u8);
                 writer.WriteStartArray();
@@ -168,22 +168,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VmManagedIdentity))
+            if (VmManagedIdentity != null)
             {
                 writer.WritePropertyName("vmManagedIdentity"u8);
                 writer.WriteObjectValue(VmManagedIdentity);
             }
-            if (Optional.IsDefined(IsStateless))
+            if (IsStateless.HasValue)
             {
                 writer.WritePropertyName("isStateless"u8);
                 writer.WriteBooleanValue(IsStateless.Value);
             }
-            if (Optional.IsDefined(HasMultiplePlacementGroups))
+            if (HasMultiplePlacementGroups.HasValue)
             {
                 writer.WritePropertyName("multiplePlacementGroups"u8);
                 writer.WriteBooleanValue(HasMultiplePlacementGroups.Value);
             }
-            if (Optional.IsCollectionDefined(FrontendConfigurations))
+            if (!(FrontendConfigurations is ChangeTrackingList<NodeTypeFrontendConfiguration> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("frontendConfigurations"u8);
                 writer.WriteStartArray();
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NetworkSecurityRules))
+            if (!(NetworkSecurityRules is ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("networkSecurityRules"u8);
                 writer.WriteStartArray();
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdditionalDataDisks))
+            if (!(AdditionalDataDisks is ChangeTrackingList<NodeTypeVmssDataDisk> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("additionalDataDisks"u8);
                 writer.WriteStartArray();
@@ -213,37 +213,37 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsEncryptionAtHostEnabled))
+            if (IsEncryptionAtHostEnabled.HasValue)
             {
                 writer.WritePropertyName("enableEncryptionAtHost"u8);
                 writer.WriteBooleanValue(IsEncryptionAtHostEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(IsAcceleratedNetworkingEnabled))
+            if (IsAcceleratedNetworkingEnabled.HasValue)
             {
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(IsAcceleratedNetworkingEnabled.Value);
             }
-            if (Optional.IsDefined(UseDefaultPublicLoadBalancer))
+            if (UseDefaultPublicLoadBalancer.HasValue)
             {
                 writer.WritePropertyName("useDefaultPublicLoadBalancer"u8);
                 writer.WriteBooleanValue(UseDefaultPublicLoadBalancer.Value);
             }
-            if (Optional.IsDefined(UseTempDataDisk))
+            if (UseTempDataDisk.HasValue)
             {
                 writer.WritePropertyName("useTempDataDisk"u8);
                 writer.WriteBooleanValue(UseTempDataDisk.Value);
             }
-            if (Optional.IsDefined(IsOverProvisioningEnabled))
+            if (IsOverProvisioningEnabled.HasValue)
             {
                 writer.WritePropertyName("enableOverProvisioning"u8);
                 writer.WriteBooleanValue(IsOverProvisioningEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -253,42 +253,42 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsSpotVm))
+            if (IsSpotVm.HasValue)
             {
                 writer.WritePropertyName("isSpotVM"u8);
                 writer.WriteBooleanValue(IsSpotVm.Value);
             }
-            if (Optional.IsDefined(HostGroupId))
+            if (HostGroupId != null)
             {
                 writer.WritePropertyName("hostGroupId"u8);
                 writer.WriteStringValue(HostGroupId);
             }
-            if (Optional.IsDefined(UseEphemeralOSDisk))
+            if (UseEphemeralOSDisk.HasValue)
             {
                 writer.WritePropertyName("useEphemeralOSDisk"u8);
                 writer.WriteBooleanValue(UseEphemeralOSDisk.Value);
             }
-            if (Optional.IsDefined(SpotRestoreTimeout))
+            if (SpotRestoreTimeout != null)
             {
                 writer.WritePropertyName("spotRestoreTimeout"u8);
                 writer.WriteStringValue(SpotRestoreTimeout);
             }
-            if (Optional.IsDefined(EvictionPolicy))
+            if (EvictionPolicy.HasValue)
             {
                 writer.WritePropertyName("evictionPolicy"u8);
                 writer.WriteStringValue(EvictionPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(VmImageResourceId))
+            if (VmImageResourceId != null)
             {
                 writer.WritePropertyName("vmImageResourceId"u8);
                 writer.WriteStringValue(VmImageResourceId);
             }
-            if (Optional.IsDefined(SubnetId))
+            if (SubnetId != null)
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsCollectionDefined(VmSetupActions))
+            if (!(VmSetupActions is ChangeTrackingList<VmSetupAction> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("vmSetupActions"u8);
                 writer.WriteStartArray();
@@ -298,52 +298,52 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SecurityType))
+            if (SecurityType.HasValue)
             {
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType.Value.ToString());
             }
-            if (Optional.IsDefined(IsSecureBootEnabled))
+            if (IsSecureBootEnabled.HasValue)
             {
                 writer.WritePropertyName("secureBootEnabled"u8);
                 writer.WriteBooleanValue(IsSecureBootEnabled.Value);
             }
-            if (Optional.IsDefined(IsNodePublicIPEnabled))
+            if (IsNodePublicIPEnabled.HasValue)
             {
                 writer.WritePropertyName("enableNodePublicIP"u8);
                 writer.WriteBooleanValue(IsNodePublicIPEnabled.Value);
             }
-            if (Optional.IsDefined(IsNodePublicIPv6Enabled))
+            if (IsNodePublicIPv6Enabled.HasValue)
             {
                 writer.WritePropertyName("enableNodePublicIPv6"u8);
                 writer.WriteBooleanValue(IsNodePublicIPv6Enabled.Value);
             }
-            if (Optional.IsDefined(VmSharedGalleryImageId))
+            if (VmSharedGalleryImageId != null)
             {
                 writer.WritePropertyName("vmSharedGalleryImageId"u8);
                 writer.WriteStringValue(VmSharedGalleryImageId);
             }
-            if (Optional.IsDefined(NatGatewayId))
+            if (NatGatewayId != null)
             {
                 writer.WritePropertyName("natGatewayId"u8);
                 writer.WriteStringValue(NatGatewayId);
             }
-            if (Optional.IsDefined(VmImagePlan))
+            if (VmImagePlan != null)
             {
                 writer.WritePropertyName("vmImagePlan"u8);
                 writer.WriteObjectValue(VmImagePlan);
             }
-            if (Optional.IsDefined(ServiceArtifactReferenceId))
+            if (ServiceArtifactReferenceId != null)
             {
                 writer.WritePropertyName("serviceArtifactReferenceId"u8);
                 writer.WriteStringValue(ServiceArtifactReferenceId);
             }
-            if (Optional.IsDefined(DscpConfigurationId))
+            if (DscpConfigurationId != null)
             {
                 writer.WritePropertyName("dscpConfigurationId"u8);
                 writer.WriteStringValue(DscpConfigurationId);
             }
-            if (Optional.IsCollectionDefined(AdditionalNetworkInterfaceConfigurations))
+            if (!(AdditionalNetworkInterfaceConfigurations is ChangeTrackingList<AdditionalNetworkInterfaceConfiguration> collection9 && collection9.IsUndefined))
             {
                 writer.WritePropertyName("additionalNetworkInterfaceConfigurations"u8);
                 writer.WriteStartArray();
@@ -392,59 +392,59 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 return null;
             }
-            Optional<NodeTypeSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            NodeTypeSku sku = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isPrimary = default;
-            Optional<int> vmInstanceCount = default;
-            Optional<int> dataDiskSizeGB = default;
-            Optional<ServiceFabricManagedDataDiskType> dataDiskType = default;
-            Optional<string> dataDiskLetter = default;
-            Optional<IDictionary<string, string>> placementProperties = default;
-            Optional<IDictionary<string, string>> capacities = default;
-            Optional<EndpointRangeDescription> applicationPorts = default;
-            Optional<EndpointRangeDescription> ephemeralPorts = default;
-            Optional<string> vmSize = default;
-            Optional<string> vmImagePublisher = default;
-            Optional<string> vmImageOffer = default;
-            Optional<string> vmImageSku = default;
-            Optional<string> vmImageVersion = default;
-            Optional<IList<NodeTypeVaultSecretGroup>> vmSecrets = default;
-            Optional<IList<NodeTypeVmssExtension>> vmExtensions = default;
-            Optional<VmManagedIdentity> vmManagedIdentity = default;
-            Optional<bool> isStateless = default;
-            Optional<bool> multiplePlacementGroups = default;
-            Optional<IList<NodeTypeFrontendConfiguration>> frontendConfigurations = default;
-            Optional<IList<ServiceFabricManagedNetworkSecurityRule>> networkSecurityRules = default;
-            Optional<IList<NodeTypeVmssDataDisk>> additionalDataDisks = default;
-            Optional<bool> enableEncryptionAtHost = default;
-            Optional<ServiceFabricManagedResourceProvisioningState> provisioningState = default;
-            Optional<bool> enableAcceleratedNetworking = default;
-            Optional<bool> useDefaultPublicLoadBalancer = default;
-            Optional<bool> useTempDataDisk = default;
-            Optional<bool> enableOverProvisioning = default;
-            Optional<IList<string>> zones = default;
-            Optional<bool> isSpotVm = default;
-            Optional<string> hostGroupId = default;
-            Optional<bool> useEphemeralOSDisk = default;
-            Optional<string> spotRestoreTimeout = default;
-            Optional<SpotNodeVmEvictionPolicyType> evictionPolicy = default;
-            Optional<ResourceIdentifier> vmImageResourceId = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<IList<VmSetupAction>> vmSetupActions = default;
-            Optional<ServiceFabricManagedClusterSecurityType> securityType = default;
-            Optional<bool> secureBootEnabled = default;
-            Optional<bool> enableNodePublicIP = default;
-            Optional<bool> enableNodePublicIPv6 = default;
-            Optional<ResourceIdentifier> vmSharedGalleryImageId = default;
-            Optional<ResourceIdentifier> natGatewayId = default;
-            Optional<VmImagePlan> vmImagePlan = default;
-            Optional<ResourceIdentifier> serviceArtifactReferenceId = default;
-            Optional<ResourceIdentifier> dscpConfigurationId = default;
-            Optional<IList<AdditionalNetworkInterfaceConfiguration>> additionalNetworkInterfaceConfigurations = default;
+            SystemData systemData = default;
+            bool? isPrimary = default;
+            int? vmInstanceCount = default;
+            int? dataDiskSizeGB = default;
+            ServiceFabricManagedDataDiskType? dataDiskType = default;
+            string dataDiskLetter = default;
+            IDictionary<string, string> placementProperties = default;
+            IDictionary<string, string> capacities = default;
+            EndpointRangeDescription applicationPorts = default;
+            EndpointRangeDescription ephemeralPorts = default;
+            string vmSize = default;
+            string vmImagePublisher = default;
+            string vmImageOffer = default;
+            string vmImageSku = default;
+            string vmImageVersion = default;
+            IList<NodeTypeVaultSecretGroup> vmSecrets = default;
+            IList<NodeTypeVmssExtension> vmExtensions = default;
+            VmManagedIdentity vmManagedIdentity = default;
+            bool? isStateless = default;
+            bool? multiplePlacementGroups = default;
+            IList<NodeTypeFrontendConfiguration> frontendConfigurations = default;
+            IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules = default;
+            IList<NodeTypeVmssDataDisk> additionalDataDisks = default;
+            bool? enableEncryptionAtHost = default;
+            ServiceFabricManagedResourceProvisioningState? provisioningState = default;
+            bool? enableAcceleratedNetworking = default;
+            bool? useDefaultPublicLoadBalancer = default;
+            bool? useTempDataDisk = default;
+            bool? enableOverProvisioning = default;
+            IList<string> zones = default;
+            bool? isSpotVm = default;
+            string hostGroupId = default;
+            bool? useEphemeralOSDisk = default;
+            string spotRestoreTimeout = default;
+            SpotNodeVmEvictionPolicyType? evictionPolicy = default;
+            ResourceIdentifier vmImageResourceId = default;
+            ResourceIdentifier subnetId = default;
+            IList<VmSetupAction> vmSetupActions = default;
+            ServiceFabricManagedClusterSecurityType? securityType = default;
+            bool? secureBootEnabled = default;
+            bool? enableNodePublicIP = default;
+            bool? enableNodePublicIPv6 = default;
+            ResourceIdentifier vmSharedGalleryImageId = default;
+            ResourceIdentifier natGatewayId = default;
+            VmImagePlan vmImagePlan = default;
+            ResourceIdentifier serviceArtifactReferenceId = default;
+            ResourceIdentifier dscpConfigurationId = default;
+            IList<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -955,7 +955,61 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedNodeTypeData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(vmInstanceCount), Optional.ToNullable(dataDiskSizeGB), Optional.ToNullable(dataDiskType), dataDiskLetter.Value, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), applicationPorts.Value, ephemeralPorts.Value, vmSize.Value, vmImagePublisher.Value, vmImageOffer.Value, vmImageSku.Value, vmImageVersion.Value, Optional.ToList(vmSecrets), Optional.ToList(vmExtensions), vmManagedIdentity.Value, Optional.ToNullable(isStateless), Optional.ToNullable(multiplePlacementGroups), Optional.ToList(frontendConfigurations), Optional.ToList(networkSecurityRules), Optional.ToList(additionalDataDisks), Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(provisioningState), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(useDefaultPublicLoadBalancer), Optional.ToNullable(useTempDataDisk), Optional.ToNullable(enableOverProvisioning), Optional.ToList(zones), Optional.ToNullable(isSpotVm), hostGroupId.Value, Optional.ToNullable(useEphemeralOSDisk), spotRestoreTimeout.Value, Optional.ToNullable(evictionPolicy), vmImageResourceId.Value, subnetId.Value, Optional.ToList(vmSetupActions), Optional.ToNullable(securityType), Optional.ToNullable(secureBootEnabled), Optional.ToNullable(enableNodePublicIP), Optional.ToNullable(enableNodePublicIPv6), vmSharedGalleryImageId.Value, natGatewayId.Value, vmImagePlan.Value, serviceArtifactReferenceId.Value, dscpConfigurationId.Value, Optional.ToList(additionalNetworkInterfaceConfigurations), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ServiceFabricManagedNodeTypeData(
+                id,
+                name,
+                type,
+                systemData,
+                sku,
+                isPrimary,
+                vmInstanceCount,
+                dataDiskSizeGB,
+                dataDiskType,
+                dataDiskLetter,
+                placementProperties ?? new ChangeTrackingDictionary<string, string>(),
+                capacities ?? new ChangeTrackingDictionary<string, string>(),
+                applicationPorts,
+                ephemeralPorts,
+                vmSize,
+                vmImagePublisher,
+                vmImageOffer,
+                vmImageSku,
+                vmImageVersion,
+                vmSecrets ?? new ChangeTrackingList<NodeTypeVaultSecretGroup>(),
+                vmExtensions ?? new ChangeTrackingList<NodeTypeVmssExtension>(),
+                vmManagedIdentity,
+                isStateless,
+                multiplePlacementGroups,
+                frontendConfigurations ?? new ChangeTrackingList<NodeTypeFrontendConfiguration>(),
+                networkSecurityRules ?? new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>(),
+                additionalDataDisks ?? new ChangeTrackingList<NodeTypeVmssDataDisk>(),
+                enableEncryptionAtHost,
+                provisioningState,
+                enableAcceleratedNetworking,
+                useDefaultPublicLoadBalancer,
+                useTempDataDisk,
+                enableOverProvisioning,
+                zones ?? new ChangeTrackingList<string>(),
+                isSpotVm,
+                hostGroupId,
+                useEphemeralOSDisk,
+                spotRestoreTimeout,
+                evictionPolicy,
+                vmImageResourceId,
+                subnetId,
+                vmSetupActions ?? new ChangeTrackingList<VmSetupAction>(),
+                securityType,
+                secureBootEnabled,
+                enableNodePublicIP,
+                enableNodePublicIPv6,
+                vmSharedGalleryImageId,
+                natGatewayId,
+                vmImagePlan,
+                serviceArtifactReferenceId,
+                dscpConfigurationId,
+                additionalNetworkInterfaceConfigurations ?? new ChangeTrackingList<AdditionalNetworkInterfaceConfiguration>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedNodeTypeData>.Write(ModelReaderWriterOptions options)

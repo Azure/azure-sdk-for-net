@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ResourceRequests))
+            if (options.Format != "W" && ResourceRequests != null)
             {
                 writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
+            if (options.Format != "W" && !(Instances is ChangeTrackingList<AppPlatformGatewayInstance> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("instances"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformGatewayOperatorResourceRequirements> resourceRequests = default;
-            Optional<IReadOnlyList<AppPlatformGatewayInstance>> instances = default;
+            AppPlatformGatewayOperatorResourceRequirements resourceRequests = default;
+            IReadOnlyList<AppPlatformGatewayInstance> instances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayOperatorProperties(resourceRequests.Value, Optional.ToList(instances), serializedAdditionalRawData);
+            return new AppPlatformGatewayOperatorProperties(resourceRequests, instances ?? new ChangeTrackingList<AppPlatformGatewayInstance>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayOperatorProperties>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualMachine))
+            if (VirtualMachine != null)
             {
                 writer.WritePropertyName("virtualMachine"u8);
                 writer.WriteObjectValue(VirtualMachine);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<VirtualMachineResourceNames> virtualMachine = default;
+            VirtualMachineResourceNames virtualMachine = default;
             SapNamingPatternType namingPatternType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SingleServerFullResourceNames(namingPatternType, serializedAdditionalRawData, virtualMachine.Value);
+            return new SingleServerFullResourceNames(namingPatternType, serializedAdditionalRawData, virtualMachine);
         }
 
         BinaryData IPersistableModel<SingleServerFullResourceNames>.Write(ModelReaderWriterOptions options)

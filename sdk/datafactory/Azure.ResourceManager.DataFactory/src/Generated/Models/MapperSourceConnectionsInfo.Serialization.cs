@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SourceEntities))
+            if (!(SourceEntities is ChangeTrackingList<MapperTable> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sourceEntities"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Connection))
+            if (Connection != null)
             {
                 writer.WritePropertyName("connection"u8);
                 writer.WriteObjectValue(Connection);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IList<MapperTable>> sourceEntities = default;
-            Optional<MapperConnection> connection = default;
+            IList<MapperTable> sourceEntities = default;
+            MapperConnection connection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperSourceConnectionsInfo(Optional.ToList(sourceEntities), connection.Value, serializedAdditionalRawData);
+            return new MapperSourceConnectionsInfo(sourceEntities ?? new ChangeTrackingList<MapperTable>(), connection, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperSourceConnectionsInfo>.Write(ModelReaderWriterOptions options)

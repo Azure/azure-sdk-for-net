@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryAvailabilitySetId))
+            if (RecoveryAvailabilitySetId != null)
             {
                 writer.WritePropertyName("recoveryAvailabilitySetId"u8);
                 writer.WriteStringValue(RecoveryAvailabilitySetId);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
+            ResourceIdentifier recoveryAvailabilitySetId = default;
             string resourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExistingRecoveryAvailabilitySet(resourceType, serializedAdditionalRawData, recoveryAvailabilitySetId.Value);
+            return new ExistingRecoveryAvailabilitySet(resourceType, serializedAdditionalRawData, recoveryAvailabilitySetId);
         }
 
         BinaryData IPersistableModel<ExistingRecoveryAvailabilitySet>.Write(ModelReaderWriterOptions options)

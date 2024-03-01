@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(EncryptedKeyForSecureFields))
+            if (EncryptedKeyForSecureFields != null)
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             SqlConnectionInfo connectionInfo = default;
             IList<string> selectedDatabases = default;
-            Optional<string> encryptedKeyForSecureFields = default;
+            string encryptedKeyForSecureFields = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetUserTablesSqlTaskInput(connectionInfo, selectedDatabases, encryptedKeyForSecureFields.Value, serializedAdditionalRawData);
+            return new GetUserTablesSqlTaskInput(connectionInfo, selectedDatabases, encryptedKeyForSecureFields, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetUserTablesSqlTaskInput>.Write(ModelReaderWriterOptions options)

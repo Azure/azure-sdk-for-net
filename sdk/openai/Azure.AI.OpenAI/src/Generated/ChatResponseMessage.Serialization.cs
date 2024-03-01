@@ -38,7 +38,7 @@ namespace Azure.AI.OpenAI
             {
                 writer.WriteNull("content");
             }
-            if (Optional.IsCollectionDefined(ToolCalls))
+            if (!(ToolCalls is ChangeTrackingList<ChatCompletionsToolCall> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tool_calls"u8);
                 writer.WriteStartArray();
@@ -48,12 +48,12 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FunctionCall))
+            if (FunctionCall != null)
             {
                 writer.WritePropertyName("function_call"u8);
                 writer.WriteObjectValue(FunctionCall);
             }
-            if (Optional.IsDefined(AzureExtensionsContext))
+            if (AzureExtensionsContext != null)
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteObjectValue(AzureExtensionsContext);
@@ -98,9 +98,9 @@ namespace Azure.AI.OpenAI
             }
             ChatRole role = default;
             string content = default;
-            Optional<IReadOnlyList<ChatCompletionsToolCall>> toolCalls = default;
-            Optional<FunctionCall> functionCall = default;
-            Optional<AzureChatExtensionsMessageContext> context = default;
+            IReadOnlyList<ChatCompletionsToolCall> toolCalls = default;
+            FunctionCall functionCall = default;
+            AzureChatExtensionsMessageContext context = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +158,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatResponseMessage(role, content, Optional.ToList(toolCalls), functionCall.Value, context.Value, serializedAdditionalRawData);
+            return new ChatResponseMessage(
+                role,
+                content,
+                toolCalls ?? new ChangeTrackingList<ChatCompletionsToolCall>(),
+                functionCall,
+                context,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatResponseMessage>.Write(ModelReaderWriterOptions options)

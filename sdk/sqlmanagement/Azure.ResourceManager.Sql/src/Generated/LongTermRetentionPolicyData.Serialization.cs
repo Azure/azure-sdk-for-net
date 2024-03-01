@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MakeBackupsImmutable))
+            if (MakeBackupsImmutable.HasValue)
             {
                 writer.WritePropertyName("makeBackupsImmutable"u8);
                 writer.WriteBooleanValue(MakeBackupsImmutable.Value);
             }
-            if (Optional.IsDefined(BackupStorageAccessTier))
+            if (BackupStorageAccessTier.HasValue)
             {
                 writer.WritePropertyName("backupStorageAccessTier"u8);
                 writer.WriteStringValue(BackupStorageAccessTier.Value.ToString());
             }
-            if (Optional.IsDefined(WeeklyRetention))
+            if (WeeklyRetention != null)
             {
                 writer.WritePropertyName("weeklyRetention"u8);
                 writer.WriteStringValue(WeeklyRetention);
             }
-            if (Optional.IsDefined(MonthlyRetention))
+            if (MonthlyRetention != null)
             {
                 writer.WritePropertyName("monthlyRetention"u8);
                 writer.WriteStringValue(MonthlyRetention);
             }
-            if (Optional.IsDefined(YearlyRetention))
+            if (YearlyRetention != null)
             {
                 writer.WritePropertyName("yearlyRetention"u8);
                 writer.WriteStringValue(YearlyRetention);
             }
-            if (Optional.IsDefined(WeekOfYear))
+            if (WeekOfYear.HasValue)
             {
                 writer.WritePropertyName("weekOfYear"u8);
                 writer.WriteNumberValue(WeekOfYear.Value);
@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> makeBackupsImmutable = default;
-            Optional<SqlBackupStorageAccessTier> backupStorageAccessTier = default;
-            Optional<string> weeklyRetention = default;
-            Optional<string> monthlyRetention = default;
-            Optional<string> yearlyRetention = default;
-            Optional<int> weekOfYear = default;
+            SystemData systemData = default;
+            bool? makeBackupsImmutable = default;
+            SqlBackupStorageAccessTier? backupStorageAccessTier = default;
+            string weeklyRetention = default;
+            string monthlyRetention = default;
+            string yearlyRetention = default;
+            int? weekOfYear = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,7 +217,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LongTermRetentionPolicyData(id, name, type, systemData.Value, Optional.ToNullable(makeBackupsImmutable), Optional.ToNullable(backupStorageAccessTier), weeklyRetention.Value, monthlyRetention.Value, yearlyRetention.Value, Optional.ToNullable(weekOfYear), serializedAdditionalRawData);
+            return new LongTermRetentionPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                makeBackupsImmutable,
+                backupStorageAccessTier,
+                weeklyRetention,
+                monthlyRetention,
+                yearlyRetention,
+                weekOfYear,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LongTermRetentionPolicyData>.Write(ModelReaderWriterOptions options)

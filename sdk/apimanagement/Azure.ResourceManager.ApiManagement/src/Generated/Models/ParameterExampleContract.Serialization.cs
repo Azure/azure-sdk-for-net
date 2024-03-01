@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Summary))
+            if (Summary != null)
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(ExternalValue))
+            if (ExternalValue != null)
             {
                 writer.WritePropertyName("externalValue"u8);
                 writer.WriteStringValue(ExternalValue);
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> summary = default;
-            Optional<string> description = default;
-            Optional<BinaryData> value = default;
-            Optional<string> externalValue = default;
+            string summary = default;
+            string description = default;
+            BinaryData value = default;
+            string externalValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ParameterExampleContract(summary.Value, description.Value, value.Value, externalValue.Value, serializedAdditionalRawData);
+            return new ParameterExampleContract(summary, description, value, externalValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ParameterExampleContract>.Write(ModelReaderWriterOptions options)

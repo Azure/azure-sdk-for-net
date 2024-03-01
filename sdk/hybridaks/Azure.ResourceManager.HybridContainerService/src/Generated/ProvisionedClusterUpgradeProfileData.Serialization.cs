@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.HybridContainerService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.HybridContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            HybridContainerServiceResourceProvisioningState? provisioningState = default;
             ProvisionedClusterPoolUpgradeProfile controlPlaneProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterUpgradeProfileData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), controlPlaneProfile, serializedAdditionalRawData);
+            return new ProvisionedClusterUpgradeProfileData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                controlPlaneProfile,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterUpgradeProfileData>.Write(ModelReaderWriterOptions options)

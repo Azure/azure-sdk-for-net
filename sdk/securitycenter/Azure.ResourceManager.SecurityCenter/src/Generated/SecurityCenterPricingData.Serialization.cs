@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PricingTier))
+            if (PricingTier.HasValue)
             {
                 writer.WritePropertyName("pricingTier"u8);
                 writer.WriteStringValue(PricingTier.Value.ToString());
             }
-            if (Optional.IsDefined(SubPlan))
+            if (SubPlan != null)
             {
                 writer.WritePropertyName("subPlan"u8);
                 writer.WriteStringValue(SubPlan);
             }
-            if (options.Format != "W" && Optional.IsDefined(FreeTrialRemainingTime))
+            if (options.Format != "W" && FreeTrialRemainingTime.HasValue)
             {
                 writer.WritePropertyName("freeTrialRemainingTime"u8);
                 writer.WriteStringValue(FreeTrialRemainingTime.Value, "P");
             }
-            if (options.Format != "W" && Optional.IsDefined(EnabledOn))
+            if (options.Format != "W" && EnabledOn.HasValue)
             {
                 writer.WritePropertyName("enablementTime"u8);
                 writer.WriteStringValue(EnabledOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(IsDeprecated))
+            if (options.Format != "W" && IsDeprecated.HasValue)
             {
                 writer.WritePropertyName("deprecated"u8);
                 writer.WriteBooleanValue(IsDeprecated.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReplacedBy))
+            if (options.Format != "W" && !(ReplacedBy is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("replacedBy"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingList<PlanExtension> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SecurityCenterPricingTier> pricingTier = default;
-            Optional<string> subPlan = default;
-            Optional<TimeSpan> freeTrialRemainingTime = default;
-            Optional<DateTimeOffset> enablementTime = default;
-            Optional<bool> deprecated = default;
-            Optional<IReadOnlyList<string>> replacedBy = default;
-            Optional<IList<PlanExtension>> extensions = default;
+            SystemData systemData = default;
+            SecurityCenterPricingTier? pricingTier = default;
+            string subPlan = default;
+            TimeSpan? freeTrialRemainingTime = default;
+            DateTimeOffset? enablementTime = default;
+            bool? deprecated = default;
+            IReadOnlyList<string> replacedBy = default;
+            IList<PlanExtension> extensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,7 +260,19 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCenterPricingData(id, name, type, systemData.Value, Optional.ToNullable(pricingTier), subPlan.Value, Optional.ToNullable(freeTrialRemainingTime), Optional.ToNullable(enablementTime), Optional.ToNullable(deprecated), Optional.ToList(replacedBy), Optional.ToList(extensions), serializedAdditionalRawData);
+            return new SecurityCenterPricingData(
+                id,
+                name,
+                type,
+                systemData,
+                pricingTier,
+                subPlan,
+                freeTrialRemainingTime,
+                enablementTime,
+                deprecated,
+                replacedBy ?? new ChangeTrackingList<string>(),
+                extensions ?? new ChangeTrackingList<PlanExtension>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCenterPricingData>.Write(ModelReaderWriterOptions options)

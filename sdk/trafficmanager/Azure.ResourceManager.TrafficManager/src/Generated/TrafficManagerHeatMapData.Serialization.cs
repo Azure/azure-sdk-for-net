@@ -27,34 +27,34 @@ namespace Azure.ResourceManager.TrafficManager
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<TrafficManagerHeatMapEndpoint> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrafficFlows))
+            if (!(TrafficFlows is ChangeTrackingList<TrafficManagerHeatMapTrafficFlow> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("trafficFlows"u8);
                 writer.WriteStartArray();
@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IList<TrafficManagerHeatMapEndpoint>> endpoints = default;
-            Optional<IList<TrafficManagerHeatMapTrafficFlow>> trafficFlows = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            IList<TrafficManagerHeatMapEndpoint> endpoints = default;
+            IList<TrafficManagerHeatMapTrafficFlow> trafficFlows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,7 +211,15 @@ namespace Azure.ResourceManager.TrafficManager
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerHeatMapData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(endpoints), Optional.ToList(trafficFlows));
+            return new TrafficManagerHeatMapData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                startTime,
+                endTime,
+                endpoints ?? new ChangeTrackingList<TrafficManagerHeatMapEndpoint>(),
+                trafficFlows ?? new ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>());
         }
 
         BinaryData IPersistableModel<TrafficManagerHeatMapData>.Write(ModelReaderWriterOptions options)

@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterPrincipalId))
+            if (ClusterPrincipalId != null)
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(ClusterPrincipalId);
             }
-            if (Optional.IsDefined(Role))
+            if (Role.HasValue)
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(PrincipalType))
+            if (PrincipalType.HasValue)
             {
                 writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantName))
+            if (options.Format != "W" && TenantName != null)
             {
                 writer.WritePropertyName("tenantName"u8);
                 writer.WriteStringValue(TenantName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrincipalName))
+            if (options.Format != "W" && PrincipalName != null)
             {
                 writer.WritePropertyName("principalName"u8);
                 writer.WriteStringValue(PrincipalName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AadObjectId))
+            if (options.Format != "W" && AadObjectId.HasValue)
             {
                 writer.WritePropertyName("aadObjectId"u8);
                 writer.WriteStringValue(AadObjectId.Value);
@@ -132,15 +132,15 @@ namespace Azure.ResourceManager.Kusto
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> principalId = default;
-            Optional<KustoClusterPrincipalRole> role = default;
-            Optional<Guid> tenantId = default;
-            Optional<KustoPrincipalAssignmentType> principalType = default;
-            Optional<string> tenantName = default;
-            Optional<string> principalName = default;
-            Optional<KustoProvisioningState> provisioningState = default;
-            Optional<Guid> aadObjectId = default;
+            SystemData systemData = default;
+            string principalId = default;
+            KustoClusterPrincipalRole? role = default;
+            Guid? tenantId = default;
+            KustoPrincipalAssignmentType? principalType = default;
+            string tenantName = default;
+            string principalName = default;
+            KustoProvisioningState? provisioningState = default;
+            Guid? aadObjectId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -247,7 +247,20 @@ namespace Azure.ResourceManager.Kusto
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoClusterPrincipalAssignmentData(id, name, type, systemData.Value, principalId.Value, Optional.ToNullable(role), Optional.ToNullable(tenantId), Optional.ToNullable(principalType), tenantName.Value, principalName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aadObjectId), serializedAdditionalRawData);
+            return new KustoClusterPrincipalAssignmentData(
+                id,
+                name,
+                type,
+                systemData,
+                principalId,
+                role,
+                tenantId,
+                principalType,
+                tenantName,
+                principalName,
+                provisioningState,
+                aadObjectId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoClusterPrincipalAssignmentData>.Write(ModelReaderWriterOptions options)

@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Synapse
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
+            if (options.Format != "W" && ManagedBy != null)
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
@@ -58,29 +58,29 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataMaskingState))
+            if (DataMaskingState.HasValue)
             {
                 writer.WritePropertyName("dataMaskingState"u8);
                 writer.WriteStringValue(DataMaskingState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ExemptPrincipals))
+            if (ExemptPrincipals != null)
             {
                 writer.WritePropertyName("exemptPrincipals"u8);
                 writer.WriteStringValue(ExemptPrincipals);
             }
-            if (options.Format != "W" && Optional.IsDefined(ApplicationPrincipals))
+            if (options.Format != "W" && ApplicationPrincipals != null)
             {
                 writer.WritePropertyName("applicationPrincipals"u8);
                 writer.WriteStringValue(ApplicationPrincipals);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaskingLevel))
+            if (options.Format != "W" && MaskingLevel != null)
             {
                 writer.WritePropertyName("maskingLevel"u8);
                 writer.WriteStringValue(MaskingLevel);
@@ -124,17 +124,17 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> kind = default;
-            Optional<string> managedBy = default;
+            AzureLocation? location = default;
+            string kind = default;
+            string managedBy = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SynapseDataMaskingState> dataMaskingState = default;
-            Optional<string> exemptPrincipals = default;
-            Optional<string> applicationPrincipals = default;
-            Optional<string> maskingLevel = default;
+            SystemData systemData = default;
+            SynapseDataMaskingState? dataMaskingState = default;
+            string exemptPrincipals = default;
+            string applicationPrincipals = default;
+            string maskingLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,19 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseDataMaskingPolicyData(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, managedBy.Value, Optional.ToNullable(dataMaskingState), exemptPrincipals.Value, applicationPrincipals.Value, maskingLevel.Value, serializedAdditionalRawData);
+            return new SynapseDataMaskingPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                managedBy,
+                dataMaskingState,
+                exemptPrincipals,
+                applicationPrincipals,
+                maskingLevel,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDataMaskingPolicyData>.Write(ModelReaderWriterOptions options)

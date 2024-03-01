@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ErrorDetail))
+            if (ErrorDetail != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, ErrorDetail);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ResponseError> error = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterPodIdentityProvisioningError(error.Value, serializedAdditionalRawData);
+            return new ManagedClusterPodIdentityProvisioningError(error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterPodIdentityProvisioningError>.Write(ModelReaderWriterOptions options)

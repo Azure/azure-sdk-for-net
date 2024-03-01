@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActionConfiguration))
+            if (ActionConfiguration != null)
             {
                 writer.WritePropertyName("actionConfiguration"u8);
                 writer.WriteObjectValue(ActionConfiguration);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<SecurityInsightsIncidentActionConfiguration> actionConfiguration = default;
+            SecurityInsightsIncidentActionConfiguration actionConfiguration = default;
             int order = default;
             ActionType actionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRuleModifyPropertiesAction(order, actionType, serializedAdditionalRawData, actionConfiguration.Value);
+            return new AutomationRuleModifyPropertiesAction(order, actionType, serializedAdditionalRawData, actionConfiguration);
         }
 
         BinaryData IPersistableModel<AutomationRuleModifyPropertiesAction>.Write(ModelReaderWriterOptions options)

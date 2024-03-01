@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Metric))
+            if (Metric != null)
             {
                 writer.WritePropertyName("metric"u8);
                 writer.WriteStringValue(Metric);
             }
-            if (Optional.IsDefined(Unit))
+            if (Unit.HasValue)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Groups))
+            if (!(Groups is ChangeTrackingList<WafMetricsResponseSeriesPropertiesItemsItem> collection && collection.IsUndefined))
             {
                 if (Groups != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("groups");
                 }
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (!(Data is ChangeTrackingList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> metric = default;
-            Optional<WafMetricsResponseSeriesItemUnit> unit = default;
-            Optional<IReadOnlyList<WafMetricsResponseSeriesPropertiesItemsItem>> groups = default;
-            Optional<IReadOnlyList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>> data = default;
+            string metric = default;
+            WafMetricsResponseSeriesItemUnit? unit = default;
+            IReadOnlyList<WafMetricsResponseSeriesPropertiesItemsItem> groups = default;
+            IReadOnlyList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WafMetricsResponseSeriesItem(metric.Value, Optional.ToNullable(unit), Optional.ToList(groups), Optional.ToList(data), serializedAdditionalRawData);
+            return new WafMetricsResponseSeriesItem(metric, unit, groups ?? new ChangeTrackingList<WafMetricsResponseSeriesPropertiesItemsItem>(), data ?? new ChangeTrackingList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WafMetricsResponseSeriesItem>.Write(ModelReaderWriterOptions options)

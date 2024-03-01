@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Logic
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ScheduledOn))
+            if (options.Format != "W" && ScheduledOn.HasValue)
             {
                 writer.WritePropertyName("scheduledTime"u8);
                 writer.WriteStringValue(ScheduledOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (options.Format != "W" && Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
 #if NET6_0_OR_GREATER
@@ -87,32 +87,32 @@ namespace Azure.ResourceManager.Logic
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsDefined(TrackingId))
+            if (options.Format != "W" && TrackingId.HasValue)
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId.Value);
             }
-            if (Optional.IsDefined(Correlation))
+            if (Correlation != null)
             {
                 writer.WritePropertyName("correlation"u8);
                 writer.WriteObjectValue(Correlation);
             }
-            if (options.Format != "W" && Optional.IsDefined(InputsLink))
+            if (options.Format != "W" && InputsLink != null)
             {
                 writer.WritePropertyName("inputsLink"u8);
                 writer.WriteObjectValue(InputsLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(OutputsLink))
+            if (options.Format != "W" && OutputsLink != null)
             {
                 writer.WritePropertyName("outputsLink"u8);
                 writer.WriteObjectValue(OutputsLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsFired))
+            if (options.Format != "W" && IsFired.HasValue)
             {
                 writer.WritePropertyName("fired"u8);
                 writer.WriteBooleanValue(IsFired.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Run))
+            if (options.Format != "W" && Run != null)
             {
                 writer.WritePropertyName("run"u8);
                 writer.WriteObjectValue(Run);
@@ -159,19 +159,19 @@ namespace Azure.ResourceManager.Logic
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<DateTimeOffset> scheduledTime = default;
-            Optional<LogicWorkflowStatus> status = default;
-            Optional<string> code = default;
-            Optional<BinaryData> error = default;
-            Optional<Guid> trackingId = default;
-            Optional<Correlation> correlation = default;
-            Optional<LogicContentLink> inputsLink = default;
-            Optional<LogicContentLink> outputsLink = default;
-            Optional<bool> fired = default;
-            Optional<LogicResourceReference> run = default;
+            SystemData systemData = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            DateTimeOffset? scheduledTime = default;
+            LogicWorkflowStatus? status = default;
+            string code = default;
+            BinaryData error = default;
+            Guid? trackingId = default;
+            Correlation correlation = default;
+            LogicContentLink inputsLink = default;
+            LogicContentLink outputsLink = default;
+            bool? fired = default;
+            LogicResourceReference run = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -322,7 +322,24 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowTriggerHistoryData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(scheduledTime), Optional.ToNullable(status), code.Value, error.Value, Optional.ToNullable(trackingId), correlation.Value, inputsLink.Value, outputsLink.Value, Optional.ToNullable(fired), run.Value, serializedAdditionalRawData);
+            return new LogicWorkflowTriggerHistoryData(
+                id,
+                name,
+                type,
+                systemData,
+                startTime,
+                endTime,
+                scheduledTime,
+                status,
+                code,
+                error,
+                trackingId,
+                correlation,
+                inputsLink,
+                outputsLink,
+                fired,
+                run,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowTriggerHistoryData>.Write(ModelReaderWriterOptions options)

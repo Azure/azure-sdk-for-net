@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Elastic
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Elastic
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.Elastic
             {
                 return null;
             }
-            Optional<MonitoringTagRulesProperties> properties = default;
+            MonitoringTagRulesProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.Elastic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitoringTagRuleData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new MonitoringTagRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringTagRuleData>.Write(ModelReaderWriterOptions options)

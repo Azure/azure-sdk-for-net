@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(AmlWorkspaceLocation))
+            if (options.Format != "W" && AmlWorkspaceLocation != null)
             {
                 writer.WritePropertyName("amlWorkspaceLocation"u8);
                 writer.WriteStringValue(AmlWorkspaceLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(UsageType))
+            if (options.Format != "W" && UsageType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(UsageType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Unit))
+            if (options.Format != "W" && Unit.HasValue)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentValue))
+            if (options.Format != "W" && CurrentValue.HasValue)
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Limit))
+            if (options.Format != "W" && Limit.HasValue)
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> amlWorkspaceLocation = default;
-            Optional<string> type = default;
-            Optional<MachineLearningUsageUnit> unit = default;
-            Optional<long> currentValue = default;
-            Optional<long> limit = default;
-            Optional<MachineLearningUsageName> name = default;
+            string id = default;
+            string amlWorkspaceLocation = default;
+            string type = default;
+            MachineLearningUsageUnit? unit = default;
+            long? currentValue = default;
+            long? limit = default;
+            MachineLearningUsageName name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningUsage(id.Value, amlWorkspaceLocation.Value, type.Value, Optional.ToNullable(unit), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, serializedAdditionalRawData);
+            return new MachineLearningUsage(
+                id,
+                amlWorkspaceLocation,
+                type,
+                unit,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningUsage>.Write(ModelReaderWriterOptions options)

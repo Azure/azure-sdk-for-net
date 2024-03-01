@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsDefined(ChunkIndex))
+            if (ChunkIndex.HasValue)
             {
                 writer.WritePropertyName("chunkIndex"u8);
                 writer.WriteNumberValue(ChunkIndex.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<string> content = default;
-            Optional<float> chunkIndex = default;
+            string content = default;
+            float? chunkIndex = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UploadFileContent(content.Value, Optional.ToNullable(chunkIndex), serializedAdditionalRawData);
+            return new UploadFileContent(content, chunkIndex, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UploadFileContent>.Write(ModelReaderWriterOptions options)

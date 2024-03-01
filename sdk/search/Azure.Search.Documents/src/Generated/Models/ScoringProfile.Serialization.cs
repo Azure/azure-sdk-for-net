@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(TextWeights))
+            if (TextWeights != null)
             {
                 if (TextWeights != null)
                 {
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("text");
                 }
             }
-            if (Optional.IsCollectionDefined(Functions))
+            if (!(Functions is ChangeTrackingList<ScoringFunction> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FunctionAggregation))
+            if (FunctionAggregation.HasValue)
             {
                 if (FunctionAggregation != null)
                 {
@@ -62,9 +62,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Optional<TextWeights> text = default;
-            Optional<IList<ScoringFunction>> functions = default;
-            Optional<ScoringFunctionAggregation?> functionAggregation = default;
+            TextWeights text = default;
+            IList<ScoringFunction> functions = default;
+            ScoringFunctionAggregation? functionAggregation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -107,7 +107,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ScoringProfile(name, text.Value, Optional.ToList(functions), Optional.ToNullable(functionAggregation));
+            return new ScoringProfile(name, text, functions ?? new ChangeTrackingList<ScoringFunction>(), functionAggregation);
         }
     }
 }

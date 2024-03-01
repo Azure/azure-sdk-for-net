@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogLink))
+            if (LogLink != null)
             {
                 writer.WritePropertyName("logLink"u8);
                 writer.WriteStringValue(LogLink);
             }
-            if (Optional.IsDefined(LogArtifactLink))
+            if (LogArtifactLink != null)
             {
                 writer.WritePropertyName("logArtifactLink"u8);
                 writer.WriteStringValue(LogArtifactLink);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> logLink = default;
-            Optional<string> logArtifactLink = default;
+            string logLink = default;
+            string logArtifactLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryRunGetLogResult(logLink.Value, logArtifactLink.Value, serializedAdditionalRawData);
+            return new ContainerRegistryRunGetLogResult(logLink, logArtifactLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryRunGetLogResult>.Write(ModelReaderWriterOptions options)

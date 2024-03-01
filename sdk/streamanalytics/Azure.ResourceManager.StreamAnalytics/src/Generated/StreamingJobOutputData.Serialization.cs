@@ -28,54 +28,54 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Datasource))
+            if (Datasource != null)
             {
                 writer.WritePropertyName("datasource"u8);
                 writer.WriteObjectValue(Datasource);
             }
-            if (Optional.IsDefined(TimeFrame))
+            if (TimeFrame.HasValue)
             {
                 writer.WritePropertyName("timeWindow"u8);
                 writer.WriteStringValue(TimeFrame.Value, "T");
             }
-            if (Optional.IsDefined(SizeWindow))
+            if (SizeWindow.HasValue)
             {
                 writer.WritePropertyName("sizeWindow"u8);
                 writer.WriteNumberValue(SizeWindow.Value);
             }
-            if (Optional.IsDefined(Serialization))
+            if (Serialization != null)
             {
                 writer.WritePropertyName("serialization"u8);
                 writer.WriteObjectValue(Serialization);
             }
-            if (options.Format != "W" && Optional.IsDefined(Diagnostics))
+            if (options.Format != "W" && Diagnostics != null)
             {
                 writer.WritePropertyName("diagnostics"u8);
                 writer.WriteObjectValue(Diagnostics);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LastOutputEventTimestamps))
+            if (options.Format != "W" && !(LastOutputEventTimestamps is ChangeTrackingList<LastOutputEventTimestamp> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("lastOutputEventTimestamps"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(WatermarkSettings))
+            if (WatermarkSettings != null)
             {
                 writer.WritePropertyName("watermarkSettings"u8);
                 writer.WriteObjectValue(WatermarkSettings);
@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<StreamingJobOutputDataSource> datasource = default;
-            Optional<TimeSpan> timeWindow = default;
-            Optional<float> sizeWindow = default;
-            Optional<StreamAnalyticsDataSerialization> serialization = default;
-            Optional<StreamingJobDiagnostics> diagnostics = default;
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyList<LastOutputEventTimestamp>> lastOutputEventTimestamps = default;
-            Optional<StreamingJobOutputWatermarkProperties> watermarkSettings = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            StreamingJobOutputDataSource datasource = default;
+            TimeSpan? timeWindow = default;
+            float? sizeWindow = default;
+            StreamAnalyticsDataSerialization serialization = default;
+            StreamingJobDiagnostics diagnostics = default;
+            ETag? etag = default;
+            IReadOnlyList<LastOutputEventTimestamp> lastOutputEventTimestamps = default;
+            StreamingJobOutputWatermarkProperties watermarkSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -262,7 +262,19 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobOutputData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, datasource.Value, Optional.ToNullable(timeWindow), Optional.ToNullable(sizeWindow), serialization.Value, diagnostics.Value, Optional.ToNullable(etag), Optional.ToList(lastOutputEventTimestamps), watermarkSettings.Value);
+            return new StreamingJobOutputData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                datasource,
+                timeWindow,
+                sizeWindow,
+                serialization,
+                diagnostics,
+                etag,
+                lastOutputEventTimestamps ?? new ChangeTrackingList<LastOutputEventTimestamp>(),
+                watermarkSettings);
         }
 
         BinaryData IPersistableModel<StreamingJobOutputData>.Write(ModelReaderWriterOptions options)

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ErrorCode))
+            if (ErrorCode != null)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Optional.IsDefined(ProvisioningStatus))
+            if (ProvisioningStatus != null)
             {
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteObjectValue(ProvisioningStatus);
             }
-            if (Optional.IsDefined(DownloadStatus))
+            if (DownloadStatus != null)
             {
                 writer.WritePropertyName("downloadStatus"u8);
                 writer.WriteObjectValue(DownloadStatus);
             }
-            if (Optional.IsDefined(ProgressPercentage))
+            if (ProgressPercentage.HasValue)
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<MarketplaceGalleryImageStatusProvisioningStatus> provisioningStatus = default;
-            Optional<MarketplaceGalleryImageStatusDownloadStatus> downloadStatus = default;
-            Optional<long> progressPercentage = default;
+            string errorCode = default;
+            string errorMessage = default;
+            MarketplaceGalleryImageStatusProvisioningStatus provisioningStatus = default;
+            MarketplaceGalleryImageStatusDownloadStatus downloadStatus = default;
+            long? progressPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceGalleryImageStatus(errorCode.Value, errorMessage.Value, provisioningStatus.Value, downloadStatus.Value, Optional.ToNullable(progressPercentage), serializedAdditionalRawData);
+            return new MarketplaceGalleryImageStatus(
+                errorCode,
+                errorMessage,
+                provisioningStatus,
+                downloadStatus,
+                progressPercentage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceGalleryImageStatus>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 if (Id != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("id");
                 }
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 if (Location != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(GroupIds))
+            if (!(GroupIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 if (GroupIds != null)
                 {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("groupIds");
                 }
             }
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (PrivateEndpoint != null)
             {
                 if (PrivateEndpoint != null)
                 {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("privateEndpoint");
                 }
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (PrivateLinkServiceConnectionState != null)
             {
                 if (PrivateLinkServiceConnectionState != null)
                 {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("privateLinkServiceConnectionState");
                 }
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState != null)
             {
                 if (ProvisioningState != null)
                 {
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<AzureLocation?> location = default;
-            Optional<IList<string>> groupIds = default;
-            Optional<RegistryPrivateEndpoint> privateEndpoint = default;
-            Optional<RegistryPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<string> provisioningState = default;
+            ResourceIdentifier id = default;
+            AzureLocation? location = default;
+            IList<string> groupIds = default;
+            RegistryPrivateEndpoint privateEndpoint = default;
+            RegistryPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -237,7 +237,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegistryPrivateEndpointConnection(id.Value, Optional.ToNullable(location), Optional.ToList(groupIds), privateEndpoint.Value, privateLinkServiceConnectionState.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new RegistryPrivateEndpointConnection(
+                id,
+                location,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegistryPrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

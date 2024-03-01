@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> expiryTime = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? expiryTime = default;
             string permission = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageTableAccessPolicy(Optional.ToNullable(startTime), Optional.ToNullable(expiryTime), permission, serializedAdditionalRawData);
+            return new StorageTableAccessPolicy(startTime, expiryTime, permission, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageTableAccessPolicy>.Write(ModelReaderWriterOptions options)

@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.NetApp
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -68,19 +68,19 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsCollectionDefined(ActiveDirectories))
+            if (!(ActiveDirectories is ChangeTrackingList<NetAppAccountActiveDirectory> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("activeDirectories"u8);
                 writer.WriteStartArray();
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.NetApp
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisableShowmount))
+            if (options.Format != "W" && DisableShowmount.HasValue)
             {
                 if (DisableShowmount != null)
                 {
@@ -105,6 +105,30 @@ namespace Azure.ResourceManager.NetApp
                 else
                 {
                     writer.WriteNull("disableShowmount");
+                }
+            }
+            if (NfsV4IdDomain != null)
+            {
+                if (NfsV4IdDomain != null)
+                {
+                    writer.WritePropertyName("nfsV4IDDomain"u8);
+                    writer.WriteStringValue(NfsV4IdDomain);
+                }
+                else
+                {
+                    writer.WriteNull("nfsV4IDDomain");
+                }
+            }
+            if (options.Format != "W" && IsMultiAdEnabled.HasValue)
+            {
+                if (IsMultiAdEnabled != null)
+                {
+                    writer.WritePropertyName("isMultiAdEnabled"u8);
+                    writer.WriteBooleanValue(IsMultiAdEnabled.Value);
+                }
+                else
+                {
+                    writer.WriteNull("isMultiAdEnabled");
                 }
             }
             writer.WriteEndObject();
@@ -146,18 +170,20 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<IList<NetAppAccountActiveDirectory>> activeDirectories = default;
-            Optional<NetAppAccountEncryption> encryption = default;
-            Optional<bool?> disableShowmount = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            IList<NetAppAccountActiveDirectory> activeDirectories = default;
+            NetAppAccountEncryption encryption = default;
+            bool? disableShowmount = default;
+            string nfsV4IdDomain = default;
+            bool? isMultiAdEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -271,6 +297,26 @@ namespace Azure.ResourceManager.NetApp
                             disableShowmount = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("nfsV4IDDomain"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                nfsV4IdDomain = null;
+                                continue;
+                            }
+                            nfsV4IdDomain = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("isMultiAdEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                isMultiAdEnabled = null;
+                                continue;
+                            }
+                            isMultiAdEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -280,7 +326,22 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), identity, provisioningState.Value, Optional.ToList(activeDirectories), encryption.Value, Optional.ToNullable(disableShowmount), serializedAdditionalRawData);
+            return new NetAppAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                identity,
+                provisioningState,
+                activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
+                encryption,
+                disableShowmount,
+                nfsV4IdDomain,
+                isMultiAdEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppAccountData>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UpdateType))
+            if (UpdateType != null)
             {
                 writer.WritePropertyName("updateType"u8);
                 writer.WriteStringValue(UpdateType);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(PackageName))
+            if (PackageName != null)
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> updateType = default;
-            Optional<string> version = default;
-            Optional<string> packageName = default;
+            string updateType = default;
+            string version = default;
+            string packageName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdatePrerequisite(updateType.Value, version.Value, packageName.Value, serializedAdditionalRawData);
+            return new UpdatePrerequisite(updateType, version, packageName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdatePrerequisite>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,27 +39,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceDbServerResourceId))
+            if (SourceDbServerResourceId != null)
             {
                 writer.WritePropertyName("sourceDbServerResourceId"u8);
                 writer.WriteStringValue(SourceDbServerResourceId);
             }
-            if (Optional.IsDefined(SourceDbServerFullyQualifiedDomainName))
+            if (SourceDbServerFullyQualifiedDomainName != null)
             {
                 writer.WritePropertyName("sourceDbServerFullyQualifiedDomainName"u8);
                 writer.WriteStringValue(SourceDbServerFullyQualifiedDomainName);
             }
-            if (Optional.IsDefined(TargetDbServerFullyQualifiedDomainName))
+            if (TargetDbServerFullyQualifiedDomainName != null)
             {
                 writer.WritePropertyName("targetDbServerFullyQualifiedDomainName"u8);
                 writer.WriteStringValue(TargetDbServerFullyQualifiedDomainName);
             }
-            if (Optional.IsDefined(SecretParameters))
+            if (SecretParameters != null)
             {
                 writer.WritePropertyName("secretParameters"u8);
                 writer.WriteObjectValue(SecretParameters);
             }
-            if (Optional.IsCollectionDefined(DbsToMigrate))
+            if (!(DbsToMigrate is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dbsToMigrate"u8);
                 writer.WriteStartArray();
@@ -69,32 +69,32 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SetupLogicalReplicationOnSourceDbIfNeeded))
+            if (SetupLogicalReplicationOnSourceDbIfNeeded.HasValue)
             {
                 writer.WritePropertyName("setupLogicalReplicationOnSourceDbIfNeeded"u8);
                 writer.WriteStringValue(SetupLogicalReplicationOnSourceDbIfNeeded.Value.ToString());
             }
-            if (Optional.IsDefined(OverwriteDbsInTarget))
+            if (OverwriteDbsInTarget.HasValue)
             {
                 writer.WritePropertyName("overwriteDbsInTarget"u8);
                 writer.WriteStringValue(OverwriteDbsInTarget.Value.ToString());
             }
-            if (Optional.IsDefined(MigrationWindowStartTimeInUtc))
+            if (MigrationWindowStartTimeInUtc.HasValue)
             {
                 writer.WritePropertyName("migrationWindowStartTimeInUtc"u8);
                 writer.WriteStringValue(MigrationWindowStartTimeInUtc.Value, "O");
             }
-            if (Optional.IsDefined(StartDataMigration))
+            if (StartDataMigration.HasValue)
             {
                 writer.WritePropertyName("startDataMigration"u8);
                 writer.WriteStringValue(StartDataMigration.Value.ToString());
             }
-            if (Optional.IsDefined(TriggerCutover))
+            if (TriggerCutover.HasValue)
             {
                 writer.WritePropertyName("triggerCutover"u8);
                 writer.WriteStringValue(TriggerCutover.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DbsToTriggerCutoverOn))
+            if (!(DbsToTriggerCutoverOn is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dbsToTriggerCutoverOn"u8);
                 writer.WriteStartArray();
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Cancel))
+            if (Cancel.HasValue)
             {
                 writer.WritePropertyName("cancel"u8);
                 writer.WriteStringValue(Cancel.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DbsToCancelMigrationOn))
+            if (!(DbsToCancelMigrationOn is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("dbsToCancelMigrationOn"u8);
                 writer.WriteStartArray();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MigrationMode))
+            if (MigrationMode.HasValue)
             {
                 writer.WritePropertyName("migrationMode"u8);
                 writer.WriteStringValue(MigrationMode.Value.ToString());
@@ -163,21 +163,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ResourceIdentifier> sourceDbServerResourceId = default;
-            Optional<string> sourceDbServerFullyQualifiedDomainName = default;
-            Optional<string> targetDbServerFullyQualifiedDomainName = default;
-            Optional<PostgreSqlMigrationSecretParameters> secretParameters = default;
-            Optional<IList<string>> dbsToMigrate = default;
-            Optional<PostgreSqlMigrationLogicalReplicationOnSourceDb> setupLogicalReplicationOnSourceDbIfNeeded = default;
-            Optional<PostgreSqlMigrationOverwriteDbsInTarget> overwriteDbsInTarget = default;
-            Optional<DateTimeOffset> migrationWindowStartTimeInUtc = default;
-            Optional<PostgreSqlMigrationStartDataMigration> startDataMigration = default;
-            Optional<PostgreSqlMigrationTriggerCutover> triggerCutover = default;
-            Optional<IList<string>> dbsToTriggerCutoverOn = default;
-            Optional<PostgreSqlMigrationCancel> cancel = default;
-            Optional<IList<string>> dbsToCancelMigrationOn = default;
-            Optional<PostgreSqlMigrationMode> migrationMode = default;
+            IDictionary<string, string> tags = default;
+            ResourceIdentifier sourceDbServerResourceId = default;
+            string sourceDbServerFullyQualifiedDomainName = default;
+            string targetDbServerFullyQualifiedDomainName = default;
+            PostgreSqlMigrationSecretParameters secretParameters = default;
+            IList<string> dbsToMigrate = default;
+            PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default;
+            PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default;
+            DateTimeOffset? migrationWindowStartTimeInUtc = default;
+            PostgreSqlMigrationStartDataMigration? startDataMigration = default;
+            PostgreSqlMigrationTriggerCutover? triggerCutover = default;
+            IList<string> dbsToTriggerCutoverOn = default;
+            PostgreSqlMigrationCancel? cancel = default;
+            IList<string> dbsToCancelMigrationOn = default;
+            PostgreSqlMigrationMode? migrationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -347,7 +347,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlMigrationPatch(Optional.ToDictionary(tags), sourceDbServerResourceId.Value, sourceDbServerFullyQualifiedDomainName.Value, targetDbServerFullyQualifiedDomainName.Value, secretParameters.Value, Optional.ToList(dbsToMigrate), Optional.ToNullable(setupLogicalReplicationOnSourceDbIfNeeded), Optional.ToNullable(overwriteDbsInTarget), Optional.ToNullable(migrationWindowStartTimeInUtc), Optional.ToNullable(startDataMigration), Optional.ToNullable(triggerCutover), Optional.ToList(dbsToTriggerCutoverOn), Optional.ToNullable(cancel), Optional.ToList(dbsToCancelMigrationOn), Optional.ToNullable(migrationMode), serializedAdditionalRawData);
+            return new PostgreSqlMigrationPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sourceDbServerResourceId,
+                sourceDbServerFullyQualifiedDomainName,
+                targetDbServerFullyQualifiedDomainName,
+                secretParameters,
+                dbsToMigrate ?? new ChangeTrackingList<string>(),
+                setupLogicalReplicationOnSourceDbIfNeeded,
+                overwriteDbsInTarget,
+                migrationWindowStartTimeInUtc,
+                startDataMigration,
+                triggerCutover,
+                dbsToTriggerCutoverOn ?? new ChangeTrackingList<string>(),
+                cancel,
+                dbsToCancelMigrationOn ?? new ChangeTrackingList<string>(),
+                migrationMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlMigrationPatch>.Write(ModelReaderWriterOptions options)

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,120 +43,120 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomDomain))
+            if (CustomDomain != null)
             {
                 writer.WritePropertyName("customDomain"u8);
                 writer.WriteObjectValue(CustomDomain);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(SasPolicy))
+            if (SasPolicy != null)
             {
                 writer.WritePropertyName("sasPolicy"u8);
                 writer.WriteObjectValue(SasPolicy);
             }
-            if (Optional.IsDefined(KeyPolicy))
+            if (KeyPolicy != null)
             {
                 writer.WritePropertyName("keyPolicy"u8);
                 writer.WriteObjectValue(KeyPolicy);
             }
-            if (Optional.IsDefined(AccessTier))
+            if (AccessTier.HasValue)
             {
                 writer.WritePropertyName("accessTier"u8);
                 writer.WriteStringValue(AccessTier.Value.ToSerialString());
             }
-            if (Optional.IsDefined(AzureFilesIdentityBasedAuthentication))
+            if (AzureFilesIdentityBasedAuthentication != null)
             {
                 writer.WritePropertyName("azureFilesIdentityBasedAuthentication"u8);
                 writer.WriteObjectValue(AzureFilesIdentityBasedAuthentication);
             }
-            if (Optional.IsDefined(EnableHttpsTrafficOnly))
+            if (EnableHttpsTrafficOnly.HasValue)
             {
                 writer.WritePropertyName("supportsHttpsTrafficOnly"u8);
                 writer.WriteBooleanValue(EnableHttpsTrafficOnly.Value);
             }
-            if (Optional.IsDefined(IsSftpEnabled))
+            if (IsSftpEnabled.HasValue)
             {
                 writer.WritePropertyName("isSftpEnabled"u8);
                 writer.WriteBooleanValue(IsSftpEnabled.Value);
             }
-            if (Optional.IsDefined(IsLocalUserEnabled))
+            if (IsLocalUserEnabled.HasValue)
             {
                 writer.WritePropertyName("isLocalUserEnabled"u8);
                 writer.WriteBooleanValue(IsLocalUserEnabled.Value);
             }
-            if (Optional.IsDefined(NetworkRuleSet))
+            if (NetworkRuleSet != null)
             {
                 writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
             }
-            if (Optional.IsDefined(LargeFileSharesState))
+            if (LargeFileSharesState.HasValue)
             {
                 writer.WritePropertyName("largeFileSharesState"u8);
                 writer.WriteStringValue(LargeFileSharesState.Value.ToString());
             }
-            if (Optional.IsDefined(RoutingPreference))
+            if (RoutingPreference != null)
             {
                 writer.WritePropertyName("routingPreference"u8);
                 writer.WriteObjectValue(RoutingPreference);
             }
-            if (Optional.IsDefined(AllowBlobPublicAccess))
+            if (AllowBlobPublicAccess.HasValue)
             {
                 writer.WritePropertyName("allowBlobPublicAccess"u8);
                 writer.WriteBooleanValue(AllowBlobPublicAccess.Value);
             }
-            if (Optional.IsDefined(MinimumTlsVersion))
+            if (MinimumTlsVersion.HasValue)
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
             }
-            if (Optional.IsDefined(AllowSharedKeyAccess))
+            if (AllowSharedKeyAccess.HasValue)
             {
                 writer.WritePropertyName("allowSharedKeyAccess"u8);
                 writer.WriteBooleanValue(AllowSharedKeyAccess.Value);
             }
-            if (Optional.IsDefined(AllowCrossTenantReplication))
+            if (AllowCrossTenantReplication.HasValue)
             {
                 writer.WritePropertyName("allowCrossTenantReplication"u8);
                 writer.WriteBooleanValue(AllowCrossTenantReplication.Value);
             }
-            if (Optional.IsDefined(IsDefaultToOAuthAuthentication))
+            if (IsDefaultToOAuthAuthentication.HasValue)
             {
                 writer.WritePropertyName("defaultToOAuthAuthentication"u8);
                 writer.WriteBooleanValue(IsDefaultToOAuthAuthentication.Value);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(ImmutableStorageWithVersioning))
+            if (ImmutableStorageWithVersioning != null)
             {
                 writer.WritePropertyName("immutableStorageWithVersioning"u8);
                 writer.WriteObjectValue(ImmutableStorageWithVersioning);
             }
-            if (Optional.IsDefined(AllowedCopyScope))
+            if (AllowedCopyScope.HasValue)
             {
                 writer.WritePropertyName("allowedCopyScope"u8);
                 writer.WriteStringValue(AllowedCopyScope.Value.ToString());
             }
-            if (Optional.IsDefined(DnsEndpointType))
+            if (DnsEndpointType.HasValue)
             {
                 writer.WritePropertyName("dnsEndpointType"u8);
                 writer.WriteStringValue(DnsEndpointType.Value.ToString());
@@ -200,31 +200,31 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<StorageSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<StorageKind> kind = default;
-            Optional<StorageCustomDomain> customDomain = default;
-            Optional<StorageAccountEncryption> encryption = default;
-            Optional<StorageAccountSasPolicy> sasPolicy = default;
-            Optional<StorageAccountKeyPolicy> keyPolicy = default;
-            Optional<StorageAccountAccessTier> accessTier = default;
-            Optional<FilesIdentityBasedAuthentication> azureFilesIdentityBasedAuthentication = default;
-            Optional<bool> supportsHttpsTrafficOnly = default;
-            Optional<bool> isSftpEnabled = default;
-            Optional<bool> isLocalUserEnabled = default;
-            Optional<StorageAccountNetworkRuleSet> networkAcls = default;
-            Optional<LargeFileSharesState> largeFileSharesState = default;
-            Optional<StorageRoutingPreference> routingPreference = default;
-            Optional<bool> allowBlobPublicAccess = default;
-            Optional<StorageMinimumTlsVersion> minimumTlsVersion = default;
-            Optional<bool> allowSharedKeyAccess = default;
-            Optional<bool> allowCrossTenantReplication = default;
-            Optional<bool> defaultToOAuthAuthentication = default;
-            Optional<StoragePublicNetworkAccess> publicNetworkAccess = default;
-            Optional<ImmutableStorageAccount> immutableStorageWithVersioning = default;
-            Optional<AllowedCopyScope> allowedCopyScope = default;
-            Optional<StorageDnsEndpointType> dnsEndpointType = default;
+            StorageSku sku = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            StorageKind? kind = default;
+            StorageCustomDomain customDomain = default;
+            StorageAccountEncryption encryption = default;
+            StorageAccountSasPolicy sasPolicy = default;
+            StorageAccountKeyPolicy keyPolicy = default;
+            StorageAccountAccessTier? accessTier = default;
+            FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default;
+            bool? supportsHttpsTrafficOnly = default;
+            bool? isSftpEnabled = default;
+            bool? isLocalUserEnabled = default;
+            StorageAccountNetworkRuleSet networkAcls = default;
+            LargeFileSharesState? largeFileSharesState = default;
+            StorageRoutingPreference routingPreference = default;
+            bool? allowBlobPublicAccess = default;
+            StorageMinimumTlsVersion? minimumTlsVersion = default;
+            bool? allowSharedKeyAccess = default;
+            bool? allowCrossTenantReplication = default;
+            bool? defaultToOAuthAuthentication = default;
+            StoragePublicNetworkAccess? publicNetworkAccess = default;
+            ImmutableStorageAccount immutableStorageWithVersioning = default;
+            AllowedCopyScope? allowedCopyScope = default;
+            StorageDnsEndpointType? dnsEndpointType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -478,7 +478,33 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountPatch(sku.Value, Optional.ToDictionary(tags), identity, Optional.ToNullable(kind), customDomain.Value, encryption.Value, sasPolicy.Value, keyPolicy.Value, Optional.ToNullable(accessTier), azureFilesIdentityBasedAuthentication.Value, Optional.ToNullable(supportsHttpsTrafficOnly), Optional.ToNullable(isSftpEnabled), Optional.ToNullable(isLocalUserEnabled), networkAcls.Value, Optional.ToNullable(largeFileSharesState), routingPreference.Value, Optional.ToNullable(allowBlobPublicAccess), Optional.ToNullable(minimumTlsVersion), Optional.ToNullable(allowSharedKeyAccess), Optional.ToNullable(allowCrossTenantReplication), Optional.ToNullable(defaultToOAuthAuthentication), Optional.ToNullable(publicNetworkAccess), immutableStorageWithVersioning.Value, Optional.ToNullable(allowedCopyScope), Optional.ToNullable(dnsEndpointType), serializedAdditionalRawData);
+            return new StorageAccountPatch(
+                sku,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                kind,
+                customDomain,
+                encryption,
+                sasPolicy,
+                keyPolicy,
+                accessTier,
+                azureFilesIdentityBasedAuthentication,
+                supportsHttpsTrafficOnly,
+                isSftpEnabled,
+                isLocalUserEnabled,
+                networkAcls,
+                largeFileSharesState,
+                routingPreference,
+                allowBlobPublicAccess,
+                minimumTlsVersion,
+                allowSharedKeyAccess,
+                allowCrossTenantReplication,
+                defaultToOAuthAuthentication,
+                publicNetworkAccess,
+                immutableStorageWithVersioning,
+                allowedCopyScope,
+                dnsEndpointType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountPatch>.Write(ModelReaderWriterOptions options)

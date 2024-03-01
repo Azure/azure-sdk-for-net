@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackupParameters))
+            if (BackupParameters != null)
             {
                 writer.WritePropertyName("backupParameters"u8);
                 writer.WriteObjectValue(BackupParameters);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<DataProtectionBackupSettingsBase> backupParameters = default;
+            DataProtectionBackupSettingsBase backupParameters = default;
             DataStoreInfoBase dataStore = default;
             DataProtectionBackupTriggerContext trigger = default;
             string name = default;
@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupRule(name, objectType, serializedAdditionalRawData, backupParameters.Value, dataStore, trigger);
+            return new DataProtectionBackupRule(
+                name,
+                objectType,
+                serializedAdditionalRawData,
+                backupParameters,
+                dataStore,
+                trigger);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupRule>.Write(ModelReaderWriterOptions options)

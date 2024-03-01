@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Uuid))
+            if (options.Format != "W" && Uuid != null)
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (Optional.IsDefined(Credentials))
+            if (Credentials != null)
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
-            if (Optional.IsDefined(PrivateLinkScopeResourceId))
+            if (PrivateLinkScopeResourceId != null)
             {
                 writer.WritePropertyName("privateLinkScopeResourceId"u8);
                 writer.WriteStringValue(PrivateLinkScopeResourceId);
             }
-            if (Optional.IsDefined(HttpProxyConfig))
+            if (HttpProxyConfig != null)
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
                 writer.WriteObjectValue(HttpProxyConfig);
             }
-            if (Optional.IsDefined(ProvisioningAction))
+            if (ProvisioningAction.HasValue)
             {
                 writer.WritePropertyName("provisioningAction"u8);
                 writer.WriteStringValue(ProvisioningAction.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomResourceName))
+            if (options.Format != "W" && CustomResourceName != null)
             {
                 writer.WritePropertyName("customResourceName"u8);
                 writer.WriteStringValue(CustomResourceName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
+            if (options.Format != "W" && !(Statuses is ChangeTrackingList<VMwareResourceStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -142,16 +142,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uuid = default;
-            Optional<VmInstanceGuestCredential> credentials = default;
-            Optional<ResourceIdentifier> privateLinkScopeResourceId = default;
-            Optional<HttpProxyConfiguration> httpProxyConfig = default;
-            Optional<GuestAgentProvisioningAction> provisioningAction = default;
-            Optional<string> status = default;
-            Optional<string> customResourceName = default;
-            Optional<IReadOnlyList<VMwareResourceStatus>> statuses = default;
-            Optional<VMwareResourceProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string uuid = default;
+            VmInstanceGuestCredential credentials = default;
+            ResourceIdentifier privateLinkScopeResourceId = default;
+            HttpProxyConfiguration httpProxyConfig = default;
+            GuestAgentProvisioningAction? provisioningAction = default;
+            string status = default;
+            string customResourceName = default;
+            IReadOnlyList<VMwareResourceStatus> statuses = default;
+            VMwareResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -272,7 +272,21 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmInstanceGuestAgentData(id, name, type, systemData.Value, uuid.Value, credentials.Value, privateLinkScopeResourceId.Value, httpProxyConfig.Value, Optional.ToNullable(provisioningAction), status.Value, customResourceName.Value, Optional.ToList(statuses), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VmInstanceGuestAgentData(
+                id,
+                name,
+                type,
+                systemData,
+                uuid,
+                credentials,
+                privateLinkScopeResourceId,
+                httpProxyConfig,
+                provisioningAction,
+                status,
+                customResourceName,
+                statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmInstanceGuestAgentData>.Write(ModelReaderWriterOptions options)

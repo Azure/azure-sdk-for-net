@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncodedCertificate))
+            if (EncodedCertificate != null)
             {
                 writer.WritePropertyName("encodedCertificate"u8);
                 writer.WriteStringValue(EncodedCertificate);
             }
-            if (Optional.IsDefined(CertificatePassword))
+            if (CertificatePassword != null)
             {
                 writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
             }
             writer.WritePropertyName("storeName"u8);
             writer.WriteStringValue(StoreName.ToString());
-            if (Optional.IsDefined(Certificate))
+            if (Certificate != null)
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteObjectValue(Certificate);
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> encodedCertificate = default;
-            Optional<string> certificatePassword = default;
+            string encodedCertificate = default;
+            string certificatePassword = default;
             CertificateConfigurationStoreName storeName = default;
-            Optional<CertificateInformation> certificate = default;
+            CertificateInformation certificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CertificateConfiguration(encodedCertificate.Value, certificatePassword.Value, storeName, certificate.Value, serializedAdditionalRawData);
+            return new CertificateConfiguration(encodedCertificate, certificatePassword, storeName, certificate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CertificateConfiguration>.Write(ModelReaderWriterOptions options)

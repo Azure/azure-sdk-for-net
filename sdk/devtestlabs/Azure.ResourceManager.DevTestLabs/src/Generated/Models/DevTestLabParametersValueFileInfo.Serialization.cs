@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FileName))
+            if (FileName != null)
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Optional.IsDefined(ParametersValueInfo))
+            if (ParametersValueInfo != null)
             {
                 writer.WritePropertyName("parametersValueInfo"u8);
 #if NET6_0_OR_GREATER
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> fileName = default;
-            Optional<BinaryData> parametersValueInfo = default;
+            string fileName = default;
+            BinaryData parametersValueInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabParametersValueFileInfo(fileName.Value, parametersValueInfo.Value, serializedAdditionalRawData);
+            return new DevTestLabParametersValueFileInfo(fileName, parametersValueInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabParametersValueFileInfo>.Write(ModelReaderWriterOptions options)

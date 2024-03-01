@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("recoveryPointType"u8);
             writer.WriteStringValue(RecoveryPointType.ToString());
-            if (Optional.IsDefined(UseMultiVmSyncPoint))
+            if (UseMultiVmSyncPoint != null)
             {
                 writer.WritePropertyName("useMultiVmSyncPoint"u8);
                 writer.WriteStringValue(UseMultiVmSyncPoint);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             InMageV2RpRecoveryPointType recoveryPointType = default;
-            Optional<string> useMultiVmSyncPoint = default;
+            string useMultiVmSyncPoint = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPlanInMageAzureV2FailoverContent(instanceType, serializedAdditionalRawData, recoveryPointType, useMultiVmSyncPoint.Value);
+            return new RecoveryPlanInMageAzureV2FailoverContent(instanceType, serializedAdditionalRawData, recoveryPointType, useMultiVmSyncPoint);
         }
 
         BinaryData IPersistableModel<RecoveryPlanInMageAzureV2FailoverContent>.Write(ModelReaderWriterOptions options)

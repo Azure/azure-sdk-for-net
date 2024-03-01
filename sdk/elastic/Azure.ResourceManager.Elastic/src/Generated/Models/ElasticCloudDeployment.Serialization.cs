@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentId))
+            if (options.Format != "W" && DeploymentId != null)
             {
                 writer.WritePropertyName("deploymentId"u8);
                 writer.WriteStringValue(DeploymentId);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureSubscriptionId))
+            if (options.Format != "W" && AzureSubscriptionId != null)
             {
                 writer.WritePropertyName("azureSubscriptionId"u8);
                 writer.WriteStringValue(AzureSubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ElasticsearchRegion))
+            if (options.Format != "W" && ElasticsearchRegion != null)
             {
                 writer.WritePropertyName("elasticsearchRegion"u8);
                 writer.WriteStringValue(ElasticsearchRegion);
             }
-            if (options.Format != "W" && Optional.IsDefined(ElasticsearchServiceUri))
+            if (options.Format != "W" && ElasticsearchServiceUri != null)
             {
                 writer.WritePropertyName("elasticsearchServiceUrl"u8);
                 writer.WriteStringValue(ElasticsearchServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(KibanaServiceUri))
+            if (options.Format != "W" && KibanaServiceUri != null)
             {
                 writer.WritePropertyName("kibanaServiceUrl"u8);
                 writer.WriteStringValue(KibanaServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(KibanaSsoUri))
+            if (options.Format != "W" && KibanaSsoUri != null)
             {
                 writer.WritePropertyName("kibanaSsoUrl"u8);
                 writer.WriteStringValue(KibanaSsoUri.AbsoluteUri);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> deploymentId = default;
-            Optional<string> azureSubscriptionId = default;
-            Optional<string> elasticsearchRegion = default;
-            Optional<Uri> elasticsearchServiceUrl = default;
-            Optional<Uri> kibanaServiceUrl = default;
-            Optional<Uri> kibanaSsoUrl = default;
+            string name = default;
+            string deploymentId = default;
+            string azureSubscriptionId = default;
+            string elasticsearchRegion = default;
+            Uri elasticsearchServiceUrl = default;
+            Uri kibanaServiceUrl = default;
+            Uri kibanaSsoUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticCloudDeployment(name.Value, deploymentId.Value, azureSubscriptionId.Value, elasticsearchRegion.Value, elasticsearchServiceUrl.Value, kibanaServiceUrl.Value, kibanaSsoUrl.Value, serializedAdditionalRawData);
+            return new ElasticCloudDeployment(
+                name,
+                deploymentId,
+                azureSubscriptionId,
+                elasticsearchRegion,
+                elasticsearchServiceUrl,
+                kibanaServiceUrl,
+                kibanaSsoUrl,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticCloudDeployment>.Write(ModelReaderWriterOptions options)

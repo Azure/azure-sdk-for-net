@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureSubscriptionId))
+            if (AzureSubscriptionId != null)
             {
                 writer.WritePropertyName("azureSubscriptionId"u8);
                 writer.WriteStringValue(AzureSubscriptionId);
             }
-            if (Optional.IsDefined(ResourceGroupName))
+            if (ResourceGroupName != null)
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Optional.IsDefined(ChangedTimeUtc))
+            if (ChangedTimeUtc.HasValue)
             {
                 writer.WritePropertyName("changedTimeUtc"u8);
                 writer.WriteStringValue(ChangedTimeUtc.Value, "O");
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> azureSubscriptionId = default;
-            Optional<string> resourceGroupName = default;
-            Optional<DateTimeOffset> changedTimeUtc = default;
+            string azureSubscriptionId = default;
+            string resourceGroupName = default;
+            DateTimeOffset? changedTimeUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceMoveChangeHistory(azureSubscriptionId.Value, resourceGroupName.Value, Optional.ToNullable(changedTimeUtc), serializedAdditionalRawData);
+            return new ResourceMoveChangeHistory(azureSubscriptionId, resourceGroupName, changedTimeUtc, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceMoveChangeHistory>.Write(ModelReaderWriterOptions options)

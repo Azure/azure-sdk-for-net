@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<AppServiceGeoRegion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(HostingEnvironments))
+            if (!(HostingEnvironments is ChangeTrackingList<AppServiceEnvironmentProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("hostingEnvironments"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(HostingEnvironmentDeploymentInfos))
+            if (!(HostingEnvironmentDeploymentInfos is ChangeTrackingList<HostingEnvironmentDeploymentInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("hostingEnvironmentDeploymentInfos"u8);
                 writer.WriteStartArray();
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppServiceGeoRegion>> locations = default;
-            Optional<IReadOnlyList<AppServiceEnvironmentProperties>> hostingEnvironments = default;
-            Optional<IReadOnlyList<HostingEnvironmentDeploymentInfo>> hostingEnvironmentDeploymentInfos = default;
+            IReadOnlyList<AppServiceGeoRegion> locations = default;
+            IReadOnlyList<AppServiceEnvironmentProperties> hostingEnvironments = default;
+            IReadOnlyList<HostingEnvironmentDeploymentInfo> hostingEnvironmentDeploymentInfos = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceDeploymentLocations(Optional.ToList(locations), Optional.ToList(hostingEnvironments), Optional.ToList(hostingEnvironmentDeploymentInfos), serializedAdditionalRawData);
+            return new AppServiceDeploymentLocations(locations ?? new ChangeTrackingList<AppServiceGeoRegion>(), hostingEnvironments ?? new ChangeTrackingList<AppServiceEnvironmentProperties>(), hostingEnvironmentDeploymentInfos ?? new ChangeTrackingList<HostingEnvironmentDeploymentInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceDeploymentLocations>.Write(ModelReaderWriterOptions options)

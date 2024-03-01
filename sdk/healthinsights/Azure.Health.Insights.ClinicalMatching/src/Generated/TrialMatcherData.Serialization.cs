@@ -34,7 +34,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
@@ -78,7 +78,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 return null;
             }
             IList<PatientRecord> patients = default;
-            Optional<TrialMatcherModelConfiguration> configuration = default;
+            TrialMatcherModelConfiguration configuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrialMatcherData(patients, configuration.Value, serializedAdditionalRawData);
+            return new TrialMatcherData(patients, configuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrialMatcherData>.Write(ModelReaderWriterOptions options)

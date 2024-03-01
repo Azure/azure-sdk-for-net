@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScaleType))
+            if (ScaleType.HasValue)
             {
                 writer.WritePropertyName("scaleType"u8);
                 writer.WriteStringValue(ScaleType.Value.ToString());
             }
-            if (Optional.IsDefined(Capacity))
+            if (Capacity.HasValue)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ActiveCapacity))
+            if (options.Format != "W" && ActiveCapacity.HasValue)
             {
                 writer.WritePropertyName("activeCapacity"u8);
                 writer.WriteNumberValue(ActiveCapacity.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<CognitiveServicesAccountDeploymentScaleType> scaleType = default;
-            Optional<int> capacity = default;
-            Optional<int> activeCapacity = default;
+            CognitiveServicesAccountDeploymentScaleType? scaleType = default;
+            int? capacity = default;
+            int? activeCapacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountDeploymentScaleSettings(Optional.ToNullable(scaleType), Optional.ToNullable(capacity), Optional.ToNullable(activeCapacity), serializedAdditionalRawData);
+            return new CognitiveServicesAccountDeploymentScaleSettings(scaleType, capacity, activeCapacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountDeploymentScaleSettings>.Write(ModelReaderWriterOptions options)

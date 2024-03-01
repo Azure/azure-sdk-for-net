@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Hostname))
+            if (Hostname != null)
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Optional.IsDefined(CertificateId))
+            if (CertificateId != null)
             {
                 writer.WritePropertyName("certificateId"u8);
                 writer.WriteStringValue(CertificateId);
             }
-            if (Optional.IsDefined(IsClientCertificateRequired))
+            if (IsClientCertificateRequired.HasValue)
             {
                 writer.WritePropertyName("negotiateClientCertificate"u8);
                 writer.WriteBooleanValue(IsClientCertificateRequired.Value);
             }
-            if (Optional.IsDefined(IsTls1_0Enabled))
+            if (IsTls1_0Enabled.HasValue)
             {
                 writer.WritePropertyName("tls10Enabled"u8);
                 writer.WriteBooleanValue(IsTls1_0Enabled.Value);
             }
-            if (Optional.IsDefined(IsTls1_1Enabled))
+            if (IsTls1_1Enabled.HasValue)
             {
                 writer.WritePropertyName("tls11Enabled"u8);
                 writer.WriteBooleanValue(IsTls1_1Enabled.Value);
             }
-            if (Optional.IsDefined(IsHttp2_0Enabled))
+            if (IsHttp2_0Enabled.HasValue)
             {
                 writer.WritePropertyName("http2Enabled"u8);
                 writer.WriteBooleanValue(IsHttp2_0Enabled.Value);
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> hostname = default;
-            Optional<string> certificateId = default;
-            Optional<bool> negotiateClientCertificate = default;
-            Optional<bool> tls10Enabled = default;
-            Optional<bool> tls11Enabled = default;
-            Optional<bool> http2Enabled = default;
+            SystemData systemData = default;
+            string hostname = default;
+            string certificateId = default;
+            bool? negotiateClientCertificate = default;
+            bool? tls10Enabled = default;
+            bool? tls11Enabled = default;
+            bool? http2Enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,18 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementGatewayHostnameConfigurationData(id, name, type, systemData.Value, hostname.Value, certificateId.Value, Optional.ToNullable(negotiateClientCertificate), Optional.ToNullable(tls10Enabled), Optional.ToNullable(tls11Enabled), Optional.ToNullable(http2Enabled), serializedAdditionalRawData);
+            return new ApiManagementGatewayHostnameConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                hostname,
+                certificateId,
+                negotiateClientCertificate,
+                tls10Enabled,
+                tls11Enabled,
+                http2Enabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementGatewayHostnameConfigurationData>.Write(ModelReaderWriterOptions options)

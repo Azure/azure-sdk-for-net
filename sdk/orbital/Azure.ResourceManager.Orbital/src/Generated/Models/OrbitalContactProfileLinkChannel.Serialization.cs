@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WriteNumberValue(BandwidthMHz);
             writer.WritePropertyName("endPoint"u8);
             writer.WriteObjectValue(EndPoint);
-            if (Optional.IsDefined(ModulationConfiguration))
+            if (ModulationConfiguration != null)
             {
                 writer.WritePropertyName("modulationConfiguration"u8);
                 writer.WriteStringValue(ModulationConfiguration);
             }
-            if (Optional.IsDefined(DemodulationConfiguration))
+            if (DemodulationConfiguration != null)
             {
                 writer.WritePropertyName("demodulationConfiguration"u8);
                 writer.WriteStringValue(DemodulationConfiguration);
             }
-            if (Optional.IsDefined(EncodingConfiguration))
+            if (EncodingConfiguration != null)
             {
                 writer.WritePropertyName("encodingConfiguration"u8);
                 writer.WriteStringValue(EncodingConfiguration);
             }
-            if (Optional.IsDefined(DecodingConfiguration))
+            if (DecodingConfiguration != null)
             {
                 writer.WritePropertyName("decodingConfiguration"u8);
                 writer.WriteStringValue(DecodingConfiguration);
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Orbital.Models
             float centerFrequencyMHz = default;
             float bandwidthMHz = default;
             OrbitalContactEndpoint endPoint = default;
-            Optional<string> modulationConfiguration = default;
-            Optional<string> demodulationConfiguration = default;
-            Optional<string> encodingConfiguration = default;
-            Optional<string> decodingConfiguration = default;
+            string modulationConfiguration = default;
+            string demodulationConfiguration = default;
+            string encodingConfiguration = default;
+            string decodingConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,16 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalContactProfileLinkChannel(name, centerFrequencyMHz, bandwidthMHz, endPoint, modulationConfiguration.Value, demodulationConfiguration.Value, encodingConfiguration.Value, decodingConfiguration.Value, serializedAdditionalRawData);
+            return new OrbitalContactProfileLinkChannel(
+                name,
+                centerFrequencyMHz,
+                bandwidthMHz,
+                endPoint,
+                modulationConfiguration,
+                demodulationConfiguration,
+                encodingConfiguration,
+                decodingConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalContactProfileLinkChannel>.Write(ModelReaderWriterOptions options)

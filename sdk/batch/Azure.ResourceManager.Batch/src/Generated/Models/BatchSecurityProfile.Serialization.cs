@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecurityType))
+            if (SecurityType.HasValue)
             {
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType.Value.ToString());
             }
-            if (Optional.IsDefined(EncryptionAtHost))
+            if (EncryptionAtHost.HasValue)
             {
                 writer.WritePropertyName("encryptionAtHost"u8);
                 writer.WriteBooleanValue(EncryptionAtHost.Value);
             }
-            if (Optional.IsDefined(UefiSettings))
+            if (UefiSettings != null)
             {
                 writer.WritePropertyName("uefiSettings"u8);
                 writer.WriteObjectValue(UefiSettings);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchSecurityType> securityType = default;
-            Optional<bool> encryptionAtHost = default;
-            Optional<BatchUefiSettings> uefiSettings = default;
+            BatchSecurityType? securityType = default;
+            bool? encryptionAtHost = default;
+            BatchUefiSettings uefiSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchSecurityProfile(Optional.ToNullable(securityType), Optional.ToNullable(encryptionAtHost), uefiSettings.Value, serializedAdditionalRawData);
+            return new BatchSecurityProfile(securityType, encryptionAtHost, uefiSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchSecurityProfile>.Write(ModelReaderWriterOptions options)

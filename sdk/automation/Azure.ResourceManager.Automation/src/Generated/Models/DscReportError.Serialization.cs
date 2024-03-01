@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ErrorSource))
+            if (ErrorSource != null)
             {
                 writer.WritePropertyName("errorSource"u8);
                 writer.WriteStringValue(ErrorSource);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(ErrorCode))
+            if (ErrorCode != null)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Optional.IsDefined(Locale))
+            if (Locale != null)
             {
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale);
             }
-            if (Optional.IsDefined(ErrorDetails))
+            if (ErrorDetails != null)
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStringValue(ErrorDetails);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> errorSource = default;
-            Optional<string> resourceId = default;
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<string> locale = default;
-            Optional<string> errorDetails = default;
+            string errorSource = default;
+            string resourceId = default;
+            string errorCode = default;
+            string errorMessage = default;
+            string locale = default;
+            string errorDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,14 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscReportError(errorSource.Value, resourceId.Value, errorCode.Value, errorMessage.Value, locale.Value, errorDetails.Value, serializedAdditionalRawData);
+            return new DscReportError(
+                errorSource,
+                resourceId,
+                errorCode,
+                errorMessage,
+                locale,
+                errorDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscReportError>.Write(ModelReaderWriterOptions options)

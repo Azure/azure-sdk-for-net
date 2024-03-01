@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(MarsAgentVersion))
+            if (options.Format != "W" && MarsAgentVersion != null)
             {
                 writer.WritePropertyName("marsAgentVersion"u8);
                 writer.WriteStringValue(MarsAgentVersion);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> marsAgentVersion = default;
+            string id = default;
+            string name = default;
+            string marsAgentVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVHostDetails(id.Value, name.Value, marsAgentVersion.Value, serializedAdditionalRawData);
+            return new HyperVHostDetails(id, name, marsAgentVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HyperVHostDetails>.Write(ModelReaderWriterOptions options)

@@ -49,7 +49,31 @@ namespace Azure.ResourceManager.Purview.Models
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<PurviewPrivateEndpointConnectionData>();
 
-            return new PurviewAccountData(id, name, resourceType, systemData, tags, location, sku, accountStatus, cloudConnectorsAwsExternalId != null ? new CloudConnectors(cloudConnectorsAwsExternalId, serializedAdditionalRawData: null) : null, createdOn, createdBy, createdByObjectId, endpoints, friendlyName, ingestionStorage, managedEventHubState, managedResourceGroupName, managedResources, managedResourcesPublicNetworkAccess, privateEndpointConnections?.ToList(), provisioningState, publicNetworkAccess, identity, serializedAdditionalRawData: null);
+            return new PurviewAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                accountStatus,
+                cloudConnectorsAwsExternalId != null ? new CloudConnectors(cloudConnectorsAwsExternalId, serializedAdditionalRawData: null) : null,
+                createdOn,
+                createdBy,
+                createdByObjectId,
+                endpoints,
+                friendlyName,
+                ingestionStorage,
+                managedEventHubState,
+                managedResourceGroupName,
+                managedResources,
+                managedResourcesPublicNetworkAccess,
+                privateEndpointConnections?.ToList(),
+                provisioningState,
+                publicNetworkAccess,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PurviewAccountProperties"/>. </summary>
@@ -73,7 +97,23 @@ namespace Azure.ResourceManager.Purview.Models
         {
             privateEndpointConnections ??= new List<PurviewPrivateEndpointConnectionData>();
 
-            return new PurviewAccountProperties(accountStatus, cloudConnectorsAwsExternalId != null ? new CloudConnectors(cloudConnectorsAwsExternalId, serializedAdditionalRawData: null) : null, createdOn, createdBy, createdByObjectId, endpoints, friendlyName, ingestionStorage, managedEventHubState, managedResourceGroupName, managedResources, managedResourcesPublicNetworkAccess, privateEndpointConnections?.ToList(), provisioningState, publicNetworkAccess, serializedAdditionalRawData: null);
+            return new PurviewAccountProperties(
+                accountStatus,
+                cloudConnectorsAwsExternalId != null ? new CloudConnectors(cloudConnectorsAwsExternalId, serializedAdditionalRawData: null) : null,
+                createdOn,
+                createdBy,
+                createdByObjectId,
+                endpoints,
+                friendlyName,
+                ingestionStorage,
+                managedEventHubState,
+                managedResourceGroupName,
+                managedResources,
+                managedResourcesPublicNetworkAccess,
+                privateEndpointConnections?.ToList(),
+                provisioningState,
+                publicNetworkAccess,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PurviewAccountStatus"/>. </summary>
@@ -116,7 +156,15 @@ namespace Azure.ResourceManager.Purview.Models
         /// <returns> A new <see cref="Purview.PurviewPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static PurviewPrivateEndpointConnectionData PurviewPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, PurviewPrivateLinkServiceConnectionState connectionState = null, string provisioningState = null)
         {
-            return new PurviewPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
+            return new PurviewPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null,
+                connectionState,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PurviewAccountSku"/>. </summary>
@@ -171,7 +219,19 @@ namespace Azure.ResourceManager.Purview.Models
         /// <returns> A new <see cref="Purview.PurviewKafkaConfigurationData"/> instance for mocking. </returns>
         public static PurviewKafkaConfigurationData PurviewKafkaConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string consumerGroup = null, PurviewCredentials credentials = null, string eventHubPartitionId = null, ResourceIdentifier eventHubResourceId = null, PurviewKafkaEventHubType? eventHubType = null, PurviewEventStreamingState? eventStreamingState = null, PurviewEventStreamingType? eventStreamingType = null)
         {
-            return new PurviewKafkaConfigurationData(id, name, resourceType, systemData, consumerGroup, credentials, eventHubPartitionId, eventHubResourceId, eventHubType, eventStreamingState, eventStreamingType, serializedAdditionalRawData: null);
+            return new PurviewKafkaConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                consumerGroup,
+                credentials,
+                eventHubPartitionId,
+                eventHubResourceId,
+                eventHubType,
+                eventStreamingState,
+                eventStreamingType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Purview.PurviewPrivateLinkResourceData"/>. </summary>
@@ -183,7 +243,13 @@ namespace Azure.ResourceManager.Purview.Models
         /// <returns> A new <see cref="Purview.PurviewPrivateLinkResourceData"/> instance for mocking. </returns>
         public static PurviewPrivateLinkResourceData PurviewPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PurviewPrivateLinkResourceProperties properties = null)
         {
-            return new PurviewPrivateLinkResourceData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new PurviewPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PurviewPrivateLinkResourceProperties"/>. </summary>
@@ -218,7 +284,13 @@ namespace Azure.ResourceManager.Purview.Models
         /// <returns> A new <see cref="Models.PurviewUsage"/> instance for mocking. </returns>
         public static PurviewUsage PurviewUsage(int? currentValue = null, string id = null, int? limit = null, PurviewUsageName name = null, string unit = null)
         {
-            return new PurviewUsage(currentValue, id, limit, name, unit, serializedAdditionalRawData: null);
+            return new PurviewUsage(
+                currentValue,
+                id,
+                limit,
+                name,
+                unit,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PurviewUsageName"/>. </summary>

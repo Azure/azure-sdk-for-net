@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AddressMailing))
+            if (AddressMailing != null)
             {
                 writer.WritePropertyName("addressMailing"u8);
                 writer.WriteObjectValue(AddressMailing);
             }
             writer.WritePropertyName("email"u8);
             writer.WriteStringValue(Email);
-            if (Optional.IsDefined(Fax))
+            if (Fax != null)
             {
                 writer.WritePropertyName("fax"u8);
                 writer.WriteStringValue(Fax);
             }
-            if (Optional.IsDefined(JobTitle))
+            if (JobTitle != null)
             {
                 writer.WritePropertyName("jobTitle"u8);
                 writer.WriteStringValue(JobTitle);
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStringValue(NameFirst);
             writer.WritePropertyName("nameLast"u8);
             writer.WriteStringValue(NameLast);
-            if (Optional.IsDefined(NameMiddle))
+            if (NameMiddle != null)
             {
                 writer.WritePropertyName("nameMiddle"u8);
                 writer.WriteStringValue(NameMiddle);
             }
-            if (Optional.IsDefined(Organization))
+            if (Organization != null)
             {
                 writer.WritePropertyName("organization"u8);
                 writer.WriteStringValue(Organization);
@@ -97,14 +97,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<RegistrationAddressInfo> addressMailing = default;
+            RegistrationAddressInfo addressMailing = default;
             string email = default;
-            Optional<string> fax = default;
-            Optional<string> jobTitle = default;
+            string fax = default;
+            string jobTitle = default;
             string nameFirst = default;
             string nameLast = default;
-            Optional<string> nameMiddle = default;
-            Optional<string> organization = default;
+            string nameMiddle = default;
+            string organization = default;
             string phone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -165,7 +165,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegistrationContactInfo(addressMailing.Value, email, fax.Value, jobTitle.Value, nameFirst, nameLast, nameMiddle.Value, organization.Value, phone, serializedAdditionalRawData);
+            return new RegistrationContactInfo(
+                addressMailing,
+                email,
+                fax,
+                jobTitle,
+                nameFirst,
+                nameLast,
+                nameMiddle,
+                organization,
+                phone,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegistrationContactInfo>.Write(ModelReaderWriterOptions options)

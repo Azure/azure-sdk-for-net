@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Subject))
+            if (Subject != null)
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (Optional.IsDefined(Thumbprint))
+            if (Thumbprint != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(KeyVaultDetails))
+            if (KeyVaultDetails != null)
             {
                 writer.WritePropertyName("keyVault"u8);
                 writer.WriteObjectValue(KeyVaultDetails);
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> subject = default;
-            Optional<string> thumbprint = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<KeyVaultContractProperties> keyVault = default;
+            SystemData systemData = default;
+            string subject = default;
+            string thumbprint = default;
+            DateTimeOffset? expirationDate = default;
+            KeyVaultContractProperties keyVault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementCertificateData(id, name, type, systemData.Value, subject.Value, thumbprint.Value, Optional.ToNullable(expirationDate), keyVault.Value, serializedAdditionalRawData);
+            return new ApiManagementCertificateData(
+                id,
+                name,
+                type,
+                systemData,
+                subject,
+                thumbprint,
+                expirationDate,
+                keyVault,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementCertificateData>.Write(ModelReaderWriterOptions options)

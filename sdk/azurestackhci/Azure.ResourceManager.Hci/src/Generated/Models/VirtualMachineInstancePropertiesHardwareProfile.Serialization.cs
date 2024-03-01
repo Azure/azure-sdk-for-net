@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmSize))
+            if (VmSize.HasValue)
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize.Value.ToString());
             }
-            if (Optional.IsDefined(Processors))
+            if (Processors.HasValue)
             {
                 writer.WritePropertyName("processors"u8);
                 writer.WriteNumberValue(Processors.Value);
             }
-            if (Optional.IsDefined(MemoryMB))
+            if (MemoryMB.HasValue)
             {
                 writer.WritePropertyName("memoryMB"u8);
                 writer.WriteNumberValue(MemoryMB.Value);
             }
-            if (Optional.IsDefined(DynamicMemoryConfig))
+            if (DynamicMemoryConfig != null)
             {
                 writer.WritePropertyName("dynamicMemoryConfig"u8);
                 writer.WriteObjectValue(DynamicMemoryConfig);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<VmSizeEnum> vmSize = default;
-            Optional<int> processors = default;
-            Optional<long> memoryMB = default;
-            Optional<VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig> dynamicMemoryConfig = default;
+            VmSizeEnum? vmSize = default;
+            int? processors = default;
+            long? memoryMB = default;
+            VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig dynamicMemoryConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstancePropertiesHardwareProfile(Optional.ToNullable(vmSize), Optional.ToNullable(processors), Optional.ToNullable(memoryMB), dynamicMemoryConfig.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstancePropertiesHardwareProfile(vmSize, processors, memoryMB, dynamicMemoryConfig, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstancePropertiesHardwareProfile>.Write(ModelReaderWriterOptions options)

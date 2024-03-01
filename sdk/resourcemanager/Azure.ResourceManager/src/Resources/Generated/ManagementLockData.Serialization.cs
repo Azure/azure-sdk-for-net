@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Resources
             writer.WriteStartObject();
             writer.WritePropertyName("level"u8);
             writer.WriteStringValue(Level.ToString());
-            if (Optional.IsDefined(Notes))
+            if (Notes != null)
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (Optional.IsCollectionDefined(Owners))
+            if (!(Owners is ChangeTrackingList<ManagementLockOwner> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("owners"u8);
                 writer.WriteStartArray();
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             ManagementLockLevel level = default;
-            Optional<string> notes = default;
-            Optional<IList<ManagementLockOwner>> owners = default;
+            string notes = default;
+            IList<ManagementLockOwner> owners = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,15 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementLockData(id, name, type, systemData.Value, level, notes.Value, Optional.ToList(owners), serializedAdditionalRawData);
+            return new ManagementLockData(
+                id,
+                name,
+                type,
+                systemData,
+                level,
+                notes,
+                owners ?? new ChangeTrackingList<ManagementLockOwner>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementLockData>.Write(ModelReaderWriterOptions options)

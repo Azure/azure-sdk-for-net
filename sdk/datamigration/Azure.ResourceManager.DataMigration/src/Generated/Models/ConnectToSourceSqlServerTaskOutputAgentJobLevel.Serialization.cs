@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(JobCategory))
+            if (options.Format != "W" && JobCategory != null)
             {
                 writer.WritePropertyName("jobCategory"u8);
                 writer.WriteStringValue(JobCategory);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
+            if (options.Format != "W" && IsEnabled.HasValue)
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(JobOwner))
+            if (options.Format != "W" && JobOwner != null)
             {
                 writer.WritePropertyName("jobOwner"u8);
                 writer.WriteStringValue(JobOwner);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastExecutedOn))
+            if (options.Format != "W" && LastExecutedOn.HasValue)
             {
                 writer.WritePropertyName("lastExecutedOn"u8);
                 writer.WriteStringValue(LastExecutedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
+            if (options.Format != "W" && !(ValidationErrors is ChangeTrackingList<ReportableException> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(MigrationEligibility))
+            if (options.Format != "W" && MigrationEligibility != null)
             {
                 writer.WritePropertyName("migrationEligibility"u8);
                 writer.WriteObjectValue(MigrationEligibility);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> jobCategory = default;
-            Optional<bool> isEnabled = default;
-            Optional<string> jobOwner = default;
-            Optional<DateTimeOffset> lastExecutedOn = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
-            Optional<MigrationEligibilityInfo> migrationEligibility = default;
-            Optional<string> id = default;
+            string name = default;
+            string jobCategory = default;
+            bool? isEnabled = default;
+            string jobOwner = default;
+            DateTimeOffset? lastExecutedOn = default;
+            IReadOnlyList<ReportableException> validationErrors = default;
+            MigrationEligibilityInfo migrationEligibility = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -196,7 +196,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceSqlServerTaskOutputAgentJobLevel(id.Value, resultType, serializedAdditionalRawData, name.Value, jobCategory.Value, Optional.ToNullable(isEnabled), jobOwner.Value, Optional.ToNullable(lastExecutedOn), Optional.ToList(validationErrors), migrationEligibility.Value);
+            return new ConnectToSourceSqlServerTaskOutputAgentJobLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                name,
+                jobCategory,
+                isEnabled,
+                jobOwner,
+                lastExecutedOn,
+                validationErrors ?? new ChangeTrackingList<ReportableException>(),
+                migrationEligibility);
         }
 
         BinaryData IPersistableModel<ConnectToSourceSqlServerTaskOutputAgentJobLevel>.Write(ModelReaderWriterOptions options)

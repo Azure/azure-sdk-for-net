@@ -123,7 +123,14 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CopyAuthorization(targetResourceId, targetResourceRegion, targetModelId, targetModelLocation, accessToken, expirationDateTime, serializedAdditionalRawData);
+            return new CopyAuthorization(
+                targetResourceId,
+                targetResourceRegion,
+                targetModelId,
+                targetModelLocation,
+                accessToken,
+                expirationDateTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CopyAuthorization>.Write(ModelReaderWriterOptions options)

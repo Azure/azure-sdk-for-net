@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.AppConfiguration
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,34 +63,34 @@ namespace Azure.ResourceManager.AppConfiguration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Endpoint))
+            if (options.Format != "W" && Endpoint != null)
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference> collection0 && collection0.IsUndefined))
             {
                 if (PrivateEndpointConnections != null)
                 {
@@ -107,27 +107,27 @@ namespace Azure.ResourceManager.AppConfiguration
                     writer.WriteNull("privateEndpointConnections");
                 }
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (DisableLocalAuth.HasValue)
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (Optional.IsDefined(SoftDeleteRetentionInDays))
+            if (SoftDeleteRetentionInDays.HasValue)
             {
                 writer.WritePropertyName("softDeleteRetentionInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionInDays.Value);
             }
-            if (Optional.IsDefined(EnablePurgeProtection))
+            if (EnablePurgeProtection.HasValue)
             {
                 writer.WritePropertyName("enablePurgeProtection"u8);
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
-            if (Optional.IsDefined(CreateMode))
+            if (CreateMode.HasValue)
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToSerialString());
@@ -171,24 +171,24 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             AppConfigurationSku sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AppConfigurationProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<string> endpoint = default;
-            Optional<AppConfigurationStoreEncryptionProperties> encryption = default;
-            Optional<IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference>> privateEndpointConnections = default;
-            Optional<AppConfigurationPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<int> softDeleteRetentionInDays = default;
-            Optional<bool> enablePurgeProtection = default;
-            Optional<AppConfigurationCreateMode> createMode = default;
+            SystemData systemData = default;
+            AppConfigurationProvisioningState? provisioningState = default;
+            DateTimeOffset? creationDate = default;
+            string endpoint = default;
+            AppConfigurationStoreEncryptionProperties encryption = default;
+            IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections = default;
+            AppConfigurationPublicNetworkAccess? publicNetworkAccess = default;
+            bool? disableLocalAuth = default;
+            int? softDeleteRetentionInDays = default;
+            bool? enablePurgeProtection = default;
+            AppConfigurationCreateMode? createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -360,7 +360,26 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationStoreData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku, Optional.ToNullable(provisioningState), Optional.ToNullable(creationDate), endpoint.Value, encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enablePurgeProtection), Optional.ToNullable(createMode), serializedAdditionalRawData);
+            return new AppConfigurationStoreData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                sku,
+                provisioningState,
+                creationDate,
+                endpoint,
+                encryption,
+                privateEndpointConnections ?? new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>(),
+                publicNetworkAccess,
+                disableLocalAuth,
+                softDeleteRetentionInDays,
+                enablePurgeProtection,
+                createMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationStoreData>.Write(ModelReaderWriterOptions options)

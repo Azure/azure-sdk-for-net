@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteNumberValue(MinThreshold);
             writer.WritePropertyName("maxThreshold"u8);
             writer.WriteNumberValue(MaxThreshold);
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             TimeSpan timeWindowSize = default;
             int minThreshold = default;
             int maxThreshold = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            string displayName = default;
+            string description = default;
             bool isEnabled = default;
             string ruleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -136,7 +136,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HttpD2CMessagesNotInAllowedRange(displayName.Value, description.Value, isEnabled, ruleType, serializedAdditionalRawData, minThreshold, maxThreshold, timeWindowSize);
+            return new HttpD2CMessagesNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
         }
 
         BinaryData IPersistableModel<HttpD2CMessagesNotInAllowedRange>.Write(ModelReaderWriterOptions options)

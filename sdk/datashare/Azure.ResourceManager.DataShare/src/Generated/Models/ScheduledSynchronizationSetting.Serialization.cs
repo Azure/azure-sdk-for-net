@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStringValue(RecurrenceInterval.ToString());
             writer.WritePropertyName("synchronizationTime"u8);
             writer.WriteStringValue(SynchronizeOn, "O");
-            if (options.Format != "W" && Optional.IsDefined(UserName))
+            if (options.Format != "W" && UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdAt = default;
+            DataShareProvisioningState? provisioningState = default;
             DataShareSynchronizationRecurrenceInterval recurrenceInterval = default;
             DateTimeOffset synchronizationTime = default;
-            Optional<string> userName = default;
+            string userName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,18 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledSynchronizationSetting(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(createdAt), Optional.ToNullable(provisioningState), recurrenceInterval, synchronizationTime, userName.Value);
+            return new ScheduledSynchronizationSetting(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                createdAt,
+                provisioningState,
+                recurrenceInterval,
+                synchronizationTime,
+                userName);
         }
 
         BinaryData IPersistableModel<ScheduledSynchronizationSetting>.Write(ModelReaderWriterOptions options)

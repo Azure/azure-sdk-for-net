@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceDetails))
+            if (ResourceDetails != null)
             {
                 writer.WritePropertyName("resourceDetails"u8);
                 writer.WriteObjectValue(ResourceDetails);
             }
-            if (Optional.IsDefined(EnvironmentDetails))
+            if (EnvironmentDetails != null)
             {
                 writer.WritePropertyName("environmentDetails"u8);
                 writer.WriteObjectValue(EnvironmentDetails);
             }
-            if (Optional.IsDefined(HealthDataClassification))
+            if (HealthDataClassification != null)
             {
                 writer.WritePropertyName("healthDataClassification"u8);
                 writer.WriteObjectValue(HealthDataClassification);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (Optional.IsCollectionDefined(AffectedDefendersPlans))
+            if (!(AffectedDefendersPlans is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("affectedDefendersPlans"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AffectedDefendersSubPlans))
+            if (!(AffectedDefendersSubPlans is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("affectedDefendersSubPlans"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReportAdditionalData))
+            if (options.Format != "W" && !(ReportAdditionalData is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("reportAdditionalData"u8);
                 writer.WriteStartObject();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Issues))
+            if (!(Issues is ChangeTrackingList<SecurityHealthReportIssue> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("issues"u8);
                 writer.WriteStartArray();
@@ -153,15 +153,15 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HealthReportResourceDetails> resourceDetails = default;
-            Optional<EnvironmentDetails> environmentDetails = default;
-            Optional<HealthDataClassification> healthDataClassification = default;
-            Optional<HealthReportStatus> status = default;
-            Optional<IList<string>> affectedDefendersPlans = default;
-            Optional<IList<string>> affectedDefendersSubPlans = default;
-            Optional<IReadOnlyDictionary<string, string>> reportAdditionalData = default;
-            Optional<IList<SecurityHealthReportIssue>> issues = default;
+            SystemData systemData = default;
+            HealthReportResourceDetails resourceDetails = default;
+            EnvironmentDetails environmentDetails = default;
+            HealthDataClassification healthDataClassification = default;
+            HealthReportStatus status = default;
+            IList<string> affectedDefendersPlans = default;
+            IList<string> affectedDefendersSubPlans = default;
+            IReadOnlyDictionary<string, string> reportAdditionalData = default;
+            IList<SecurityHealthReportIssue> issues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -300,7 +300,20 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityHealthReportData(id, name, type, systemData.Value, resourceDetails.Value, environmentDetails.Value, healthDataClassification.Value, status.Value, Optional.ToList(affectedDefendersPlans), Optional.ToList(affectedDefendersSubPlans), Optional.ToDictionary(reportAdditionalData), Optional.ToList(issues), serializedAdditionalRawData);
+            return new SecurityHealthReportData(
+                id,
+                name,
+                type,
+                systemData,
+                resourceDetails,
+                environmentDetails,
+                healthDataClassification,
+                status,
+                affectedDefendersPlans ?? new ChangeTrackingList<string>(),
+                affectedDefendersSubPlans ?? new ChangeTrackingList<string>(),
+                reportAdditionalData ?? new ChangeTrackingDictionary<string, string>(),
+                issues ?? new ChangeTrackingList<SecurityHealthReportIssue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityHealthReportData>.Write(ModelReaderWriterOptions options)

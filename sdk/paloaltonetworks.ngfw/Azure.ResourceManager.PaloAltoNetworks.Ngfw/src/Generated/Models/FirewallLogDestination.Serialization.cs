@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageConfiguration))
+            if (StorageConfiguration != null)
             {
                 writer.WritePropertyName("storageConfigurations"u8);
                 writer.WriteObjectValue(StorageConfiguration);
             }
-            if (Optional.IsDefined(EventHubConfiguration))
+            if (EventHubConfiguration != null)
             {
                 writer.WritePropertyName("eventHubConfigurations"u8);
                 writer.WriteObjectValue(EventHubConfiguration);
             }
-            if (Optional.IsDefined(MonitorConfiguration))
+            if (MonitorConfiguration != null)
             {
                 writer.WritePropertyName("monitorConfigurations"u8);
                 writer.WriteObjectValue(MonitorConfiguration);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<StorageAccountConfiguration> storageConfigurations = default;
-            Optional<EventHubConfiguration> eventHubConfigurations = default;
-            Optional<MonitorLogConfiguration> monitorConfigurations = default;
+            StorageAccountConfiguration storageConfigurations = default;
+            EventHubConfiguration eventHubConfigurations = default;
+            MonitorLogConfiguration monitorConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallLogDestination(storageConfigurations.Value, eventHubConfigurations.Value, monitorConfigurations.Value, serializedAdditionalRawData);
+            return new FirewallLogDestination(storageConfigurations, eventHubConfigurations, monitorConfigurations, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallLogDestination>.Write(ModelReaderWriterOptions options)

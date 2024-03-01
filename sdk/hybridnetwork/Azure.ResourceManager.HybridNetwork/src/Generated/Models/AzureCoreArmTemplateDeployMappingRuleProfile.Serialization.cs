@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TemplateMappingRuleProfile))
+            if (TemplateMappingRuleProfile != null)
             {
                 writer.WritePropertyName("templateMappingRuleProfile"u8);
                 writer.WriteObjectValue(TemplateMappingRuleProfile);
             }
-            if (Optional.IsDefined(ApplicationEnablement))
+            if (ApplicationEnablement.HasValue)
             {
                 writer.WritePropertyName("applicationEnablement"u8);
                 writer.WriteStringValue(ApplicationEnablement.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ArmTemplateMappingRuleProfile> templateMappingRuleProfile = default;
-            Optional<ApplicationEnablement> applicationEnablement = default;
+            ArmTemplateMappingRuleProfile templateMappingRuleProfile = default;
+            ApplicationEnablement? applicationEnablement = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCoreArmTemplateDeployMappingRuleProfile(Optional.ToNullable(applicationEnablement), serializedAdditionalRawData, templateMappingRuleProfile.Value);
+            return new AzureCoreArmTemplateDeployMappingRuleProfile(applicationEnablement, serializedAdditionalRawData, templateMappingRuleProfile);
         }
 
         BinaryData IPersistableModel<AzureCoreArmTemplateDeployMappingRuleProfile>.Write(ModelReaderWriterOptions options)

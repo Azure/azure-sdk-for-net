@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryKekCertificatePfx))
+            if (PrimaryKekCertificatePfx != null)
             {
                 writer.WritePropertyName("primaryKekCertificatePfx"u8);
                 writer.WriteStringValue(PrimaryKekCertificatePfx);
             }
-            if (Optional.IsDefined(SecondaryKekCertificatePfx))
+            if (SecondaryKekCertificatePfx != null)
             {
                 writer.WritePropertyName("secondaryKekCertificatePfx"u8);
                 writer.WriteStringValue(SecondaryKekCertificatePfx);
             }
-            if (Optional.IsDefined(RecoveryPointId))
+            if (RecoveryPointId != null)
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (Optional.IsDefined(OSUpgradeVersion))
+            if (OSUpgradeVersion != null)
             {
                 writer.WritePropertyName("osUpgradeVersion"u8);
                 writer.WriteStringValue(OSUpgradeVersion);
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> primaryKekCertificatePfx = default;
-            Optional<string> secondaryKekCertificatePfx = default;
-            Optional<ResourceIdentifier> recoveryPointId = default;
-            Optional<string> osUpgradeVersion = default;
+            string primaryKekCertificatePfx = default;
+            string secondaryKekCertificatePfx = default;
+            ResourceIdentifier recoveryPointId = default;
+            string osUpgradeVersion = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzurePlannedFailoverProviderContent(instanceType, serializedAdditionalRawData, primaryKekCertificatePfx.Value, secondaryKekCertificatePfx.Value, recoveryPointId.Value, osUpgradeVersion.Value);
+            return new HyperVReplicaAzurePlannedFailoverProviderContent(
+                instanceType,
+                serializedAdditionalRawData,
+                primaryKekCertificatePfx,
+                secondaryKekCertificatePfx,
+                recoveryPointId,
+                osUpgradeVersion);
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzurePlannedFailoverProviderContent>.Write(ModelReaderWriterOptions options)

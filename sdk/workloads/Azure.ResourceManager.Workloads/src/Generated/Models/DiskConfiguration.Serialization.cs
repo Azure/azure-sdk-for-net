@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DiskVolumeConfigurations))
+            if (!(DiskVolumeConfigurations is ChangeTrackingDictionary<string, DiskVolumeConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("diskVolumeConfigurations"u8);
                 writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, DiskVolumeConfiguration>> diskVolumeConfigurations = default;
+            IDictionary<string, DiskVolumeConfiguration> diskVolumeConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskConfiguration(Optional.ToDictionary(diskVolumeConfigurations), serializedAdditionalRawData);
+            return new DiskConfiguration(diskVolumeConfigurations ?? new ChangeTrackingDictionary<string, DiskVolumeConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskConfiguration>.Write(ModelReaderWriterOptions options)

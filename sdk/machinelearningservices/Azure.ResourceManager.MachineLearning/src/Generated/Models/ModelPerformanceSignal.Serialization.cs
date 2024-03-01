@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataSegment))
+            if (DataSegment != null)
             {
                 if (DataSegment != null)
                 {
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndArray();
             writer.WritePropertyName("referenceData"u8);
             writer.WriteObjectValue(ReferenceData);
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MonitoringDataSegment> dataSegment = default;
+            MonitoringDataSegment dataSegment = default;
             ModelPerformanceMetricThresholdBase metricThreshold = default;
             IList<MonitoringInputDataBase> productionData = default;
             MonitoringInputDataBase referenceData = default;
-            Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            MonitoringNotificationMode? mode = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -188,7 +188,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelPerformanceSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData, dataSegment.Value, metricThreshold, productionData, referenceData);
+            return new ModelPerformanceSignal(
+                mode,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                dataSegment,
+                metricThreshold,
+                productionData,
+                referenceData);
         }
 
         BinaryData IPersistableModel<ModelPerformanceSignal>.Write(ModelReaderWriterOptions options)

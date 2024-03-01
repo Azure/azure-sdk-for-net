@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationId))
+            if (OperationId != null)
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (Optional.IsDefined(BuiltInOperation))
+            if (BuiltInOperation != null)
             {
                 writer.WritePropertyName("builtInOperation"u8);
                 writer.WriteStringValue(BuiltInOperation);
             }
-            if (Optional.IsDefined(ItemsPath))
+            if (ItemsPath != null)
             {
                 writer.WritePropertyName("itemsPath"u8);
                 writer.WriteStringValue(ItemsPath);
             }
-            if (Optional.IsDefined(ItemValuePath))
+            if (ItemValuePath != null)
             {
                 writer.WritePropertyName("itemValuePath"u8);
                 writer.WriteStringValue(ItemValuePath);
             }
-            if (Optional.IsDefined(ItemTitlePath))
+            if (ItemTitlePath != null)
             {
                 writer.WritePropertyName("itemTitlePath"u8);
                 writer.WriteStringValue(ItemTitlePath);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, SwaggerCustomDynamicProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<string> builtInOperation = default;
-            Optional<string> itemsPath = default;
-            Optional<string> itemValuePath = default;
-            Optional<string> itemTitlePath = default;
-            Optional<IDictionary<string, SwaggerCustomDynamicProperties>> parameters = default;
+            string operationId = default;
+            string builtInOperation = default;
+            string itemsPath = default;
+            string itemValuePath = default;
+            string itemTitlePath = default;
+            IDictionary<string, SwaggerCustomDynamicProperties> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicList(operationId.Value, builtInOperation.Value, itemsPath.Value, itemValuePath.Value, itemTitlePath.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+            return new SwaggerCustomDynamicList(
+                operationId,
+                builtInOperation,
+                itemsPath,
+                itemValuePath,
+                itemTitlePath,
+                parameters ?? new ChangeTrackingDictionary<string, SwaggerCustomDynamicProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicList>.Write(ModelReaderWriterOptions options)

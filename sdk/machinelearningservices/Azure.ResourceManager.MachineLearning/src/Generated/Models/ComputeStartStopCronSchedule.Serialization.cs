@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartTime))
+            if (StartTime != null)
             {
                 if (StartTime != null)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (Optional.IsDefined(TimeZone))
+            if (TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(Expression))
+            if (Expression != null)
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> startTime = default;
-            Optional<string> timeZone = default;
-            Optional<string> expression = default;
+            string startTime = default;
+            string timeZone = default;
+            string expression = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeStartStopCronSchedule(startTime.Value, timeZone.Value, expression.Value, serializedAdditionalRawData);
+            return new ComputeStartStopCronSchedule(startTime, timeZone, expression, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeStartStopCronSchedule>.Write(ModelReaderWriterOptions options)

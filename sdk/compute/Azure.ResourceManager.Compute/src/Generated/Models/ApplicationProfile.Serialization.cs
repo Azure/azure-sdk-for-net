@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(GalleryApplications))
+            if (!(GalleryApplications is ChangeTrackingList<VirtualMachineGalleryApplication> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("galleryApplications"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<VirtualMachineGalleryApplication>> galleryApplications = default;
+            IList<VirtualMachineGalleryApplication> galleryApplications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationProfile(Optional.ToList(galleryApplications), serializedAdditionalRawData);
+            return new ApplicationProfile(galleryApplications ?? new ChangeTrackingList<VirtualMachineGalleryApplication>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationProfile>.Write(ModelReaderWriterOptions options)

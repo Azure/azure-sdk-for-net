@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceStatus))
+            if (SourceStatus.HasValue)
             {
                 writer.WritePropertyName("sourceStatus"u8);
                 writer.WriteStringValue(SourceStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(States))
+            if (!(States is ChangeTrackingList<ConnectionStateSnapshot> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("states"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ConnectionMonitorSourceStatus> sourceStatus = default;
-            Optional<IReadOnlyList<ConnectionStateSnapshot>> states = default;
+            ConnectionMonitorSourceStatus? sourceStatus = default;
+            IReadOnlyList<ConnectionStateSnapshot> states = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorQueryResult(Optional.ToNullable(sourceStatus), Optional.ToList(states), serializedAdditionalRawData);
+            return new ConnectionMonitorQueryResult(sourceStatus, states ?? new ChangeTrackingList<ConnectionStateSnapshot>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorQueryResult>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,39 +48,39 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccountName))
+            if (AccountName != null)
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(OldestRestorableOn))
+            if (OldestRestorableOn.HasValue)
             {
                 writer.WritePropertyName("oldestRestorableTime"u8);
                 writer.WriteStringValue(OldestRestorableOn.Value, "O");
             }
-            if (Optional.IsDefined(DeletedOn))
+            if (DeletedOn.HasValue)
             {
                 writer.WritePropertyName("deletionTime"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ApiType))
+            if (options.Format != "W" && ApiType.HasValue)
             {
                 writer.WritePropertyName("apiType"u8);
                 writer.WriteStringValue(ApiType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RestorableLocations))
+            if (options.Format != "W" && !(RestorableLocations is ChangeTrackingList<RestorableLocationResourceInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("restorableLocations"u8);
                 writer.WriteStartArray();
@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> accountName = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> oldestRestorableTime = default;
-            Optional<DateTimeOffset> deletionTime = default;
-            Optional<CosmosDBApiType> apiType = default;
-            Optional<IReadOnlyList<RestorableLocationResourceInfo>> restorableLocations = default;
+            SystemData systemData = default;
+            string accountName = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? oldestRestorableTime = default;
+            DateTimeOffset? deletionTime = default;
+            CosmosDBApiType? apiType = default;
+            IReadOnlyList<RestorableLocationResourceInfo> restorableLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +250,19 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableCosmosDBAccountData(id, name, type, systemData.Value, Optional.ToNullable(location), accountName.Value, Optional.ToNullable(creationTime), Optional.ToNullable(oldestRestorableTime), Optional.ToNullable(deletionTime), Optional.ToNullable(apiType), Optional.ToList(restorableLocations), serializedAdditionalRawData);
+            return new RestorableCosmosDBAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                accountName,
+                creationTime,
+                oldestRestorableTime,
+                deletionTime,
+                apiType,
+                restorableLocations ?? new ChangeTrackingList<RestorableLocationResourceInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableCosmosDBAccountData>.Write(ModelReaderWriterOptions options)

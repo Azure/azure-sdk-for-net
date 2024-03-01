@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Family))
+            if (Family != null)
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Optional.IsDefined(Tier))
+            if (Tier != null)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Optional.IsDefined(VCores))
+            if (VCores.HasValue)
             {
                 writer.WritePropertyName("vCores"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (Optional.IsDefined(StorageSizeInGB))
+            if (StorageSizeInGB.HasValue)
             {
                 writer.WritePropertyName("storageSizeInGB"u8);
                 writer.WriteNumberValue(StorageSizeInGB.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> family = default;
-            Optional<string> tier = default;
-            Optional<int> vCores = default;
-            Optional<int> storageSizeInGB = default;
+            string family = default;
+            string tier = default;
+            int? vCores = default;
+            int? storageSizeInGB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpsertManagedServerOperationParameters(family.Value, tier.Value, Optional.ToNullable(vCores), Optional.ToNullable(storageSizeInGB), serializedAdditionalRawData);
+            return new UpsertManagedServerOperationParameters(family, tier, vCores, storageSizeInGB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpsertManagedServerOperationParameters>.Write(ModelReaderWriterOptions options)

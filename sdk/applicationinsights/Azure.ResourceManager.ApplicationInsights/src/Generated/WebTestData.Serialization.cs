@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,54 +61,54 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SyntheticMonitorId))
+            if (SyntheticMonitorId != null)
             {
                 writer.WritePropertyName("SyntheticMonitorId"u8);
                 writer.WriteStringValue(SyntheticMonitorId);
             }
-            if (Optional.IsDefined(WebTestName))
+            if (WebTestName != null)
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(WebTestName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("Description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("Enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(FrequencyInSeconds))
+            if (FrequencyInSeconds.HasValue)
             {
                 writer.WritePropertyName("Frequency"u8);
                 writer.WriteNumberValue(FrequencyInSeconds.Value);
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (TimeoutInSeconds.HasValue)
             {
                 writer.WritePropertyName("Timeout"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(WebTestKind))
+            if (WebTestKind.HasValue)
             {
                 writer.WritePropertyName("Kind"u8);
                 writer.WriteStringValue(WebTestKind.Value.ToSerialString());
             }
-            if (Optional.IsDefined(IsRetryEnabled))
+            if (IsRetryEnabled.HasValue)
             {
                 writer.WritePropertyName("RetryEnabled"u8);
                 writer.WriteBooleanValue(IsRetryEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<WebTestGeolocation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("Locations"u8);
                 writer.WriteStartArray();
@@ -118,22 +118,22 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("Configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(Request))
+            if (Request != null)
             {
                 writer.WritePropertyName("Request"u8);
                 writer.WriteObjectValue(Request);
             }
-            if (Optional.IsDefined(ValidationRules))
+            if (ValidationRules != null)
             {
                 writer.WritePropertyName("ValidationRules"u8);
                 writer.WriteObjectValue(ValidationRules);
@@ -177,26 +177,26 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 return null;
             }
-            Optional<WebTestKind> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            WebTestKind? kind = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> syntheticMonitorId = default;
-            Optional<string> name0 = default;
-            Optional<string> description = default;
-            Optional<bool> enabled = default;
-            Optional<int> frequency = default;
-            Optional<int> timeout = default;
-            Optional<WebTestKind> kind0 = default;
-            Optional<bool> retryEnabled = default;
-            Optional<IList<WebTestGeolocation>> locations = default;
-            Optional<WebTestPropertiesConfiguration> configuration = default;
-            Optional<string> provisioningState = default;
-            Optional<WebTestPropertiesRequest> request = default;
-            Optional<WebTestPropertiesValidationRules> validationRules = default;
+            SystemData systemData = default;
+            string syntheticMonitorId = default;
+            string name0 = default;
+            string description = default;
+            bool? enabled = default;
+            int? frequency = default;
+            int? timeout = default;
+            WebTestKind? kind0 = default;
+            bool? retryEnabled = default;
+            IList<WebTestGeolocation> locations = default;
+            WebTestPropertiesConfiguration configuration = default;
+            string provisioningState = default;
+            WebTestPropertiesRequest request = default;
+            WebTestPropertiesValidationRules validationRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -377,7 +377,28 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebTestData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), syntheticMonitorId.Value, name0.Value, description.Value, Optional.ToNullable(enabled), Optional.ToNullable(frequency), Optional.ToNullable(timeout), Optional.ToNullable(kind0), Optional.ToNullable(retryEnabled), Optional.ToList(locations), configuration.Value, provisioningState.Value, request.Value, validationRules.Value, serializedAdditionalRawData);
+            return new WebTestData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                kind,
+                syntheticMonitorId,
+                name0,
+                description,
+                enabled,
+                frequency,
+                timeout,
+                kind0,
+                retryEnabled,
+                locations ?? new ChangeTrackingList<WebTestGeolocation>(),
+                configuration,
+                provisioningState,
+                request,
+                validationRules,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebTestData>.Write(ModelReaderWriterOptions options)

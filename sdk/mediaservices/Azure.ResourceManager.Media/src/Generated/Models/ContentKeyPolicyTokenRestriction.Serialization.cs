@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 writer.WriteNull("primaryVerificationKey");
             }
-            if (Optional.IsCollectionDefined(AlternateVerificationKeys))
+            if (!(AlternateVerificationKeys is ChangeTrackingList<ContentKeyPolicyRestrictionTokenKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("alternateVerificationKeys"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequiredClaims))
+            if (!(RequiredClaims is ChangeTrackingList<ContentKeyPolicyTokenClaim> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("requiredClaims"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Media.Models
             }
             writer.WritePropertyName("restrictionTokenType"u8);
             writer.WriteStringValue(RestrictionTokenType.ToString());
-            if (Optional.IsDefined(OpenIdConnectDiscoveryDocument))
+            if (OpenIdConnectDiscoveryDocument != null)
             {
                 writer.WritePropertyName("openIdConnectDiscoveryDocument"u8);
                 writer.WriteStringValue(OpenIdConnectDiscoveryDocument);
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Media.Models
             string issuer = default;
             string audience = default;
             ContentKeyPolicyRestrictionTokenKey primaryVerificationKey = default;
-            Optional<IList<ContentKeyPolicyRestrictionTokenKey>> alternateVerificationKeys = default;
-            Optional<IList<ContentKeyPolicyTokenClaim>> requiredClaims = default;
+            IList<ContentKeyPolicyRestrictionTokenKey> alternateVerificationKeys = default;
+            IList<ContentKeyPolicyTokenClaim> requiredClaims = default;
             ContentKeyPolicyRestrictionTokenType restrictionTokenType = default;
-            Optional<string> openIdConnectDiscoveryDocument = default;
+            string openIdConnectDiscoveryDocument = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -187,7 +187,16 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyTokenRestriction(odataType, serializedAdditionalRawData, issuer, audience, primaryVerificationKey, Optional.ToList(alternateVerificationKeys), Optional.ToList(requiredClaims), restrictionTokenType, openIdConnectDiscoveryDocument.Value);
+            return new ContentKeyPolicyTokenRestriction(
+                odataType,
+                serializedAdditionalRawData,
+                issuer,
+                audience,
+                primaryVerificationKey,
+                alternateVerificationKeys ?? new ChangeTrackingList<ContentKeyPolicyRestrictionTokenKey>(),
+                requiredClaims ?? new ChangeTrackingList<ContentKeyPolicyTokenClaim>(),
+                restrictionTokenType,
+                openIdConnectDiscoveryDocument);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyTokenRestriction>.Write(ModelReaderWriterOptions options)

@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScheduledType))
+            if (ScheduledType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ScheduledType.Value.ToString());
             }
-            if (Optional.IsDefined(Frequency))
+            if (Frequency.HasValue)
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Optional.IsDefined(Time))
+            if (Time != null)
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time);
             }
-            if (Optional.IsDefined(TimeZone))
+            if (TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevCenterScheduledType> type0 = default;
-            Optional<DevCenterScheduledFrequency> frequency = default;
-            Optional<string> time = default;
-            Optional<string> timeZone = default;
-            Optional<DevCenterScheduleEnableStatus> state = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            DevCenterScheduledType? type0 = default;
+            DevCenterScheduledFrequency? frequency = default;
+            string time = default;
+            string timeZone = default;
+            DevCenterScheduleEnableStatus? state = default;
+            DevCenterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterScheduleData(id, name, type, systemData.Value, Optional.ToNullable(type0), Optional.ToNullable(frequency), time.Value, timeZone.Value, Optional.ToNullable(state), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DevCenterScheduleData(
+                id,
+                name,
+                type,
+                systemData,
+                type0,
+                frequency,
+                time,
+                timeZone,
+                state,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterScheduleData>.Write(ModelReaderWriterOptions options)

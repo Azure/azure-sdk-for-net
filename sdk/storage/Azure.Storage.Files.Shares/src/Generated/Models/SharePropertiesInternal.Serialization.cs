@@ -105,7 +105,25 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 rootSquash = rootSquashElement.Value.ToShareRootSquash();
             }
-            return new SharePropertiesInternal(lastModified, etag, quota, provisionedIops, provisionedIngressMBps, provisionedEgressMBps, provisionedBandwidthMiBps, nextAllowedQuotaDowngradeTime, deletedTime, remainingRetentionDays, accessTier, accessTierChangeTime, accessTierTransitionState, leaseStatus, leaseState, leaseDuration, enabledProtocols, rootSquash);
+            return new SharePropertiesInternal(
+                lastModified,
+                etag,
+                quota,
+                provisionedIops,
+                provisionedIngressMBps,
+                provisionedEgressMBps,
+                provisionedBandwidthMiBps,
+                nextAllowedQuotaDowngradeTime,
+                deletedTime,
+                remainingRetentionDays,
+                accessTier,
+                accessTierChangeTime,
+                accessTierTransitionState,
+                leaseStatus,
+                leaseState,
+                leaseDuration,
+                enabledProtocols,
+                rootSquash);
         }
     }
 }

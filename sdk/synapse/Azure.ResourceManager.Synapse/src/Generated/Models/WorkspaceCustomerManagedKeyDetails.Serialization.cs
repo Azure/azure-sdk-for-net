@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteObjectValue(Key);
             }
-            if (Optional.IsDefined(KekIdentity))
+            if (KekIdentity != null)
             {
                 writer.WritePropertyName("kekIdentity"u8);
                 writer.WriteObjectValue(KekIdentity);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<SynapseWorkspaceKeyDetails> key = default;
-            Optional<KekIdentityProperties> kekIdentity = default;
+            string status = default;
+            SynapseWorkspaceKeyDetails key = default;
+            KekIdentityProperties kekIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceCustomerManagedKeyDetails(status.Value, key.Value, kekIdentity.Value, serializedAdditionalRawData);
+            return new WorkspaceCustomerManagedKeyDetails(status, key, kekIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceCustomerManagedKeyDetails>.Write(ModelReaderWriterOptions options)

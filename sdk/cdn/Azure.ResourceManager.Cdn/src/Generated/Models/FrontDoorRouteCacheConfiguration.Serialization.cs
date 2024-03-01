@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QueryStringCachingBehavior))
+            if (QueryStringCachingBehavior.HasValue)
             {
                 writer.WritePropertyName("queryStringCachingBehavior"u8);
                 writer.WriteStringValue(QueryStringCachingBehavior.Value.ToString());
             }
-            if (Optional.IsDefined(QueryParameters))
+            if (QueryParameters != null)
             {
                 writer.WritePropertyName("queryParameters"u8);
                 writer.WriteStringValue(QueryParameters);
             }
-            if (Optional.IsDefined(CompressionSettings))
+            if (CompressionSettings != null)
             {
                 writer.WritePropertyName("compressionSettings"u8);
                 writer.WriteObjectValue(CompressionSettings);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<FrontDoorQueryStringCachingBehavior> queryStringCachingBehavior = default;
-            Optional<string> queryParameters = default;
-            Optional<RouteCacheCompressionSettings> compressionSettings = default;
+            FrontDoorQueryStringCachingBehavior? queryStringCachingBehavior = default;
+            string queryParameters = default;
+            RouteCacheCompressionSettings compressionSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorRouteCacheConfiguration(Optional.ToNullable(queryStringCachingBehavior), queryParameters.Value, compressionSettings.Value, serializedAdditionalRawData);
+            return new FrontDoorRouteCacheConfiguration(queryStringCachingBehavior, queryParameters, compressionSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorRouteCacheConfiguration>.Write(ModelReaderWriterOptions options)

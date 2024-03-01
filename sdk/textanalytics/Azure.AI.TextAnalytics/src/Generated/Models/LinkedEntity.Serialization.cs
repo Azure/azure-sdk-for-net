@@ -28,7 +28,7 @@ namespace Azure.AI.TextAnalytics
             writer.WriteEndArray();
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(Language);
-            if (Optional.IsDefined(DataSourceEntityId))
+            if (DataSourceEntityId != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(DataSourceEntityId);
@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics
             writer.WriteStringValue(Url.AbsoluteUri);
             writer.WritePropertyName("dataSource"u8);
             writer.WriteStringValue(DataSource);
-            if (Optional.IsDefined(BingEntitySearchApiId))
+            if (BingEntitySearchApiId != null)
             {
                 writer.WritePropertyName("bingId"u8);
                 writer.WriteStringValue(BingEntitySearchApiId);
@@ -50,10 +50,10 @@ namespace Azure.AI.TextAnalytics
             string name = default;
             IEnumerable<LinkedEntityMatch> matches = default;
             string language = default;
-            Optional<string> id = default;
+            string id = default;
             Uri url = default;
             string dataSource = default;
-            Optional<string> bingId = default;
+            string bingId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -97,7 +97,14 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new LinkedEntity(name, matches, language, id.Value, url, dataSource, bingId.Value);
+            return new LinkedEntity(
+                name,
+                matches,
+                language,
+                id,
+                url,
+                dataSource,
+                bingId);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Messages))
+            if (!(Messages is ChangeTrackingList<MessageExample> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<IList<MessageExample>> messages = default;
+            IList<MessageExample> messages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messages"u8))
@@ -53,7 +53,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new MessageExampleSequence(Optional.ToList(messages));
+            return new MessageExampleSequence(messages ?? new ChangeTrackingList<MessageExample>());
         }
     }
 }

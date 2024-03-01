@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(EndpointName))
+            if (options.Format != "W" && EndpointName != null)
             {
                 writer.WritePropertyName("endpointName"u8);
                 writer.WriteStringValue(EndpointName);
             }
-            if (Optional.IsCollectionDefined(CustomDomains))
+            if (!(CustomDomains is ChangeTrackingList<FrontDoorActivatedResourceInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OriginGroup))
+            if (OriginGroup != null)
             {
                 writer.WritePropertyName("originGroup"u8);
                 JsonSerializer.Serialize(writer, OriginGroup);
             }
-            if (Optional.IsDefined(OriginPath))
+            if (OriginPath != null)
             {
                 writer.WritePropertyName("originPath"u8);
                 writer.WriteStringValue(OriginPath);
             }
-            if (Optional.IsCollectionDefined(RuleSets))
+            if (!(RuleSets is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ruleSets"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SupportedProtocols))
+            if (!(SupportedProtocols is ChangeTrackingList<FrontDoorEndpointProtocol> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("supportedProtocols"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PatternsToMatch))
+            if (!(PatternsToMatch is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("patternsToMatch"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CacheConfiguration))
+            if (CacheConfiguration != null)
             {
                 if (CacheConfiguration != null)
                 {
@@ -118,32 +118,32 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("cacheConfiguration");
                 }
             }
-            if (Optional.IsDefined(ForwardingProtocol))
+            if (ForwardingProtocol.HasValue)
             {
                 writer.WritePropertyName("forwardingProtocol"u8);
                 writer.WriteStringValue(ForwardingProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(LinkToDefaultDomain))
+            if (LinkToDefaultDomain.HasValue)
             {
                 writer.WritePropertyName("linkToDefaultDomain"u8);
                 writer.WriteStringValue(LinkToDefaultDomain.Value.ToString());
             }
-            if (Optional.IsDefined(HttpsRedirect))
+            if (HttpsRedirect.HasValue)
             {
                 writer.WritePropertyName("httpsRedirect"u8);
                 writer.WriteStringValue(HttpsRedirect.Value.ToString());
             }
-            if (Optional.IsDefined(EnabledState))
+            if (EnabledState.HasValue)
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
+            if (options.Format != "W" && DeploymentStatus.HasValue)
             {
                 writer.WritePropertyName("deploymentStatus"u8);
                 writer.WriteStringValue(DeploymentStatus.Value.ToString());
@@ -190,21 +190,21 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> endpointName = default;
-            Optional<IList<FrontDoorActivatedResourceInfo>> customDomains = default;
-            Optional<WritableSubResource> originGroup = default;
-            Optional<string> originPath = default;
-            Optional<IList<WritableSubResource>> ruleSets = default;
-            Optional<IList<FrontDoorEndpointProtocol>> supportedProtocols = default;
-            Optional<IList<string>> patternsToMatch = default;
-            Optional<FrontDoorRouteCacheConfiguration> cacheConfiguration = default;
-            Optional<ForwardingProtocol> forwardingProtocol = default;
-            Optional<LinkToDefaultDomain> linkToDefaultDomain = default;
-            Optional<HttpsRedirect> httpsRedirect = default;
-            Optional<EnabledState> enabledState = default;
-            Optional<FrontDoorProvisioningState> provisioningState = default;
-            Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
+            SystemData systemData = default;
+            string endpointName = default;
+            IList<FrontDoorActivatedResourceInfo> customDomains = default;
+            WritableSubResource originGroup = default;
+            string originPath = default;
+            IList<WritableSubResource> ruleSets = default;
+            IList<FrontDoorEndpointProtocol> supportedProtocols = default;
+            IList<string> patternsToMatch = default;
+            FrontDoorRouteCacheConfiguration cacheConfiguration = default;
+            ForwardingProtocol? forwardingProtocol = default;
+            LinkToDefaultDomain? linkToDefaultDomain = default;
+            HttpsRedirect? httpsRedirect = default;
+            EnabledState? enabledState = default;
+            FrontDoorProvisioningState? provisioningState = default;
+            FrontDoorDeploymentStatus? deploymentStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -390,7 +390,26 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorRouteData(id, name, type, systemData.Value, endpointName.Value, Optional.ToList(customDomains), originGroup, originPath.Value, Optional.ToList(ruleSets), Optional.ToList(supportedProtocols), Optional.ToList(patternsToMatch), cacheConfiguration.Value, Optional.ToNullable(forwardingProtocol), Optional.ToNullable(linkToDefaultDomain), Optional.ToNullable(httpsRedirect), Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), serializedAdditionalRawData);
+            return new FrontDoorRouteData(
+                id,
+                name,
+                type,
+                systemData,
+                endpointName,
+                customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>(),
+                originGroup,
+                originPath,
+                ruleSets ?? new ChangeTrackingList<WritableSubResource>(),
+                supportedProtocols ?? new ChangeTrackingList<FrontDoorEndpointProtocol>(),
+                patternsToMatch ?? new ChangeTrackingList<string>(),
+                cacheConfiguration,
+                forwardingProtocol,
+                linkToDefaultDomain,
+                httpsRedirect,
+                enabledState,
+                provisioningState,
+                deploymentStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorRouteData>.Write(ModelReaderWriterOptions options)

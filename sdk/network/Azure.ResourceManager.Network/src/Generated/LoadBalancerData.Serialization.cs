@@ -29,42 +29,42 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(FrontendIPConfigurations))
+            if (!(FrontendIPConfigurations is ChangeTrackingList<FrontendIPConfigurationData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("frontendIPConfigurations"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BackendAddressPools))
+            if (!(BackendAddressPools is ChangeTrackingList<BackendAddressPoolData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("backendAddressPools"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LoadBalancingRules))
+            if (!(LoadBalancingRules is ChangeTrackingList<LoadBalancingRuleData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("loadBalancingRules"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Probes))
+            if (!(Probes is ChangeTrackingList<ProbeData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("probes"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InboundNatRules))
+            if (!(InboundNatRules is ChangeTrackingList<InboundNatRuleData> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("inboundNatRules"u8);
                 writer.WriteStartArray();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InboundNatPools))
+            if (!(InboundNatPools is ChangeTrackingList<LoadBalancerInboundNatPool> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("inboundNatPools"u8);
                 writer.WriteStartArray();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(OutboundRules))
+            if (!(OutboundRules is ChangeTrackingList<OutboundRuleData> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("outboundRules"u8);
                 writer.WriteStartArray();
@@ -147,12 +147,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            if (options.Format != "W" && ResourceGuid.HasValue)
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -196,23 +196,23 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<LoadBalancerSku> sku = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<FrontendIPConfigurationData>> frontendIPConfigurations = default;
-            Optional<IList<BackendAddressPoolData>> backendAddressPools = default;
-            Optional<IList<LoadBalancingRuleData>> loadBalancingRules = default;
-            Optional<IList<ProbeData>> probes = default;
-            Optional<IList<InboundNatRuleData>> inboundNatRules = default;
-            Optional<IList<LoadBalancerInboundNatPool>> inboundNatPools = default;
-            Optional<IList<OutboundRuleData>> outboundRules = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ExtendedLocation extendedLocation = default;
+            LoadBalancerSku sku = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            IList<FrontendIPConfigurationData> frontendIPConfigurations = default;
+            IList<BackendAddressPoolData> backendAddressPools = default;
+            IList<LoadBalancingRuleData> loadBalancingRules = default;
+            IList<ProbeData> probes = default;
+            IList<InboundNatRuleData> inboundNatRules = default;
+            IList<LoadBalancerInboundNatPool> inboundNatPools = default;
+            IList<OutboundRuleData> outboundRules = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -424,7 +424,25 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, sku.Value, Optional.ToNullable(etag), Optional.ToList(frontendIPConfigurations), Optional.ToList(backendAddressPools), Optional.ToList(loadBalancingRules), Optional.ToList(probes), Optional.ToList(inboundNatRules), Optional.ToList(inboundNatPools), Optional.ToList(outboundRules), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new LoadBalancerData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                extendedLocation,
+                sku,
+                etag,
+                frontendIPConfigurations ?? new ChangeTrackingList<FrontendIPConfigurationData>(),
+                backendAddressPools ?? new ChangeTrackingList<BackendAddressPoolData>(),
+                loadBalancingRules ?? new ChangeTrackingList<LoadBalancingRuleData>(),
+                probes ?? new ChangeTrackingList<ProbeData>(),
+                inboundNatRules ?? new ChangeTrackingList<InboundNatRuleData>(),
+                inboundNatPools ?? new ChangeTrackingList<LoadBalancerInboundNatPool>(),
+                outboundRules ?? new ChangeTrackingList<OutboundRuleData>(),
+                resourceGuid,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<LoadBalancerData>.Write(ModelReaderWriterOptions options)

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QueryResultsUri))
+            if (QueryResultsUri != null)
             {
                 writer.WritePropertyName("queryResultsUri"u8);
                 writer.WriteStringValue(QueryResultsUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(NonCompliantResources))
+            if (NonCompliantResources.HasValue)
             {
                 writer.WritePropertyName("nonCompliantResources"u8);
                 writer.WriteNumberValue(NonCompliantResources.Value);
             }
-            if (Optional.IsDefined(NonCompliantPolicies))
+            if (NonCompliantPolicies.HasValue)
             {
                 writer.WritePropertyName("nonCompliantPolicies"u8);
                 writer.WriteNumberValue(NonCompliantPolicies.Value);
             }
-            if (Optional.IsCollectionDefined(ResourceDetails))
+            if (!(ResourceDetails is ChangeTrackingList<ComplianceDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceDetails"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PolicyDetails))
+            if (!(PolicyDetails is ChangeTrackingList<ComplianceDetail> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("policyDetails"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PolicyGroupDetails))
+            if (!(PolicyGroupDetails is ChangeTrackingList<ComplianceDetail> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("policyGroupDetails"u8);
                 writer.WriteStartArray();
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<Uri> queryResultsUri = default;
-            Optional<int> nonCompliantResources = default;
-            Optional<int> nonCompliantPolicies = default;
-            Optional<IReadOnlyList<ComplianceDetail>> resourceDetails = default;
-            Optional<IReadOnlyList<ComplianceDetail>> policyDetails = default;
-            Optional<IReadOnlyList<ComplianceDetail>> policyGroupDetails = default;
+            Uri queryResultsUri = default;
+            int? nonCompliantResources = default;
+            int? nonCompliantPolicies = default;
+            IReadOnlyList<ComplianceDetail> resourceDetails = default;
+            IReadOnlyList<ComplianceDetail> policyDetails = default;
+            IReadOnlyList<ComplianceDetail> policyGroupDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySummaryResults(queryResultsUri.Value, Optional.ToNullable(nonCompliantResources), Optional.ToNullable(nonCompliantPolicies), Optional.ToList(resourceDetails), Optional.ToList(policyDetails), Optional.ToList(policyGroupDetails), serializedAdditionalRawData);
+            return new PolicySummaryResults(
+                queryResultsUri,
+                nonCompliantResources,
+                nonCompliantPolicies,
+                resourceDetails ?? new ChangeTrackingList<ComplianceDetail>(),
+                policyDetails ?? new ChangeTrackingList<ComplianceDetail>(),
+                policyGroupDetails ?? new ChangeTrackingList<ComplianceDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySummaryResults>.Write(ModelReaderWriterOptions options)

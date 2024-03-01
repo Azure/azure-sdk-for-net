@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,64 +47,64 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(BaseAddress))
+            if (BaseAddress != null)
             {
                 writer.WritePropertyName("base_address"u8);
                 writer.WriteStringValue(BaseAddress);
             }
-            if (Optional.IsDefined(FileName))
+            if (FileName != null)
             {
                 writer.WritePropertyName("file_name"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Optional.IsDefined(Href))
+            if (Href != null)
             {
                 writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
-            if (Optional.IsDefined(FilePath))
+            if (FilePath != null)
             {
                 writer.WritePropertyName("file_path"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (Optional.IsDefined(ModuleMemorySize))
+            if (ModuleMemorySize.HasValue)
             {
                 writer.WritePropertyName("module_memory_size"u8);
                 writer.WriteNumberValue(ModuleMemorySize.Value);
             }
-            if (Optional.IsDefined(FileVersion))
+            if (FileVersion != null)
             {
                 writer.WritePropertyName("file_version"u8);
                 writer.WriteStringValue(FileVersion);
             }
-            if (Optional.IsDefined(FileDescription))
+            if (FileDescription != null)
             {
                 writer.WritePropertyName("file_description"u8);
                 writer.WriteStringValue(FileDescription);
             }
-            if (Optional.IsDefined(Product))
+            if (Product != null)
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (Optional.IsDefined(ProductVersion))
+            if (ProductVersion != null)
             {
                 writer.WritePropertyName("product_version"u8);
                 writer.WriteStringValue(ProductVersion);
             }
-            if (Optional.IsDefined(IsDebug))
+            if (IsDebug.HasValue)
             {
                 writer.WritePropertyName("is_debug"u8);
                 writer.WriteBooleanValue(IsDebug.Value);
             }
-            if (Optional.IsDefined(Language))
+            if (Language != null)
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
@@ -148,22 +148,22 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> baseAddress = default;
-            Optional<string> fileName = default;
-            Optional<string> href = default;
-            Optional<string> filePath = default;
-            Optional<int> moduleMemorySize = default;
-            Optional<string> fileVersion = default;
-            Optional<string> fileDescription = default;
-            Optional<string> product = default;
-            Optional<string> productVersion = default;
-            Optional<bool> isDebug = default;
-            Optional<string> language = default;
+            SystemData systemData = default;
+            string baseAddress = default;
+            string fileName = default;
+            string href = default;
+            string filePath = default;
+            int? moduleMemorySize = default;
+            string fileVersion = default;
+            string fileDescription = default;
+            string product = default;
+            string productVersion = default;
+            bool? isDebug = default;
+            string language = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -278,7 +278,24 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProcessModuleInfoData(id, name, type, systemData.Value, baseAddress.Value, fileName.Value, href.Value, filePath.Value, Optional.ToNullable(moduleMemorySize), fileVersion.Value, fileDescription.Value, product.Value, productVersion.Value, Optional.ToNullable(isDebug), language.Value, kind.Value, serializedAdditionalRawData);
+            return new ProcessModuleInfoData(
+                id,
+                name,
+                type,
+                systemData,
+                baseAddress,
+                fileName,
+                href,
+                filePath,
+                moduleMemorySize,
+                fileVersion,
+                fileDescription,
+                product,
+                productVersion,
+                isDebug,
+                language,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProcessModuleInfoData>.Write(ModelReaderWriterOptions options)

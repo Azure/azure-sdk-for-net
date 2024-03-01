@@ -30,28 +30,28 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStringValue(CreateOption.ToSerialString());
             writer.WritePropertyName("imageReference"u8);
             writer.WriteObjectValue(ImageReference);
-            if (options.Format != "W" && Optional.IsDefined(OSType))
+            if (options.Format != "W" && OSType.HasValue)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsDefined(AdditionalCapabilities))
+            if (AdditionalCapabilities != null)
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
                 writer.WriteObjectValue(AdditionalCapabilities);
             }
             writer.WritePropertyName("usageQuota"u8);
             writer.WriteStringValue(UsageQuota, "P");
-            if (Optional.IsDefined(UseSharedPassword))
+            if (UseSharedPassword.HasValue)
             {
                 writer.WritePropertyName("useSharedPassword"u8);
                 writer.WriteStringValue(UseSharedPassword.Value.ToSerialString());
             }
             writer.WritePropertyName("adminUser"u8);
             writer.WriteObjectValue(AdminUser);
-            if (Optional.IsDefined(NonAdminUser))
+            if (NonAdminUser != null)
             {
                 writer.WritePropertyName("nonAdminUser"u8);
                 writer.WriteObjectValue(NonAdminUser);
@@ -96,13 +96,13 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             LabVirtualMachineCreateOption createOption = default;
             LabVirtualMachineImageReference imageReference = default;
-            Optional<LabVirtualMachineImageOSType> osType = default;
+            LabVirtualMachineImageOSType? osType = default;
             LabServicesSku sku = default;
-            Optional<LabVirtualMachineAdditionalCapability> additionalCapabilities = default;
+            LabVirtualMachineAdditionalCapability additionalCapabilities = default;
             TimeSpan usageQuota = default;
-            Optional<LabServicesEnableState> useSharedPassword = default;
+            LabServicesEnableState? useSharedPassword = default;
             LabVirtualMachineCredential adminUser = default;
-            Optional<LabVirtualMachineCredential> nonAdminUser = default;
+            LabVirtualMachineCredential nonAdminUser = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,17 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineProfile(createOption, imageReference, Optional.ToNullable(osType), sku, additionalCapabilities.Value, usageQuota, Optional.ToNullable(useSharedPassword), adminUser, nonAdminUser.Value, serializedAdditionalRawData);
+            return new LabVirtualMachineProfile(
+                createOption,
+                imageReference,
+                osType,
+                sku,
+                additionalCapabilities,
+                usageQuota,
+                useSharedPassword,
+                adminUser,
+                nonAdminUser,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineProfile>.Write(ModelReaderWriterOptions options)

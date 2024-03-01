@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SignatureTemplateNames))
+            if (!(SignatureTemplateNames is ChangeTrackingList<UefiSignatureTemplateName> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("signatureTemplateNames"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AdditionalSignatures))
+            if (AdditionalSignatures != null)
             {
                 writer.WritePropertyName("additionalSignatures"u8);
                 writer.WriteObjectValue(AdditionalSignatures);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<UefiSignatureTemplateName>> signatureTemplateNames = default;
-            Optional<UefiKeySignatures> additionalSignatures = default;
+            IList<UefiSignatureTemplateName> signatureTemplateNames = default;
+            UefiKeySignatures additionalSignatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageVersionUefiSettings(Optional.ToList(signatureTemplateNames), additionalSignatures.Value, serializedAdditionalRawData);
+            return new GalleryImageVersionUefiSettings(signatureTemplateNames ?? new ChangeTrackingList<UefiSignatureTemplateName>(), additionalSignatures, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageVersionUefiSettings>.Write(ModelReaderWriterOptions options)

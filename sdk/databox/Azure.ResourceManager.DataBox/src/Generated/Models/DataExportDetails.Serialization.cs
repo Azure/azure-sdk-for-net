@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("transferConfiguration"u8);
             writer.WriteObjectValue(TransferConfiguration);
-            if (Optional.IsDefined(LogCollectionLevel))
+            if (LogCollectionLevel.HasValue)
             {
                 writer.WritePropertyName("logCollectionLevel"u8);
                 writer.WriteStringValue(LogCollectionLevel.Value.ToSerialString());
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             TransferConfiguration transferConfiguration = default;
-            Optional<LogCollectionLevel> logCollectionLevel = default;
+            LogCollectionLevel? logCollectionLevel = default;
             DataAccountDetails accountDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataExportDetails(transferConfiguration, Optional.ToNullable(logCollectionLevel), accountDetails, serializedAdditionalRawData);
+            return new DataExportDetails(transferConfiguration, logCollectionLevel, accountDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataExportDetails>.Write(ModelReaderWriterOptions options)

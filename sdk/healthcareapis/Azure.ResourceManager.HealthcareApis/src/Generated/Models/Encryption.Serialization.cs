@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomerManagedKeyEncryption))
+            if (CustomerManagedKeyEncryption != null)
             {
                 writer.WritePropertyName("customerManagedKeyEncryption"u8);
                 writer.WriteObjectValue(CustomerManagedKeyEncryption);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<EncryptionCustomerManagedKeyEncryption> customerManagedKeyEncryption = default;
+            EncryptionCustomerManagedKeyEncryption customerManagedKeyEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Encryption(customerManagedKeyEncryption.Value, serializedAdditionalRawData);
+            return new Encryption(customerManagedKeyEncryption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Encryption>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PolicyInfo))
+            if (options.Format != "W" && PolicyInfo != null)
             {
                 writer.WritePropertyName("policyInfo"u8);
                 writer.WriteObjectValue(PolicyInfo);
             }
-            if (options.Format != "W" && Optional.IsDefined(EvaluationResult))
+            if (options.Format != "W" && EvaluationResult != null)
             {
                 writer.WritePropertyName("evaluationResult"u8);
                 writer.WriteStringValue(EvaluationResult);
             }
-            if (options.Format != "W" && Optional.IsDefined(EvaluationDetails))
+            if (options.Format != "W" && EvaluationDetails != null)
             {
                 writer.WritePropertyName("evaluationDetails"u8);
                 writer.WriteObjectValue(EvaluationDetails);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<PolicyReference> policyInfo = default;
-            Optional<string> evaluationResult = default;
-            Optional<PolicyEvaluationDetails> evaluationDetails = default;
+            PolicyReference policyInfo = default;
+            string evaluationResult = default;
+            PolicyEvaluationDetails evaluationDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyEvaluationResult(policyInfo.Value, evaluationResult.Value, evaluationDetails.Value, serializedAdditionalRawData);
+            return new PolicyEvaluationResult(policyInfo, evaluationResult, evaluationDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyEvaluationResult>.Write(ModelReaderWriterOptions options)

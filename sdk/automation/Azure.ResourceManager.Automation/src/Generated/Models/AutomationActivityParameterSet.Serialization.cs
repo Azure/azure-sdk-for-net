@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<AutomationActivityParameterDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<AutomationActivityParameterDefinition>> parameters = default;
+            string name = default;
+            IReadOnlyList<AutomationActivityParameterDefinition> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationActivityParameterSet(name.Value, Optional.ToList(parameters), serializedAdditionalRawData);
+            return new AutomationActivityParameterSet(name, parameters ?? new ChangeTrackingList<AutomationActivityParameterDefinition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationActivityParameterSet>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
+            Guid? id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobNavigation(Optional.ToNullable(id), serializedAdditionalRawData);
+            return new JobNavigation(id, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobNavigation>.Write(ModelReaderWriterOptions options)

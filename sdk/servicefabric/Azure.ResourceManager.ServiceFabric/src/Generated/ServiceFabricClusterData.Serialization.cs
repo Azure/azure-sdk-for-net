@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ServiceFabric
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AddOnFeatures))
+            if (!(AddOnFeatures is ChangeTrackingList<ClusterAddOnFeature> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("addOnFeatures"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AvailableClusterVersions))
+            if (options.Format != "W" && !(AvailableClusterVersions is ChangeTrackingList<ClusterVersionDetails> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("availableClusterVersions"u8);
                 writer.WriteStartArray();
@@ -89,22 +89,22 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AzureActiveDirectory))
+            if (AzureActiveDirectory != null)
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
                 writer.WriteObjectValue(AzureActiveDirectory);
             }
-            if (Optional.IsDefined(Certificate))
+            if (Certificate != null)
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteObjectValue(Certificate);
             }
-            if (Optional.IsDefined(CertificateCommonNames))
+            if (CertificateCommonNames != null)
             {
                 writer.WritePropertyName("certificateCommonNames"u8);
                 writer.WriteObjectValue(CertificateCommonNames);
             }
-            if (Optional.IsCollectionDefined(ClientCertificateCommonNames))
+            if (!(ClientCertificateCommonNames is ChangeTrackingList<ClusterClientCertificateCommonName> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("clientCertificateCommonNames"u8);
                 writer.WriteStartArray();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClientCertificateThumbprints))
+            if (!(ClientCertificateThumbprints is ChangeTrackingList<ClusterClientCertificateThumbprint> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("clientCertificateThumbprints"u8);
                 writer.WriteStartArray();
@@ -124,37 +124,37 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ClusterCodeVersion))
+            if (ClusterCodeVersion != null)
             {
                 writer.WritePropertyName("clusterCodeVersion"u8);
                 writer.WriteStringValue(ClusterCodeVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterEndpoint))
+            if (options.Format != "W" && ClusterEndpoint != null)
             {
                 writer.WritePropertyName("clusterEndpoint"u8);
                 writer.WriteStringValue(ClusterEndpoint.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterId))
+            if (options.Format != "W" && ClusterId.HasValue)
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterState))
+            if (options.Format != "W" && ClusterState.HasValue)
             {
                 writer.WritePropertyName("clusterState"u8);
                 writer.WriteStringValue(ClusterState.Value.ToString());
             }
-            if (Optional.IsDefined(DiagnosticsStorageAccountConfig))
+            if (DiagnosticsStorageAccountConfig != null)
             {
                 writer.WritePropertyName("diagnosticsStorageAccountConfig"u8);
                 writer.WriteObjectValue(DiagnosticsStorageAccountConfig);
             }
-            if (Optional.IsDefined(IsEventStoreServiceEnabled))
+            if (IsEventStoreServiceEnabled.HasValue)
             {
                 writer.WritePropertyName("eventStoreServiceEnabled"u8);
                 writer.WriteBooleanValue(IsEventStoreServiceEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(FabricSettings))
+            if (!(FabricSettings is ChangeTrackingList<SettingsSectionDescription> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("fabricSettings"u8);
                 writer.WriteStartArray();
@@ -164,12 +164,12 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ManagementEndpoint))
+            if (ManagementEndpoint != null)
             {
                 writer.WritePropertyName("managementEndpoint"u8);
                 writer.WriteStringValue(ManagementEndpoint.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(NodeTypes))
+            if (!(NodeTypes is ChangeTrackingList<ClusterNodeTypeDescription> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("nodeTypes"u8);
                 writer.WriteStartArray();
@@ -179,82 +179,82 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ReliabilityLevel))
+            if (ReliabilityLevel.HasValue)
             {
                 writer.WritePropertyName("reliabilityLevel"u8);
                 writer.WriteStringValue(ReliabilityLevel.Value.ToString());
             }
-            if (Optional.IsDefined(ReverseProxyCertificate))
+            if (ReverseProxyCertificate != null)
             {
                 writer.WritePropertyName("reverseProxyCertificate"u8);
                 writer.WriteObjectValue(ReverseProxyCertificate);
             }
-            if (Optional.IsDefined(ReverseProxyCertificateCommonNames))
+            if (ReverseProxyCertificateCommonNames != null)
             {
                 writer.WritePropertyName("reverseProxyCertificateCommonNames"u8);
                 writer.WriteObjectValue(ReverseProxyCertificateCommonNames);
             }
-            if (Optional.IsDefined(UpgradeDescription))
+            if (UpgradeDescription != null)
             {
                 writer.WritePropertyName("upgradeDescription"u8);
                 writer.WriteObjectValue(UpgradeDescription);
             }
-            if (Optional.IsDefined(UpgradeMode))
+            if (UpgradeMode.HasValue)
             {
                 writer.WritePropertyName("upgradeMode"u8);
                 writer.WriteStringValue(UpgradeMode.Value.ToString());
             }
-            if (Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
+            if (ApplicationTypeVersionsCleanupPolicy != null)
             {
                 writer.WritePropertyName("applicationTypeVersionsCleanupPolicy"u8);
                 writer.WriteObjectValue(ApplicationTypeVersionsCleanupPolicy);
             }
-            if (Optional.IsDefined(VmImage))
+            if (VmImage != null)
             {
                 writer.WritePropertyName("vmImage"u8);
                 writer.WriteStringValue(VmImage);
             }
-            if (Optional.IsDefined(ServiceFabricZonalUpgradeMode))
+            if (ServiceFabricZonalUpgradeMode.HasValue)
             {
                 writer.WritePropertyName("sfZonalUpgradeMode"u8);
                 writer.WriteStringValue(ServiceFabricZonalUpgradeMode.Value.ToString());
             }
-            if (Optional.IsDefined(VmssZonalUpgradeMode))
+            if (VmssZonalUpgradeMode.HasValue)
             {
                 writer.WritePropertyName("vmssZonalUpgradeMode"u8);
                 writer.WriteStringValue(VmssZonalUpgradeMode.Value.ToString());
             }
-            if (Optional.IsDefined(IsInfrastructureServiceManagerEnabled))
+            if (IsInfrastructureServiceManagerEnabled.HasValue)
             {
                 writer.WritePropertyName("infrastructureServiceManager"u8);
                 writer.WriteBooleanValue(IsInfrastructureServiceManagerEnabled.Value);
             }
-            if (Optional.IsDefined(UpgradeWave))
+            if (UpgradeWave.HasValue)
             {
                 writer.WritePropertyName("upgradeWave"u8);
                 writer.WriteStringValue(UpgradeWave.Value.ToString());
             }
-            if (Optional.IsDefined(UpgradePauseStartOn))
+            if (UpgradePauseStartOn.HasValue)
             {
                 writer.WritePropertyName("upgradePauseStartTimestampUtc"u8);
                 writer.WriteStringValue(UpgradePauseStartOn.Value, "O");
             }
-            if (Optional.IsDefined(UpgradePauseEndOn))
+            if (UpgradePauseEndOn.HasValue)
             {
                 writer.WritePropertyName("upgradePauseEndTimestampUtc"u8);
                 writer.WriteStringValue(UpgradePauseEndOn.Value, "O");
             }
-            if (Optional.IsDefined(IsWaveUpgradePaused))
+            if (IsWaveUpgradePaused.HasValue)
             {
                 writer.WritePropertyName("waveUpgradePaused"u8);
                 writer.WriteBooleanValue(IsWaveUpgradePaused.Value);
             }
-            if (Optional.IsCollectionDefined(Notifications))
+            if (!(Notifications is ChangeTrackingList<ClusterNotification> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("notifications"u8);
                 writer.WriteStartArray();
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsHttpGatewayExclusiveAuthModeEnabled))
+            if (IsHttpGatewayExclusiveAuthModeEnabled.HasValue)
             {
                 writer.WritePropertyName("enableHttpGatewayExclusiveAuthMode"u8);
                 writer.WriteBooleanValue(IsHttpGatewayExclusiveAuthModeEnabled.Value);
@@ -308,46 +308,46 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<ClusterAddOnFeature>> addOnFeatures = default;
-            Optional<IReadOnlyList<ClusterVersionDetails>> availableClusterVersions = default;
-            Optional<ClusterAadSetting> azureActiveDirectory = default;
-            Optional<ClusterCertificateDescription> certificate = default;
-            Optional<ClusterServerCertificateCommonNames> certificateCommonNames = default;
-            Optional<IList<ClusterClientCertificateCommonName>> clientCertificateCommonNames = default;
-            Optional<IList<ClusterClientCertificateThumbprint>> clientCertificateThumbprints = default;
-            Optional<string> clusterCodeVersion = default;
-            Optional<Uri> clusterEndpoint = default;
-            Optional<Guid> clusterId = default;
-            Optional<ServiceFabricClusterState> clusterState = default;
-            Optional<DiagnosticsStorageAccountConfig> diagnosticsStorageAccountConfig = default;
-            Optional<bool> eventStoreServiceEnabled = default;
-            Optional<IList<SettingsSectionDescription>> fabricSettings = default;
-            Optional<Uri> managementEndpoint = default;
-            Optional<IList<ClusterNodeTypeDescription>> nodeTypes = default;
-            Optional<ServiceFabricProvisioningState> provisioningState = default;
-            Optional<ClusterReliabilityLevel> reliabilityLevel = default;
-            Optional<ClusterCertificateDescription> reverseProxyCertificate = default;
-            Optional<ClusterServerCertificateCommonNames> reverseProxyCertificateCommonNames = default;
-            Optional<ClusterUpgradePolicy> upgradeDescription = default;
-            Optional<ClusterUpgradeMode> upgradeMode = default;
-            Optional<ApplicationTypeVersionsCleanupPolicy> applicationTypeVersionsCleanupPolicy = default;
-            Optional<string> vmImage = default;
-            Optional<SfZonalUpgradeMode> sfZonalUpgradeMode = default;
-            Optional<VmssZonalUpgradeMode> vmssZonalUpgradeMode = default;
-            Optional<bool> infrastructureServiceManager = default;
-            Optional<ClusterUpgradeCadence> upgradeWave = default;
-            Optional<DateTimeOffset> upgradePauseStartTimestampUtc = default;
-            Optional<DateTimeOffset> upgradePauseEndTimestampUtc = default;
-            Optional<bool> waveUpgradePaused = default;
-            Optional<IList<ClusterNotification>> notifications = default;
-            Optional<bool> enableHttpGatewayExclusiveAuthMode = default;
+            SystemData systemData = default;
+            IList<ClusterAddOnFeature> addOnFeatures = default;
+            IReadOnlyList<ClusterVersionDetails> availableClusterVersions = default;
+            ClusterAadSetting azureActiveDirectory = default;
+            ClusterCertificateDescription certificate = default;
+            ClusterServerCertificateCommonNames certificateCommonNames = default;
+            IList<ClusterClientCertificateCommonName> clientCertificateCommonNames = default;
+            IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints = default;
+            string clusterCodeVersion = default;
+            Uri clusterEndpoint = default;
+            Guid? clusterId = default;
+            ServiceFabricClusterState? clusterState = default;
+            DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig = default;
+            bool? eventStoreServiceEnabled = default;
+            IList<SettingsSectionDescription> fabricSettings = default;
+            Uri managementEndpoint = default;
+            IList<ClusterNodeTypeDescription> nodeTypes = default;
+            ServiceFabricProvisioningState? provisioningState = default;
+            ClusterReliabilityLevel? reliabilityLevel = default;
+            ClusterCertificateDescription reverseProxyCertificate = default;
+            ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames = default;
+            ClusterUpgradePolicy upgradeDescription = default;
+            ClusterUpgradeMode? upgradeMode = default;
+            ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy = default;
+            string vmImage = default;
+            SfZonalUpgradeMode? sfZonalUpgradeMode = default;
+            VmssZonalUpgradeMode? vmssZonalUpgradeMode = default;
+            bool? infrastructureServiceManager = default;
+            ClusterUpgradeCadence? upgradeWave = default;
+            DateTimeOffset? upgradePauseStartTimestampUtc = default;
+            DateTimeOffset? upgradePauseEndTimestampUtc = default;
+            bool? waveUpgradePaused = default;
+            IList<ClusterNotification> notifications = default;
+            bool? enableHttpGatewayExclusiveAuthMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -746,7 +746,48 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(addOnFeatures), Optional.ToList(availableClusterVersions), azureActiveDirectory.Value, certificate.Value, certificateCommonNames.Value, Optional.ToList(clientCertificateCommonNames), Optional.ToList(clientCertificateThumbprints), clusterCodeVersion.Value, clusterEndpoint.Value, Optional.ToNullable(clusterId), Optional.ToNullable(clusterState), diagnosticsStorageAccountConfig.Value, Optional.ToNullable(eventStoreServiceEnabled), Optional.ToList(fabricSettings), managementEndpoint.Value, Optional.ToList(nodeTypes), Optional.ToNullable(provisioningState), Optional.ToNullable(reliabilityLevel), reverseProxyCertificate.Value, reverseProxyCertificateCommonNames.Value, upgradeDescription.Value, Optional.ToNullable(upgradeMode), applicationTypeVersionsCleanupPolicy.Value, vmImage.Value, Optional.ToNullable(sfZonalUpgradeMode), Optional.ToNullable(vmssZonalUpgradeMode), Optional.ToNullable(infrastructureServiceManager), Optional.ToNullable(upgradeWave), Optional.ToNullable(upgradePauseStartTimestampUtc), Optional.ToNullable(upgradePauseEndTimestampUtc), Optional.ToNullable(waveUpgradePaused), Optional.ToList(notifications), Optional.ToNullable(enableHttpGatewayExclusiveAuthMode), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new ServiceFabricClusterData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                addOnFeatures ?? new ChangeTrackingList<ClusterAddOnFeature>(),
+                availableClusterVersions ?? new ChangeTrackingList<ClusterVersionDetails>(),
+                azureActiveDirectory,
+                certificate,
+                certificateCommonNames,
+                clientCertificateCommonNames ?? new ChangeTrackingList<ClusterClientCertificateCommonName>(),
+                clientCertificateThumbprints ?? new ChangeTrackingList<ClusterClientCertificateThumbprint>(),
+                clusterCodeVersion,
+                clusterEndpoint,
+                clusterId,
+                clusterState,
+                diagnosticsStorageAccountConfig,
+                eventStoreServiceEnabled,
+                fabricSettings ?? new ChangeTrackingList<SettingsSectionDescription>(),
+                managementEndpoint,
+                nodeTypes ?? new ChangeTrackingList<ClusterNodeTypeDescription>(),
+                provisioningState,
+                reliabilityLevel,
+                reverseProxyCertificate,
+                reverseProxyCertificateCommonNames,
+                upgradeDescription,
+                upgradeMode,
+                applicationTypeVersionsCleanupPolicy,
+                vmImage,
+                sfZonalUpgradeMode,
+                vmssZonalUpgradeMode,
+                infrastructureServiceManager,
+                upgradeWave,
+                upgradePauseStartTimestampUtc,
+                upgradePauseEndTimestampUtc,
+                waveUpgradePaused,
+                notifications ?? new ChangeTrackingList<ClusterNotification>(),
+                enableHttpGatewayExclusiveAuthMode,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricClusterData>.Write(ModelReaderWriterOptions options)

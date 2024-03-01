@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.LabServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startAt"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(StopOn))
+            if (StopOn.HasValue)
             {
                 writer.WritePropertyName("stopAt"u8);
                 writer.WriteStringValue(StopOn.Value, "O");
             }
-            if (Optional.IsDefined(RecurrencePattern))
+            if (RecurrencePattern != null)
             {
                 writer.WritePropertyName("recurrencePattern"u8);
                 writer.WriteObjectValue(RecurrencePattern);
             }
-            if (Optional.IsDefined(TimeZoneId))
+            if (TimeZoneId != null)
             {
                 writer.WritePropertyName("timeZoneId"u8);
                 writer.WriteStringValue(TimeZoneId);
             }
-            if (Optional.IsDefined(Notes))
+            if (Notes != null)
             {
                 writer.WritePropertyName("notes"u8);
 #if NET6_0_OR_GREATER
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.LabServices
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
@@ -129,13 +129,13 @@ namespace Azure.ResourceManager.LabServices
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startAt = default;
-            Optional<DateTimeOffset> stopAt = default;
-            Optional<LabServicesRecurrencePattern> recurrencePattern = default;
-            Optional<string> timeZoneId = default;
-            Optional<BinaryData> notes = default;
-            Optional<LabServicesProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            DateTimeOffset? startAt = default;
+            DateTimeOffset? stopAt = default;
+            LabServicesRecurrencePattern recurrencePattern = default;
+            string timeZoneId = default;
+            BinaryData notes = default;
+            LabServicesProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,7 +232,18 @@ namespace Azure.ResourceManager.LabServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabServicesScheduleData(id, name, type, systemData.Value, Optional.ToNullable(startAt), Optional.ToNullable(stopAt), recurrencePattern.Value, timeZoneId.Value, notes.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new LabServicesScheduleData(
+                id,
+                name,
+                type,
+                systemData,
+                startAt,
+                stopAt,
+                recurrencePattern,
+                timeZoneId,
+                notes,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabServicesScheduleData>.Write(ModelReaderWriterOptions options)

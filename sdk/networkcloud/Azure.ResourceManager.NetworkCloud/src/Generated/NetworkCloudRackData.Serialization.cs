@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -67,22 +67,22 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("availabilityZone"u8);
             writer.WriteStringValue(AvailabilityZone);
-            if (options.Format != "W" && Optional.IsDefined(ClusterId))
+            if (options.Format != "W" && ClusterId != null)
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
+            if (options.Format != "W" && DetailedStatus.HasValue)
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
+            if (options.Format != "W" && DetailedStatusMessage != null)
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -133,17 +133,17 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string availabilityZone = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<RackDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<RackProvisioningState> provisioningState = default;
+            ResourceIdentifier clusterId = default;
+            RackDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            RackProvisioningState? provisioningState = default;
             string rackLocation = default;
             string rackSerialNumber = default;
             ResourceIdentifier rackSkuId = default;
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudRackData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, availabilityZone, clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(provisioningState), rackLocation, rackSerialNumber, rackSkuId, serializedAdditionalRawData);
+            return new NetworkCloudRackData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                availabilityZone,
+                clusterId,
+                detailedStatus,
+                detailedStatusMessage,
+                provisioningState,
+                rackLocation,
+                rackSerialNumber,
+                rackSkuId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudRackData>.Write(ModelReaderWriterOptions options)

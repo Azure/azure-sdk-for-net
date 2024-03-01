@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Kubernetes.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(HybridConnectionConfig))
+            if (options.Format != "W" && HybridConnectionConfig != null)
             {
                 writer.WritePropertyName("hybridConnectionConfig"u8);
                 writer.WriteObjectValue(HybridConnectionConfig);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Kubeconfigs))
+            if (options.Format != "W" && !(Kubeconfigs is ChangeTrackingList<CredentialResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("kubeconfigs"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 return null;
             }
-            Optional<HybridConnectionConfig> hybridConnectionConfig = default;
-            Optional<IReadOnlyList<CredentialResult>> kubeconfigs = default;
+            HybridConnectionConfig hybridConnectionConfig = default;
+            IReadOnlyList<CredentialResult> kubeconfigs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CredentialResults(hybridConnectionConfig.Value, Optional.ToList(kubeconfigs), serializedAdditionalRawData);
+            return new CredentialResults(hybridConnectionConfig, kubeconfigs ?? new ChangeTrackingList<CredentialResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CredentialResults>.Write(ModelReaderWriterOptions options)

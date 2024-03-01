@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScoreName))
+            if (options.Format != "W" && ScoreName != null)
             {
                 writer.WritePropertyName("scoreName"u8);
                 writer.WriteStringValue(ScoreName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PredictionDistribution))
+            if (options.Format != "W" && PredictionDistribution != null)
             {
                 writer.WritePropertyName("predictionDistribution"u8);
                 writer.WriteObjectValue(PredictionDistribution);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CanonicalProfiles))
+            if (options.Format != "W" && !(CanonicalProfiles is ChangeTrackingList<CanonicalProfileDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("canonicalProfiles"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryProfileInstanceCount))
+            if (options.Format != "W" && PrimaryProfileInstanceCount.HasValue)
             {
                 writer.WritePropertyName("primaryProfileInstanceCount"u8);
                 writer.WriteNumberValue(PrimaryProfileInstanceCount.Value);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> scoreName = default;
-            Optional<PredictionDistributionDefinition> predictionDistribution = default;
-            Optional<IReadOnlyList<CanonicalProfileDefinition>> canonicalProfiles = default;
-            Optional<long> primaryProfileInstanceCount = default;
+            Guid? tenantId = default;
+            string scoreName = default;
+            PredictionDistributionDefinition predictionDistribution = default;
+            IReadOnlyList<CanonicalProfileDefinition> canonicalProfiles = default;
+            long? primaryProfileInstanceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionTrainingResults(Optional.ToNullable(tenantId), scoreName.Value, predictionDistribution.Value, Optional.ToList(canonicalProfiles), Optional.ToNullable(primaryProfileInstanceCount), serializedAdditionalRawData);
+            return new PredictionTrainingResults(
+                tenantId,
+                scoreName,
+                predictionDistribution,
+                canonicalProfiles ?? new ChangeTrackingList<CanonicalProfileDefinition>(),
+                primaryProfileInstanceCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictionTrainingResults>.Write(ModelReaderWriterOptions options)

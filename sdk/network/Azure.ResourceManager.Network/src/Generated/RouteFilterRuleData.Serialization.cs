@@ -28,44 +28,44 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Access))
+            if (Access.HasValue)
             {
                 writer.WritePropertyName("access"u8);
                 writer.WriteStringValue(Access.Value.ToString());
             }
-            if (Optional.IsDefined(RouteFilterRuleType))
+            if (RouteFilterRuleType.HasValue)
             {
                 writer.WritePropertyName("routeFilterRuleType"u8);
                 writer.WriteStringValue(RouteFilterRuleType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Communities))
+            if (!(Communities is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("communities"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<NetworkAccess> access = default;
-            Optional<RouteFilterRuleType> routeFilterRuleType = default;
-            Optional<IList<string>> communities = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            AzureLocation? location = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            NetworkAccess? access = default;
+            RouteFilterRuleType? routeFilterRuleType = default;
+            IList<string> communities = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,7 +232,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteFilterRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(location), Optional.ToNullable(etag), Optional.ToNullable(access), Optional.ToNullable(routeFilterRuleType), Optional.ToList(communities), Optional.ToNullable(provisioningState));
+            return new RouteFilterRuleData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                location,
+                etag,
+                access,
+                routeFilterRuleType,
+                communities ?? new ChangeTrackingList<string>(),
+                provisioningState);
         }
 
         BinaryData IPersistableModel<RouteFilterRuleData>.Write(ModelReaderWriterOptions options)

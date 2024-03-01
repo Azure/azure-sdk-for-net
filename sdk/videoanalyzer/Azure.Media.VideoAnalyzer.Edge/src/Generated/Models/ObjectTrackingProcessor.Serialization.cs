@@ -16,7 +16,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Accuracy))
+            if (Accuracy.HasValue)
             {
                 writer.WritePropertyName("accuracy"u8);
                 writer.WriteStringValue(Accuracy.Value.ToString());
@@ -41,7 +41,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<ObjectTrackingAccuracy> accuracy = default;
+            ObjectTrackingAccuracy? accuracy = default;
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
@@ -77,7 +77,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new ObjectTrackingProcessor(type, name, inputs, Optional.ToNullable(accuracy));
+            return new ObjectTrackingProcessor(type, name, inputs, accuracy);
         }
     }
 }

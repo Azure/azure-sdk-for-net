@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<CalculateExchangeOperationResultStatus> status = default;
-            Optional<CalculateExchangeResultProperties> properties = default;
-            Optional<OperationResultError> error = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            CalculateExchangeOperationResultStatus? status = default;
+            CalculateExchangeResultProperties properties = default;
+            OperationResultError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CalculateExchangeResult(id.Value, name.Value, Optional.ToNullable(status), properties.Value, error.Value, serializedAdditionalRawData);
+            return new CalculateExchangeResult(
+                id,
+                name,
+                status,
+                properties,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CalculateExchangeResult>.Write(ModelReaderWriterOptions options)

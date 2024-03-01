@@ -15,17 +15,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventType))
+            if (EventType.HasValue)
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType.Value.ToString());
             }
-            if (Optional.IsDefined(Threshold))
+            if (Threshold != null)
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteStringValue(Threshold);
             }
-            if (Optional.IsDefined(Focus))
+            if (Focus.HasValue)
             {
                 writer.WritePropertyName("focus"u8);
                 writer.WriteStringValue(Focus.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<SpatialAnalysisPersonZoneCrossingEventType> eventType = default;
-            Optional<string> threshold = default;
-            Optional<SpatialAnalysisOperationFocus> focus = default;
+            SpatialAnalysisPersonZoneCrossingEventType? eventType = default;
+            string threshold = default;
+            SpatialAnalysisOperationFocus? focus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventType"u8))
@@ -68,7 +68,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SpatialAnalysisPersonZoneCrossingEvent(threshold.Value, Optional.ToNullable(focus), Optional.ToNullable(eventType));
+            return new SpatialAnalysisPersonZoneCrossingEvent(threshold, focus, eventType);
         }
     }
 }

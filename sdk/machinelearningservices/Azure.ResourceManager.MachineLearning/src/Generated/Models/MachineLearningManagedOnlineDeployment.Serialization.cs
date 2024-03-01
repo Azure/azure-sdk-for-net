@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppInsightsEnabled))
+            if (AppInsightsEnabled.HasValue)
             {
                 writer.WritePropertyName("appInsightsEnabled"u8);
                 writer.WriteBooleanValue(AppInsightsEnabled.Value);
             }
-            if (Optional.IsDefined(DataCollector))
+            if (DataCollector != null)
             {
                 if (DataCollector != null)
                 {
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dataCollector");
                 }
             }
-            if (Optional.IsDefined(EgressPublicNetworkAccess))
+            if (EgressPublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("egressPublicNetworkAccess"u8);
                 writer.WriteStringValue(EgressPublicNetworkAccess.Value.ToString());
             }
             writer.WritePropertyName("endpointComputeType"u8);
             writer.WriteStringValue(EndpointComputeType.ToString());
-            if (Optional.IsDefined(InstanceType))
+            if (InstanceType != null)
             {
                 if (InstanceType != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("instanceType");
                 }
             }
-            if (Optional.IsDefined(LivenessProbe))
+            if (LivenessProbe != null)
             {
                 if (LivenessProbe != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("livenessProbe");
                 }
             }
-            if (Optional.IsDefined(Model))
+            if (Model != null)
             {
                 if (Model != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("model");
                 }
             }
-            if (Optional.IsDefined(ModelMountPath))
+            if (ModelMountPath != null)
             {
                 if (ModelMountPath != null)
                 {
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelMountPath");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ReadinessProbe))
+            if (ReadinessProbe != null)
             {
                 if (ReadinessProbe != null)
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("readinessProbe");
                 }
             }
-            if (Optional.IsDefined(RequestSettings))
+            if (RequestSettings != null)
             {
                 if (RequestSettings != null)
                 {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("requestSettings");
                 }
             }
-            if (Optional.IsDefined(ScaleSettings))
+            if (ScaleSettings != null)
             {
                 if (ScaleSettings != null)
                 {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("scaleSettings");
                 }
             }
-            if (Optional.IsDefined(CodeConfiguration))
+            if (CodeConfiguration != null)
             {
                 if (CodeConfiguration != null)
                 {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("codeConfiguration");
                 }
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsDefined(EnvironmentId))
+            if (EnvironmentId != null)
             {
                 if (EnvironmentId != null)
                 {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentId");
                 }
             }
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            if (!(EnvironmentVariables is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (EnvironmentVariables != null)
                 {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentVariables");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -249,23 +249,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<bool> appInsightsEnabled = default;
-            Optional<DataCollector> dataCollector = default;
-            Optional<MachineLearningEgressPublicNetworkAccessType> egressPublicNetworkAccess = default;
+            bool? appInsightsEnabled = default;
+            DataCollector dataCollector = default;
+            MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = default;
             MachineLearningEndpointComputeType endpointComputeType = default;
-            Optional<string> instanceType = default;
-            Optional<MachineLearningProbeSettings> livenessProbe = default;
-            Optional<string> model = default;
-            Optional<string> modelMountPath = default;
-            Optional<MachineLearningDeploymentProvisioningState> provisioningState = default;
-            Optional<MachineLearningProbeSettings> readinessProbe = default;
-            Optional<MachineLearningOnlineRequestSettings> requestSettings = default;
-            Optional<MachineLearningOnlineScaleSettings> scaleSettings = default;
-            Optional<MachineLearningCodeConfiguration> codeConfiguration = default;
-            Optional<string> description = default;
-            Optional<string> environmentId = default;
-            Optional<IDictionary<string, string>> environmentVariables = default;
-            Optional<IDictionary<string, string>> properties = default;
+            string instanceType = default;
+            MachineLearningProbeSettings livenessProbe = default;
+            string model = default;
+            string modelMountPath = default;
+            MachineLearningDeploymentProvisioningState? provisioningState = default;
+            MachineLearningProbeSettings readinessProbe = default;
+            MachineLearningOnlineRequestSettings requestSettings = default;
+            MachineLearningOnlineScaleSettings scaleSettings = default;
+            MachineLearningCodeConfiguration codeConfiguration = default;
+            string description = default;
+            string environmentId = default;
+            IDictionary<string, string> environmentVariables = default;
+            IDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -448,7 +448,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningManagedOnlineDeployment(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), serializedAdditionalRawData, Optional.ToNullable(appInsightsEnabled), dataCollector.Value, Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value);
+            return new MachineLearningManagedOnlineDeployment(
+                codeConfiguration,
+                description,
+                environmentId,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                appInsightsEnabled,
+                dataCollector,
+                egressPublicNetworkAccess,
+                endpointComputeType,
+                instanceType,
+                livenessProbe,
+                model,
+                modelMountPath,
+                provisioningState,
+                readinessProbe,
+                requestSettings,
+                scaleSettings);
         }
 
         BinaryData IPersistableModel<MachineLearningManagedOnlineDeployment>.Write(ModelReaderWriterOptions options)

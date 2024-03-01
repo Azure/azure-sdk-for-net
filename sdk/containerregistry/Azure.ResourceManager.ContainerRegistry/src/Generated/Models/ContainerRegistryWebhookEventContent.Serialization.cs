@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
-            if (Optional.IsDefined(Timestamp))
+            if (Timestamp.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (Optional.IsDefined(Action))
+            if (Action != null)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
             }
-            if (Optional.IsDefined(Request))
+            if (Request != null)
             {
                 writer.WritePropertyName("request"u8);
                 writer.WriteObjectValue(Request);
             }
-            if (Optional.IsDefined(Actor))
+            if (Actor != null)
             {
                 writer.WritePropertyName("actor"u8);
                 writer.WriteObjectValue(Actor);
             }
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> action = default;
-            Optional<ContainerRegistryWebhookEventTarget> target = default;
-            Optional<ContainerRegistryWebhookEventRequestContent> request = default;
-            Optional<ContainerRegistryWebhookEventActor> actor = default;
-            Optional<ContainerRegistryWebhookEventSource> source = default;
+            Guid? id = default;
+            DateTimeOffset? timestamp = default;
+            string action = default;
+            ContainerRegistryWebhookEventTarget target = default;
+            ContainerRegistryWebhookEventRequestContent request = default;
+            ContainerRegistryWebhookEventActor actor = default;
+            ContainerRegistryWebhookEventSource source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryWebhookEventContent(Optional.ToNullable(id), Optional.ToNullable(timestamp), action.Value, target.Value, request.Value, actor.Value, source.Value, serializedAdditionalRawData);
+            return new ContainerRegistryWebhookEventContent(
+                id,
+                timestamp,
+                action,
+                target,
+                request,
+                actor,
+                source,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryWebhookEventContent>.Write(ModelReaderWriterOptions options)

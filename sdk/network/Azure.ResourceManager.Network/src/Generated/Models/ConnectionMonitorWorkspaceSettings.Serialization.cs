@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(WorkspaceResourceId))
+            if (WorkspaceResourceId != null)
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> workspaceResourceId = default;
+            ResourceIdentifier workspaceResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorWorkspaceSettings(workspaceResourceId.Value, serializedAdditionalRawData);
+            return new ConnectionMonitorWorkspaceSettings(workspaceResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorWorkspaceSettings>.Write(ModelReaderWriterOptions options)

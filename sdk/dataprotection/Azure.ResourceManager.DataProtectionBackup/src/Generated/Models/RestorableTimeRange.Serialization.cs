@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndOn, "O");
-            if (Optional.IsDefined(ObjectType))
+            if (ObjectType != null)
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
-            Optional<string> objectType = default;
+            string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableTimeRange(startTime, endTime, objectType.Value, serializedAdditionalRawData);
+            return new RestorableTimeRange(startTime, endTime, objectType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableTimeRange>.Write(ModelReaderWriterOptions options)

@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomHttpsProvisioningState))
+            if (options.Format != "W" && CustomHttpsProvisioningState.HasValue)
             {
                 writer.WritePropertyName("customHttpsProvisioningState"u8);
                 writer.WriteStringValue(CustomHttpsProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomHttpsAvailabilityState))
+            if (options.Format != "W" && CustomHttpsAvailabilityState.HasValue)
             {
                 writer.WritePropertyName("customHttpsProvisioningSubstate"u8);
                 writer.WriteStringValue(CustomHttpsAvailabilityState.Value.ToString());
             }
-            if (Optional.IsDefined(CustomDomainHttpsContent))
+            if (CustomDomainHttpsContent != null)
             {
                 if (CustomDomainHttpsContent != null)
                 {
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("customHttpsParameters");
                 }
             }
-            if (Optional.IsDefined(ValidationData))
+            if (ValidationData != null)
             {
                 writer.WritePropertyName("validationData"u8);
                 writer.WriteStringValue(ValidationData);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> hostName = default;
-            Optional<CustomDomainResourceState> resourceState = default;
-            Optional<CustomHttpsProvisioningState> customHttpsProvisioningState = default;
-            Optional<CustomHttpsAvailabilityState> customHttpsProvisioningSubstate = default;
-            Optional<CustomDomainHttpsContent> customHttpsParameters = default;
-            Optional<string> validationData = default;
-            Optional<CustomHttpsProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string hostName = default;
+            CustomDomainResourceState? resourceState = default;
+            CustomHttpsProvisioningState? customHttpsProvisioningState = default;
+            CustomHttpsAvailabilityState? customHttpsProvisioningSubstate = default;
+            CustomDomainHttpsContent customHttpsParameters = default;
+            string validationData = default;
+            CustomHttpsProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,7 +244,19 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnCustomDomainData(id, name, type, systemData.Value, hostName.Value, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsParameters.Value, validationData.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new CdnCustomDomainData(
+                id,
+                name,
+                type,
+                systemData,
+                hostName,
+                resourceState,
+                customHttpsProvisioningState,
+                customHttpsProvisioningSubstate,
+                customHttpsParameters,
+                validationData,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnCustomDomainData>.Write(ModelReaderWriterOptions options)

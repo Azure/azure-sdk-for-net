@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Zone))
+            if (options.Format != "W" && Zone != null)
             {
                 writer.WritePropertyName("zone"u8);
                 writer.WriteStringValue(Zone);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedHAMode))
+            if (options.Format != "W" && !(SupportedHAMode is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedHAMode"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedGeoBackupRegions))
+            if (options.Format != "W" && !(SupportedGeoBackupRegions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedGeoBackupRegions"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFlexibleServerEditions))
+            if (options.Format != "W" && !(SupportedFlexibleServerEditions is ChangeTrackingList<MySqlFlexibleServerEditionCapability> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("supportedFlexibleServerEditions"u8);
                 writer.WriteStartArray();
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> zone = default;
-            Optional<IReadOnlyList<string>> supportedHAMode = default;
-            Optional<IReadOnlyList<string>> supportedGeoBackupRegions = default;
-            Optional<IReadOnlyList<MySqlFlexibleServerEditionCapability>> supportedFlexibleServerEditions = default;
+            string zone = default;
+            IReadOnlyList<string> supportedHAMode = default;
+            IReadOnlyList<string> supportedGeoBackupRegions = default;
+            IReadOnlyList<MySqlFlexibleServerEditionCapability> supportedFlexibleServerEditions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerCapabilityProperties(zone.Value, Optional.ToList(supportedHAMode), Optional.ToList(supportedGeoBackupRegions), Optional.ToList(supportedFlexibleServerEditions), serializedAdditionalRawData);
+            return new MySqlFlexibleServerCapabilityProperties(zone, supportedHAMode ?? new ChangeTrackingList<string>(), supportedGeoBackupRegions ?? new ChangeTrackingList<string>(), supportedFlexibleServerEditions ?? new ChangeTrackingList<MySqlFlexibleServerEditionCapability>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerCapabilityProperties>.Write(ModelReaderWriterOptions options)

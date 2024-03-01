@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,29 +56,29 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Workspace))
+            if (Workspace != null)
             {
                 writer.WritePropertyName("workspace"u8);
                 writer.WriteStringValue(Workspace);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Export))
+            if (!(Export is ChangeTrackingList<IotSecuritySolutionExportOption> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("export"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DisabledDataSources))
+            if (!(DisabledDataSources is ChangeTrackingList<IotSecuritySolutionDataSource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("disabledDataSources"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IotHubs))
+            if (!(IotHubs is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("iotHubs"u8);
                 writer.WriteStartArray();
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UserDefinedResources))
+            if (UserDefinedResources != null)
             {
                 writer.WritePropertyName("userDefinedResources"u8);
                 writer.WriteObjectValue(UserDefinedResources);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AutoDiscoveredResources))
+            if (options.Format != "W" && !(AutoDiscoveredResources is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("autoDiscoveredResources"u8);
                 writer.WriteStartArray();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RecommendationsConfiguration))
+            if (!(RecommendationsConfiguration is ChangeTrackingList<RecommendationConfigurationProperties> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("recommendationsConfiguration"u8);
                 writer.WriteStartArray();
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UnmaskedIPLoggingStatus))
+            if (UnmaskedIPLoggingStatus.HasValue)
             {
                 writer.WritePropertyName("unmaskedIpLoggingStatus"u8);
                 writer.WriteStringValue(UnmaskedIPLoggingStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AdditionalWorkspaces))
+            if (!(AdditionalWorkspaces is ChangeTrackingList<AdditionalWorkspacesProperties> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("additionalWorkspaces"u8);
                 writer.WriteStartArray();
@@ -187,23 +187,23 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> workspace = default;
-            Optional<string> displayName = default;
-            Optional<SecuritySolutionStatus> status = default;
-            Optional<IList<IotSecuritySolutionExportOption>> export = default;
-            Optional<IList<IotSecuritySolutionDataSource>> disabledDataSources = default;
-            Optional<IList<string>> iotHubs = default;
-            Optional<UserDefinedResourcesProperties> userDefinedResources = default;
-            Optional<IReadOnlyList<string>> autoDiscoveredResources = default;
-            Optional<IList<RecommendationConfigurationProperties>> recommendationsConfiguration = default;
-            Optional<UnmaskedIPLoggingStatus> unmaskedIPLoggingStatus = default;
-            Optional<IList<AdditionalWorkspacesProperties>> additionalWorkspaces = default;
+            SystemData systemData = default;
+            string workspace = default;
+            string displayName = default;
+            SecuritySolutionStatus? status = default;
+            IList<IotSecuritySolutionExportOption> export = default;
+            IList<IotSecuritySolutionDataSource> disabledDataSources = default;
+            IList<string> iotHubs = default;
+            UserDefinedResourcesProperties userDefinedResources = default;
+            IReadOnlyList<string> autoDiscoveredResources = default;
+            IList<RecommendationConfigurationProperties> recommendationsConfiguration = default;
+            UnmaskedIPLoggingStatus? unmaskedIPLoggingStatus = default;
+            IList<AdditionalWorkspacesProperties> additionalWorkspaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -390,7 +390,25 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecuritySolutionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, workspace.Value, displayName.Value, Optional.ToNullable(status), Optional.ToList(export), Optional.ToList(disabledDataSources), Optional.ToList(iotHubs), userDefinedResources.Value, Optional.ToList(autoDiscoveredResources), Optional.ToList(recommendationsConfiguration), Optional.ToNullable(unmaskedIPLoggingStatus), Optional.ToList(additionalWorkspaces), serializedAdditionalRawData);
+            return new IotSecuritySolutionData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                workspace,
+                displayName,
+                status,
+                export ?? new ChangeTrackingList<IotSecuritySolutionExportOption>(),
+                disabledDataSources ?? new ChangeTrackingList<IotSecuritySolutionDataSource>(),
+                iotHubs ?? new ChangeTrackingList<string>(),
+                userDefinedResources,
+                autoDiscoveredResources ?? new ChangeTrackingList<string>(),
+                recommendationsConfiguration ?? new ChangeTrackingList<RecommendationConfigurationProperties>(),
+                unmaskedIPLoggingStatus,
+                additionalWorkspaces ?? new ChangeTrackingList<AdditionalWorkspacesProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotSecuritySolutionData>.Write(ModelReaderWriterOptions options)

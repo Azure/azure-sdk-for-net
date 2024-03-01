@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ProtocolTypes))
+            if (!(ProtocolTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("protocolTypes"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VlanMatchCondition))
+            if (VlanMatchCondition != null)
             {
                 writer.WritePropertyName("vlanMatchCondition"u8);
                 writer.WriteObjectValue(VlanMatchCondition);
             }
-            if (Optional.IsDefined(IPCondition))
+            if (IPCondition != null)
             {
                 writer.WritePropertyName("ipCondition"u8);
                 writer.WriteObjectValue(IPCondition);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<string>> protocolTypes = default;
-            Optional<VlanMatchCondition> vlanMatchCondition = default;
-            Optional<IPMatchCondition> ipCondition = default;
+            IList<string> protocolTypes = default;
+            VlanMatchCondition vlanMatchCondition = default;
+            IPMatchCondition ipCondition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommonMatchConditions(Optional.ToList(protocolTypes), vlanMatchCondition.Value, ipCondition.Value, serializedAdditionalRawData);
+            return new CommonMatchConditions(protocolTypes ?? new ChangeTrackingList<string>(), vlanMatchCondition, ipCondition, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommonMatchConditions>.Write(ModelReaderWriterOptions options)

@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(PolicySchema))
+            if (PolicySchema != null)
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(PolicySchema);
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<BlobInventoryPolicySchema> policy = default;
+            SystemData systemData = default;
+            DateTimeOffset? lastModifiedTime = default;
+            BlobInventoryPolicySchema policy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobInventoryPolicyData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime), policy.Value, serializedAdditionalRawData);
+            return new BlobInventoryPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                lastModifiedTime,
+                policy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobInventoryPolicyData>.Write(ModelReaderWriterOptions options)

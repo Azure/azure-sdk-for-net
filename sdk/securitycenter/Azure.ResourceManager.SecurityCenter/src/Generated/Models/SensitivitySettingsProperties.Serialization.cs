@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SensitiveInfoTypesIds))
+            if (!(SensitiveInfoTypesIds is ChangeTrackingList<Guid> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sensitiveInfoTypesIds"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SensitivityThresholdLabelOrder))
+            if (SensitivityThresholdLabelOrder.HasValue)
             {
                 writer.WritePropertyName("sensitivityThresholdLabelOrder"u8);
                 writer.WriteNumberValue(SensitivityThresholdLabelOrder.Value);
             }
-            if (Optional.IsDefined(SensitivityThresholdLabelId))
+            if (SensitivityThresholdLabelId.HasValue)
             {
                 writer.WritePropertyName("sensitivityThresholdLabelId"u8);
                 writer.WriteStringValue(SensitivityThresholdLabelId.Value);
             }
-            if (Optional.IsDefined(MipInformation))
+            if (MipInformation != null)
             {
                 writer.WritePropertyName("mipInformation"u8);
                 writer.WriteObjectValue(MipInformation);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<Guid>> sensitiveInfoTypesIds = default;
-            Optional<float> sensitivityThresholdLabelOrder = default;
-            Optional<Guid> sensitivityThresholdLabelId = default;
-            Optional<GetSensitivitySettingsResponsePropertiesMipInformation> mipInformation = default;
+            IReadOnlyList<Guid> sensitiveInfoTypesIds = default;
+            float? sensitivityThresholdLabelOrder = default;
+            Guid? sensitivityThresholdLabelId = default;
+            GetSensitivitySettingsResponsePropertiesMipInformation mipInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensitivitySettingsProperties(Optional.ToList(sensitiveInfoTypesIds), Optional.ToNullable(sensitivityThresholdLabelOrder), Optional.ToNullable(sensitivityThresholdLabelId), mipInformation.Value, serializedAdditionalRawData);
+            return new SensitivitySettingsProperties(sensitiveInfoTypesIds ?? new ChangeTrackingList<Guid>(), sensitivityThresholdLabelOrder, sensitivityThresholdLabelId, mipInformation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SensitivitySettingsProperties>.Write(ModelReaderWriterOptions options)

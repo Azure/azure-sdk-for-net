@@ -17,18 +17,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>
         /// <param name="lastUpdatedOn"> Tag last update time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
         internal TagAttributesBase(string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (digest == null)
-            {
-                throw new ArgumentNullException(nameof(digest));
-            }
-
             Name = name;
             Digest = digest;
             CreatedOn = createdOn;

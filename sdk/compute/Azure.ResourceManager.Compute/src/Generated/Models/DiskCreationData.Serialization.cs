@@ -28,62 +28,62 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("createOption"u8);
             writer.WriteStringValue(CreateOption.ToString());
-            if (Optional.IsDefined(StorageAccountId))
+            if (StorageAccountId != null)
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (Optional.IsDefined(ImageReference))
+            if (ImageReference != null)
             {
                 writer.WritePropertyName("imageReference"u8);
                 writer.WriteObjectValue(ImageReference);
             }
-            if (Optional.IsDefined(GalleryImageReference))
+            if (GalleryImageReference != null)
             {
                 writer.WritePropertyName("galleryImageReference"u8);
                 writer.WriteObjectValue(GalleryImageReference);
             }
-            if (Optional.IsDefined(SourceUri))
+            if (SourceUri != null)
             {
                 writer.WritePropertyName("sourceUri"u8);
                 writer.WriteStringValue(SourceUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SourceResourceId))
+            if (SourceResourceId != null)
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceUniqueId))
+            if (options.Format != "W" && SourceUniqueId != null)
             {
                 writer.WritePropertyName("sourceUniqueId"u8);
                 writer.WriteStringValue(SourceUniqueId);
             }
-            if (Optional.IsDefined(UploadSizeBytes))
+            if (UploadSizeBytes.HasValue)
             {
                 writer.WritePropertyName("uploadSizeBytes"u8);
                 writer.WriteNumberValue(UploadSizeBytes.Value);
             }
-            if (Optional.IsDefined(LogicalSectorSize))
+            if (LogicalSectorSize.HasValue)
             {
                 writer.WritePropertyName("logicalSectorSize"u8);
                 writer.WriteNumberValue(LogicalSectorSize.Value);
             }
-            if (Optional.IsDefined(SecurityDataUri))
+            if (SecurityDataUri != null)
             {
                 writer.WritePropertyName("securityDataUri"u8);
                 writer.WriteStringValue(SecurityDataUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(IsPerformancePlusEnabled))
+            if (IsPerformancePlusEnabled.HasValue)
             {
                 writer.WritePropertyName("performancePlus"u8);
                 writer.WriteBooleanValue(IsPerformancePlusEnabled.Value);
             }
-            if (Optional.IsDefined(ElasticSanResourceId))
+            if (ElasticSanResourceId != null)
             {
                 writer.WritePropertyName("elasticSanResourceId"u8);
                 writer.WriteStringValue(ElasticSanResourceId);
             }
-            if (Optional.IsDefined(ProvisionedBandwidthCopySpeed))
+            if (ProvisionedBandwidthCopySpeed.HasValue)
             {
                 writer.WritePropertyName("provisionedBandwidthCopySpeed"u8);
                 writer.WriteStringValue(ProvisionedBandwidthCopySpeed.Value.ToString());
@@ -127,18 +127,18 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             DiskCreateOption createOption = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<ImageDiskReference> imageReference = default;
-            Optional<ImageDiskReference> galleryImageReference = default;
-            Optional<Uri> sourceUri = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<string> sourceUniqueId = default;
-            Optional<long> uploadSizeBytes = default;
-            Optional<int> logicalSectorSize = default;
-            Optional<Uri> securityDataUri = default;
-            Optional<bool> performancePlus = default;
-            Optional<ResourceIdentifier> elasticSanResourceId = default;
-            Optional<ProvisionedBandwidthCopyOption> provisionedBandwidthCopySpeed = default;
+            ResourceIdentifier storageAccountId = default;
+            ImageDiskReference imageReference = default;
+            ImageDiskReference galleryImageReference = default;
+            Uri sourceUri = default;
+            ResourceIdentifier sourceResourceId = default;
+            string sourceUniqueId = default;
+            long? uploadSizeBytes = default;
+            int? logicalSectorSize = default;
+            Uri securityDataUri = default;
+            bool? performancePlus = default;
+            ResourceIdentifier elasticSanResourceId = default;
+            ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,7 +258,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskCreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes), Optional.ToNullable(logicalSectorSize), securityDataUri.Value, Optional.ToNullable(performancePlus), elasticSanResourceId.Value, Optional.ToNullable(provisionedBandwidthCopySpeed), serializedAdditionalRawData);
+            return new DiskCreationData(
+                createOption,
+                storageAccountId,
+                imageReference,
+                galleryImageReference,
+                sourceUri,
+                sourceResourceId,
+                sourceUniqueId,
+                uploadSizeBytes,
+                logicalSectorSize,
+                securityDataUri,
+                performancePlus,
+                elasticSanResourceId,
+                provisionedBandwidthCopySpeed,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskCreationData>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkConfiguration))
+            if (NetworkConfiguration != null)
             {
                 writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteObjectValue(ApplicationServer);
             writer.WritePropertyName("databaseServer"u8);
             writer.WriteObjectValue(DatabaseServer);
-            if (Optional.IsDefined(HighAvailabilityConfig))
+            if (HighAvailabilityConfig != null)
             {
                 writer.WritePropertyName("highAvailabilityConfig"u8);
                 writer.WriteObjectValue(HighAvailabilityConfig);
             }
-            if (Optional.IsDefined(StorageConfiguration))
+            if (StorageConfiguration != null)
             {
                 writer.WritePropertyName("storageConfiguration"u8);
                 writer.WriteObjectValue(StorageConfiguration);
             }
-            if (Optional.IsDefined(CustomResourceNames))
+            if (CustomResourceNames != null)
             {
                 writer.WritePropertyName("customResourceNames"u8);
                 writer.WriteObjectValue(CustomResourceNames);
@@ -94,13 +94,13 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<NetworkConfiguration> networkConfiguration = default;
+            NetworkConfiguration networkConfiguration = default;
             CentralServerConfiguration centralServer = default;
             ApplicationServerConfiguration applicationServer = default;
             DatabaseConfiguration databaseServer = default;
-            Optional<HighAvailabilityConfiguration> highAvailabilityConfig = default;
-            Optional<SapStorageConfiguration> storageConfiguration = default;
-            Optional<ThreeTierCustomResourceNames> customResourceNames = default;
+            HighAvailabilityConfiguration highAvailabilityConfig = default;
+            SapStorageConfiguration storageConfiguration = default;
+            ThreeTierCustomResourceNames customResourceNames = default;
             SapDeploymentType deploymentType = default;
             string appResourceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -174,7 +174,17 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreeTierConfiguration(deploymentType, appResourceGroup, serializedAdditionalRawData, networkConfiguration.Value, centralServer, applicationServer, databaseServer, highAvailabilityConfig.Value, storageConfiguration.Value, customResourceNames.Value);
+            return new ThreeTierConfiguration(
+                deploymentType,
+                appResourceGroup,
+                serializedAdditionalRawData,
+                networkConfiguration,
+                centralServer,
+                applicationServer,
+                databaseServer,
+                highAvailabilityConfig,
+                storageConfiguration,
+                customResourceNames);
         }
 
         BinaryData IPersistableModel<ThreeTierConfiguration>.Write(ModelReaderWriterOptions options)

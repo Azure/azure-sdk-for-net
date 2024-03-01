@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.NewRelicObservability
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(LogRules))
+            if (LogRules != null)
             {
                 writer.WritePropertyName("logRules"u8);
                 writer.WriteObjectValue(LogRules);
             }
-            if (Optional.IsDefined(MetricRules))
+            if (MetricRules != null)
             {
                 writer.WritePropertyName("metricRules"u8);
                 writer.WriteObjectValue(MetricRules);
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.NewRelicObservability
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NewRelicProvisioningState> provisioningState = default;
-            Optional<NewRelicObservabilityLogRules> logRules = default;
-            Optional<NewRelicObservabilityMetricRules> metricRules = default;
+            SystemData systemData = default;
+            NewRelicProvisioningState? provisioningState = default;
+            NewRelicObservabilityLogRules logRules = default;
+            NewRelicObservabilityMetricRules metricRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,7 +184,15 @@ namespace Azure.ResourceManager.NewRelicObservability
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicObservabilityTagRuleData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), logRules.Value, metricRules.Value, serializedAdditionalRawData);
+            return new NewRelicObservabilityTagRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                logRules,
+                metricRules,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicObservabilityTagRuleData>.Write(ModelReaderWriterOptions options)

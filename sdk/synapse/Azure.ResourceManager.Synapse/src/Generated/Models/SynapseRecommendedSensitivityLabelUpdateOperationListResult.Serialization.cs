@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Operations))
+            if (!(Operations is ChangeTrackingList<SynapseRecommendedSensitivityLabelUpdate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IList<SynapseRecommendedSensitivityLabelUpdate>> operations = default;
+            IList<SynapseRecommendedSensitivityLabelUpdate> operations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseRecommendedSensitivityLabelUpdateOperationListResult(Optional.ToList(operations), serializedAdditionalRawData);
+            return new SynapseRecommendedSensitivityLabelUpdateOperationListResult(operations ?? new ChangeTrackingList<SynapseRecommendedSensitivityLabelUpdate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseRecommendedSensitivityLabelUpdateOperationListResult>.Write(ModelReaderWriterOptions options)

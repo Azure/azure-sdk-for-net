@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,39 +67,39 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Uuid))
+            if (options.Format != "W" && Uuid != null)
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (Optional.IsDefined(VCenterId))
+            if (VCenterId != null)
             {
                 writer.WritePropertyName("vCenterId"u8);
                 writer.WriteStringValue(VCenterId);
             }
-            if (Optional.IsDefined(MoRefId))
+            if (MoRefId != null)
             {
                 writer.WritePropertyName("moRefId"u8);
                 writer.WriteStringValue(MoRefId);
             }
-            if (Optional.IsDefined(InventoryItemId))
+            if (InventoryItemId != null)
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MoName))
+            if (options.Format != "W" && MoName != null)
             {
                 writer.WritePropertyName("moName"u8);
                 writer.WriteStringValue(MoName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
+            if (options.Format != "W" && !(Statuses is ChangeTrackingList<VMwareResourceStatus> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -109,32 +109,32 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomResourceName))
+            if (options.Format != "W" && CustomResourceName != null)
             {
                 writer.WritePropertyName("customResourceName"u8);
                 writer.WriteStringValue(CustomResourceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(OverallMemoryUsageGB))
+            if (options.Format != "W" && OverallMemoryUsageGB.HasValue)
             {
                 writer.WritePropertyName("overallMemoryUsageGB"u8);
                 writer.WriteNumberValue(OverallMemoryUsageGB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MemorySizeGB))
+            if (options.Format != "W" && MemorySizeGB.HasValue)
             {
                 writer.WritePropertyName("memorySizeGB"u8);
                 writer.WriteNumberValue(MemorySizeGB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(OverallCpuUsageMHz))
+            if (options.Format != "W" && OverallCpuUsageMHz.HasValue)
             {
                 writer.WritePropertyName("overallCpuUsageMHz"u8);
                 writer.WriteNumberValue(OverallCpuUsageMHz.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CpuMhz))
+            if (options.Format != "W" && CpuMhz.HasValue)
             {
                 writer.WritePropertyName("cpuMhz"u8);
                 writer.WriteNumberValue(CpuMhz.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DatastoreIds))
+            if (options.Format != "W" && !(DatastoreIds is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("datastoreIds"u8);
                 writer.WriteStartArray();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkIds))
+            if (options.Format != "W" && !(NetworkIds is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("networkIds"u8);
                 writer.WriteStartArray();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -198,28 +198,28 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ExtendedLocation extendedLocation = default;
+            string kind = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uuid = default;
-            Optional<string> vCenterId = default;
-            Optional<string> moRefId = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> moName = default;
-            Optional<IReadOnlyList<VMwareResourceStatus>> statuses = default;
-            Optional<string> customResourceName = default;
-            Optional<long> overallMemoryUsageGB = default;
-            Optional<long> memorySizeGB = default;
-            Optional<long> overallCpuUsageMHz = default;
-            Optional<long> cpuMhz = default;
-            Optional<IReadOnlyList<string>> datastoreIds = default;
-            Optional<IReadOnlyList<string>> networkIds = default;
-            Optional<VMwareResourceProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string uuid = default;
+            string vCenterId = default;
+            string moRefId = default;
+            string inventoryItemId = default;
+            string moName = default;
+            IReadOnlyList<VMwareResourceStatus> statuses = default;
+            string customResourceName = default;
+            long? overallMemoryUsageGB = default;
+            long? memorySizeGB = default;
+            long? overallCpuUsageMHz = default;
+            long? cpuMhz = default;
+            IReadOnlyList<string> datastoreIds = default;
+            IReadOnlyList<string> networkIds = default;
+            VMwareResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -416,7 +416,30 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareHostData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToList(statuses), customResourceName.Value, Optional.ToNullable(overallMemoryUsageGB), Optional.ToNullable(memorySizeGB), Optional.ToNullable(overallCpuUsageMHz), Optional.ToNullable(cpuMhz), Optional.ToList(datastoreIds), Optional.ToList(networkIds), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VMwareHostData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                kind,
+                uuid,
+                vCenterId,
+                moRefId,
+                inventoryItemId,
+                moName,
+                statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
+                customResourceName,
+                overallMemoryUsageGB,
+                memorySizeGB,
+                overallCpuUsageMHz,
+                cpuMhz,
+                datastoreIds ?? new ChangeTrackingList<string>(),
+                networkIds ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareHostData>.Write(ModelReaderWriterOptions options)

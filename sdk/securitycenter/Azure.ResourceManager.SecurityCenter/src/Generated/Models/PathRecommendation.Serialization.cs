@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(Action))
+            if (Action.HasValue)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (Optional.IsDefined(IotSecurityRecommendationType))
+            if (IotSecurityRecommendationType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IotSecurityRecommendationType.Value.ToString());
             }
-            if (Optional.IsDefined(PublisherInfo))
+            if (PublisherInfo != null)
             {
                 writer.WritePropertyName("publisherInfo"u8);
                 writer.WriteObjectValue(PublisherInfo);
             }
-            if (Optional.IsDefined(IsCommon))
+            if (IsCommon.HasValue)
             {
                 writer.WritePropertyName("common"u8);
                 writer.WriteBooleanValue(IsCommon.Value);
             }
-            if (Optional.IsCollectionDefined(UserSids))
+            if (!(UserSids is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("userSids"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Usernames))
+            if (!(Usernames is ChangeTrackingList<UserRecommendation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("usernames"u8);
                 writer.WriteStartArray();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FileType))
+            if (FileType.HasValue)
             {
                 writer.WritePropertyName("fileType"u8);
                 writer.WriteStringValue(FileType.Value.ToString());
             }
-            if (Optional.IsDefined(ConfigurationStatus))
+            if (ConfigurationStatus.HasValue)
             {
                 writer.WritePropertyName("configurationStatus"u8);
                 writer.WriteStringValue(ConfigurationStatus.Value.ToString());
@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<RecommendationAction> action = default;
-            Optional<IotSecurityRecommendationType> type = default;
-            Optional<SecurityCenterPublisherInfo> publisherInfo = default;
-            Optional<bool> common = default;
-            Optional<IList<string>> userSids = default;
-            Optional<IList<UserRecommendation>> usernames = default;
-            Optional<PathRecommendationFileType> fileType = default;
-            Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
+            string path = default;
+            RecommendationAction? action = default;
+            IotSecurityRecommendationType? type = default;
+            SecurityCenterPublisherInfo publisherInfo = default;
+            bool? common = default;
+            IList<string> userSids = default;
+            IList<UserRecommendation> usernames = default;
+            PathRecommendationFileType? fileType = default;
+            SecurityCenterConfigurationStatus? configurationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +225,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PathRecommendation(path.Value, Optional.ToNullable(action), Optional.ToNullable(type), publisherInfo.Value, Optional.ToNullable(common), Optional.ToList(userSids), Optional.ToList(usernames), Optional.ToNullable(fileType), Optional.ToNullable(configurationStatus), serializedAdditionalRawData);
+            return new PathRecommendation(
+                path,
+                action,
+                type,
+                publisherInfo,
+                common,
+                userSids ?? new ChangeTrackingList<string>(),
+                usernames ?? new ChangeTrackingList<UserRecommendation>(),
+                fileType,
+                configurationStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PathRecommendation>.Write(ModelReaderWriterOptions options)

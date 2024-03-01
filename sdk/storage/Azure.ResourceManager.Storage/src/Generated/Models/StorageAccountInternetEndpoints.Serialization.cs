@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(BlobUri))
+            if (options.Format != "W" && BlobUri != null)
             {
                 writer.WritePropertyName("blob"u8);
                 writer.WriteStringValue(BlobUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(FileUri))
+            if (options.Format != "W" && FileUri != null)
             {
                 writer.WritePropertyName("file"u8);
                 writer.WriteStringValue(FileUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(WebUri))
+            if (options.Format != "W" && WebUri != null)
             {
                 writer.WritePropertyName("web"u8);
                 writer.WriteStringValue(WebUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(DfsUri))
+            if (options.Format != "W" && DfsUri != null)
             {
                 writer.WritePropertyName("dfs"u8);
                 writer.WriteStringValue(DfsUri.AbsoluteUri);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<Uri> blob = default;
-            Optional<Uri> file = default;
-            Optional<Uri> web = default;
-            Optional<Uri> dfs = default;
+            Uri blob = default;
+            Uri file = default;
+            Uri web = default;
+            Uri dfs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountInternetEndpoints(blob.Value, file.Value, web.Value, dfs.Value, serializedAdditionalRawData);
+            return new StorageAccountInternetEndpoints(blob, file, web, dfs, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountInternetEndpoints>.Write(ModelReaderWriterOptions options)

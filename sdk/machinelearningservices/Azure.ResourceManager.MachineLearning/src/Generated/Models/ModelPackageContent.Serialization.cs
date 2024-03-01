@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BaseEnvironmentSource))
+            if (BaseEnvironmentSource != null)
             {
                 if (BaseEnvironmentSource != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("baseEnvironmentSource");
                 }
             }
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            if (!(EnvironmentVariables is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (EnvironmentVariables != null)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("inferencingServer"u8);
             writer.WriteObjectValue(InferencingServer);
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingList<ModelPackageInput> collection0 && collection0.IsUndefined))
             {
                 if (Inputs != null)
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("inputs");
                 }
             }
-            if (Optional.IsDefined(ModelConfiguration))
+            if (ModelConfiguration != null)
             {
                 if (ModelConfiguration != null)
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelConfiguration");
                 }
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 if (Tags != null)
                 {
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<BaseEnvironmentSource> baseEnvironmentSource = default;
-            Optional<IDictionary<string, string>> environmentVariables = default;
+            BaseEnvironmentSource baseEnvironmentSource = default;
+            IDictionary<string, string> environmentVariables = default;
             InferencingServer inferencingServer = default;
-            Optional<IList<ModelPackageInput>> inputs = default;
-            Optional<ModelConfiguration> modelConfiguration = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IList<ModelPackageInput> inputs = default;
+            ModelConfiguration modelConfiguration = default;
+            IDictionary<string, string> tags = default;
             string targetEnvironmentId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -237,7 +237,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelPackageContent(baseEnvironmentSource.Value, Optional.ToDictionary(environmentVariables), inferencingServer, Optional.ToList(inputs), modelConfiguration.Value, Optional.ToDictionary(tags), targetEnvironmentId, serializedAdditionalRawData);
+            return new ModelPackageContent(
+                baseEnvironmentSource,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                inferencingServer,
+                inputs ?? new ChangeTrackingList<ModelPackageInput>(),
+                modelConfiguration,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                targetEnvironmentId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ModelPackageContent>.Write(ModelReaderWriterOptions options)

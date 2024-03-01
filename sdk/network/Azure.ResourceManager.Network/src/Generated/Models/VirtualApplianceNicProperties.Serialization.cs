@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
+            if (options.Format != "W" && PublicIPAddress != null)
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
+            if (options.Format != "W" && PrivateIPAddress != null)
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceName))
+            if (options.Format != "W" && InstanceName != null)
             {
                 writer.WritePropertyName("instanceName"u8);
                 writer.WriteStringValue(InstanceName);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> publicIPAddress = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> instanceName = default;
+            string name = default;
+            string publicIPAddress = default;
+            string privateIPAddress = default;
+            string instanceName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualApplianceNicProperties(name.Value, publicIPAddress.Value, privateIPAddress.Value, instanceName.Value, serializedAdditionalRawData);
+            return new VirtualApplianceNicProperties(name, publicIPAddress, privateIPAddress, instanceName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualApplianceNicProperties>.Write(ModelReaderWriterOptions options)

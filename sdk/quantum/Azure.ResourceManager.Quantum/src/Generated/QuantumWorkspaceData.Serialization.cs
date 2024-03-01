@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Quantum
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.Quantum
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Providers))
+            if (!(Providers is ChangeTrackingList<Provider> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("providers"u8);
                 writer.WriteStartArray();
@@ -78,22 +78,22 @@ namespace Azure.ResourceManager.Quantum
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Usable))
+            if (options.Format != "W" && Usable.HasValue)
             {
                 writer.WritePropertyName("usable"u8);
                 writer.WriteStringValue(Usable.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(StorageAccount))
+            if (StorageAccount != null)
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteStringValue(StorageAccount);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndpointUri))
+            if (options.Format != "W" && EndpointUri != null)
             {
                 writer.WritePropertyName("endpointUri"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);
@@ -137,18 +137,18 @@ namespace Azure.ResourceManager.Quantum
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<Provider>> providers = default;
-            Optional<UsableStatus> usable = default;
-            Optional<ProvisioningStatus> provisioningState = default;
-            Optional<string> storageAccount = default;
-            Optional<Uri> endpointUri = default;
+            SystemData systemData = default;
+            IList<Provider> providers = default;
+            UsableStatus? usable = default;
+            ProvisioningStatus? provisioningState = default;
+            string storageAccount = default;
+            Uri endpointUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,7 +269,20 @@ namespace Azure.ResourceManager.Quantum
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuantumWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToList(providers), Optional.ToNullable(usable), Optional.ToNullable(provisioningState), storageAccount.Value, endpointUri.Value, serializedAdditionalRawData);
+            return new QuantumWorkspaceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                providers ?? new ChangeTrackingList<Provider>(),
+                usable,
+                provisioningState,
+                storageAccount,
+                endpointUri,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuantumWorkspaceData>.Write(ModelReaderWriterOptions options)

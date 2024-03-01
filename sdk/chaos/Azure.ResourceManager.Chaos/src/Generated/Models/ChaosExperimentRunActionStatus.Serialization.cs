@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ActionName))
+            if (options.Format != "W" && ActionName != null)
             {
                 writer.WritePropertyName("actionName"u8);
                 writer.WriteStringValue(ActionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ActionId))
+            if (options.Format != "W" && ActionId != null)
             {
                 writer.WritePropertyName("actionId"u8);
                 writer.WriteStringValue(ActionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Targets))
+            if (options.Format != "W" && !(Targets is ChangeTrackingList<ExperimentExecutionActionTargetDetailsProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<string> actionName = default;
-            Optional<string> actionId = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<ExperimentExecutionActionTargetDetailsProperties>> targets = default;
+            string actionName = default;
+            string actionId = default;
+            string status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            IReadOnlyList<ExperimentExecutionActionTargetDetailsProperties> targets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosExperimentRunActionStatus(actionName.Value, actionId.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(targets), serializedAdditionalRawData);
+            return new ChaosExperimentRunActionStatus(
+                actionName,
+                actionId,
+                status,
+                startTime,
+                endTime,
+                targets ?? new ChangeTrackingList<ExperimentExecutionActionTargetDetailsProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosExperimentRunActionStatus>.Write(ModelReaderWriterOptions options)

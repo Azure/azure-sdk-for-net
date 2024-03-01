@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArtifactId))
+            if (ArtifactId != null)
             {
                 writer.WritePropertyName("artifactId"u8);
                 writer.WriteStringValue(ArtifactId);
             }
-            if (Optional.IsDefined(ArtifactTitle))
+            if (ArtifactTitle != null)
             {
                 writer.WritePropertyName("artifactTitle"u8);
                 writer.WriteStringValue(ArtifactTitle);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<DevTestLabArtifactParameter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(DeploymentStatusMessage))
+            if (DeploymentStatusMessage != null)
             {
                 writer.WritePropertyName("deploymentStatusMessage"u8);
                 writer.WriteStringValue(DeploymentStatusMessage);
             }
-            if (Optional.IsDefined(VmExtensionStatusMessage))
+            if (VmExtensionStatusMessage != null)
             {
                 writer.WritePropertyName("vmExtensionStatusMessage"u8);
                 writer.WriteStringValue(VmExtensionStatusMessage);
             }
-            if (Optional.IsDefined(InstallOn))
+            if (InstallOn.HasValue)
             {
                 writer.WritePropertyName("installTime"u8);
                 writer.WriteStringValue(InstallOn.Value, "O");
@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> artifactId = default;
-            Optional<string> artifactTitle = default;
-            Optional<IList<DevTestLabArtifactParameter>> parameters = default;
-            Optional<string> status = default;
-            Optional<string> deploymentStatusMessage = default;
-            Optional<string> vmExtensionStatusMessage = default;
-            Optional<DateTimeOffset> installTime = default;
+            string artifactId = default;
+            string artifactTitle = default;
+            IList<DevTestLabArtifactParameter> parameters = default;
+            string status = default;
+            string deploymentStatusMessage = default;
+            string vmExtensionStatusMessage = default;
+            DateTimeOffset? installTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabArtifactInstallInfo(artifactId.Value, artifactTitle.Value, Optional.ToList(parameters), status.Value, deploymentStatusMessage.Value, vmExtensionStatusMessage.Value, Optional.ToNullable(installTime), serializedAdditionalRawData);
+            return new DevTestLabArtifactInstallInfo(
+                artifactId,
+                artifactTitle,
+                parameters ?? new ChangeTrackingList<DevTestLabArtifactParameter>(),
+                status,
+                deploymentStatusMessage,
+                vmExtensionStatusMessage,
+                installTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabArtifactInstallInfo>.Write(ModelReaderWriterOptions options)

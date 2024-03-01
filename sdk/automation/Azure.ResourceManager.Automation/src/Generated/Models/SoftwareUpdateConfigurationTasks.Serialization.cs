@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PreTask))
+            if (PreTask != null)
             {
                 writer.WritePropertyName("preTask"u8);
                 writer.WriteObjectValue(PreTask);
             }
-            if (Optional.IsDefined(PostTask))
+            if (PostTask != null)
             {
                 writer.WritePropertyName("postTask"u8);
                 writer.WriteObjectValue(PostTask);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<SoftwareUpdateConfigurationTaskProperties> preTask = default;
-            Optional<SoftwareUpdateConfigurationTaskProperties> postTask = default;
+            SoftwareUpdateConfigurationTaskProperties preTask = default;
+            SoftwareUpdateConfigurationTaskProperties postTask = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationTasks(preTask.Value, postTask.Value, serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationTasks(preTask, postTask, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationTasks>.Write(ModelReaderWriterOptions options)

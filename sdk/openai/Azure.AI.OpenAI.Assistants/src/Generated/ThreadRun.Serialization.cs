@@ -37,7 +37,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStringValue(AssistantId);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsDefined(RequiredAction))
+            if (RequiredAction != null)
             {
                 if (RequiredAction != null)
                 {
@@ -123,7 +123,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 writer.WriteNull("failed_at");
             }
-            if (Metadata != null && Optional.IsCollectionDefined(Metadata))
+            if (Metadata != null && !(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -181,7 +181,7 @@ namespace Azure.AI.OpenAI.Assistants
             string threadId = default;
             string assistantId = default;
             RunStatus status = default;
-            Optional<RequiredAction> requiredAction = default;
+            RequiredAction requiredAction = default;
             RunError lastError = default;
             string model = default;
             string instructions = default;
@@ -324,7 +324,26 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreadRun(id, @object, threadId, assistantId, status, requiredAction.Value, lastError, model, instructions, tools, fileIds, createdAt, expiresAt, startedAt, completedAt, cancelledAt, failedAt, metadata, serializedAdditionalRawData);
+            return new ThreadRun(
+                id,
+                @object,
+                threadId,
+                assistantId,
+                status,
+                requiredAction,
+                lastError,
+                model,
+                instructions,
+                tools,
+                fileIds,
+                createdAt,
+                expiresAt,
+                startedAt,
+                completedAt,
+                cancelledAt,
+                failedAt,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreadRun>.Write(ModelReaderWriterOptions options)

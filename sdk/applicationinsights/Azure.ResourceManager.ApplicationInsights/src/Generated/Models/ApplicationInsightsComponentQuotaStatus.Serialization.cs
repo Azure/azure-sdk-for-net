@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AppId))
+            if (options.Format != "W" && AppId != null)
             {
                 writer.WritePropertyName("AppId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ShouldBeThrottled))
+            if (options.Format != "W" && ShouldBeThrottled.HasValue)
             {
                 writer.WritePropertyName("ShouldBeThrottled"u8);
                 writer.WriteBooleanValue(ShouldBeThrottled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpirationTime))
+            if (options.Format != "W" && ExpirationTime != null)
             {
                 writer.WritePropertyName("ExpirationTime"u8);
                 writer.WriteStringValue(ExpirationTime);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> appId = default;
-            Optional<bool> shouldBeThrottled = default;
-            Optional<string> expirationTime = default;
+            string appId = default;
+            bool? shouldBeThrottled = default;
+            string expirationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentQuotaStatus(appId.Value, Optional.ToNullable(shouldBeThrottled), expirationTime.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentQuotaStatus(appId, shouldBeThrottled, expirationTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentQuotaStatus>.Write(ModelReaderWriterOptions options)

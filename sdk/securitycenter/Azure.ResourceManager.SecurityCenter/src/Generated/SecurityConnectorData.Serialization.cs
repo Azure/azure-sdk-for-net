@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.SecurityCenter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,29 +67,29 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HierarchyIdentifier))
+            if (HierarchyIdentifier != null)
             {
                 writer.WritePropertyName("hierarchyIdentifier"u8);
                 writer.WriteStringValue(HierarchyIdentifier);
             }
-            if (options.Format != "W" && Optional.IsDefined(HierarchyIdentifierTrialEndOn))
+            if (options.Format != "W" && HierarchyIdentifierTrialEndOn.HasValue)
             {
                 writer.WritePropertyName("hierarchyIdentifierTrialEndDate"u8);
                 writer.WriteStringValue(HierarchyIdentifierTrialEndOn.Value, "O");
             }
-            if (Optional.IsDefined(EnvironmentName))
+            if (EnvironmentName.HasValue)
             {
                 writer.WritePropertyName("environmentName"u8);
                 writer.WriteStringValue(EnvironmentName.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Offerings))
+            if (!(Offerings is ChangeTrackingList<SecurityCenterCloudOffering> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("offerings"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnvironmentData))
+            if (EnvironmentData != null)
             {
                 writer.WritePropertyName("environmentData"u8);
                 writer.WriteObjectValue(EnvironmentData);
@@ -143,19 +143,19 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string kind = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> hierarchyIdentifier = default;
-            Optional<DateTimeOffset> hierarchyIdentifierTrialEndDate = default;
-            Optional<SecurityCenterCloudName> environmentName = default;
-            Optional<IList<SecurityCenterCloudOffering>> offerings = default;
-            Optional<SecurityConnectorEnvironment> environmentData = default;
+            SystemData systemData = default;
+            string hierarchyIdentifier = default;
+            DateTimeOffset? hierarchyIdentifierTrialEndDate = default;
+            SecurityCenterCloudName? environmentName = default;
+            IList<SecurityCenterCloudOffering> offerings = default;
+            SecurityConnectorEnvironment environmentData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -281,7 +281,21 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityConnectorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, hierarchyIdentifier.Value, Optional.ToNullable(hierarchyIdentifierTrialEndDate), Optional.ToNullable(environmentName), Optional.ToList(offerings), environmentData.Value, kind.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityConnectorData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                hierarchyIdentifier,
+                hierarchyIdentifierTrialEndDate,
+                environmentName,
+                offerings ?? new ChangeTrackingList<SecurityCenterCloudOffering>(),
+                environmentData,
+                kind,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityConnectorData>.Write(ModelReaderWriterOptions options)

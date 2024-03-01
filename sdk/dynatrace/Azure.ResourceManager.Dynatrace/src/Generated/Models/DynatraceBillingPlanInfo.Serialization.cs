@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UsageType))
+            if (UsageType != null)
             {
                 writer.WritePropertyName("usageType"u8);
                 writer.WriteStringValue(UsageType);
             }
-            if (Optional.IsDefined(BillingCycle))
+            if (BillingCycle != null)
             {
                 writer.WritePropertyName("billingCycle"u8);
                 writer.WriteStringValue(BillingCycle);
             }
-            if (Optional.IsDefined(PlanDetails))
+            if (PlanDetails != null)
             {
                 writer.WritePropertyName("planDetails"u8);
                 writer.WriteStringValue(PlanDetails);
             }
-            if (Optional.IsDefined(EffectiveOn))
+            if (EffectiveOn.HasValue)
             {
                 writer.WritePropertyName("effectiveDate"u8);
                 writer.WriteStringValue(EffectiveOn.Value, "O");
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<string> usageType = default;
-            Optional<string> billingCycle = default;
-            Optional<string> planDetails = default;
-            Optional<DateTimeOffset> effectiveDate = default;
+            string usageType = default;
+            string billingCycle = default;
+            string planDetails = default;
+            DateTimeOffset? effectiveDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceBillingPlanInfo(usageType.Value, billingCycle.Value, planDetails.Value, Optional.ToNullable(effectiveDate), serializedAdditionalRawData);
+            return new DynatraceBillingPlanInfo(usageType, billingCycle, planDetails, effectiveDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceBillingPlanInfo>.Write(ModelReaderWriterOptions options)

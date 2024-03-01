@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ThirdPartyProviderConsent))
+            if (ThirdPartyProviderConsent != null)
             {
                 writer.WritePropertyName("thirdPartyProviderConsent"u8);
                 writer.WriteObjectValue(ThirdPartyProviderConsent);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ProviderConsentDefinition> thirdPartyProviderConsent = default;
+            ProviderConsentDefinition thirdPartyProviderConsent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderRegistrationContent(thirdPartyProviderConsent.Value, serializedAdditionalRawData);
+            return new ProviderRegistrationContent(thirdPartyProviderConsent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderRegistrationContent>.Write(ModelReaderWriterOptions options)

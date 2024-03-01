@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisableProtectionReason))
+            if (DisableProtectionReason.HasValue)
             {
                 writer.WritePropertyName("disableProtectionReason"u8);
                 writer.WriteStringValue(DisableProtectionReason.Value.ToString());
             }
-            if (Optional.IsDefined(ReplicationProviderContent))
+            if (ReplicationProviderContent != null)
             {
                 writer.WritePropertyName("replicationProviderInput"u8);
                 writer.WriteObjectValue(ReplicationProviderContent);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<DisableProtectionReason> disableProtectionReason = default;
-            Optional<DisableProtectionProviderSpecificContent> replicationProviderContent = default;
+            DisableProtectionReason? disableProtectionReason = default;
+            DisableProtectionProviderSpecificContent replicationProviderContent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DisableProtectionProperties(Optional.ToNullable(disableProtectionReason), replicationProviderContent.Value, serializedAdditionalRawData);
+            return new DisableProtectionProperties(disableProtectionReason, replicationProviderContent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DisableProtectionProperties>.Write(ModelReaderWriterOptions options)

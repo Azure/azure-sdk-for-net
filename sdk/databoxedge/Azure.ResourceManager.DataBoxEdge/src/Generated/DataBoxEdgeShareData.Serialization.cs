@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             writer.WriteStringValue(ShareStatus.ToString());
             writer.WritePropertyName("monitoringStatus"u8);
             writer.WriteStringValue(MonitoringStatus.ToString());
-            if (Optional.IsDefined(AzureContainerInfo))
+            if (AzureContainerInfo != null)
             {
                 writer.WritePropertyName("azureContainerInfo"u8);
                 writer.WriteObjectValue(AzureContainerInfo);
             }
             writer.WritePropertyName("accessProtocol"u8);
             writer.WriteStringValue(AccessProtocol.ToString());
-            if (Optional.IsCollectionDefined(UserAccessRights))
+            if (!(UserAccessRights is ChangeTrackingList<UserAccessRight> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("userAccessRights"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClientAccessRights))
+            if (!(ClientAccessRights is ChangeTrackingList<ClientAccessRight> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("clientAccessRights"u8);
                 writer.WriteStartArray();
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RefreshDetails))
+            if (RefreshDetails != null)
             {
                 writer.WritePropertyName("refreshDetails"u8);
                 writer.WriteObjectValue(RefreshDetails);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ShareMappings))
+            if (options.Format != "W" && !(ShareMappings is ChangeTrackingList<DataBoxEdgeMountPointMap> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("shareMappings"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DataPolicy))
+            if (DataPolicy.HasValue)
             {
                 writer.WritePropertyName("dataPolicy"u8);
                 writer.WriteStringValue(DataPolicy.Value.ToString());
@@ -148,17 +148,17 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string description = default;
             ShareStatus shareStatus = default;
             DataBoxEdgeShareMonitoringStatus monitoringStatus = default;
-            Optional<DataBoxEdgeStorageContainerInfo> azureContainerInfo = default;
+            DataBoxEdgeStorageContainerInfo azureContainerInfo = default;
             ShareAccessProtocol accessProtocol = default;
-            Optional<IList<UserAccessRight>> userAccessRights = default;
-            Optional<IList<ClientAccessRight>> clientAccessRights = default;
-            Optional<DataBoxEdgeRefreshDetails> refreshDetails = default;
-            Optional<IReadOnlyList<DataBoxEdgeMountPointMap>> shareMappings = default;
-            Optional<DataBoxEdgeDataPolicy> dataPolicy = default;
+            IList<UserAccessRight> userAccessRights = default;
+            IList<ClientAccessRight> clientAccessRights = default;
+            DataBoxEdgeRefreshDetails refreshDetails = default;
+            IReadOnlyList<DataBoxEdgeMountPointMap> shareMappings = default;
+            DataBoxEdgeDataPolicy? dataPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -294,7 +294,22 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeShareData(id, name, type, systemData.Value, description.Value, shareStatus, monitoringStatus, azureContainerInfo.Value, accessProtocol, Optional.ToList(userAccessRights), Optional.ToList(clientAccessRights), refreshDetails.Value, Optional.ToList(shareMappings), Optional.ToNullable(dataPolicy), serializedAdditionalRawData);
+            return new DataBoxEdgeShareData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                shareStatus,
+                monitoringStatus,
+                azureContainerInfo,
+                accessProtocol,
+                userAccessRights ?? new ChangeTrackingList<UserAccessRight>(),
+                clientAccessRights ?? new ChangeTrackingList<ClientAccessRight>(),
+                refreshDetails,
+                shareMappings ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>(),
+                dataPolicy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeShareData>.Write(ModelReaderWriterOptions options)

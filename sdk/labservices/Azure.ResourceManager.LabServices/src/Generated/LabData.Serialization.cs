@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.LabServices
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,64 +56,64 @@ namespace Azure.ResourceManager.LabServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutoShutdownProfile))
+            if (AutoShutdownProfile != null)
             {
                 writer.WritePropertyName("autoShutdownProfile"u8);
                 writer.WriteObjectValue(AutoShutdownProfile);
             }
-            if (Optional.IsDefined(ConnectionProfile))
+            if (ConnectionProfile != null)
             {
                 writer.WritePropertyName("connectionProfile"u8);
                 writer.WriteObjectValue(ConnectionProfile);
             }
-            if (Optional.IsDefined(VirtualMachineProfile))
+            if (VirtualMachineProfile != null)
             {
                 writer.WritePropertyName("virtualMachineProfile"u8);
                 writer.WriteObjectValue(VirtualMachineProfile);
             }
-            if (Optional.IsDefined(SecurityProfile))
+            if (SecurityProfile != null)
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (Optional.IsDefined(RosterProfile))
+            if (RosterProfile != null)
             {
                 writer.WritePropertyName("rosterProfile"u8);
                 writer.WriteObjectValue(RosterProfile);
             }
-            if (Optional.IsDefined(LabPlanId))
+            if (LabPlanId != null)
             {
                 writer.WritePropertyName("labPlanId"u8);
                 writer.WriteStringValue(LabPlanId);
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(NetworkProfile))
+            if (NetworkProfile != null)
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
@@ -157,23 +157,23 @@ namespace Azure.ResourceManager.LabServices
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LabAutoShutdownProfile> autoShutdownProfile = default;
-            Optional<LabConnectionProfile> connectionProfile = default;
-            Optional<LabVirtualMachineProfile> virtualMachineProfile = default;
-            Optional<LabSecurityProfile> securityProfile = default;
-            Optional<LabRosterProfile> rosterProfile = default;
-            Optional<ResourceIdentifier> labPlanId = default;
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<LabServicesProvisioningState> provisioningState = default;
-            Optional<LabNetworkProfile> networkProfile = default;
-            Optional<LabState> state = default;
+            SystemData systemData = default;
+            LabAutoShutdownProfile autoShutdownProfile = default;
+            LabConnectionProfile connectionProfile = default;
+            LabVirtualMachineProfile virtualMachineProfile = default;
+            LabSecurityProfile securityProfile = default;
+            LabRosterProfile rosterProfile = default;
+            ResourceIdentifier labPlanId = default;
+            string title = default;
+            string description = default;
+            LabServicesProvisioningState? provisioningState = default;
+            LabNetworkProfile networkProfile = default;
+            LabState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -330,7 +330,25 @@ namespace Azure.ResourceManager.LabServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, autoShutdownProfile.Value, connectionProfile.Value, virtualMachineProfile.Value, securityProfile.Value, rosterProfile.Value, labPlanId.Value, title.Value, description.Value, Optional.ToNullable(provisioningState), networkProfile.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new LabData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                autoShutdownProfile,
+                connectionProfile,
+                virtualMachineProfile,
+                securityProfile,
+                rosterProfile,
+                labPlanId,
+                title,
+                description,
+                provisioningState,
+                networkProfile,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabData>.Write(ModelReaderWriterOptions options)

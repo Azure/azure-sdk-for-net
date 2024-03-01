@@ -27,12 +27,12 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(BuildMode))
+            if (BuildMode.HasValue)
             {
                 writer.WritePropertyName("buildMode"u8);
                 writer.WriteStringValue(BuildMode.Value.ToString());
@@ -45,7 +45,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Optional.IsCollectionDefined(FieldConfidence))
+            if (!(FieldConfidence is ChangeTrackingDictionary<string, float> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fieldConfidence"u8);
                 writer.WriteStartObject();
@@ -94,10 +94,10 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<DocumentBuildMode> buildMode = default;
+            string description = default;
+            DocumentBuildMode? buildMode = default;
             IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema = default;
-            Optional<IReadOnlyDictionary<string, float>> fieldConfidence = default;
+            IReadOnlyDictionary<string, float> fieldConfidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentTypeDetails(description.Value, Optional.ToNullable(buildMode), fieldSchema, Optional.ToDictionary(fieldConfidence), serializedAdditionalRawData);
+            return new DocumentTypeDetails(description, buildMode, fieldSchema, fieldConfidence ?? new ChangeTrackingDictionary<string, float>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentTypeDetails>.Write(ModelReaderWriterOptions options)

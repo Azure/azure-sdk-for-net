@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Rid))
+            if (options.Format != "W" && Rid != null)
             {
                 writer.WritePropertyName("_rid"u8);
                 writer.WriteStringValue(Rid);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationType))
+            if (options.Format != "W" && OperationType.HasValue)
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
+            if (options.Format != "W" && EventTimestamp != null)
             {
                 writer.WritePropertyName("eventTimestamp"u8);
                 writer.WriteStringValue(EventTimestamp);
             }
-            if (options.Format != "W" && Optional.IsDefined(ContainerName))
+            if (options.Format != "W" && ContainerName != null)
             {
                 writer.WritePropertyName("ownerId"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ContainerId))
+            if (options.Format != "W" && ContainerId != null)
             {
                 writer.WritePropertyName("ownerResourceId"u8);
                 writer.WriteStringValue(ContainerId);
             }
-            if (Optional.IsDefined(Container))
+            if (Container != null)
             {
                 writer.WritePropertyName("container"u8);
                 writer.WriteObjectValue(Container);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> rid = default;
-            Optional<CosmosDBOperationType> operationType = default;
-            Optional<string> eventTimestamp = default;
-            Optional<string> ownerId = default;
-            Optional<string> ownerResourceId = default;
-            Optional<RestorableSqlContainerPropertiesResourceContainer> container = default;
+            string rid = default;
+            CosmosDBOperationType? operationType = default;
+            string eventTimestamp = default;
+            string ownerId = default;
+            string ownerResourceId = default;
+            RestorableSqlContainerPropertiesResourceContainer container = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedRestorableSqlContainerResourceInfo(rid.Value, Optional.ToNullable(operationType), eventTimestamp.Value, ownerId.Value, ownerResourceId.Value, container.Value, serializedAdditionalRawData);
+            return new ExtendedRestorableSqlContainerResourceInfo(
+                rid,
+                operationType,
+                eventTimestamp,
+                ownerId,
+                ownerResourceId,
+                container,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtendedRestorableSqlContainerResourceInfo>.Write(ModelReaderWriterOptions options)

@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsExpirationRequired))
+            if (IsExpirationRequired.HasValue)
             {
                 writer.WritePropertyName("isExpirationRequired"u8);
                 writer.WriteBooleanValue(IsExpirationRequired.Value);
             }
-            if (Optional.IsDefined(MaximumDuration))
+            if (MaximumDuration.HasValue)
             {
                 writer.WritePropertyName("maximumDuration"u8);
                 writer.WriteStringValue(MaximumDuration.Value, "P");
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<bool> isExpirationRequired = default;
-            Optional<TimeSpan> maximumDuration = default;
-            Optional<string> id = default;
+            bool? isExpirationRequired = default;
+            TimeSpan? maximumDuration = default;
+            string id = default;
             RoleManagementPolicyRuleType ruleType = default;
-            Optional<RoleManagementPolicyRuleTarget> target = default;
+            RoleManagementPolicyRuleTarget target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyExpirationRule(id.Value, ruleType, target.Value, serializedAdditionalRawData, Optional.ToNullable(isExpirationRequired), Optional.ToNullable(maximumDuration));
+            return new RoleManagementPolicyExpirationRule(
+                id,
+                ruleType,
+                target,
+                serializedAdditionalRawData,
+                isExpirationRequired,
+                maximumDuration);
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyExpirationRule>.Write(ModelReaderWriterOptions options)

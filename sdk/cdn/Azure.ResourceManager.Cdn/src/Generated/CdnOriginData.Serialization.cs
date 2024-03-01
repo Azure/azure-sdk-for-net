@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(HttpPort))
+            if (HttpPort.HasValue)
             {
                 if (HttpPort != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("httpPort");
                 }
             }
-            if (Optional.IsDefined(HttpsPort))
+            if (HttpsPort.HasValue)
             {
                 if (HttpsPort != null)
                 {
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("httpsPort");
                 }
             }
-            if (Optional.IsDefined(OriginHostHeader))
+            if (OriginHostHeader != null)
             {
                 writer.WritePropertyName("originHostHeader"u8);
                 writer.WriteStringValue(OriginHostHeader);
             }
-            if (Optional.IsDefined(Priority))
+            if (Priority.HasValue)
             {
                 if (Priority != null)
                 {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("priority");
                 }
             }
-            if (Optional.IsDefined(Weight))
+            if (Weight.HasValue)
             {
                 if (Weight != null)
                 {
@@ -108,17 +108,17 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("weight");
                 }
             }
-            if (Optional.IsDefined(Enabled))
+            if (Enabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(PrivateLinkAlias))
+            if (PrivateLinkAlias != null)
             {
                 writer.WritePropertyName("privateLinkAlias"u8);
                 writer.WriteStringValue(PrivateLinkAlias);
             }
-            if (Optional.IsDefined(PrivateLinkResourceId))
+            if (PrivateLinkResourceId != null)
             {
                 if (PrivateLinkResourceId != null)
                 {
@@ -130,27 +130,27 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("privateLinkResourceId");
                 }
             }
-            if (Optional.IsDefined(PrivateLinkLocation))
+            if (PrivateLinkLocation != null)
             {
                 writer.WritePropertyName("privateLinkLocation"u8);
                 writer.WriteStringValue(PrivateLinkLocation);
             }
-            if (Optional.IsDefined(PrivateLinkApprovalMessage))
+            if (PrivateLinkApprovalMessage != null)
             {
                 writer.WritePropertyName("privateLinkApprovalMessage"u8);
                 writer.WriteStringValue(PrivateLinkApprovalMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointStatus))
+            if (options.Format != "W" && PrivateEndpointStatus.HasValue)
             {
                 if (PrivateEndpointStatus != null)
                 {
@@ -204,21 +204,21 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> hostName = default;
-            Optional<int?> httpPort = default;
-            Optional<int?> httpsPort = default;
-            Optional<string> originHostHeader = default;
-            Optional<int?> priority = default;
-            Optional<int?> weight = default;
-            Optional<bool> enabled = default;
-            Optional<string> privateLinkAlias = default;
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<string> privateLinkLocation = default;
-            Optional<string> privateLinkApprovalMessage = default;
-            Optional<OriginResourceState> resourceState = default;
-            Optional<OriginProvisioningState> provisioningState = default;
-            Optional<PrivateEndpointStatus?> privateEndpointStatus = default;
+            SystemData systemData = default;
+            string hostName = default;
+            int? httpPort = default;
+            int? httpsPort = default;
+            string originHostHeader = default;
+            int? priority = default;
+            int? weight = default;
+            bool? enabled = default;
+            string privateLinkAlias = default;
+            ResourceIdentifier privateLinkResourceId = default;
+            string privateLinkLocation = default;
+            string privateLinkApprovalMessage = default;
+            OriginResourceState? resourceState = default;
+            OriginProvisioningState? provisioningState = default;
+            PrivateEndpointStatus? privateEndpointStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -377,7 +377,26 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnOriginData(id, name, type, systemData.Value, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), Optional.ToNullable(enabled), privateLinkAlias.Value, privateLinkResourceId.Value, privateLinkLocation.Value, privateLinkApprovalMessage.Value, Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState), Optional.ToNullable(privateEndpointStatus), serializedAdditionalRawData);
+            return new CdnOriginData(
+                id,
+                name,
+                type,
+                systemData,
+                hostName,
+                httpPort,
+                httpsPort,
+                originHostHeader,
+                priority,
+                weight,
+                enabled,
+                privateLinkAlias,
+                privateLinkResourceId,
+                privateLinkLocation,
+                privateLinkApprovalMessage,
+                resourceState,
+                provisioningState,
+                privateEndpointStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnOriginData>.Write(ModelReaderWriterOptions options)

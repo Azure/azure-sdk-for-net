@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.LabServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectionProfile))
+            if (options.Format != "W" && ConnectionProfile != null)
             {
                 writer.WritePropertyName("connectionProfile"u8);
                 writer.WriteObjectValue(ConnectionProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClaimedByUserId))
+            if (options.Format != "W" && ClaimedByUserId != null)
             {
                 writer.WritePropertyName("claimedByUserId"u8);
                 writer.WriteStringValue(ClaimedByUserId);
             }
-            if (options.Format != "W" && Optional.IsDefined(VmType))
+            if (options.Format != "W" && VmType.HasValue)
             {
                 writer.WritePropertyName("vmType"u8);
                 writer.WriteStringValue(VmType.Value.ToSerialString());
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.LabServices
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LabServicesProvisioningState> provisioningState = default;
-            Optional<LabVirtualMachineState> state = default;
-            Optional<LabVirtualMachineConnectionProfile> connectionProfile = default;
-            Optional<string> claimedByUserId = default;
-            Optional<LabVirtualMachineType> vmType = default;
+            SystemData systemData = default;
+            LabServicesProvisioningState? provisioningState = default;
+            LabVirtualMachineState? state = default;
+            LabVirtualMachineConnectionProfile connectionProfile = default;
+            string claimedByUserId = default;
+            LabVirtualMachineType? vmType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,7 +210,17 @@ namespace Azure.ResourceManager.LabServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(state), connectionProfile.Value, claimedByUserId.Value, Optional.ToNullable(vmType), serializedAdditionalRawData);
+            return new LabVirtualMachineData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                state,
+                connectionProfile,
+                claimedByUserId,
+                vmType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineData>.Write(ModelReaderWriterOptions options)

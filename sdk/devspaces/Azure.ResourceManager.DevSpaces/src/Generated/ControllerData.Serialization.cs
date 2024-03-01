@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevSpaces
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,29 +58,29 @@ namespace Azure.ResourceManager.DevSpaces
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(HostSuffix))
+            if (options.Format != "W" && HostSuffix != null)
             {
                 writer.WritePropertyName("hostSuffix"u8);
                 writer.WriteStringValue(HostSuffix);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataPlaneFqdn))
+            if (options.Format != "W" && DataPlaneFqdn != null)
             {
                 writer.WritePropertyName("dataPlaneFqdn"u8);
                 writer.WriteStringValue(DataPlaneFqdn);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetContainerHostApiServerFqdn))
+            if (options.Format != "W" && TargetContainerHostApiServerFqdn != null)
             {
                 writer.WritePropertyName("targetContainerHostApiServerFqdn"u8);
                 writer.WriteStringValue(TargetContainerHostApiServerFqdn);
@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.DevSpaces
                 return null;
             }
             DevSpacesSku sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> hostSuffix = default;
-            Optional<string> dataPlaneFqdn = default;
-            Optional<string> targetContainerHostApiServerFqdn = default;
+            SystemData systemData = default;
+            ProvisioningState? provisioningState = default;
+            string hostSuffix = default;
+            string dataPlaneFqdn = default;
+            string targetContainerHostApiServerFqdn = default;
             string targetContainerHostResourceId = default;
             string targetContainerHostCredentialsBase64 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -245,7 +245,21 @@ namespace Azure.ResourceManager.DevSpaces
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControllerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(provisioningState), hostSuffix.Value, dataPlaneFqdn.Value, targetContainerHostApiServerFqdn.Value, targetContainerHostResourceId, targetContainerHostCredentialsBase64, serializedAdditionalRawData);
+            return new ControllerData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                provisioningState,
+                hostSuffix,
+                dataPlaneFqdn,
+                targetContainerHostApiServerFqdn,
+                targetContainerHostResourceId,
+                targetContainerHostCredentialsBase64,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControllerData>.Write(ModelReaderWriterOptions options)

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FileName))
+            if (FileName != null)
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(LanguageCode))
+            if (LanguageCode != null)
             {
                 writer.WritePropertyName("languageCode"u8);
                 writer.WriteStringValue(LanguageCode);
             }
-            if (Optional.IsDefined(HlsSettings))
+            if (HlsSettings != null)
             {
                 writer.WritePropertyName("hlsSettings"u8);
                 writer.WriteObjectValue(HlsSettings);
             }
-            if (Optional.IsDefined(DashSettings))
+            if (DashSettings != null)
             {
                 writer.WritePropertyName("dashSettings"u8);
                 writer.WriteObjectValue(DashSettings);
             }
-            if (Optional.IsDefined(Mpeg4TrackId))
+            if (Mpeg4TrackId.HasValue)
             {
                 if (Mpeg4TrackId != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("mpeg4TrackId");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(BitRate))
+            if (options.Format != "W" && BitRate.HasValue)
             {
                 writer.WritePropertyName("bitRate"u8);
                 writer.WriteNumberValue(BitRate.Value);
@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> fileName = default;
-            Optional<string> displayName = default;
-            Optional<string> languageCode = default;
-            Optional<HlsSettings> hlsSettings = default;
-            Optional<TrackDashSettings> dashSettings = default;
-            Optional<int?> mpeg4TrackId = default;
-            Optional<int> bitRate = default;
+            string fileName = default;
+            string displayName = default;
+            string languageCode = default;
+            HlsSettings hlsSettings = default;
+            TrackDashSettings dashSettings = default;
+            int? mpeg4TrackId = default;
+            int? bitRate = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -183,7 +183,16 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioTrack(odataType, serializedAdditionalRawData, fileName.Value, displayName.Value, languageCode.Value, hlsSettings.Value, dashSettings.Value, Optional.ToNullable(mpeg4TrackId), Optional.ToNullable(bitRate));
+            return new AudioTrack(
+                odataType,
+                serializedAdditionalRawData,
+                fileName,
+                displayName,
+                languageCode,
+                hlsSettings,
+                dashSettings,
+                mpeg4TrackId,
+                bitRate);
         }
 
         BinaryData IPersistableModel<AudioTrack>.Write(ModelReaderWriterOptions options)

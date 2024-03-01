@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Connections))
+            if (!(Connections is ChangeTrackingList<PeeringExchangeConnection> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connections"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PeerAsn))
+            if (PeerAsn != null)
             {
                 writer.WritePropertyName("peerAsn"u8);
                 JsonSerializer.Serialize(writer, PeerAsn);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IList<PeeringExchangeConnection>> connections = default;
-            Optional<WritableSubResource> peerAsn = default;
+            IList<PeeringExchangeConnection> connections = default;
+            WritableSubResource peerAsn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExchangePeeringProperties(Optional.ToList(connections), peerAsn, serializedAdditionalRawData);
+            return new ExchangePeeringProperties(connections ?? new ChangeTrackingList<PeeringExchangeConnection>(), peerAsn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExchangePeeringProperties>.Write(ModelReaderWriterOptions options)

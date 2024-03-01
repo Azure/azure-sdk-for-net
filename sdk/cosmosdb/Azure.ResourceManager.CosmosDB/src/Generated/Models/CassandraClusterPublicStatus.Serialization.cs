@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(ReaperStatus))
+            if (ReaperStatus != null)
             {
                 writer.WritePropertyName("reaperStatus"u8);
                 writer.WriteObjectValue(ReaperStatus);
             }
-            if (Optional.IsCollectionDefined(ConnectionErrors))
+            if (!(ConnectionErrors is ChangeTrackingList<CassandraConnectionError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connectionErrors"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Errors))
+            if (!(Errors is ChangeTrackingList<CassandraError> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DataCenters))
+            if (!(DataCenters is ChangeTrackingList<CassandraClusterPublicStatusDataCentersItem> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dataCenters"u8);
                 writer.WriteStartArray();
@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
-            Optional<CassandraReaperStatus> reaperStatus = default;
-            Optional<IReadOnlyList<CassandraConnectionError>> connectionErrors = default;
-            Optional<IReadOnlyList<CassandraError>> errors = default;
-            Optional<IReadOnlyList<CassandraClusterPublicStatusDataCentersItem>> dataCenters = default;
+            ETag? eTag = default;
+            CassandraReaperStatus reaperStatus = default;
+            IReadOnlyList<CassandraConnectionError> connectionErrors = default;
+            IReadOnlyList<CassandraError> errors = default;
+            IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> dataCenters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +180,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterPublicStatus(Optional.ToNullable(eTag), reaperStatus.Value, Optional.ToList(connectionErrors), Optional.ToList(errors), Optional.ToList(dataCenters), serializedAdditionalRawData);
+            return new CassandraClusterPublicStatus(
+                eTag,
+                reaperStatus,
+                connectionErrors ?? new ChangeTrackingList<CassandraConnectionError>(),
+                errors ?? new ChangeTrackingList<CassandraError>(),
+                dataCenters ?? new ChangeTrackingList<CassandraClusterPublicStatusDataCentersItem>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraClusterPublicStatus>.Write(ModelReaderWriterOptions options)

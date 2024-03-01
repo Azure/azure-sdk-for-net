@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RevisionSuffix))
+            if (RevisionSuffix != null)
             {
                 writer.WritePropertyName("revisionSuffix"u8);
                 writer.WriteStringValue(RevisionSuffix);
             }
-            if (Optional.IsDefined(TerminationGracePeriodSeconds))
+            if (TerminationGracePeriodSeconds.HasValue)
             {
                 writer.WritePropertyName("terminationGracePeriodSeconds"u8);
                 writer.WriteNumberValue(TerminationGracePeriodSeconds.Value);
             }
-            if (Optional.IsCollectionDefined(InitContainers))
+            if (!(InitContainers is ChangeTrackingList<ContainerAppInitContainer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Containers))
+            if (!(Containers is ChangeTrackingList<ContainerAppContainer> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Scale))
+            if (Scale != null)
             {
                 writer.WritePropertyName("scale"u8);
                 writer.WriteObjectValue(Scale);
             }
-            if (Optional.IsCollectionDefined(Volumes))
+            if (!(Volumes is ChangeTrackingList<ContainerAppVolume> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceBinds))
+            if (!(ServiceBinds is ChangeTrackingList<ContainerAppServiceBind> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("serviceBinds"u8);
                 writer.WriteStartArray();
@@ -119,13 +119,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> revisionSuffix = default;
-            Optional<long> terminationGracePeriodSeconds = default;
-            Optional<IList<ContainerAppInitContainer>> initContainers = default;
-            Optional<IList<ContainerAppContainer>> containers = default;
-            Optional<ContainerAppScale> scale = default;
-            Optional<IList<ContainerAppVolume>> volumes = default;
-            Optional<IList<ContainerAppServiceBind>> serviceBinds = default;
+            string revisionSuffix = default;
+            long? terminationGracePeriodSeconds = default;
+            IList<ContainerAppInitContainer> initContainers = default;
+            IList<ContainerAppContainer> containers = default;
+            ContainerAppScale scale = default;
+            IList<ContainerAppVolume> volumes = default;
+            IList<ContainerAppServiceBind> serviceBinds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,7 +215,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppTemplate(revisionSuffix.Value, Optional.ToNullable(terminationGracePeriodSeconds), Optional.ToList(initContainers), Optional.ToList(containers), scale.Value, Optional.ToList(volumes), Optional.ToList(serviceBinds), serializedAdditionalRawData);
+            return new ContainerAppTemplate(
+                revisionSuffix,
+                terminationGracePeriodSeconds,
+                initContainers ?? new ChangeTrackingList<ContainerAppInitContainer>(),
+                containers ?? new ChangeTrackingList<ContainerAppContainer>(),
+                scale,
+                volumes ?? new ChangeTrackingList<ContainerAppVolume>(),
+                serviceBinds ?? new ChangeTrackingList<ContainerAppServiceBind>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppTemplate>.Write(ModelReaderWriterOptions options)

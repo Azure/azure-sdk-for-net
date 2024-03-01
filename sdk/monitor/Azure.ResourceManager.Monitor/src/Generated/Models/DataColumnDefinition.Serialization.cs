@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DefinitionType))
+            if (DefinitionType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DefinitionType.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<DataColumnDefinitionType> type = default;
+            string name = default;
+            DataColumnDefinitionType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataColumnDefinition(name.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new DataColumnDefinition(name, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataColumnDefinition>.Write(ModelReaderWriterOptions options)

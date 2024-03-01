@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsPasswordAuthenticationDisabled))
+            if (IsPasswordAuthenticationDisabled.HasValue)
             {
                 writer.WritePropertyName("disablePasswordAuthentication"u8);
                 writer.WriteBooleanValue(IsPasswordAuthenticationDisabled.Value);
             }
-            if (Optional.IsDefined(Ssh))
+            if (Ssh != null)
             {
                 writer.WritePropertyName("ssh"u8);
                 writer.WriteObjectValue(Ssh);
             }
-            if (Optional.IsDefined(ProvisionVmAgent))
+            if (ProvisionVmAgent.HasValue)
             {
                 writer.WritePropertyName("provisionVMAgent"u8);
                 writer.WriteBooleanValue(ProvisionVmAgent.Value);
             }
-            if (Optional.IsDefined(PatchSettings))
+            if (PatchSettings != null)
             {
                 writer.WritePropertyName("patchSettings"u8);
                 writer.WriteObjectValue(PatchSettings);
             }
-            if (Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
+            if (IsVmAgentPlatformUpdatesEnabled.HasValue)
             {
                 writer.WritePropertyName("enableVMAgentPlatformUpdates"u8);
                 writer.WriteBooleanValue(IsVmAgentPlatformUpdatesEnabled.Value);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> disablePasswordAuthentication = default;
-            Optional<SshConfiguration> ssh = default;
-            Optional<bool> provisionVmAgent = default;
-            Optional<LinuxPatchSettings> patchSettings = default;
-            Optional<bool> enableVmAgentPlatformUpdates = default;
+            bool? disablePasswordAuthentication = default;
+            SshConfiguration ssh = default;
+            bool? provisionVmAgent = default;
+            LinuxPatchSettings patchSettings = default;
+            bool? enableVmAgentPlatformUpdates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinuxConfiguration(Optional.ToNullable(disablePasswordAuthentication), ssh.Value, Optional.ToNullable(provisionVmAgent), patchSettings.Value, Optional.ToNullable(enableVmAgentPlatformUpdates), serializedAdditionalRawData);
+            return new LinuxConfiguration(
+                disablePasswordAuthentication,
+                ssh,
+                provisionVmAgent,
+                patchSettings,
+                enableVmAgentPlatformUpdates,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinuxConfiguration>.Write(ModelReaderWriterOptions options)

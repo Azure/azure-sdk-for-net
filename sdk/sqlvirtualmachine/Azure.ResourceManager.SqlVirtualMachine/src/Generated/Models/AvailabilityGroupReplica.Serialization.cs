@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SqlVmInstanceId))
+            if (SqlVmInstanceId != null)
             {
                 writer.WritePropertyName("sqlVirtualMachineInstanceId"u8);
                 writer.WriteStringValue(SqlVmInstanceId);
             }
-            if (Optional.IsDefined(Role))
+            if (Role.HasValue)
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
-            if (Optional.IsDefined(Commit))
+            if (Commit.HasValue)
             {
                 writer.WritePropertyName("commit"u8);
                 writer.WriteStringValue(Commit.Value.ToString());
             }
-            if (Optional.IsDefined(Failover))
+            if (Failover.HasValue)
             {
                 writer.WritePropertyName("failover"u8);
                 writer.WriteStringValue(Failover.Value.ToString());
             }
-            if (Optional.IsDefined(ReadableSecondary))
+            if (ReadableSecondary.HasValue)
             {
                 writer.WritePropertyName("readableSecondary"u8);
                 writer.WriteStringValue(ReadableSecondary.Value.ToString());
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> sqlVmInstanceId = default;
-            Optional<AvailabilityGroupReplicaRole> role = default;
-            Optional<AvailabilityGroupReplicaCommitMode> commit = default;
-            Optional<AvailabilityGroupReplicaFailoverMode> failover = default;
-            Optional<ReadableSecondaryMode> readableSecondary = default;
+            ResourceIdentifier sqlVmInstanceId = default;
+            AvailabilityGroupReplicaRole? role = default;
+            AvailabilityGroupReplicaCommitMode? commit = default;
+            AvailabilityGroupReplicaFailoverMode? failover = default;
+            ReadableSecondaryMode? readableSecondary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilityGroupReplica(sqlVmInstanceId.Value, Optional.ToNullable(role), Optional.ToNullable(commit), Optional.ToNullable(failover), Optional.ToNullable(readableSecondary), serializedAdditionalRawData);
+            return new AvailabilityGroupReplica(
+                sqlVmInstanceId,
+                role,
+                commit,
+                failover,
+                readableSecondary,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilityGroupReplica>.Write(ModelReaderWriterOptions options)

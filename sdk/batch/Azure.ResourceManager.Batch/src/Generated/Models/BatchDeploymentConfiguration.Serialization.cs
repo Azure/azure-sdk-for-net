@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CloudServiceConfiguration))
+            if (CloudServiceConfiguration != null)
             {
                 writer.WritePropertyName("cloudServiceConfiguration"u8);
                 writer.WriteObjectValue(CloudServiceConfiguration);
             }
-            if (Optional.IsDefined(VmConfiguration))
+            if (VmConfiguration != null)
             {
                 writer.WritePropertyName("virtualMachineConfiguration"u8);
                 writer.WriteObjectValue(VmConfiguration);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchCloudServiceConfiguration> cloudServiceConfiguration = default;
-            Optional<BatchVmConfiguration> virtualMachineConfiguration = default;
+            BatchCloudServiceConfiguration cloudServiceConfiguration = default;
+            BatchVmConfiguration virtualMachineConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchDeploymentConfiguration(cloudServiceConfiguration.Value, virtualMachineConfiguration.Value, serializedAdditionalRawData);
+            return new BatchDeploymentConfiguration(cloudServiceConfiguration, virtualMachineConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchDeploymentConfiguration>.Write(ModelReaderWriterOptions options)

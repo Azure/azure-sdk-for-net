@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(NetworkConnectionId))
+            if (NetworkConnectionId != null)
             {
                 writer.WritePropertyName("networkConnectionId"u8);
                 writer.WriteStringValue(NetworkConnectionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkConnectionLocation))
+            if (options.Format != "W" && NetworkConnectionLocation.HasValue)
             {
                 writer.WritePropertyName("networkConnectionLocation"u8);
                 writer.WriteStringValue(NetworkConnectionLocation.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(HealthCheckStatus))
+            if (options.Format != "W" && HealthCheckStatus.HasValue)
             {
                 writer.WritePropertyName("healthCheckStatus"u8);
                 writer.WriteStringValue(HealthCheckStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DomainJoinType))
+            if (options.Format != "W" && DomainJoinType.HasValue)
             {
                 writer.WritePropertyName("domainJoinType"u8);
                 writer.WriteStringValue(DomainJoinType.Value.ToString());
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> networkConnectionId = default;
-            Optional<AzureLocation> networkConnectionLocation = default;
-            Optional<DevCenterHealthCheckStatus> healthCheckStatus = default;
-            Optional<DomainJoinType> domainJoinType = default;
+            SystemData systemData = default;
+            DevCenterProvisioningState? provisioningState = default;
+            ResourceIdentifier networkConnectionId = default;
+            AzureLocation? networkConnectionLocation = default;
+            DevCenterHealthCheckStatus? healthCheckStatus = default;
+            DomainJoinType? domainJoinType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttachedNetworkConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), networkConnectionId.Value, Optional.ToNullable(networkConnectionLocation), Optional.ToNullable(healthCheckStatus), Optional.ToNullable(domainJoinType), serializedAdditionalRawData);
+            return new AttachedNetworkConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                networkConnectionId,
+                networkConnectionLocation,
+                healthCheckStatus,
+                domainJoinType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttachedNetworkConnectionData>.Write(ModelReaderWriterOptions options)

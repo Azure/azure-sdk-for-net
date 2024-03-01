@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsDefined(ReplacementMaps))
+            if (ReplacementMaps != null)
             {
                 writer.WritePropertyName("replacementMaps"u8);
                 writer.WriteObjectValue(ReplacementMaps);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> content = default;
-            Optional<ReplacementMaps> replacementMaps = default;
+            string title = default;
+            string content = default;
+            ReplacementMaps replacementMaps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpSection(title.Value, content.Value, replacementMaps.Value, serializedAdditionalRawData);
+            return new SelfHelpSection(title, content, replacementMaps, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpSection>.Write(ModelReaderWriterOptions options)

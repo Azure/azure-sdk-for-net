@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(RuleName))
+            if (options.Format != "W" && RuleName != null)
             {
                 writer.WritePropertyName("ruleName"u8);
                 writer.WriteStringValue(RuleName);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsActive))
+            if (options.Format != "W" && IsActive.HasValue)
             {
                 writer.WritePropertyName("isActive"u8);
                 writer.WriteBooleanValue(IsActive.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ActivatedOn))
+            if (options.Format != "W" && ActivatedOn.HasValue)
             {
                 writer.WritePropertyName("activatedTime"u8);
                 writer.WriteStringValue(ActivatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ResolvedOn))
+            if (options.Format != "W" && ResolvedOn.HasValue)
             {
                 writer.WritePropertyName("resolvedTime"u8);
                 writer.WriteStringValue(ResolvedOn.Value, "O");
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> ruleName = default;
-            Optional<bool> isActive = default;
-            Optional<DateTimeOffset> activatedTime = default;
-            Optional<DateTimeOffset> resolvedTime = default;
+            string name = default;
+            string ruleName = default;
+            bool? isActive = default;
+            DateTimeOffset? activatedTime = default;
+            DateTimeOffset? resolvedTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorIncident(name.Value, ruleName.Value, Optional.ToNullable(isActive), Optional.ToNullable(activatedTime), Optional.ToNullable(resolvedTime), serializedAdditionalRawData);
+            return new MonitorIncident(
+                name,
+                ruleName,
+                isActive,
+                activatedTime,
+                resolvedTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorIncident>.Write(ModelReaderWriterOptions options)

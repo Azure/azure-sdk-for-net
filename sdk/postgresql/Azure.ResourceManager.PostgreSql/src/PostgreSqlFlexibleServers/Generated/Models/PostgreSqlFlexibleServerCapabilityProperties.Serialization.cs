@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedServerEditions))
+            if (options.Format != "W" && !(SupportedServerEditions is ChangeTrackingList<PostgreSqlFlexibleServerEditionCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedServerEditions"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedServerVersions))
+            if (options.Format != "W" && !(SupportedServerVersions is ChangeTrackingList<PostgreSqlFlexibleServerServerVersionCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedServerVersions"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportFastProvisioning))
+            if (options.Format != "W" && SupportFastProvisioning.HasValue)
             {
                 writer.WritePropertyName("fastProvisioningSupported"u8);
                 writer.WriteStringValue(SupportFastProvisioning.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFastProvisioningEditions))
+            if (options.Format != "W" && !(SupportedFastProvisioningEditions is ChangeTrackingList<PostgreSqlFlexibleServerFastProvisioningEditionCapability> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("supportedFastProvisioningEditions"u8);
                 writer.WriteStartArray();
@@ -66,42 +66,42 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(GeoBackupSupported))
+            if (options.Format != "W" && GeoBackupSupported.HasValue)
             {
                 writer.WritePropertyName("geoBackupSupported"u8);
                 writer.WriteStringValue(GeoBackupSupported.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ZoneRedundantHaSupported))
+            if (options.Format != "W" && ZoneRedundantHaSupported.HasValue)
             {
                 writer.WritePropertyName("zoneRedundantHaSupported"u8);
                 writer.WriteStringValue(ZoneRedundantHaSupported.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ZoneRedundantHaAndGeoBackupSupported))
+            if (options.Format != "W" && ZoneRedundantHaAndGeoBackupSupported.HasValue)
             {
                 writer.WritePropertyName("zoneRedundantHaAndGeoBackupSupported"u8);
                 writer.WriteStringValue(ZoneRedundantHaAndGeoBackupSupported.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageAutoGrowthSupported))
+            if (options.Format != "W" && StorageAutoGrowthSupported.HasValue)
             {
                 writer.WritePropertyName("storageAutoGrowthSupported"u8);
                 writer.WriteStringValue(StorageAutoGrowthSupported.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(OnlineResizeSupported))
+            if (options.Format != "W" && OnlineResizeSupported.HasValue)
             {
                 writer.WritePropertyName("onlineResizeSupported"u8);
                 writer.WriteStringValue(OnlineResizeSupported.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Restricted))
+            if (options.Format != "W" && Restricted.HasValue)
             {
                 writer.WritePropertyName("restricted"u8);
                 writer.WriteStringValue(Restricted.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
+            if (options.Format != "W" && CapabilityStatus.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
+            if (options.Format != "W" && Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -144,19 +144,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerEditionCapability>> supportedServerEditions = default;
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability>> supportedServerVersions = default;
-            Optional<PostgreSqlFlexibleServerFastProvisioningSupported> fastProvisioningSupported = default;
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>> supportedFastProvisioningEditions = default;
-            Optional<PostgreSqlFlexibleServerGeoBackupSupported> geoBackupSupported = default;
-            Optional<PostgreSqlFlexibleServerZoneRedundantHaSupported> zoneRedundantHaSupported = default;
-            Optional<PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported> zoneRedundantHaAndGeoBackupSupported = default;
-            Optional<PostgreSqlFlexibleServerStorageAutoGrowthSupported> storageAutoGrowthSupported = default;
-            Optional<PostgreSqlFlexibleServerOnlineResizeSupported> onlineResizeSupported = default;
-            Optional<PostgreSqlFlexibleServerZoneRedundantRestricted> restricted = default;
-            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> supportedServerEditions = default;
+            IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions = default;
+            PostgreSqlFlexibleServerFastProvisioningSupported? fastProvisioningSupported = default;
+            IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions = default;
+            PostgreSqlFlexibleServerGeoBackupSupported? geoBackupSupported = default;
+            PostgreSqlFlexibleServerZoneRedundantHaSupported? zoneRedundantHaSupported = default;
+            PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported? zoneRedundantHaAndGeoBackupSupported = default;
+            PostgreSqlFlexibleServerStorageAutoGrowthSupported? storageAutoGrowthSupported = default;
+            PostgreSqlFlexibleServerOnlineResizeSupported? onlineResizeSupported = default;
+            PostgreSqlFlexibleServerZoneRedundantRestricted? restricted = default;
+            PostgreSqlFlexbileServerCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -291,7 +291,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerCapabilityProperties(Optional.ToNullable(status), reason.Value, serializedAdditionalRawData, name.Value, Optional.ToList(supportedServerEditions), Optional.ToList(supportedServerVersions), Optional.ToNullable(fastProvisioningSupported), Optional.ToList(supportedFastProvisioningEditions), Optional.ToNullable(geoBackupSupported), Optional.ToNullable(zoneRedundantHaSupported), Optional.ToNullable(zoneRedundantHaAndGeoBackupSupported), Optional.ToNullable(storageAutoGrowthSupported), Optional.ToNullable(onlineResizeSupported), Optional.ToNullable(restricted));
+            return new PostgreSqlFlexibleServerCapabilityProperties(
+                status,
+                reason,
+                serializedAdditionalRawData,
+                name,
+                supportedServerEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerEditionCapability>(),
+                supportedServerVersions ?? new ChangeTrackingList<PostgreSqlFlexibleServerServerVersionCapability>(),
+                fastProvisioningSupported,
+                supportedFastProvisioningEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>(),
+                geoBackupSupported,
+                zoneRedundantHaSupported,
+                zoneRedundantHaAndGeoBackupSupported,
+                storageAutoGrowthSupported,
+                onlineResizeSupported,
+                restricted);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerCapabilityProperties>.Write(ModelReaderWriterOptions options)

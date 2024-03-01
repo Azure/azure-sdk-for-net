@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ValidateNonce))
+            if (ValidateNonce.HasValue)
             {
                 writer.WritePropertyName("validateNonce"u8);
                 writer.WriteBooleanValue(ValidateNonce.Value);
             }
-            if (Optional.IsDefined(NonceExpirationInterval))
+            if (NonceExpirationInterval != null)
             {
                 writer.WritePropertyName("nonceExpirationInterval"u8);
                 writer.WriteStringValue(NonceExpirationInterval);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> validateNonce = default;
-            Optional<string> nonceExpirationInterval = default;
+            bool? validateNonce = default;
+            string nonceExpirationInterval = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoginFlowNonceSettings(Optional.ToNullable(validateNonce), nonceExpirationInterval.Value, serializedAdditionalRawData);
+            return new LoginFlowNonceSettings(validateNonce, nonceExpirationInterval, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoginFlowNonceSettings>.Write(ModelReaderWriterOptions options)

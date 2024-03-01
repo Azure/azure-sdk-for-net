@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IsPanoramaManaged))
+            if (options.Format != "W" && IsPanoramaManaged.HasValue)
             {
                 writer.WritePropertyName("isPanoramaManaged"u8);
                 writer.WriteStringValue(IsPanoramaManaged.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(HealthStatus))
+            if (options.Format != "W" && HealthStatus.HasValue)
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(HealthReason))
+            if (options.Format != "W" && HealthReason != null)
             {
                 writer.WritePropertyName("healthReason"u8);
                 writer.WriteStringValue(HealthReason);
             }
-            if (options.Format != "W" && Optional.IsDefined(PanoramaStatus))
+            if (options.Format != "W" && PanoramaStatus != null)
             {
                 writer.WritePropertyName("panoramaStatus"u8);
                 writer.WriteObjectValue(PanoramaStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<FirewallBooleanType> isPanoramaManaged = default;
-            Optional<FirewallHealthStatus> healthStatus = default;
-            Optional<string> healthReason = default;
-            Optional<FirewallPanoramaStatus> panoramaStatus = default;
-            Optional<FirewallProvisioningStateType> provisioningState = default;
+            SystemData systemData = default;
+            FirewallBooleanType? isPanoramaManaged = default;
+            FirewallHealthStatus? healthStatus = default;
+            string healthReason = default;
+            FirewallPanoramaStatus panoramaStatus = default;
+            FirewallProvisioningStateType? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,7 +210,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PaloAltoNetworksFirewallStatusData(id, name, type, systemData.Value, Optional.ToNullable(isPanoramaManaged), Optional.ToNullable(healthStatus), healthReason.Value, panoramaStatus.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PaloAltoNetworksFirewallStatusData(
+                id,
+                name,
+                type,
+                systemData,
+                isPanoramaManaged,
+                healthStatus,
+                healthReason,
+                panoramaStatus,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PaloAltoNetworksFirewallStatusData>.Write(ModelReaderWriterOptions options)

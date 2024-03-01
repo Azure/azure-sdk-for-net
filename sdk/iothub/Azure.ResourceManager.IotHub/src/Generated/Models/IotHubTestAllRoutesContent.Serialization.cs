@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoutingSource))
+            if (RoutingSource.HasValue)
             {
                 writer.WritePropertyName("routingSource"u8);
                 writer.WriteStringValue(RoutingSource.Value.ToString());
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteObjectValue(Message);
             }
-            if (Optional.IsDefined(Twin))
+            if (Twin != null)
             {
                 writer.WritePropertyName("twin"u8);
                 writer.WriteObjectValue(Twin);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IotHubRoutingSource> routingSource = default;
-            Optional<RoutingMessage> message = default;
-            Optional<RoutingTwin> twin = default;
+            IotHubRoutingSource? routingSource = default;
+            RoutingMessage message = default;
+            RoutingTwin twin = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubTestAllRoutesContent(Optional.ToNullable(routingSource), message.Value, twin.Value, serializedAdditionalRawData);
+            return new IotHubTestAllRoutesContent(routingSource, message, twin, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubTestAllRoutesContent>.Write(ModelReaderWriterOptions options)

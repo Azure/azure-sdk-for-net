@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Peering
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PeerAsn))
+            if (PeerAsn.HasValue)
             {
                 writer.WritePropertyName("peerAsn"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (Optional.IsCollectionDefined(PeerContactDetail))
+            if (!(PeerContactDetail is ChangeTrackingList<PeerAsnContactDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("peerContactDetail"u8);
                 writer.WriteStartArray();
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.Peering
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PeerName))
+            if (PeerName != null)
             {
                 writer.WritePropertyName("peerName"u8);
                 writer.WriteStringValue(PeerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ValidationState))
+            if (options.Format != "W" && ValidationState.HasValue)
             {
                 writer.WritePropertyName("validationState"u8);
                 writer.WriteStringValue(ValidationState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.Peering
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> peerAsn = default;
-            Optional<IList<PeerAsnContactDetail>> peerContactDetail = default;
-            Optional<string> peerName = default;
-            Optional<PeerAsnValidationState> validationState = default;
-            Optional<string> errorMessage = default;
+            SystemData systemData = default;
+            int? peerAsn = default;
+            IList<PeerAsnContactDetail> peerContactDetail = default;
+            string peerName = default;
+            PeerAsnValidationState? validationState = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +216,17 @@ namespace Azure.ResourceManager.Peering
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeerAsnData(id, name, type, systemData.Value, Optional.ToNullable(peerAsn), Optional.ToList(peerContactDetail), peerName.Value, Optional.ToNullable(validationState), errorMessage.Value, serializedAdditionalRawData);
+            return new PeerAsnData(
+                id,
+                name,
+                type,
+                systemData,
+                peerAsn,
+                peerContactDetail ?? new ChangeTrackingList<PeerAsnContactDetail>(),
+                peerName,
+                validationState,
+                errorMessage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeerAsnData>.Write(ModelReaderWriterOptions options)

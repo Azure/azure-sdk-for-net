@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
+            if (options.Format != "W" && PercentComplete.HasValue)
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -68,49 +68,49 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(JobType))
+            if (options.Format != "W" && JobType.HasValue)
             {
                 writer.WritePropertyName("jobType"u8);
                 writer.WriteStringValue(JobType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentStage))
+            if (options.Format != "W" && CurrentStage.HasValue)
             {
                 writer.WritePropertyName("currentStage"u8);
                 writer.WriteStringValue(CurrentStage.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DownloadProgress))
+            if (options.Format != "W" && DownloadProgress != null)
             {
                 writer.WritePropertyName("downloadProgress"u8);
                 writer.WriteObjectValue(DownloadProgress);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstallProgress))
+            if (options.Format != "W" && InstallProgress != null)
             {
                 writer.WritePropertyName("installProgress"u8);
                 writer.WriteObjectValue(InstallProgress);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalRefreshErrors))
+            if (options.Format != "W" && TotalRefreshErrors.HasValue)
             {
                 writer.WritePropertyName("totalRefreshErrors"u8);
                 writer.WriteNumberValue(TotalRefreshErrors.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorManifestFile))
+            if (options.Format != "W" && ErrorManifestFile != null)
             {
                 writer.WritePropertyName("errorManifestFile"u8);
                 writer.WriteStringValue(ErrorManifestFile);
             }
-            if (options.Format != "W" && Optional.IsDefined(RefreshedEntityId))
+            if (options.Format != "W" && RefreshedEntityId != null)
             {
                 writer.WritePropertyName("refreshedEntityId"u8);
                 writer.WriteStringValue(RefreshedEntityId);
             }
-            if (Optional.IsDefined(Folder))
+            if (Folder != null)
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteStringValue(Folder);
@@ -154,23 +154,23 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 return null;
             }
-            Optional<DataBoxEdgeJobStatus> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<int> percentComplete = default;
-            Optional<DataBoxEdgeJobErrorDetails> error = default;
+            DataBoxEdgeJobStatus? status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            int? percentComplete = default;
+            DataBoxEdgeJobErrorDetails error = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DataBoxEdgeJobType> jobType = default;
-            Optional<UpdateOperationStage> currentStage = default;
-            Optional<UpdateDownloadProgress> downloadProgress = default;
-            Optional<UpdateInstallProgress> installProgress = default;
-            Optional<int> totalRefreshErrors = default;
-            Optional<string> errorManifestFile = default;
-            Optional<ResourceIdentifier> refreshedEntityId = default;
-            Optional<string> folder = default;
+            SystemData systemData = default;
+            DataBoxEdgeJobType? jobType = default;
+            UpdateOperationStage? currentStage = default;
+            UpdateDownloadProgress downloadProgress = default;
+            UpdateInstallProgress installProgress = default;
+            int? totalRefreshErrors = default;
+            string errorManifestFile = default;
+            ResourceIdentifier refreshedEntityId = default;
+            string folder = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -326,7 +326,25 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeJobData(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), error.Value, Optional.ToNullable(jobType), Optional.ToNullable(currentStage), downloadProgress.Value, installProgress.Value, Optional.ToNullable(totalRefreshErrors), errorManifestFile.Value, refreshedEntityId.Value, folder.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeJobData(
+                id,
+                name,
+                type,
+                systemData,
+                status,
+                startTime,
+                endTime,
+                percentComplete,
+                error,
+                jobType,
+                currentStage,
+                downloadProgress,
+                installProgress,
+                totalRefreshErrors,
+                errorManifestFile,
+                refreshedEntityId,
+                folder,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeJobData>.Write(ModelReaderWriterOptions options)

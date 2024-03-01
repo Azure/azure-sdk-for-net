@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningOperation))
+            if (options.Format != "W" && ProvisioningOperation.HasValue)
             {
                 writer.WritePropertyName("provisioningOperation"u8);
                 writer.WriteStringValue(ProvisioningOperation.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Timestamp.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Duration))
+            if (options.Format != "W" && Duration.HasValue)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceRequestId))
+            if (options.Format != "W" && ServiceRequestId != null)
             {
                 writer.WritePropertyName("serviceRequestId"u8);
                 writer.WriteStringValue(ServiceRequestId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusCode))
+            if (options.Format != "W" && StatusCode != null)
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteStringValue(StatusCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
+            if (options.Format != "W" && StatusMessage != null)
             {
                 if (StatusMessage != null)
                 {
@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.Resources.Models
                     writer.WriteNull("statusMessage");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetResource))
+            if (options.Format != "W" && TargetResource != null)
             {
                 writer.WritePropertyName("targetResource"u8);
                 writer.WriteObjectValue(TargetResource);
             }
-            if (options.Format != "W" && Optional.IsDefined(Request))
+            if (options.Format != "W" && Request != null)
             {
                 writer.WritePropertyName("request"u8);
                 writer.WriteObjectValue(Request);
             }
-            if (options.Format != "W" && Optional.IsDefined(Response))
+            if (options.Format != "W" && Response != null)
             {
                 writer.WritePropertyName("response"u8);
                 writer.WriteObjectValue(Response);
@@ -121,16 +121,16 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ProvisioningOperationKind> provisioningOperation = default;
-            Optional<string> provisioningState = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<TimeSpan> duration = default;
-            Optional<string> serviceRequestId = default;
-            Optional<string> statusCode = default;
-            Optional<StatusMessage> statusMessage = default;
-            Optional<TargetResource> targetResource = default;
-            Optional<HttpMessage> request = default;
-            Optional<HttpMessage> response = default;
+            ProvisioningOperationKind? provisioningOperation = default;
+            string provisioningState = default;
+            DateTimeOffset? timestamp = default;
+            TimeSpan? duration = default;
+            string serviceRequestId = default;
+            string statusCode = default;
+            StatusMessage statusMessage = default;
+            TargetResource targetResource = default;
+            HttpMessage request = default;
+            HttpMessage response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,18 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentOperationProperties(Optional.ToNullable(provisioningOperation), provisioningState.Value, Optional.ToNullable(timestamp), Optional.ToNullable(duration), serviceRequestId.Value, statusCode.Value, statusMessage.Value, targetResource.Value, request.Value, response.Value, serializedAdditionalRawData);
+            return new ArmDeploymentOperationProperties(
+                provisioningOperation,
+                provisioningState,
+                timestamp,
+                duration,
+                serviceRequestId,
+                statusCode,
+                statusMessage,
+                targetResource,
+                request,
+                response,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentOperationProperties>.Write(ModelReaderWriterOptions options)

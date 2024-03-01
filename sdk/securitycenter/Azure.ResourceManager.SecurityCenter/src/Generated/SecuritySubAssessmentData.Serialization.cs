@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(VulnerabilityId))
+            if (options.Format != "W" && VulnerabilityId != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(VulnerabilityId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(Remediation))
+            if (options.Format != "W" && Remediation != null)
             {
                 writer.WritePropertyName("remediation"u8);
                 writer.WriteStringValue(Remediation);
             }
-            if (options.Format != "W" && Optional.IsDefined(Impact))
+            if (options.Format != "W" && Impact != null)
             {
                 writer.WritePropertyName("impact"u8);
                 writer.WriteStringValue(Impact);
             }
-            if (options.Format != "W" && Optional.IsDefined(Category))
+            if (options.Format != "W" && Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(GeneratedOn))
+            if (options.Format != "W" && GeneratedOn.HasValue)
             {
                 writer.WritePropertyName("timeGenerated"u8);
                 writer.WriteStringValue(GeneratedOn.Value, "O");
             }
-            if (Optional.IsDefined(ResourceDetails))
+            if (ResourceDetails != null)
             {
                 writer.WritePropertyName("resourceDetails"u8);
                 writer.WriteObjectValue(ResourceDetails);
             }
-            if (Optional.IsDefined(AdditionalData))
+            if (AdditionalData != null)
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteObjectValue(AdditionalData);
@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> id0 = default;
-            Optional<string> displayName = default;
-            Optional<SubAssessmentStatus> status = default;
-            Optional<string> remediation = default;
-            Optional<string> impact = default;
-            Optional<string> category = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> timeGenerated = default;
-            Optional<SecurityCenterResourceDetails> resourceDetails = default;
-            Optional<SecuritySubAssessmentAdditionalInfo> additionalData = default;
+            SystemData systemData = default;
+            string id0 = default;
+            string displayName = default;
+            SubAssessmentStatus status = default;
+            string remediation = default;
+            string impact = default;
+            string category = default;
+            string description = default;
+            DateTimeOffset? timeGenerated = default;
+            SecurityCenterResourceDetails resourceDetails = default;
+            SecuritySubAssessmentAdditionalInfo additionalData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -265,7 +265,22 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecuritySubAssessmentData(id, name, type, systemData.Value, id0.Value, displayName.Value, status.Value, remediation.Value, impact.Value, category.Value, description.Value, Optional.ToNullable(timeGenerated), resourceDetails.Value, additionalData.Value, serializedAdditionalRawData);
+            return new SecuritySubAssessmentData(
+                id,
+                name,
+                type,
+                systemData,
+                id0,
+                displayName,
+                status,
+                remediation,
+                impact,
+                category,
+                description,
+                timeGenerated,
+                resourceDetails,
+                additionalData,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecuritySubAssessmentData>.Write(ModelReaderWriterOptions options)

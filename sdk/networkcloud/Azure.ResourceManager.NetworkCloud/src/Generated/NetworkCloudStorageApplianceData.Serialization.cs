@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -68,37 +68,37 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("administratorCredentials"u8);
             writer.WriteObjectValue(AdministratorCredentials);
-            if (options.Format != "W" && Optional.IsDefined(Capacity))
+            if (options.Format != "W" && Capacity.HasValue)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CapacityUsed))
+            if (options.Format != "W" && CapacityUsed.HasValue)
             {
                 writer.WritePropertyName("capacityUsed"u8);
                 writer.WriteNumberValue(CapacityUsed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterId))
+            if (options.Format != "W" && ClusterId != null)
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
+            if (options.Format != "W" && DetailedStatus.HasValue)
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
+            if (options.Format != "W" && DetailedStatusMessage != null)
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagementIPv4Address))
+            if (options.Format != "W" && ManagementIPv4Address != null)
             {
                 writer.WritePropertyName("managementIpv4Address"u8);
                 writer.WriteStringValue(ManagementIPv4Address.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(RackId);
             writer.WritePropertyName("rackSlot"u8);
             writer.WriteNumberValue(RackSlot);
-            if (options.Format != "W" && Optional.IsDefined(RemoteVendorManagementFeature))
+            if (options.Format != "W" && RemoteVendorManagementFeature.HasValue)
             {
                 writer.WritePropertyName("remoteVendorManagementFeature"u8);
                 writer.WriteStringValue(RemoteVendorManagementFeature.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RemoteVendorManagementStatus))
+            if (options.Format != "W" && RemoteVendorManagementStatus.HasValue)
             {
                 writer.WritePropertyName("remoteVendorManagementStatus"u8);
                 writer.WriteStringValue(RemoteVendorManagementStatus.Value.ToString());
@@ -161,24 +161,24 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             AdministrativeCredentials administratorCredentials = default;
-            Optional<long> capacity = default;
-            Optional<long> capacityUsed = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<StorageApplianceDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<IPAddress> managementIPv4Address = default;
-            Optional<StorageApplianceProvisioningState> provisioningState = default;
+            long? capacity = default;
+            long? capacityUsed = default;
+            ResourceIdentifier clusterId = default;
+            StorageApplianceDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            IPAddress managementIPv4Address = default;
+            StorageApplianceProvisioningState? provisioningState = default;
             ResourceIdentifier rackId = default;
             long rackSlot = default;
-            Optional<RemoteVendorManagementFeature> remoteVendorManagementFeature = default;
-            Optional<RemoteVendorManagementStatus> remoteVendorManagementStatus = default;
+            RemoteVendorManagementFeature? remoteVendorManagementFeature = default;
+            RemoteVendorManagementStatus? remoteVendorManagementStatus = default;
             string serialNumber = default;
             string storageApplianceSkuId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -353,7 +353,29 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudStorageApplianceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, administratorCredentials, Optional.ToNullable(capacity), Optional.ToNullable(capacityUsed), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, managementIPv4Address.Value, Optional.ToNullable(provisioningState), rackId, rackSlot, Optional.ToNullable(remoteVendorManagementFeature), Optional.ToNullable(remoteVendorManagementStatus), serialNumber, storageApplianceSkuId, serializedAdditionalRawData);
+            return new NetworkCloudStorageApplianceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                administratorCredentials,
+                capacity,
+                capacityUsed,
+                clusterId,
+                detailedStatus,
+                detailedStatusMessage,
+                managementIPv4Address,
+                provisioningState,
+                rackId,
+                rackSlot,
+                remoteVendorManagementFeature,
+                remoteVendorManagementStatus,
+                serialNumber,
+                storageApplianceSkuId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudStorageApplianceData>.Write(ModelReaderWriterOptions options)

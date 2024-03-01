@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CrashConsistentFrequencyInMinutes))
+            if (CrashConsistentFrequencyInMinutes.HasValue)
             {
                 writer.WritePropertyName("crashConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(CrashConsistentFrequencyInMinutes.Value);
             }
-            if (Optional.IsDefined(AppConsistentFrequencyInMinutes))
+            if (AppConsistentFrequencyInMinutes.HasValue)
             {
                 writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> crashConsistentFrequencyInMinutes = default;
-            Optional<int> appConsistentFrequencyInMinutes = default;
+            int? crashConsistentFrequencyInMinutes = default;
+            int? appConsistentFrequencyInMinutes = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackPolicyCreationContent(instanceType, serializedAdditionalRawData, Optional.ToNullable(crashConsistentFrequencyInMinutes), Optional.ToNullable(appConsistentFrequencyInMinutes));
+            return new InMageRcmFailbackPolicyCreationContent(instanceType, serializedAdditionalRawData, crashConsistentFrequencyInMinutes, appConsistentFrequencyInMinutes);
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackPolicyCreationContent>.Write(ModelReaderWriterOptions options)

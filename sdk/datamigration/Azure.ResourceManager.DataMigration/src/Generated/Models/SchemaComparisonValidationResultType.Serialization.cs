@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ObjectName))
+            if (ObjectName != null)
             {
                 writer.WritePropertyName("objectName"u8);
                 writer.WriteStringValue(ObjectName);
             }
-            if (Optional.IsDefined(ObjectType))
+            if (ObjectType.HasValue)
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType.Value.ToString());
             }
-            if (Optional.IsDefined(UpdateAction))
+            if (UpdateAction.HasValue)
             {
                 writer.WritePropertyName("updateAction"u8);
                 writer.WriteStringValue(UpdateAction.Value.ToString());
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> objectName = default;
-            Optional<ObjectType> objectType = default;
-            Optional<UpdateActionType> updateAction = default;
+            string objectName = default;
+            ObjectType? objectType = default;
+            UpdateActionType? updateAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SchemaComparisonValidationResultType(objectName.Value, Optional.ToNullable(objectType), Optional.ToNullable(updateAction), serializedAdditionalRawData);
+            return new SchemaComparisonValidationResultType(objectName, objectType, updateAction, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SchemaComparisonValidationResultType>.Write(ModelReaderWriterOptions options)

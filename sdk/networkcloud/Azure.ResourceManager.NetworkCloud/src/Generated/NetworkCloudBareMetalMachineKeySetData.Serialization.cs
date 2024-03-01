@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("azureGroupId"u8);
             writer.WriteStringValue(AzureGroupId);
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
+            if (options.Format != "W" && DetailedStatus.HasValue)
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
+            if (options.Format != "W" && DetailedStatusMessage != null)
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
@@ -92,19 +92,19 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(LastValidatedOn))
+            if (options.Format != "W" && LastValidatedOn.HasValue)
             {
                 writer.WritePropertyName("lastValidation"u8);
                 writer.WriteStringValue(LastValidatedOn.Value, "O");
             }
-            if (Optional.IsDefined(OSGroupName))
+            if (OSGroupName != null)
             {
                 writer.WritePropertyName("osGroupName"u8);
                 writer.WriteStringValue(OSGroupName);
             }
             writer.WritePropertyName("privilegeLevel"u8);
             writer.WriteStringValue(PrivilegeLevel.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsCollectionDefined(UserListStatus))
+            if (options.Format != "W" && !(UserListStatus is ChangeTrackingList<KeySetUserStatus> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userListStatus"u8);
                 writer.WriteStartArray();
@@ -166,23 +166,23 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string azureGroupId = default;
-            Optional<BareMetalMachineKeySetDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
+            BareMetalMachineKeySetDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
             DateTimeOffset expiration = default;
             IList<IPAddress> jumpHostsAllowed = default;
-            Optional<DateTimeOffset> lastValidation = default;
-            Optional<string> osGroupName = default;
+            DateTimeOffset? lastValidation = default;
+            string osGroupName = default;
             BareMetalMachineKeySetPrivilegeLevel privilegeLevel = default;
-            Optional<BareMetalMachineKeySetProvisioningState> provisioningState = default;
+            BareMetalMachineKeySetProvisioningState? provisioningState = default;
             IList<KeySetUser> userList = default;
-            Optional<IReadOnlyList<KeySetUserStatus>> userListStatus = default;
+            IReadOnlyList<KeySetUserStatus> userListStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -346,7 +346,26 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudBareMetalMachineKeySetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, azureGroupId, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, expiration, jumpHostsAllowed, Optional.ToNullable(lastValidation), osGroupName.Value, privilegeLevel, Optional.ToNullable(provisioningState), userList, Optional.ToList(userListStatus), serializedAdditionalRawData);
+            return new NetworkCloudBareMetalMachineKeySetData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                azureGroupId,
+                detailedStatus,
+                detailedStatusMessage,
+                expiration,
+                jumpHostsAllowed,
+                lastValidation,
+                osGroupName,
+                privilegeLevel,
+                provisioningState,
+                userList,
+                userListStatus ?? new ChangeTrackingList<KeySetUserStatus>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudBareMetalMachineKeySetData>.Write(ModelReaderWriterOptions options)

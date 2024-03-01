@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
+            if (options.Format != "W" && ErrorCode != null)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(Occurrences))
+            if (options.Format != "W" && Occurrences.HasValue)
             {
                 writer.WritePropertyName("occurrences"u8);
                 writer.WriteNumberValue(Occurrences.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<int> occurrences = default;
+            string errorCode = default;
+            string errorMessage = default;
+            int? occurrences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeAlertErrorDetails(errorCode.Value, errorMessage.Value, Optional.ToNullable(occurrences), serializedAdditionalRawData);
+            return new DataBoxEdgeAlertErrorDetails(errorCode, errorMessage, occurrences, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeAlertErrorDetails>.Write(ModelReaderWriterOptions options)

@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetCoreMainEntryPath))
+            if (NetCoreMainEntryPath != null)
             {
                 writer.WritePropertyName("netCoreMainEntryPath"u8);
                 writer.WriteStringValue(NetCoreMainEntryPath);
             }
-            if (Optional.IsDefined(RuntimeVersion))
+            if (RuntimeVersion != null)
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (Optional.IsDefined(RelativePath))
+            if (RelativePath != null)
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> netCoreMainEntryPath = default;
-            Optional<string> runtimeVersion = default;
-            Optional<string> relativePath = default;
+            string netCoreMainEntryPath = default;
+            string runtimeVersion = default;
+            string relativePath = default;
             string type = default;
-            Optional<string> version = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetCoreZipUploadedUserSourceInfo(type, version.Value, serializedAdditionalRawData, relativePath.Value, netCoreMainEntryPath.Value, runtimeVersion.Value);
+            return new NetCoreZipUploadedUserSourceInfo(
+                type,
+                version,
+                serializedAdditionalRawData,
+                relativePath,
+                netCoreMainEntryPath,
+                runtimeVersion);
         }
 
         BinaryData IPersistableModel<NetCoreZipUploadedUserSourceInfo>.Write(ModelReaderWriterOptions options)

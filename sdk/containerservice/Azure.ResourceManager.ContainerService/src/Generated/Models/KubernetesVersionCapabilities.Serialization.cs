@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SupportPlan))
+            if (!(SupportPlan is ChangeTrackingList<KubernetesSupportPlan> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportPlan"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KubernetesSupportPlan>> supportPlan = default;
+            IReadOnlyList<KubernetesSupportPlan> supportPlan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesVersionCapabilities(Optional.ToList(supportPlan), serializedAdditionalRawData);
+            return new KubernetesVersionCapabilities(supportPlan ?? new ChangeTrackingList<KubernetesSupportPlan>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesVersionCapabilities>.Write(ModelReaderWriterOptions options)

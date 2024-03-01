@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(MappingType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceField))
+            if (SourceField != null)
             {
                 writer.WritePropertyName("sourceField"u8);
                 writer.WriteStringValue(SourceField);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             DeliveryAttributeMappingType type = default;
-            Optional<string> sourceField = default;
+            string sourceField = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynamicDeliveryAttributeMapping(name.Value, type, serializedAdditionalRawData, sourceField.Value);
+            return new DynamicDeliveryAttributeMapping(name, type, serializedAdditionalRawData, sourceField);
         }
 
         BinaryData IPersistableModel<DynamicDeliveryAttributeMapping>.Write(ModelReaderWriterOptions options)

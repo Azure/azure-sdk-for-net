@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProximityPlacementGroupType))
+            if (ProximityPlacementGroupType.HasValue)
             {
                 writer.WritePropertyName("proximityPlacementGroupType"u8);
                 writer.WriteStringValue(ProximityPlacementGroupType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachines))
+            if (options.Format != "W" && !(VirtualMachines is ChangeTrackingList<ComputeSubResourceDataWithColocationStatus> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachineScaleSets))
+            if (options.Format != "W" && !(VirtualMachineScaleSets is ChangeTrackingList<ComputeSubResourceDataWithColocationStatus> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("virtualMachineScaleSets"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AvailabilitySets))
+            if (options.Format != "W" && !(AvailabilitySets is ChangeTrackingList<ComputeSubResourceDataWithColocationStatus> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("availabilitySets"u8);
                 writer.WriteStartArray();
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ColocationStatus))
+            if (ColocationStatus != null)
             {
                 writer.WritePropertyName("colocationStatus"u8);
                 writer.WriteObjectValue(ColocationStatus);
             }
-            if (Optional.IsDefined(Intent))
+            if (Intent != null)
             {
                 writer.WritePropertyName("intent"u8);
                 writer.WriteObjectValue(Intent);
@@ -157,19 +157,19 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<IList<string>> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IList<string> zones = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ProximityPlacementGroupType> proximityPlacementGroupType = default;
-            Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> virtualMachines = default;
-            Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> virtualMachineScaleSets = default;
-            Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> availabilitySets = default;
-            Optional<InstanceViewStatus> colocationStatus = default;
-            Optional<ProximityPlacementGroupPropertiesIntent> intent = default;
+            SystemData systemData = default;
+            ProximityPlacementGroupType? proximityPlacementGroupType = default;
+            IReadOnlyList<ComputeSubResourceDataWithColocationStatus> virtualMachines = default;
+            IReadOnlyList<ComputeSubResourceDataWithColocationStatus> virtualMachineScaleSets = default;
+            IReadOnlyList<ComputeSubResourceDataWithColocationStatus> availabilitySets = default;
+            InstanceViewStatus colocationStatus = default;
+            ProximityPlacementGroupPropertiesIntent intent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -318,7 +318,21 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProximityPlacementGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToNullable(proximityPlacementGroupType), Optional.ToList(virtualMachines), Optional.ToList(virtualMachineScaleSets), Optional.ToList(availabilitySets), colocationStatus.Value, intent.Value, serializedAdditionalRawData);
+            return new ProximityPlacementGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                zones ?? new ChangeTrackingList<string>(),
+                proximityPlacementGroupType,
+                virtualMachines ?? new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>(),
+                virtualMachineScaleSets ?? new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>(),
+                availabilitySets ?? new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>(),
+                colocationStatus,
+                intent,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProximityPlacementGroupData>.Write(ModelReaderWriterOptions options)

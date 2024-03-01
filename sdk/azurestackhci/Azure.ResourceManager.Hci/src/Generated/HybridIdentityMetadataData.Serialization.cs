@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceUid))
+            if (ResourceUid != null)
             {
                 writer.WritePropertyName("resourceUid"u8);
                 writer.WriteStringValue(ResourceUid);
             }
-            if (Optional.IsDefined(PublicKey))
+            if (PublicKey != null)
             {
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(Identity))
+            if (options.Format != "W" && Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Hci
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> resourceUid = default;
-            Optional<string> publicKey = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            string resourceUid = default;
+            string publicKey = default;
+            ManagedServiceIdentity identity = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridIdentityMetadataData(id, name, type, systemData.Value, resourceUid.Value, publicKey.Value, identity, provisioningState.Value, serializedAdditionalRawData);
+            return new HybridIdentityMetadataData(
+                id,
+                name,
+                type,
+                systemData,
+                resourceUid,
+                publicKey,
+                identity,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridIdentityMetadataData>.Write(ModelReaderWriterOptions options)

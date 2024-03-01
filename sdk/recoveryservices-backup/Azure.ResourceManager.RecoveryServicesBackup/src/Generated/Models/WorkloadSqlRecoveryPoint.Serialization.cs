@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedInfo))
+            if (ExtendedInfo != null)
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            if (Optional.IsDefined(RecoveryPointCreatedOn))
+            if (RecoveryPointCreatedOn.HasValue)
             {
                 writer.WritePropertyName("recoveryPointTimeInUTC"u8);
                 writer.WriteStringValue(RecoveryPointCreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(RestorePointType))
+            if (RestorePointType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RestorePointType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(RecoveryPointTierDetails))
+            if (!(RecoveryPointTierDetails is ChangeTrackingList<RecoveryPointTierInformationV2> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recoveryPointTierDetails"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RecoveryPointMoveReadinessInfo))
+            if (!(RecoveryPointMoveReadinessInfo is ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("recoveryPointMoveReadinessInfo"u8);
                 writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(RecoveryPointProperties))
+            if (RecoveryPointProperties != null)
             {
                 writer.WritePropertyName("recoveryPointProperties"u8);
                 writer.WriteObjectValue(RecoveryPointProperties);
@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "AzureWorkloadSQLPointInTimeRecoveryPoint": return WorkloadSqlPointInTimeRecoveryPoint.DeserializeWorkloadSqlPointInTimeRecoveryPoint(element, options);
                 }
             }
-            Optional<WorkloadSqlRecoveryPointExtendedInfo> extendedInfo = default;
-            Optional<DateTimeOffset> recoveryPointTimeInUTC = default;
-            Optional<RestorePointType> type = default;
-            Optional<IList<RecoveryPointTierInformationV2>> recoveryPointTierDetails = default;
-            Optional<IDictionary<string, RecoveryPointMoveReadinessInfo>> recoveryPointMoveReadinessInfo = default;
-            Optional<RecoveryPointProperties> recoveryPointProperties = default;
+            WorkloadSqlRecoveryPointExtendedInfo extendedInfo = default;
+            DateTimeOffset? recoveryPointTimeInUTC = default;
+            RestorePointType? type = default;
+            IList<RecoveryPointTierInformationV2> recoveryPointTierDetails = default;
+            IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default;
+            RecoveryPointProperties recoveryPointProperties = default;
             string objectType = "AzureWorkloadSQLRecoveryPoint";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -200,7 +200,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadSqlRecoveryPoint(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointTimeInUTC), Optional.ToNullable(type), Optional.ToList(recoveryPointTierDetails), Optional.ToDictionary(recoveryPointMoveReadinessInfo), recoveryPointProperties.Value, extendedInfo.Value);
+            return new WorkloadSqlRecoveryPoint(
+                objectType,
+                serializedAdditionalRawData,
+                recoveryPointTimeInUTC,
+                type,
+                recoveryPointTierDetails ?? new ChangeTrackingList<RecoveryPointTierInformationV2>(),
+                recoveryPointMoveReadinessInfo ?? new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>(),
+                recoveryPointProperties,
+                extendedInfo);
         }
 
         BinaryData IPersistableModel<WorkloadSqlRecoveryPoint>.Write(ModelReaderWriterOptions options)

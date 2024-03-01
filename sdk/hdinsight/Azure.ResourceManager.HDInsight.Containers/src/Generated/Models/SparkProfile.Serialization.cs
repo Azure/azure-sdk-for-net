@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultStorageUriString))
+            if (DefaultStorageUriString != null)
             {
                 writer.WritePropertyName("defaultStorageUrl"u8);
                 writer.WriteStringValue(DefaultStorageUriString);
             }
-            if (Optional.IsDefined(MetastoreSpec))
+            if (MetastoreSpec != null)
             {
                 writer.WritePropertyName("metastoreSpec"u8);
                 writer.WriteObjectValue(MetastoreSpec);
             }
-            if (Optional.IsDefined(UserPluginsSpec))
+            if (UserPluginsSpec != null)
             {
                 writer.WritePropertyName("userPluginsSpec"u8);
                 writer.WriteObjectValue(UserPluginsSpec);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<string> defaultStorageUrl = default;
-            Optional<SparkMetastoreSpec> metastoreSpec = default;
-            Optional<SparkUserPluginListResult> userPluginsSpec = default;
+            string defaultStorageUrl = default;
+            SparkMetastoreSpec metastoreSpec = default;
+            SparkUserPluginListResult userPluginsSpec = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SparkProfile(defaultStorageUrl.Value, metastoreSpec.Value, userPluginsSpec.Value, serializedAdditionalRawData);
+            return new SparkProfile(defaultStorageUrl, metastoreSpec, userPluginsSpec, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SparkProfile>.Write(ModelReaderWriterOptions options)

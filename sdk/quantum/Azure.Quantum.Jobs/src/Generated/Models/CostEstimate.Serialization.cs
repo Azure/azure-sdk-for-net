@@ -19,9 +19,9 @@ namespace Azure.Quantum.Jobs.Models
             {
                 return null;
             }
-            Optional<string> currencyCode = default;
-            Optional<IReadOnlyList<UsageEvent>> events = default;
-            Optional<float> estimatedTotal = default;
+            string currencyCode = default;
+            IReadOnlyList<UsageEvent> events = default;
+            float? estimatedTotal = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currencyCode"u8))
@@ -53,7 +53,7 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new CostEstimate(currencyCode.Value, Optional.ToList(events), Optional.ToNullable(estimatedTotal));
+            return new CostEstimate(currencyCode, events ?? new ChangeTrackingList<UsageEvent>(), estimatedTotal);
         }
     }
 }

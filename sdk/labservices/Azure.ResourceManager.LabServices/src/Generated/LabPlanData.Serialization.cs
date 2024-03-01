@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.LabServices
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,29 +61,29 @@ namespace Azure.ResourceManager.LabServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultConnectionProfile))
+            if (DefaultConnectionProfile != null)
             {
                 writer.WritePropertyName("defaultConnectionProfile"u8);
                 writer.WriteObjectValue(DefaultConnectionProfile);
             }
-            if (Optional.IsDefined(DefaultAutoShutdownProfile))
+            if (DefaultAutoShutdownProfile != null)
             {
                 writer.WritePropertyName("defaultAutoShutdownProfile"u8);
                 writer.WriteObjectValue(DefaultAutoShutdownProfile);
             }
-            if (Optional.IsDefined(DefaultNetworkProfile))
+            if (DefaultNetworkProfile != null)
             {
                 writer.WritePropertyName("defaultNetworkProfile"u8);
                 writer.WriteObjectValue(DefaultNetworkProfile);
             }
-            if (Optional.IsCollectionDefined(AllowedRegions))
+            if (!(AllowedRegions is ChangeTrackingList<AzureLocation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("allowedRegions"u8);
                 writer.WriteStartArray();
@@ -93,22 +93,22 @@ namespace Azure.ResourceManager.LabServices
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SharedGalleryId))
+            if (SharedGalleryId != null)
             {
                 writer.WritePropertyName("sharedGalleryId"u8);
                 writer.WriteStringValue(SharedGalleryId);
             }
-            if (Optional.IsDefined(SupportInfo))
+            if (SupportInfo != null)
             {
                 writer.WritePropertyName("supportInfo"u8);
                 writer.WriteObjectValue(SupportInfo);
             }
-            if (Optional.IsDefined(LinkedLmsInstance))
+            if (LinkedLmsInstance != null)
             {
                 writer.WritePropertyName("linkedLmsInstance"u8);
                 writer.WriteStringValue(LinkedLmsInstance.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
@@ -152,21 +152,21 @@ namespace Azure.ResourceManager.LabServices
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LabConnectionProfile> defaultConnectionProfile = default;
-            Optional<LabAutoShutdownProfile> defaultAutoShutdownProfile = default;
-            Optional<LabPlanNetworkProfile> defaultNetworkProfile = default;
-            Optional<IList<AzureLocation>> allowedRegions = default;
-            Optional<ResourceIdentifier> sharedGalleryId = default;
-            Optional<LabPlanSupportInfo> supportInfo = default;
-            Optional<Uri> linkedLmsInstance = default;
-            Optional<LabServicesProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            LabConnectionProfile defaultConnectionProfile = default;
+            LabAutoShutdownProfile defaultAutoShutdownProfile = default;
+            LabPlanNetworkProfile defaultNetworkProfile = default;
+            IList<AzureLocation> allowedRegions = default;
+            ResourceIdentifier sharedGalleryId = default;
+            LabPlanSupportInfo supportInfo = default;
+            Uri linkedLmsInstance = default;
+            LabServicesProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -318,7 +318,23 @@ namespace Azure.ResourceManager.LabServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, defaultConnectionProfile.Value, defaultAutoShutdownProfile.Value, defaultNetworkProfile.Value, Optional.ToList(allowedRegions), sharedGalleryId.Value, supportInfo.Value, linkedLmsInstance.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new LabPlanData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                defaultConnectionProfile,
+                defaultAutoShutdownProfile,
+                defaultNetworkProfile,
+                allowedRegions ?? new ChangeTrackingList<AzureLocation>(),
+                sharedGalleryId,
+                supportInfo,
+                linkedLmsInstance,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabPlanData>.Write(ModelReaderWriterOptions options)

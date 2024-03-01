@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProbePath))
+            if (ProbePath != null)
             {
                 writer.WritePropertyName("probePath"u8);
                 writer.WriteStringValue(ProbePath);
             }
-            if (Optional.IsDefined(ProbeRequestType))
+            if (ProbeRequestType.HasValue)
             {
                 writer.WritePropertyName("probeRequestType"u8);
                 writer.WriteStringValue(ProbeRequestType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ProbeProtocol))
+            if (ProbeProtocol.HasValue)
             {
                 writer.WritePropertyName("probeProtocol"u8);
                 writer.WriteStringValue(ProbeProtocol.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ProbeIntervalInSeconds))
+            if (ProbeIntervalInSeconds.HasValue)
             {
                 writer.WritePropertyName("probeIntervalInSeconds"u8);
                 writer.WriteNumberValue(ProbeIntervalInSeconds.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> probePath = default;
-            Optional<HealthProbeRequestType> probeRequestType = default;
-            Optional<HealthProbeProtocol> probeProtocol = default;
-            Optional<int> probeIntervalInSeconds = default;
+            string probePath = default;
+            HealthProbeRequestType? probeRequestType = default;
+            HealthProbeProtocol? probeProtocol = default;
+            int? probeIntervalInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthProbeSettings(probePath.Value, Optional.ToNullable(probeRequestType), Optional.ToNullable(probeProtocol), Optional.ToNullable(probeIntervalInSeconds), serializedAdditionalRawData);
+            return new HealthProbeSettings(probePath, probeRequestType, probeProtocol, probeIntervalInSeconds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthProbeSettings>.Write(ModelReaderWriterOptions options)

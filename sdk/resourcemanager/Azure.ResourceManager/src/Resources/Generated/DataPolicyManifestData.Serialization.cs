@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Namespaces))
+            if (!(Namespaces is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("namespaces"u8);
                 writer.WriteStartArray();
@@ -60,17 +60,17 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PolicyMode))
+            if (PolicyMode != null)
             {
                 writer.WritePropertyName("policyMode"u8);
                 writer.WriteStringValue(PolicyMode);
             }
-            if (Optional.IsDefined(IsBuiltInOnly))
+            if (IsBuiltInOnly.HasValue)
             {
                 writer.WritePropertyName("isBuiltInOnly"u8);
                 writer.WriteBooleanValue(IsBuiltInOnly.Value);
             }
-            if (Optional.IsCollectionDefined(ResourceTypeAliases))
+            if (!(ResourceTypeAliases is ChangeTrackingList<ResourceTypeAliases> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypeAliases"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Effects))
+            if (!(Effects is ChangeTrackingList<DataPolicyManifestEffect> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("effects"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FieldValues))
+            if (!(FieldValues is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("fieldValues"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Resources
             }
             writer.WritePropertyName("resourceFunctions"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Standard))
+            if (!(Standard is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("standard"u8);
                 writer.WriteStartArray();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CustomDefinitions))
+            if (!(CustomDefinitions is ChangeTrackingList<DataManifestCustomResourceFunctionDefinition> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("custom"u8);
                 writer.WriteStartArray();
@@ -165,15 +165,15 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<string>> namespaces = default;
-            Optional<string> policyMode = default;
-            Optional<bool> isBuiltInOnly = default;
-            Optional<IReadOnlyList<ResourceTypeAliases>> resourceTypeAliases = default;
-            Optional<IReadOnlyList<DataPolicyManifestEffect>> effects = default;
-            Optional<IReadOnlyList<string>> fieldValues = default;
-            Optional<IReadOnlyList<string>> standard = default;
-            Optional<IReadOnlyList<DataManifestCustomResourceFunctionDefinition>> custom = default;
+            SystemData systemData = default;
+            IReadOnlyList<string> namespaces = default;
+            string policyMode = default;
+            bool? isBuiltInOnly = default;
+            IReadOnlyList<ResourceTypeAliases> resourceTypeAliases = default;
+            IReadOnlyList<DataPolicyManifestEffect> effects = default;
+            IReadOnlyList<string> fieldValues = default;
+            IReadOnlyList<string> standard = default;
+            IReadOnlyList<DataManifestCustomResourceFunctionDefinition> custom = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -330,7 +330,20 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataPolicyManifestData(id, name, type, systemData.Value, Optional.ToList(namespaces), policyMode.Value, Optional.ToNullable(isBuiltInOnly), Optional.ToList(resourceTypeAliases), Optional.ToList(effects), Optional.ToList(fieldValues), Optional.ToList(standard), Optional.ToList(custom), serializedAdditionalRawData);
+            return new DataPolicyManifestData(
+                id,
+                name,
+                type,
+                systemData,
+                namespaces ?? new ChangeTrackingList<string>(),
+                policyMode,
+                isBuiltInOnly,
+                resourceTypeAliases ?? new ChangeTrackingList<ResourceTypeAliases>(),
+                effects ?? new ChangeTrackingList<DataPolicyManifestEffect>(),
+                fieldValues ?? new ChangeTrackingList<string>(),
+                standard ?? new ChangeTrackingList<string>(),
+                custom ?? new ChangeTrackingList<DataManifestCustomResourceFunctionDefinition>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataPolicyManifestData>.Write(ModelReaderWriterOptions options)

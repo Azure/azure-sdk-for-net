@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Address))
+            if (Address != null)
             {
                 if (Address != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("address");
                 }
             }
-            if (Optional.IsDefined(DashboardPort))
+            if (DashboardPort.HasValue)
             {
                 if (DashboardPort != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dashboardPort");
                 }
             }
-            if (Optional.IsDefined(HeadNodeAdditionalArgs))
+            if (HeadNodeAdditionalArgs != null)
             {
                 if (HeadNodeAdditionalArgs != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("headNodeAdditionalArgs");
                 }
             }
-            if (Optional.IsDefined(IncludeDashboard))
+            if (IncludeDashboard.HasValue)
             {
                 if (IncludeDashboard != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("includeDashboard");
                 }
             }
-            if (Optional.IsDefined(Port))
+            if (Port.HasValue)
             {
                 if (Port != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("port");
                 }
             }
-            if (Optional.IsDefined(WorkerNodeAdditionalArgs))
+            if (WorkerNodeAdditionalArgs != null)
             {
                 if (WorkerNodeAdditionalArgs != null)
                 {
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> address = default;
-            Optional<int?> dashboardPort = default;
-            Optional<string> headNodeAdditionalArgs = default;
-            Optional<bool?> includeDashboard = default;
-            Optional<int?> port = default;
-            Optional<string> workerNodeAdditionalArgs = default;
+            string address = default;
+            int? dashboardPort = default;
+            string headNodeAdditionalArgs = default;
+            bool? includeDashboard = default;
+            int? port = default;
+            string workerNodeAdditionalArgs = default;
             DistributionType distributionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -220,7 +220,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RayDistributionConfiguration(distributionType, serializedAdditionalRawData, address.Value, Optional.ToNullable(dashboardPort), headNodeAdditionalArgs.Value, Optional.ToNullable(includeDashboard), Optional.ToNullable(port), workerNodeAdditionalArgs.Value);
+            return new RayDistributionConfiguration(
+                distributionType,
+                serializedAdditionalRawData,
+                address,
+                dashboardPort,
+                headNodeAdditionalArgs,
+                includeDashboard,
+                port,
+                workerNodeAdditionalArgs);
         }
 
         BinaryData IPersistableModel<RayDistributionConfiguration>.Write(ModelReaderWriterOptions options)

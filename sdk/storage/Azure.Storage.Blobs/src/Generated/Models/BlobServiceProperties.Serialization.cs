@@ -17,33 +17,33 @@ namespace Azure.Storage.Blobs.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "StorageServiceProperties");
-            if (Optional.IsDefined(Logging))
+            if (Logging != null)
             {
                 writer.WriteObjectValue(Logging, "Logging");
             }
-            if (Optional.IsDefined(HourMetrics))
+            if (HourMetrics != null)
             {
                 writer.WriteObjectValue(HourMetrics, "HourMetrics");
             }
-            if (Optional.IsDefined(MinuteMetrics))
+            if (MinuteMetrics != null)
             {
                 writer.WriteObjectValue(MinuteMetrics, "MinuteMetrics");
             }
-            if (Optional.IsDefined(DefaultServiceVersion))
+            if (DefaultServiceVersion != null)
             {
                 writer.WriteStartElement("DefaultServiceVersion");
                 writer.WriteValue(DefaultServiceVersion);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(DeleteRetentionPolicy))
+            if (DeleteRetentionPolicy != null)
             {
                 writer.WriteObjectValue(DeleteRetentionPolicy, "DeleteRetentionPolicy");
             }
-            if (Optional.IsDefined(StaticWebsite))
+            if (StaticWebsite != null)
             {
                 writer.WriteObjectValue(StaticWebsite, "StaticWebsite");
             }
-            if (Optional.IsCollectionDefined(Cors))
+            if (!(Cors is ChangeTrackingList<BlobCorsRule> collection && collection.IsUndefined))
             {
                 writer.WriteStartElement("Cors");
                 foreach (var item in Cors)
@@ -97,7 +97,14 @@ namespace Azure.Storage.Blobs.Models
                 }
                 cors = array;
             }
-            return new BlobServiceProperties(logging, hourMetrics, minuteMetrics, cors, defaultServiceVersion, deleteRetentionPolicy, staticWebsite);
+            return new BlobServiceProperties(
+                logging,
+                hourMetrics,
+                minuteMetrics,
+                cors,
+                defaultServiceVersion,
+                deleteRetentionPolicy,
+                staticWebsite);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Confluent
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,29 +56,29 @@ namespace Azure.ResourceManager.Confluent
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(OrganizationId))
+            if (options.Format != "W" && OrganizationId.HasValue)
             {
                 writer.WritePropertyName("organizationId"u8);
                 writer.WriteStringValue(OrganizationId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SsoUri))
+            if (options.Format != "W" && SsoUri != null)
             {
                 writer.WritePropertyName("ssoUrl"u8);
                 writer.WriteStringValue(SsoUri.AbsoluteUri);
@@ -126,16 +126,16 @@ namespace Azure.ResourceManager.Confluent
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<ConfluentProvisionState> provisioningState = default;
-            Optional<Guid> organizationId = default;
-            Optional<Uri> ssoUrl = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdTime = default;
+            ConfluentProvisionState? provisioningState = default;
+            Guid? organizationId = default;
+            Uri ssoUrl = default;
             ConfluentOfferDetail offerDetail = default;
             ConfluentUserDetail userDetail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -249,7 +249,20 @@ namespace Azure.ResourceManager.Confluent
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentOrganizationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(provisioningState), Optional.ToNullable(organizationId), ssoUrl.Value, offerDetail, userDetail, serializedAdditionalRawData);
+            return new ConfluentOrganizationData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                createdTime,
+                provisioningState,
+                organizationId,
+                ssoUrl,
+                offerDetail,
+                userDetail,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentOrganizationData>.Write(ModelReaderWriterOptions options)

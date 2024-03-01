@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsDimensionRequired))
+            if (IsDimensionRequired.HasValue)
             {
                 writer.WritePropertyName("isDimensionRequired"u8);
                 writer.WriteBooleanValue(IsDimensionRequired.Value);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (Optional.IsDefined(DisplayDescription))
+            if (DisplayDescription != null)
             {
                 writer.WritePropertyName("displayDescription"u8);
                 writer.WriteStringValue(DisplayDescription);
             }
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(MetricClass))
+            if (MetricClass.HasValue)
             {
                 writer.WritePropertyName("metricClass"u8);
                 writer.WriteStringValue(MetricClass.Value.ToString());
             }
-            if (Optional.IsDefined(Unit))
+            if (Unit.HasValue)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (Optional.IsDefined(PrimaryAggregationType))
+            if (PrimaryAggregationType.HasValue)
             {
                 writer.WritePropertyName("primaryAggregationType"u8);
                 writer.WriteStringValue(PrimaryAggregationType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(SupportedAggregationTypes))
+            if (!(SupportedAggregationTypes is ChangeTrackingList<MonitorAggregationType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedAggregationTypes"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MetricAvailabilities))
+            if (!(MetricAvailabilities is ChangeTrackingList<MonitorMetricAvailability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("metricAvailabilities"u8);
                 writer.WriteStartArray();
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsCollectionDefined(Dimensions))
+            if (!(Dimensions is ChangeTrackingList<MonitorLocalizableString> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
@@ -144,19 +144,19 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<bool> isDimensionRequired = default;
-            Optional<string> resourceId = default;
-            Optional<string> @namespace = default;
-            Optional<MonitorLocalizableString> name = default;
-            Optional<string> displayDescription = default;
-            Optional<string> category = default;
-            Optional<MonitorMetricClass> metricClass = default;
-            Optional<MonitorMetricUnit> unit = default;
-            Optional<MonitorAggregationType> primaryAggregationType = default;
-            Optional<IReadOnlyList<MonitorAggregationType>> supportedAggregationTypes = default;
-            Optional<IReadOnlyList<MonitorMetricAvailability>> metricAvailabilities = default;
-            Optional<string> id = default;
-            Optional<IReadOnlyList<MonitorLocalizableString>> dimensions = default;
+            bool? isDimensionRequired = default;
+            string resourceId = default;
+            string @namespace = default;
+            MonitorLocalizableString name = default;
+            string displayDescription = default;
+            string category = default;
+            MonitorMetricClass? metricClass = default;
+            MonitorMetricUnit? unit = default;
+            MonitorAggregationType? primaryAggregationType = default;
+            IReadOnlyList<MonitorAggregationType> supportedAggregationTypes = default;
+            IReadOnlyList<MonitorMetricAvailability> metricAvailabilities = default;
+            string id = default;
+            IReadOnlyList<MonitorLocalizableString> dimensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -279,7 +279,21 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorMetricDefinition(Optional.ToNullable(isDimensionRequired), resourceId.Value, @namespace.Value, name.Value, displayDescription.Value, category.Value, Optional.ToNullable(metricClass), Optional.ToNullable(unit), Optional.ToNullable(primaryAggregationType), Optional.ToList(supportedAggregationTypes), Optional.ToList(metricAvailabilities), id.Value, Optional.ToList(dimensions), serializedAdditionalRawData);
+            return new MonitorMetricDefinition(
+                isDimensionRequired,
+                resourceId,
+                @namespace,
+                name,
+                displayDescription,
+                category,
+                metricClass,
+                unit,
+                primaryAggregationType,
+                supportedAggregationTypes ?? new ChangeTrackingList<MonitorAggregationType>(),
+                metricAvailabilities ?? new ChangeTrackingList<MonitorMetricAvailability>(),
+                id,
+                dimensions ?? new ChangeTrackingList<MonitorLocalizableString>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorMetricDefinition>.Write(ModelReaderWriterOptions options)

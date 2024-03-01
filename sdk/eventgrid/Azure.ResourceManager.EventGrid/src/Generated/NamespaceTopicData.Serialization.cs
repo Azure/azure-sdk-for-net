@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(PublisherType))
+            if (PublisherType.HasValue)
             {
                 writer.WritePropertyName("publisherType"u8);
                 writer.WriteStringValue(PublisherType.Value.ToString());
             }
-            if (Optional.IsDefined(InputSchema))
+            if (InputSchema.HasValue)
             {
                 writer.WritePropertyName("inputSchema"u8);
                 writer.WriteStringValue(InputSchema.Value.ToString());
             }
-            if (Optional.IsDefined(EventRetentionInDays))
+            if (EventRetentionInDays.HasValue)
             {
                 writer.WritePropertyName("eventRetentionInDays"u8);
                 writer.WriteNumberValue(EventRetentionInDays.Value);
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NamespaceTopicProvisioningState> provisioningState = default;
-            Optional<PublisherType> publisherType = default;
-            Optional<EventInputSchema> inputSchema = default;
-            Optional<int> eventRetentionInDays = default;
+            SystemData systemData = default;
+            NamespaceTopicProvisioningState? provisioningState = default;
+            PublisherType? publisherType = default;
+            EventInputSchema? inputSchema = default;
+            int? eventRetentionInDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NamespaceTopicData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(publisherType), Optional.ToNullable(inputSchema), Optional.ToNullable(eventRetentionInDays), serializedAdditionalRawData);
+            return new NamespaceTopicData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                publisherType,
+                inputSchema,
+                eventRetentionInDays,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NamespaceTopicData>.Write(ModelReaderWriterOptions options)

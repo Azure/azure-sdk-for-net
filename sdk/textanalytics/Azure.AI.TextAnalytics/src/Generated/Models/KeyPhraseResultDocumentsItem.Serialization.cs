@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Statistics))
+            if (Statistics.HasValue)
             {
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics);
@@ -50,7 +50,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<string> keyPhrases = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
-            Optional<TextDocumentStatistics> statistics = default;
+            TextDocumentStatistics? statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyPhrases"u8))
@@ -88,7 +88,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new KeyPhraseResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), keyPhrases);
+            return new KeyPhraseResultDocumentsItem(id, warnings, statistics, keyPhrases);
         }
     }
 }

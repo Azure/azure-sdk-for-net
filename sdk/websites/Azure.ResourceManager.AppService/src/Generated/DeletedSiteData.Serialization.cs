@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,49 +47,49 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DeletedSiteId))
+            if (options.Format != "W" && DeletedSiteId.HasValue)
             {
                 writer.WritePropertyName("deletedSiteId"u8);
                 writer.WriteNumberValue(DeletedSiteId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletedTimestamp))
+            if (options.Format != "W" && DeletedTimestamp != null)
             {
                 writer.WritePropertyName("deletedTimestamp"u8);
                 writer.WriteStringValue(DeletedTimestamp);
             }
-            if (options.Format != "W" && Optional.IsDefined(Subscription))
+            if (options.Format != "W" && Subscription != null)
             {
                 writer.WritePropertyName("subscription"u8);
                 writer.WriteStringValue(Subscription);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
+            if (options.Format != "W" && ResourceGroup != null)
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletedSiteName))
+            if (options.Format != "W" && DeletedSiteName != null)
             {
                 writer.WritePropertyName("deletedSiteName"u8);
                 writer.WriteStringValue(DeletedSiteName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Slot))
+            if (options.Format != "W" && Slot != null)
             {
                 writer.WritePropertyName("slot"u8);
                 writer.WriteStringValue(Slot);
             }
-            if (options.Format != "W" && Optional.IsDefined(KindPropertiesKind))
+            if (options.Format != "W" && KindPropertiesKind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(KindPropertiesKind);
             }
-            if (options.Format != "W" && Optional.IsDefined(GeoRegionName))
+            if (options.Format != "W" && GeoRegionName != null)
             {
                 writer.WritePropertyName("geoRegionName"u8);
                 writer.WriteStringValue(GeoRegionName);
@@ -133,19 +133,19 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> deletedSiteId = default;
-            Optional<string> deletedTimestamp = default;
-            Optional<string> subscription = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> deletedSiteName = default;
-            Optional<string> slot = default;
-            Optional<string> kind0 = default;
-            Optional<string> geoRegionName = default;
+            SystemData systemData = default;
+            int? deletedSiteId = default;
+            string deletedTimestamp = default;
+            string subscription = default;
+            string resourceGroup = default;
+            string deletedSiteName = default;
+            string slot = default;
+            string kind0 = default;
+            string geoRegionName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,7 +241,21 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedSiteData(id, name, type, systemData.Value, Optional.ToNullable(deletedSiteId), deletedTimestamp.Value, subscription.Value, resourceGroup.Value, deletedSiteName.Value, slot.Value, kind0.Value, geoRegionName.Value, kind.Value, serializedAdditionalRawData);
+            return new DeletedSiteData(
+                id,
+                name,
+                type,
+                systemData,
+                deletedSiteId,
+                deletedTimestamp,
+                subscription,
+                resourceGroup,
+                deletedSiteName,
+                slot,
+                kind0,
+                geoRegionName,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedSiteData>.Write(ModelReaderWriterOptions options)

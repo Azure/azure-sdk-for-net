@@ -34,7 +34,7 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(TopContributorCount))
+            if (TopContributorCount.HasValue)
             {
                 writer.WritePropertyName("topContributorCount"u8);
                 writer.WriteNumberValue(TopContributorCount.Value);
@@ -78,7 +78,7 @@ namespace Azure.AI.AnomalyDetector
                 return null;
             }
             IList<VariableValues> variables = default;
-            Optional<int> topContributorCount = default;
+            int? topContributorCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MultivariateLastDetectionOptions(variables, Optional.ToNullable(topContributorCount), serializedAdditionalRawData);
+            return new MultivariateLastDetectionOptions(variables, topContributorCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MultivariateLastDetectionOptions>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TimerTriggers))
+            if (!(TimerTriggers is ChangeTrackingList<ContainerRegistryTimerTrigger> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("timerTriggers"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourceTriggers))
+            if (!(SourceTriggers is ChangeTrackingList<ContainerRegistrySourceTrigger> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sourceTriggers"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BaseImageTrigger))
+            if (BaseImageTrigger != null)
             {
                 writer.WritePropertyName("baseImageTrigger"u8);
                 writer.WriteObjectValue(BaseImageTrigger);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IList<ContainerRegistryTimerTrigger>> timerTriggers = default;
-            Optional<IList<ContainerRegistrySourceTrigger>> sourceTriggers = default;
-            Optional<ContainerRegistryBaseImageTrigger> baseImageTrigger = default;
+            IList<ContainerRegistryTimerTrigger> timerTriggers = default;
+            IList<ContainerRegistrySourceTrigger> sourceTriggers = default;
+            ContainerRegistryBaseImageTrigger baseImageTrigger = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTriggerProperties(Optional.ToList(timerTriggers), Optional.ToList(sourceTriggers), baseImageTrigger.Value, serializedAdditionalRawData);
+            return new ContainerRegistryTriggerProperties(timerTriggers ?? new ChangeTrackingList<ContainerRegistryTimerTrigger>(), sourceTriggers ?? new ChangeTrackingList<ContainerRegistrySourceTrigger>(), baseImageTrigger, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTriggerProperties>.Write(ModelReaderWriterOptions options)

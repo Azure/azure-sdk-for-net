@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PolicyId))
+            if (options.Format != "W" && PolicyId != null)
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (options.Format != "W" && Optional.IsDefined(EnabledOn))
+            if (options.Format != "W" && EnabledOn.HasValue)
             {
                 writer.WritePropertyName("enabledTime"u8);
                 writer.WriteStringValue(EnabledOn.Value, "O");
             }
-            if (Optional.IsDefined(SourceAccount))
+            if (SourceAccount != null)
             {
                 writer.WritePropertyName("sourceAccount"u8);
                 writer.WriteStringValue(SourceAccount);
             }
-            if (Optional.IsDefined(DestinationAccount))
+            if (DestinationAccount != null)
             {
                 writer.WritePropertyName("destinationAccount"u8);
                 writer.WriteStringValue(DestinationAccount);
             }
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<ObjectReplicationPolicyRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> policyId = default;
-            Optional<DateTimeOffset> enabledTime = default;
-            Optional<string> sourceAccount = default;
-            Optional<string> destinationAccount = default;
-            Optional<IList<ObjectReplicationPolicyRule>> rules = default;
+            SystemData systemData = default;
+            string policyId = default;
+            DateTimeOffset? enabledTime = default;
+            string sourceAccount = default;
+            string destinationAccount = default;
+            IList<ObjectReplicationPolicyRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +212,17 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ObjectReplicationPolicyData(id, name, type, systemData.Value, policyId.Value, Optional.ToNullable(enabledTime), sourceAccount.Value, destinationAccount.Value, Optional.ToList(rules), serializedAdditionalRawData);
+            return new ObjectReplicationPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                policyId,
+                enabledTime,
+                sourceAccount,
+                destinationAccount,
+                rules ?? new ChangeTrackingList<ObjectReplicationPolicyRule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ObjectReplicationPolicyData>.Write(ModelReaderWriterOptions options)

@@ -26,84 +26,84 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MigrationStatusDetails))
+            if (options.Format != "W" && MigrationStatusDetails != null)
             {
                 writer.WritePropertyName("migrationStatusDetails"u8);
                 writer.WriteObjectValue(MigrationStatusDetails);
             }
-            if (Optional.IsDefined(BackupConfiguration))
+            if (BackupConfiguration != null)
             {
                 writer.WritePropertyName("backupConfiguration"u8);
                 writer.WriteObjectValue(BackupConfiguration);
             }
-            if (Optional.IsDefined(OfflineConfiguration))
+            if (OfflineConfiguration != null)
             {
                 writer.WritePropertyName("offlineConfiguration"u8);
                 writer.WriteObjectValue(OfflineConfiguration);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(MigrationStatus))
+            if (options.Format != "W" && MigrationStatus != null)
             {
                 writer.WritePropertyName("migrationStatus"u8);
                 writer.WriteStringValue(MigrationStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && StartedOn.HasValue)
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndedOn))
+            if (options.Format != "W" && EndedOn.HasValue)
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (Optional.IsDefined(SourceSqlConnection))
+            if (SourceSqlConnection != null)
             {
                 writer.WritePropertyName("sourceSqlConnection"u8);
                 writer.WriteObjectValue(SourceSqlConnection);
             }
-            if (Optional.IsDefined(SourceDatabaseName))
+            if (SourceDatabaseName != null)
             {
                 writer.WritePropertyName("sourceDatabaseName"u8);
                 writer.WriteStringValue(SourceDatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceServerName))
+            if (options.Format != "W" && SourceServerName != null)
             {
                 writer.WritePropertyName("sourceServerName"u8);
                 writer.WriteStringValue(SourceServerName);
             }
-            if (Optional.IsDefined(MigrationService))
+            if (MigrationService != null)
             {
                 writer.WritePropertyName("migrationService"u8);
                 writer.WriteStringValue(MigrationService);
             }
-            if (Optional.IsDefined(MigrationOperationId))
+            if (MigrationOperationId != null)
             {
                 writer.WritePropertyName("migrationOperationId"u8);
                 writer.WriteStringValue(MigrationOperationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MigrationFailureError))
+            if (options.Format != "W" && MigrationFailureError != null)
             {
                 writer.WritePropertyName("migrationFailureError"u8);
                 writer.WriteObjectValue(MigrationFailureError);
             }
-            if (Optional.IsDefined(TargetDatabaseCollation))
+            if (TargetDatabaseCollation != null)
             {
                 writer.WritePropertyName("targetDatabaseCollation"u8);
                 writer.WriteStringValue(TargetDatabaseCollation);
             }
-            if (Optional.IsDefined(ProvisioningError))
+            if (ProvisioningError != null)
             {
                 writer.WritePropertyName("provisioningError"u8);
                 writer.WriteStringValue(ProvisioningError);
@@ -146,23 +146,23 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<MigrationStatusDetails> migrationStatusDetails = default;
-            Optional<BackupConfiguration> backupConfiguration = default;
-            Optional<OfflineConfiguration> offlineConfiguration = default;
+            MigrationStatusDetails migrationStatusDetails = default;
+            BackupConfiguration backupConfiguration = default;
+            OfflineConfiguration offlineConfiguration = default;
             ResourceType kind = default;
-            Optional<string> scope = default;
-            Optional<string> provisioningState = default;
-            Optional<string> migrationStatus = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<SqlConnectionInformation> sourceSqlConnection = default;
-            Optional<string> sourceDatabaseName = default;
-            Optional<string> sourceServerName = default;
-            Optional<string> migrationService = default;
-            Optional<string> migrationOperationId = default;
-            Optional<ErrorInfo> migrationFailureError = default;
-            Optional<string> targetDatabaseCollation = default;
-            Optional<string> provisioningError = default;
+            string scope = default;
+            string provisioningState = default;
+            string migrationStatus = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            SqlConnectionInformation sourceSqlConnection = default;
+            string sourceDatabaseName = default;
+            string sourceServerName = default;
+            string migrationService = default;
+            string migrationOperationId = default;
+            ErrorInfo migrationFailureError = default;
+            string targetDatabaseCollation = default;
+            string provisioningError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -286,7 +286,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseMigrationSqlVmProperties(kind, scope.Value, provisioningState.Value, migrationStatus.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceSqlConnection.Value, sourceDatabaseName.Value, sourceServerName.Value, migrationService.Value, migrationOperationId.Value, migrationFailureError.Value, targetDatabaseCollation.Value, provisioningError.Value, serializedAdditionalRawData, migrationStatusDetails.Value, backupConfiguration.Value, offlineConfiguration.Value);
+            return new DatabaseMigrationSqlVmProperties(
+                kind,
+                scope,
+                provisioningState,
+                migrationStatus,
+                startedOn,
+                endedOn,
+                sourceSqlConnection,
+                sourceDatabaseName,
+                sourceServerName,
+                migrationService,
+                migrationOperationId,
+                migrationFailureError,
+                targetDatabaseCollation,
+                provisioningError,
+                serializedAdditionalRawData,
+                migrationStatusDetails,
+                backupConfiguration,
+                offlineConfiguration);
         }
 
         BinaryData IPersistableModel<DatabaseMigrationSqlVmProperties>.Write(ModelReaderWriterOptions options)
