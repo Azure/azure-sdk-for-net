@@ -98,7 +98,9 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = await _viewResourceFormatViewsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, viewName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation<ViewResourceFormatResource>(Response.FromValue(new ViewResourceFormatResource(Client, response), response.GetRawResponse()));
+                var uri = _viewResourceFormatViewsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, viewName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CustomerInsightsArmOperation<ViewResourceFormatResource>(Response.FromValue(new ViewResourceFormatResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -157,7 +159,9 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = _viewResourceFormatViewsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, viewName, data, cancellationToken);
-                var operation = new CustomerInsightsArmOperation<ViewResourceFormatResource>(Response.FromValue(new ViewResourceFormatResource(Client, response), response.GetRawResponse()));
+                var uri = _viewResourceFormatViewsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, viewName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CustomerInsightsArmOperation<ViewResourceFormatResource>(Response.FromValue(new ViewResourceFormatResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

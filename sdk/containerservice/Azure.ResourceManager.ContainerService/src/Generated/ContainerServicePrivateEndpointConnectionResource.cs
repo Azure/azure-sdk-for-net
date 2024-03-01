@@ -291,7 +291,9 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation<ContainerServicePrivateEndpointConnectionResource>(Response.FromValue(new ContainerServicePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ContainerServiceArmOperation<ContainerServicePrivateEndpointConnectionResource>(Response.FromValue(new ContainerServicePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -340,7 +342,9 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ContainerServiceArmOperation<ContainerServicePrivateEndpointConnectionResource>(Response.FromValue(new ContainerServicePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ContainerServiceArmOperation<ContainerServicePrivateEndpointConnectionResource>(Response.FromValue(new ContainerServicePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
