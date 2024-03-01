@@ -268,31 +268,50 @@ namespace Azure.Provisioning.Tests
         }
 
         [Test]
-        public void CannotAddLocationParameterInPromptMode()
+        public async Task CanAddCustomLocationParameterInInteractiveMode()
         {
             var infra = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
             var sa = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
-            Assert.Throws<InvalidOperationException>(() =>
-                sa.AssignParameter(d => d.Location, new Parameter("myLocationParam")));
+            sa.AssignParameter(d => d.Location, new Parameter("myLocationParam"));
+
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync(BinaryData.FromObjectAsJson(
+                new
+                {
+                    myLocationParam = new { value = "eastus" },
+                }),
+                interactiveMode: true);
         }
 
         [Test]
-        public void CannotOverrideSamePropertyMoreThanOnce()
+        public async Task CanAssignParameterToMultipleResources()
         {
             var infra = new TestInfrastructure();
-            var sa = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            var overrideLocation = new Parameter("overrideLocation");
 
-            sa.AssignParameter(d => d.Kind, new Parameter("skuParam"));
-            Assert.Throws<InvalidOperationException>(() =>
-                sa.AssignProperty(d => d.Kind, StorageKind.BlockBlobStorage.ToString()));
-            Assert.Throws<InvalidOperationException>(() =>
-                sa.AssignParameter(d => d.Kind, new Parameter("skuParam")));
+            var account1 = infra.AddStorageAccount(
+                name: "sa1",
+                kind: StorageKind.BlobStorage,
+                sku: StorageSkuName.StandardLrs
+            );
+            account1.AssignParameter(a => a.Location, overrideLocation);
 
-            sa.AssignProperty(d => d.AccessTier, StorageAccountAccessTier.Cool.ToString());
-            Assert.Throws<InvalidOperationException>(() =>
-                sa.AssignProperty(d => d.AccessTier, StorageAccountAccessTier.Cool.ToString()));
-            Assert.Throws<InvalidOperationException>(() =>
-                sa.AssignParameter(d => d.AccessTier, new Parameter("tierParam")));
+            var account2 = infra.AddStorageAccount(
+                name: "sa2",
+                kind: StorageKind.BlobStorage,
+                sku: StorageSkuName.StandardLrs
+            );
+            account2.AssignParameter(a => a.Location, overrideLocation);
+
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync(BinaryData.FromObjectAsJson(
+                new
+                {
+                    overrideLocation = new { value = "eastus" },
+                }));
         }
 
         [Test]
@@ -398,7 +417,7 @@ namespace Azure.Provisioning.Tests
                 {
                     var error = process.StandardError.ReadLine();
                     TestContext.Progress.WriteLine(error);
-                    if (error!.StartsWith("ERROR"))
+                    if (error!.Contains("Error"))
                     {
                         Assert.Fail(error);
                     }
