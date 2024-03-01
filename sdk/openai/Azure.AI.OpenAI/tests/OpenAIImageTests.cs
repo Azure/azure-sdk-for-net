@@ -52,7 +52,7 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(firstImageLocation.Url, Is.Not.Null.Or.Empty);
 
             // ContentFilterResults and PromptFilterResults are currently Azure Only
-            if (serviceTarget is Service.Azure)
+            if (serviceTarget == Service.Azure)
             {
                 foreach (ImageGenerationData data in imageGenerations.Data)
                 {
