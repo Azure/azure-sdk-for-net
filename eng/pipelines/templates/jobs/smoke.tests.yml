@@ -117,5 +117,5 @@ jobs:
         - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
           displayName: dotnet restore
 
-        - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
+        - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework ${{ matrix.TestTargetFramework }}
           displayName: "Run Smoke Tests"
