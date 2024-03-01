@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.ResourceManager.Authorization.Models;
 
 namespace Azure.Provisioning.Authorization
 {
@@ -16,9 +17,14 @@ namespace Azure.Provisioning.Authorization
         /// <param name="resource">The resource.</param>
         /// <param name="roleDefinition">The role definition.</param>
         /// <param name="principalId">The principal ID.</param>
-        public static RoleAssignment AssignRole(this Resource resource, RoleDefinition roleDefinition, Guid? principalId = default)
+        /// <param name="principalType">The principal type</param>
+        public static RoleAssignment AssignRole(
+            this Resource resource,
+            RoleDefinition roleDefinition,
+            Guid? principalId = default,
+            RoleManagementPrincipalType? principalType = default)
         {
-            return new RoleAssignment(resource, roleDefinition, principalId);
+            return new RoleAssignment(resource, roleDefinition, principalId, principalType);
         }
     }
 }

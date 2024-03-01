@@ -389,12 +389,18 @@ namespace Azure.Provisioning
             return sb.ToString();
         }
 
-        private static string GetScopedName(Resource resource, string scopedName)
+        private string GetScopedName(Resource resource, string scopedName)
         {
             Resource? parent = resource.Parent;
-
-            return parent is null || parent is Tenant ? scopedName : GetScopedName(parent, $"{parent.Id.Name}_{scopedName}");
+            return parent is null || parent is Tenant ? scopedName : GetScopedName(parent, $"{GetBicepName(parent)}_{scopedName}");
         }
+
+        /// <summary>
+        /// Gets the name of the resource for Bicep.
+        /// </summary>
+        /// <param name="resource">The resource.</param>
+        /// <returns>The name to use for Bicep</returns>
+        protected virtual string GetBicepName(Resource resource) => resource.Id.Name;
 
         string IPersistableModel<Resource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "bicep";
     }

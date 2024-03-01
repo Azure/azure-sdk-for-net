@@ -21,16 +21,20 @@ namespace Azure.Provisioning.Authorization
         internal RoleAssignment(
             Resource resource,
             RoleDefinition roleDefinition,
-            Guid? principalId = default)
+            Guid? principalId = default,
+            RoleManagementPrincipalType? principalType = default)
             : base(
                 resource.Scope,
                 resource,
+                // will be overriden
                 resource.Name,
                 ResourceType,
                 "2022-04-01",
                 (name) => ArmAuthorizationModelFactory.RoleAssignmentData(
                     name: name,
-                    principalId: principalId))
+                    principalId: principalId,
+                    roleDefinitionId: ResourceIdentifier.Parse($"/providers/{RoleDefinitionResourceType}/{roleDefinition}"),
+                    principalType: principalType ?? RoleManagementPrincipalType.ServicePrincipal))
         {
             if (resource.Scope.Configuration?.UseInteractiveMode != true && principalId == null)
             {
@@ -44,14 +48,22 @@ namespace Azure.Provisioning.Authorization
 
             AssignProperty(
                 data => data.Name,
-                $"guid('{resource.Name}', {(principalId == null ? "principalId" : "'" + principalId + "'")}," +
-                $" {SubscriptionResourceIdFunction}({(resource.Scope.Configuration?.UseInteractiveMode != true ? "'" + Id.SubscriptionId + "', ": string.Empty)}" +
-                $"'{RoleDefinitionResourceType}', '{roleDefinition}'))");
+                GetBicepName(resource));
 
             AssignProperty(
                 data => data.RoleDefinitionId,
                 $"{SubscriptionResourceIdFunction}({(resource.Scope.Configuration?.UseInteractiveMode != true ? "'"+ Id.SubscriptionId + "', ": string.Empty)}" +
                 $"'{RoleDefinitionResourceType}', '{roleDefinition}')");
+        }
+
+        /// <inheritdoc />
+        protected override string GetBicepName(Resource resource)
+        {
+            var data = (RoleAssignmentData)ResourceData;
+            return
+                $"guid('{resource.Name}', {(data.PrincipalId == null ? "principalId" : "'" + data.PrincipalId + "'")}," +
+                $" {SubscriptionResourceIdFunction}({(resource.Scope.Configuration?.UseInteractiveMode != true ? "'" + Id.SubscriptionId + "', " : string.Empty)}" +
+                $"'{RoleDefinitionResourceType}', '{data.RoleDefinitionId.Name}'))";
         }
 
         /// <inheritdoc />
