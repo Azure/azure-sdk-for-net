@@ -1064,12 +1064,15 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
     }
-    public abstract partial class HttpPipelineTransport
+    public abstract partial class HttpPipelineTransport : System.ClientModel.Primitives.PipelineTransport
     {
         protected HttpPipelineTransport() { }
+        protected sealed override System.ClientModel.Primitives.PipelineMessage CreateMessageCore() { throw null; }
         public abstract Azure.Core.Request CreateRequest();
         public abstract void Process(Azure.Core.HttpMessage message);
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message);
+        protected sealed override void ProcessCore(System.ClientModel.Primitives.PipelineMessage message) { }
+        protected sealed override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
     public partial class HttpPipelineTransportOptions
     {
