@@ -23,13 +23,13 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure
         }
 
         /// <summary>
-        /// Creates a <see cref="ClinicalMatchingClient" /> with the endpoint and API key provided via environment
+        /// Creates a <see cref="RadiologyInsightsClient" /> with the endpoint and API key provided via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
         /// <param name="apiKey">The API key to use for authentication. Defaults to <see cref="HealthInsightsTestEnvironment.ApiKey"/>.</param>
         /// <param name="skipInstrumenting">Whether or not instrumenting should be skipped. Avoid skipping it as much as possible.</param>
-        /// <returns>The instrumented <see cref="ClinicalMatchingClient" />.</returns>
+        /// <returns>The instrumented <see cref="RadiologyInsightsClient" />.</returns>
         public RadiologyInsightsClient CreateRadiologyInsightsClient(bool useTokenCredential = false, string apiKey = default, bool skipInstrumenting = false)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
