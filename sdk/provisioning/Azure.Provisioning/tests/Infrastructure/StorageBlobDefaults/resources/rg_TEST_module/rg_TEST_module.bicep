@@ -5,7 +5,7 @@ resource storageAccount_melvnlpF2 'Microsoft.Storage/storageAccounts@2022-09-01'
   sku: {
     name: 'Premium_LRS'
   }
-  kind: 'StorageV2'
+  kind: 'BlockBlobStorage'
   properties: {
   }
 }

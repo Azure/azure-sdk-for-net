@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Authorization
     /// </summary>
     public class RoleAssignment : Resource<RoleAssignmentData>
     {
-        private static readonly ResourceType ResourceType = "Microsoft.Resources/roleAssignments";
+        private static readonly ResourceType ResourceType = "Microsoft.Authorization/roleAssignments";
         private static readonly ResourceType RoleDefinitionResourceType = "Microsoft.Authorization/roleDefinitions";
 
         private const string SubscriptionResourceIdFunction = "subscriptionResourceId";
