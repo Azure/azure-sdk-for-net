@@ -22,11 +22,32 @@ resource blobService_lnEDXlX5c 'Microsoft.Storage/storageAccounts/blobServices@2
   }
 }
 
-resource roleAssignment_ZBWGKDk4O 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource roleAssignment_S6jH5ugdS 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   scope: storageAccount_YRiDhR43q
   name: guid('storageAccount_YRiDhR43q', '00000000-0000-0000-0000-000000000000', subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'))
   properties: {
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')
     principalId: '00000000-0000-0000-0000-000000000000'
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource roleAssignment_7MQXhfyRx 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: storageAccount_YRiDhR43q
+  name: guid('storageAccount_YRiDhR43q', '00000000-0000-0000-0000-000000000000', subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '974c5e8b-45b9-4653-ba55-5f855dd0fb88'))
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '974c5e8b-45b9-4653-ba55-5f855dd0fb88')
+    principalId: '00000000-0000-0000-0000-000000000000'
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource roleAssignment_eQvFjtjRE 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: storageAccount_YRiDhR43q
+  name: guid('storageAccount_YRiDhR43q', '00000000-0000-0000-0000-000000000000', subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3'))
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3')
+    principalId: '00000000-0000-0000-0000-000000000000'
+    principalType: 'User'
   }
 }

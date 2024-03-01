@@ -20,6 +20,7 @@ using Azure.Provisioning.Storage;
 using Azure.Provisioning.AppConfiguration;
 using Azure.Provisioning.Authorization;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -217,6 +218,8 @@ namespace Azure.Provisioning.Tests
             var storageAccount = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             infra.AddBlobService();
             storageAccount.AssignRole(RoleDefinition.StorageBlobDataContributor);
+            storageAccount.AssignRole(RoleDefinition.StorageQueueDataContributor);
+            storageAccount.AssignRole(RoleDefinition.StorageTableDataContributor, Guid.Empty, RoleManagementPrincipalType.User);
             infra.Build(GetOutputPath());
 
             await ValidateBicepAsync(BinaryData.FromObjectAsJson(new { principalId = new { value = Guid.Empty }}), interactiveMode: true);
@@ -229,6 +232,8 @@ namespace Azure.Provisioning.Tests
             var storageAccount = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             infra.AddBlobService();
             storageAccount.AssignRole(RoleDefinition.StorageBlobDataContributor, Guid.Empty);
+            storageAccount.AssignRole(RoleDefinition.StorageQueueDataContributor, Guid.Empty);
+            storageAccount.AssignRole(RoleDefinition.StorageTableDataContributor, Guid.Empty, RoleManagementPrincipalType.User);
             infra.Build(GetOutputPath());
 
             await ValidateBicepAsync();
@@ -241,6 +246,8 @@ namespace Azure.Provisioning.Tests
             var storageAccount = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             infra.AddBlobService();
             storageAccount.AssignRole(RoleDefinition.StorageBlobDataContributor, Guid.Empty);
+            storageAccount.AssignRole(RoleDefinition.StorageQueueDataContributor, Guid.Empty);
+            storageAccount.AssignRole(RoleDefinition.StorageTableDataContributor, Guid.Empty, RoleManagementPrincipalType.User);
             infra.Build(GetOutputPath());
 
             await ValidateBicepAsync(interactiveMode: true);

@@ -92,6 +92,7 @@ namespace Azure.Provisioning
         public string Version { get { throw null; } }
         protected virtual Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         protected virtual string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
+        protected virtual string GetBicepName(Azure.Provisioning.Resource resource) { throw null; }
         protected virtual bool NeedsParent() { throw null; }
         protected virtual bool NeedsScope() { throw null; }
         Azure.Provisioning.Resource System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -157,11 +158,12 @@ namespace Azure.Provisioning.Authorization
 {
     public static partial class AuthorizationExtensions
     {
-        public static Azure.Provisioning.Authorization.RoleAssignment AssignRole(this Azure.Provisioning.Resource resource, Azure.Provisioning.Authorization.RoleDefinition roleDefinition, System.Guid? principalId = default(System.Guid?)) { throw null; }
+        public static Azure.Provisioning.Authorization.RoleAssignment AssignRole(this Azure.Provisioning.Resource resource, Azure.Provisioning.Authorization.RoleDefinition roleDefinition, System.Guid? principalId = default(System.Guid?), Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?)) { throw null; }
     }
     public partial class RoleAssignment : Azure.Provisioning.Resource<Azure.ResourceManager.Authorization.RoleAssignmentData>
     {
         internal RoleAssignment() : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Authorization.RoleAssignmentData>)) { }
+        protected override string GetBicepName(Azure.Provisioning.Resource resource) { throw null; }
         protected override bool NeedsParent() { throw null; }
         protected override bool NeedsScope() { throw null; }
     }
