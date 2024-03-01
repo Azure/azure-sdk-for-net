@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> recoveryProximityPlacementGroupId = default;
+            ResourceIdentifier recoveryProximityPlacementGroupId = default;
             string resourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExistingRecoveryProximityPlacementGroup(resourceType, serializedAdditionalRawData, recoveryProximityPlacementGroupId.Value);
+            return new ExistingRecoveryProximityPlacementGroup(resourceType, serializedAdditionalRawData, recoveryProximityPlacementGroupId);
         }
 
         BinaryData IPersistableModel<ExistingRecoveryProximityPlacementGroup>.Write(ModelReaderWriterOptions options)

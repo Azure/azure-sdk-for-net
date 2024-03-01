@@ -122,20 +122,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<object> structure = default;
-            Optional<object> schema = default;
+            string description = default;
+            object structure = default;
+            object schema = default;
             LinkedServiceReference linkedServiceName = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
-            Optional<DatasetFolder> folder = default;
-            Optional<DatasetLocation> location = default;
-            Optional<object> sheetName = default;
-            Optional<object> sheetIndex = default;
-            Optional<object> range = default;
-            Optional<object> firstRowAsHeader = default;
-            Optional<DatasetCompression> compression = default;
-            Optional<object> nullValue = default;
+            DatasetFolder folder = default;
+            DatasetLocation location = default;
+            object sheetName = default;
+            object sheetIndex = default;
+            object range = default;
+            object firstRowAsHeader = default;
+            DatasetCompression compression = default;
+            object nullValue = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -295,7 +295,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExcelDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), folder.Value, additionalProperties, location.Value, sheetName.Value, sheetIndex.Value, range.Value, firstRowAsHeader.Value, compression.Value, nullValue.Value);
+            return new ExcelDataset(
+                type,
+                description,
+                structure,
+                schema,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                folder,
+                additionalProperties,
+                location,
+                sheetName,
+                sheetIndex,
+                range,
+                firstRowAsHeader,
+                compression,
+                nullValue);
         }
 
         internal partial class ExcelDatasetConverter : JsonConverter<ExcelDataset>

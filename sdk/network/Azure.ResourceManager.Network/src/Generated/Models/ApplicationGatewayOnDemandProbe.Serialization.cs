@@ -105,14 +105,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ApplicationGatewayProtocol> protocol = default;
-            Optional<string> host = default;
-            Optional<string> path = default;
-            Optional<int> timeout = default;
-            Optional<bool> pickHostNameFromBackendHttpSettings = default;
-            Optional<ApplicationGatewayProbeHealthResponseMatch> match = default;
-            Optional<WritableSubResource> backendAddressPool = default;
-            Optional<WritableSubResource> backendHttpSettings = default;
+            ApplicationGatewayProtocol? protocol = default;
+            string host = default;
+            string path = default;
+            int? timeout = default;
+            bool? pickHostNameFromBackendHttpSettings = default;
+            ApplicationGatewayProbeHealthResponseMatch match = default;
+            WritableSubResource backendAddressPool = default;
+            WritableSubResource backendHttpSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,7 +187,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayOnDemandProbe(Optional.ToNullable(protocol), host.Value, path.Value, Optional.ToNullable(timeout), Optional.ToNullable(pickHostNameFromBackendHttpSettings), match.Value, backendAddressPool, backendHttpSettings, serializedAdditionalRawData);
+            return new ApplicationGatewayOnDemandProbe(
+                protocol,
+                host,
+                path,
+                timeout,
+                pickHostNameFromBackendHttpSettings,
+                match,
+                backendAddressPool,
+                backendHttpSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayOnDemandProbe>.Write(ModelReaderWriterOptions options)

@@ -128,14 +128,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> caseManipulation = default;
-            Optional<string> name = default;
-            Optional<string> schemaName = default;
-            Optional<IDictionary<string, string>> tableMap = default;
-            Optional<string> targetDatabaseName = default;
-            Optional<IDictionary<string, string>> migrationSetting = default;
-            Optional<IDictionary<string, string>> sourceSetting = default;
-            Optional<IDictionary<string, string>> targetSetting = default;
+            string caseManipulation = default;
+            string name = default;
+            string schemaName = default;
+            IDictionary<string, string> tableMap = default;
+            string targetDatabaseName = default;
+            IDictionary<string, string> migrationSetting = default;
+            IDictionary<string, string> sourceSetting = default;
+            IDictionary<string, string> targetSetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -222,7 +222,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateOracleAzureDBPostgreSqlSyncDatabaseInput(caseManipulation.Value, name.Value, schemaName.Value, Optional.ToDictionary(tableMap), targetDatabaseName.Value, Optional.ToDictionary(migrationSetting), Optional.ToDictionary(sourceSetting), Optional.ToDictionary(targetSetting), serializedAdditionalRawData);
+            return new MigrateOracleAzureDBPostgreSqlSyncDatabaseInput(
+                caseManipulation,
+                name,
+                schemaName,
+                tableMap ?? new ChangeTrackingDictionary<string, string>(),
+                targetDatabaseName,
+                migrationSetting ?? new ChangeTrackingDictionary<string, string>(),
+                sourceSetting ?? new ChangeTrackingDictionary<string, string>(),
+                targetSetting ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput>.Write(ModelReaderWriterOptions options)

@@ -153,21 +153,21 @@ namespace Azure.ResourceManager.Workloads
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> subnet = default;
-            Optional<string> databaseSid = default;
-            Optional<string> databaseType = default;
-            Optional<string> ipAddress = default;
-            Optional<SubResource> loadBalancerDetails = default;
+            SystemData systemData = default;
+            ResourceIdentifier subnet = default;
+            string databaseSid = default;
+            string databaseType = default;
+            string ipAddress = default;
+            SubResource loadBalancerDetails = default;
             IReadOnlyList<DatabaseVmDetails> vmDetails = default;
-            Optional<SapVirtualInstanceStatus> status = default;
-            Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
-            Optional<SapVirtualInstanceError> errors = default;
+            SapVirtualInstanceStatus? status = default;
+            SapVirtualInstanceProvisioningState? provisioningState = default;
+            SapVirtualInstanceError errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -307,7 +307,23 @@ namespace Azure.ResourceManager.Workloads
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapDatabaseInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, subnet.Value, databaseSid.Value, databaseType.Value, ipAddress.Value, loadBalancerDetails, vmDetails ?? new ChangeTrackingList<DatabaseVmDetails>(), Optional.ToNullable(status), Optional.ToNullable(provisioningState), errors.Value, serializedAdditionalRawData);
+            return new SapDatabaseInstanceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                subnet,
+                databaseSid,
+                databaseType,
+                ipAddress,
+                loadBalancerDetails,
+                vmDetails ?? new ChangeTrackingList<DatabaseVmDetails>(),
+                status,
+                provisioningState,
+                errors,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapDatabaseInstanceData>.Write(ModelReaderWriterOptions options)

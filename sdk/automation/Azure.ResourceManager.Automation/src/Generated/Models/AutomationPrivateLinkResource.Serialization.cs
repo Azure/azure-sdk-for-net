@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.Automation.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
+            SystemData systemData = default;
+            string groupId = default;
             IReadOnlyList<string> requiredMembers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationPrivateLinkResource(id, name, type, systemData.Value, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AutomationPrivateLinkResource(
+                id,
+                name,
+                type,
+                systemData,
+                groupId,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationPrivateLinkResource>.Write(ModelReaderWriterOptions options)

@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<string> releaseTrain = default;
-            Optional<string> version = default;
-            Optional<IDictionary<string, string>> configurationSettings = default;
-            Optional<IDictionary<string, string>> configurationProtectedSettings = default;
+            bool? autoUpgradeMinorVersion = default;
+            string releaseTrain = default;
+            string version = default;
+            IDictionary<string, string> configurationSettings = default;
+            IDictionary<string, string> configurationProtectedSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +206,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterExtensionPatch(Optional.ToNullable(autoUpgradeMinorVersion), releaseTrain.Value, version.Value, Optional.ToDictionary(configurationSettings), Optional.ToDictionary(configurationProtectedSettings), serializedAdditionalRawData);
+            return new KubernetesClusterExtensionPatch(
+                autoUpgradeMinorVersion,
+                releaseTrain,
+                version,
+                configurationSettings ?? new ChangeTrackingDictionary<string, string>(),
+                configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterExtensionPatch>.Write(ModelReaderWriterOptions options)

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             IList<AzureLocation> completedRegions = default;
-            Optional<IDictionary<string, ExtendedErrorInfo>> failedOrSkippedRegions = default;
+            IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RolloutStatusBase(completedRegions ?? new ChangeTrackingList<AzureLocation>(), Optional.ToDictionary(failedOrSkippedRegions), serializedAdditionalRawData);
+            return new RolloutStatusBase(completedRegions ?? new ChangeTrackingList<AzureLocation>(), failedOrSkippedRegions ?? new ChangeTrackingDictionary<string, ExtendedErrorInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RolloutStatusBase>.Write(ModelReaderWriterOptions options)

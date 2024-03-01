@@ -196,26 +196,26 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            AzureLocation? location = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ConnectionMonitorSource> source = default;
-            Optional<ConnectionMonitorDestination> destination = default;
-            Optional<bool> autoStart = default;
-            Optional<int> monitoringIntervalInSeconds = default;
+            SystemData systemData = default;
+            ConnectionMonitorSource source = default;
+            ConnectionMonitorDestination destination = default;
+            bool? autoStart = default;
+            int? monitoringIntervalInSeconds = default;
             IReadOnlyList<ConnectionMonitorEndpoint> endpoints = default;
             IReadOnlyList<ConnectionMonitorTestConfiguration> testConfigurations = default;
             IReadOnlyList<ConnectionMonitorTestGroup> testGroups = default;
             IReadOnlyList<ConnectionMonitorOutput> outputs = default;
-            Optional<string> notes = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> monitoringStatus = default;
-            Optional<ConnectionMonitorType> connectionMonitorType = default;
+            string notes = default;
+            NetworkProvisioningState? provisioningState = default;
+            DateTimeOffset? startTime = default;
+            string monitoringStatus = default;
+            ConnectionMonitorType? connectionMonitorType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -423,7 +423,28 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToNullable(location), Optional.ToDictionary(tags), source.Value, destination.Value, Optional.ToNullable(autoStart), Optional.ToNullable(monitoringIntervalInSeconds), endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>(), testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>(), testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>(), outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>(), notes.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), monitoringStatus.Value, Optional.ToNullable(connectionMonitorType), serializedAdditionalRawData);
+            return new ConnectionMonitorData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                source,
+                destination,
+                autoStart,
+                monitoringIntervalInSeconds,
+                endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>(),
+                testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>(),
+                testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>(),
+                outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>(),
+                notes,
+                provisioningState,
+                startTime,
+                monitoringStatus,
+                connectionMonitorType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorData>.Write(ModelReaderWriterOptions options)

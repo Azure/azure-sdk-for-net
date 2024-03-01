@@ -167,24 +167,24 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<ServiceBusSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ServiceBusSku sku = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<string> serviceBusEndpoint = default;
-            Optional<string> metricId = default;
-            Optional<ServiceBusEncryption> encryption = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string status = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
+            string serviceBusEndpoint = default;
+            string metricId = default;
+            ServiceBusEncryption encryption = default;
             IList<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<string> alternateName = default;
+            bool? disableLocalAuth = default;
+            string alternateName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -343,7 +343,26 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusNamespacePatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, encryption.Value, privateEndpointConnections ?? new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>(), Optional.ToNullable(disableLocalAuth), alternateName.Value, serializedAdditionalRawData);
+            return new ServiceBusNamespacePatch(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                identity,
+                provisioningState,
+                status,
+                createdAt,
+                updatedAt,
+                serviceBusEndpoint,
+                metricId,
+                encryption,
+                privateEndpointConnections ?? new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>(),
+                disableLocalAuth,
+                alternateName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusNamespacePatch>.Write(ModelReaderWriterOptions options)

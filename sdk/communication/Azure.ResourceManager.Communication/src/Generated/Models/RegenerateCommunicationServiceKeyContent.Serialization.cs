@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<CommunicationServiceKeyType> keyType = default;
+            CommunicationServiceKeyType? keyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegenerateCommunicationServiceKeyContent(Optional.ToNullable(keyType), serializedAdditionalRawData);
+            return new RegenerateCommunicationServiceKeyContent(keyType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegenerateCommunicationServiceKeyContent>.Write(ModelReaderWriterOptions options)

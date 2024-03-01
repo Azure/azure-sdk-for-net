@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.SelfHelp
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, string>> globalParameters = default;
+            SystemData systemData = default;
+            IDictionary<string, string> globalParameters = default;
             IList<SelfHelpDiagnosticInvocation> insights = default;
-            Optional<DateTimeOffset> acceptedAt = default;
-            Optional<SelfHelpProvisioningState> provisioningState = default;
+            DateTimeOffset? acceptedAt = default;
+            SelfHelpProvisioningState? provisioningState = default;
             IReadOnlyList<SelfHelpDiagnosticInfo> diagnostics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -245,7 +245,17 @@ namespace Azure.ResourceManager.SelfHelp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpDiagnosticData(id, name, type, systemData.Value, Optional.ToDictionary(globalParameters), insights ?? new ChangeTrackingList<SelfHelpDiagnosticInvocation>(), Optional.ToNullable(acceptedAt), Optional.ToNullable(provisioningState), diagnostics ?? new ChangeTrackingList<SelfHelpDiagnosticInfo>(), serializedAdditionalRawData);
+            return new SelfHelpDiagnosticData(
+                id,
+                name,
+                type,
+                systemData,
+                globalParameters ?? new ChangeTrackingDictionary<string, string>(),
+                insights ?? new ChangeTrackingList<SelfHelpDiagnosticInvocation>(),
+                acceptedAt,
+                provisioningState,
+                diagnostics ?? new ChangeTrackingList<SelfHelpDiagnosticInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpDiagnosticData>.Write(ModelReaderWriterOptions options)

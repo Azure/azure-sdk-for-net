@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<GalleryExtendedLocation> extendedLocation = default;
-            Optional<int> extendedLocationReplicaCount = default;
-            Optional<EdgeZoneStorageAccountType> storageAccountType = default;
-            Optional<EncryptionImages> encryption = default;
+            string name = default;
+            GalleryExtendedLocation extendedLocation = default;
+            int? extendedLocationReplicaCount = default;
+            EdgeZoneStorageAccountType? storageAccountType = default;
+            EncryptionImages encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryTargetExtendedLocation(name.Value, extendedLocation.Value, Optional.ToNullable(extendedLocationReplicaCount), Optional.ToNullable(storageAccountType), encryption.Value, serializedAdditionalRawData);
+            return new GalleryTargetExtendedLocation(
+                name,
+                extendedLocation,
+                extendedLocationReplicaCount,
+                storageAccountType,
+                encryption,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryTargetExtendedLocation>.Write(ModelReaderWriterOptions options)

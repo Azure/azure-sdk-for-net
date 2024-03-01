@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<string> possibleCauses = default;
-            Optional<string> recommendedAction = default;
-            Optional<string> activityId = default;
+            string code = default;
+            string message = default;
+            string possibleCauses = default;
+            string recommendedAction = default;
+            string activityId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryServiceError(code.Value, message.Value, possibleCauses.Value, recommendedAction.Value, activityId.Value, serializedAdditionalRawData);
+            return new SiteRecoveryServiceError(
+                code,
+                message,
+                possibleCauses,
+                recommendedAction,
+                activityId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryServiceError>.Write(ModelReaderWriterOptions options)

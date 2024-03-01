@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<string> description = default;
+            string description = default;
             IList<BinaryData> annotations = default;
-            Optional<DataFlowFolder> folder = default;
+            DataFlowFolder folder = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDataFlow(type, description.Value, annotations ?? new ChangeTrackingList<BinaryData>(), folder.Value, serializedAdditionalRawData);
+            return new UnknownDataFlow(type, description, annotations ?? new ChangeTrackingList<BinaryData>(), folder, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryDataFlowProperties>.Write(ModelReaderWriterOptions options)

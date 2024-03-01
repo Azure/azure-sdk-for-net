@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> link = default;
+            string title = default;
+            string link = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VendorReference(title.Value, link.Value, serializedAdditionalRawData);
+            return new VendorReference(title, link, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VendorReference>.Write(ModelReaderWriterOptions options)

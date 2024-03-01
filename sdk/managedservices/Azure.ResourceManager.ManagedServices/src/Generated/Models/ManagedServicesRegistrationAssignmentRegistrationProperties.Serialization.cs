@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.ManagedServices.Models
             {
                 return null;
             }
-            Optional<string> description = default;
+            string description = default;
             IReadOnlyList<ManagedServicesAuthorization> authorizations = default;
             IReadOnlyList<ManagedServicesEligibleAuthorization> eligibleAuthorizations = default;
-            Optional<string> registrationDefinitionName = default;
-            Optional<ManagedServicesProvisioningState> provisioningState = default;
-            Optional<Guid> manageeTenantId = default;
-            Optional<string> manageeTenantName = default;
-            Optional<Guid> managedByTenantId = default;
-            Optional<string> managedByTenantName = default;
+            string registrationDefinitionName = default;
+            ManagedServicesProvisioningState? provisioningState = default;
+            Guid? manageeTenantId = default;
+            string manageeTenantName = default;
+            Guid? managedByTenantId = default;
+            string managedByTenantName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,7 +213,17 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesRegistrationAssignmentRegistrationProperties(description.Value, authorizations ?? new ChangeTrackingList<ManagedServicesAuthorization>(), eligibleAuthorizations ?? new ChangeTrackingList<ManagedServicesEligibleAuthorization>(), registrationDefinitionName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(manageeTenantId), manageeTenantName.Value, Optional.ToNullable(managedByTenantId), managedByTenantName.Value, serializedAdditionalRawData);
+            return new ManagedServicesRegistrationAssignmentRegistrationProperties(
+                description,
+                authorizations ?? new ChangeTrackingList<ManagedServicesAuthorization>(),
+                eligibleAuthorizations ?? new ChangeTrackingList<ManagedServicesEligibleAuthorization>(),
+                registrationDefinitionName,
+                provisioningState,
+                manageeTenantId,
+                manageeTenantName,
+                managedByTenantId,
+                managedByTenantName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesRegistrationAssignmentRegistrationProperties>.Write(ModelReaderWriterOptions options)

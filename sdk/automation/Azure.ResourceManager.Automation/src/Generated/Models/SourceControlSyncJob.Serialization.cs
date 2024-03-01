@@ -135,13 +135,13 @@ namespace Azure.ResourceManager.Automation.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> sourceControlSyncJobId = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<SourceControlProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<SourceControlSyncType> syncType = default;
+            SystemData systemData = default;
+            string sourceControlSyncJobId = default;
+            DateTimeOffset? creationTime = default;
+            SourceControlProvisioningState? provisioningState = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            SourceControlSyncType? syncType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,7 +240,18 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceControlSyncJob(id, name, type, systemData.Value, sourceControlSyncJobId.Value, Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(syncType), serializedAdditionalRawData);
+            return new SourceControlSyncJob(
+                id,
+                name,
+                type,
+                systemData,
+                sourceControlSyncJobId,
+                creationTime,
+                provisioningState,
+                startTime,
+                endTime,
+                syncType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceControlSyncJob>.Write(ModelReaderWriterOptions options)

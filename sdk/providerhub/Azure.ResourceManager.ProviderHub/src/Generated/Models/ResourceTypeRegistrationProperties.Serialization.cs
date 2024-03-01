@@ -269,35 +269,35 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<ResourceRoutingType> routingType = default;
-            Optional<ResourceTypeRegistrationRegionality> regionality = default;
+            ResourceRoutingType? routingType = default;
+            ResourceTypeRegistrationRegionality? regionality = default;
             IList<ResourceTypeEndpoint> endpoints = default;
-            Optional<ResourceTypeExtensionOptions> extensionOptions = default;
-            Optional<MarketplaceType> marketplaceType = default;
+            ResourceTypeExtensionOptions extensionOptions = default;
+            MarketplaceType? marketplaceType = default;
             IList<SwaggerSpecification> swaggerSpecifications = default;
             IList<string> allowedUnauthorizedActions = default;
             IList<AuthorizationActionMapping> authorizationActionMappings = default;
             IList<LinkedAccessCheck> linkedAccessChecks = default;
-            Optional<string> defaultApiVersion = default;
+            string defaultApiVersion = default;
             IList<LoggingRule> loggingRules = default;
             IList<ThrottlingRule> throttlingRules = default;
             IList<string> requiredFeatures = default;
-            Optional<FeaturesRule> featuresRule = default;
-            Optional<bool> enableAsyncOperation = default;
-            Optional<ProviderHubProvisioningState> provisioningState = default;
-            Optional<bool> enableThirdPartyS2S = default;
-            Optional<SubscriptionLifecycleNotificationSpecifications> subscriptionLifecycleNotificationSpecifications = default;
-            Optional<bool> isPureProxy = default;
-            Optional<IdentityManagementProperties> identityManagement = default;
-            Optional<CheckNameAvailabilitySpecifications> checkNameAvailabilitySpecifications = default;
+            FeaturesRule featuresRule = default;
+            bool? enableAsyncOperation = default;
+            ProviderHubProvisioningState? provisioningState = default;
+            bool? enableThirdPartyS2S = default;
+            SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = default;
+            bool? isPureProxy = default;
+            IdentityManagementProperties identityManagement = default;
+            CheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications = default;
             IList<string> disallowedActionVerbs = default;
             IList<ServiceTreeInfo> serviceTreeInfos = default;
-            Optional<RequestHeaderOptions> requestHeaderOptions = default;
+            RequestHeaderOptions requestHeaderOptions = default;
             IList<ProviderSubscriptionStateRule> subscriptionStateRules = default;
-            Optional<TemplateDeploymentOptions> templateDeploymentOptions = default;
+            TemplateDeploymentOptions templateDeploymentOptions = default;
             IList<ProviderHubExtendedLocationOptions> extendedLocations = default;
-            Optional<ResourceMovePolicy> resourceMovePolicy = default;
-            Optional<ResourceDeletionPolicy> resourceDeletionPolicy = default;
+            ResourceMovePolicy resourceMovePolicy = default;
+            ResourceDeletionPolicy? resourceDeletionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -625,7 +625,37 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeRegistrationProperties(Optional.ToNullable(routingType), Optional.ToNullable(regionality), endpoints ?? new ChangeTrackingList<ResourceTypeEndpoint>(), extensionOptions.Value, Optional.ToNullable(marketplaceType), swaggerSpecifications ?? new ChangeTrackingList<SwaggerSpecification>(), allowedUnauthorizedActions ?? new ChangeTrackingList<string>(), authorizationActionMappings ?? new ChangeTrackingList<AuthorizationActionMapping>(), linkedAccessChecks ?? new ChangeTrackingList<LinkedAccessCheck>(), defaultApiVersion.Value, loggingRules ?? new ChangeTrackingList<LoggingRule>(), throttlingRules ?? new ChangeTrackingList<ThrottlingRule>(), requiredFeatures ?? new ChangeTrackingList<string>(), featuresRule.Value, Optional.ToNullable(enableAsyncOperation), Optional.ToNullable(provisioningState), Optional.ToNullable(enableThirdPartyS2S), subscriptionLifecycleNotificationSpecifications.Value, Optional.ToNullable(isPureProxy), identityManagement.Value, checkNameAvailabilitySpecifications.Value, disallowedActionVerbs ?? new ChangeTrackingList<string>(), serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(), requestHeaderOptions.Value, subscriptionStateRules ?? new ChangeTrackingList<ProviderSubscriptionStateRule>(), templateDeploymentOptions.Value, extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>(), resourceMovePolicy.Value, Optional.ToNullable(resourceDeletionPolicy), serializedAdditionalRawData);
+            return new ResourceTypeRegistrationProperties(
+                routingType,
+                regionality,
+                endpoints ?? new ChangeTrackingList<ResourceTypeEndpoint>(),
+                extensionOptions,
+                marketplaceType,
+                swaggerSpecifications ?? new ChangeTrackingList<SwaggerSpecification>(),
+                allowedUnauthorizedActions ?? new ChangeTrackingList<string>(),
+                authorizationActionMappings ?? new ChangeTrackingList<AuthorizationActionMapping>(),
+                linkedAccessChecks ?? new ChangeTrackingList<LinkedAccessCheck>(),
+                defaultApiVersion,
+                loggingRules ?? new ChangeTrackingList<LoggingRule>(),
+                throttlingRules ?? new ChangeTrackingList<ThrottlingRule>(),
+                requiredFeatures ?? new ChangeTrackingList<string>(),
+                featuresRule,
+                enableAsyncOperation,
+                provisioningState,
+                enableThirdPartyS2S,
+                subscriptionLifecycleNotificationSpecifications,
+                isPureProxy,
+                identityManagement,
+                checkNameAvailabilitySpecifications,
+                disallowedActionVerbs ?? new ChangeTrackingList<string>(),
+                serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
+                requestHeaderOptions,
+                subscriptionStateRules ?? new ChangeTrackingList<ProviderSubscriptionStateRule>(),
+                templateDeploymentOptions,
+                extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>(),
+                resourceMovePolicy,
+                resourceDeletionPolicy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeRegistrationProperties>.Write(ModelReaderWriterOptions options)

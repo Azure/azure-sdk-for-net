@@ -58,12 +58,12 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<int> maxShingleSize = default;
-            Optional<int> minShingleSize = default;
-            Optional<bool> outputUnigrams = default;
-            Optional<bool> outputUnigramsIfNoShingles = default;
-            Optional<string> tokenSeparator = default;
-            Optional<string> filterToken = default;
+            int? maxShingleSize = default;
+            int? minShingleSize = default;
+            bool? outputUnigrams = default;
+            bool? outputUnigramsIfNoShingles = default;
+            string tokenSeparator = default;
+            string filterToken = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ShingleTokenFilter(odataType, name, Optional.ToNullable(maxShingleSize), Optional.ToNullable(minShingleSize), Optional.ToNullable(outputUnigrams), Optional.ToNullable(outputUnigramsIfNoShingles), tokenSeparator.Value, filterToken.Value);
+            return new ShingleTokenFilter(
+                odataType,
+                name,
+                maxShingleSize,
+                minShingleSize,
+                outputUnigrams,
+                outputUnigramsIfNoShingles,
+                tokenSeparator,
+                filterToken);
         }
     }
 }

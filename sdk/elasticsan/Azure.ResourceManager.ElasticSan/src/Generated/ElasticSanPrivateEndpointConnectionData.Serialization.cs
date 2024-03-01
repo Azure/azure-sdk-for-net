@@ -115,9 +115,9 @@ namespace Azure.ResourceManager.ElasticSan
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ElasticSanProvisioningState> provisioningState = default;
-            Optional<SubResource> privateEndpoint = default;
+            SystemData systemData = default;
+            ElasticSanProvisioningState? provisioningState = default;
+            SubResource privateEndpoint = default;
             ElasticSanPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             IList<string> groupIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -203,7 +203,16 @@ namespace Azure.ResourceManager.ElasticSan
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState, groupIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ElasticSanPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                groupIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

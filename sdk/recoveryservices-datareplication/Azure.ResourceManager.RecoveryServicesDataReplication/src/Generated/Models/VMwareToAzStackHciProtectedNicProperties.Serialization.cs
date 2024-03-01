@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> nicId = default;
-            Optional<string> macAddress = default;
-            Optional<string> label = default;
-            Optional<bool> isPrimaryNic = default;
-            Optional<string> networkName = default;
-            Optional<string> targetNetworkId = default;
-            Optional<string> testNetworkId = default;
-            Optional<VmNicSelection> selectionTypeForFailover = default;
+            string nicId = default;
+            string macAddress = default;
+            string label = default;
+            bool? isPrimaryNic = default;
+            string networkName = default;
+            string targetNetworkId = default;
+            string testNetworkId = default;
+            VmNicSelection? selectionTypeForFailover = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +170,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareToAzStackHciProtectedNicProperties(nicId.Value, macAddress.Value, label.Value, Optional.ToNullable(isPrimaryNic), networkName.Value, targetNetworkId.Value, testNetworkId.Value, Optional.ToNullable(selectionTypeForFailover), serializedAdditionalRawData);
+            return new VMwareToAzStackHciProtectedNicProperties(
+                nicId,
+                macAddress,
+                label,
+                isPrimaryNic,
+                networkName,
+                targetNetworkId,
+                testNetworkId,
+                selectionTypeForFailover,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareToAzStackHciProtectedNicProperties>.Write(ModelReaderWriterOptions options)

@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> connectorId = default;
-            Optional<string> connectorDataConfiguration = default;
-            Optional<bool> validateOnly = default;
-            Optional<IDictionary<string, string>> workItemProperties = default;
+            string connectorId = default;
+            string connectorDataConfiguration = default;
+            bool? validateOnly = default;
+            IDictionary<string, string> workItemProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkItemCreateConfiguration(connectorId.Value, connectorDataConfiguration.Value, Optional.ToNullable(validateOnly), Optional.ToDictionary(workItemProperties), serializedAdditionalRawData);
+            return new WorkItemCreateConfiguration(connectorId, connectorDataConfiguration, validateOnly, workItemProperties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkItemCreateConfiguration>.Write(ModelReaderWriterOptions options)

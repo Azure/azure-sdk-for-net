@@ -178,24 +178,24 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 return null;
             }
-            Optional<ResourceIdentifier> managedBy = default;
-            Optional<string> kind = default;
-            Optional<ETag> etag = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<DesktopVirtualizationSku> sku = default;
-            Optional<ArmPlan> plan = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ResourceIdentifier managedBy = default;
+            string kind = default;
+            ETag? etag = default;
+            ManagedServiceIdentity identity = default;
+            DesktopVirtualizationSku sku = default;
+            ArmPlan plan = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> objectId = default;
-            Optional<string> description = default;
-            Optional<string> friendlyName = default;
+            SystemData systemData = default;
+            string objectId = default;
+            string description = default;
+            string friendlyName = default;
             IList<string> applicationGroupReferences = default;
-            Optional<bool> cloudPCResource = default;
-            Optional<DesktopVirtualizationPublicNetworkAccess> publicNetworkAccess = default;
+            bool? cloudPCResource = default;
+            DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess = default;
             IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -373,7 +373,27 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, applicationGroupReferences ?? new ChangeTrackingList<string>(), Optional.ToNullable(cloudPCResource), Optional.ToNullable(publicNetworkAccess), privateEndpointConnections ?? new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>(), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan, serializedAdditionalRawData);
+            return new VirtualWorkspaceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                objectId,
+                description,
+                friendlyName,
+                applicationGroupReferences ?? new ChangeTrackingList<string>(),
+                cloudPCResource,
+                publicNetworkAccess,
+                privateEndpointConnections ?? new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>(),
+                managedBy,
+                kind,
+                etag,
+                identity,
+                sku,
+                plan,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualWorkspaceData>.Write(ModelReaderWriterOptions options)

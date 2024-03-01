@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<NetworkTapEncapsulationType> encapsulationType = default;
-            Optional<NetworkFabricPortCondition> portCondition = default;
+            NetworkTapEncapsulationType? encapsulationType = default;
+            NetworkFabricPortCondition portCondition = default;
             IList<string> protocolTypes = default;
-            Optional<VlanMatchCondition> vlanMatchCondition = default;
-            Optional<IPMatchCondition> ipCondition = default;
+            VlanMatchCondition vlanMatchCondition = default;
+            IPMatchCondition ipCondition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkTapRuleMatchCondition(protocolTypes ?? new ChangeTrackingList<string>(), vlanMatchCondition.Value, ipCondition.Value, serializedAdditionalRawData, Optional.ToNullable(encapsulationType), portCondition.Value);
+            return new NetworkTapRuleMatchCondition(
+                protocolTypes ?? new ChangeTrackingList<string>(),
+                vlanMatchCondition,
+                ipCondition,
+                serializedAdditionalRawData,
+                encapsulationType,
+                portCondition);
         }
 
         BinaryData IPersistableModel<NetworkTapRuleMatchCondition>.Write(ModelReaderWriterOptions options)

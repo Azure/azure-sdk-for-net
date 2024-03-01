@@ -91,9 +91,9 @@ namespace Azure.AI.DocumentIntelligence
             }
             string code = default;
             string message = default;
-            Optional<string> target = default;
+            string target = default;
             IReadOnlyList<DocumentIntelligenceError> details = default;
-            Optional<InnerError> innererror = default;
+            InnerError innererror = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,13 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentIntelligenceError(code, message, target.Value, details ?? new ChangeTrackingList<DocumentIntelligenceError>(), innererror.Value, serializedAdditionalRawData);
+            return new DocumentIntelligenceError(
+                code,
+                message,
+                target,
+                details ?? new ChangeTrackingList<DocumentIntelligenceError>(),
+                innererror,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentIntelligenceError>.Write(ModelReaderWriterOptions options)

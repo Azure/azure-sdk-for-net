@@ -136,11 +136,11 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<WritableSubResource> subnet = default;
-            Optional<bool> primary = default;
-            Optional<VirtualMachineScaleSetPublicIPAddressConfiguration> publicIPAddressConfiguration = default;
-            Optional<IPVersion> privateIPAddressVersion = default;
+            ResourceIdentifier id = default;
+            WritableSubResource subnet = default;
+            bool? primary = default;
+            VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration = default;
+            IPVersion? privateIPAddressVersion = default;
             IList<WritableSubResource> applicationGatewayBackendAddressPools = default;
             IList<WritableSubResource> applicationSecurityGroups = default;
             IList<WritableSubResource> loadBalancerBackendAddressPools = default;
@@ -273,7 +273,18 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetIPConfiguration(id.Value, serializedAdditionalRawData, name, subnet, Optional.ToNullable(primary), publicIPAddressConfiguration.Value, Optional.ToNullable(privateIPAddressVersion), applicationGatewayBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(), applicationSecurityGroups ?? new ChangeTrackingList<WritableSubResource>(), loadBalancerBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(), loadBalancerInboundNatPools ?? new ChangeTrackingList<WritableSubResource>());
+            return new VirtualMachineScaleSetIPConfiguration(
+                id,
+                serializedAdditionalRawData,
+                name,
+                subnet,
+                primary,
+                publicIPAddressConfiguration,
+                privateIPAddressVersion,
+                applicationGatewayBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),
+                applicationSecurityGroups ?? new ChangeTrackingList<WritableSubResource>(),
+                loadBalancerBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),
+                loadBalancerInboundNatPools ?? new ChangeTrackingList<WritableSubResource>());
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetIPConfiguration>.Write(ModelReaderWriterOptions options)

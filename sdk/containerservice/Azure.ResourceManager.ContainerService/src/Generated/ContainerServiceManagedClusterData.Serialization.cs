@@ -335,54 +335,54 @@ namespace Azure.ResourceManager.ContainerService
             {
                 return null;
             }
-            Optional<ManagedClusterSku> sku = default;
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ManagedClusterIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedClusterSku sku = default;
+            ExtendedLocation extendedLocation = default;
+            ManagedClusterIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<ContainerServicePowerState> powerState = default;
-            Optional<int> maxAgentPools = default;
-            Optional<string> kubernetesVersion = default;
-            Optional<string> currentKubernetesVersion = default;
-            Optional<string> dnsPrefix = default;
-            Optional<string> fqdnSubdomain = default;
-            Optional<string> fqdn = default;
-            Optional<string> privateFQDN = default;
-            Optional<string> azurePortalFQDN = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            ContainerServicePowerState powerState = default;
+            int? maxAgentPools = default;
+            string kubernetesVersion = default;
+            string currentKubernetesVersion = default;
+            string dnsPrefix = default;
+            string fqdnSubdomain = default;
+            string fqdn = default;
+            string privateFQDN = default;
+            string azurePortalFQDN = default;
             IList<ManagedClusterAgentPoolProfile> agentPoolProfiles = default;
-            Optional<ContainerServiceLinuxProfile> linuxProfile = default;
-            Optional<ManagedClusterWindowsProfile> windowsProfile = default;
-            Optional<ManagedClusterServicePrincipalProfile> servicePrincipalProfile = default;
-            Optional<IDictionary<string, ManagedClusterAddonProfile>> addonProfiles = default;
-            Optional<ManagedClusterPodIdentityProfile> podIdentityProfile = default;
-            Optional<ManagedClusterOidcIssuerProfile> oidcIssuerProfile = default;
-            Optional<string> nodeResourceGroup = default;
-            Optional<bool> enableRBAC = default;
-            Optional<KubernetesSupportPlan> supportPlan = default;
-            Optional<bool> enablePodSecurityPolicy = default;
-            Optional<ContainerServiceNetworkProfile> networkProfile = default;
-            Optional<ManagedClusterAadProfile> aadProfile = default;
-            Optional<ManagedClusterAutoUpgradeProfile> autoUpgradeProfile = default;
-            Optional<ClusterUpgradeSettings> upgradeSettings = default;
-            Optional<ManagedClusterAutoScalerProfile> autoScalerProfile = default;
-            Optional<ManagedClusterApiServerAccessProfile> apiServerAccessProfile = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Optional<IDictionary<string, ContainerServiceUserAssignedIdentity>> identityProfile = default;
+            ContainerServiceLinuxProfile linuxProfile = default;
+            ManagedClusterWindowsProfile windowsProfile = default;
+            ManagedClusterServicePrincipalProfile servicePrincipalProfile = default;
+            IDictionary<string, ManagedClusterAddonProfile> addonProfiles = default;
+            ManagedClusterPodIdentityProfile podIdentityProfile = default;
+            ManagedClusterOidcIssuerProfile oidcIssuerProfile = default;
+            string nodeResourceGroup = default;
+            bool? enableRBAC = default;
+            KubernetesSupportPlan? supportPlan = default;
+            bool? enablePodSecurityPolicy = default;
+            ContainerServiceNetworkProfile networkProfile = default;
+            ManagedClusterAadProfile aadProfile = default;
+            ManagedClusterAutoUpgradeProfile autoUpgradeProfile = default;
+            ClusterUpgradeSettings upgradeSettings = default;
+            ManagedClusterAutoScalerProfile autoScalerProfile = default;
+            ManagedClusterApiServerAccessProfile apiServerAccessProfile = default;
+            ResourceIdentifier diskEncryptionSetId = default;
+            IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile = default;
             IList<ContainerServicePrivateLinkResourceData> privateLinkResources = default;
-            Optional<bool> disableLocalAccounts = default;
-            Optional<ManagedClusterHttpProxyConfig> httpProxyConfig = default;
-            Optional<ManagedClusterSecurityProfile> securityProfile = default;
-            Optional<ManagedClusterStorageProfile> storageProfile = default;
-            Optional<ContainerServicePublicNetworkAccess> publicNetworkAccess = default;
-            Optional<ManagedClusterWorkloadAutoScalerProfile> workloadAutoScalerProfile = default;
-            Optional<ManagedClusterAzureMonitorProfile> azureMonitorProfile = default;
-            Optional<ServiceMeshProfile> serviceMeshProfile = default;
-            Optional<ResourceIdentifier> resourceUID = default;
+            bool? disableLocalAccounts = default;
+            ManagedClusterHttpProxyConfig httpProxyConfig = default;
+            ManagedClusterSecurityProfile securityProfile = default;
+            ManagedClusterStorageProfile storageProfile = default;
+            ContainerServicePublicNetworkAccess? publicNetworkAccess = default;
+            ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile = default;
+            ManagedClusterAzureMonitorProfile azureMonitorProfile = default;
+            ServiceMeshProfile serviceMeshProfile = default;
+            ResourceIdentifier resourceUID = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -810,7 +810,56 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceManagedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, extendedLocation, identity.Value, provisioningState.Value, powerState.Value, Optional.ToNullable(maxAgentPools), kubernetesVersion.Value, currentKubernetesVersion.Value, dnsPrefix.Value, fqdnSubdomain.Value, fqdn.Value, privateFQDN.Value, azurePortalFQDN.Value, agentPoolProfiles ?? new ChangeTrackingList<ManagedClusterAgentPoolProfile>(), linuxProfile.Value, windowsProfile.Value, servicePrincipalProfile.Value, Optional.ToDictionary(addonProfiles), podIdentityProfile.Value, oidcIssuerProfile.Value, nodeResourceGroup.Value, Optional.ToNullable(enableRBAC), Optional.ToNullable(supportPlan), Optional.ToNullable(enablePodSecurityPolicy), networkProfile.Value, aadProfile.Value, autoUpgradeProfile.Value, upgradeSettings.Value, autoScalerProfile.Value, apiServerAccessProfile.Value, diskEncryptionSetId.Value, Optional.ToDictionary(identityProfile), privateLinkResources ?? new ChangeTrackingList<ContainerServicePrivateLinkResourceData>(), Optional.ToNullable(disableLocalAccounts), httpProxyConfig.Value, securityProfile.Value, storageProfile.Value, Optional.ToNullable(publicNetworkAccess), workloadAutoScalerProfile.Value, azureMonitorProfile.Value, serviceMeshProfile.Value, resourceUID.Value, serializedAdditionalRawData);
+            return new ContainerServiceManagedClusterData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                extendedLocation,
+                identity,
+                provisioningState,
+                powerState,
+                maxAgentPools,
+                kubernetesVersion,
+                currentKubernetesVersion,
+                dnsPrefix,
+                fqdnSubdomain,
+                fqdn,
+                privateFQDN,
+                azurePortalFQDN,
+                agentPoolProfiles ?? new ChangeTrackingList<ManagedClusterAgentPoolProfile>(),
+                linuxProfile,
+                windowsProfile,
+                servicePrincipalProfile,
+                addonProfiles ?? new ChangeTrackingDictionary<string, ManagedClusterAddonProfile>(),
+                podIdentityProfile,
+                oidcIssuerProfile,
+                nodeResourceGroup,
+                enableRBAC,
+                supportPlan,
+                enablePodSecurityPolicy,
+                networkProfile,
+                aadProfile,
+                autoUpgradeProfile,
+                upgradeSettings,
+                autoScalerProfile,
+                apiServerAccessProfile,
+                diskEncryptionSetId,
+                identityProfile ?? new ChangeTrackingDictionary<string, ContainerServiceUserAssignedIdentity>(),
+                privateLinkResources ?? new ChangeTrackingList<ContainerServicePrivateLinkResourceData>(),
+                disableLocalAccounts,
+                httpProxyConfig,
+                securityProfile,
+                storageProfile,
+                publicNetworkAccess,
+                workloadAutoScalerProfile,
+                azureMonitorProfile,
+                serviceMeshProfile,
+                resourceUID,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceManagedClusterData>.Write(ModelReaderWriterOptions options)

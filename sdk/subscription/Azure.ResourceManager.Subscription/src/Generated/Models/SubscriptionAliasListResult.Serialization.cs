@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 return null;
             }
             IReadOnlyList<SubscriptionAliasData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionAliasListResult(value ?? new ChangeTrackingList<SubscriptionAliasData>(), nextLink.Value, serializedAdditionalRawData);
+            return new SubscriptionAliasListResult(value ?? new ChangeTrackingList<SubscriptionAliasData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionAliasListResult>.Write(ModelReaderWriterOptions options)

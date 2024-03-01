@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<ContactInfo> contactDetails = default;
-            Optional<DataBoxShippingAddress> shippingAddress = default;
-            Optional<bool> isUpdated = default;
+            ContactInfo contactDetails = default;
+            DataBoxShippingAddress shippingAddress = default;
+            bool? isUpdated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReverseShippingDetails(contactDetails.Value, shippingAddress.Value, Optional.ToNullable(isUpdated), serializedAdditionalRawData);
+            return new ReverseShippingDetails(contactDetails, shippingAddress, isUpdated, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReverseShippingDetails>.Write(ModelReaderWriterOptions options)

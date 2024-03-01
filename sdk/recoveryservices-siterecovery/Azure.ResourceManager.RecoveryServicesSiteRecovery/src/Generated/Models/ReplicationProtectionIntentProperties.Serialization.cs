@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<string> jobState = default;
-            Optional<bool> isActive = default;
-            Optional<string> creationTimeUTC = default;
-            Optional<ReplicationProtectionIntentProviderSpecificSettings> providerSpecificDetails = default;
+            string friendlyName = default;
+            ResourceIdentifier jobId = default;
+            string jobState = default;
+            bool? isActive = default;
+            string creationTimeUTC = default;
+            ReplicationProtectionIntentProviderSpecificSettings providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationProtectionIntentProperties(friendlyName.Value, jobId.Value, jobState.Value, Optional.ToNullable(isActive), creationTimeUTC.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new ReplicationProtectionIntentProperties(
+                friendlyName,
+                jobId,
+                jobState,
+                isActive,
+                creationTimeUTC,
+                providerSpecificDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationProtectionIntentProperties>.Write(ModelReaderWriterOptions options)

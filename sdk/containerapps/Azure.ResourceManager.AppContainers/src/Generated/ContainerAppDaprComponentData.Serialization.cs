@@ -147,13 +147,13 @@ namespace Azure.ResourceManager.AppContainers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> componentType = default;
-            Optional<string> version = default;
-            Optional<bool> ignoreErrors = default;
-            Optional<string> initTimeout = default;
+            SystemData systemData = default;
+            string componentType = default;
+            string version = default;
+            bool? ignoreErrors = default;
+            string initTimeout = default;
             IList<ContainerAppWritableSecret> secrets = default;
-            Optional<string> secretStoreComponent = default;
+            string secretStoreComponent = default;
             IList<ContainerAppDaprMetadata> metadata = default;
             IList<string> scopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -273,7 +273,20 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDaprComponentData(id, name, type, systemData.Value, componentType.Value, version.Value, Optional.ToNullable(ignoreErrors), initTimeout.Value, secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(), secretStoreComponent.Value, metadata ?? new ChangeTrackingList<ContainerAppDaprMetadata>(), scopes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ContainerAppDaprComponentData(
+                id,
+                name,
+                type,
+                systemData,
+                componentType,
+                version,
+                ignoreErrors,
+                initTimeout,
+                secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(),
+                secretStoreComponent,
+                metadata ?? new ChangeTrackingList<ContainerAppDaprMetadata>(),
+                scopes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDaprComponentData>.Write(ModelReaderWriterOptions options)

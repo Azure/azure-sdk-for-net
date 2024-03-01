@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<PurviewAccountProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            PurviewAccountProperties properties = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewAccountPatch(identity, properties.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new PurviewAccountPatch(identity, properties, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewAccountPatch>.Write(ModelReaderWriterOptions options)

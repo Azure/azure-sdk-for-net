@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<ExtensionOptions> resourceCreationBegin = default;
+            ExtensionOptions resourceCreationBegin = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeExtensionOptions(resourceCreationBegin.Value, serializedAdditionalRawData);
+            return new ResourceTypeExtensionOptions(resourceCreationBegin, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeExtensionOptions>.Write(ModelReaderWriterOptions options)

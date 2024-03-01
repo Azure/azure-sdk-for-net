@@ -75,15 +75,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> ingestionMappingName = default;
-            Optional<object> ingestionMappingAsJson = default;
-            Optional<object> flushImmediately = default;
+            object ingestionMappingName = default;
+            object ingestionMappingAsJson = default;
+            object flushImmediately = default;
             string type = default;
-            Optional<object> writeBatchSize = default;
-            Optional<object> writeBatchTimeout = default;
-            Optional<object> sinkRetryCount = default;
-            Optional<object> sinkRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object writeBatchSize = default;
+            object writeBatchTimeout = default;
+            object sinkRetryCount = default;
+            object sinkRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataExplorerSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, ingestionMappingName.Value, ingestionMappingAsJson.Value, flushImmediately.Value);
+            return new AzureDataExplorerSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                ingestionMappingName,
+                ingestionMappingAsJson,
+                flushImmediately);
         }
 
         internal partial class AzureDataExplorerSinkConverter : JsonConverter<AzureDataExplorerSink>

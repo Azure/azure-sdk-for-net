@@ -148,21 +148,21 @@ namespace Azure.ResourceManager.DataMigration
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<string> kind = default;
-            Optional<ServiceSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            string kind = default;
+            ServiceSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             Core.ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ServiceProvisioningState> provisioningState = default;
-            Optional<string> publicKey = default;
-            Optional<string> virtualSubnetId = default;
-            Optional<string> virtualNicId = default;
-            Optional<string> autoStopDelay = default;
-            Optional<bool> deleteResourcesOnStop = default;
+            SystemData systemData = default;
+            ServiceProvisioningState? provisioningState = default;
+            string publicKey = default;
+            string virtualSubnetId = default;
+            string virtualNicId = default;
+            string autoStopDelay = default;
+            bool? deleteResourcesOnStop = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -289,7 +289,23 @@ namespace Azure.ResourceManager.DataMigration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataMigrationServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), kind.Value, sku.Value, Optional.ToNullable(provisioningState), publicKey.Value, virtualSubnetId.Value, virtualNicId.Value, autoStopDelay.Value, Optional.ToNullable(deleteResourcesOnStop), serializedAdditionalRawData);
+            return new DataMigrationServiceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                kind,
+                sku,
+                provisioningState,
+                publicKey,
+                virtualSubnetId,
+                virtualNicId,
+                autoStopDelay,
+                deleteResourcesOnStop,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataMigrationServiceData>.Write(ModelReaderWriterOptions options)

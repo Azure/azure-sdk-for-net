@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             string name = default;
             Guid objectId = default;
             AadObjectIdentifierType objectType = default;
-            Optional<int> maxDegreeOfParallelismPerJob = default;
-            Optional<int> minPriorityPerJob = default;
+            int? maxDegreeOfParallelismPerJob = default;
+            int? minPriorityPerJob = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(name, objectId, objectType, Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob), serializedAdditionalRawData);
+            return new ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(
+                name,
+                objectId,
+                objectType,
+                maxDegreeOfParallelismPerJob,
+                minPriorityPerJob,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> dbVmSku = default;
-            Optional<long> databaseInstanceCount = default;
-            Optional<string> centralServerVmSku = default;
-            Optional<long> centralServerInstanceCount = default;
-            Optional<string> applicationServerVmSku = default;
-            Optional<long> applicationServerInstanceCount = default;
+            string dbVmSku = default;
+            long? databaseInstanceCount = default;
+            string centralServerVmSku = default;
+            long? centralServerInstanceCount = default;
+            string applicationServerVmSku = default;
+            long? applicationServerInstanceCount = default;
             SapDeploymentType deploymentType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,7 +160,15 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreeTierRecommendationResult(deploymentType, serializedAdditionalRawData, dbVmSku.Value, Optional.ToNullable(databaseInstanceCount), centralServerVmSku.Value, Optional.ToNullable(centralServerInstanceCount), applicationServerVmSku.Value, Optional.ToNullable(applicationServerInstanceCount));
+            return new ThreeTierRecommendationResult(
+                deploymentType,
+                serializedAdditionalRawData,
+                dbVmSku,
+                databaseInstanceCount,
+                centralServerVmSku,
+                centralServerInstanceCount,
+                applicationServerVmSku,
+                applicationServerInstanceCount);
         }
 
         BinaryData IPersistableModel<ThreeTierRecommendationResult>.Write(ModelReaderWriterOptions options)

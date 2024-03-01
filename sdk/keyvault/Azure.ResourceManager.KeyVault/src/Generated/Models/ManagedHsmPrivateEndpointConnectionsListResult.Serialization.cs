@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 return null;
             }
             IReadOnlyList<ManagedHsmPrivateEndpointConnectionData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedHsmPrivateEndpointConnectionsListResult(value ?? new ChangeTrackingList<ManagedHsmPrivateEndpointConnectionData>(), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedHsmPrivateEndpointConnectionsListResult(value ?? new ChangeTrackingList<ManagedHsmPrivateEndpointConnectionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedHsmPrivateEndpointConnectionsListResult>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<AttestationServicePatchSpecificParams> properties = default;
+            IDictionary<string, string> tags = default;
+            AttestationServicePatchSpecificParams properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttestationProviderPatch(Optional.ToDictionary(tags), properties.Value, serializedAdditionalRawData);
+            return new AttestationProviderPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationProviderPatch>.Write(ModelReaderWriterOptions options)

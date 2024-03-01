@@ -140,17 +140,17 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
             IList<RouteData> routes = default;
             IReadOnlyList<SubnetData> subnets = default;
-            Optional<bool> disableBgpRoutePropagation = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<Guid> resourceGuid = default;
+            bool? disableBgpRoutePropagation = default;
+            NetworkProvisioningState? provisioningState = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -283,7 +283,19 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteTableData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), routes ?? new ChangeTrackingList<RouteData>(), subnets ?? new ChangeTrackingList<SubnetData>(), Optional.ToNullable(disableBgpRoutePropagation), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
+            return new RouteTableData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                routes ?? new ChangeTrackingList<RouteData>(),
+                subnets ?? new ChangeTrackingList<SubnetData>(),
+                disableBgpRoutePropagation,
+                provisioningState,
+                resourceGuid);
         }
 
         BinaryData IPersistableModel<RouteTableData>.Write(ModelReaderWriterOptions options)

@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 return null;
             }
             AzureCoreArtifactType artifactType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
-            Optional<string> name = default;
-            Optional<DependsOnProfile> dependsOnProfile = default;
+            string name = default;
+            DependsOnProfile dependsOnProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownAzureCoreNetworkFunctionApplication(name.Value, dependsOnProfile.Value, serializedAdditionalRawData, artifactType);
+            return new UnknownAzureCoreNetworkFunctionApplication(name, dependsOnProfile, serializedAdditionalRawData, artifactType);
         }
 
         BinaryData IPersistableModel<AzureCoreNetworkFunctionApplication>.Write(ModelReaderWriterOptions options)

@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<int> asn = default;
-            Optional<string> city = default;
-            Optional<string> countryCode = default;
-            Optional<string> countryName = default;
-            Optional<double> latitude = default;
-            Optional<double> longitude = default;
-            Optional<string> state = default;
+            int? asn = default;
+            string city = default;
+            string countryCode = default;
+            string countryName = default;
+            double? latitude = default;
+            double? longitude = default;
+            string state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIPEntityGeoLocation(Optional.ToNullable(asn), city.Value, countryCode.Value, countryName.Value, Optional.ToNullable(latitude), Optional.ToNullable(longitude), state.Value, serializedAdditionalRawData);
+            return new SecurityInsightsIPEntityGeoLocation(
+                asn,
+                city,
+                countryCode,
+                countryName,
+                latitude,
+                longitude,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIPEntityGeoLocation>.Write(ModelReaderWriterOptions options)

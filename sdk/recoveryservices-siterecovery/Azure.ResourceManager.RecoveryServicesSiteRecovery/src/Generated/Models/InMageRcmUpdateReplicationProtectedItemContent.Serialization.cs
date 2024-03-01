@@ -126,17 +126,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> targetVmName = default;
-            Optional<string> targetVmSize = default;
-            Optional<ResourceIdentifier> targetResourceGroupId = default;
-            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
-            Optional<string> targetAvailabilityZone = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
-            Optional<ResourceIdentifier> targetNetworkId = default;
-            Optional<ResourceIdentifier> testNetworkId = default;
+            string targetVmName = default;
+            string targetVmSize = default;
+            ResourceIdentifier targetResourceGroupId = default;
+            ResourceIdentifier targetAvailabilitySetId = default;
+            string targetAvailabilityZone = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            ResourceIdentifier targetBootDiagnosticsStorageAccountId = default;
+            ResourceIdentifier targetNetworkId = default;
+            ResourceIdentifier testNetworkId = default;
             IList<InMageRcmNicContent> vmNics = default;
-            Optional<SiteRecoveryLicenseType> licenseType = default;
+            SiteRecoveryLicenseType? licenseType = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -245,7 +245,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmUpdateReplicationProtectedItemContent(instanceType, serializedAdditionalRawData, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, vmNics ?? new ChangeTrackingList<InMageRcmNicContent>(), Optional.ToNullable(licenseType));
+            return new InMageRcmUpdateReplicationProtectedItemContent(
+                instanceType,
+                serializedAdditionalRawData,
+                targetVmName,
+                targetVmSize,
+                targetResourceGroupId,
+                targetAvailabilitySetId,
+                targetAvailabilityZone,
+                targetProximityPlacementGroupId,
+                targetBootDiagnosticsStorageAccountId,
+                targetNetworkId,
+                testNetworkId,
+                vmNics ?? new ChangeTrackingList<InMageRcmNicContent>(),
+                licenseType);
         }
 
         BinaryData IPersistableModel<InMageRcmUpdateReplicationProtectedItemContent>.Write(ModelReaderWriterOptions options)

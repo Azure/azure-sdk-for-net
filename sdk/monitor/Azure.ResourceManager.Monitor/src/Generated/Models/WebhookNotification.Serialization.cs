@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<Uri> serviceUri = default;
-            Optional<IDictionary<string, string>> properties = default;
+            Uri serviceUri = default;
+            IDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebhookNotification(serviceUri.Value, Optional.ToDictionary(properties), serializedAdditionalRawData);
+            return new WebhookNotification(serviceUri, properties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebhookNotification>.Write(ModelReaderWriterOptions options)

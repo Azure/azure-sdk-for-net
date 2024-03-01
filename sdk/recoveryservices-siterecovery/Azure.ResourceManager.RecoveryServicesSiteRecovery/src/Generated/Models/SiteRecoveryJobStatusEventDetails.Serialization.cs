@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<string> jobFriendlyName = default;
-            Optional<string> jobStatus = default;
-            Optional<string> affectedObjectType = default;
+            ResourceIdentifier jobId = default;
+            string jobFriendlyName = default;
+            string jobStatus = default;
+            string affectedObjectType = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryJobStatusEventDetails(instanceType, serializedAdditionalRawData, jobId.Value, jobFriendlyName.Value, jobStatus.Value, affectedObjectType.Value);
+            return new SiteRecoveryJobStatusEventDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                jobId,
+                jobFriendlyName,
+                jobStatus,
+                affectedObjectType);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobStatusEventDetails>.Write(ModelReaderWriterOptions options)

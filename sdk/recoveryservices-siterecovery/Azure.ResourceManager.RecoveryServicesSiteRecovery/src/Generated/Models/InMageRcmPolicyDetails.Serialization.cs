@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> recoveryPointHistoryInMinutes = default;
-            Optional<int> appConsistentFrequencyInMinutes = default;
-            Optional<int> crashConsistentFrequencyInMinutes = default;
-            Optional<string> enableMultiVmSync = default;
+            int? recoveryPointHistoryInMinutes = default;
+            int? appConsistentFrequencyInMinutes = default;
+            int? crashConsistentFrequencyInMinutes = default;
+            string enableMultiVmSync = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmPolicyDetails(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointHistoryInMinutes), Optional.ToNullable(appConsistentFrequencyInMinutes), Optional.ToNullable(crashConsistentFrequencyInMinutes), enableMultiVmSync.Value);
+            return new InMageRcmPolicyDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                recoveryPointHistoryInMinutes,
+                appConsistentFrequencyInMinutes,
+                crashConsistentFrequencyInMinutes,
+                enableMultiVmSync);
         }
 
         BinaryData IPersistableModel<InMageRcmPolicyDetails>.Write(ModelReaderWriterOptions options)

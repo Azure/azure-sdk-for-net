@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<bool> allowBlobPublicAccess = default;
-            Optional<ArmResourceId> armResourceId = default;
-            Optional<bool> storageAccountHnsEnabled = default;
-            Optional<string> storageAccountName = default;
-            Optional<string> storageAccountType = default;
+            bool? allowBlobPublicAccess = default;
+            ArmResourceId armResourceId = default;
+            bool? storageAccountHnsEnabled = default;
+            string storageAccountName = default;
+            string storageAccountType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +173,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SystemCreatedStorageAccount(Optional.ToNullable(allowBlobPublicAccess), armResourceId.Value, Optional.ToNullable(storageAccountHnsEnabled), storageAccountName.Value, storageAccountType.Value, serializedAdditionalRawData);
+            return new SystemCreatedStorageAccount(
+                allowBlobPublicAccess,
+                armResourceId,
+                storageAccountHnsEnabled,
+                storageAccountName,
+                storageAccountType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SystemCreatedStorageAccount>.Write(ModelReaderWriterOptions options)

@@ -200,22 +200,22 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<EgressEndpoint> additionalEgressEndpoints = default;
             IReadOnlyList<ResourceIdentifier> associatedResourceIds = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<CloudServicesNetworkDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<CloudServicesNetworkEnableDefaultEgressEndpoint> enableDefaultEgressEndpoints = default;
+            ResourceIdentifier clusterId = default;
+            CloudServicesNetworkDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints = default;
             IReadOnlyList<EgressEndpoint> enabledEgressEndpoints = default;
             IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds = default;
-            Optional<string> interfaceName = default;
-            Optional<CloudServicesNetworkProvisioningState> provisioningState = default;
+            string interfaceName = default;
+            CloudServicesNetworkProvisioningState? provisioningState = default;
             IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -424,7 +424,26 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudCloudServicesNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, additionalEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(), associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(enableDefaultEgressEndpoints), enabledEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(), hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(), interfaceName.Value, Optional.ToNullable(provisioningState), virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
+            return new NetworkCloudCloudServicesNetworkData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                additionalEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(),
+                associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                clusterId,
+                detailedStatus,
+                detailedStatusMessage,
+                enableDefaultEgressEndpoints,
+                enabledEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(),
+                hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                interfaceName,
+                provisioningState,
+                virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudCloudServicesNetworkData>.Write(ModelReaderWriterOptions options)

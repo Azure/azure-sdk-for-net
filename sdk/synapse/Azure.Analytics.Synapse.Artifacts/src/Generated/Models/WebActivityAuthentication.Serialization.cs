@@ -60,12 +60,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<SecretBase> pfx = default;
-            Optional<object> username = default;
-            Optional<SecretBase> password = default;
-            Optional<object> resource = default;
-            Optional<object> userTenant = default;
-            Optional<CredentialReference> credential = default;
+            SecretBase pfx = default;
+            object username = default;
+            SecretBase password = default;
+            object resource = default;
+            object userTenant = default;
+            CredentialReference credential = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -128,7 +128,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new WebActivityAuthentication(type, pfx.Value, username.Value, password.Value, resource.Value, userTenant.Value, credential.Value);
+            return new WebActivityAuthentication(
+                type,
+                pfx,
+                username,
+                password,
+                resource,
+                userTenant,
+                credential);
         }
 
         internal partial class WebActivityAuthenticationConverter : JsonConverter<WebActivityAuthentication>

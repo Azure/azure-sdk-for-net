@@ -94,10 +94,10 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             DocumentFieldType type = default;
-            Optional<string> description = default;
-            Optional<string> example = default;
-            Optional<DocumentFieldSchema> items = default;
-            Optional<IReadOnlyDictionary<string, DocumentFieldSchema>> properties = default;
+            string description = default;
+            string example = default;
+            DocumentFieldSchema items = default;
+            IReadOnlyDictionary<string, DocumentFieldSchema> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,13 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentFieldSchema(type, description.Value, example.Value, items.Value, Optional.ToDictionary(properties), serializedAdditionalRawData);
+            return new DocumentFieldSchema(
+                type,
+                description,
+                example,
+                items,
+                properties ?? new ChangeTrackingDictionary<string, DocumentFieldSchema>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentFieldSchema>.Write(ModelReaderWriterOptions options)

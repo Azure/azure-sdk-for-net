@@ -138,16 +138,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> connectionString = default;
-            Optional<DataFactoryElement<string>> authenticationType = default;
-            Optional<DataFactorySecretBaseDefinition> credential = default;
-            Optional<DataFactoryElement<string>> userName = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<string> encryptedCredential = default;
+            DataFactoryElement<string> authenticationType = default;
+            DataFactorySecretBaseDefinition credential = default;
+            DataFactoryElement<string> userName = default;
+            DataFactorySecretBaseDefinition password = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -267,7 +267,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new InformixLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, connectionString, authenticationType.Value, credential, userName.Value, password, encryptedCredential.Value);
+            return new InformixLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                connectionString,
+                authenticationType,
+                credential,
+                userName,
+                password,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<InformixLinkedService>.Write(ModelReaderWriterOptions options)

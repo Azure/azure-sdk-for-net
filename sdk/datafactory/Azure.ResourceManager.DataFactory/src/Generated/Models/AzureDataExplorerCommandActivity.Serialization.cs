@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             DataFactoryElement<string> command = default;
-            Optional<DataFactoryElement<string>> commandTimeout = default;
+            DataFactoryElement<string> commandTimeout = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,7 +244,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataExplorerCommandActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, command, commandTimeout.Value);
+            return new AzureDataExplorerCommandActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                command,
+                commandTimeout);
         }
 
         BinaryData IPersistableModel<AzureDataExplorerCommandActivity>.Write(ModelReaderWriterOptions options)

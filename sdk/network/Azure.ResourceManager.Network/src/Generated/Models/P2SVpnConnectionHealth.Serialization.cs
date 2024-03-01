@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<Uri> sasUrl = default;
+            Uri sasUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new P2SVpnConnectionHealth(sasUrl.Value, serializedAdditionalRawData);
+            return new P2SVpnConnectionHealth(sasUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<P2SVpnConnectionHealth>.Write(ModelReaderWriterOptions options)

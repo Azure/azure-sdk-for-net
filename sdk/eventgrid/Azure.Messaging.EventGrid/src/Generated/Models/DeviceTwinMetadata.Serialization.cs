@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,7 +17,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> lastUpdated = default;
+            string lastUpdated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdated"u8))
@@ -27,7 +26,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new DeviceTwinMetadata(lastUpdated.Value);
+            return new DeviceTwinMetadata(lastUpdated);
         }
     }
 }

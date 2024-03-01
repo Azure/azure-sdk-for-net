@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<AzureFirewallNatRCActionType> type = default;
+            AzureFirewallNatRCActionType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallNatRCAction(Optional.ToNullable(type), serializedAdditionalRawData);
+            return new AzureFirewallNatRCAction(type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureFirewallNatRCAction>.Write(ModelReaderWriterOptions options)

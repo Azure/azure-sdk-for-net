@@ -99,16 +99,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<object> structure = default;
-            Optional<object> schema = default;
+            string description = default;
+            object structure = default;
+            object schema = default;
             LinkedServiceReference linkedServiceName = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
-            Optional<DatasetFolder> folder = default;
+            DatasetFolder folder = default;
             object openHubDestinationName = default;
-            Optional<object> excludeLastRequest = default;
-            Optional<object> baseRequestId = default;
+            object excludeLastRequest = default;
+            object baseRequestId = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -228,7 +228,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOpenHubTableDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), folder.Value, additionalProperties, openHubDestinationName, excludeLastRequest.Value, baseRequestId.Value);
+            return new SapOpenHubTableDataset(
+                type,
+                description,
+                structure,
+                schema,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                folder,
+                additionalProperties,
+                openHubDestinationName,
+                excludeLastRequest,
+                baseRequestId);
         }
 
         internal partial class SapOpenHubTableDatasetConverter : JsonConverter<SapOpenHubTableDataset>

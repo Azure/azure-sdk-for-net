@@ -19,9 +19,9 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IReadOnlyList<TimeSeriesIdProperty> timeSeriesIdProperties = default;
-            Optional<string> defaultTypeId = default;
+            string defaultTypeId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -49,7 +49,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new TimeSeriesModelSettings(name.Value, timeSeriesIdProperties ?? new ChangeTrackingList<TimeSeriesIdProperty>(), defaultTypeId.Value);
+            return new TimeSeriesModelSettings(name, timeSeriesIdProperties ?? new ChangeTrackingList<TimeSeriesIdProperty>(), defaultTypeId);
         }
     }
 }

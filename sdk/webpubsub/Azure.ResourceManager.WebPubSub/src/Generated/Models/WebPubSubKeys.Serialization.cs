@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<string> primaryConnectionString = default;
-            Optional<string> secondaryConnectionString = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            string primaryConnectionString = default;
+            string secondaryConnectionString = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubKeys(primaryKey.Value, secondaryKey.Value, primaryConnectionString.Value, secondaryConnectionString.Value, serializedAdditionalRawData);
+            return new WebPubSubKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubKeys>.Write(ModelReaderWriterOptions options)

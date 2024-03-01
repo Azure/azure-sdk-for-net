@@ -184,27 +184,27 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 return null;
             }
-            Optional<FhirServiceKind> kind = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            FhirServiceKind? kind = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HealthcareApisProvisioningState> provisioningState = default;
-            Optional<FhirServiceAcrConfiguration> acrConfiguration = default;
-            Optional<FhirServiceAuthenticationConfiguration> authenticationConfiguration = default;
-            Optional<FhirServiceCorsConfiguration> corsConfiguration = default;
-            Optional<FhirServiceExportConfiguration> exportConfiguration = default;
+            SystemData systemData = default;
+            HealthcareApisProvisioningState? provisioningState = default;
+            FhirServiceAcrConfiguration acrConfiguration = default;
+            FhirServiceAuthenticationConfiguration authenticationConfiguration = default;
+            FhirServiceCorsConfiguration corsConfiguration = default;
+            FhirServiceExportConfiguration exportConfiguration = default;
             IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<FhirServiceEventState> eventState = default;
-            Optional<FhirServiceResourceVersionPolicyConfiguration> resourceVersionPolicyConfiguration = default;
-            Optional<FhirServiceImportConfiguration> importConfiguration = default;
-            Optional<ImplementationGuidesConfiguration> implementationGuidesConfiguration = default;
-            Optional<Encryption> encryption = default;
+            HealthcareApisPublicNetworkAccess? publicNetworkAccess = default;
+            FhirServiceEventState? eventState = default;
+            FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration = default;
+            FhirServiceImportConfiguration importConfiguration = default;
+            ImplementationGuidesConfiguration implementationGuidesConfiguration = default;
+            Encryption encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -411,7 +411,29 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FhirServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), Optional.ToNullable(provisioningState), acrConfiguration.Value, authenticationConfiguration.Value, corsConfiguration.Value, exportConfiguration.Value, privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eventState), resourceVersionPolicyConfiguration.Value, importConfiguration.Value, implementationGuidesConfiguration.Value, encryption.Value, identity, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new FhirServiceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                kind,
+                provisioningState,
+                acrConfiguration,
+                authenticationConfiguration,
+                corsConfiguration,
+                exportConfiguration,
+                privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>(),
+                publicNetworkAccess,
+                eventState,
+                resourceVersionPolicyConfiguration,
+                importConfiguration,
+                implementationGuidesConfiguration,
+                encryption,
+                identity,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FhirServiceData>.Write(ModelReaderWriterOptions options)

@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> serverVersion = default;
+            string id = default;
+            string serverVersion = default;
             IReadOnlyList<string> databases = default;
-            Optional<string> targetServerBrandVersion = default;
+            string targetServerBrandVersion = default;
             IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToTargetAzureDBForMySqlTaskOutput(id.Value, serverVersion.Value, databases ?? new ChangeTrackingList<string>(), targetServerBrandVersion.Value, validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
+            return new ConnectToTargetAzureDBForMySqlTaskOutput(
+                id,
+                serverVersion,
+                databases ?? new ChangeTrackingList<string>(),
+                targetServerBrandVersion,
+                validationErrors ?? new ChangeTrackingList<ReportableException>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectToTargetAzureDBForMySqlTaskOutput>.Write(ModelReaderWriterOptions options)

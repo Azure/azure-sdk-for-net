@@ -145,10 +145,10 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             int pageNumber = default;
-            Optional<float> angle = default;
-            Optional<float> width = default;
-            Optional<float> height = default;
-            Optional<LengthUnit> unit = default;
+            float? angle = default;
+            float? width = default;
+            float? height = default;
+            LengthUnit? unit = default;
             IReadOnlyList<DocumentSpan> spans = default;
             IReadOnlyList<DocumentWord> words = default;
             IReadOnlyList<DocumentSelectionMark> selectionMarks = default;
@@ -286,7 +286,19 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentPage(pageNumber, Optional.ToNullable(angle), Optional.ToNullable(width), Optional.ToNullable(height), Optional.ToNullable(unit), spans, words ?? new ChangeTrackingList<DocumentWord>(), selectionMarks ?? new ChangeTrackingList<DocumentSelectionMark>(), lines ?? new ChangeTrackingList<DocumentLine>(), barcodes ?? new ChangeTrackingList<DocumentBarcode>(), formulas ?? new ChangeTrackingList<DocumentFormula>(), serializedAdditionalRawData);
+            return new DocumentPage(
+                pageNumber,
+                angle,
+                width,
+                height,
+                unit,
+                spans,
+                words ?? new ChangeTrackingList<DocumentWord>(),
+                selectionMarks ?? new ChangeTrackingList<DocumentSelectionMark>(),
+                lines ?? new ChangeTrackingList<DocumentLine>(),
+                barcodes ?? new ChangeTrackingList<DocumentBarcode>(),
+                formulas ?? new ChangeTrackingList<DocumentFormula>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentPage>.Write(ModelReaderWriterOptions options)

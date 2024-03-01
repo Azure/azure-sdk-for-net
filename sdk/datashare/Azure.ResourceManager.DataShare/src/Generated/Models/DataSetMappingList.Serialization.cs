@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<ShareDataSetMappingData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataSetMappingList(nextLink.Value, value, serializedAdditionalRawData);
+            return new DataSetMappingList(nextLink, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataSetMappingList>.Write(ModelReaderWriterOptions options)

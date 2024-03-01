@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> validationToken = default;
-            Optional<DateTimeOffset> expirationDate = default;
+            string validationToken = default;
+            DateTimeOffset? expirationDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DomainValidationProperties(validationToken.Value, Optional.ToNullable(expirationDate), serializedAdditionalRawData);
+            return new DomainValidationProperties(validationToken, expirationDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DomainValidationProperties>.Write(ModelReaderWriterOptions options)

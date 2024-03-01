@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             MySqlConnectionInfo sourceConnectionInfo = default;
             MySqlConnectionInfo targetConnectionInfo = default;
             IList<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> selectedDatabases = default;
-            Optional<bool> makeSourceServerReadOnly = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<IDictionary<string, string>> optionalAgentSettings = default;
-            Optional<string> encryptedKeyForSecureFields = default;
+            bool? makeSourceServerReadOnly = default;
+            DateTimeOffset? startedOn = default;
+            IDictionary<string, string> optionalAgentSettings = default;
+            string encryptedKeyForSecureFields = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMySqlAzureDBForMySqlOfflineTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases, Optional.ToNullable(makeSourceServerReadOnly), Optional.ToNullable(startedOn), Optional.ToDictionary(optionalAgentSettings), encryptedKeyForSecureFields.Value, serializedAdditionalRawData);
+            return new MigrateMySqlAzureDBForMySqlOfflineTaskInput(
+                sourceConnectionInfo,
+                targetConnectionInfo,
+                selectedDatabases,
+                makeSourceServerReadOnly,
+                startedOn,
+                optionalAgentSettings ?? new ChangeTrackingDictionary<string, string>(),
+                encryptedKeyForSecureFields,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskInput>.Write(ModelReaderWriterOptions options)

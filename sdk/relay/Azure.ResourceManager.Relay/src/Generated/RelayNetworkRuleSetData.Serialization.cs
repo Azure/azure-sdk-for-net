@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.Relay
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RelayNetworkRuleSetDefaultAction> defaultAction = default;
-            Optional<RelayPublicNetworkAccess> publicNetworkAccess = default;
+            SystemData systemData = default;
+            RelayNetworkRuleSetDefaultAction? defaultAction = default;
+            RelayPublicNetworkAccess? publicNetworkAccess = default;
             IList<RelayNetworkRuleSetIPRule> ipRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -194,7 +194,15 @@ namespace Azure.ResourceManager.Relay
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayNetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(defaultAction), Optional.ToNullable(publicNetworkAccess), ipRules ?? new ChangeTrackingList<RelayNetworkRuleSetIPRule>(), serializedAdditionalRawData);
+            return new RelayNetworkRuleSetData(
+                id,
+                name,
+                type,
+                systemData,
+                defaultAction,
+                publicNetworkAccess,
+                ipRules ?? new ChangeTrackingList<RelayNetworkRuleSetIPRule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayNetworkRuleSetData>.Write(ModelReaderWriterOptions options)

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<FrontDoorNameAvailabilityState> nameAvailability = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
+            FrontDoorNameAvailabilityState? nameAvailability = default;
+            string reason = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorNameAvailabilityResult(Optional.ToNullable(nameAvailability), reason.Value, message.Value, serializedAdditionalRawData);
+            return new FrontDoorNameAvailabilityResult(nameAvailability, reason, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorNameAvailabilityResult>.Write(ModelReaderWriterOptions options)

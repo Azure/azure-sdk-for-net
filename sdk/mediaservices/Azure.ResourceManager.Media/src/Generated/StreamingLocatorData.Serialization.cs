@@ -152,16 +152,16 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> assetName = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<Guid> streamingLocatorId = default;
-            Optional<string> streamingPolicyName = default;
-            Optional<string> defaultContentKeyPolicyName = default;
+            SystemData systemData = default;
+            string assetName = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            Guid? streamingLocatorId = default;
+            string streamingPolicyName = default;
+            string defaultContentKeyPolicyName = default;
             IList<StreamingLocatorContentKey> contentKeys = default;
-            Optional<string> alternativeMediaId = default;
+            string alternativeMediaId = default;
             IList<string> filters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -293,7 +293,22 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingLocatorData(id, name, type, systemData.Value, assetName.Value, Optional.ToNullable(created), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(streamingLocatorId), streamingPolicyName.Value, defaultContentKeyPolicyName.Value, contentKeys ?? new ChangeTrackingList<StreamingLocatorContentKey>(), alternativeMediaId.Value, filters ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new StreamingLocatorData(
+                id,
+                name,
+                type,
+                systemData,
+                assetName,
+                created,
+                startTime,
+                endTime,
+                streamingLocatorId,
+                streamingPolicyName,
+                defaultContentKeyPolicyName,
+                contentKeys ?? new ChangeTrackingList<StreamingLocatorContentKey>(),
+                alternativeMediaId,
+                filters ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingLocatorData>.Write(ModelReaderWriterOptions options)

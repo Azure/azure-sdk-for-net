@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<Uri> sasUrl = default;
+            Uri sasUrl = default;
             IList<string> linkConnectionNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnConnectionPacketCaptureStopContent(sasUrl.Value, linkConnectionNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new VpnConnectionPacketCaptureStopContent(sasUrl, linkConnectionNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnConnectionPacketCaptureStopContent>.Write(ModelReaderWriterOptions options)

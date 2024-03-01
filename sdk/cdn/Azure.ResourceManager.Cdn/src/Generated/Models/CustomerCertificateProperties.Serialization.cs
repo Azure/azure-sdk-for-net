@@ -110,13 +110,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             WritableSubResource secretSource = default;
-            Optional<string> secretVersion = default;
-            Optional<bool> useLatestVersion = default;
-            Optional<string> subject = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> certificateAuthority = default;
+            string secretVersion = default;
+            bool? useLatestVersion = default;
+            string subject = default;
+            DateTimeOffset? expirationDate = default;
+            string certificateAuthority = default;
             IList<string> subjectAlternativeNames = default;
-            Optional<string> thumbprint = default;
+            string thumbprint = default;
             SecretType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -190,7 +190,17 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomerCertificateProperties(type, serializedAdditionalRawData, secretSource, secretVersion.Value, Optional.ToNullable(useLatestVersion), subject.Value, Optional.ToNullable(expirationDate), certificateAuthority.Value, subjectAlternativeNames ?? new ChangeTrackingList<string>(), thumbprint.Value);
+            return new CustomerCertificateProperties(
+                type,
+                serializedAdditionalRawData,
+                secretSource,
+                secretVersion,
+                useLatestVersion,
+                subject,
+                expirationDate,
+                certificateAuthority,
+                subjectAlternativeNames ?? new ChangeTrackingList<string>(),
+                thumbprint);
         }
 
         BinaryData IPersistableModel<CustomerCertificateProperties>.Write(ModelReaderWriterOptions options)

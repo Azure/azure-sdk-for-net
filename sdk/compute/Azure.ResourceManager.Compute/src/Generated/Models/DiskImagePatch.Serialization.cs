@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<WritableSubResource> sourceVirtualMachine = default;
-            Optional<ImageStorageProfile> storageProfile = default;
-            Optional<string> provisioningState = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
+            IDictionary<string, string> tags = default;
+            WritableSubResource sourceVirtualMachine = default;
+            ImageStorageProfile storageProfile = default;
+            string provisioningState = default;
+            HyperVGeneration? hyperVGeneration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,7 +172,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskImagePatch(Optional.ToDictionary(tags), serializedAdditionalRawData, sourceVirtualMachine, storageProfile.Value, provisioningState.Value, Optional.ToNullable(hyperVGeneration));
+            return new DiskImagePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                sourceVirtualMachine,
+                storageProfile,
+                provisioningState,
+                hyperVGeneration);
         }
 
         BinaryData IPersistableModel<DiskImagePatch>.Write(ModelReaderWriterOptions options)

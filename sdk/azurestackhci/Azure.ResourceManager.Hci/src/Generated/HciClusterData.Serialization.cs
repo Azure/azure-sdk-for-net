@@ -221,34 +221,34 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HciProvisioningState> provisioningState = default;
-            Optional<HciClusterStatus> status = default;
-            Optional<Guid> cloudId = default;
-            Optional<string> cloudManagementEndpoint = default;
-            Optional<Guid> aadClientId = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<Guid> aadApplicationObjectId = default;
-            Optional<Guid> aadServicePrincipalObjectId = default;
-            Optional<SoftwareAssuranceProperties> softwareAssuranceProperties = default;
-            Optional<HciClusterDesiredProperties> desiredProperties = default;
-            Optional<HciClusterReportedProperties> reportedProperties = default;
-            Optional<float> trialDaysRemaining = default;
-            Optional<string> billingModel = default;
-            Optional<DateTimeOffset> registrationTimestamp = default;
-            Optional<DateTimeOffset> lastSyncTimestamp = default;
-            Optional<DateTimeOffset> lastBillingTimestamp = default;
-            Optional<string> serviceEndpoint = default;
-            Optional<string> resourceProviderObjectId = default;
-            Optional<Guid> principalId = default;
-            Optional<Guid> tenantId = default;
-            Optional<HciManagedServiceIdentityType> type0 = default;
-            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
+            SystemData systemData = default;
+            HciProvisioningState? provisioningState = default;
+            HciClusterStatus? status = default;
+            Guid? cloudId = default;
+            string cloudManagementEndpoint = default;
+            Guid? aadClientId = default;
+            Guid? aadTenantId = default;
+            Guid? aadApplicationObjectId = default;
+            Guid? aadServicePrincipalObjectId = default;
+            SoftwareAssuranceProperties softwareAssuranceProperties = default;
+            HciClusterDesiredProperties desiredProperties = default;
+            HciClusterReportedProperties reportedProperties = default;
+            float? trialDaysRemaining = default;
+            string billingModel = default;
+            DateTimeOffset? registrationTimestamp = default;
+            DateTimeOffset? lastSyncTimestamp = default;
+            DateTimeOffset? lastBillingTimestamp = default;
+            string serviceEndpoint = default;
+            string resourceProviderObjectId = default;
+            Guid? principalId = default;
+            Guid? tenantId = default;
+            HciManagedServiceIdentityType? type0 = default;
+            IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -513,7 +513,36 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), Optional.ToNullable(aadApplicationObjectId), Optional.ToNullable(aadServicePrincipalObjectId), softwareAssuranceProperties.Value, desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), serviceEndpoint.Value, resourceProviderObjectId.Value, Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(type0), Optional.ToDictionary(userAssignedIdentities), serializedAdditionalRawData);
+            return new HciClusterData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                status,
+                cloudId,
+                cloudManagementEndpoint,
+                aadClientId,
+                aadTenantId,
+                aadApplicationObjectId,
+                aadServicePrincipalObjectId,
+                softwareAssuranceProperties,
+                desiredProperties,
+                reportedProperties,
+                trialDaysRemaining,
+                billingModel,
+                registrationTimestamp,
+                lastSyncTimestamp,
+                lastBillingTimestamp,
+                serviceEndpoint,
+                resourceProviderObjectId,
+                principalId,
+                tenantId,
+                type0,
+                userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterData>.Write(ModelReaderWriterOptions options)

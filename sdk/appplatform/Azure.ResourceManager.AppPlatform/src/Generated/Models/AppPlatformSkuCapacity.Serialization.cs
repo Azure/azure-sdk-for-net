@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 return null;
             }
             int minimum = default;
-            Optional<int> maximum = default;
-            Optional<int> @default = default;
-            Optional<AppPlatformSkuScaleType> scaleType = default;
+            int? maximum = default;
+            int? @default = default;
+            AppPlatformSkuScaleType? scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformSkuCapacity(minimum, Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType), serializedAdditionalRawData);
+            return new AppPlatformSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformSkuCapacity>.Write(ModelReaderWriterOptions options)

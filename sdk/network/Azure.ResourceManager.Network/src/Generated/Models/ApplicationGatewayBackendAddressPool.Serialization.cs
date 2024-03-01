@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
             IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations = default;
             IList<ApplicationGatewayBackendAddress> backendAddresses = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +212,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayBackendAddressPool(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), backendIPConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>(), backendAddresses ?? new ChangeTrackingList<ApplicationGatewayBackendAddress>(), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayBackendAddressPool(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                backendIPConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>(),
+                backendAddresses ?? new ChangeTrackingList<ApplicationGatewayBackendAddress>(),
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendAddressPool>.Write(ModelReaderWriterOptions options)

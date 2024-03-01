@@ -110,6 +110,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("rootFileSystems");
                 }
             }
+            writer.WritePropertyName("summaryType"u8);
+            writer.WriteStringValue(SummaryType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -148,13 +150,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<long?> extractedSize = default;
-            Optional<long?> fileSize = default;
-            Optional<long?> extractedFileCount = default;
-            Optional<long?> componentCount = default;
-            Optional<long?> binaryCount = default;
-            Optional<long?> analysisTimeSeconds = default;
-            Optional<long?> rootFileSystems = default;
+            long? extractedSize = default;
+            long? fileSize = default;
+            long? extractedFileCount = default;
+            long? componentCount = default;
+            long? binaryCount = default;
+            long? analysisTimeSeconds = default;
+            long? rootFileSystems = default;
+            FirmwareAnalysisSummaryType summaryType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,13 +232,27 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     rootFileSystems = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("summaryType"u8))
+                {
+                    summaryType = new FirmwareAnalysisSummaryType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareSummary(Optional.ToNullable(extractedSize), Optional.ToNullable(fileSize), Optional.ToNullable(extractedFileCount), Optional.ToNullable(componentCount), Optional.ToNullable(binaryCount), Optional.ToNullable(analysisTimeSeconds), Optional.ToNullable(rootFileSystems), serializedAdditionalRawData);
+            return new FirmwareSummary(
+                summaryType,
+                serializedAdditionalRawData,
+                extractedSize,
+                fileSize,
+                extractedFileCount,
+                componentCount,
+                binaryCount,
+                analysisTimeSeconds,
+                rootFileSystems);
         }
 
         BinaryData IPersistableModel<FirmwareSummary>.Write(ModelReaderWriterOptions options)

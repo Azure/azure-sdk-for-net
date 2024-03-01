@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> mediaType = default;
-            Optional<long> size = default;
-            Optional<string> digest = default;
-            Optional<long> length = default;
-            Optional<string> repository = default;
-            Optional<Uri> url = default;
-            Optional<string> tag = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
+            string mediaType = default;
+            long? size = default;
+            string digest = default;
+            long? length = default;
+            string repository = default;
+            Uri url = default;
+            string tag = default;
+            string name = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +185,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryWebhookEventTarget(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToNullable(length), repository.Value, url.Value, tag.Value, name.Value, version.Value, serializedAdditionalRawData);
+            return new ContainerRegistryWebhookEventTarget(
+                mediaType,
+                size,
+                digest,
+                length,
+                repository,
+                url,
+                tag,
+                name,
+                version,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryWebhookEventTarget>.Write(ModelReaderWriterOptions options)

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             IReadOnlyList<MobileNetworkServiceData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceListResult(value ?? new ChangeTrackingList<MobileNetworkServiceData>(), nextLink.Value, serializedAdditionalRawData);
+            return new ServiceListResult(value ?? new ChangeTrackingList<MobileNetworkServiceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceListResult>.Write(ModelReaderWriterOptions options)

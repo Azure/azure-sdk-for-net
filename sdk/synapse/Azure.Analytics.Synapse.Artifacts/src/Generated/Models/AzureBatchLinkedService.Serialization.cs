@@ -98,17 +98,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object accountName = default;
-            Optional<SecretBase> accessKey = default;
+            SecretBase accessKey = default;
             object batchUri = default;
             object poolName = default;
             LinkedServiceReference linkedServiceName = default;
-            Optional<object> encryptedCredential = default;
-            Optional<CredentialReference> credential = default;
+            object encryptedCredential = default;
+            CredentialReference credential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -229,7 +229,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBatchLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), additionalProperties, accountName, accessKey.Value, batchUri, poolName, linkedServiceName, encryptedCredential.Value, credential.Value);
+            return new AzureBatchLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                accountName,
+                accessKey,
+                batchUri,
+                poolName,
+                linkedServiceName,
+                encryptedCredential,
+                credential);
         }
 
         internal partial class AzureBatchLinkedServiceConverter : JsonConverter<AzureBatchLinkedService>

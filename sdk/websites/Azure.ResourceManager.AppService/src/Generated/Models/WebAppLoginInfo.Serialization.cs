@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<LoginRoutes> routes = default;
-            Optional<AppServiceTokenStore> tokenStore = default;
-            Optional<bool> preserveUrlFragmentsForLogins = default;
+            LoginRoutes routes = default;
+            AppServiceTokenStore tokenStore = default;
+            bool? preserveUrlFragmentsForLogins = default;
             IList<string> allowedExternalRedirectUrls = default;
-            Optional<WebAppCookieExpiration> cookieExpiration = default;
-            Optional<LoginFlowNonceSettings> nonce = default;
+            WebAppCookieExpiration cookieExpiration = default;
+            LoginFlowNonceSettings nonce = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppLoginInfo(routes.Value, tokenStore.Value, Optional.ToNullable(preserveUrlFragmentsForLogins), allowedExternalRedirectUrls ?? new ChangeTrackingList<string>(), cookieExpiration.Value, nonce.Value, serializedAdditionalRawData);
+            return new WebAppLoginInfo(
+                routes,
+                tokenStore,
+                preserveUrlFragmentsForLogins,
+                allowedExternalRedirectUrls ?? new ChangeTrackingList<string>(),
+                cookieExpiration,
+                nonce,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppLoginInfo>.Write(ModelReaderWriterOptions options)

@@ -400,32 +400,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IList<string> archives = default;
-            Optional<string> args = default;
+            string args = default;
             string codeId = default;
-            Optional<IDictionary<string, string>> conf = default;
+            IDictionary<string, string> conf = default;
             SparkJobEntry entry = default;
-            Optional<string> environmentId = default;
+            string environmentId = default;
             IList<string> files = default;
-            Optional<IDictionary<string, MachineLearningJobInput>> inputs = default;
+            IDictionary<string, MachineLearningJobInput> inputs = default;
             IList<string> jars = default;
-            Optional<IDictionary<string, MachineLearningJobOutput>> outputs = default;
+            IDictionary<string, MachineLearningJobOutput> outputs = default;
             IList<string> pyFiles = default;
-            Optional<JobQueueSettings> queueSettings = default;
-            Optional<SparkResourceConfiguration> resources = default;
-            Optional<ResourceIdentifier> componentId = default;
-            Optional<ResourceIdentifier> computeId = default;
-            Optional<string> displayName = default;
-            Optional<string> experimentName = default;
-            Optional<MachineLearningIdentityConfiguration> identity = default;
-            Optional<bool> isArchived = default;
+            JobQueueSettings queueSettings = default;
+            SparkResourceConfiguration resources = default;
+            ResourceIdentifier componentId = default;
+            ResourceIdentifier computeId = default;
+            string displayName = default;
+            string experimentName = default;
+            MachineLearningIdentityConfiguration identity = default;
+            bool? isArchived = default;
             JobType jobType = default;
-            Optional<NotificationSetting> notificationSetting = default;
-            Optional<IDictionary<string, SecretConfiguration>> secretsConfiguration = default;
-            Optional<IDictionary<string, MachineLearningJobService>> services = default;
-            Optional<MachineLearningJobStatus> status = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            NotificationSetting notificationSetting = default;
+            IDictionary<string, SecretConfiguration> secretsConfiguration = default;
+            IDictionary<string, MachineLearningJobService> services = default;
+            MachineLearningJobStatus? status = default;
+            string description = default;
+            IDictionary<string, string> properties = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -739,7 +739,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SparkJob(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), serializedAdditionalRawData, componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, notificationSetting.Value, Optional.ToDictionary(secretsConfiguration), Optional.ToDictionary(services), Optional.ToNullable(status), archives ?? new ChangeTrackingList<string>(), args.Value, codeId, Optional.ToDictionary(conf), entry, environmentId.Value, files ?? new ChangeTrackingList<string>(), Optional.ToDictionary(inputs), jars ?? new ChangeTrackingList<string>(), Optional.ToDictionary(outputs), pyFiles ?? new ChangeTrackingList<string>(), queueSettings.Value, resources.Value);
+            return new SparkJob(
+                description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                componentId,
+                computeId,
+                displayName,
+                experimentName,
+                identity,
+                isArchived,
+                jobType,
+                notificationSetting,
+                secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(),
+                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
+                status,
+                archives ?? new ChangeTrackingList<string>(),
+                args,
+                codeId,
+                conf ?? new ChangeTrackingDictionary<string, string>(),
+                entry,
+                environmentId,
+                files ?? new ChangeTrackingList<string>(),
+                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
+                jars ?? new ChangeTrackingList<string>(),
+                outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
+                pyFiles ?? new ChangeTrackingList<string>(),
+                queueSettings,
+                resources);
         }
 
         BinaryData IPersistableModel<SparkJob>.Write(ModelReaderWriterOptions options)

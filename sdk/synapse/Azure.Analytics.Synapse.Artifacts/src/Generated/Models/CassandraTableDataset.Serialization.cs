@@ -97,15 +97,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<object> structure = default;
-            Optional<object> schema = default;
+            string description = default;
+            object structure = default;
+            object schema = default;
             LinkedServiceReference linkedServiceName = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
-            Optional<DatasetFolder> folder = default;
-            Optional<object> tableName = default;
-            Optional<object> keyspace = default;
+            DatasetFolder folder = default;
+            object tableName = default;
+            object keyspace = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CassandraTableDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), folder.Value, additionalProperties, tableName.Value, keyspace.Value);
+            return new CassandraTableDataset(
+                type,
+                description,
+                structure,
+                schema,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                folder,
+                additionalProperties,
+                tableName,
+                keyspace);
         }
 
         internal partial class CassandraTableDatasetConverter : JsonConverter<CassandraTableDataset>

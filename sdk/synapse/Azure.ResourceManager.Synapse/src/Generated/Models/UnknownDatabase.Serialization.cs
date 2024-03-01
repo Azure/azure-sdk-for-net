@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             SynapseKind kind = "Unknown";
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +147,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData);
+            return new UnknownDatabase(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDatabaseData>.Write(ModelReaderWriterOptions options)

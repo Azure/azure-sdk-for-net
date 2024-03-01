@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             CookiesMatchConditionType typeName = default;
-            Optional<string> selector = default;
+            string selector = default;
             CookiesOperator @operator = default;
-            Optional<bool> negateCondition = default;
+            bool? negateCondition = default;
             IList<string> matchValues = default;
             IList<PreTransformCategory> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CookiesMatchCondition(typeName, selector.Value, @operator, Optional.ToNullable(negateCondition), matchValues ?? new ChangeTrackingList<string>(), transforms ?? new ChangeTrackingList<PreTransformCategory>(), serializedAdditionalRawData);
+            return new CookiesMatchCondition(
+                typeName,
+                selector,
+                @operator,
+                negateCondition,
+                matchValues ?? new ChangeTrackingList<string>(),
+                transforms ?? new ChangeTrackingList<PreTransformCategory>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CookiesMatchCondition>.Write(ModelReaderWriterOptions options)

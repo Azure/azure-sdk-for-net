@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             string encodedTaskContent = default;
-            Optional<string> encodedValuesContent = default;
+            string encodedValuesContent = default;
             IList<ContainerRegistryTaskOverridableValue> values = default;
-            Optional<int> timeout = default;
+            int? timeout = default;
             ContainerRegistryPlatformProperties platform = default;
-            Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
-            Optional<string> sourceLocation = default;
-            Optional<ContainerRegistryCredentials> credentials = default;
+            ContainerRegistryAgentProperties agentConfiguration = default;
+            string sourceLocation = default;
+            ContainerRegistryCredentials credentials = default;
             string type = default;
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> agentPoolName = default;
-            Optional<string> logTemplate = default;
+            bool? isArchiveEnabled = default;
+            string agentPoolName = default;
+            string logTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -227,7 +227,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryEncodedTaskRunContent(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value, serializedAdditionalRawData, encodedTaskContent, encodedValuesContent.Value, values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>(), Optional.ToNullable(timeout), platform, agentConfiguration.Value, sourceLocation.Value, credentials.Value);
+            return new ContainerRegistryEncodedTaskRunContent(
+                type,
+                isArchiveEnabled,
+                agentPoolName,
+                logTemplate,
+                serializedAdditionalRawData,
+                encodedTaskContent,
+                encodedValuesContent,
+                values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>(),
+                timeout,
+                platform,
+                agentConfiguration,
+                sourceLocation,
+                credentials);
         }
 
         BinaryData IPersistableModel<ContainerRegistryEncodedTaskRunContent>.Write(ModelReaderWriterOptions options)

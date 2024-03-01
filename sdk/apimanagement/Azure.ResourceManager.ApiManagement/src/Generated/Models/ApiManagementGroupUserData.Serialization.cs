@@ -141,14 +141,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ApiManagementUserState> state = default;
-            Optional<string> note = default;
+            SystemData systemData = default;
+            ApiManagementUserState? state = default;
+            string note = default;
             IList<UserIdentityContract> identities = default;
-            Optional<string> firstName = default;
-            Optional<string> lastName = default;
-            Optional<string> email = default;
-            Optional<DateTimeOffset> registrationDate = default;
+            string firstName = default;
+            string lastName = default;
+            string email = default;
+            DateTimeOffset? registrationDate = default;
             IReadOnlyList<GroupContractProperties> groups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -262,7 +262,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementGroupUserData(id, name, type, systemData.Value, Optional.ToNullable(state), note.Value, identities ?? new ChangeTrackingList<UserIdentityContract>(), firstName.Value, lastName.Value, email.Value, Optional.ToNullable(registrationDate), groups ?? new ChangeTrackingList<GroupContractProperties>(), serializedAdditionalRawData);
+            return new ApiManagementGroupUserData(
+                id,
+                name,
+                type,
+                systemData,
+                state,
+                note,
+                identities ?? new ChangeTrackingList<UserIdentityContract>(),
+                firstName,
+                lastName,
+                email,
+                registrationDate,
+                groups ?? new ChangeTrackingList<GroupContractProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementGroupUserData>.Write(ModelReaderWriterOptions options)

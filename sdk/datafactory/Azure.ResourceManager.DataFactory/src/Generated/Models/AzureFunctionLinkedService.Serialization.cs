@@ -138,16 +138,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> functionAppUrl = default;
-            Optional<DataFactorySecretBaseDefinition> functionKey = default;
-            Optional<string> encryptedCredential = default;
-            Optional<DataFactoryCredentialReference> credential = default;
-            Optional<DataFactoryElement<string>> resourceId = default;
-            Optional<DataFactoryElement<string>> authentication = default;
+            DataFactorySecretBaseDefinition functionKey = default;
+            string encryptedCredential = default;
+            DataFactoryCredentialReference credential = default;
+            DataFactoryElement<string> resourceId = default;
+            DataFactoryElement<string> authentication = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -267,7 +267,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureFunctionLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, functionAppUrl, functionKey, encryptedCredential.Value, credential.Value, resourceId.Value, authentication.Value);
+            return new AzureFunctionLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                functionAppUrl,
+                functionKey,
+                encryptedCredential,
+                credential,
+                resourceId,
+                authentication);
         }
 
         BinaryData IPersistableModel<AzureFunctionLinkedService>.Write(ModelReaderWriterOptions options)

@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<int> defaultMaximumExpirationTimeInDays = default;
+            IDictionary<string, string> tags = default;
+            int? defaultMaximumExpirationTimeInDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerConfigurationPatch(Optional.ToDictionary(tags), Optional.ToNullable(defaultMaximumExpirationTimeInDays), serializedAdditionalRawData);
+            return new PartnerConfigurationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), defaultMaximumExpirationTimeInDays, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerConfigurationPatch>.Write(ModelReaderWriterOptions options)

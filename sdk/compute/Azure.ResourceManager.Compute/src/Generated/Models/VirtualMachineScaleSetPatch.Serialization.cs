@@ -155,22 +155,22 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ComputeSku> sku = default;
-            Optional<ComputePlan> plan = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<VirtualMachineScaleSetUpgradePolicy> upgradePolicy = default;
-            Optional<AutomaticRepairsPolicy> automaticRepairsPolicy = default;
-            Optional<VirtualMachineScaleSetUpdateVmProfile> virtualMachineProfile = default;
-            Optional<bool> overprovision = default;
-            Optional<bool> doNotRunExtensionsOnOverprovisionedVms = default;
-            Optional<bool> singlePlacementGroup = default;
-            Optional<AdditionalCapabilities> additionalCapabilities = default;
-            Optional<ScaleInPolicy> scaleInPolicy = default;
-            Optional<WritableSubResource> proximityPlacementGroup = default;
-            Optional<VirtualMachineScaleSetPriorityMixPolicy> priorityMixPolicy = default;
-            Optional<SpotRestorePolicy> spotRestorePolicy = default;
-            Optional<ResiliencyPolicy> resiliencyPolicy = default;
+            ComputeSku sku = default;
+            ComputePlan plan = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            VirtualMachineScaleSetUpgradePolicy upgradePolicy = default;
+            AutomaticRepairsPolicy automaticRepairsPolicy = default;
+            VirtualMachineScaleSetUpdateVmProfile virtualMachineProfile = default;
+            bool? overprovision = default;
+            bool? doNotRunExtensionsOnOverprovisionedVms = default;
+            bool? singlePlacementGroup = default;
+            AdditionalCapabilities additionalCapabilities = default;
+            ScaleInPolicy scaleInPolicy = default;
+            WritableSubResource proximityPlacementGroup = default;
+            VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = default;
+            SpotRestorePolicy spotRestorePolicy = default;
+            ResiliencyPolicy resiliencyPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -342,7 +342,24 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, sku.Value, plan.Value, identity, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms), Optional.ToNullable(singlePlacementGroup), additionalCapabilities.Value, scaleInPolicy.Value, proximityPlacementGroup, priorityMixPolicy.Value, spotRestorePolicy.Value, resiliencyPolicy.Value);
+            return new VirtualMachineScaleSetPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                sku,
+                plan,
+                identity,
+                upgradePolicy,
+                automaticRepairsPolicy,
+                virtualMachineProfile,
+                overprovision,
+                doNotRunExtensionsOnOverprovisionedVms,
+                singlePlacementGroup,
+                additionalCapabilities,
+                scaleInPolicy,
+                proximityPlacementGroup,
+                priorityMixPolicy,
+                spotRestorePolicy,
+                resiliencyPolicy);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetPatch>.Write(ModelReaderWriterOptions options)

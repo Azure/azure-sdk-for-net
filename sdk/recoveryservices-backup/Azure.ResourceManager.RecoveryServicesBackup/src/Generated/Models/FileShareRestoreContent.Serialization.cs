@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<FileShareRecoveryType> recoveryType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<FileShareCopyOption> copyOptions = default;
-            Optional<FileShareRestoreType> restoreRequestType = default;
+            FileShareRecoveryType? recoveryType = default;
+            ResourceIdentifier sourceResourceId = default;
+            FileShareCopyOption? copyOptions = default;
+            FileShareRestoreType? restoreRequestType = default;
             IList<RestoreFileSpecs> restoreFileSpecs = default;
-            Optional<TargetAfsRestoreInfo> targetDetails = default;
+            TargetAfsRestoreInfo targetDetails = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -182,7 +182,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileShareRestoreContent(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToNullable(copyOptions), Optional.ToNullable(restoreRequestType), restoreFileSpecs ?? new ChangeTrackingList<RestoreFileSpecs>(), targetDetails.Value);
+            return new FileShareRestoreContent(
+                objectType,
+                serializedAdditionalRawData,
+                recoveryType,
+                sourceResourceId,
+                copyOptions,
+                restoreRequestType,
+                restoreFileSpecs ?? new ChangeTrackingList<RestoreFileSpecs>(),
+                targetDetails);
         }
 
         BinaryData IPersistableModel<FileShareRestoreContent>.Write(ModelReaderWriterOptions options)

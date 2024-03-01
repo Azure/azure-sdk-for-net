@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> @namespace = default;
-            Optional<string> registrationState = default;
-            Optional<string> registrationPolicy = default;
+            ResourceIdentifier id = default;
+            string @namespace = default;
+            string registrationState = default;
+            string registrationPolicy = default;
             IReadOnlyList<ProviderResourceType> resourceTypes = default;
-            Optional<ProviderAuthorizationConsentState> providerAuthorizationConsentState = default;
+            ProviderAuthorizationConsentState? providerAuthorizationConsentState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +163,14 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceProviderData(id.Value, @namespace.Value, registrationState.Value, registrationPolicy.Value, resourceTypes ?? new ChangeTrackingList<ProviderResourceType>(), Optional.ToNullable(providerAuthorizationConsentState), serializedAdditionalRawData);
+            return new ResourceProviderData(
+                id,
+                @namespace,
+                registrationState,
+                registrationPolicy,
+                resourceTypes ?? new ChangeTrackingList<ProviderResourceType>(),
+                providerAuthorizationConsentState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceProviderData>.Write(ModelReaderWriterOptions options)

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupDataSourceType> resourceType = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<ResourceIdentifier> vaultId = default;
-            Optional<string> properties = default;
+            BackupDataSourceType? resourceType = default;
+            ResourceIdentifier resourceId = default;
+            ResourceIdentifier vaultId = default;
+            string properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PreValidateEnableBackupContent(Optional.ToNullable(resourceType), resourceId.Value, vaultId.Value, properties.Value, serializedAdditionalRawData);
+            return new PreValidateEnableBackupContent(resourceType, resourceId, vaultId, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PreValidateEnableBackupContent>.Write(ModelReaderWriterOptions options)

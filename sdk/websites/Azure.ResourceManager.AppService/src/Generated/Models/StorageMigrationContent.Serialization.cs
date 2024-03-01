@@ -113,15 +113,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> azurefilesConnectionString = default;
-            Optional<string> azurefilesShare = default;
-            Optional<bool> switchSiteAfterMigration = default;
-            Optional<bool> blockWriteAccessToSite = default;
+            SystemData systemData = default;
+            string azurefilesConnectionString = default;
+            string azurefilesShare = default;
+            bool? switchSiteAfterMigration = default;
+            bool? blockWriteAccessToSite = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageMigrationContent(id, name, type, systemData.Value, azurefilesConnectionString.Value, azurefilesShare.Value, Optional.ToNullable(switchSiteAfterMigration), Optional.ToNullable(blockWriteAccessToSite), kind.Value, serializedAdditionalRawData);
+            return new StorageMigrationContent(
+                id,
+                name,
+                type,
+                systemData,
+                azurefilesConnectionString,
+                azurefilesShare,
+                switchSiteAfterMigration,
+                blockWriteAccessToSite,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageMigrationContent>.Write(ModelReaderWriterOptions options)

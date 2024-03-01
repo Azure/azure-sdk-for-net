@@ -224,23 +224,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningOSType> osType = default;
-            Optional<string> vmSize = default;
-            Optional<MachineLearningVmPriority> vmPriority = default;
-            Optional<VirtualMachineImage> virtualMachineImage = default;
-            Optional<bool> isolatedNetwork = default;
-            Optional<AmlComputeScaleSettings> scaleSettings = default;
-            Optional<MachineLearningUserAccountCredentials> userAccountCredentials = default;
-            Optional<ResourceId> subnet = default;
-            Optional<MachineLearningRemoteLoginPortPublicAccess> remoteLoginPortPublicAccess = default;
-            Optional<MachineLearningAllocationState> allocationState = default;
-            Optional<DateTimeOffset> allocationStateTransitionTime = default;
+            MachineLearningOSType? osType = default;
+            string vmSize = default;
+            MachineLearningVmPriority? vmPriority = default;
+            VirtualMachineImage virtualMachineImage = default;
+            bool? isolatedNetwork = default;
+            AmlComputeScaleSettings scaleSettings = default;
+            MachineLearningUserAccountCredentials userAccountCredentials = default;
+            ResourceId subnet = default;
+            MachineLearningRemoteLoginPortPublicAccess? remoteLoginPortPublicAccess = default;
+            MachineLearningAllocationState? allocationState = default;
+            DateTimeOffset? allocationStateTransitionTime = default;
             IReadOnlyList<MachineLearningError> errors = default;
-            Optional<int?> currentNodeCount = default;
-            Optional<int?> targetNodeCount = default;
-            Optional<MachineLearningNodeStateCounts> nodeStateCounts = default;
-            Optional<bool?> enableNodePublicIP = default;
-            Optional<BinaryData> propertyBag = default;
+            int? currentNodeCount = default;
+            int? targetNodeCount = default;
+            MachineLearningNodeStateCounts nodeStateCounts = default;
+            bool? enableNodePublicIP = default;
+            BinaryData propertyBag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -414,7 +414,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage.Value, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet.Value, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), errors ?? new ChangeTrackingList<MachineLearningError>(), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIP), propertyBag.Value, serializedAdditionalRawData);
+            return new AmlComputeProperties(
+                osType,
+                vmSize,
+                vmPriority,
+                virtualMachineImage,
+                isolatedNetwork,
+                scaleSettings,
+                userAccountCredentials,
+                subnet,
+                remoteLoginPortPublicAccess,
+                allocationState,
+                allocationStateTransitionTime,
+                errors ?? new ChangeTrackingList<MachineLearningError>(),
+                currentNodeCount,
+                targetNodeCount,
+                nodeStateCounts,
+                enableNodePublicIP,
+                propertyBag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlComputeProperties>.Write(ModelReaderWriterOptions options)

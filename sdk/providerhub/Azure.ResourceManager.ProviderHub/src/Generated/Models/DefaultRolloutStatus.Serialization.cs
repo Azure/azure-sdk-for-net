@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<TrafficRegionCategory> nextTrafficRegion = default;
-            Optional<DateTimeOffset> nextTrafficRegionScheduledTime = default;
-            Optional<SubscriptionReregistrationResult> subscriptionReregistrationResult = default;
+            TrafficRegionCategory? nextTrafficRegion = default;
+            DateTimeOffset? nextTrafficRegionScheduledTime = default;
+            SubscriptionReregistrationResult? subscriptionReregistrationResult = default;
             IList<AzureLocation> completedRegions = default;
-            Optional<IDictionary<string, ExtendedErrorInfo>> failedOrSkippedRegions = default;
+            IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +170,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefaultRolloutStatus(completedRegions ?? new ChangeTrackingList<AzureLocation>(), Optional.ToDictionary(failedOrSkippedRegions), serializedAdditionalRawData, Optional.ToNullable(nextTrafficRegion), Optional.ToNullable(nextTrafficRegionScheduledTime), Optional.ToNullable(subscriptionReregistrationResult));
+            return new DefaultRolloutStatus(
+                completedRegions ?? new ChangeTrackingList<AzureLocation>(),
+                failedOrSkippedRegions ?? new ChangeTrackingDictionary<string, ExtendedErrorInfo>(),
+                serializedAdditionalRawData,
+                nextTrafficRegion,
+                nextTrafficRegionScheduledTime,
+                subscriptionReregistrationResult);
         }
 
         BinaryData IPersistableModel<DefaultRolloutStatus>.Write(ModelReaderWriterOptions options)

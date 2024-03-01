@@ -110,9 +110,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             WebLinkedServiceTypeProperties typeProperties = default;
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -180,7 +180,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new WebLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, typeProperties);
+            return new WebLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                typeProperties);
         }
 
         BinaryData IPersistableModel<WebLinkedService>.Write(ModelReaderWriterOptions options)

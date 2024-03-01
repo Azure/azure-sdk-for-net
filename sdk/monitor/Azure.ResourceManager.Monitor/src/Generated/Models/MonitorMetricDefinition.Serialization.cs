@@ -144,18 +144,18 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<bool> isDimensionRequired = default;
-            Optional<string> resourceId = default;
-            Optional<string> @namespace = default;
-            Optional<MonitorLocalizableString> name = default;
-            Optional<string> displayDescription = default;
-            Optional<string> category = default;
-            Optional<MonitorMetricClass> metricClass = default;
-            Optional<MonitorMetricUnit> unit = default;
-            Optional<MonitorAggregationType> primaryAggregationType = default;
+            bool? isDimensionRequired = default;
+            string resourceId = default;
+            string @namespace = default;
+            MonitorLocalizableString name = default;
+            string displayDescription = default;
+            string category = default;
+            MonitorMetricClass? metricClass = default;
+            MonitorMetricUnit? unit = default;
+            MonitorAggregationType? primaryAggregationType = default;
             IReadOnlyList<MonitorAggregationType> supportedAggregationTypes = default;
             IReadOnlyList<MonitorMetricAvailability> metricAvailabilities = default;
-            Optional<string> id = default;
+            string id = default;
             IReadOnlyList<MonitorLocalizableString> dimensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -279,7 +279,21 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorMetricDefinition(Optional.ToNullable(isDimensionRequired), resourceId.Value, @namespace.Value, name.Value, displayDescription.Value, category.Value, Optional.ToNullable(metricClass), Optional.ToNullable(unit), Optional.ToNullable(primaryAggregationType), supportedAggregationTypes ?? new ChangeTrackingList<MonitorAggregationType>(), metricAvailabilities ?? new ChangeTrackingList<MonitorMetricAvailability>(), id.Value, dimensions ?? new ChangeTrackingList<MonitorLocalizableString>(), serializedAdditionalRawData);
+            return new MonitorMetricDefinition(
+                isDimensionRequired,
+                resourceId,
+                @namespace,
+                name,
+                displayDescription,
+                category,
+                metricClass,
+                unit,
+                primaryAggregationType,
+                supportedAggregationTypes ?? new ChangeTrackingList<MonitorAggregationType>(),
+                metricAvailabilities ?? new ChangeTrackingList<MonitorMetricAvailability>(),
+                id,
+                dimensions ?? new ChangeTrackingList<MonitorLocalizableString>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorMetricDefinition>.Write(ModelReaderWriterOptions options)

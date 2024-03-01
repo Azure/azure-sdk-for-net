@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> annotation = default;
-            Optional<string> hostName = default;
-            Optional<string> serialNumber = default;
+            IDictionary<string, string> tags = default;
+            string annotation = default;
+            string hostName = default;
+            string serialNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkDevicePatch(Optional.ToDictionary(tags), serializedAdditionalRawData, annotation.Value, hostName.Value, serialNumber.Value);
+            return new NetworkDevicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, annotation, hostName, serialNumber);
         }
 
         BinaryData IPersistableModel<NetworkDevicePatch>.Write(ModelReaderWriterOptions options)

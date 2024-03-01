@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> availabilityZone = default;
+            string availabilityZone = default;
             IList<BareMetalMachineConfiguration> bareMetalMachineConfigurationData = default;
             ResourceIdentifier networkRackId = default;
-            Optional<string> rackLocation = default;
+            string rackLocation = default;
             string rackSerialNumber = default;
             ResourceIdentifier rackSkuId = default;
             IList<StorageApplianceConfiguration> storageApplianceConfigurationData = default;
@@ -170,7 +170,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudRackDefinition(availabilityZone.Value, bareMetalMachineConfigurationData ?? new ChangeTrackingList<BareMetalMachineConfiguration>(), networkRackId, rackLocation.Value, rackSerialNumber, rackSkuId, storageApplianceConfigurationData ?? new ChangeTrackingList<StorageApplianceConfiguration>(), serializedAdditionalRawData);
+            return new NetworkCloudRackDefinition(
+                availabilityZone,
+                bareMetalMachineConfigurationData ?? new ChangeTrackingList<BareMetalMachineConfiguration>(),
+                networkRackId,
+                rackLocation,
+                rackSerialNumber,
+                rackSkuId,
+                storageApplianceConfigurationData ?? new ChangeTrackingList<StorageApplianceConfiguration>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudRackDefinition>.Write(ModelReaderWriterOptions options)

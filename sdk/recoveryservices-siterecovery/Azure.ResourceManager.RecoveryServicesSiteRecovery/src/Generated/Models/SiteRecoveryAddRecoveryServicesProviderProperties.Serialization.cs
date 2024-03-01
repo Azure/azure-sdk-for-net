@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string machineName = default;
-            Optional<string> machineId = default;
-            Optional<string> biosId = default;
+            string machineId = default;
+            string biosId = default;
             IdentityProviderContent authenticationIdentityContent = default;
             IdentityProviderContent resourceAccessIdentityContent = default;
-            Optional<IdentityProviderContent> dataPlaneAuthenticationIdentityContent = default;
+            IdentityProviderContent dataPlaneAuthenticationIdentityContent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryAddRecoveryServicesProviderProperties(machineName, machineId.Value, biosId.Value, authenticationIdentityContent, resourceAccessIdentityContent, dataPlaneAuthenticationIdentityContent.Value, serializedAdditionalRawData);
+            return new SiteRecoveryAddRecoveryServicesProviderProperties(
+                machineName,
+                machineId,
+                biosId,
+                authenticationIdentityContent,
+                resourceAccessIdentityContent,
+                dataPlaneAuthenticationIdentityContent,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryAddRecoveryServicesProviderProperties>.Write(ModelReaderWriterOptions options)

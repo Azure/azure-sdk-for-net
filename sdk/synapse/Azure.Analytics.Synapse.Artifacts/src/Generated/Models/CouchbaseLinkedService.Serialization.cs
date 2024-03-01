@@ -90,13 +90,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
-            Optional<object> connectionString = default;
-            Optional<AzureKeyVaultSecretReference> credString = default;
-            Optional<object> encryptedCredential = default;
+            object connectionString = default;
+            AzureKeyVaultSecretReference credString = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CouchbaseLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), additionalProperties, connectionString.Value, credString.Value, encryptedCredential.Value);
+            return new CouchbaseLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                connectionString,
+                credString,
+                encryptedCredential);
         }
 
         internal partial class CouchbaseLinkedServiceConverter : JsonConverter<CouchbaseLinkedService>

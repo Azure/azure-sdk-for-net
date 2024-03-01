@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupPrivateEndpointConnectionProvisioningState> provisioningState = default;
-            Optional<WritableSubResource> privateEndpoint = default;
+            BackupPrivateEndpointConnectionProvisioningState? provisioningState = default;
+            WritableSubResource privateEndpoint = default;
             IList<VaultSubResourceType> groupIds = default;
-            Optional<RecoveryServicesBackupPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            RecoveryServicesBackupPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupPrivateEndpointConnectionProperties(Optional.ToNullable(provisioningState), privateEndpoint, groupIds ?? new ChangeTrackingList<VaultSubResourceType>(), privateLinkServiceConnectionState.Value, serializedAdditionalRawData);
+            return new BackupPrivateEndpointConnectionProperties(provisioningState, privateEndpoint, groupIds ?? new ChangeTrackingList<VaultSubResourceType>(), privateLinkServiceConnectionState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupPrivateEndpointConnectionProperties>.Write(ModelReaderWriterOptions options)

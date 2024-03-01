@@ -124,18 +124,18 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<ServerEndpointHealthState> downloadHealth = default;
-            Optional<ServerEndpointHealthState> uploadHealth = default;
-            Optional<ServerEndpointHealthState> combinedHealth = default;
-            Optional<ServerEndpointSyncActivityState> syncActivity = default;
-            Optional<long> totalPersistentFilesNotSyncingCount = default;
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<ServerEndpointSyncSessionStatus> uploadStatus = default;
-            Optional<ServerEndpointSyncSessionStatus> downloadStatus = default;
-            Optional<ServerEndpointSyncActivityStatus> uploadActivity = default;
-            Optional<ServerEndpointSyncActivityStatus> downloadActivity = default;
-            Optional<ServerEndpointOfflineDataTransferState> offlineDataTransferStatus = default;
-            Optional<ServerEndpointBackgroundDataDownloadActivity> backgroundDataDownloadActivity = default;
+            ServerEndpointHealthState? downloadHealth = default;
+            ServerEndpointHealthState? uploadHealth = default;
+            ServerEndpointHealthState? combinedHealth = default;
+            ServerEndpointSyncActivityState? syncActivity = default;
+            long? totalPersistentFilesNotSyncingCount = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            ServerEndpointSyncSessionStatus uploadStatus = default;
+            ServerEndpointSyncSessionStatus downloadStatus = default;
+            ServerEndpointSyncActivityStatus uploadActivity = default;
+            ServerEndpointSyncActivityStatus downloadActivity = default;
+            ServerEndpointOfflineDataTransferState? offlineDataTransferStatus = default;
+            ServerEndpointBackgroundDataDownloadActivity backgroundDataDownloadActivity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,7 +254,20 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEndpointSyncStatus(Optional.ToNullable(downloadHealth), Optional.ToNullable(uploadHealth), Optional.ToNullable(combinedHealth), Optional.ToNullable(syncActivity), Optional.ToNullable(totalPersistentFilesNotSyncingCount), Optional.ToNullable(lastUpdatedTimestamp), uploadStatus.Value, downloadStatus.Value, uploadActivity.Value, downloadActivity.Value, Optional.ToNullable(offlineDataTransferStatus), backgroundDataDownloadActivity.Value, serializedAdditionalRawData);
+            return new ServerEndpointSyncStatus(
+                downloadHealth,
+                uploadHealth,
+                combinedHealth,
+                syncActivity,
+                totalPersistentFilesNotSyncingCount,
+                lastUpdatedTimestamp,
+                uploadStatus,
+                downloadStatus,
+                uploadActivity,
+                downloadActivity,
+                offlineDataTransferStatus,
+                backgroundDataDownloadActivity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEndpointSyncStatus>.Write(ModelReaderWriterOptions options)

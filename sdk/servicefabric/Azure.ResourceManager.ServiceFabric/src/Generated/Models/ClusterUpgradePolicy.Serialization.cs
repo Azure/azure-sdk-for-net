@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<bool> forceRestart = default;
+            bool? forceRestart = default;
             TimeSpan upgradeReplicaSetCheckTimeout = default;
             TimeSpan healthCheckWaitDuration = default;
             TimeSpan healthCheckStableDuration = default;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             TimeSpan upgradeTimeout = default;
             TimeSpan upgradeDomainTimeout = default;
             ClusterHealthPolicy healthPolicy = default;
-            Optional<ClusterUpgradeDeltaHealthPolicy> deltaHealthPolicy = default;
+            ClusterUpgradeDeltaHealthPolicy deltaHealthPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterUpgradePolicy(Optional.ToNullable(forceRestart), upgradeReplicaSetCheckTimeout, healthCheckWaitDuration, healthCheckStableDuration, healthCheckRetryTimeout, upgradeTimeout, upgradeDomainTimeout, healthPolicy, deltaHealthPolicy.Value, serializedAdditionalRawData);
+            return new ClusterUpgradePolicy(
+                forceRestart,
+                upgradeReplicaSetCheckTimeout,
+                healthCheckWaitDuration,
+                healthCheckStableDuration,
+                healthCheckRetryTimeout,
+                upgradeTimeout,
+                upgradeDomainTimeout,
+                healthPolicy,
+                deltaHealthPolicy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterUpgradePolicy>.Write(ModelReaderWriterOptions options)

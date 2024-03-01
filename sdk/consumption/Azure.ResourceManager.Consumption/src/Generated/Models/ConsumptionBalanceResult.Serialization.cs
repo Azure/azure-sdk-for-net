@@ -190,25 +190,25 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> currency = default;
-            Optional<decimal> beginningBalance = default;
-            Optional<decimal> endingBalance = default;
-            Optional<decimal> newPurchases = default;
-            Optional<decimal> adjustments = default;
-            Optional<decimal> utilized = default;
-            Optional<decimal> serviceOverage = default;
-            Optional<decimal> chargesBilledSeparately = default;
-            Optional<decimal> totalOverage = default;
-            Optional<decimal> totalUsage = default;
-            Optional<decimal> azureMarketplaceServiceCharges = default;
-            Optional<ConsumptionBillingFrequency> billingFrequency = default;
-            Optional<bool> priceHidden = default;
+            SystemData systemData = default;
+            string currency = default;
+            decimal? beginningBalance = default;
+            decimal? endingBalance = default;
+            decimal? newPurchases = default;
+            decimal? adjustments = default;
+            decimal? utilized = default;
+            decimal? serviceOverage = default;
+            decimal? chargesBilledSeparately = default;
+            decimal? totalOverage = default;
+            decimal? totalUsage = default;
+            decimal? azureMarketplaceServiceCharges = default;
+            ConsumptionBillingFrequency? billingFrequency = default;
+            bool? priceHidden = default;
             IReadOnlyList<ConsumptionBalanceNewPurchasesDetail> newPurchasesDetails = default;
             IReadOnlyList<ConsumptionBalanceAdjustmentDetail> adjustmentDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -421,7 +421,29 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionBalanceResult(id, name, type, systemData.Value, currency.Value, Optional.ToNullable(beginningBalance), Optional.ToNullable(endingBalance), Optional.ToNullable(newPurchases), Optional.ToNullable(adjustments), Optional.ToNullable(utilized), Optional.ToNullable(serviceOverage), Optional.ToNullable(chargesBilledSeparately), Optional.ToNullable(totalOverage), Optional.ToNullable(totalUsage), Optional.ToNullable(azureMarketplaceServiceCharges), Optional.ToNullable(billingFrequency), Optional.ToNullable(priceHidden), newPurchasesDetails ?? new ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail>(), adjustmentDetails ?? new ChangeTrackingList<ConsumptionBalanceAdjustmentDetail>(), Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ConsumptionBalanceResult(
+                id,
+                name,
+                type,
+                systemData,
+                currency,
+                beginningBalance,
+                endingBalance,
+                newPurchases,
+                adjustments,
+                utilized,
+                serviceOverage,
+                chargesBilledSeparately,
+                totalOverage,
+                totalUsage,
+                azureMarketplaceServiceCharges,
+                billingFrequency,
+                priceHidden,
+                newPurchasesDetails ?? new ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail>(),
+                adjustmentDetails ?? new ChangeTrackingList<ConsumptionBalanceAdjustmentDetail>(),
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionBalanceResult>.Write(ModelReaderWriterOptions options)

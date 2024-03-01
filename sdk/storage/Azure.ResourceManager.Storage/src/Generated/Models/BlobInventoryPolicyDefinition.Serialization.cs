@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<BlobInventoryPolicyFilter> filters = default;
+            BlobInventoryPolicyFilter filters = default;
             BlobInventoryPolicyFormat format = default;
             BlobInventoryPolicySchedule schedule = default;
             BlobInventoryPolicyObjectType objectType = default;
@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobInventoryPolicyDefinition(filters.Value, format, schedule, objectType, schemaFields, serializedAdditionalRawData);
+            return new BlobInventoryPolicyDefinition(
+                filters,
+                format,
+                schedule,
+                objectType,
+                schemaFields,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobInventoryPolicyDefinition>.Write(ModelReaderWriterOptions options)

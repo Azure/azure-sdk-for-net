@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Qumulo.Models
             {
                 return null;
             }
-            Optional<MarketplaceDetails> marketplaceDetails = default;
-            Optional<QumuloUserDetails> userDetails = default;
-            Optional<ResourceIdentifier> delegatedSubnetId = default;
-            Optional<Uri> clusterLoginUrl = default;
+            MarketplaceDetails marketplaceDetails = default;
+            QumuloUserDetails userDetails = default;
+            ResourceIdentifier delegatedSubnetId = default;
+            Uri clusterLoginUrl = default;
             IList<string> privateIPs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileSystemResourceUpdateProperties(marketplaceDetails.Value, userDetails.Value, delegatedSubnetId.Value, clusterLoginUrl.Value, privateIPs ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new FileSystemResourceUpdateProperties(
+                marketplaceDetails,
+                userDetails,
+                delegatedSubnetId,
+                clusterLoginUrl,
+                privateIPs ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FileSystemResourceUpdateProperties>.Write(ModelReaderWriterOptions options)

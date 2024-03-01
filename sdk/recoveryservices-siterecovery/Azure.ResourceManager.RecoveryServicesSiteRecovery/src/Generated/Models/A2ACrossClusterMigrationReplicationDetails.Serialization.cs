@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> fabricObjectId = default;
-            Optional<AzureLocation> primaryFabricLocation = default;
-            Optional<string> osType = default;
-            Optional<string> vmProtectionState = default;
-            Optional<string> vmProtectionStateDescription = default;
-            Optional<string> lifecycleId = default;
+            ResourceIdentifier fabricObjectId = default;
+            AzureLocation? primaryFabricLocation = default;
+            string osType = default;
+            string vmProtectionState = default;
+            string vmProtectionStateDescription = default;
+            string lifecycleId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -156,7 +156,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2ACrossClusterMigrationReplicationDetails(instanceType, serializedAdditionalRawData, fabricObjectId.Value, Optional.ToNullable(primaryFabricLocation), osType.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, lifecycleId.Value);
+            return new A2ACrossClusterMigrationReplicationDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                fabricObjectId,
+                primaryFabricLocation,
+                osType,
+                vmProtectionState,
+                vmProtectionStateDescription,
+                lifecycleId);
         }
 
         BinaryData IPersistableModel<A2ACrossClusterMigrationReplicationDetails>.Write(ModelReaderWriterOptions options)

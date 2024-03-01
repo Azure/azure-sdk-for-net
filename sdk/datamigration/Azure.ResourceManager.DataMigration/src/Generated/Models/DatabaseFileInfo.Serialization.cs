@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<string> id = default;
-            Optional<string> logicalName = default;
-            Optional<string> physicalFullName = default;
-            Optional<string> restoreFullName = default;
-            Optional<DatabaseFileType> fileType = default;
-            Optional<double> sizeMB = default;
+            string databaseName = default;
+            string id = default;
+            string logicalName = default;
+            string physicalFullName = default;
+            string restoreFullName = default;
+            DatabaseFileType? fileType = default;
+            double? sizeMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseFileInfo(databaseName.Value, id.Value, logicalName.Value, physicalFullName.Value, restoreFullName.Value, Optional.ToNullable(fileType), Optional.ToNullable(sizeMB), serializedAdditionalRawData);
+            return new DatabaseFileInfo(
+                databaseName,
+                id,
+                logicalName,
+                physicalFullName,
+                restoreFullName,
+                fileType,
+                sizeMB,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseFileInfo>.Write(ModelReaderWriterOptions options)

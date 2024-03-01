@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<bool> isWindowEnabled = default;
-            Optional<bool> isRegionReady = default;
-            Optional<bool> isWindowActive = default;
-            Optional<bool> canApplyUpdates = default;
-            Optional<DateTimeOffset> lastWindowStatusUpdateAtUTC = default;
-            Optional<DateTimeOffset> lastWindowStartTimeUTC = default;
-            Optional<DateTimeOffset> lastWindowEndTimeUTC = default;
+            bool? isWindowEnabled = default;
+            bool? isRegionReady = default;
+            bool? isWindowActive = default;
+            bool? canApplyUpdates = default;
+            DateTimeOffset? lastWindowStatusUpdateAtUTC = default;
+            DateTimeOffset? lastWindowStartTimeUTC = default;
+            DateTimeOffset? lastWindowEndTimeUTC = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedMaintenanceWindowStatus(Optional.ToNullable(isWindowEnabled), Optional.ToNullable(isRegionReady), Optional.ToNullable(isWindowActive), Optional.ToNullable(canApplyUpdates), Optional.ToNullable(lastWindowStatusUpdateAtUTC), Optional.ToNullable(lastWindowStartTimeUTC), Optional.ToNullable(lastWindowEndTimeUTC), serializedAdditionalRawData);
+            return new ManagedMaintenanceWindowStatus(
+                isWindowEnabled,
+                isRegionReady,
+                isWindowActive,
+                canApplyUpdates,
+                lastWindowStatusUpdateAtUTC,
+                lastWindowStartTimeUTC,
+                lastWindowEndTimeUTC,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedMaintenanceWindowStatus>.Write(ModelReaderWriterOptions options)

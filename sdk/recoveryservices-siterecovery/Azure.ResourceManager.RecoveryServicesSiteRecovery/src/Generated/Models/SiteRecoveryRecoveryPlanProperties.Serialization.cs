@@ -164,20 +164,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<ResourceIdentifier> primaryFabricId = default;
-            Optional<string> primaryFabricFriendlyName = default;
-            Optional<ResourceIdentifier> recoveryFabricId = default;
-            Optional<string> recoveryFabricFriendlyName = default;
-            Optional<string> failoverDeploymentModel = default;
+            string friendlyName = default;
+            ResourceIdentifier primaryFabricId = default;
+            string primaryFabricFriendlyName = default;
+            ResourceIdentifier recoveryFabricId = default;
+            string recoveryFabricFriendlyName = default;
+            string failoverDeploymentModel = default;
             IReadOnlyList<string> replicationProviders = default;
             IReadOnlyList<string> allowedOperations = default;
-            Optional<DateTimeOffset> lastPlannedFailoverTime = default;
-            Optional<DateTimeOffset> lastUnplannedFailoverTime = default;
-            Optional<DateTimeOffset> lastTestFailoverTime = default;
-            Optional<CurrentScenarioDetails> currentScenario = default;
-            Optional<string> currentScenarioStatus = default;
-            Optional<string> currentScenarioStatusDescription = default;
+            DateTimeOffset? lastPlannedFailoverTime = default;
+            DateTimeOffset? lastUnplannedFailoverTime = default;
+            DateTimeOffset? lastTestFailoverTime = default;
+            CurrentScenarioDetails currentScenario = default;
+            string currentScenarioStatus = default;
+            string currentScenarioStatusDescription = default;
             IReadOnlyList<SiteRecoveryPlanGroup> groups = default;
             IReadOnlyList<RecoveryPlanProviderSpecificDetails> providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -330,7 +330,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryRecoveryPlanProperties(friendlyName.Value, primaryFabricId.Value, primaryFabricFriendlyName.Value, recoveryFabricId.Value, recoveryFabricFriendlyName.Value, failoverDeploymentModel.Value, replicationProviders ?? new ChangeTrackingList<string>(), allowedOperations ?? new ChangeTrackingList<string>(), Optional.ToNullable(lastPlannedFailoverTime), Optional.ToNullable(lastUnplannedFailoverTime), Optional.ToNullable(lastTestFailoverTime), currentScenario.Value, currentScenarioStatus.Value, currentScenarioStatusDescription.Value, groups ?? new ChangeTrackingList<SiteRecoveryPlanGroup>(), providerSpecificDetails ?? new ChangeTrackingList<RecoveryPlanProviderSpecificDetails>(), serializedAdditionalRawData);
+            return new SiteRecoveryRecoveryPlanProperties(
+                friendlyName,
+                primaryFabricId,
+                primaryFabricFriendlyName,
+                recoveryFabricId,
+                recoveryFabricFriendlyName,
+                failoverDeploymentModel,
+                replicationProviders ?? new ChangeTrackingList<string>(),
+                allowedOperations ?? new ChangeTrackingList<string>(),
+                lastPlannedFailoverTime,
+                lastUnplannedFailoverTime,
+                lastTestFailoverTime,
+                currentScenario,
+                currentScenarioStatus,
+                currentScenarioStatusDescription,
+                groups ?? new ChangeTrackingList<SiteRecoveryPlanGroup>(),
+                providerSpecificDetails ?? new ChangeTrackingList<RecoveryPlanProviderSpecificDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryRecoveryPlanProperties>.Write(ModelReaderWriterOptions options)

@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Logic.Models
             bool needMdn = default;
             bool signMdn = default;
             bool sendMdnAsynchronously = default;
-            Optional<Uri> receiptDeliveryUrl = default;
-            Optional<string> dispositionNotificationTo = default;
+            Uri receiptDeliveryUrl = default;
+            string dispositionNotificationTo = default;
             bool signOutboundMdnIfOptional = default;
-            Optional<string> mdnText = default;
+            string mdnText = default;
             bool sendInboundMdnToMessageBox = default;
             AS2HashingAlgorithm micHashingAlgorithm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -159,7 +159,17 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AS2MdnSettings(needMdn, signMdn, sendMdnAsynchronously, receiptDeliveryUrl.Value, dispositionNotificationTo.Value, signOutboundMdnIfOptional, mdnText.Value, sendInboundMdnToMessageBox, micHashingAlgorithm, serializedAdditionalRawData);
+            return new AS2MdnSettings(
+                needMdn,
+                signMdn,
+                sendMdnAsynchronously,
+                receiptDeliveryUrl,
+                dispositionNotificationTo,
+                signOutboundMdnIfOptional,
+                mdnText,
+                sendInboundMdnToMessageBox,
+                micHashingAlgorithm,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AS2MdnSettings>.Write(ModelReaderWriterOptions options)

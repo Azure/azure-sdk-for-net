@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<string> firstConsumptionDate = default;
-            Optional<string> lastConsumptionDate = default;
-            Optional<string> lookBackUnitType = default;
+            string firstConsumptionDate = default;
+            string lastConsumptionDate = default;
+            string lookBackUnitType = default;
             IReadOnlyList<float> usageData = default;
-            Optional<string> usageGrain = default;
+            string usageGrain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,13 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionUsageProperties(firstConsumptionDate.Value, lastConsumptionDate.Value, lookBackUnitType.Value, usageData ?? new ChangeTrackingList<float>(), usageGrain.Value, serializedAdditionalRawData);
+            return new ConsumptionUsageProperties(
+                firstConsumptionDate,
+                lastConsumptionDate,
+                lookBackUnitType,
+                usageData ?? new ChangeTrackingList<float>(),
+                usageGrain,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionUsageProperties>.Write(ModelReaderWriterOptions options)

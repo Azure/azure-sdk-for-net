@@ -167,21 +167,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             IList<DataFactoryLinkedServiceReference> storageLinkedServices = default;
-            Optional<DataFactoryElement<IList<string>>> arguments = default;
-            Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
-            Optional<DataFactoryElement<string>> scriptPath = default;
-            Optional<DataFactoryLinkedServiceReference> scriptLinkedService = default;
-            Optional<IDictionary<string, BinaryData>> defines = default;
+            DataFactoryElement<IList<string>> arguments = default;
+            HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default;
+            DataFactoryElement<string> scriptPath = default;
+            DataFactoryLinkedServiceReference scriptLinkedService = default;
+            IDictionary<string, BinaryData> defines = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -351,7 +351,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightPigActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(), arguments.Value, Optional.ToNullable(getDebugInfo), scriptPath.Value, scriptLinkedService, Optional.ToDictionary(defines));
+            return new HDInsightPigActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
+                arguments,
+                getDebugInfo,
+                scriptPath,
+                scriptLinkedService,
+                defines ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<HDInsightPigActivity>.Write(ModelReaderWriterOptions options)

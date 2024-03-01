@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 return null;
             }
             string name = default;
-            Optional<WebPubSubSkuTier> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<int> capacity = default;
+            WebPubSubSkuTier? tier = default;
+            string size = default;
+            string family = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingInfoSku(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new BillingInfoSku(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingInfoSku>.Write(ModelReaderWriterOptions options)

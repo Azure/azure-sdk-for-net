@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.KeyVault
                 return null;
             }
             SecretProperties properties = default;
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            AzureLocation? location = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.KeyVault
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultSecretData(id, name, type, systemData.Value, properties, Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new KeyVaultSecretData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultSecretData>.Write(ModelReaderWriterOptions options)

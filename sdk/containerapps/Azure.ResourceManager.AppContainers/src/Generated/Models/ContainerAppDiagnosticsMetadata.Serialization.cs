@@ -125,16 +125,16 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> author = default;
-            Optional<string> category = default;
+            string description = default;
+            string author = default;
+            string category = default;
             IList<ContainerAppDiagnosticSupportTopic> supportTopicList = default;
             IList<string> analysisTypes = default;
-            Optional<float> score = default;
+            float? score = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDiagnosticsMetadata(id, name, type, systemData.Value, description.Value, author.Value, category.Value, supportTopicList ?? new ChangeTrackingList<ContainerAppDiagnosticSupportTopic>(), analysisTypes ?? new ChangeTrackingList<string>(), Optional.ToNullable(score), serializedAdditionalRawData);
+            return new ContainerAppDiagnosticsMetadata(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                author,
+                category,
+                supportTopicList ?? new ChangeTrackingList<ContainerAppDiagnosticSupportTopic>(),
+                analysisTypes ?? new ChangeTrackingList<string>(),
+                score,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDiagnosticsMetadata>.Write(ModelReaderWriterOptions options)

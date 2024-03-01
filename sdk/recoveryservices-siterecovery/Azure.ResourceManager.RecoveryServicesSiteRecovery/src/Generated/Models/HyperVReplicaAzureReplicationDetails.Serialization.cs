@@ -281,37 +281,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             IReadOnlyList<SiteRecoveryVmDiskDetails> azureVmDiskDetails = default;
-            Optional<string> recoveryAzureVmName = default;
-            Optional<string> recoveryAzureVmSize = default;
-            Optional<string> recoveryAzureStorageAccount = default;
-            Optional<ResourceIdentifier> recoveryAzureLogStorageAccountId = default;
-            Optional<DateTimeOffset> lastReplicatedTime = default;
-            Optional<long> rpoInSeconds = default;
-            Optional<DateTimeOffset> lastRpoCalculatedTime = default;
-            Optional<string> vmId = default;
-            Optional<string> vmProtectionState = default;
-            Optional<string> vmProtectionStateDescription = default;
-            Optional<InitialReplicationDetails> initialReplicationDetails = default;
+            string recoveryAzureVmName = default;
+            string recoveryAzureVmSize = default;
+            string recoveryAzureStorageAccount = default;
+            ResourceIdentifier recoveryAzureLogStorageAccountId = default;
+            DateTimeOffset? lastReplicatedTime = default;
+            long? rpoInSeconds = default;
+            DateTimeOffset? lastRpoCalculatedTime = default;
+            string vmId = default;
+            string vmProtectionState = default;
+            string vmProtectionStateDescription = default;
+            InitialReplicationDetails initialReplicationDetails = default;
             IReadOnlyList<VmNicDetails> vmNics = default;
-            Optional<ResourceIdentifier> selectedRecoveryAzureNetworkId = default;
-            Optional<string> selectedSourceNicId = default;
-            Optional<string> encryption = default;
-            Optional<SiteRecoveryOSDetails> osDetails = default;
-            Optional<int> sourceVmRamSizeInMB = default;
-            Optional<int> sourceVmCpuCount = default;
-            Optional<string> enableRdpOnTargetOption = default;
-            Optional<ResourceIdentifier> recoveryAzureResourceGroupId = default;
-            Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
-            Optional<string> targetAvailabilityZone = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<string> useManagedDisks = default;
-            Optional<string> licenseType = default;
-            Optional<string> sqlServerLicenseType = default;
-            Optional<DateTimeOffset> lastRecoveryPointReceived = default;
-            Optional<IReadOnlyDictionary<string, string>> targetVmTags = default;
-            Optional<IReadOnlyDictionary<string, string>> seedManagedDiskTags = default;
-            Optional<IReadOnlyDictionary<string, string>> targetManagedDiskTags = default;
-            Optional<IReadOnlyDictionary<string, string>> targetNicTags = default;
+            ResourceIdentifier selectedRecoveryAzureNetworkId = default;
+            string selectedSourceNicId = default;
+            string encryption = default;
+            SiteRecoveryOSDetails osDetails = default;
+            int? sourceVmRamSizeInMB = default;
+            int? sourceVmCpuCount = default;
+            string enableRdpOnTargetOption = default;
+            ResourceIdentifier recoveryAzureResourceGroupId = default;
+            ResourceIdentifier recoveryAvailabilitySetId = default;
+            string targetAvailabilityZone = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            string useManagedDisks = default;
+            string licenseType = default;
+            string sqlServerLicenseType = default;
+            DateTimeOffset? lastRecoveryPointReceived = default;
+            IReadOnlyDictionary<string, string> targetVmTags = default;
+            IReadOnlyDictionary<string, string> seedManagedDiskTags = default;
+            IReadOnlyDictionary<string, string> targetManagedDiskTags = default;
+            IReadOnlyDictionary<string, string> targetNicTags = default;
             IReadOnlyList<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks = default;
             IReadOnlyList<OSUpgradeSupportedVersions> allAvailableOSUpgradeConfigurations = default;
             string instanceType = default;
@@ -624,7 +624,43 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzureReplicationDetails(instanceType, serializedAdditionalRawData, azureVmDiskDetails ?? new ChangeTrackingList<SiteRecoveryVmDiskDetails>(), recoveryAzureVmName.Value, recoveryAzureVmSize.Value, recoveryAzureStorageAccount.Value, recoveryAzureLogStorageAccountId.Value, Optional.ToNullable(lastReplicatedTime), Optional.ToNullable(rpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, initialReplicationDetails.Value, vmNics ?? new ChangeTrackingList<VmNicDetails>(), selectedRecoveryAzureNetworkId.Value, selectedSourceNicId.Value, encryption.Value, osDetails.Value, Optional.ToNullable(sourceVmRamSizeInMB), Optional.ToNullable(sourceVmCpuCount), enableRdpOnTargetOption.Value, recoveryAzureResourceGroupId.Value, recoveryAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, useManagedDisks.Value, licenseType.Value, sqlServerLicenseType.Value, Optional.ToNullable(lastRecoveryPointReceived), Optional.ToDictionary(targetVmTags), Optional.ToDictionary(seedManagedDiskTags), Optional.ToDictionary(targetManagedDiskTags), Optional.ToDictionary(targetNicTags), protectedManagedDisks ?? new ChangeTrackingList<HyperVReplicaAzureManagedDiskDetails>(), allAvailableOSUpgradeConfigurations ?? new ChangeTrackingList<OSUpgradeSupportedVersions>());
+            return new HyperVReplicaAzureReplicationDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                azureVmDiskDetails ?? new ChangeTrackingList<SiteRecoveryVmDiskDetails>(),
+                recoveryAzureVmName,
+                recoveryAzureVmSize,
+                recoveryAzureStorageAccount,
+                recoveryAzureLogStorageAccountId,
+                lastReplicatedTime,
+                rpoInSeconds,
+                lastRpoCalculatedTime,
+                vmId,
+                vmProtectionState,
+                vmProtectionStateDescription,
+                initialReplicationDetails,
+                vmNics ?? new ChangeTrackingList<VmNicDetails>(),
+                selectedRecoveryAzureNetworkId,
+                selectedSourceNicId,
+                encryption,
+                osDetails,
+                sourceVmRamSizeInMB,
+                sourceVmCpuCount,
+                enableRdpOnTargetOption,
+                recoveryAzureResourceGroupId,
+                recoveryAvailabilitySetId,
+                targetAvailabilityZone,
+                targetProximityPlacementGroupId,
+                useManagedDisks,
+                licenseType,
+                sqlServerLicenseType,
+                lastRecoveryPointReceived,
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                seedManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
+                protectedManagedDisks ?? new ChangeTrackingList<HyperVReplicaAzureManagedDiskDetails>(),
+                allAvailableOSUpgradeConfigurations ?? new ChangeTrackingList<OSUpgradeSupportedVersions>());
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureReplicationDetails>.Write(ModelReaderWriterOptions options)

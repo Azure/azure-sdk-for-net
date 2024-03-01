@@ -195,30 +195,30 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Optional<MobileNetworkManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            MobileNetworkManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
-            Optional<MobileNetworkInstallation> installation = default;
+            SystemData systemData = default;
+            MobileNetworkProvisioningState? provisioningState = default;
+            MobileNetworkInstallation installation = default;
             IList<WritableSubResource> sites = default;
             MobileNetworkPlatformConfiguration platform = default;
-            Optional<MobileNetworkCoreNetworkType> coreNetworkTechnology = default;
-            Optional<string> version = default;
-            Optional<string> installedVersion = default;
-            Optional<string> rollbackVersion = default;
+            MobileNetworkCoreNetworkType? coreNetworkTechnology = default;
+            string version = default;
+            string installedVersion = default;
+            string rollbackVersion = default;
             MobileNetworkInterfaceProperties controlPlaneAccessInterface = default;
             IList<string> controlPlaneAccessVirtualIPv4Addresses = default;
             MobileNetworkBillingSku sku = default;
-            Optional<int> ueMtu = default;
+            int? ueMtu = default;
             MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = default;
-            Optional<DiagnosticsUploadConfiguration> diagnosticsUpload = default;
-            Optional<MobileNetworkEventHubConfiguration> eventHub = default;
-            Optional<SignalingConfiguration> signaling = default;
-            Optional<BinaryData> interopSettings = default;
+            DiagnosticsUploadConfiguration diagnosticsUpload = default;
+            MobileNetworkEventHubConfiguration eventHub = default;
+            SignalingConfiguration signaling = default;
+            BinaryData interopSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -424,7 +424,32 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCoreControlPlaneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), installation.Value, sites, platform, Optional.ToNullable(coreNetworkTechnology), version.Value, installedVersion.Value, rollbackVersion.Value, controlPlaneAccessInterface, controlPlaneAccessVirtualIPv4Addresses ?? new ChangeTrackingList<string>(), sku, Optional.ToNullable(ueMtu), localDiagnosticsAccess, diagnosticsUpload.Value, eventHub.Value, signaling.Value, interopSettings.Value, serializedAdditionalRawData);
+            return new PacketCoreControlPlaneData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState,
+                installation,
+                sites,
+                platform,
+                coreNetworkTechnology,
+                version,
+                installedVersion,
+                rollbackVersion,
+                controlPlaneAccessInterface,
+                controlPlaneAccessVirtualIPv4Addresses ?? new ChangeTrackingList<string>(),
+                sku,
+                ueMtu,
+                localDiagnosticsAccess,
+                diagnosticsUpload,
+                eventHub,
+                signaling,
+                interopSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCoreControlPlaneData>.Write(ModelReaderWriterOptions options)

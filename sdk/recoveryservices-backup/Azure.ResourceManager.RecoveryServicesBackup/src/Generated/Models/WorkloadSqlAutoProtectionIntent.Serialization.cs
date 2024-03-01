@@ -96,13 +96,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<WorkloadItemType> workloadItemType = default;
+            WorkloadItemType? workloadItemType = default;
             ProtectionIntentItemType protectionIntentItemType = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<ResourceIdentifier> itemId = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<BackupProtectionStatus> protectionState = default;
+            BackupManagementType? backupManagementType = default;
+            ResourceIdentifier sourceResourceId = default;
+            ResourceIdentifier itemId = default;
+            ResourceIdentifier policyId = default;
+            BackupProtectionStatus? protectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,7 +172,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadSqlAutoProtectionIntent(protectionIntentItemType, Optional.ToNullable(backupManagementType), sourceResourceId.Value, itemId.Value, policyId.Value, Optional.ToNullable(protectionState), serializedAdditionalRawData, Optional.ToNullable(workloadItemType));
+            return new WorkloadSqlAutoProtectionIntent(
+                protectionIntentItemType,
+                backupManagementType,
+                sourceResourceId,
+                itemId,
+                policyId,
+                protectionState,
+                serializedAdditionalRawData,
+                workloadItemType);
         }
 
         BinaryData IPersistableModel<WorkloadSqlAutoProtectionIntent>.Write(ModelReaderWriterOptions options)

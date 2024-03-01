@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<EventGroupingAggregationKind> aggregationKind = default;
+            EventGroupingAggregationKind? aggregationKind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGroupingSettings(Optional.ToNullable(aggregationKind), serializedAdditionalRawData);
+            return new EventGroupingSettings(aggregationKind, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGroupingSettings>.Write(ModelReaderWriterOptions options)

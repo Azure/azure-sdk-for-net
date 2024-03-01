@@ -57,8 +57,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> connectionString = default;
-            Optional<string> database = default;
+            string connectionString = default;
+            string database = default;
             string command = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -93,7 +93,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MongoDBParameter(connectionString.Value, database.Value, command);
+            return new MongoDBParameter(connectionString, database, command);
         }
     }
 }

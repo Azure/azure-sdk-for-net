@@ -158,22 +158,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ExtendedLocation extendedLocation = default;
+            string kind = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uuid = default;
-            Optional<string> vCenterId = default;
-            Optional<string> moRefId = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> moName = default;
-            Optional<string> customResourceName = default;
+            SystemData systemData = default;
+            string uuid = default;
+            string vCenterId = default;
+            string moRefId = default;
+            string inventoryItemId = default;
+            string moName = default;
+            string customResourceName = default;
             IReadOnlyList<VMwareResourceStatus> statuses = default;
-            Optional<VMwareResourceProvisioningState> provisioningState = default;
+            VMwareResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -306,7 +306,24 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareVirtualNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, customResourceName.Value, statuses ?? new ChangeTrackingList<VMwareResourceStatus>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VMwareVirtualNetworkData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                kind,
+                uuid,
+                vCenterId,
+                moRefId,
+                inventoryItemId,
+                moName,
+                customResourceName,
+                statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareVirtualNetworkData>.Write(ModelReaderWriterOptions options)

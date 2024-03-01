@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 return null;
             }
-            Optional<SiteRecoveryEventProperties> properties = default;
-            Optional<AzureLocation> location = default;
+            SiteRecoveryEventProperties properties = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryEventData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new SiteRecoveryEventData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryEventData>.Write(ModelReaderWriterOptions options)

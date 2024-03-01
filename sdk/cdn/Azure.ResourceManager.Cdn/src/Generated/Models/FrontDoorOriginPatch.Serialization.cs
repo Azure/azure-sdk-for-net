@@ -144,17 +144,17 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> originGroupName = default;
-            Optional<WritableSubResource> azureOrigin = default;
-            Optional<string> hostName = default;
-            Optional<int> httpPort = default;
-            Optional<int> httpsPort = default;
-            Optional<string> originHostHeader = default;
-            Optional<int?> priority = default;
-            Optional<int?> weight = default;
-            Optional<SharedPrivateLinkResourceProperties> sharedPrivateLinkResource = default;
-            Optional<EnabledState> enabledState = default;
-            Optional<bool> enforceCertificateNameCheck = default;
+            string originGroupName = default;
+            WritableSubResource azureOrigin = default;
+            string hostName = default;
+            int? httpPort = default;
+            int? httpsPort = default;
+            string originHostHeader = default;
+            int? priority = default;
+            int? weight = default;
+            SharedPrivateLinkResourceProperties sharedPrivateLinkResource = default;
+            EnabledState? enabledState = default;
+            bool? enforceCertificateNameCheck = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -267,7 +267,19 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorOriginPatch(originGroupName.Value, azureOrigin, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), sharedPrivateLinkResource.Value, Optional.ToNullable(enabledState), Optional.ToNullable(enforceCertificateNameCheck), serializedAdditionalRawData);
+            return new FrontDoorOriginPatch(
+                originGroupName,
+                azureOrigin,
+                hostName,
+                httpPort,
+                httpsPort,
+                originHostHeader,
+                priority,
+                weight,
+                sharedPrivateLinkResource,
+                enabledState,
+                enforceCertificateNameCheck,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorOriginPatch>.Write(ModelReaderWriterOptions options)

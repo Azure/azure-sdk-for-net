@@ -190,27 +190,27 @@ namespace Azure.ResourceManager.ContainerRegistry
                 return null;
             }
             ContainerRegistrySku sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> loginServer = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<ContainerRegistryProvisioningState> provisioningState = default;
-            Optional<ContainerRegistryResourceStatus> status = default;
-            Optional<bool> adminUserEnabled = default;
-            Optional<ContainerRegistryNetworkRuleSet> networkRuleSet = default;
-            Optional<ContainerRegistryPolicies> policies = default;
-            Optional<ContainerRegistryEncryption> encryption = default;
-            Optional<bool> dataEndpointEnabled = default;
+            SystemData systemData = default;
+            string loginServer = default;
+            DateTimeOffset? creationDate = default;
+            ContainerRegistryProvisioningState? provisioningState = default;
+            ContainerRegistryResourceStatus status = default;
+            bool? adminUserEnabled = default;
+            ContainerRegistryNetworkRuleSet networkRuleSet = default;
+            ContainerRegistryPolicies policies = default;
+            ContainerRegistryEncryption encryption = default;
+            bool? dataEndpointEnabled = default;
             IReadOnlyList<string> dataEndpointHostNames = default;
             IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<ContainerRegistryPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<ContainerRegistryNetworkRuleBypassOption> networkRuleBypassOptions = default;
-            Optional<ContainerRegistryZoneRedundancy> zoneRedundancy = default;
+            ContainerRegistryPublicNetworkAccess? publicNetworkAccess = default;
+            ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default;
+            ContainerRegistryZoneRedundancy? zoneRedundancy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -422,7 +422,30 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, loginServer.Value, Optional.ToNullable(creationDate), Optional.ToNullable(provisioningState), status.Value, Optional.ToNullable(adminUserEnabled), networkRuleSet.Value, policies.Value, encryption.Value, Optional.ToNullable(dataEndpointEnabled), dataEndpointHostNames ?? new ChangeTrackingList<string>(), privateEndpointConnections ?? new ChangeTrackingList<ContainerRegistryPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(networkRuleBypassOptions), Optional.ToNullable(zoneRedundancy), serializedAdditionalRawData);
+            return new ContainerRegistryData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                identity,
+                loginServer,
+                creationDate,
+                provisioningState,
+                status,
+                adminUserEnabled,
+                networkRuleSet,
+                policies,
+                encryption,
+                dataEndpointEnabled,
+                dataEndpointHostNames ?? new ChangeTrackingList<string>(),
+                privateEndpointConnections ?? new ChangeTrackingList<ContainerRegistryPrivateEndpointConnectionData>(),
+                publicNetworkAccess,
+                networkRuleBypassOptions,
+                zoneRedundancy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryData>.Write(ModelReaderWriterOptions options)

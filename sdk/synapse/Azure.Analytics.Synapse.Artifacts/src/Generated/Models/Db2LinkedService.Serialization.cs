@@ -114,19 +114,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
-            Optional<object> connectionString = default;
+            object connectionString = default;
             object server = default;
             object database = default;
-            Optional<Db2AuthenticationType> authenticationType = default;
-            Optional<object> username = default;
-            Optional<SecretBase> password = default;
-            Optional<object> packageCollection = default;
-            Optional<object> certificateCommonName = default;
-            Optional<object> encryptedCredential = default;
+            Db2AuthenticationType? authenticationType = default;
+            object username = default;
+            SecretBase password = default;
+            object packageCollection = default;
+            object certificateCommonName = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -273,7 +273,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Db2LinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), additionalProperties, connectionString.Value, server, database, Optional.ToNullable(authenticationType), username.Value, password.Value, packageCollection.Value, certificateCommonName.Value, encryptedCredential.Value);
+            return new Db2LinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                connectionString,
+                server,
+                database,
+                authenticationType,
+                username,
+                password,
+                packageCollection,
+                certificateCommonName,
+                encryptedCredential);
         }
 
         internal partial class Db2LinkedServiceConverter : JsonConverter<Db2LinkedService>

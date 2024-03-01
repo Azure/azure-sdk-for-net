@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<OperatingSystemType> osType = default;
+            string id = default;
+            OperatingSystemType? osType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstancePropertiesStorageProfileOSDisk(id.Value, Optional.ToNullable(osType), serializedAdditionalRawData);
+            return new VirtualMachineInstancePropertiesStorageProfileOSDisk(id, osType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstancePropertiesStorageProfileOSDisk>.Write(ModelReaderWriterOptions options)

@@ -124,15 +124,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> siteUrl = default;
             DataFactoryElement<string> tenantId = default;
             DataFactoryElement<string> servicePrincipalId = default;
             DataFactorySecretBaseDefinition servicePrincipalKey = default;
-            Optional<string> encryptedCredential = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -231,7 +231,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SharePointOnlineListLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, siteUrl, tenantId, servicePrincipalId, servicePrincipalKey, encryptedCredential.Value);
+            return new SharePointOnlineListLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                siteUrl,
+                tenantId,
+                servicePrincipalId,
+                servicePrincipalKey,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<SharePointOnlineListLinkedService>.Write(ModelReaderWriterOptions options)

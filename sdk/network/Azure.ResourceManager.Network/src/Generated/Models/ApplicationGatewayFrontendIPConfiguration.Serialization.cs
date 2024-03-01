@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> privateIPAddress = default;
-            Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
-            Optional<WritableSubResource> subnet = default;
-            Optional<WritableSubResource> publicIPAddress = default;
-            Optional<WritableSubResource> privateLinkConfiguration = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string privateIPAddress = default;
+            NetworkIPAllocationMethod? privateIPAllocationMethod = default;
+            WritableSubResource subnet = default;
+            WritableSubResource publicIPAddress = default;
+            WritableSubResource privateLinkConfiguration = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -233,7 +233,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayFrontendIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet, publicIPAddress, privateLinkConfiguration, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayFrontendIPConfiguration(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                privateIPAddress,
+                privateIPAllocationMethod,
+                subnet,
+                publicIPAddress,
+                privateLinkConfiguration,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayFrontendIPConfiguration>.Write(ModelReaderWriterOptions options)

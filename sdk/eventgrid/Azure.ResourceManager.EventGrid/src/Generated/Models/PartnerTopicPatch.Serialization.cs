@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerTopicPatch(Optional.ToDictionary(tags), identity, serializedAdditionalRawData);
+            return new PartnerTopicPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerTopicPatch>.Write(ModelReaderWriterOptions options)

@@ -108,17 +108,17 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Optional<DocumentClassifierDetails> result = default;
+            DocumentClassifierDetails result = default;
             string operationId = default;
             OperationStatus status = default;
-            Optional<int> percentCompleted = default;
+            int? percentCompleted = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
             OperationKind kind = default;
             Uri resourceLocation = default;
-            Optional<string> apiVersion = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<DocumentIntelligenceError> error = default;
+            string apiVersion = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            DocumentIntelligenceError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,19 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentClassifierBuildOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error.Value, serializedAdditionalRawData, result.Value);
+            return new DocumentClassifierBuildOperationDetails(
+                operationId,
+                status,
+                percentCompleted,
+                createdDateTime,
+                lastUpdatedDateTime,
+                kind,
+                resourceLocation,
+                apiVersion,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                error,
+                serializedAdditionalRawData,
+                result);
         }
 
         BinaryData IPersistableModel<DocumentClassifierBuildOperationDetails>.Write(ModelReaderWriterOptions options)

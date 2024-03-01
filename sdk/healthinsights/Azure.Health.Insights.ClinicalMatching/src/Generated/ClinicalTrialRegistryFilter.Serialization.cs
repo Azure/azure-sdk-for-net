@@ -350,7 +350,19 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClinicalTrialRegistryFilter(conditions ?? new ChangeTrackingList<string>(), studyTypes ?? new ChangeTrackingList<ClinicalTrialStudyType>(), recruitmentStatuses ?? new ChangeTrackingList<ClinicalTrialRecruitmentStatus>(), sponsors ?? new ChangeTrackingList<string>(), phases ?? new ChangeTrackingList<ClinicalTrialPhase>(), purposes ?? new ChangeTrackingList<ClinicalTrialPurpose>(), ids ?? new ChangeTrackingList<string>(), sources ?? new ChangeTrackingList<ClinicalTrialSource>(), facilityNames ?? new ChangeTrackingList<string>(), facilityLocations ?? new ChangeTrackingList<GeographicLocation>(), facilityAreas ?? new ChangeTrackingList<GeographicArea>(), serializedAdditionalRawData);
+            return new ClinicalTrialRegistryFilter(
+                conditions ?? new ChangeTrackingList<string>(),
+                studyTypes ?? new ChangeTrackingList<ClinicalTrialStudyType>(),
+                recruitmentStatuses ?? new ChangeTrackingList<ClinicalTrialRecruitmentStatus>(),
+                sponsors ?? new ChangeTrackingList<string>(),
+                phases ?? new ChangeTrackingList<ClinicalTrialPhase>(),
+                purposes ?? new ChangeTrackingList<ClinicalTrialPurpose>(),
+                ids ?? new ChangeTrackingList<string>(),
+                sources ?? new ChangeTrackingList<ClinicalTrialSource>(),
+                facilityNames ?? new ChangeTrackingList<string>(),
+                facilityLocations ?? new ChangeTrackingList<GeographicLocation>(),
+                facilityAreas ?? new ChangeTrackingList<GeographicArea>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClinicalTrialRegistryFilter>.Write(ModelReaderWriterOptions options)

@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<DateTimeOffset> expiration = default;
+            IDictionary<string, string> tags = default;
+            DateTimeOffset? expiration = default;
             IList<KeySetUser> userList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudBmcKeySetPatch(Optional.ToDictionary(tags), Optional.ToNullable(expiration), userList ?? new ChangeTrackingList<KeySetUser>(), serializedAdditionalRawData);
+            return new NetworkCloudBmcKeySetPatch(tags ?? new ChangeTrackingDictionary<string, string>(), expiration, userList ?? new ChangeTrackingList<KeySetUser>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudBmcKeySetPatch>.Write(ModelReaderWriterOptions options)

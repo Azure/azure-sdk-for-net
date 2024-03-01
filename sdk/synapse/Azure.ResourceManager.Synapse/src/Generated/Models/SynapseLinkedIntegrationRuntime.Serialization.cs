@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> dataFactoryName = default;
-            Optional<string> dataFactoryLocation = default;
-            Optional<DateTimeOffset> createTime = default;
+            string name = default;
+            string subscriptionId = default;
+            string dataFactoryName = default;
+            string dataFactoryLocation = default;
+            DateTimeOffset? createTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseLinkedIntegrationRuntime(name.Value, subscriptionId.Value, dataFactoryName.Value, dataFactoryLocation.Value, Optional.ToNullable(createTime), serializedAdditionalRawData);
+            return new SynapseLinkedIntegrationRuntime(
+                name,
+                subscriptionId,
+                dataFactoryName,
+                dataFactoryLocation,
+                createTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseLinkedIntegrationRuntime>.Write(ModelReaderWriterOptions options)

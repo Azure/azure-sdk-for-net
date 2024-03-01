@@ -138,14 +138,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> name0 = default;
-            Optional<string> display = default;
-            Optional<string> dependency = default;
+            SystemData systemData = default;
+            string name0 = default;
+            string display = default;
+            string dependency = default;
             IList<StackMajorVersion> majorVersions = default;
             IList<ApplicationStack> frameworks = default;
             IList<ApplicationStack> isDeprecated = default;
@@ -257,7 +257,19 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationStackResource(id, name, type, systemData.Value, name0.Value, display.Value, dependency.Value, majorVersions ?? new ChangeTrackingList<StackMajorVersion>(), frameworks ?? new ChangeTrackingList<ApplicationStack>(), isDeprecated ?? new ChangeTrackingList<ApplicationStack>(), kind.Value, serializedAdditionalRawData);
+            return new ApplicationStackResource(
+                id,
+                name,
+                type,
+                systemData,
+                name0,
+                display,
+                dependency,
+                majorVersions ?? new ChangeTrackingList<StackMajorVersion>(),
+                frameworks ?? new ChangeTrackingList<ApplicationStack>(),
+                isDeprecated ?? new ChangeTrackingList<ApplicationStack>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationStackResource>.Write(ModelReaderWriterOptions options)

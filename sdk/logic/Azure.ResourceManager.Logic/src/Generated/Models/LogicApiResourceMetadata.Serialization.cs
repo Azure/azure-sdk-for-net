@@ -120,16 +120,16 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> source = default;
-            Optional<string> brandColor = default;
-            Optional<string> hideKey = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<LogicApiType> apiType = default;
-            Optional<LogicWsdlService> wsdlService = default;
-            Optional<LogicWsdlImportMethod> wsdlImportMethod = default;
-            Optional<string> connectionType = default;
-            Optional<LogicWorkflowProvisioningState> provisioningState = default;
-            Optional<LogicApiDeploymentParameterMetadataSet> deploymentParameters = default;
+            string source = default;
+            string brandColor = default;
+            string hideKey = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            LogicApiType? apiType = default;
+            LogicWsdlService wsdlService = default;
+            LogicWsdlImportMethod? wsdlImportMethod = default;
+            string connectionType = default;
+            LogicWorkflowProvisioningState? provisioningState = default;
+            LogicApiDeploymentParameterMetadataSet deploymentParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,7 +219,18 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiResourceMetadata(source.Value, brandColor.Value, hideKey.Value, Optional.ToDictionary(tags), Optional.ToNullable(apiType), wsdlService.Value, Optional.ToNullable(wsdlImportMethod), connectionType.Value, Optional.ToNullable(provisioningState), deploymentParameters.Value, serializedAdditionalRawData);
+            return new LogicApiResourceMetadata(
+                source,
+                brandColor,
+                hideKey,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                apiType,
+                wsdlService,
+                wsdlImportMethod,
+                connectionType,
+                provisioningState,
+                deploymentParameters,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiResourceMetadata>.Write(ModelReaderWriterOptions options)

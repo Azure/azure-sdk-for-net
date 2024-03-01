@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<CommitmentPlanProvisioningState> provisioningState = default;
-            Optional<Guid> commitmentPlanGuid = default;
-            Optional<ServiceAccountHostingModel> hostingModel = default;
-            Optional<string> planType = default;
-            Optional<CommitmentPeriod> current = default;
-            Optional<bool> autoRenew = default;
-            Optional<CommitmentPeriod> next = default;
-            Optional<CommitmentPeriod> last = default;
+            CommitmentPlanProvisioningState? provisioningState = default;
+            Guid? commitmentPlanGuid = default;
+            ServiceAccountHostingModel? hostingModel = default;
+            string planType = default;
+            CommitmentPeriod current = default;
+            bool? autoRenew = default;
+            CommitmentPeriod next = default;
+            CommitmentPeriod last = default;
             IReadOnlyList<string> provisioningIssues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -215,7 +215,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommitmentPlanProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(commitmentPlanGuid), Optional.ToNullable(hostingModel), planType.Value, current.Value, Optional.ToNullable(autoRenew), next.Value, last.Value, provisioningIssues ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new CommitmentPlanProperties(
+                provisioningState,
+                commitmentPlanGuid,
+                hostingModel,
+                planType,
+                current,
+                autoRenew,
+                next,
+                last,
+                provisioningIssues ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommitmentPlanProperties>.Write(ModelReaderWriterOptions options)

@@ -152,16 +152,16 @@ namespace Azure.ResourceManager.Marketplace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> collectionId = default;
-            Optional<string> collectionName = default;
-            Optional<string> claim = default;
-            Optional<bool> allSubscriptions = default;
-            Optional<bool> approveAllItems = default;
-            Optional<DateTimeOffset> approveAllItemsModifiedAt = default;
+            SystemData systemData = default;
+            Guid? collectionId = default;
+            string collectionName = default;
+            string claim = default;
+            bool? allSubscriptions = default;
+            bool? approveAllItems = default;
+            DateTimeOffset? approveAllItemsModifiedAt = default;
             IList<string> subscriptionsList = default;
-            Optional<bool> enabled = default;
-            Optional<long> numberOfOffers = default;
+            bool? enabled = default;
+            long? numberOfOffers = default;
             IReadOnlyList<MarketplaceRule> appliedRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -301,7 +301,22 @@ namespace Azure.ResourceManager.Marketplace
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateStoreCollectionInfoData(id, name, type, systemData.Value, Optional.ToNullable(collectionId), collectionName.Value, claim.Value, Optional.ToNullable(allSubscriptions), Optional.ToNullable(approveAllItems), Optional.ToNullable(approveAllItemsModifiedAt), subscriptionsList ?? new ChangeTrackingList<string>(), Optional.ToNullable(enabled), Optional.ToNullable(numberOfOffers), appliedRules ?? new ChangeTrackingList<MarketplaceRule>(), serializedAdditionalRawData);
+            return new PrivateStoreCollectionInfoData(
+                id,
+                name,
+                type,
+                systemData,
+                collectionId,
+                collectionName,
+                claim,
+                allSubscriptions,
+                approveAllItems,
+                approveAllItemsModifiedAt,
+                subscriptionsList ?? new ChangeTrackingList<string>(),
+                enabled,
+                numberOfOffers,
+                appliedRules ?? new ChangeTrackingList<MarketplaceRule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateStoreCollectionInfoData>.Write(ModelReaderWriterOptions options)

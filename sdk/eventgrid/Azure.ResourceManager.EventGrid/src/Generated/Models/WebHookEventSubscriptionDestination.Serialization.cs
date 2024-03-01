@@ -115,14 +115,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Optional<Uri> endpointUri = default;
-            Optional<Uri> endpointBaseUri = default;
-            Optional<int> maxEventsPerBatch = default;
-            Optional<int> preferredBatchSizeInKilobytes = default;
-            Optional<Guid> azureActiveDirectoryTenantId = default;
-            Optional<string> azureActiveDirectoryApplicationIdOrUri = default;
+            Uri endpointUri = default;
+            Uri endpointBaseUri = default;
+            int? maxEventsPerBatch = default;
+            int? preferredBatchSizeInKilobytes = default;
+            Guid? azureActiveDirectoryTenantId = default;
+            string azureActiveDirectoryApplicationIdOrUri = default;
             IList<DeliveryAttributeMapping> deliveryAttributeMappings = default;
-            Optional<TlsVersion> minimumTlsVersionAllowed = default;
+            TlsVersion? minimumTlsVersionAllowed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +223,17 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebHookEventSubscriptionDestination(endpointType, serializedAdditionalRawData, endpointUri.Value, endpointBaseUri.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), Optional.ToNullable(azureActiveDirectoryTenantId), azureActiveDirectoryApplicationIdOrUri.Value, deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>(), Optional.ToNullable(minimumTlsVersionAllowed));
+            return new WebHookEventSubscriptionDestination(
+                endpointType,
+                serializedAdditionalRawData,
+                endpointUri,
+                endpointBaseUri,
+                maxEventsPerBatch,
+                preferredBatchSizeInKilobytes,
+                azureActiveDirectoryTenantId,
+                azureActiveDirectoryApplicationIdOrUri,
+                deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>(),
+                minimumTlsVersionAllowed);
         }
 
         BinaryData IPersistableModel<WebHookEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)

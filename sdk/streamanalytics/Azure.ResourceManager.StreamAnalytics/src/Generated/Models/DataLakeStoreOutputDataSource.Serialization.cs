@@ -115,15 +115,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> refreshToken = default;
-            Optional<string> tokenUserPrincipalName = default;
-            Optional<string> tokenUserDisplayName = default;
-            Optional<string> accountName = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> filePathPrefix = default;
-            Optional<string> dateFormat = default;
-            Optional<string> timeFormat = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            string refreshToken = default;
+            string tokenUserPrincipalName = default;
+            string tokenUserDisplayName = default;
+            string accountName = default;
+            Guid? tenantId = default;
+            string filePathPrefix = default;
+            string dateFormat = default;
+            string timeFormat = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreOutputDataSource(type, serializedAdditionalRawData, refreshToken.Value, tokenUserPrincipalName.Value, tokenUserDisplayName.Value, accountName.Value, Optional.ToNullable(tenantId), filePathPrefix.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode));
+            return new DataLakeStoreOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                refreshToken,
+                tokenUserPrincipalName,
+                tokenUserDisplayName,
+                accountName,
+                tenantId,
+                filePathPrefix,
+                dateFormat,
+                timeFormat,
+                authenticationMode);
         }
 
         BinaryData IPersistableModel<DataLakeStoreOutputDataSource>.Write(ModelReaderWriterOptions options)

@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> runtimeVersion = default;
-            Optional<string> jvmOptions = default;
-            Optional<string> relativePath = default;
+            string runtimeVersion = default;
+            string jvmOptions = default;
+            string relativePath = default;
             string type = default;
-            Optional<string> version = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JarUploadedUserSourceInfo(type, version.Value, serializedAdditionalRawData, relativePath.Value, runtimeVersion.Value, jvmOptions.Value);
+            return new JarUploadedUserSourceInfo(
+                type,
+                version,
+                serializedAdditionalRawData,
+                relativePath,
+                runtimeVersion,
+                jvmOptions);
         }
 
         BinaryData IPersistableModel<JarUploadedUserSourceInfo>.Write(ModelReaderWriterOptions options)

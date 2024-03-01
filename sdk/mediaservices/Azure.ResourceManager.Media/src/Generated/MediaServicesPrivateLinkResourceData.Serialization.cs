@@ -116,8 +116,8 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
+            SystemData systemData = default;
+            string groupId = default;
             IReadOnlyList<string> requiredMembers = default;
             IList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -199,7 +199,15 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaServicesPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new MediaServicesPrivateLinkResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                groupId,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaServicesPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

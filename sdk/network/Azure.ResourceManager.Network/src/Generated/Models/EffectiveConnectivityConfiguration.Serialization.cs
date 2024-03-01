@@ -132,16 +132,16 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             IReadOnlyList<NetworkConfigurationGroup> configurationGroups = default;
-            Optional<string> description = default;
-            Optional<ConnectivityTopology> connectivityTopology = default;
+            string description = default;
+            ConnectivityTopology? connectivityTopology = default;
             IReadOnlyList<ConnectivityHub> hubs = default;
-            Optional<GlobalMeshSupportFlag> isGlobal = default;
+            GlobalMeshSupportFlag? isGlobal = default;
             IReadOnlyList<ConnectivityGroupItem> appliesToGroups = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<DeleteExistingPeering> deleteExistingPeering = default;
-            Optional<Guid> resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            DeleteExistingPeering? deleteExistingPeering = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,7 +261,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveConnectivityConfiguration(id.Value, configurationGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(), description.Value, Optional.ToNullable(connectivityTopology), hubs ?? new ChangeTrackingList<ConnectivityHub>(), Optional.ToNullable(isGlobal), appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>(), Optional.ToNullable(provisioningState), Optional.ToNullable(deleteExistingPeering), Optional.ToNullable(resourceGuid), serializedAdditionalRawData);
+            return new EffectiveConnectivityConfiguration(
+                id,
+                configurationGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
+                description,
+                connectivityTopology,
+                hubs ?? new ChangeTrackingList<ConnectivityHub>(),
+                isGlobal,
+                appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>(),
+                provisioningState,
+                deleteExistingPeering,
+                resourceGuid,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveConnectivityConfiguration>.Write(ModelReaderWriterOptions options)

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Workloads.Models
             string sapBitsStorageAccountId = default;
             string sapFqdn = default;
             string sshPrivateKey = default;
-            Optional<HighAvailabilitySoftwareConfiguration> highAvailabilitySoftwareConfiguration = default;
+            HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration = default;
             SapSoftwareInstallationType softwareInstallationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +137,15 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceInitiatedSoftwareConfiguration(softwareInstallationType, serializedAdditionalRawData, bomUrl, softwareVersion, sapBitsStorageAccountId, sapFqdn, sshPrivateKey, highAvailabilitySoftwareConfiguration.Value);
+            return new ServiceInitiatedSoftwareConfiguration(
+                softwareInstallationType,
+                serializedAdditionalRawData,
+                bomUrl,
+                softwareVersion,
+                sapBitsStorageAccountId,
+                sapFqdn,
+                sshPrivateKey,
+                highAvailabilitySoftwareConfiguration);
         }
 
         BinaryData IPersistableModel<ServiceInitiatedSoftwareConfiguration>.Write(ModelReaderWriterOptions options)

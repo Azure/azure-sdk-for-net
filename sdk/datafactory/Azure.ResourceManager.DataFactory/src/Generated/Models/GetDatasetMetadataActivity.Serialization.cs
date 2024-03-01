@@ -148,19 +148,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             DatasetReference dataset = default;
             IList<BinaryData> fieldList = default;
-            Optional<StoreReadSettings> storeSettings = default;
-            Optional<FormatReadSettings> formatSettings = default;
+            StoreReadSettings storeSettings = default;
+            FormatReadSettings formatSettings = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -303,7 +303,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GetDatasetMetadataActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, dataset, fieldList ?? new ChangeTrackingList<BinaryData>(), storeSettings.Value, formatSettings.Value);
+            return new GetDatasetMetadataActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                dataset,
+                fieldList ?? new ChangeTrackingList<BinaryData>(),
+                storeSettings,
+                formatSettings);
         }
 
         BinaryData IPersistableModel<GetDatasetMetadataActivity>.Write(ModelReaderWriterOptions options)

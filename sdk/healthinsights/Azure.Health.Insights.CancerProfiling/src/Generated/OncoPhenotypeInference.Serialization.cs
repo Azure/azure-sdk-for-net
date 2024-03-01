@@ -96,10 +96,10 @@ namespace Azure.Health.Insights.CancerProfiling
             }
             OncoPhenotypeInferenceType type = default;
             string value = default;
-            Optional<string> description = default;
-            Optional<float> confidenceScore = default;
+            string description = default;
+            float? confidenceScore = default;
             IReadOnlyList<InferenceEvidence> evidence = default;
-            Optional<string> caseId = default;
+            string caseId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +153,14 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OncoPhenotypeInference(type, value, description.Value, Optional.ToNullable(confidenceScore), evidence ?? new ChangeTrackingList<InferenceEvidence>(), caseId.Value, serializedAdditionalRawData);
+            return new OncoPhenotypeInference(
+                type,
+                value,
+                description,
+                confidenceScore,
+                evidence ?? new ChangeTrackingList<InferenceEvidence>(),
+                caseId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OncoPhenotypeInference>.Write(ModelReaderWriterOptions options)

@@ -112,14 +112,14 @@ namespace Azure.ResourceManager.DefenderEasm
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EasmResourceProvisioningState> provisioningState = default;
-            Optional<string> dataPlaneEndpoint = default;
+            SystemData systemData = default;
+            EasmResourceProvisioningState? provisioningState = default;
+            string dataPlaneEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.DefenderEasm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EasmWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), dataPlaneEndpoint.Value, serializedAdditionalRawData);
+            return new EasmWorkspaceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                dataPlaneEndpoint,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EasmWorkspaceData>.Write(ModelReaderWriterOptions options)

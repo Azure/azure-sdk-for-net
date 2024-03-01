@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<DeinterlaceSettings> deinterlace = default;
-            Optional<RotationSetting> rotation = default;
-            Optional<RectangularWindow> crop = default;
-            Optional<FadeOptions> fadeIn = default;
-            Optional<FadeOptions> fadeOut = default;
+            DeinterlaceSettings deinterlace = default;
+            RotationSetting? rotation = default;
+            RectangularWindow crop = default;
+            FadeOptions fadeIn = default;
+            FadeOptions fadeOut = default;
             IList<MediaOverlayBase> overlays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FilteringOperations(deinterlace.Value, Optional.ToNullable(rotation), crop.Value, fadeIn.Value, fadeOut.Value, overlays ?? new ChangeTrackingList<MediaOverlayBase>(), serializedAdditionalRawData);
+            return new FilteringOperations(
+                deinterlace,
+                rotation,
+                crop,
+                fadeIn,
+                fadeOut,
+                overlays ?? new ChangeTrackingList<MediaOverlayBase>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FilteringOperations>.Write(ModelReaderWriterOptions options)

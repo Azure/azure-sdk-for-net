@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> rawCertData = default;
-            Optional<ContainerIdentityInfo> containerIdentityInfo = default;
-            Optional<IDictionary<string, string>> serviceEndpoints = default;
+            string rawCertData = default;
+            ContainerIdentityInfo containerIdentityInfo = default;
+            IDictionary<string, string> serviceEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenericContainerExtendedInfo(rawCertData.Value, containerIdentityInfo.Value, Optional.ToDictionary(serviceEndpoints), serializedAdditionalRawData);
+            return new GenericContainerExtendedInfo(rawCertData, containerIdentityInfo, serviceEndpoints ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GenericContainerExtendedInfo>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             IList<string> prefixMatch = default;
-            Optional<string> minCreationTime = default;
+            string minCreationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ObjectReplicationPolicyFilter(prefixMatch ?? new ChangeTrackingList<string>(), minCreationTime.Value, serializedAdditionalRawData);
+            return new ObjectReplicationPolicyFilter(prefixMatch ?? new ChangeTrackingList<string>(), minCreationTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ObjectReplicationPolicyFilter>.Write(ModelReaderWriterOptions options)

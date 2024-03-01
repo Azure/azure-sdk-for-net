@@ -121,16 +121,16 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> databaseName = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<DateTimeOffset> deletionDate = default;
-            Optional<DateTimeOffset> earliestRestoreDate = default;
+            SystemData systemData = default;
+            string databaseName = default;
+            DateTimeOffset? creationDate = default;
+            DateTimeOffset? deletionDate = default;
+            DateTimeOffset? earliestRestoreDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,7 +228,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableDroppedManagedDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, databaseName.Value, Optional.ToNullable(creationDate), Optional.ToNullable(deletionDate), Optional.ToNullable(earliestRestoreDate), serializedAdditionalRawData);
+            return new RestorableDroppedManagedDatabaseData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                databaseName,
+                creationDate,
+                deletionDate,
+                earliestRestoreDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableDroppedManagedDatabaseData>.Write(ModelReaderWriterOptions options)

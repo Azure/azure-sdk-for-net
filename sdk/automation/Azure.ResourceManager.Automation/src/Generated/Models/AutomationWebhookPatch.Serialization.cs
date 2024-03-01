@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> isEnabled = default;
-            Optional<string> runOn = default;
-            Optional<IDictionary<string, string>> parameters = default;
-            Optional<string> description = default;
+            string name = default;
+            bool? isEnabled = default;
+            string runOn = default;
+            IDictionary<string, string> parameters = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +163,13 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationWebhookPatch(name.Value, Optional.ToNullable(isEnabled), runOn.Value, Optional.ToDictionary(parameters), description.Value, serializedAdditionalRawData);
+            return new AutomationWebhookPatch(
+                name,
+                isEnabled,
+                runOn,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationWebhookPatch>.Write(ModelReaderWriterOptions options)

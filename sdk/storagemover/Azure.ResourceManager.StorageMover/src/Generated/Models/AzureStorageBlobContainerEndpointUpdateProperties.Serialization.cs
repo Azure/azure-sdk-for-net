@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureStorageBlobContainerEndpointUpdateProperties(endpointType, description.Value, serializedAdditionalRawData);
+            return new AzureStorageBlobContainerEndpointUpdateProperties(endpointType, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureStorageBlobContainerEndpointUpdateProperties>.Write(ModelReaderWriterOptions options)

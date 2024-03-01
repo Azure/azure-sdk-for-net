@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IotHubRoutingSource source = default;
-            Optional<string> condition = default;
+            string condition = default;
             IList<string> endpointNames = default;
             bool isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubFallbackRouteProperties(name.Value, source, condition.Value, endpointNames, isEnabled, serializedAdditionalRawData);
+            return new IotHubFallbackRouteProperties(
+                name,
+                source,
+                condition,
+                endpointNames,
+                isEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubFallbackRouteProperties>.Write(ModelReaderWriterOptions options)

@@ -54,9 +54,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<bool> lowercase = default;
-            Optional<string> pattern = default;
-            Optional<string> flags = default;
+            bool? lowercase = default;
+            string pattern = default;
+            string flags = default;
             IList<string> stopwords = default;
             string odataType = default;
             string name = default;
@@ -106,7 +106,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PatternAnalyzer(odataType, name, Optional.ToNullable(lowercase), pattern.Value, flags.Value, stopwords ?? new ChangeTrackingList<string>());
+            return new PatternAnalyzer(
+                odataType,
+                name,
+                lowercase,
+                pattern,
+                flags,
+                stopwords ?? new ChangeTrackingList<string>());
         }
     }
 }

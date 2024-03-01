@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,9 +17,9 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<CallParticipantInternal> participant = default;
-            Optional<string> operationContext = default;
-            Optional<string> invitationId = default;
+            CallParticipantInternal participant = default;
+            string operationContext = default;
+            string invitationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("participant"u8))
@@ -43,7 +42,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new AddParticipantResponseInternal(participant.Value, operationContext.Value, invitationId.Value);
+            return new AddParticipantResponseInternal(participant, operationContext, invitationId);
         }
     }
 }

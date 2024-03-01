@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> providerType = default;
-            Optional<string> company = default;
-            Optional<string> defaultEndpoint = default;
-            Optional<ProviderPropertiesAad> aad = default;
-            Optional<ProviderPropertiesManagedApplication> managedApplication = default;
+            string description = default;
+            string providerType = default;
+            string company = default;
+            string defaultEndpoint = default;
+            ProviderPropertiesAad aad = default;
+            ProviderPropertiesManagedApplication managedApplication = default;
             IReadOnlyList<TargetDescription> targets = default;
             IReadOnlyList<SkuDescription> skus = default;
             IReadOnlyList<QuotaDimension> quotaDimensions = default;
@@ -248,7 +248,18 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderProperties(description.Value, providerType.Value, company.Value, defaultEndpoint.Value, aad.Value, managedApplication.Value, targets ?? new ChangeTrackingList<TargetDescription>(), skus ?? new ChangeTrackingList<SkuDescription>(), quotaDimensions ?? new ChangeTrackingList<QuotaDimension>(), pricingDimensions ?? new ChangeTrackingList<PricingDimension>(), serializedAdditionalRawData);
+            return new ProviderProperties(
+                description,
+                providerType,
+                company,
+                defaultEndpoint,
+                aad,
+                managedApplication,
+                targets ?? new ChangeTrackingList<TargetDescription>(),
+                skus ?? new ChangeTrackingList<SkuDescription>(),
+                quotaDimensions ?? new ChangeTrackingList<QuotaDimension>(),
+                pricingDimensions ?? new ChangeTrackingList<PricingDimension>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderProperties>.Write(ModelReaderWriterOptions options)

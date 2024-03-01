@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<AzureLocation> sourceRegion = default;
-            Optional<AzureLocation> targetRegion = default;
-            Optional<AzureLocation> moveRegion = default;
-            Optional<MoverProvisioningState> provisioningState = default;
-            Optional<string> version = default;
-            Optional<MoveType> moveType = default;
-            Optional<MoveCollectionPropertiesErrors> errors = default;
+            AzureLocation? sourceRegion = default;
+            AzureLocation? targetRegion = default;
+            AzureLocation? moveRegion = default;
+            MoverProvisioningState? provisioningState = default;
+            string version = default;
+            MoveType? moveType = default;
+            MoveCollectionPropertiesErrors errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceSetProperties(Optional.ToNullable(sourceRegion), Optional.ToNullable(targetRegion), Optional.ToNullable(moveRegion), Optional.ToNullable(provisioningState), version.Value, Optional.ToNullable(moveType), errors.Value, serializedAdditionalRawData);
+            return new MoverResourceSetProperties(
+                sourceRegion,
+                targetRegion,
+                moveRegion,
+                provisioningState,
+                version,
+                moveType,
+                errors,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceSetProperties>.Write(ModelReaderWriterOptions options)

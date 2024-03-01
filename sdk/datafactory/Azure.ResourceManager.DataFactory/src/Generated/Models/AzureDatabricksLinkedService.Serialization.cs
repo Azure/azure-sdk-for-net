@@ -257,29 +257,29 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> domain = default;
-            Optional<DataFactorySecretBaseDefinition> accessToken = default;
-            Optional<DataFactoryElement<string>> authentication = default;
-            Optional<DataFactoryElement<string>> workspaceResourceId = default;
-            Optional<DataFactoryElement<string>> existingClusterId = default;
-            Optional<DataFactoryElement<string>> instancePoolId = default;
-            Optional<DataFactoryElement<string>> newClusterVersion = default;
-            Optional<DataFactoryElement<string>> newClusterNumOfWorker = default;
-            Optional<DataFactoryElement<string>> newClusterNodeType = default;
-            Optional<IDictionary<string, BinaryData>> newClusterSparkConf = default;
-            Optional<IDictionary<string, BinaryData>> newClusterSparkEnvVars = default;
-            Optional<IDictionary<string, BinaryData>> newClusterCustomTags = default;
-            Optional<DataFactoryElement<string>> newClusterLogDestination = default;
-            Optional<DataFactoryElement<string>> newClusterDriverNodeType = default;
-            Optional<DataFactoryElement<IList<string>>> newClusterInitScripts = default;
-            Optional<DataFactoryElement<bool>> newClusterEnableElasticDisk = default;
-            Optional<string> encryptedCredential = default;
-            Optional<DataFactoryElement<string>> policyId = default;
-            Optional<DataFactoryCredentialReference> credential = default;
+            DataFactorySecretBaseDefinition accessToken = default;
+            DataFactoryElement<string> authentication = default;
+            DataFactoryElement<string> workspaceResourceId = default;
+            DataFactoryElement<string> existingClusterId = default;
+            DataFactoryElement<string> instancePoolId = default;
+            DataFactoryElement<string> newClusterVersion = default;
+            DataFactoryElement<string> newClusterNumOfWorker = default;
+            DataFactoryElement<string> newClusterNodeType = default;
+            IDictionary<string, BinaryData> newClusterSparkConf = default;
+            IDictionary<string, BinaryData> newClusterSparkEnvVars = default;
+            IDictionary<string, BinaryData> newClusterCustomTags = default;
+            DataFactoryElement<string> newClusterLogDestination = default;
+            DataFactoryElement<string> newClusterDriverNodeType = default;
+            DataFactoryElement<IList<string>> newClusterInitScripts = default;
+            DataFactoryElement<bool> newClusterEnableElasticDisk = default;
+            string encryptedCredential = default;
+            DataFactoryElement<string> policyId = default;
+            DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -552,7 +552,32 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDatabricksLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, domain, accessToken, authentication.Value, workspaceResourceId.Value, existingClusterId.Value, instancePoolId.Value, newClusterVersion.Value, newClusterNumOfWorker.Value, newClusterNodeType.Value, Optional.ToDictionary(newClusterSparkConf), Optional.ToDictionary(newClusterSparkEnvVars), Optional.ToDictionary(newClusterCustomTags), newClusterLogDestination.Value, newClusterDriverNodeType.Value, newClusterInitScripts.Value, newClusterEnableElasticDisk.Value, encryptedCredential.Value, policyId.Value, credential.Value);
+            return new AzureDatabricksLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                domain,
+                accessToken,
+                authentication,
+                workspaceResourceId,
+                existingClusterId,
+                instancePoolId,
+                newClusterVersion,
+                newClusterNumOfWorker,
+                newClusterNodeType,
+                newClusterSparkConf ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                newClusterSparkEnvVars ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                newClusterCustomTags ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                newClusterLogDestination,
+                newClusterDriverNodeType,
+                newClusterInitScripts,
+                newClusterEnableElasticDisk,
+                encryptedCredential,
+                policyId,
+                credential);
         }
 
         BinaryData IPersistableModel<AzureDatabricksLinkedService>.Write(ModelReaderWriterOptions options)

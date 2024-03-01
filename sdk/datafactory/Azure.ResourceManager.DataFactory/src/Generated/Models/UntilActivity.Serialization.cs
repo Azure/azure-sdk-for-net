@@ -120,13 +120,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             DataFactoryExpression expression = default;
-            Optional<DataFactoryElement<string>> timeout = default;
+            DataFactoryElement<string> timeout = default;
             IList<PipelineActivity> activities = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -232,7 +232,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UntilActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, expression, timeout.Value, activities);
+            return new UntilActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                expression,
+                timeout,
+                activities);
         }
 
         BinaryData IPersistableModel<UntilActivity>.Write(ModelReaderWriterOptions options)

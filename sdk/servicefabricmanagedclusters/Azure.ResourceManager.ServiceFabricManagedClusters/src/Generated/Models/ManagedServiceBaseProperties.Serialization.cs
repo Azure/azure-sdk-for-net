@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<string> placementConstraints = default;
+            string placementConstraints = default;
             IList<ManagedServiceCorrelation> correlationScheme = default;
             IList<ManagedServiceLoadMetric> serviceLoadMetrics = default;
             IList<ManagedServicePlacementPolicy> servicePlacementPolicies = default;
-            Optional<ServiceFabricManagedServiceMoveCost> defaultMoveCost = default;
+            ServiceFabricManagedServiceMoveCost? defaultMoveCost = default;
             IList<ManagedServiceScalingPolicy> scalingPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -200,7 +200,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServiceBaseProperties(placementConstraints.Value, correlationScheme ?? new ChangeTrackingList<ManagedServiceCorrelation>(), serviceLoadMetrics ?? new ChangeTrackingList<ManagedServiceLoadMetric>(), servicePlacementPolicies ?? new ChangeTrackingList<ManagedServicePlacementPolicy>(), Optional.ToNullable(defaultMoveCost), scalingPolicies ?? new ChangeTrackingList<ManagedServiceScalingPolicy>(), serializedAdditionalRawData);
+            return new ManagedServiceBaseProperties(
+                placementConstraints,
+                correlationScheme ?? new ChangeTrackingList<ManagedServiceCorrelation>(),
+                serviceLoadMetrics ?? new ChangeTrackingList<ManagedServiceLoadMetric>(),
+                servicePlacementPolicies ?? new ChangeTrackingList<ManagedServicePlacementPolicy>(),
+                defaultMoveCost,
+                scalingPolicies ?? new ChangeTrackingList<ManagedServiceScalingPolicy>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServiceBaseProperties>.Write(ModelReaderWriterOptions options)

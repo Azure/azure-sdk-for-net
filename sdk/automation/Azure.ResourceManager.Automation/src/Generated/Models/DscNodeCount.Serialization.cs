@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<DscNodeCountProperties> properties = default;
+            string name = default;
+            DscNodeCountProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscNodeCount(name.Value, properties.Value, serializedAdditionalRawData);
+            return new DscNodeCount(name, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscNodeCount>.Write(ModelReaderWriterOptions options)

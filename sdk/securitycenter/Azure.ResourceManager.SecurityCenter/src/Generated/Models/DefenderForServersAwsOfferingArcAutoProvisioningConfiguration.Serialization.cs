@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> proxy = default;
-            Optional<string> privateLinkScope = default;
+            string proxy = default;
+            string privateLinkScope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForServersAwsOfferingArcAutoProvisioningConfiguration(proxy.Value, privateLinkScope.Value, serializedAdditionalRawData);
+            return new DefenderForServersAwsOfferingArcAutoProvisioningConfiguration(proxy, privateLinkScope, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderForServersAwsOfferingArcAutoProvisioningConfiguration>.Write(ModelReaderWriterOptions options)

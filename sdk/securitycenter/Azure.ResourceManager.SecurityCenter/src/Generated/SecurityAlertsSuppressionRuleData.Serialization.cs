@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> alertType = default;
-            Optional<DateTimeOffset> lastModifiedUtc = default;
-            Optional<DateTimeOffset> expirationDateUtc = default;
-            Optional<string> reason = default;
-            Optional<SecurityAlertsSuppressionRuleState> state = default;
-            Optional<string> comment = default;
-            Optional<SuppressionAlertsScope> suppressionAlertsScope = default;
+            SystemData systemData = default;
+            string alertType = default;
+            DateTimeOffset? lastModifiedUtc = default;
+            DateTimeOffset? expirationDateUtc = default;
+            string reason = default;
+            SecurityAlertsSuppressionRuleState? state = default;
+            string comment = default;
+            SuppressionAlertsScope suppressionAlertsScope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,7 +232,19 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAlertsSuppressionRuleData(id, name, type, systemData.Value, alertType.Value, Optional.ToNullable(lastModifiedUtc), Optional.ToNullable(expirationDateUtc), reason.Value, Optional.ToNullable(state), comment.Value, suppressionAlertsScope.Value, serializedAdditionalRawData);
+            return new SecurityAlertsSuppressionRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                alertType,
+                lastModifiedUtc,
+                expirationDateUtc,
+                reason,
+                state,
+                comment,
+                suppressionAlertsScope,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAlertsSuppressionRuleData>.Write(ModelReaderWriterOptions options)

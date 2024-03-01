@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<Uri> requestUrl = default;
+            Uri requestUrl = default;
             IList<HeaderField> headers = default;
-            Optional<string> httpVerb = default;
-            Optional<string> requestBody = default;
-            Optional<bool> parseDependentRequests = default;
-            Optional<bool> followRedirects = default;
+            string httpVerb = default;
+            string requestBody = default;
+            bool? parseDependentRequests = default;
+            bool? followRedirects = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebTestPropertiesRequest(requestUrl.Value, headers ?? new ChangeTrackingList<HeaderField>(), httpVerb.Value, requestBody.Value, Optional.ToNullable(parseDependentRequests), Optional.ToNullable(followRedirects), serializedAdditionalRawData);
+            return new WebTestPropertiesRequest(
+                requestUrl,
+                headers ?? new ChangeTrackingList<HeaderField>(),
+                httpVerb,
+                requestBody,
+                parseDependentRequests,
+                followRedirects,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebTestPropertiesRequest>.Write(ModelReaderWriterOptions options)

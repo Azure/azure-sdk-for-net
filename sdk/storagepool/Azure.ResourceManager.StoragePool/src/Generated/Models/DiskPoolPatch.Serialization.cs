@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<string> managedBy = default;
+            string managedBy = default;
             IList<string> managedByExtended = default;
-            Optional<StoragePoolSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            StoragePoolSku sku = default;
+            IDictionary<string, string> tags = default;
             IList<WritableSubResource> disks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -192,7 +192,13 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolPatch(managedBy.Value, managedByExtended ?? new ChangeTrackingList<string>(), sku.Value, Optional.ToDictionary(tags), disks ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
+            return new DiskPoolPatch(
+                managedBy,
+                managedByExtended ?? new ChangeTrackingList<string>(),
+                sku,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                disks ?? new ChangeTrackingList<WritableSubResource>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolPatch>.Write(ModelReaderWriterOptions options)

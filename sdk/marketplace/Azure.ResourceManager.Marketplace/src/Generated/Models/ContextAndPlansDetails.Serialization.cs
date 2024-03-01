@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> context = default;
+            string context = default;
             IList<string> planIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContextAndPlansDetails(context.Value, planIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ContextAndPlansDetails(context, planIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContextAndPlansDetails>.Write(ModelReaderWriterOptions options)

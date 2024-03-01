@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             IList<string> preferredDataCenterRegion = default;
-            Optional<TransportPreferences> transportPreferences = default;
-            Optional<TransportPreferences> reverseTransportPreferences = default;
-            Optional<DataBoxEncryptionPreferences> encryptionPreferences = default;
+            TransportPreferences transportPreferences = default;
+            TransportPreferences reverseTransportPreferences = default;
+            DataBoxEncryptionPreferences encryptionPreferences = default;
             IList<string> storageAccountAccessTierPreferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -169,7 +169,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxOrderPreferences(preferredDataCenterRegion ?? new ChangeTrackingList<string>(), transportPreferences.Value, reverseTransportPreferences.Value, encryptionPreferences.Value, storageAccountAccessTierPreferences ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DataBoxOrderPreferences(
+                preferredDataCenterRegion ?? new ChangeTrackingList<string>(),
+                transportPreferences,
+                reverseTransportPreferences,
+                encryptionPreferences,
+                storageAccountAccessTierPreferences ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxOrderPreferences>.Write(ModelReaderWriterOptions options)

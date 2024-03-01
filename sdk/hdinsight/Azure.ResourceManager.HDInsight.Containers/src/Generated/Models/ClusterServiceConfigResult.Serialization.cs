@@ -119,14 +119,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<string> serviceName = default;
-            Optional<string> fileName = default;
-            Optional<string> content = default;
-            Optional<string> componentName = default;
-            Optional<string> type = default;
-            Optional<string> path = default;
-            Optional<IReadOnlyDictionary<string, string>> customKeys = default;
-            Optional<IReadOnlyDictionary<string, ClusterServiceConfigValueEntity>> defaultKeys = default;
+            string serviceName = default;
+            string fileName = default;
+            string content = default;
+            string componentName = default;
+            string type = default;
+            string path = default;
+            IReadOnlyDictionary<string, string> customKeys = default;
+            IReadOnlyDictionary<string, ClusterServiceConfigValueEntity> defaultKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +207,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterServiceConfigResult(serviceName.Value, fileName.Value, content.Value, componentName.Value, type.Value, path.Value, Optional.ToDictionary(customKeys), Optional.ToDictionary(defaultKeys), serializedAdditionalRawData);
+            return new ClusterServiceConfigResult(
+                serviceName,
+                fileName,
+                content,
+                componentName,
+                type,
+                path,
+                customKeys ?? new ChangeTrackingDictionary<string, string>(),
+                defaultKeys ?? new ChangeTrackingDictionary<string, ClusterServiceConfigValueEntity>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterServiceConfigResult>.Write(ModelReaderWriterOptions options)

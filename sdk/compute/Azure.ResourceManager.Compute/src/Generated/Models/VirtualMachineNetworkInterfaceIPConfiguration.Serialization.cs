@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            Optional<WritableSubResource> subnet = default;
-            Optional<bool> primary = default;
-            Optional<VirtualMachinePublicIPAddressConfiguration> publicIPAddressConfiguration = default;
-            Optional<IPVersion> privateIPAddressVersion = default;
+            WritableSubResource subnet = default;
+            bool? primary = default;
+            VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default;
+            IPVersion? privateIPAddressVersion = default;
             IList<WritableSubResource> applicationSecurityGroups = default;
             IList<WritableSubResource> applicationGatewayBackendAddressPools = default;
             IList<WritableSubResource> loadBalancerBackendAddressPools = default;
@@ -233,7 +233,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineNetworkInterfaceIPConfiguration(name, subnet, Optional.ToNullable(primary), publicIPAddressConfiguration.Value, Optional.ToNullable(privateIPAddressVersion), applicationSecurityGroups ?? new ChangeTrackingList<WritableSubResource>(), applicationGatewayBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(), loadBalancerBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
+            return new VirtualMachineNetworkInterfaceIPConfiguration(
+                name,
+                subnet,
+                primary,
+                publicIPAddressConfiguration,
+                privateIPAddressVersion,
+                applicationSecurityGroups ?? new ChangeTrackingList<WritableSubResource>(),
+                applicationGatewayBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),
+                loadBalancerBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineNetworkInterfaceIPConfiguration>.Write(ModelReaderWriterOptions options)

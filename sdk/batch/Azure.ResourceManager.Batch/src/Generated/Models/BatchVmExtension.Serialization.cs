@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.Batch.Models
             string name = default;
             string publisher = default;
             string type = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<bool> enableAutomaticUpgrade = default;
-            Optional<BinaryData> settings = default;
-            Optional<BinaryData> protectedSettings = default;
+            string typeHandlerVersion = default;
+            bool? autoUpgradeMinorVersion = default;
+            bool? enableAutomaticUpgrade = default;
+            BinaryData settings = default;
+            BinaryData protectedSettings = default;
             IList<string> provisionAfterExtensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -208,7 +208,17 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchVmExtension(name, publisher, type, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisionAfterExtensions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new BatchVmExtension(
+                name,
+                publisher,
+                type,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                enableAutomaticUpgrade,
+                settings,
+                protectedSettings,
+                provisionAfterExtensions ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchVmExtension>.Write(ModelReaderWriterOptions options)

@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<int>> blockSizeInMB = default;
+            DataFactoryElement<int> blockSizeInMB = default;
             string type = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
-            Optional<DataFactoryElement<string>> copyBehavior = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
+            DataFactoryElement<string> copyBehavior = default;
             IList<DataFactoryMetadataItemInfo> metadata = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobStorageWriteSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, copyBehavior.Value, metadata ?? new ChangeTrackingList<DataFactoryMetadataItemInfo>(), additionalProperties, blockSizeInMB.Value);
+            return new AzureBlobStorageWriteSettings(
+                type,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                copyBehavior,
+                metadata ?? new ChangeTrackingList<DataFactoryMetadataItemInfo>(),
+                additionalProperties,
+                blockSizeInMB);
         }
 
         BinaryData IPersistableModel<AzureBlobStorageWriteSettings>.Write(ModelReaderWriterOptions options)

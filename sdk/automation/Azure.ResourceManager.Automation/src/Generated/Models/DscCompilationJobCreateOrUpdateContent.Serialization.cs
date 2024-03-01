@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string name = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
             DscConfigurationAssociationProperty configuration = default;
-            Optional<IDictionary<string, string>> parameters = default;
-            Optional<bool> incrementNodeConfigurationBuild = default;
+            IDictionary<string, string> parameters = default;
+            bool? incrementNodeConfigurationBuild = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,14 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscCompilationJobCreateOrUpdateContent(name.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), configuration, Optional.ToDictionary(parameters), Optional.ToNullable(incrementNodeConfigurationBuild), serializedAdditionalRawData);
+            return new DscCompilationJobCreateOrUpdateContent(
+                name,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                configuration,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                incrementNodeConfigurationBuild,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscCompilationJobCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

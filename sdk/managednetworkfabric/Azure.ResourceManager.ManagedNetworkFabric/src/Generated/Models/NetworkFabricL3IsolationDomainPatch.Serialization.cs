@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> annotation = default;
-            Optional<RedistributeConnectedSubnet> redistributeConnectedSubnets = default;
-            Optional<RedistributeStaticRoute> redistributeStaticRoutes = default;
-            Optional<AggregateRouteConfiguration> aggregateRouteConfiguration = default;
-            Optional<ConnectedSubnetRoutePolicy> connectedSubnetRoutePolicy = default;
+            IDictionary<string, string> tags = default;
+            string annotation = default;
+            RedistributeConnectedSubnet? redistributeConnectedSubnets = default;
+            RedistributeStaticRoute? redistributeStaticRoutes = default;
+            AggregateRouteConfiguration aggregateRouteConfiguration = default;
+            ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricL3IsolationDomainPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, annotation.Value, Optional.ToNullable(redistributeConnectedSubnets), Optional.ToNullable(redistributeStaticRoutes), aggregateRouteConfiguration.Value, connectedSubnetRoutePolicy.Value);
+            return new NetworkFabricL3IsolationDomainPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                annotation,
+                redistributeConnectedSubnets,
+                redistributeStaticRoutes,
+                aggregateRouteConfiguration,
+                connectedSubnetRoutePolicy);
         }
 
         BinaryData IPersistableModel<NetworkFabricL3IsolationDomainPatch>.Write(ModelReaderWriterOptions options)

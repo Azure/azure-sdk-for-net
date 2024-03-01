@@ -145,21 +145,21 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<PurviewAccountStatus> accountStatus = default;
-            Optional<CloudConnectors> cloudConnectors = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<string> createdBy = default;
-            Optional<string> createdByObjectId = default;
-            Optional<PurviewAccountEndpoint> endpoints = default;
-            Optional<string> friendlyName = default;
-            Optional<PurviewIngestionStorage> ingestionStorage = default;
-            Optional<PurviewManagedEventHubState> managedEventHubState = default;
-            Optional<string> managedResourceGroupName = default;
-            Optional<PurviewManagedResource> managedResources = default;
-            Optional<ManagedResourcesPublicNetworkAccess> managedResourcesPublicNetworkAccess = default;
+            PurviewAccountStatus accountStatus = default;
+            CloudConnectors cloudConnectors = default;
+            DateTimeOffset? createdAt = default;
+            string createdBy = default;
+            string createdByObjectId = default;
+            PurviewAccountEndpoint endpoints = default;
+            string friendlyName = default;
+            PurviewIngestionStorage ingestionStorage = default;
+            PurviewManagedEventHubState? managedEventHubState = default;
+            string managedResourceGroupName = default;
+            PurviewManagedResource managedResources = default;
+            ManagedResourcesPublicNetworkAccess? managedResourcesPublicNetworkAccess = default;
             IReadOnlyList<PurviewPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<PurviewProvisioningState> provisioningState = default;
-            Optional<PurviewPublicNetworkAccess> publicNetworkAccess = default;
+            PurviewProvisioningState? provisioningState = default;
+            PurviewPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -294,7 +294,23 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewAccountProperties(accountStatus.Value, cloudConnectors.Value, Optional.ToNullable(createdAt), createdBy.Value, createdByObjectId.Value, endpoints.Value, friendlyName.Value, ingestionStorage.Value, Optional.ToNullable(managedEventHubState), managedResourceGroupName.Value, managedResources.Value, Optional.ToNullable(managedResourcesPublicNetworkAccess), privateEndpointConnections ?? new ChangeTrackingList<PurviewPrivateEndpointConnectionData>(), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new PurviewAccountProperties(
+                accountStatus,
+                cloudConnectors,
+                createdAt,
+                createdBy,
+                createdByObjectId,
+                endpoints,
+                friendlyName,
+                ingestionStorage,
+                managedEventHubState,
+                managedResourceGroupName,
+                managedResources,
+                managedResourcesPublicNetworkAccess,
+                privateEndpointConnections ?? new ChangeTrackingList<PurviewPrivateEndpointConnectionData>(),
+                provisioningState,
+                publicNetworkAccess,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewAccountProperties>.Write(ModelReaderWriterOptions options)

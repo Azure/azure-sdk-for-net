@@ -283,40 +283,40 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<BatchAccountPoolProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> provisioningStateTransitionTime = default;
-            Optional<BatchAccountPoolAllocationState> allocationState = default;
-            Optional<DateTimeOffset> allocationStateTransitionTime = default;
-            Optional<string> vmSize = default;
-            Optional<BatchDeploymentConfiguration> deploymentConfiguration = default;
-            Optional<int> currentDedicatedNodes = default;
-            Optional<int> currentLowPriorityNodes = default;
-            Optional<BatchAccountPoolScaleSettings> scaleSettings = default;
-            Optional<BatchAccountPoolAutoScaleRun> autoScaleRun = default;
-            Optional<InterNodeCommunicationState> interNodeCommunication = default;
-            Optional<BatchNetworkConfiguration> networkConfiguration = default;
-            Optional<int> taskSlotsPerNode = default;
-            Optional<TaskSchedulingPolicy> taskSchedulingPolicy = default;
+            SystemData systemData = default;
+            string displayName = default;
+            DateTimeOffset? lastModified = default;
+            DateTimeOffset? creationTime = default;
+            BatchAccountPoolProvisioningState? provisioningState = default;
+            DateTimeOffset? provisioningStateTransitionTime = default;
+            BatchAccountPoolAllocationState? allocationState = default;
+            DateTimeOffset? allocationStateTransitionTime = default;
+            string vmSize = default;
+            BatchDeploymentConfiguration deploymentConfiguration = default;
+            int? currentDedicatedNodes = default;
+            int? currentLowPriorityNodes = default;
+            BatchAccountPoolScaleSettings scaleSettings = default;
+            BatchAccountPoolAutoScaleRun autoScaleRun = default;
+            InterNodeCommunicationState? interNodeCommunication = default;
+            BatchNetworkConfiguration networkConfiguration = default;
+            int? taskSlotsPerNode = default;
+            TaskSchedulingPolicy taskSchedulingPolicy = default;
             IList<BatchUserAccount> userAccounts = default;
             IList<BatchAccountPoolMetadataItem> metadata = default;
-            Optional<BatchAccountPoolStartTask> startTask = default;
+            BatchAccountPoolStartTask startTask = default;
             IList<BatchCertificateReference> certificates = default;
             IList<BatchApplicationPackageReference> applicationPackages = default;
             IList<string> applicationLicenses = default;
-            Optional<BatchResizeOperationStatus> resizeOperationStatus = default;
+            BatchResizeOperationStatus resizeOperationStatus = default;
             IList<BatchMountConfiguration> mountConfiguration = default;
-            Optional<NodeCommunicationMode> targetNodeCommunicationMode = default;
-            Optional<NodeCommunicationMode?> currentNodeCommunicationMode = default;
-            Optional<IDictionary<string, string>> resourceTags = default;
+            NodeCommunicationMode? targetNodeCommunicationMode = default;
+            NodeCommunicationMode? currentNodeCommunicationMode = default;
+            IDictionary<string, string> resourceTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -661,7 +661,42 @@ namespace Azure.ResourceManager.Batch
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountPoolData(id, name, type, systemData.Value, identity, displayName.Value, Optional.ToNullable(lastModified), Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(provisioningStateTransitionTime), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), vmSize.Value, deploymentConfiguration.Value, Optional.ToNullable(currentDedicatedNodes), Optional.ToNullable(currentLowPriorityNodes), scaleSettings.Value, autoScaleRun.Value, Optional.ToNullable(interNodeCommunication), networkConfiguration.Value, Optional.ToNullable(taskSlotsPerNode), taskSchedulingPolicy.Value, userAccounts ?? new ChangeTrackingList<BatchUserAccount>(), metadata ?? new ChangeTrackingList<BatchAccountPoolMetadataItem>(), startTask.Value, certificates ?? new ChangeTrackingList<BatchCertificateReference>(), applicationPackages ?? new ChangeTrackingList<BatchApplicationPackageReference>(), applicationLicenses ?? new ChangeTrackingList<string>(), resizeOperationStatus.Value, mountConfiguration ?? new ChangeTrackingList<BatchMountConfiguration>(), Optional.ToNullable(targetNodeCommunicationMode), Optional.ToNullable(currentNodeCommunicationMode), Optional.ToDictionary(resourceTags), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new BatchAccountPoolData(
+                id,
+                name,
+                type,
+                systemData,
+                identity,
+                displayName,
+                lastModified,
+                creationTime,
+                provisioningState,
+                provisioningStateTransitionTime,
+                allocationState,
+                allocationStateTransitionTime,
+                vmSize,
+                deploymentConfiguration,
+                currentDedicatedNodes,
+                currentLowPriorityNodes,
+                scaleSettings,
+                autoScaleRun,
+                interNodeCommunication,
+                networkConfiguration,
+                taskSlotsPerNode,
+                taskSchedulingPolicy,
+                userAccounts ?? new ChangeTrackingList<BatchUserAccount>(),
+                metadata ?? new ChangeTrackingList<BatchAccountPoolMetadataItem>(),
+                startTask,
+                certificates ?? new ChangeTrackingList<BatchCertificateReference>(),
+                applicationPackages ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
+                applicationLicenses ?? new ChangeTrackingList<string>(),
+                resizeOperationStatus,
+                mountConfiguration ?? new ChangeTrackingList<BatchMountConfiguration>(),
+                targetNodeCommunicationMode,
+                currentNodeCommunicationMode,
+                resourceTags ?? new ChangeTrackingDictionary<string, string>(),
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountPoolData>.Write(ModelReaderWriterOptions options)

@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> minimumTimeStamp = default;
-            Optional<DateTimeOffset> maximumTimeStamp = default;
-            Optional<string> include = default;
+            SystemData systemData = default;
+            DateTimeOffset? minimumTimeStamp = default;
+            DateTimeOffset? maximumTimeStamp = default;
+            string include = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TriggerSupportPackageContent(id, name, type, systemData.Value, Optional.ToNullable(minimumTimeStamp), Optional.ToNullable(maximumTimeStamp), include.Value, serializedAdditionalRawData);
+            return new TriggerSupportPackageContent(
+                id,
+                name,
+                type,
+                systemData,
+                minimumTimeStamp,
+                maximumTimeStamp,
+                include,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TriggerSupportPackageContent>.Write(ModelReaderWriterOptions options)

@@ -199,28 +199,28 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ArmDeploymentScriptManagedIdentity> identity = default;
+            ArmDeploymentScriptManagedIdentity identity = default;
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ScriptType kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerConfiguration> containerSettings = default;
-            Optional<ScriptStorageConfiguration> storageAccountSettings = default;
-            Optional<ScriptCleanupOptions> cleanupPreference = default;
-            Optional<ScriptProvisioningState> provisioningState = default;
-            Optional<ScriptStatus> status = default;
-            Optional<BinaryData> outputs = default;
-            Optional<Uri> primaryScriptUri = default;
+            SystemData systemData = default;
+            ContainerConfiguration containerSettings = default;
+            ScriptStorageConfiguration storageAccountSettings = default;
+            ScriptCleanupOptions? cleanupPreference = default;
+            ScriptProvisioningState? provisioningState = default;
+            ScriptStatus status = default;
+            BinaryData outputs = default;
+            Uri primaryScriptUri = default;
             IList<Uri> supportingScriptUris = default;
-            Optional<string> scriptContent = default;
-            Optional<string> arguments = default;
+            string scriptContent = default;
+            string arguments = default;
             IList<ScriptEnvironmentVariable> environmentVariables = default;
-            Optional<string> forceUpdateTag = default;
+            string forceUpdateTag = default;
             TimeSpan retentionInterval = default;
-            Optional<TimeSpan> timeout = default;
+            TimeSpan? timeout = default;
             string azPowerShellVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -433,7 +433,31 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzurePowerShellScript(id, name, type, systemData.Value, identity.Value, location, Optional.ToDictionary(tags), kind, serializedAdditionalRawData, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, outputs.Value, primaryScriptUri.Value, supportingScriptUris ?? new ChangeTrackingList<Uri>(), scriptContent.Value, arguments.Value, environmentVariables ?? new ChangeTrackingList<ScriptEnvironmentVariable>(), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azPowerShellVersion);
+            return new AzurePowerShellScript(
+                id,
+                name,
+                type,
+                systemData,
+                identity,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                kind,
+                serializedAdditionalRawData,
+                containerSettings,
+                storageAccountSettings,
+                cleanupPreference,
+                provisioningState,
+                status,
+                outputs,
+                primaryScriptUri,
+                supportingScriptUris ?? new ChangeTrackingList<Uri>(),
+                scriptContent,
+                arguments,
+                environmentVariables ?? new ChangeTrackingList<ScriptEnvironmentVariable>(),
+                forceUpdateTag,
+                retentionInterval,
+                timeout,
+                azPowerShellVersion);
         }
 
         BinaryData IPersistableModel<AzurePowerShellScript>.Write(ModelReaderWriterOptions options)

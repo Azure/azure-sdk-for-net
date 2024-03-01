@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SqlServerKeyType> serverKeyType = default;
-            Optional<Uri> uri = default;
-            Optional<string> thumbprint = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<bool> autoRotationEnabled = default;
+            SystemData systemData = default;
+            SqlServerKeyType? serverKeyType = default;
+            Uri uri = default;
+            string thumbprint = default;
+            DateTimeOffset? creationDate = default;
+            bool? autoRotationEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceKeyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(creationDate), Optional.ToNullable(autoRotationEnabled), serializedAdditionalRawData);
+            return new ManagedInstanceKeyData(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serverKeyType,
+                uri,
+                thumbprint,
+                creationDate,
+                autoRotationEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceKeyData>.Write(ModelReaderWriterOptions options)

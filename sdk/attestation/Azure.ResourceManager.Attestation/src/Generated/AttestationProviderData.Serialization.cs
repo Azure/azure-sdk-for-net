@@ -132,16 +132,16 @@ namespace Azure.ResourceManager.Attestation
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> trustModel = default;
-            Optional<AttestationServiceStatus> status = default;
-            Optional<Uri> attestUri = default;
-            Optional<PublicNetworkAccessType> publicNetworkAccess = default;
+            SystemData systemData = default;
+            string trustModel = default;
+            AttestationServiceStatus? status = default;
+            Uri attestUri = default;
+            PublicNetworkAccessType? publicNetworkAccess = default;
             IReadOnlyList<AttestationPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.Attestation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttestationProviderData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, trustModel.Value, Optional.ToNullable(status), attestUri.Value, Optional.ToNullable(publicNetworkAccess), privateEndpointConnections ?? new ChangeTrackingList<AttestationPrivateEndpointConnectionData>(), serializedAdditionalRawData);
+            return new AttestationProviderData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                trustModel,
+                status,
+                attestUri,
+                publicNetworkAccess,
+                privateEndpointConnections ?? new ChangeTrackingList<AttestationPrivateEndpointConnectionData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationProviderData>.Write(ModelReaderWriterOptions options)

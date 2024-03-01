@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<DigitalTwinsPatchProperties> properties = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            DigitalTwinsPatchProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsDescriptionPatch(Optional.ToDictionary(tags), identity, properties.Value, serializedAdditionalRawData);
+            return new DigitalTwinsDescriptionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsDescriptionPatch>.Write(ModelReaderWriterOptions options)

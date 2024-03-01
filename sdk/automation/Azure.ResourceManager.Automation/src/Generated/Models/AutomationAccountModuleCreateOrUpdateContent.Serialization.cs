@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string name = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
             AutomationContentLink contentLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAccountModuleCreateOrUpdateContent(name.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), contentLink, serializedAdditionalRawData);
+            return new AutomationAccountModuleCreateOrUpdateContent(name, location, tags ?? new ChangeTrackingDictionary<string, string>(), contentLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAccountModuleCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

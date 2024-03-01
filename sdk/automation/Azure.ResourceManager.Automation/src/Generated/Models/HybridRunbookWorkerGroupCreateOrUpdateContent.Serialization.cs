@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<RunAsCredentialAssociationProperty> credential = default;
+            string name = default;
+            RunAsCredentialAssociationProperty credential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridRunbookWorkerGroupCreateOrUpdateContent(name.Value, credential.Value, serializedAdditionalRawData);
+            return new HybridRunbookWorkerGroupCreateOrUpdateContent(name, credential, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridRunbookWorkerGroupCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

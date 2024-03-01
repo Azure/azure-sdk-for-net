@@ -190,21 +190,21 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> endpointName = default;
+            SystemData systemData = default;
+            string endpointName = default;
             IList<FrontDoorActivatedResourceInfo> customDomains = default;
-            Optional<WritableSubResource> originGroup = default;
-            Optional<string> originPath = default;
+            WritableSubResource originGroup = default;
+            string originPath = default;
             IList<WritableSubResource> ruleSets = default;
             IList<FrontDoorEndpointProtocol> supportedProtocols = default;
             IList<string> patternsToMatch = default;
-            Optional<FrontDoorRouteCacheConfiguration> cacheConfiguration = default;
-            Optional<ForwardingProtocol> forwardingProtocol = default;
-            Optional<LinkToDefaultDomain> linkToDefaultDomain = default;
-            Optional<HttpsRedirect> httpsRedirect = default;
-            Optional<EnabledState> enabledState = default;
-            Optional<FrontDoorProvisioningState> provisioningState = default;
-            Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
+            FrontDoorRouteCacheConfiguration cacheConfiguration = default;
+            ForwardingProtocol? forwardingProtocol = default;
+            LinkToDefaultDomain? linkToDefaultDomain = default;
+            HttpsRedirect? httpsRedirect = default;
+            EnabledState? enabledState = default;
+            FrontDoorProvisioningState? provisioningState = default;
+            FrontDoorDeploymentStatus? deploymentStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -390,7 +390,26 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorRouteData(id, name, type, systemData.Value, endpointName.Value, customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>(), originGroup, originPath.Value, ruleSets ?? new ChangeTrackingList<WritableSubResource>(), supportedProtocols ?? new ChangeTrackingList<FrontDoorEndpointProtocol>(), patternsToMatch ?? new ChangeTrackingList<string>(), cacheConfiguration.Value, Optional.ToNullable(forwardingProtocol), Optional.ToNullable(linkToDefaultDomain), Optional.ToNullable(httpsRedirect), Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), serializedAdditionalRawData);
+            return new FrontDoorRouteData(
+                id,
+                name,
+                type,
+                systemData,
+                endpointName,
+                customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>(),
+                originGroup,
+                originPath,
+                ruleSets ?? new ChangeTrackingList<WritableSubResource>(),
+                supportedProtocols ?? new ChangeTrackingList<FrontDoorEndpointProtocol>(),
+                patternsToMatch ?? new ChangeTrackingList<string>(),
+                cacheConfiguration,
+                forwardingProtocol,
+                linkToDefaultDomain,
+                httpsRedirect,
+                enabledState,
+                provisioningState,
+                deploymentStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorRouteData>.Write(ModelReaderWriterOptions options)

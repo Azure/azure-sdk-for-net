@@ -163,24 +163,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
-            Optional<string> hostName = default;
-            Optional<string> serialNumber = default;
-            Optional<string> version = default;
-            Optional<string> networkDeviceSku = default;
-            Optional<NetworkDeviceRole> networkDeviceRole = default;
-            Optional<ResourceIdentifier> networkRackId = default;
-            Optional<IPAddress> managementIPv4Address = default;
-            Optional<string> managementIPv6Address = default;
-            Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            SystemData systemData = default;
+            string annotation = default;
+            string hostName = default;
+            string serialNumber = default;
+            string version = default;
+            string networkDeviceSku = default;
+            NetworkDeviceRole? networkDeviceRole = default;
+            ResourceIdentifier networkRackId = default;
+            IPAddress managementIPv4Address = default;
+            string managementIPv6Address = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -330,7 +330,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkDeviceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, hostName.Value, serialNumber.Value, version.Value, networkDeviceSku.Value, Optional.ToNullable(networkDeviceRole), networkRackId.Value, managementIPv4Address.Value, managementIPv6Address.Value, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkDeviceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation,
+                hostName,
+                serialNumber,
+                version,
+                networkDeviceSku,
+                networkDeviceRole,
+                networkRackId,
+                managementIPv4Address,
+                managementIPv6Address,
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkDeviceData>.Write(ModelReaderWriterOptions options)

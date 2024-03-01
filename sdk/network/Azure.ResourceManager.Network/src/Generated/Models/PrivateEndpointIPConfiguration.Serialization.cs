@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<ETag> etag = default;
-            Optional<string> groupId = default;
-            Optional<string> memberName = default;
-            Optional<IPAddress> privateIPAddress = default;
+            string name = default;
+            string type = default;
+            ETag? etag = default;
+            string groupId = default;
+            string memberName = default;
+            IPAddress privateIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointIPConfiguration(name.Value, type.Value, Optional.ToNullable(etag), groupId.Value, memberName.Value, privateIPAddress.Value, serializedAdditionalRawData);
+            return new PrivateEndpointIPConfiguration(
+                name,
+                type,
+                etag,
+                groupId,
+                memberName,
+                privateIPAddress,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateEndpointIPConfiguration>.Write(ModelReaderWriterOptions options)

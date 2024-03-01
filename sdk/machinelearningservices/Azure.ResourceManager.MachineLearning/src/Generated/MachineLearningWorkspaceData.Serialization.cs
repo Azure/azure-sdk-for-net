@@ -338,52 +338,52 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> kind = default;
-            Optional<MachineLearningSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            string kind = default;
+            MachineLearningSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> allowPublicAccessWhenBehindVnet = default;
-            Optional<string> applicationInsights = default;
+            SystemData systemData = default;
+            bool? allowPublicAccessWhenBehindVnet = default;
+            string applicationInsights = default;
             IList<string> associatedWorkspaces = default;
             IList<string> containerRegistries = default;
-            Optional<string> containerRegistry = default;
-            Optional<string> description = default;
-            Optional<Uri> discoveryUrl = default;
-            Optional<bool> enableDataIsolation = default;
-            Optional<MachineLearningEncryptionSetting> encryption = default;
+            string containerRegistry = default;
+            string description = default;
+            Uri discoveryUrl = default;
+            bool? enableDataIsolation = default;
+            MachineLearningEncryptionSetting encryption = default;
             IList<string> existingWorkspaces = default;
-            Optional<FeatureStoreSettings> featureStoreSettings = default;
-            Optional<string> friendlyName = default;
-            Optional<bool> hbiWorkspace = default;
-            Optional<ResourceIdentifier> hubResourceId = default;
-            Optional<string> imageBuildCompute = default;
-            Optional<string> keyVault = default;
+            FeatureStoreSettings featureStoreSettings = default;
+            string friendlyName = default;
+            bool? hbiWorkspace = default;
+            ResourceIdentifier hubResourceId = default;
+            string imageBuildCompute = default;
+            string keyVault = default;
             IList<string> keyVaults = default;
-            Optional<ManagedNetworkSettings> managedNetwork = default;
-            Optional<Uri> mlFlowTrackingUri = default;
-            Optional<MachineLearningNotebookResourceInfo> notebookInfo = default;
-            Optional<string> primaryUserAssignedIdentity = default;
+            ManagedNetworkSettings managedNetwork = default;
+            Uri mlFlowTrackingUri = default;
+            MachineLearningNotebookResourceInfo notebookInfo = default;
+            string primaryUserAssignedIdentity = default;
             IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<int> privateLinkCount = default;
-            Optional<MachineLearningProvisioningState> provisioningState = default;
-            Optional<MachineLearningPublicNetworkAccessType> publicNetworkAccess = default;
-            Optional<ServiceManagedResourcesSettings> serviceManagedResourcesSettings = default;
-            Optional<string> serviceProvisionedResourceGroup = default;
+            int? privateLinkCount = default;
+            MachineLearningProvisioningState? provisioningState = default;
+            MachineLearningPublicNetworkAccessType? publicNetworkAccess = default;
+            ServiceManagedResourcesSettings serviceManagedResourcesSettings = default;
+            string serviceProvisionedResourceGroup = default;
             IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources = default;
-            Optional<int> softDeleteRetentionInDays = default;
-            Optional<string> storageAccount = default;
+            int? softDeleteRetentionInDays = default;
+            string storageAccount = default;
             IList<string> storageAccounts = default;
-            Optional<bool> storageHnsEnabled = default;
-            Optional<string> systemDatastoresAuthMode = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> v1LegacyMode = default;
-            Optional<WorkspaceHubConfig> workspaceHubConfig = default;
-            Optional<string> workspaceId = default;
+            bool? storageHnsEnabled = default;
+            string systemDatastoresAuthMode = default;
+            Guid? tenantId = default;
+            bool? v1LegacyMode = default;
+            WorkspaceHubConfig workspaceHubConfig = default;
+            string workspaceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -797,7 +797,54 @@ namespace Azure.ResourceManager.MachineLearning
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, sku.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), applicationInsights.Value, associatedWorkspaces ?? new ChangeTrackingList<string>(), containerRegistries ?? new ChangeTrackingList<string>(), containerRegistry.Value, description.Value, discoveryUrl.Value, Optional.ToNullable(enableDataIsolation), encryption.Value, existingWorkspaces ?? new ChangeTrackingList<string>(), featureStoreSettings.Value, friendlyName.Value, Optional.ToNullable(hbiWorkspace), hubResourceId.Value, imageBuildCompute.Value, keyVault.Value, keyVaults ?? new ChangeTrackingList<string>(), managedNetwork.Value, mlFlowTrackingUri.Value, notebookInfo.Value, primaryUserAssignedIdentity.Value, privateEndpointConnections ?? new ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>(), Optional.ToNullable(privateLinkCount), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), serviceManagedResourcesSettings.Value, serviceProvisionedResourceGroup.Value, sharedPrivateLinkResources ?? new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>(), Optional.ToNullable(softDeleteRetentionInDays), storageAccount.Value, storageAccounts ?? new ChangeTrackingList<string>(), Optional.ToNullable(storageHnsEnabled), systemDatastoresAuthMode.Value, Optional.ToNullable(tenantId), Optional.ToNullable(v1LegacyMode), workspaceHubConfig.Value, workspaceId.Value, serializedAdditionalRawData);
+            return new MachineLearningWorkspaceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                kind,
+                sku,
+                allowPublicAccessWhenBehindVnet,
+                applicationInsights,
+                associatedWorkspaces ?? new ChangeTrackingList<string>(),
+                containerRegistries ?? new ChangeTrackingList<string>(),
+                containerRegistry,
+                description,
+                discoveryUrl,
+                enableDataIsolation,
+                encryption,
+                existingWorkspaces ?? new ChangeTrackingList<string>(),
+                featureStoreSettings,
+                friendlyName,
+                hbiWorkspace,
+                hubResourceId,
+                imageBuildCompute,
+                keyVault,
+                keyVaults ?? new ChangeTrackingList<string>(),
+                managedNetwork,
+                mlFlowTrackingUri,
+                notebookInfo,
+                primaryUserAssignedIdentity,
+                privateEndpointConnections ?? new ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>(),
+                privateLinkCount,
+                provisioningState,
+                publicNetworkAccess,
+                serviceManagedResourcesSettings,
+                serviceProvisionedResourceGroup,
+                sharedPrivateLinkResources ?? new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>(),
+                softDeleteRetentionInDays,
+                storageAccount,
+                storageAccounts ?? new ChangeTrackingList<string>(),
+                storageHnsEnabled,
+                systemDatastoresAuthMode,
+                tenantId,
+                v1LegacyMode,
+                workspaceHubConfig,
+                workspaceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceData>.Write(ModelReaderWriterOptions options)

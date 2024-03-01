@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> organizationId = default;
-            Optional<string> organizationName = default;
-            Optional<NewRelicObservabilityBillingSource> billingSource = default;
+            SystemData systemData = default;
+            string organizationId = default;
+            string organizationName = default;
+            NewRelicObservabilityBillingSource? billingSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicOrganizationResourceData(id, name, type, systemData.Value, organizationId.Value, organizationName.Value, Optional.ToNullable(billingSource), serializedAdditionalRawData);
+            return new NewRelicOrganizationResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                organizationId,
+                organizationName,
+                billingSource,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicOrganizationResourceData>.Write(ModelReaderWriterOptions options)

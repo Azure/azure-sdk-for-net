@@ -129,17 +129,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<ActivityDependency> dependsOn = default;
             IList<UserProperty> userProperties = default;
             object notebookPath = default;
-            Optional<IDictionary<string, object>> baseParameters = default;
+            IDictionary<string, object> baseParameters = default;
             IList<IDictionary<string, object>> libraries = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -298,7 +298,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatabricksNotebookActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, notebookPath, Optional.ToDictionary(baseParameters), libraries ?? new ChangeTrackingList<IDictionary<string, object>>());
+            return new DatabricksNotebookActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                notebookPath,
+                baseParameters ?? new ChangeTrackingDictionary<string, object>(),
+                libraries ?? new ChangeTrackingList<IDictionary<string, object>>());
         }
 
         internal partial class DatabricksNotebookActivityConverter : JsonConverter<DatabricksNotebookActivity>

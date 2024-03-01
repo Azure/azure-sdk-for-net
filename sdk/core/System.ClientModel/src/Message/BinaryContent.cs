@@ -9,22 +9,34 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel;
 
+/// <summary>
+/// Represents binary content that can be sent to a cloud service as part of
+/// a <see cref="PipelineRequest"/>.
+/// </summary>
 public abstract class BinaryContent : IDisposable
 {
     private static readonly ModelReaderWriterOptions ModelWriteWireOptions = new ModelReaderWriterOptions("W");
 
     /// <summary>
-    /// Creates an instance of <see cref="BinaryContent"/> that wraps a <see cref="BinaryData"/>.
+    /// Creates an instance of <see cref="BinaryContent"/> that contains the
+    /// bytes held in the provided <see cref="BinaryData"/> instance.
     /// </summary>
-    /// <param name="value">The <see cref="BinaryData"/> to use.</param>
-    /// <returns>An instance of <see cref="BinaryContent"/> that wraps a <see cref="BinaryData"/>.</returns>
-    public static BinaryContent Create(BinaryData value) => new BinaryDataBinaryContent(value.ToMemory());
+    /// <param name="value">The <see cref="BinaryData"/> containing the bytes
+    /// this <see cref="BinaryContent"/> will hold.</param>
+    /// <returns>An an instance of <see cref="BinaryContent"/> that contains the
+    /// bytes held in the provided <see cref="BinaryData"/> instance.</returns>
+    public static BinaryContent Create(BinaryData value)
+        => new BinaryDataBinaryContent(value.ToMemory());
 
     /// <summary>
-    /// Creates an instance of <see cref="BinaryContent"/> that wraps a <see cref="IPersistableModel{T}"/>.
+    /// Creates an instance of <see cref="BinaryContent"/> that contains the
+    /// bytes resulting from writing the value of the provided
+    /// <see cref="IPersistableModel{T}"/>.
     /// </summary>
     /// <param name="model">The <see cref="IPersistableModel{T}"/> to write.</param>
-    /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+    /// <param name="options">The <see cref="ModelReaderWriterOptions"/>, if any,
+    /// that indicates what format the <paramref name="model"/> will be written in.
+    /// </param>
     /// <returns>An instance of <see cref="BinaryContent"/> that wraps a <see cref="IPersistableModel{T}"/>.</returns>
     public static BinaryContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
         => new ModelBinaryContent<T>(model, options ?? ModelWriteWireOptions);
@@ -36,17 +48,21 @@ public abstract class BinaryContent : IDisposable
     public abstract bool TryComputeLength(out long length);
 
     /// <summary>
-    /// Writes contents of this object to an instance of <see cref="Stream"/>.
+    /// Writes contents of this <see cref="BinaryContent"/> instance to the
+    /// provided <see cref="Stream"/>.
     /// </summary>
-    /// <param name="stream">The stream to write to.</param>
-    /// <param name="cancellationToken">To cancellation token to use.</param>
+    /// <param name="stream">The stream to write the binary content to.</param>
+    /// <param name="cancellationToken">To <see cref="CancellationToken"/> to
+    /// use for the write operation.</param>
     public abstract Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Writes contents of this object to an instance of <see cref="Stream"/>.
+    /// Writes contents of this <see cref="BinaryContent"/> instance to the
+    /// provided <see cref="Stream"/>.
     /// </summary>
-    /// <param name="stream">The stream to write to.</param>
-    /// <param name="cancellationToken">To cancellation token to use.</param>
+    /// <param name="stream">The stream to write the binary content to.</param>
+    /// <param name="cancellationToken">To <see cref="CancellationToken"/> to
+    /// use for the write operation.</param>
     public abstract void WriteTo(Stream stream, CancellationToken cancellationToken = default);
 
     /// <inheritdoc/>

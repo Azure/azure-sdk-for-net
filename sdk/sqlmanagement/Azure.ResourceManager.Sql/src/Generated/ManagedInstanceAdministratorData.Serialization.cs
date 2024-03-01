@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ManagedInstanceAdministratorType> administratorType = default;
-            Optional<string> login = default;
-            Optional<Guid> sid = default;
-            Optional<Guid> tenantId = default;
+            SystemData systemData = default;
+            ManagedInstanceAdministratorType? administratorType = default;
+            string login = default;
+            Guid? sid = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceAdministratorData(id, name, type, systemData.Value, Optional.ToNullable(administratorType), login.Value, Optional.ToNullable(sid), Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new ManagedInstanceAdministratorData(
+                id,
+                name,
+                type,
+                systemData,
+                administratorType,
+                login,
+                sid,
+                tenantId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceAdministratorData>.Write(ModelReaderWriterOptions options)

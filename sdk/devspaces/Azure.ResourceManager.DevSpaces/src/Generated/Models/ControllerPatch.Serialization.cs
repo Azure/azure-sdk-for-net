@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.DevSpaces.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> targetContainerHostCredentialsBase64 = default;
+            IDictionary<string, string> tags = default;
+            string targetContainerHostCredentialsBase64 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControllerPatch(Optional.ToDictionary(tags), targetContainerHostCredentialsBase64.Value, serializedAdditionalRawData);
+            return new ControllerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), targetContainerHostCredentialsBase64, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControllerPatch>.Write(ModelReaderWriterOptions options)

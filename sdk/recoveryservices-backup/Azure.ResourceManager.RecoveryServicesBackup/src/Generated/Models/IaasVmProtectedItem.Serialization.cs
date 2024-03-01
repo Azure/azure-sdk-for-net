@@ -240,37 +240,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "Microsoft.Compute/virtualMachines": return IaasComputeVmProtectedItem.DeserializeIaasComputeVmProtectedItem(element, options);
                 }
             }
-            Optional<string> friendlyName = default;
-            Optional<ResourceIdentifier> virtualMachineId = default;
-            Optional<string> protectionStatus = default;
-            Optional<BackupProtectionState> protectionState = default;
-            Optional<IaasVmProtectedItemHealthStatus> healthStatus = default;
+            string friendlyName = default;
+            ResourceIdentifier virtualMachineId = default;
+            string protectionStatus = default;
+            BackupProtectionState? protectionState = default;
+            IaasVmProtectedItemHealthStatus? healthStatus = default;
             IList<IaasVmHealthDetails> healthDetails = default;
-            Optional<IDictionary<string, KpiResourceHealthDetails>> kpisHealths = default;
-            Optional<string> lastBackupStatus = default;
-            Optional<DateTimeOffset> lastBackupTime = default;
-            Optional<string> protectedItemDataId = default;
-            Optional<IaasVmProtectedItemExtendedInfo> extendedInfo = default;
-            Optional<IaasVmBackupExtendedProperties> extendedProperties = default;
+            IDictionary<string, KpiResourceHealthDetails> kpisHealths = default;
+            string lastBackupStatus = default;
+            DateTimeOffset? lastBackupTime = default;
+            string protectedItemDataId = default;
+            IaasVmProtectedItemExtendedInfo extendedInfo = default;
+            IaasVmBackupExtendedProperties extendedProperties = default;
             string protectedItemType = "AzureIaaSVMProtectedItem";
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<BackupDataSourceType> workloadType = default;
-            Optional<string> containerName = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<DateTimeOffset> lastRecoveryPoint = default;
-            Optional<string> backupSetName = default;
-            Optional<BackupCreateMode> createMode = default;
-            Optional<DateTimeOffset> deferredDeleteTimeInUTC = default;
-            Optional<bool> isScheduledForDeferredDelete = default;
-            Optional<string> deferredDeleteTimeRemaining = default;
-            Optional<bool> isDeferredDeleteScheduleUpcoming = default;
-            Optional<bool> isRehydrate = default;
+            BackupManagementType? backupManagementType = default;
+            BackupDataSourceType? workloadType = default;
+            string containerName = default;
+            ResourceIdentifier sourceResourceId = default;
+            ResourceIdentifier policyId = default;
+            DateTimeOffset? lastRecoveryPoint = default;
+            string backupSetName = default;
+            BackupCreateMode? createMode = default;
+            DateTimeOffset? deferredDeleteTimeInUTC = default;
+            bool? isScheduledForDeferredDelete = default;
+            string deferredDeleteTimeRemaining = default;
+            bool? isDeferredDeleteScheduleUpcoming = default;
+            bool? isRehydrate = default;
             IList<string> resourceGuardOperationRequests = default;
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> policyName = default;
-            Optional<int> softDeleteRetentionPeriodInDays = default;
-            Optional<string> vaultId = default;
+            bool? isArchiveEnabled = default;
+            string policyName = default;
+            int? softDeleteRetentionPeriodInDays = default;
+            string vaultId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -535,7 +535,39 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriodInDays), vaultId.Value, serializedAdditionalRawData, friendlyName.Value, virtualMachineId.Value, protectionStatus.Value, Optional.ToNullable(protectionState), Optional.ToNullable(healthStatus), healthDetails ?? new ChangeTrackingList<IaasVmHealthDetails>(), Optional.ToDictionary(kpisHealths), lastBackupStatus.Value, Optional.ToNullable(lastBackupTime), protectedItemDataId.Value, extendedInfo.Value, extendedProperties.Value);
+            return new IaasVmProtectedItem(
+                protectedItemType,
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoveryPoint,
+                backupSetName,
+                createMode,
+                deferredDeleteTimeInUTC,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
+                serializedAdditionalRawData,
+                friendlyName,
+                virtualMachineId,
+                protectionStatus,
+                protectionState,
+                healthStatus,
+                healthDetails ?? new ChangeTrackingList<IaasVmHealthDetails>(),
+                kpisHealths ?? new ChangeTrackingDictionary<string, KpiResourceHealthDetails>(),
+                lastBackupStatus,
+                lastBackupTime,
+                protectedItemDataId,
+                extendedInfo,
+                extendedProperties);
         }
 
         BinaryData IPersistableModel<IaasVmProtectedItem>.Write(ModelReaderWriterOptions options)

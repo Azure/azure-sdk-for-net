@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> ruleName = default;
-            Optional<bool> isActive = default;
-            Optional<DateTimeOffset> activatedTime = default;
-            Optional<DateTimeOffset> resolvedTime = default;
+            string name = default;
+            string ruleName = default;
+            bool? isActive = default;
+            DateTimeOffset? activatedTime = default;
+            DateTimeOffset? resolvedTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorIncident(name.Value, ruleName.Value, Optional.ToNullable(isActive), Optional.ToNullable(activatedTime), Optional.ToNullable(resolvedTime), serializedAdditionalRawData);
+            return new MonitorIncident(
+                name,
+                ruleName,
+                isActive,
+                activatedTime,
+                resolvedTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorIncident>.Write(ModelReaderWriterOptions options)

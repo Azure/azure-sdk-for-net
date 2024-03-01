@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.IotCentral.Models
             {
                 return null;
             }
-            Optional<string> manifestId = default;
-            Optional<string> manifestVersion = default;
-            Optional<string> name = default;
-            Optional<string> title = default;
-            Optional<int> order = default;
-            Optional<string> description = default;
-            Optional<string> industry = default;
+            string manifestId = default;
+            string manifestVersion = default;
+            string name = default;
+            string title = default;
+            int? order = default;
+            string description = default;
+            string industry = default;
             IReadOnlyList<IotCentralAppTemplateLocation> locations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -180,7 +180,16 @@ namespace Azure.ResourceManager.IotCentral.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotCentralAppTemplate(manifestId.Value, manifestVersion.Value, name.Value, title.Value, Optional.ToNullable(order), description.Value, industry.Value, locations ?? new ChangeTrackingList<IotCentralAppTemplateLocation>(), serializedAdditionalRawData);
+            return new IotCentralAppTemplate(
+                manifestId,
+                manifestVersion,
+                name,
+                title,
+                order,
+                description,
+                industry,
+                locations ?? new ChangeTrackingList<IotCentralAppTemplateLocation>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotCentralAppTemplate>.Write(ModelReaderWriterOptions options)

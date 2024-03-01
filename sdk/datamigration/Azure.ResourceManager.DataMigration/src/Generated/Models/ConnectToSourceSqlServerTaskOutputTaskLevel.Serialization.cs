@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> databases = default;
-            Optional<string> logins = default;
-            Optional<string> agentJobs = default;
-            Optional<string> databaseTdeCertificateMapping = default;
-            Optional<string> sourceServerVersion = default;
-            Optional<string> sourceServerBrandVersion = default;
+            string databases = default;
+            string logins = default;
+            string agentJobs = default;
+            string databaseTdeCertificateMapping = default;
+            string sourceServerVersion = default;
+            string sourceServerBrandVersion = default;
             IReadOnlyList<ReportableException> validationErrors = default;
-            Optional<string> id = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -184,7 +184,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceSqlServerTaskOutputTaskLevel(id.Value, resultType, serializedAdditionalRawData, databases.Value, logins.Value, agentJobs.Value, databaseTdeCertificateMapping.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, validationErrors ?? new ChangeTrackingList<ReportableException>());
+            return new ConnectToSourceSqlServerTaskOutputTaskLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                databases,
+                logins,
+                agentJobs,
+                databaseTdeCertificateMapping,
+                sourceServerVersion,
+                sourceServerBrandVersion,
+                validationErrors ?? new ChangeTrackingList<ReportableException>());
         }
 
         BinaryData IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.Write(ModelReaderWriterOptions options)

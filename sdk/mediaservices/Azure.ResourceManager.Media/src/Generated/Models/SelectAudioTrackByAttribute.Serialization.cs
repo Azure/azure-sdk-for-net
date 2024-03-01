@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.Media.Models
             }
             TrackAttribute attribute = default;
             TrackAttributeFilter filter = default;
-            Optional<string> filterValue = default;
-            Optional<ChannelMapping> channelMapping = default;
+            string filterValue = default;
+            ChannelMapping? channelMapping = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelectAudioTrackByAttribute(odataType, serializedAdditionalRawData, Optional.ToNullable(channelMapping), attribute, filter, filterValue.Value);
+            return new SelectAudioTrackByAttribute(
+                odataType,
+                serializedAdditionalRawData,
+                channelMapping,
+                attribute,
+                filter,
+                filterValue);
         }
 
         BinaryData IPersistableModel<SelectAudioTrackByAttribute>.Write(ModelReaderWriterOptions options)

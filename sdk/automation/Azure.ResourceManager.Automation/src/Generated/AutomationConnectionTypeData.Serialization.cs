@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isGlobal = default;
-            Optional<IReadOnlyDictionary<string, AutomationConnectionFieldDefinition>> fieldDefinitions = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            bool? isGlobal = default;
+            IReadOnlyDictionary<string, AutomationConnectionFieldDefinition> fieldDefinitions = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,17 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationConnectionTypeData(id, name, type, systemData.Value, Optional.ToNullable(isGlobal), Optional.ToDictionary(fieldDefinitions), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
+            return new AutomationConnectionTypeData(
+                id,
+                name,
+                type,
+                systemData,
+                isGlobal,
+                fieldDefinitions ?? new ChangeTrackingDictionary<string, AutomationConnectionFieldDefinition>(),
+                creationTime,
+                lastModifiedTime,
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationConnectionTypeData>.Write(ModelReaderWriterOptions options)

@@ -143,17 +143,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> version = default;
-            Optional<IDictionary<string, string>> parameters = default;
-            Optional<ApplicationUpgradePolicy> upgradePolicy = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string version = default;
+            IDictionary<string, string> parameters = default;
+            ApplicationUpgradePolicy upgradePolicy = default;
             IList<ApplicationUserAssignedIdentityInfo> managedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -276,7 +276,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, version.Value, Optional.ToDictionary(parameters), upgradePolicy.Value, managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentityInfo>(), serializedAdditionalRawData);
+            return new ServiceFabricManagedApplicationData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState,
+                version,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                upgradePolicy,
+                managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentityInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedApplicationData>.Write(ModelReaderWriterOptions options)

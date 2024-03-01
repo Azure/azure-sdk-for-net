@@ -161,20 +161,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            Optional<DataFactoryElement<string>> host = default;
-            Optional<DataFactoryElement<string>> userId = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<DataFactoryElement<string>> connectionString = default;
-            Optional<DataFactoryKeyVaultSecretReference> accountKey = default;
-            Optional<DataFactoryElement<string>> sasUri = default;
-            Optional<DataFactoryKeyVaultSecretReference> sasToken = default;
-            Optional<DataFactoryElement<string>> fileShare = default;
-            Optional<DataFactoryElement<string>> snapshot = default;
-            Optional<string> encryptedCredential = default;
+            DataFactoryElement<string> host = default;
+            DataFactoryElement<string> userId = default;
+            DataFactorySecretBaseDefinition password = default;
+            DataFactoryElement<string> connectionString = default;
+            DataFactoryKeyVaultSecretReference accountKey = default;
+            DataFactoryElement<string> sasUri = default;
+            DataFactoryKeyVaultSecretReference sasToken = default;
+            DataFactoryElement<string> fileShare = default;
+            DataFactoryElement<string> snapshot = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -334,7 +334,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureFileStorageLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, host.Value, userId.Value, password, connectionString.Value, accountKey, sasUri.Value, sasToken, fileShare.Value, snapshot.Value, encryptedCredential.Value);
+            return new AzureFileStorageLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                host,
+                userId,
+                password,
+                connectionString,
+                accountKey,
+                sasUri,
+                sasToken,
+                fileShare,
+                snapshot,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<AzureFileStorageLinkedService>.Write(ModelReaderWriterOptions options)

@@ -159,20 +159,20 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<WritableSubResource> subnet = default;
-            Optional<WritableSubResource> virtualNetwork = default;
-            Optional<NetworkIPAllocationType> type0 = default;
-            Optional<string> prefix = default;
-            Optional<int?> prefixLength = default;
-            Optional<NetworkIPVersion> prefixType = default;
-            Optional<string> ipamAllocationId = default;
-            Optional<IDictionary<string, string>> allocationTags = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            WritableSubResource subnet = default;
+            WritableSubResource virtualNetwork = default;
+            NetworkIPAllocationType? type0 = default;
+            string prefix = default;
+            int? prefixLength = default;
+            NetworkIPVersion? prefixType = default;
+            string ipamAllocationId = default;
+            IDictionary<string, string> allocationTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -320,7 +320,22 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPAllocationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), subnet, virtualNetwork, Optional.ToNullable(type0), prefix.Value, Optional.ToNullable(prefixLength), Optional.ToNullable(prefixType), ipamAllocationId.Value, Optional.ToDictionary(allocationTags));
+            return new IPAllocationData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                subnet,
+                virtualNetwork,
+                type0,
+                prefix,
+                prefixLength,
+                prefixType,
+                ipamAllocationId,
+                allocationTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<IPAllocationData>.Write(ModelReaderWriterOptions options)

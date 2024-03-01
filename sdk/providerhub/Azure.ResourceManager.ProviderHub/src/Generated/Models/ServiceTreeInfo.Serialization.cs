@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<string> serviceId = default;
-            Optional<string> componentId = default;
+            string serviceId = default;
+            string componentId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTreeInfo(serviceId.Value, componentId.Value, serializedAdditionalRawData);
+            return new ServiceTreeInfo(serviceId, componentId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTreeInfo>.Write(ModelReaderWriterOptions options)

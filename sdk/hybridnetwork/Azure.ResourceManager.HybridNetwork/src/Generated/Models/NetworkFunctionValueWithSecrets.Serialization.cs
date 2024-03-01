@@ -131,17 +131,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> secretDeploymentValues = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> publisherName = default;
-            Optional<PublisherScope> publisherScope = default;
-            Optional<string> networkFunctionDefinitionGroupName = default;
-            Optional<string> networkFunctionDefinitionVersion = default;
-            Optional<string> networkFunctionDefinitionOfferingLocation = default;
-            Optional<DeploymentResourceIdReference> networkFunctionDefinitionVersionResourceReference = default;
-            Optional<NfviType> nfviType = default;
-            Optional<ResourceIdentifier> nfviId = default;
-            Optional<bool> allowSoftwareUpdate = default;
+            string secretDeploymentValues = default;
+            ProvisioningState? provisioningState = default;
+            string publisherName = default;
+            PublisherScope? publisherScope = default;
+            string networkFunctionDefinitionGroupName = default;
+            string networkFunctionDefinitionVersion = default;
+            string networkFunctionDefinitionOfferingLocation = default;
+            DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = default;
+            NfviType? nfviType = default;
+            ResourceIdentifier nfviId = default;
+            bool? allowSoftwareUpdate = default;
             NetworkFunctionConfigurationType configurationType = default;
             IList<string> roleOverrideValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -252,7 +252,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFunctionValueWithSecrets(Optional.ToNullable(provisioningState), publisherName.Value, Optional.ToNullable(publisherScope), networkFunctionDefinitionGroupName.Value, networkFunctionDefinitionVersion.Value, networkFunctionDefinitionOfferingLocation.Value, networkFunctionDefinitionVersionResourceReference.Value, Optional.ToNullable(nfviType), nfviId.Value, Optional.ToNullable(allowSoftwareUpdate), configurationType, roleOverrideValues ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, secretDeploymentValues.Value);
+            return new NetworkFunctionValueWithSecrets(
+                provisioningState,
+                publisherName,
+                publisherScope,
+                networkFunctionDefinitionGroupName,
+                networkFunctionDefinitionVersion,
+                networkFunctionDefinitionOfferingLocation,
+                networkFunctionDefinitionVersionResourceReference,
+                nfviType,
+                nfviId,
+                allowSoftwareUpdate,
+                configurationType,
+                roleOverrideValues ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                secretDeploymentValues);
         }
 
         BinaryData IPersistableModel<NetworkFunctionValueWithSecrets>.Write(ModelReaderWriterOptions options)

@@ -118,13 +118,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             IList<ParameterContract> templateParameters = default;
-            Optional<string> description = default;
-            Optional<RequestContract> request = default;
+            string description = default;
+            RequestContract request = default;
             IList<ResponseContract> responses = default;
-            Optional<string> policies = default;
-            Optional<string> displayName = default;
-            Optional<string> method = default;
-            Optional<string> uriTemplate = default;
+            string policies = default;
+            string displayName = default;
+            string method = default;
+            string uriTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +209,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiOperationPatch(templateParameters ?? new ChangeTrackingList<ParameterContract>(), description.Value, request.Value, responses ?? new ChangeTrackingList<ResponseContract>(), policies.Value, displayName.Value, method.Value, uriTemplate.Value, serializedAdditionalRawData);
+            return new ApiOperationPatch(
+                templateParameters ?? new ChangeTrackingList<ParameterContract>(),
+                description,
+                request,
+                responses ?? new ChangeTrackingList<ResponseContract>(),
+                policies,
+                displayName,
+                method,
+                uriTemplate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiOperationPatch>.Write(ModelReaderWriterOptions options)

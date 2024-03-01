@@ -148,21 +148,21 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> arrayValueSeparator = default;
+            string arrayValueSeparator = default;
             IList<ProfileEnumValidValuesFormat> enumValidValues = default;
             string fieldName = default;
             string fieldType = default;
-            Optional<bool> isArray = default;
-            Optional<bool> isEnum = default;
-            Optional<bool> isFlagEnum = default;
-            Optional<bool> isImage = default;
-            Optional<bool> isLocalizedString = default;
-            Optional<bool> isName = default;
-            Optional<bool> isRequired = default;
-            Optional<string> propertyId = default;
-            Optional<string> schemaItemPropLink = default;
-            Optional<int> maxLength = default;
-            Optional<bool> isAvailableInGraph = default;
+            bool? isArray = default;
+            bool? isEnum = default;
+            bool? isFlagEnum = default;
+            bool? isImage = default;
+            bool? isLocalizedString = default;
+            bool? isName = default;
+            bool? isRequired = default;
+            string propertyId = default;
+            string schemaItemPropLink = default;
+            int? maxLength = default;
+            bool? isAvailableInGraph = default;
             IReadOnlyList<DataSourcePrecedence> dataSourcePrecedenceRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -308,7 +308,24 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PropertyDefinition(arrayValueSeparator.Value, enumValidValues ?? new ChangeTrackingList<ProfileEnumValidValuesFormat>(), fieldName, fieldType, Optional.ToNullable(isArray), Optional.ToNullable(isEnum), Optional.ToNullable(isFlagEnum), Optional.ToNullable(isImage), Optional.ToNullable(isLocalizedString), Optional.ToNullable(isName), Optional.ToNullable(isRequired), propertyId.Value, schemaItemPropLink.Value, Optional.ToNullable(maxLength), Optional.ToNullable(isAvailableInGraph), dataSourcePrecedenceRules ?? new ChangeTrackingList<DataSourcePrecedence>(), serializedAdditionalRawData);
+            return new PropertyDefinition(
+                arrayValueSeparator,
+                enumValidValues ?? new ChangeTrackingList<ProfileEnumValidValuesFormat>(),
+                fieldName,
+                fieldType,
+                isArray,
+                isEnum,
+                isFlagEnum,
+                isImage,
+                isLocalizedString,
+                isName,
+                isRequired,
+                propertyId,
+                schemaItemPropLink,
+                maxLength,
+                isAvailableInGraph,
+                dataSourcePrecedenceRules ?? new ChangeTrackingList<DataSourcePrecedence>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PropertyDefinition>.Write(ModelReaderWriterOptions options)

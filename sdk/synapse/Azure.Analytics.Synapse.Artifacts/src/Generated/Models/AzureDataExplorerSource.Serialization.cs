@@ -68,13 +68,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             object query = default;
-            Optional<object> noTruncation = default;
-            Optional<object> queryTimeout = default;
-            Optional<object> additionalColumns = default;
+            object noTruncation = default;
+            object queryTimeout = default;
+            object additionalColumns = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object sourceRetryCount = default;
+            object sourceRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataExplorerSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query, noTruncation.Value, queryTimeout.Value, additionalColumns.Value);
+            return new AzureDataExplorerSource(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                query,
+                noTruncation,
+                queryTimeout,
+                additionalColumns);
         }
 
         internal partial class AzureDataExplorerSourceConverter : JsonConverter<AzureDataExplorerSource>

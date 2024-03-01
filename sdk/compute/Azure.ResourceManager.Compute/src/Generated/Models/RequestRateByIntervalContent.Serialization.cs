@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.Compute.Models
             Uri blobContainerSasUri = default;
             DateTimeOffset fromTime = default;
             DateTimeOffset toTime = default;
-            Optional<bool> groupByThrottlePolicy = default;
-            Optional<bool> groupByOperationName = default;
-            Optional<bool> groupByResourceName = default;
-            Optional<bool> groupByClientApplicationId = default;
-            Optional<bool> groupByUserAgent = default;
+            bool? groupByThrottlePolicy = default;
+            bool? groupByOperationName = default;
+            bool? groupByResourceName = default;
+            bool? groupByClientApplicationId = default;
+            bool? groupByUserAgent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequestRateByIntervalContent(blobContainerSasUri, fromTime, toTime, Optional.ToNullable(groupByThrottlePolicy), Optional.ToNullable(groupByOperationName), Optional.ToNullable(groupByResourceName), Optional.ToNullable(groupByClientApplicationId), Optional.ToNullable(groupByUserAgent), serializedAdditionalRawData, intervalLength);
+            return new RequestRateByIntervalContent(
+                blobContainerSasUri,
+                fromTime,
+                toTime,
+                groupByThrottlePolicy,
+                groupByOperationName,
+                groupByResourceName,
+                groupByClientApplicationId,
+                groupByUserAgent,
+                serializedAdditionalRawData,
+                intervalLength);
         }
 
         BinaryData IPersistableModel<RequestRateByIntervalContent>.Write(ModelReaderWriterOptions options)

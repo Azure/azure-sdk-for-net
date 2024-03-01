@@ -117,13 +117,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<StreamAnalyticsSampleInputResultStatus> status = default;
+            StreamAnalyticsSampleInputResultStatus? status = default;
             IReadOnlyList<string> diagnostics = default;
-            Optional<Uri> eventsDownloadUrl = default;
-            Optional<DateTimeOffset> lastArrivalTime = default;
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<string> target = default;
+            Uri eventsDownloadUrl = default;
+            DateTimeOffset? lastArrivalTime = default;
+            string code = default;
+            string message = default;
+            string target = default;
             IReadOnlyList<StreamAnalyticsErrorDetails> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -217,7 +217,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsSampleInputResult(code.Value, message.Value, target.Value, details ?? new ChangeTrackingList<StreamAnalyticsErrorDetails>(), serializedAdditionalRawData, Optional.ToNullable(status), diagnostics ?? new ChangeTrackingList<string>(), eventsDownloadUrl.Value, Optional.ToNullable(lastArrivalTime));
+            return new StreamAnalyticsSampleInputResult(
+                code,
+                message,
+                target,
+                details ?? new ChangeTrackingList<StreamAnalyticsErrorDetails>(),
+                serializedAdditionalRawData,
+                status,
+                diagnostics ?? new ChangeTrackingList<string>(),
+                eventsDownloadUrl,
+                lastArrivalTime);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsSampleInputResult>.Write(ModelReaderWriterOptions options)

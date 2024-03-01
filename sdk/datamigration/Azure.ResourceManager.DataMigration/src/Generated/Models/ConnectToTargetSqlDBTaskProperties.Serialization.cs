@@ -122,14 +122,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<ConnectToTargetSqlDBTaskInput> input = default;
+            ConnectToTargetSqlDBTaskInput input = default;
             IReadOnlyList<ConnectToTargetSqlDBTaskOutput> output = default;
-            Optional<string> createdOn = default;
+            string createdOn = default;
             TaskType taskType = default;
             IReadOnlyList<ODataError> errors = default;
-            Optional<TaskState> state = default;
+            TaskState? state = default;
             IReadOnlyList<CommandProperties> commands = default;
-            Optional<IDictionary<string, string>> clientData = default;
+            IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToTargetSqlDBTaskProperties(taskType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), commands ?? new ChangeTrackingList<CommandProperties>(), Optional.ToDictionary(clientData), serializedAdditionalRawData, input.Value, output ?? new ChangeTrackingList<ConnectToTargetSqlDBTaskOutput>(), createdOn.Value);
+            return new ConnectToTargetSqlDBTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                state,
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input,
+                output ?? new ChangeTrackingList<ConnectToTargetSqlDBTaskOutput>(),
+                createdOn);
         }
 
         BinaryData IPersistableModel<ConnectToTargetSqlDBTaskProperties>.Write(ModelReaderWriterOptions options)

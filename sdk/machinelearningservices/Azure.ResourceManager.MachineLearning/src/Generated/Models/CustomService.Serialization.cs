@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ImageSetting> image = default;
-            Optional<IDictionary<string, EnvironmentVariable>> environmentVariables = default;
-            Optional<DockerSetting> docker = default;
+            string name = default;
+            ImageSetting image = default;
+            IDictionary<string, EnvironmentVariable> environmentVariables = default;
+            DockerSetting docker = default;
             IList<ContainerEndpoint> endpoints = default;
             IList<VolumeDefinition> volumes = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -193,7 +193,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CustomService(name.Value, image.Value, Optional.ToDictionary(environmentVariables), docker.Value, endpoints ?? new ChangeTrackingList<ContainerEndpoint>(), volumes ?? new ChangeTrackingList<VolumeDefinition>(), additionalProperties);
+            return new CustomService(
+                name,
+                image,
+                environmentVariables ?? new ChangeTrackingDictionary<string, EnvironmentVariable>(),
+                docker,
+                endpoints ?? new ChangeTrackingList<ContainerEndpoint>(),
+                volumes ?? new ChangeTrackingList<VolumeDefinition>(),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<CustomService>.Write(ModelReaderWriterOptions options)

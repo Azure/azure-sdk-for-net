@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> dataLakeStoreAccountName = default;
+            string dataLakeStoreAccountName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningDataLakeAnalyticsProperties(dataLakeStoreAccountName.Value, serializedAdditionalRawData);
+            return new MachineLearningDataLakeAnalyticsProperties(dataLakeStoreAccountName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningDataLakeAnalyticsProperties>.Write(ModelReaderWriterOptions options)

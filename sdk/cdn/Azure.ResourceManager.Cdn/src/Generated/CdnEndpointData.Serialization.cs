@@ -267,32 +267,32 @@ namespace Azure.ResourceManager.Cdn
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> originPath = default;
+            SystemData systemData = default;
+            string originPath = default;
             IList<string> contentTypesToCompress = default;
-            Optional<string> originHostHeader = default;
-            Optional<bool> isCompressionEnabled = default;
-            Optional<bool> isHttpAllowed = default;
-            Optional<bool> isHttpsAllowed = default;
-            Optional<QueryStringCachingBehavior> queryStringCachingBehavior = default;
-            Optional<OptimizationType?> optimizationType = default;
-            Optional<string> probePath = default;
+            string originHostHeader = default;
+            bool? isCompressionEnabled = default;
+            bool? isHttpAllowed = default;
+            bool? isHttpsAllowed = default;
+            QueryStringCachingBehavior? queryStringCachingBehavior = default;
+            OptimizationType? optimizationType = default;
+            string probePath = default;
             IList<GeoFilter> geoFilters = default;
-            Optional<EndpointPropertiesUpdateParametersDefaultOriginGroup> defaultOriginGroup = default;
+            EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup = default;
             IList<UriSigningKey> uriSigningKeys = default;
-            Optional<EndpointDeliveryPolicy> deliveryPolicy = default;
-            Optional<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
-            Optional<string> hostName = default;
+            EndpointDeliveryPolicy deliveryPolicy = default;
+            EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default;
+            string hostName = default;
             IList<DeepCreatedOrigin> origins = default;
             IList<DeepCreatedOriginGroup> originGroups = default;
             IReadOnlyList<CdnCustomDomainData> customDomains = default;
-            Optional<EndpointResourceState> resourceState = default;
-            Optional<CdnEndpointProvisioningState> provisioningState = default;
+            EndpointResourceState? resourceState = default;
+            CdnEndpointProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -557,7 +557,34 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, originPath.Value, contentTypesToCompress ?? new ChangeTrackingList<string>(), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, geoFilters ?? new ChangeTrackingList<GeoFilter>(), defaultOriginGroup.Value, uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>(), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, hostName.Value, origins ?? new ChangeTrackingList<DeepCreatedOrigin>(), originGroups ?? new ChangeTrackingList<DeepCreatedOriginGroup>(), customDomains ?? new ChangeTrackingList<CdnCustomDomainData>(), Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new CdnEndpointData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                originPath,
+                contentTypesToCompress ?? new ChangeTrackingList<string>(),
+                originHostHeader,
+                isCompressionEnabled,
+                isHttpAllowed,
+                isHttpsAllowed,
+                queryStringCachingBehavior,
+                optimizationType,
+                probePath,
+                geoFilters ?? new ChangeTrackingList<GeoFilter>(),
+                defaultOriginGroup,
+                uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>(),
+                deliveryPolicy,
+                webApplicationFirewallPolicyLink,
+                hostName,
+                origins ?? new ChangeTrackingList<DeepCreatedOrigin>(),
+                originGroups ?? new ChangeTrackingList<DeepCreatedOriginGroup>(),
+                customDomains ?? new ChangeTrackingList<CdnCustomDomainData>(),
+                resourceState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnEndpointData>.Write(ModelReaderWriterOptions options)

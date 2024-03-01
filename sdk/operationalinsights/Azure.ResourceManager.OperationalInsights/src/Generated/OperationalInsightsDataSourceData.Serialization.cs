@@ -115,13 +115,13 @@ namespace Azure.ResourceManager.OperationalInsights
                 return null;
             }
             BinaryData properties = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             OperationalInsightsDataSourceKind kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +189,16 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsDataSourceData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag), kind, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new OperationalInsightsDataSourceData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                etag,
+                kind,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsDataSourceData>.Write(ModelReaderWriterOptions options)

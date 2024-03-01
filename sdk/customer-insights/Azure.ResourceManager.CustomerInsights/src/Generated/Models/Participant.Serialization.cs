@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             string profileTypeName = default;
             IList<ParticipantPropertyReference> participantPropertyReferences = default;
             string participantName = default;
-            Optional<IDictionary<string, string>> displayName = default;
-            Optional<IDictionary<string, string>> description = default;
-            Optional<string> role = default;
+            IDictionary<string, string> displayName = default;
+            IDictionary<string, string> description = default;
+            string role = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Participant(profileTypeName, participantPropertyReferences, participantName, Optional.ToDictionary(displayName), Optional.ToDictionary(description), role.Value, serializedAdditionalRawData);
+            return new Participant(
+                profileTypeName,
+                participantPropertyReferences,
+                participantName,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                role,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Participant>.Write(ModelReaderWriterOptions options)

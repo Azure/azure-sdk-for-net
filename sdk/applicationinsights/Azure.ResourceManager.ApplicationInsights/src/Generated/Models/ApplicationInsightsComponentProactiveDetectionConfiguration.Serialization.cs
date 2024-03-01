@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> enabled = default;
-            Optional<bool> sendEmailsToSubscriptionOwners = default;
+            string name = default;
+            bool? enabled = default;
+            bool? sendEmailsToSubscriptionOwners = default;
             IList<string> customEmails = default;
-            Optional<string> lastUpdatedTime = default;
-            Optional<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions> ruleDefinitions = default;
+            string lastUpdatedTime = default;
+            ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions ruleDefinitions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentProactiveDetectionConfiguration(name.Value, Optional.ToNullable(enabled), Optional.ToNullable(sendEmailsToSubscriptionOwners), customEmails ?? new ChangeTrackingList<string>(), lastUpdatedTime.Value, ruleDefinitions.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentProactiveDetectionConfiguration(
+                name,
+                enabled,
+                sendEmailsToSubscriptionOwners,
+                customEmails ?? new ChangeTrackingList<string>(),
+                lastUpdatedTime,
+                ruleDefinitions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>.Write(ModelReaderWriterOptions options)

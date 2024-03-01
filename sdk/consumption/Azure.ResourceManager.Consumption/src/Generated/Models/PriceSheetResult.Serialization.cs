@@ -125,15 +125,15 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<PriceSheetProperties> pricesheets = default;
-            Optional<string> nextLink = default;
-            Optional<ConsumptionMeterDetails> download = default;
+            string nextLink = default;
+            ConsumptionMeterDetails download = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -231,7 +231,17 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PriceSheetResult(id, name, type, systemData.Value, pricesheets ?? new ChangeTrackingList<PriceSheetProperties>(), nextLink.Value, download.Value, Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new PriceSheetResult(
+                id,
+                name,
+                type,
+                systemData,
+                pricesheets ?? new ChangeTrackingList<PriceSheetProperties>(),
+                nextLink,
+                download,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PriceSheetResult>.Write(ModelReaderWriterOptions options)

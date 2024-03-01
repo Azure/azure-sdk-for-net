@@ -206,30 +206,30 @@ namespace Azure.ResourceManager.ArcScVmm
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> uuid = default;
-            Optional<string> vmmServerId = default;
-            Optional<OSType> osType = default;
-            Optional<string> osName = default;
-            Optional<string> computerName = default;
-            Optional<int> memoryMB = default;
-            Optional<int> cpuCount = default;
-            Optional<LimitCpuForMigration> limitCpuForMigration = default;
-            Optional<DynamicMemoryEnabled> dynamicMemoryEnabled = default;
-            Optional<IsCustomizable> isCustomizable = default;
-            Optional<int> dynamicMemoryMaxMB = default;
-            Optional<int> dynamicMemoryMinMB = default;
-            Optional<string> isHighlyAvailable = default;
-            Optional<int> generation = default;
+            SystemData systemData = default;
+            string inventoryItemId = default;
+            string uuid = default;
+            string vmmServerId = default;
+            OSType? osType = default;
+            string osName = default;
+            string computerName = default;
+            int? memoryMB = default;
+            int? cpuCount = default;
+            LimitCpuForMigration? limitCpuForMigration = default;
+            DynamicMemoryEnabled? dynamicMemoryEnabled = default;
+            IsCustomizable? isCustomizable = default;
+            int? dynamicMemoryMaxMB = default;
+            int? dynamicMemoryMinMB = default;
+            string isHighlyAvailable = default;
+            int? generation = default;
             IReadOnlyList<NetworkInterfaces> networkInterfaces = default;
             IReadOnlyList<VirtualDisk> disks = default;
-            Optional<string> provisioningState = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -444,7 +444,33 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScVmmVirtualMachineTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, Optional.ToNullable(osType), osName.Value, computerName.Value, Optional.ToNullable(memoryMB), Optional.ToNullable(cpuCount), Optional.ToNullable(limitCpuForMigration), Optional.ToNullable(dynamicMemoryEnabled), Optional.ToNullable(isCustomizable), Optional.ToNullable(dynamicMemoryMaxMB), Optional.ToNullable(dynamicMemoryMinMB), isHighlyAvailable.Value, Optional.ToNullable(generation), networkInterfaces ?? new ChangeTrackingList<NetworkInterfaces>(), disks ?? new ChangeTrackingList<VirtualDisk>(), provisioningState.Value, serializedAdditionalRawData);
+            return new ScVmmVirtualMachineTemplateData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                inventoryItemId,
+                uuid,
+                vmmServerId,
+                osType,
+                osName,
+                computerName,
+                memoryMB,
+                cpuCount,
+                limitCpuForMigration,
+                dynamicMemoryEnabled,
+                isCustomizable,
+                dynamicMemoryMaxMB,
+                dynamicMemoryMinMB,
+                isHighlyAvailable,
+                generation,
+                networkInterfaces ?? new ChangeTrackingList<NetworkInterfaces>(),
+                disks ?? new ChangeTrackingList<VirtualDisk>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScVmmVirtualMachineTemplateData>.Write(ModelReaderWriterOptions options)

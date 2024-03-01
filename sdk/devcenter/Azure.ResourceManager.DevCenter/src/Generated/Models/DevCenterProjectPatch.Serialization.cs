@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<ResourceIdentifier> devCenterId = default;
-            Optional<string> description = default;
-            Optional<int> maxDevBoxesPerUser = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation? location = default;
+            ResourceIdentifier devCenterId = default;
+            string description = default;
+            int? maxDevBoxesPerUser = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,13 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterProjectPatch(Optional.ToDictionary(tags), Optional.ToNullable(location), serializedAdditionalRawData, devCenterId.Value, description.Value, Optional.ToNullable(maxDevBoxesPerUser));
+            return new DevCenterProjectPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                serializedAdditionalRawData,
+                devCenterId,
+                description,
+                maxDevBoxesPerUser);
         }
 
         BinaryData IPersistableModel<DevCenterProjectPatch>.Write(ModelReaderWriterOptions options)

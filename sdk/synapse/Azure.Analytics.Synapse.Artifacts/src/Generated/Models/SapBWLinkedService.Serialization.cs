@@ -96,16 +96,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object server = default;
             object systemNumber = default;
             object clientId = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<object> encryptedCredential = default;
+            object userName = default;
+            SecretBase password = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapBWLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), additionalProperties, server, systemNumber, clientId, userName.Value, password.Value, encryptedCredential.Value);
+            return new SapBWLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                server,
+                systemNumber,
+                clientId,
+                userName,
+                password,
+                encryptedCredential);
         }
 
         internal partial class SapBWLinkedServiceConverter : JsonConverter<SapBWLinkedService>

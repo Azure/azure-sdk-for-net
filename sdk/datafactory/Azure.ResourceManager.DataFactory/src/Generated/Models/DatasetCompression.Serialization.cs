@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> type = default;
-            Optional<DataFactoryElement<string>> level = default;
+            DataFactoryElement<string> level = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatasetCompression(type, level.Value, additionalProperties);
+            return new DatasetCompression(type, level, additionalProperties);
         }
 
         BinaryData IPersistableModel<DatasetCompression>.Write(ModelReaderWriterOptions options)

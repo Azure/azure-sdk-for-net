@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<NetAppProvisioningState> provisioningState = default;
-            Optional<long> quotaSizeInKiBs = default;
-            Optional<NetAppVolumeQuotaType> quotaType = default;
-            Optional<string> quotaTarget = default;
+            IDictionary<string, string> tags = default;
+            NetAppProvisioningState? provisioningState = default;
+            long? quotaSizeInKiBs = default;
+            NetAppVolumeQuotaType? quotaType = default;
+            string quotaTarget = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeQuotaRulePatch(Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), Optional.ToNullable(quotaSizeInKiBs), Optional.ToNullable(quotaType), quotaTarget.Value, serializedAdditionalRawData);
+            return new NetAppVolumeQuotaRulePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                provisioningState,
+                quotaSizeInKiBs,
+                quotaType,
+                quotaTarget,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeQuotaRulePatch>.Write(ModelReaderWriterOptions options)

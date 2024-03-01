@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<SiteRecoveryPointType> recoveryPointType = default;
-            Optional<ResourceIdentifier> recoveryPointId = default;
+            SiteRecoveryPointType? recoveryPointType = default;
+            ResourceIdentifier recoveryPointId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageTestFailoverContent(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointType), recoveryPointId.Value);
+            return new InMageTestFailoverContent(instanceType, serializedAdditionalRawData, recoveryPointType, recoveryPointId);
         }
 
         BinaryData IPersistableModel<InMageTestFailoverContent>.Write(ModelReaderWriterOptions options)

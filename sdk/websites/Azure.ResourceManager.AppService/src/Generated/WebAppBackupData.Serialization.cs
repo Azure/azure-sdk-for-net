@@ -169,25 +169,25 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> id0 = default;
-            Optional<Uri> storageAccountUrl = default;
-            Optional<string> blobName = default;
-            Optional<string> name0 = default;
-            Optional<WebAppBackupStatus> status = default;
-            Optional<long> sizeInBytes = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<string> log = default;
+            SystemData systemData = default;
+            int? id0 = default;
+            Uri storageAccountUrl = default;
+            string blobName = default;
+            string name0 = default;
+            WebAppBackupStatus? status = default;
+            long? sizeInBytes = default;
+            DateTimeOffset? created = default;
+            string log = default;
             IReadOnlyList<AppServiceDatabaseBackupSetting> databases = default;
-            Optional<bool> scheduled = default;
-            Optional<DateTimeOffset> lastRestoreTimeStamp = default;
-            Optional<DateTimeOffset> finishedTimeStamp = default;
-            Optional<string> correlationId = default;
-            Optional<long> websiteSizeInBytes = default;
+            bool? scheduled = default;
+            DateTimeOffset? lastRestoreTimeStamp = default;
+            DateTimeOffset? finishedTimeStamp = default;
+            string correlationId = default;
+            long? websiteSizeInBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -354,7 +354,27 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppBackupData(id, name, type, systemData.Value, Optional.ToNullable(id0), storageAccountUrl.Value, blobName.Value, name0.Value, Optional.ToNullable(status), Optional.ToNullable(sizeInBytes), Optional.ToNullable(created), log.Value, databases ?? new ChangeTrackingList<AppServiceDatabaseBackupSetting>(), Optional.ToNullable(scheduled), Optional.ToNullable(lastRestoreTimeStamp), Optional.ToNullable(finishedTimeStamp), correlationId.Value, Optional.ToNullable(websiteSizeInBytes), kind.Value, serializedAdditionalRawData);
+            return new WebAppBackupData(
+                id,
+                name,
+                type,
+                systemData,
+                id0,
+                storageAccountUrl,
+                blobName,
+                name0,
+                status,
+                sizeInBytes,
+                created,
+                log,
+                databases ?? new ChangeTrackingList<AppServiceDatabaseBackupSetting>(),
+                scheduled,
+                lastRestoreTimeStamp,
+                finishedTimeStamp,
+                correlationId,
+                websiteSizeInBytes,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppBackupData>.Write(ModelReaderWriterOptions options)

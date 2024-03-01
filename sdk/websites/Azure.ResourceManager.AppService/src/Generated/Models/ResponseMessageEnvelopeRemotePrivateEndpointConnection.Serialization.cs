@@ -142,19 +142,19 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<AppServiceArmPlan> plan = default;
-            Optional<RemotePrivateEndpointConnection> properties = default;
-            Optional<AppServiceSkuDescription> sku = default;
-            Optional<string> status = default;
-            Optional<ResponseError> error = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            AzureLocation? location = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            AppServiceArmPlan plan = default;
+            RemotePrivateEndpointConnection properties = default;
+            AppServiceSkuDescription sku = default;
+            string status = default;
+            ResponseError error = default;
+            ManagedServiceIdentity identity = default;
             IReadOnlyList<string> zones = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -276,7 +276,21 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResponseMessageEnvelopeRemotePrivateEndpointConnection(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), plan.Value, properties.Value, sku.Value, status.Value, error.Value, identity, zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ResponseMessageEnvelopeRemotePrivateEndpointConnection(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                plan,
+                properties,
+                sku,
+                status,
+                error,
+                identity,
+                zones ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResponseMessageEnvelopeRemotePrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Logic.Models
             IntegrationAccountEventLevel eventLevel = default;
             DateTimeOffset eventTime = default;
             IntegrationAccountTrackingRecordType recordType = default;
-            Optional<BinaryData> record = default;
-            Optional<IntegrationAccountTrackingEventErrorInfo> error = default;
+            BinaryData record = default;
+            IntegrationAccountTrackingEventErrorInfo error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountTrackingEvent(eventLevel, eventTime, recordType, record.Value, error.Value, serializedAdditionalRawData);
+            return new IntegrationAccountTrackingEvent(
+                eventLevel,
+                eventTime,
+                recordType,
+                record,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountTrackingEvent>.Write(ModelReaderWriterOptions options)

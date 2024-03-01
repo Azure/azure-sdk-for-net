@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.OperationalInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<OperationalInsightsDataSourceType> dataSourceType = default;
+            SystemData systemData = default;
+            OperationalInsightsDataSourceType? dataSourceType = default;
             IList<ResourceIdentifier> storageAccountIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -191,7 +191,14 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsLinkedStorageAccountsData(id, name, type, systemData.Value, Optional.ToNullable(dataSourceType), storageAccountIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
+            return new OperationalInsightsLinkedStorageAccountsData(
+                id,
+                name,
+                type,
+                systemData,
+                dataSourceType,
+                storageAccountIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsLinkedStorageAccountsData>.Write(ModelReaderWriterOptions options)

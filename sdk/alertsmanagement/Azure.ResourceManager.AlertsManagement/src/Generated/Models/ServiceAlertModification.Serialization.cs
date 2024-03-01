@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<ServiceAlertModificationProperties> properties = default;
+            ServiceAlertModificationProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAlertModification(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new ServiceAlertModification(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertModification>.Write(ModelReaderWriterOptions options)

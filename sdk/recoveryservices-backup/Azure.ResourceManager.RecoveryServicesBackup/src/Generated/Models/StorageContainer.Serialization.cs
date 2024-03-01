@@ -116,17 +116,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<string> storageAccountVersion = default;
-            Optional<string> resourceGroup = default;
-            Optional<long> protectedItemCount = default;
-            Optional<AcquireStorageAccountLock> acquireStorageAccountLock = default;
-            Optional<string> friendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> registrationStatus = default;
-            Optional<string> healthStatus = default;
+            ResourceIdentifier sourceResourceId = default;
+            string storageAccountVersion = default;
+            string resourceGroup = default;
+            long? protectedItemCount = default;
+            AcquireStorageAccountLock? acquireStorageAccountLock = default;
+            string friendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string registrationStatus = default;
+            string healthStatus = default;
             ProtectableContainerType containerType = default;
-            Optional<string> protectableObjectType = default;
+            string protectableObjectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,7 +208,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, serializedAdditionalRawData, sourceResourceId.Value, storageAccountVersion.Value, resourceGroup.Value, Optional.ToNullable(protectedItemCount), Optional.ToNullable(acquireStorageAccountLock));
+            return new StorageContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                containerType,
+                protectableObjectType,
+                serializedAdditionalRawData,
+                sourceResourceId,
+                storageAccountVersion,
+                resourceGroup,
+                protectedItemCount,
+                acquireStorageAccountLock);
         }
 
         BinaryData IPersistableModel<StorageContainer>.Write(ModelReaderWriterOptions options)

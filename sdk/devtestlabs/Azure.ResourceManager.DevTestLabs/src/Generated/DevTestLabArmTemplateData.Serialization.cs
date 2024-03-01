@@ -154,20 +154,20 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> publisher = default;
-            Optional<string> icon = default;
-            Optional<BinaryData> contents = default;
-            Optional<DateTimeOffset> createdDate = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            string publisher = default;
+            string icon = default;
+            BinaryData contents = default;
+            DateTimeOffset? createdDate = default;
             IReadOnlyList<DevTestLabParametersValueFileInfo> parametersValueFilesInfo = default;
-            Optional<bool> enabled = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -294,7 +294,22 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabArmTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, displayName.Value, description.Value, publisher.Value, icon.Value, contents.Value, Optional.ToNullable(createdDate), parametersValueFilesInfo ?? new ChangeTrackingList<DevTestLabParametersValueFileInfo>(), Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new DevTestLabArmTemplateData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                displayName,
+                description,
+                publisher,
+                icon,
+                contents,
+                createdDate,
+                parametersValueFilesInfo ?? new ChangeTrackingList<DevTestLabParametersValueFileInfo>(),
+                enabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabArmTemplateData>.Write(ModelReaderWriterOptions options)

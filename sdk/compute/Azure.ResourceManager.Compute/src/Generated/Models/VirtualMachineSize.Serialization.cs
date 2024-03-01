@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> numberOfCores = default;
-            Optional<int> osDiskSizeInMB = default;
-            Optional<int> resourceDiskSizeInMB = default;
-            Optional<int> memoryInMB = default;
-            Optional<int> maxDataDiskCount = default;
+            string name = default;
+            int? numberOfCores = default;
+            int? osDiskSizeInMB = default;
+            int? resourceDiskSizeInMB = default;
+            int? memoryInMB = default;
+            int? maxDataDiskCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineSize(name.Value, Optional.ToNullable(numberOfCores), Optional.ToNullable(osDiskSizeInMB), Optional.ToNullable(resourceDiskSizeInMB), Optional.ToNullable(memoryInMB), Optional.ToNullable(maxDataDiskCount), serializedAdditionalRawData);
+            return new VirtualMachineSize(
+                name,
+                numberOfCores,
+                osDiskSizeInMB,
+                resourceDiskSizeInMB,
+                memoryInMB,
+                maxDataDiskCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineSize>.Write(ModelReaderWriterOptions options)

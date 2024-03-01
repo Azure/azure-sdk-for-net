@@ -117,15 +117,15 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<SqlSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            SqlSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> databaseId = default;
-            Optional<JobAgentState> state = default;
+            SystemData systemData = default;
+            ResourceIdentifier databaseId = default;
+            JobAgentState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,7 +218,17 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerJobAgentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, databaseId.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new SqlServerJobAgentData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                databaseId,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerJobAgentData>.Write(ModelReaderWriterOptions options)

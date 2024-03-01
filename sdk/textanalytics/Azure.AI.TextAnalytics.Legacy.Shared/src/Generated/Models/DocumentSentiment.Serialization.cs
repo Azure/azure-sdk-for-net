@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -22,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             string id = default;
             DocumentSentimentValue sentiment = default;
-            Optional<DocumentStatistics> statistics = default;
+            DocumentStatistics statistics = default;
             SentimentConfidenceScorePerLabel confidenceScores = default;
             IReadOnlyList<SentenceSentiment> sentences = default;
             IReadOnlyList<TextAnalyticsWarning> warnings = default;
@@ -73,7 +72,13 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new DocumentSentiment(id, sentiment, statistics.Value, confidenceScores, sentences, warnings);
+            return new DocumentSentiment(
+                id,
+                sentiment,
+                statistics,
+                confidenceScores,
+                sentences,
+                warnings);
         }
     }
 }

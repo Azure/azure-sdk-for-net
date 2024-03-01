@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<CognitiveServicesSku> sku = default;
+            ResourceType? resourceType = default;
+            CognitiveServicesSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountSku(Optional.ToNullable(resourceType), sku.Value, serializedAdditionalRawData);
+            return new CognitiveServicesAccountSku(resourceType, sku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountSku>.Write(ModelReaderWriterOptions options)

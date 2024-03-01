@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> addressPrefix = default;
-            Optional<RouteNextHopType> nextHopType = default;
-            Optional<string> nextHopIPAddress = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<bool> hasBgpOverride = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string addressPrefix = default;
+            RouteNextHopType? nextHopType = default;
+            string nextHopIPAddress = default;
+            NetworkProvisioningState? provisioningState = default;
+            bool? hasBgpOverride = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), addressPrefix.Value, Optional.ToNullable(nextHopType), nextHopIPAddress.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(hasBgpOverride));
+            return new RouteData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                addressPrefix,
+                nextHopType,
+                nextHopIPAddress,
+                provisioningState,
+                hasBgpOverride);
         }
 
         BinaryData IPersistableModel<RouteData>.Write(ModelReaderWriterOptions options)

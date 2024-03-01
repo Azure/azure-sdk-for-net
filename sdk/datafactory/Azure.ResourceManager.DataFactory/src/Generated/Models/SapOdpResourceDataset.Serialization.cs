@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
-            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
+            string description = default;
+            DataFactoryElement<IList<DatasetDataElement>> structure = default;
+            DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            Optional<DatasetFolder> folder = default;
+            DatasetFolder folder = default;
             DataFactoryElement<string> context = default;
             DataFactoryElement<string> objectName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -242,7 +242,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOdpResourceDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), folder.Value, additionalProperties, context, objectName);
+            return new SapOdpResourceDataset(
+                type,
+                description,
+                structure,
+                schema,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                folder,
+                additionalProperties,
+                context,
+                objectName);
         }
 
         BinaryData IPersistableModel<SapOdpResourceDataset>.Write(ModelReaderWriterOptions options)

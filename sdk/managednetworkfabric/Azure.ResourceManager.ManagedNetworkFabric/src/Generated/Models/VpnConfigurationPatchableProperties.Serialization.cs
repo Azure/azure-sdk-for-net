@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> networkToNetworkInterconnectId = default;
-            Optional<PeeringOption> peeringOption = default;
-            Optional<OptionBProperties> optionBProperties = default;
-            Optional<VpnConfigurationPatchableOptionAProperties> optionAProperties = default;
+            ResourceIdentifier networkToNetworkInterconnectId = default;
+            PeeringOption? peeringOption = default;
+            OptionBProperties optionBProperties = default;
+            VpnConfigurationPatchableOptionAProperties optionAProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnConfigurationPatchableProperties(networkToNetworkInterconnectId.Value, Optional.ToNullable(peeringOption), optionBProperties.Value, optionAProperties.Value, serializedAdditionalRawData);
+            return new VpnConfigurationPatchableProperties(networkToNetworkInterconnectId, peeringOption, optionBProperties, optionAProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnConfigurationPatchableProperties>.Write(ModelReaderWriterOptions options)

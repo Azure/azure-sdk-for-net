@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> publicKey = default;
+            IDictionary<string, string> tags = default;
+            string publicKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SshPublicKeyPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, publicKey.Value);
+            return new SshPublicKeyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, publicKey);
         }
 
         BinaryData IPersistableModel<SshPublicKeyPatch>.Write(ModelReaderWriterOptions options)

@@ -174,17 +174,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isHostnameAlreadyVerified = default;
-            Optional<DnsVerificationTestResult> customDomainVerificationTest = default;
-            Optional<ResponseError> customDomainVerificationFailureInfo = default;
-            Optional<bool> hasConflictOnScaleUnit = default;
-            Optional<bool> hasConflictAcrossSubscription = default;
-            Optional<string> conflictingAppResourceId = default;
+            SystemData systemData = default;
+            bool? isHostnameAlreadyVerified = default;
+            DnsVerificationTestResult? customDomainVerificationTest = default;
+            ResponseError customDomainVerificationFailureInfo = default;
+            bool? hasConflictOnScaleUnit = default;
+            bool? hasConflictAcrossSubscription = default;
+            string conflictingAppResourceId = default;
             IList<string> cNameRecords = default;
             IList<string> txtRecords = default;
             IList<string> aRecords = default;
@@ -361,7 +361,24 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomHostnameAnalysisResult(id, name, type, systemData.Value, Optional.ToNullable(isHostnameAlreadyVerified), Optional.ToNullable(customDomainVerificationTest), customDomainVerificationFailureInfo.Value, Optional.ToNullable(hasConflictOnScaleUnit), Optional.ToNullable(hasConflictAcrossSubscription), conflictingAppResourceId.Value, cNameRecords ?? new ChangeTrackingList<string>(), txtRecords ?? new ChangeTrackingList<string>(), aRecords ?? new ChangeTrackingList<string>(), alternateCNameRecords ?? new ChangeTrackingList<string>(), alternateTxtRecords ?? new ChangeTrackingList<string>(), kind.Value, serializedAdditionalRawData);
+            return new CustomHostnameAnalysisResult(
+                id,
+                name,
+                type,
+                systemData,
+                isHostnameAlreadyVerified,
+                customDomainVerificationTest,
+                customDomainVerificationFailureInfo,
+                hasConflictOnScaleUnit,
+                hasConflictAcrossSubscription,
+                conflictingAppResourceId,
+                cNameRecords ?? new ChangeTrackingList<string>(),
+                txtRecords ?? new ChangeTrackingList<string>(),
+                aRecords ?? new ChangeTrackingList<string>(),
+                alternateCNameRecords ?? new ChangeTrackingList<string>(),
+                alternateTxtRecords ?? new ChangeTrackingList<string>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomHostnameAnalysisResult>.Write(ModelReaderWriterOptions options)

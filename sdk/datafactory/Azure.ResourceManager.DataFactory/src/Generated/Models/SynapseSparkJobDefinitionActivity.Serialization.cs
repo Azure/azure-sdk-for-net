@@ -284,31 +284,31 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             SynapseSparkJobReference sparkJob = default;
             IList<BinaryData> args = default;
-            Optional<DataFactoryElement<string>> file = default;
-            Optional<DataFactoryElement<bool>> scanFolder = default;
-            Optional<DataFactoryElement<string>> className = default;
+            DataFactoryElement<string> file = default;
+            DataFactoryElement<bool> scanFolder = default;
+            DataFactoryElement<string> className = default;
             IList<BinaryData> files = default;
             IList<BinaryData> pythonCodeReference = default;
             IList<BinaryData> filesV2 = default;
-            Optional<BigDataPoolParametrizationReference> targetBigDataPool = default;
-            Optional<DataFactoryElement<string>> executorSize = default;
-            Optional<BinaryData> conf = default;
-            Optional<DataFactoryElement<string>> driverSize = default;
-            Optional<DataFactoryElement<int>> numExecutors = default;
-            Optional<DataFactorySparkConfigurationType> configurationType = default;
-            Optional<SparkConfigurationParametrizationReference> targetSparkConfiguration = default;
-            Optional<IDictionary<string, BinaryData>> sparkConfig = default;
+            BigDataPoolParametrizationReference targetBigDataPool = default;
+            DataFactoryElement<string> executorSize = default;
+            BinaryData conf = default;
+            DataFactoryElement<string> driverSize = default;
+            DataFactoryElement<int> numExecutors = default;
+            DataFactorySparkConfigurationType? configurationType = default;
+            SparkConfigurationParametrizationReference targetSparkConfiguration = default;
+            IDictionary<string, BinaryData> sparkConfig = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -607,7 +607,33 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseSparkJobDefinitionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, sparkJob, args ?? new ChangeTrackingList<BinaryData>(), file.Value, scanFolder.Value, className.Value, files ?? new ChangeTrackingList<BinaryData>(), pythonCodeReference ?? new ChangeTrackingList<BinaryData>(), filesV2 ?? new ChangeTrackingList<BinaryData>(), targetBigDataPool.Value, executorSize.Value, conf.Value, driverSize.Value, numExecutors.Value, Optional.ToNullable(configurationType), targetSparkConfiguration.Value, Optional.ToDictionary(sparkConfig));
+            return new SynapseSparkJobDefinitionActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                sparkJob,
+                args ?? new ChangeTrackingList<BinaryData>(),
+                file,
+                scanFolder,
+                className,
+                files ?? new ChangeTrackingList<BinaryData>(),
+                pythonCodeReference ?? new ChangeTrackingList<BinaryData>(),
+                filesV2 ?? new ChangeTrackingList<BinaryData>(),
+                targetBigDataPool,
+                executorSize,
+                conf,
+                driverSize,
+                numExecutors,
+                configurationType,
+                targetSparkConfiguration,
+                sparkConfig ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<SynapseSparkJobDefinitionActivity>.Write(ModelReaderWriterOptions options)

@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedApplicationTypeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, serializedAdditionalRawData);
+            return new ServiceFabricManagedApplicationTypeData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedApplicationTypeData>.Write(ModelReaderWriterOptions options)

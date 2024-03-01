@@ -129,14 +129,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
+            string id = default;
+            string name = default;
             IReadOnlyList<ReportableException> restoreDatabaseNameErrors = default;
             IReadOnlyList<ReportableException> backupFolderErrors = default;
             IReadOnlyList<ReportableException> backupShareCredentialsErrors = default;
             IReadOnlyList<ReportableException> backupStorageAccountErrors = default;
             IReadOnlyList<ReportableException> existingBackupErrors = default;
-            Optional<DatabaseBackupInfo> databaseBackupInfo = default;
+            DatabaseBackupInfo databaseBackupInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,7 +236,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ValidateMigrationInputSqlServerSqlMITaskOutput(id.Value, name.Value, restoreDatabaseNameErrors ?? new ChangeTrackingList<ReportableException>(), backupFolderErrors ?? new ChangeTrackingList<ReportableException>(), backupShareCredentialsErrors ?? new ChangeTrackingList<ReportableException>(), backupStorageAccountErrors ?? new ChangeTrackingList<ReportableException>(), existingBackupErrors ?? new ChangeTrackingList<ReportableException>(), databaseBackupInfo.Value, serializedAdditionalRawData);
+            return new ValidateMigrationInputSqlServerSqlMITaskOutput(
+                id,
+                name,
+                restoreDatabaseNameErrors ?? new ChangeTrackingList<ReportableException>(),
+                backupFolderErrors ?? new ChangeTrackingList<ReportableException>(),
+                backupShareCredentialsErrors ?? new ChangeTrackingList<ReportableException>(),
+                backupStorageAccountErrors ?? new ChangeTrackingList<ReportableException>(),
+                existingBackupErrors ?? new ChangeTrackingList<ReportableException>(),
+                databaseBackupInfo,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskOutput>.Write(ModelReaderWriterOptions options)

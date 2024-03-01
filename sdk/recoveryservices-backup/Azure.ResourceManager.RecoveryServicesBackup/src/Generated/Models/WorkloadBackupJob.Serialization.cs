@@ -136,18 +136,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> workloadType = default;
-            Optional<TimeSpan> duration = default;
+            string workloadType = default;
+            TimeSpan? duration = default;
             IList<JobSupportedAction> actionsInfo = default;
             IList<WorkloadErrorInfo> errorDetails = default;
-            Optional<WorkloadBackupJobExtendedInfo> extendedInfo = default;
-            Optional<string> entityFriendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> operation = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> activityId = default;
+            WorkloadBackupJobExtendedInfo extendedInfo = default;
+            string entityFriendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string operation = default;
+            string status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string activityId = default;
             string jobType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -262,7 +262,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, serializedAdditionalRawData, workloadType.Value, Optional.ToNullable(duration), actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(), errorDetails ?? new ChangeTrackingList<WorkloadErrorInfo>(), extendedInfo.Value);
+            return new WorkloadBackupJob(
+                entityFriendlyName,
+                backupManagementType,
+                operation,
+                status,
+                startTime,
+                endTime,
+                activityId,
+                jobType,
+                serializedAdditionalRawData,
+                workloadType,
+                duration,
+                actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(),
+                errorDetails ?? new ChangeTrackingList<WorkloadErrorInfo>(),
+                extendedInfo);
         }
 
         BinaryData IPersistableModel<WorkloadBackupJob>.Write(ModelReaderWriterOptions options)

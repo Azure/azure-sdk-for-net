@@ -158,21 +158,21 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<VirtualMachineRunCommandScriptSource> source = default;
+            IDictionary<string, string> tags = default;
+            VirtualMachineRunCommandScriptSource source = default;
             IList<RunCommandInputParameter> parameters = default;
             IList<RunCommandInputParameter> protectedParameters = default;
-            Optional<bool> asyncExecution = default;
-            Optional<string> runAsUser = default;
-            Optional<string> runAsPassword = default;
-            Optional<int> timeoutInSeconds = default;
-            Optional<Uri> outputBlobUri = default;
-            Optional<Uri> errorBlobUri = default;
-            Optional<RunCommandManagedIdentity> outputBlobManagedIdentity = default;
-            Optional<RunCommandManagedIdentity> errorBlobManagedIdentity = default;
-            Optional<string> provisioningState = default;
-            Optional<VirtualMachineRunCommandInstanceView> instanceView = default;
-            Optional<bool> treatFailureAsDeploymentFailure = default;
+            bool? asyncExecution = default;
+            string runAsUser = default;
+            string runAsPassword = default;
+            int? timeoutInSeconds = default;
+            Uri outputBlobUri = default;
+            Uri errorBlobUri = default;
+            RunCommandManagedIdentity outputBlobManagedIdentity = default;
+            RunCommandManagedIdentity errorBlobManagedIdentity = default;
+            string provisioningState = default;
+            VirtualMachineRunCommandInstanceView instanceView = default;
+            bool? treatFailureAsDeploymentFailure = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -333,7 +333,23 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineRunCommandUpdate(Optional.ToDictionary(tags), serializedAdditionalRawData, source.Value, parameters ?? new ChangeTrackingList<RunCommandInputParameter>(), protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(), Optional.ToNullable(asyncExecution), runAsUser.Value, runAsPassword.Value, Optional.ToNullable(timeoutInSeconds), outputBlobUri.Value, errorBlobUri.Value, outputBlobManagedIdentity.Value, errorBlobManagedIdentity.Value, provisioningState.Value, instanceView.Value, Optional.ToNullable(treatFailureAsDeploymentFailure));
+            return new VirtualMachineRunCommandUpdate(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                source,
+                parameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                asyncExecution,
+                runAsUser,
+                runAsPassword,
+                timeoutInSeconds,
+                outputBlobUri,
+                errorBlobUri,
+                outputBlobManagedIdentity,
+                errorBlobManagedIdentity,
+                provisioningState,
+                instanceView,
+                treatFailureAsDeploymentFailure);
         }
 
         BinaryData IPersistableModel<VirtualMachineRunCommandUpdate>.Write(ModelReaderWriterOptions options)

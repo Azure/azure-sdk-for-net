@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> artifactId = default;
-            Optional<string> artifactTitle = default;
+            string artifactId = default;
+            string artifactTitle = default;
             IList<DevTestLabArtifactParameter> parameters = default;
-            Optional<string> status = default;
-            Optional<string> deploymentStatusMessage = default;
-            Optional<string> vmExtensionStatusMessage = default;
-            Optional<DateTimeOffset> installTime = default;
+            string status = default;
+            string deploymentStatusMessage = default;
+            string vmExtensionStatusMessage = default;
+            DateTimeOffset? installTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabArtifactInstallInfo(artifactId.Value, artifactTitle.Value, parameters ?? new ChangeTrackingList<DevTestLabArtifactParameter>(), status.Value, deploymentStatusMessage.Value, vmExtensionStatusMessage.Value, Optional.ToNullable(installTime), serializedAdditionalRawData);
+            return new DevTestLabArtifactInstallInfo(
+                artifactId,
+                artifactTitle,
+                parameters ?? new ChangeTrackingList<DevTestLabArtifactParameter>(),
+                status,
+                deploymentStatusMessage,
+                vmExtensionStatusMessage,
+                installTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabArtifactInstallInfo>.Write(ModelReaderWriterOptions options)

@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> viewName = default;
-            Optional<string> userId = default;
-            Optional<Guid> tenantId = default;
-            Optional<IDictionary<string, string>> displayName = default;
-            Optional<string> definition = default;
-            Optional<DateTimeOffset> changed = default;
-            Optional<DateTimeOffset> created = default;
+            SystemData systemData = default;
+            string viewName = default;
+            string userId = default;
+            Guid? tenantId = default;
+            IDictionary<string, string> displayName = default;
+            string definition = default;
+            DateTimeOffset? changed = default;
+            DateTimeOffset? created = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -242,7 +242,19 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ViewResourceFormatData(id, name, type, systemData.Value, viewName.Value, userId.Value, Optional.ToNullable(tenantId), Optional.ToDictionary(displayName), definition.Value, Optional.ToNullable(changed), Optional.ToNullable(created), serializedAdditionalRawData);
+            return new ViewResourceFormatData(
+                id,
+                name,
+                type,
+                systemData,
+                viewName,
+                userId,
+                tenantId,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                definition,
+                changed,
+                created,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ViewResourceFormatData>.Write(ModelReaderWriterOptions options)

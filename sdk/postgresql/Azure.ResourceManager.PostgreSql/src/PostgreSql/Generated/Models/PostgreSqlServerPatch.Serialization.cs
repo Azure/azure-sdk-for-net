@@ -124,16 +124,16 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<PostgreSqlSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<PostgreSqlStorageProfile> storageProfile = default;
-            Optional<string> administratorLoginPassword = default;
-            Optional<PostgreSqlServerVersion> version = default;
-            Optional<PostgreSqlSslEnforcementEnum> sslEnforcement = default;
-            Optional<PostgreSqlMinimalTlsVersionEnum> minimalTlsVersion = default;
-            Optional<PostgreSqlPublicNetworkAccessEnum> publicNetworkAccess = default;
-            Optional<string> replicationRole = default;
+            ManagedServiceIdentity identity = default;
+            PostgreSqlSku sku = default;
+            IDictionary<string, string> tags = default;
+            PostgreSqlStorageProfile storageProfile = default;
+            string administratorLoginPassword = default;
+            PostgreSqlServerVersion? version = default;
+            PostgreSqlSslEnforcementEnum? sslEnforcement = default;
+            PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion = default;
+            PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess = default;
+            string replicationRole = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,7 +243,18 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerPatch(identity, sku.Value, Optional.ToDictionary(tags), storageProfile.Value, administratorLoginPassword.Value, Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(publicNetworkAccess), replicationRole.Value, serializedAdditionalRawData);
+            return new PostgreSqlServerPatch(
+                identity,
+                sku,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                storageProfile,
+                administratorLoginPassword,
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                publicNetworkAccess,
+                replicationRole,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerPatch>.Write(ModelReaderWriterOptions options)

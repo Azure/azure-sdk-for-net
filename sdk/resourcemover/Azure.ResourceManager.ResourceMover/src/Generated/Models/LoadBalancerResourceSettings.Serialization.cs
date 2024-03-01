@@ -117,14 +117,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> sku = default;
+            IDictionary<string, string> tags = default;
+            string sku = default;
             IList<LoadBalancerFrontendIPConfigurationResourceSettings> frontendIPConfigurations = default;
             IList<LoadBalancerBackendAddressPoolResourceSettings> backendAddressPools = default;
-            Optional<string> zones = default;
+            string zones = default;
             string resourceType = default;
-            Optional<string> targetResourceName = default;
-            Optional<string> targetResourceGroupName = default;
+            string targetResourceName = default;
+            string targetResourceGroupName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,7 +202,16 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, Optional.ToDictionary(tags), sku.Value, frontendIPConfigurations ?? new ChangeTrackingList<LoadBalancerFrontendIPConfigurationResourceSettings>(), backendAddressPools ?? new ChangeTrackingList<LoadBalancerBackendAddressPoolResourceSettings>(), zones.Value);
+            return new LoadBalancerResourceSettings(
+                resourceType,
+                targetResourceName,
+                targetResourceGroupName,
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
+                frontendIPConfigurations ?? new ChangeTrackingList<LoadBalancerFrontendIPConfigurationResourceSettings>(),
+                backendAddressPools ?? new ChangeTrackingList<LoadBalancerBackendAddressPoolResourceSettings>(),
+                zones);
         }
 
         BinaryData IPersistableModel<LoadBalancerResourceSettings>.Write(ModelReaderWriterOptions options)

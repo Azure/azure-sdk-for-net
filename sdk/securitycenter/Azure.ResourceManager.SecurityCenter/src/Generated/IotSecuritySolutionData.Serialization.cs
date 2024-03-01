@@ -187,22 +187,22 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> workspace = default;
-            Optional<string> displayName = default;
-            Optional<SecuritySolutionStatus> status = default;
+            SystemData systemData = default;
+            string workspace = default;
+            string displayName = default;
+            SecuritySolutionStatus? status = default;
             IList<IotSecuritySolutionExportOption> export = default;
             IList<IotSecuritySolutionDataSource> disabledDataSources = default;
             IList<string> iotHubs = default;
-            Optional<UserDefinedResourcesProperties> userDefinedResources = default;
+            UserDefinedResourcesProperties userDefinedResources = default;
             IReadOnlyList<string> autoDiscoveredResources = default;
             IList<RecommendationConfigurationProperties> recommendationsConfiguration = default;
-            Optional<UnmaskedIPLoggingStatus> unmaskedIPLoggingStatus = default;
+            UnmaskedIPLoggingStatus? unmaskedIPLoggingStatus = default;
             IList<AdditionalWorkspacesProperties> additionalWorkspaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -390,7 +390,25 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecuritySolutionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, workspace.Value, displayName.Value, Optional.ToNullable(status), export ?? new ChangeTrackingList<IotSecuritySolutionExportOption>(), disabledDataSources ?? new ChangeTrackingList<IotSecuritySolutionDataSource>(), iotHubs ?? new ChangeTrackingList<string>(), userDefinedResources.Value, autoDiscoveredResources ?? new ChangeTrackingList<string>(), recommendationsConfiguration ?? new ChangeTrackingList<RecommendationConfigurationProperties>(), Optional.ToNullable(unmaskedIPLoggingStatus), additionalWorkspaces ?? new ChangeTrackingList<AdditionalWorkspacesProperties>(), serializedAdditionalRawData);
+            return new IotSecuritySolutionData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                workspace,
+                displayName,
+                status,
+                export ?? new ChangeTrackingList<IotSecuritySolutionExportOption>(),
+                disabledDataSources ?? new ChangeTrackingList<IotSecuritySolutionDataSource>(),
+                iotHubs ?? new ChangeTrackingList<string>(),
+                userDefinedResources,
+                autoDiscoveredResources ?? new ChangeTrackingList<string>(),
+                recommendationsConfiguration ?? new ChangeTrackingList<RecommendationConfigurationProperties>(),
+                unmaskedIPLoggingStatus,
+                additionalWorkspaces ?? new ChangeTrackingList<AdditionalWorkspacesProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotSecuritySolutionData>.Write(ModelReaderWriterOptions options)

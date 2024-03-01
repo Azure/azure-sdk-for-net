@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<Guid> oid = default;
-            Optional<string> puid = default;
-            Optional<Guid> applicationId = default;
+            Guid? oid = default;
+            string puid = default;
+            Guid? applicationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationDetails(Optional.ToNullable(oid), puid.Value, Optional.ToNullable(applicationId), serializedAdditionalRawData);
+            return new ArmApplicationDetails(oid, puid, applicationId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmApplicationDetails>.Write(ModelReaderWriterOptions options)

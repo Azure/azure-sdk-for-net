@@ -53,8 +53,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string videoName = default;
-            Optional<VideoCreationProperties> videoCreationProperties = default;
-            Optional<VideoPublishingOptions> videoPublishingOptions = default;
+            VideoCreationProperties videoCreationProperties = default;
+            VideoPublishingOptions videoPublishingOptions = default;
             string localMediaCachePath = default;
             string localMediaCacheMaximumSizeMiB = default;
             string type = default;
@@ -116,7 +116,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new VideoSink(type, name, inputs, videoName, videoCreationProperties.Value, videoPublishingOptions.Value, localMediaCachePath, localMediaCacheMaximumSizeMiB);
+            return new VideoSink(
+                type,
+                name,
+                inputs,
+                videoName,
+                videoCreationProperties,
+                videoPublishingOptions,
+                localMediaCachePath,
+                localMediaCacheMaximumSizeMiB);
         }
     }
 }

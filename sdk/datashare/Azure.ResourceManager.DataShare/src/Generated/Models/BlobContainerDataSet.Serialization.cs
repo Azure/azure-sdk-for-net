@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string containerName = default;
-            Optional<Guid> dataSetId = default;
+            Guid? dataSetId = default;
             string resourceGroup = default;
             string storageAccountName = default;
             string subscriptionId = default;
@@ -193,7 +193,18 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobContainerDataSet(id, name, type, systemData.Value, kind, serializedAdditionalRawData, containerName, Optional.ToNullable(dataSetId), resourceGroup, storageAccountName, subscriptionId);
+            return new BlobContainerDataSet(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                containerName,
+                dataSetId,
+                resourceGroup,
+                storageAccountName,
+                subscriptionId);
         }
 
         BinaryData IPersistableModel<BlobContainerDataSet>.Write(ModelReaderWriterOptions options)

@@ -221,19 +221,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             IReadOnlyList<ClusterComponentItem> components = default;
             HDInsightIdentityProfile identityProfile = default;
             AuthorizationProfile authorizationProfile = default;
-            Optional<ClusterSecretsProfile> secretsProfile = default;
+            ClusterSecretsProfile secretsProfile = default;
             IList<ClusterServiceConfigsProfile> serviceConfigsProfiles = default;
-            Optional<ClusterConnectivityProfile> connectivityProfile = default;
-            Optional<ClusterLogAnalyticsProfile> logAnalyticsProfile = default;
-            Optional<ClusterPrometheusProfile> prometheusProfile = default;
-            Optional<ClusterSshProfile> sshProfile = default;
-            Optional<ClusterAutoscaleProfile> autoscaleProfile = default;
-            Optional<IDictionary<string, BinaryData>> kafkaProfile = default;
-            Optional<TrinoProfile> trinoProfile = default;
-            Optional<IDictionary<string, BinaryData>> llapProfile = default;
-            Optional<FlinkProfile> flinkProfile = default;
-            Optional<SparkProfile> sparkProfile = default;
-            Optional<IDictionary<string, BinaryData>> stubProfile = default;
+            ClusterConnectivityProfile connectivityProfile = default;
+            ClusterLogAnalyticsProfile logAnalyticsProfile = default;
+            ClusterPrometheusProfile prometheusProfile = default;
+            ClusterSshProfile sshProfile = default;
+            ClusterAutoscaleProfile autoscaleProfile = default;
+            IDictionary<string, BinaryData> kafkaProfile = default;
+            TrinoProfile trinoProfile = default;
+            IDictionary<string, BinaryData> llapProfile = default;
+            FlinkProfile flinkProfile = default;
+            SparkProfile sparkProfile = default;
+            IDictionary<string, BinaryData> stubProfile = default;
             IList<ScriptActionProfile> scriptActionProfiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -451,7 +451,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterProfile(clusterVersion, ossVersion, components ?? new ChangeTrackingList<ClusterComponentItem>(), identityProfile, authorizationProfile, secretsProfile.Value, serviceConfigsProfiles ?? new ChangeTrackingList<ClusterServiceConfigsProfile>(), connectivityProfile.Value, logAnalyticsProfile.Value, prometheusProfile.Value, sshProfile.Value, autoscaleProfile.Value, Optional.ToDictionary(kafkaProfile), trinoProfile.Value, Optional.ToDictionary(llapProfile), flinkProfile.Value, sparkProfile.Value, Optional.ToDictionary(stubProfile), scriptActionProfiles ?? new ChangeTrackingList<ScriptActionProfile>(), serializedAdditionalRawData);
+            return new ClusterProfile(
+                clusterVersion,
+                ossVersion,
+                components ?? new ChangeTrackingList<ClusterComponentItem>(),
+                identityProfile,
+                authorizationProfile,
+                secretsProfile,
+                serviceConfigsProfiles ?? new ChangeTrackingList<ClusterServiceConfigsProfile>(),
+                connectivityProfile,
+                logAnalyticsProfile,
+                prometheusProfile,
+                sshProfile,
+                autoscaleProfile,
+                kafkaProfile ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                trinoProfile,
+                llapProfile ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                flinkProfile,
+                sparkProfile,
+                stubProfile ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                scriptActionProfiles ?? new ChangeTrackingList<ScriptActionProfile>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterProfile>.Write(ModelReaderWriterOptions options)

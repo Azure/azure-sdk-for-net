@@ -144,17 +144,17 @@ namespace Azure.ResourceManager.Compute
                 return null;
             }
             IList<string> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> platformFaultDomainCount = default;
+            SystemData systemData = default;
+            int? platformFaultDomainCount = default;
             IReadOnlyList<SubResource> hosts = default;
-            Optional<DedicatedHostGroupInstanceView> instanceView = default;
-            Optional<bool> supportAutomaticPlacement = default;
-            Optional<DedicatedHostGroupPropertiesAdditionalCapabilities> additionalCapabilities = default;
+            DedicatedHostGroupInstanceView instanceView = default;
+            bool? supportAutomaticPlacement = default;
+            DedicatedHostGroupPropertiesAdditionalCapabilities additionalCapabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -284,7 +284,20 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedHostGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, zones ?? new ChangeTrackingList<string>(), Optional.ToNullable(platformFaultDomainCount), hosts ?? new ChangeTrackingList<SubResource>(), instanceView.Value, Optional.ToNullable(supportAutomaticPlacement), additionalCapabilities.Value, serializedAdditionalRawData);
+            return new DedicatedHostGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                zones ?? new ChangeTrackingList<string>(),
+                platformFaultDomainCount,
+                hosts ?? new ChangeTrackingList<SubResource>(),
+                instanceView,
+                supportAutomaticPlacement,
+                additionalCapabilities,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DedicatedHostGroupData>.Write(ModelReaderWriterOptions options)

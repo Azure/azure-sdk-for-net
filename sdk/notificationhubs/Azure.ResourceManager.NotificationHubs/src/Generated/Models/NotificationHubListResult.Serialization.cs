@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 return null;
             }
             IReadOnlyList<NotificationHubData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubListResult(value ?? new ChangeTrackingList<NotificationHubData>(), nextLink.Value, serializedAdditionalRawData);
+            return new NotificationHubListResult(value ?? new ChangeTrackingList<NotificationHubData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubListResult>.Write(ModelReaderWriterOptions options)

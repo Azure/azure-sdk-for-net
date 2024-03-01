@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<int> readTimeoutInSeconds = default;
-            Optional<int> sendTimeoutInSeconds = default;
-            Optional<AppSessionAffinity> sessionAffinity = default;
-            Optional<int> sessionCookieMaxAge = default;
-            Optional<AppBackendProtocol> backendProtocol = default;
-            Optional<IngressSettingsClientAuth> clientAuth = default;
+            int? readTimeoutInSeconds = default;
+            int? sendTimeoutInSeconds = default;
+            AppSessionAffinity? sessionAffinity = default;
+            int? sessionCookieMaxAge = default;
+            AppBackendProtocol? backendProtocol = default;
+            IngressSettingsClientAuth clientAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppIngressSettings(Optional.ToNullable(readTimeoutInSeconds), Optional.ToNullable(sendTimeoutInSeconds), Optional.ToNullable(sessionAffinity), Optional.ToNullable(sessionCookieMaxAge), Optional.ToNullable(backendProtocol), clientAuth.Value, serializedAdditionalRawData);
+            return new AppIngressSettings(
+                readTimeoutInSeconds,
+                sendTimeoutInSeconds,
+                sessionAffinity,
+                sessionCookieMaxAge,
+                backendProtocol,
+                clientAuth,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppIngressSettings>.Write(ModelReaderWriterOptions options)

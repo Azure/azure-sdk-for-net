@@ -131,16 +131,16 @@ namespace Azure.ResourceManager.Batch.Models
             }
             BatchImageReference imageReference = default;
             string nodeAgentSkuId = default;
-            Optional<WindowsConfiguration> windowsConfiguration = default;
+            WindowsConfiguration windowsConfiguration = default;
             IList<BatchVmDataDisk> dataDisks = default;
-            Optional<string> licenseType = default;
-            Optional<BatchVmContainerConfiguration> containerConfiguration = default;
-            Optional<DiskEncryptionConfiguration> diskEncryptionConfiguration = default;
-            Optional<NodePlacementConfiguration> nodePlacementConfiguration = default;
+            string licenseType = default;
+            BatchVmContainerConfiguration containerConfiguration = default;
+            DiskEncryptionConfiguration diskEncryptionConfiguration = default;
+            NodePlacementConfiguration nodePlacementConfiguration = default;
             IList<BatchVmExtension> extensions = default;
-            Optional<BatchOSDisk> osDisk = default;
-            Optional<BatchSecurityProfile> securityProfile = default;
-            Optional<WritableSubResource> serviceArtifactReference = default;
+            BatchOSDisk osDisk = default;
+            BatchSecurityProfile securityProfile = default;
+            WritableSubResource serviceArtifactReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +257,20 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchVmConfiguration(imageReference, nodeAgentSkuId, windowsConfiguration.Value, dataDisks ?? new ChangeTrackingList<BatchVmDataDisk>(), licenseType.Value, containerConfiguration.Value, diskEncryptionConfiguration.Value, nodePlacementConfiguration.Value, extensions ?? new ChangeTrackingList<BatchVmExtension>(), osDisk.Value, securityProfile.Value, serviceArtifactReference, serializedAdditionalRawData);
+            return new BatchVmConfiguration(
+                imageReference,
+                nodeAgentSkuId,
+                windowsConfiguration,
+                dataDisks ?? new ChangeTrackingList<BatchVmDataDisk>(),
+                licenseType,
+                containerConfiguration,
+                diskEncryptionConfiguration,
+                nodePlacementConfiguration,
+                extensions ?? new ChangeTrackingList<BatchVmExtension>(),
+                osDisk,
+                securityProfile,
+                serviceArtifactReference,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchVmConfiguration>.Write(ModelReaderWriterOptions options)

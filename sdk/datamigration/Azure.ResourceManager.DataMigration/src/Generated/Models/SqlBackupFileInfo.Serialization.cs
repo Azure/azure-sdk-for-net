@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> fileName = default;
-            Optional<string> status = default;
-            Optional<long> totalSize = default;
-            Optional<long> dataRead = default;
-            Optional<long> dataWritten = default;
-            Optional<double> copyThroughput = default;
-            Optional<int> copyDuration = default;
-            Optional<int> familySequenceNumber = default;
+            string fileName = default;
+            string status = default;
+            long? totalSize = default;
+            long? dataRead = default;
+            long? dataWritten = default;
+            double? copyThroughput = default;
+            int? copyDuration = default;
+            int? familySequenceNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlBackupFileInfo(fileName.Value, status.Value, Optional.ToNullable(totalSize), Optional.ToNullable(dataRead), Optional.ToNullable(dataWritten), Optional.ToNullable(copyThroughput), Optional.ToNullable(copyDuration), Optional.ToNullable(familySequenceNumber), serializedAdditionalRawData);
+            return new SqlBackupFileInfo(
+                fileName,
+                status,
+                totalSize,
+                dataRead,
+                dataWritten,
+                copyThroughput,
+                copyDuration,
+                familySequenceNumber,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlBackupFileInfo>.Write(ModelReaderWriterOptions options)

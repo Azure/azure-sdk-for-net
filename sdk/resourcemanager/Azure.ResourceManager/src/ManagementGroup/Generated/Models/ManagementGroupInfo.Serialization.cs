@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 return null;
             }
-            Optional<int> version = default;
-            Optional<DateTimeOffset> updatedTime = default;
-            Optional<string> updatedBy = default;
-            Optional<ParentManagementGroupInfo> parent = default;
+            int? version = default;
+            DateTimeOffset? updatedTime = default;
+            string updatedBy = default;
+            ParentManagementGroupInfo parent = default;
             IReadOnlyList<ManagementGroupPathElement> path = default;
             IReadOnlyList<string> managementGroupAncestors = default;
             IReadOnlyList<ManagementGroupPathElement> managementGroupAncestorsChain = default;
@@ -229,7 +229,15 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementGroupInfo(Optional.ToNullable(version), Optional.ToNullable(updatedTime), updatedBy.Value, parent.Value, path ?? new ChangeTrackingList<ManagementGroupPathElement>(), managementGroupAncestors ?? new ChangeTrackingList<string>(), managementGroupAncestorsChain ?? new ChangeTrackingList<ManagementGroupPathElement>(), serializedAdditionalRawData);
+            return new ManagementGroupInfo(
+                version,
+                updatedTime,
+                updatedBy,
+                parent,
+                path ?? new ChangeTrackingList<ManagementGroupPathElement>(),
+                managementGroupAncestors ?? new ChangeTrackingList<string>(),
+                managementGroupAncestorsChain ?? new ChangeTrackingList<ManagementGroupPathElement>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementGroupInfo>.Write(ModelReaderWriterOptions options)

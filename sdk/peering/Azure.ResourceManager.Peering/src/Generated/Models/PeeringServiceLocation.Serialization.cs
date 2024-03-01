@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Peering.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> country = default;
-            Optional<string> state = default;
-            Optional<AzureLocation> azureRegion = default;
+            SystemData systemData = default;
+            string country = default;
+            string state = default;
+            AzureLocation? azureRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringServiceLocation(id, name, type, systemData.Value, country.Value, state.Value, Optional.ToNullable(azureRegion), serializedAdditionalRawData);
+            return new PeeringServiceLocation(
+                id,
+                name,
+                type,
+                systemData,
+                country,
+                state,
+                azureRegion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringServiceLocation>.Write(ModelReaderWriterOptions options)

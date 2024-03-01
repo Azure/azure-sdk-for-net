@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<int> weightPerServer = default;
-            Optional<WritableSubResource> backendAddressPool = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            int? weightPerServer = default;
+            WritableSubResource backendAddressPool = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayLoadDistributionTarget(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(weightPerServer), backendAddressPool);
+            return new ApplicationGatewayLoadDistributionTarget(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                weightPerServer,
+                backendAddressPool);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayLoadDistributionTarget>.Write(ModelReaderWriterOptions options)

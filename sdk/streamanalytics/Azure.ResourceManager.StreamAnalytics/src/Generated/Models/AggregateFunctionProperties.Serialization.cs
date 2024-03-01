@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IList<StreamingJobFunctionInput> inputs = default;
-            Optional<StreamingJobFunctionOutput> output = default;
-            Optional<StreamingJobFunctionBinding> binding = default;
+            StreamingJobFunctionOutput output = default;
+            StreamingJobFunctionBinding binding = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AggregateFunctionProperties(type, Optional.ToNullable(etag), inputs ?? new ChangeTrackingList<StreamingJobFunctionInput>(), output.Value, binding.Value, serializedAdditionalRawData);
+            return new AggregateFunctionProperties(
+                type,
+                etag,
+                inputs ?? new ChangeTrackingList<StreamingJobFunctionInput>(),
+                output,
+                binding,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AggregateFunctionProperties>.Write(ModelReaderWriterOptions options)

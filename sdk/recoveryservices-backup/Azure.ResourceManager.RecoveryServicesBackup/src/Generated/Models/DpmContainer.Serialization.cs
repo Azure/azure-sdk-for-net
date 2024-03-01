@@ -143,20 +143,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "AzureBackupServerContainer": return BackupServerContainer.DeserializeBackupServerContainer(element, options);
                 }
             }
-            Optional<bool> canReRegister = default;
-            Optional<string> containerId = default;
-            Optional<long> protectedItemCount = default;
-            Optional<string> dpmAgentVersion = default;
+            bool? canReRegister = default;
+            string containerId = default;
+            long? protectedItemCount = default;
+            string dpmAgentVersion = default;
             IList<string> dpmServers = default;
-            Optional<bool> upgradeAvailable = default;
-            Optional<string> protectionStatus = default;
-            Optional<DpmContainerExtendedInfo> extendedInfo = default;
-            Optional<string> friendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> registrationStatus = default;
-            Optional<string> healthStatus = default;
+            bool? upgradeAvailable = default;
+            string protectionStatus = default;
+            DpmContainerExtendedInfo extendedInfo = default;
+            string friendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string registrationStatus = default;
+            string healthStatus = default;
             ProtectableContainerType containerType = default;
-            Optional<string> protectableObjectType = default;
+            string protectableObjectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -266,7 +266,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DpmContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, serializedAdditionalRawData, Optional.ToNullable(canReRegister), containerId.Value, Optional.ToNullable(protectedItemCount), dpmAgentVersion.Value, dpmServers ?? new ChangeTrackingList<string>(), Optional.ToNullable(upgradeAvailable), protectionStatus.Value, extendedInfo.Value);
+            return new DpmContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                containerType,
+                protectableObjectType,
+                serializedAdditionalRawData,
+                canReRegister,
+                containerId,
+                protectedItemCount,
+                dpmAgentVersion,
+                dpmServers ?? new ChangeTrackingList<string>(),
+                upgradeAvailable,
+                protectionStatus,
+                extendedInfo);
         }
 
         BinaryData IPersistableModel<DpmContainer>.Write(ModelReaderWriterOptions options)

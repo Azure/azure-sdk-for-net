@@ -117,15 +117,15 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             {
                 return null;
             }
-            Optional<Vector3> dimensions = default;
-            Optional<Vector3> boundingBoxCenter = default;
+            Vector3 dimensions = default;
+            Vector3 boundingBoxCenter = default;
             Vector3 gravity = default;
             IReadOnlyList<int> keyFrameIndexes = default;
             IReadOnlyList<TrajectoryPose> gtTrajectory = default;
-            Optional<Quaternion> principalAxis = default;
+            Quaternion principalAxis = default;
             float scale = default;
-            Optional<bool> disableDetectScaleUnits = default;
-            Optional<Vector4> supportingPlane = default;
+            bool disableDetectScaleUnits = default;
+            Vector4 supportingPlane = default;
             IReadOnlyList<TrajectoryPose> testTrajectory = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -231,7 +231,17 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     continue;
                 }
             }
-            return new AssetConversionConfiguration(dimensions.Value, boundingBoxCenter.Value, gravity, keyFrameIndexes ?? new ChangeTrackingList<int>(), gtTrajectory ?? new ChangeTrackingList<TrajectoryPose>(), principalAxis.Value, scale, disableDetectScaleUnits, supportingPlane.Value, testTrajectory ?? new ChangeTrackingList<TrajectoryPose>());
+            return new AssetConversionConfiguration(
+                dimensions,
+                boundingBoxCenter,
+                gravity,
+                keyFrameIndexes ?? new ChangeTrackingList<int>(),
+                gtTrajectory ?? new ChangeTrackingList<TrajectoryPose>(),
+                principalAxis,
+                scale,
+                disableDetectScaleUnits,
+                supportingPlane,
+                testTrajectory ?? new ChangeTrackingList<TrajectoryPose>());
         }
     }
 }

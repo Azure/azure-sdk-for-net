@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> azureSubscriptionId = default;
-            Optional<string> resourceGroupName = default;
-            Optional<string> name = default;
+            string azureSubscriptionId = default;
+            string resourceGroupName = default;
+            string name = default;
             PartnerEndpointType endpointType = default;
-            Optional<string> endpointServiceContext = default;
+            string endpointServiceContext = default;
             IList<ResourceMoveChangeHistory> resourceMoveChangeHistory = default;
-            Optional<Uri> endpointUri = default;
-            Optional<Uri> endpointBaseUri = default;
-            Optional<PartnerClientAuthentication> clientAuthentication = default;
+            Uri endpointUri = default;
+            Uri endpointBaseUri = default;
+            PartnerClientAuthentication clientAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,7 +211,17 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebhookPartnerDestinationInfo(azureSubscriptionId.Value, resourceGroupName.Value, name.Value, endpointType, endpointServiceContext.Value, resourceMoveChangeHistory ?? new ChangeTrackingList<ResourceMoveChangeHistory>(), serializedAdditionalRawData, endpointUri.Value, endpointBaseUri.Value, clientAuthentication.Value);
+            return new WebhookPartnerDestinationInfo(
+                azureSubscriptionId,
+                resourceGroupName,
+                name,
+                endpointType,
+                endpointServiceContext,
+                resourceMoveChangeHistory ?? new ChangeTrackingList<ResourceMoveChangeHistory>(),
+                serializedAdditionalRawData,
+                endpointUri,
+                endpointBaseUri,
+                clientAuthentication);
         }
 
         BinaryData IPersistableModel<WebhookPartnerDestinationInfo>.Write(ModelReaderWriterOptions options)

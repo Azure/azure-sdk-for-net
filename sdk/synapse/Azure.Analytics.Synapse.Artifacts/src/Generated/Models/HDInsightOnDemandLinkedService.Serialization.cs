@@ -234,44 +234,44 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object clusterSize = default;
             object timeToLive = default;
             object version = default;
             LinkedServiceReference linkedServiceName = default;
             object hostSubscriptionId = default;
-            Optional<object> servicePrincipalId = default;
-            Optional<SecretBase> servicePrincipalKey = default;
+            object servicePrincipalId = default;
+            SecretBase servicePrincipalKey = default;
             object tenant = default;
             object clusterResourceGroup = default;
-            Optional<object> clusterNamePrefix = default;
-            Optional<object> clusterUserName = default;
-            Optional<SecretBase> clusterPassword = default;
-            Optional<object> clusterSshUserName = default;
-            Optional<SecretBase> clusterSshPassword = default;
+            object clusterNamePrefix = default;
+            object clusterUserName = default;
+            SecretBase clusterPassword = default;
+            object clusterSshUserName = default;
+            SecretBase clusterSshPassword = default;
             IList<LinkedServiceReference> additionalLinkedServiceNames = default;
-            Optional<LinkedServiceReference> hcatalogLinkedServiceName = default;
-            Optional<object> clusterType = default;
-            Optional<object> sparkVersion = default;
-            Optional<object> coreConfiguration = default;
-            Optional<object> hBaseConfiguration = default;
-            Optional<object> hdfsConfiguration = default;
-            Optional<object> hiveConfiguration = default;
-            Optional<object> mapReduceConfiguration = default;
-            Optional<object> oozieConfiguration = default;
-            Optional<object> stormConfiguration = default;
-            Optional<object> yarnConfiguration = default;
-            Optional<object> encryptedCredential = default;
-            Optional<object> headNodeSize = default;
-            Optional<object> dataNodeSize = default;
-            Optional<object> zookeeperNodeSize = default;
+            LinkedServiceReference hcatalogLinkedServiceName = default;
+            object clusterType = default;
+            object sparkVersion = default;
+            object coreConfiguration = default;
+            object hBaseConfiguration = default;
+            object hdfsConfiguration = default;
+            object hiveConfiguration = default;
+            object mapReduceConfiguration = default;
+            object oozieConfiguration = default;
+            object stormConfiguration = default;
+            object yarnConfiguration = default;
+            object encryptedCredential = default;
+            object headNodeSize = default;
+            object dataNodeSize = default;
+            object zookeeperNodeSize = default;
             IList<ScriptAction> scriptActions = default;
-            Optional<object> virtualNetworkId = default;
-            Optional<object> subnetName = default;
-            Optional<CredentialReference> credential = default;
+            object virtualNetworkId = default;
+            object subnetName = default;
+            CredentialReference credential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -633,7 +633,47 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightOnDemandLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), additionalProperties, clusterSize, timeToLive, version, linkedServiceName, hostSubscriptionId, servicePrincipalId.Value, servicePrincipalKey.Value, tenant, clusterResourceGroup, clusterNamePrefix.Value, clusterUserName.Value, clusterPassword.Value, clusterSshUserName.Value, clusterSshPassword.Value, additionalLinkedServiceNames ?? new ChangeTrackingList<LinkedServiceReference>(), hcatalogLinkedServiceName.Value, clusterType.Value, sparkVersion.Value, coreConfiguration.Value, hBaseConfiguration.Value, hdfsConfiguration.Value, hiveConfiguration.Value, mapReduceConfiguration.Value, oozieConfiguration.Value, stormConfiguration.Value, yarnConfiguration.Value, encryptedCredential.Value, headNodeSize.Value, dataNodeSize.Value, zookeeperNodeSize.Value, scriptActions ?? new ChangeTrackingList<ScriptAction>(), virtualNetworkId.Value, subnetName.Value, credential.Value);
+            return new HDInsightOnDemandLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                clusterSize,
+                timeToLive,
+                version,
+                linkedServiceName,
+                hostSubscriptionId,
+                servicePrincipalId,
+                servicePrincipalKey,
+                tenant,
+                clusterResourceGroup,
+                clusterNamePrefix,
+                clusterUserName,
+                clusterPassword,
+                clusterSshUserName,
+                clusterSshPassword,
+                additionalLinkedServiceNames ?? new ChangeTrackingList<LinkedServiceReference>(),
+                hcatalogLinkedServiceName,
+                clusterType,
+                sparkVersion,
+                coreConfiguration,
+                hBaseConfiguration,
+                hdfsConfiguration,
+                hiveConfiguration,
+                mapReduceConfiguration,
+                oozieConfiguration,
+                stormConfiguration,
+                yarnConfiguration,
+                encryptedCredential,
+                headNodeSize,
+                dataNodeSize,
+                zookeeperNodeSize,
+                scriptActions ?? new ChangeTrackingList<ScriptAction>(),
+                virtualNetworkId,
+                subnetName,
+                credential);
         }
 
         internal partial class HDInsightOnDemandLinkedServiceConverter : JsonConverter<HDInsightOnDemandLinkedService>

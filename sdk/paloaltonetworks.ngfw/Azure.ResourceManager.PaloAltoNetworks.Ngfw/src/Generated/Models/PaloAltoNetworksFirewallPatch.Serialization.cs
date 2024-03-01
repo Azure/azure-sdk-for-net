@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<FirewallUpdateProperties> properties = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            FirewallUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PaloAltoNetworksFirewallPatch(identity, Optional.ToDictionary(tags), properties.Value, serializedAdditionalRawData);
+            return new PaloAltoNetworksFirewallPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PaloAltoNetworksFirewallPatch>.Write(ModelReaderWriterOptions options)

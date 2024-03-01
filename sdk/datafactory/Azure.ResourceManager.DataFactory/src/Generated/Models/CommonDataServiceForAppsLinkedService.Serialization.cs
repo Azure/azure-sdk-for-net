@@ -165,22 +165,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> deploymentType = default;
-            Optional<DataFactoryElement<string>> hostName = default;
-            Optional<DataFactoryElement<int>> port = default;
-            Optional<DataFactoryElement<string>> serviceUri = default;
-            Optional<DataFactoryElement<string>> organizationName = default;
+            DataFactoryElement<string> hostName = default;
+            DataFactoryElement<int> port = default;
+            DataFactoryElement<string> serviceUri = default;
+            DataFactoryElement<string> organizationName = default;
             DataFactoryElement<string> authenticationType = default;
-            Optional<DataFactoryElement<string>> username = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<DataFactoryElement<string>> servicePrincipalId = default;
-            Optional<DataFactoryElement<string>> servicePrincipalCredentialType = default;
-            Optional<DataFactorySecretBaseDefinition> servicePrincipalCredential = default;
-            Optional<string> encryptedCredential = default;
+            DataFactoryElement<string> username = default;
+            DataFactorySecretBaseDefinition password = default;
+            DataFactoryElement<string> servicePrincipalId = default;
+            DataFactoryElement<string> servicePrincipalCredentialType = default;
+            DataFactorySecretBaseDefinition servicePrincipalCredential = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -350,7 +350,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CommonDataServiceForAppsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, deploymentType, hostName.Value, port.Value, serviceUri.Value, organizationName.Value, authenticationType, username.Value, password, servicePrincipalId.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential, encryptedCredential.Value);
+            return new CommonDataServiceForAppsLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                deploymentType,
+                hostName,
+                port,
+                serviceUri,
+                organizationName,
+                authenticationType,
+                username,
+                password,
+                servicePrincipalId,
+                servicePrincipalCredentialType,
+                servicePrincipalCredential,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<CommonDataServiceForAppsLinkedService>.Write(ModelReaderWriterOptions options)

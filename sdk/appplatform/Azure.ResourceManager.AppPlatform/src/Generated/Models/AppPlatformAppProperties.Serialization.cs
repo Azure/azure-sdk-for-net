@@ -168,19 +168,19 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<bool> @public = default;
-            Optional<string> uri = default;
-            Optional<IDictionary<string, IDictionary<string, BinaryData>>> addonConfigs = default;
-            Optional<AppPlatformAppProvisioningState> provisioningState = default;
-            Optional<string> fqdn = default;
-            Optional<bool> httpsOnly = default;
-            Optional<AppTemporaryDisk> temporaryDisk = default;
-            Optional<AppPersistentDisk> persistentDisk = default;
+            bool? @public = default;
+            string uri = default;
+            IDictionary<string, IDictionary<string, BinaryData>> addonConfigs = default;
+            AppPlatformAppProvisioningState? provisioningState = default;
+            string fqdn = default;
+            bool? httpsOnly = default;
+            AppTemporaryDisk temporaryDisk = default;
+            AppPersistentDisk persistentDisk = default;
             IList<AppCustomPersistentDisk> customPersistentDisks = default;
-            Optional<bool> enableEndToEndTls = default;
+            bool? enableEndToEndTls = default;
             IList<AppLoadedCertificate> loadedCertificates = default;
-            Optional<AppVnetAddons> vnetAddons = default;
-            Optional<AppIngressSettings> ingressSettings = default;
+            AppVnetAddons vnetAddons = default;
+            AppIngressSettings ingressSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -334,7 +334,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformAppProperties(Optional.ToNullable(@public), uri.Value, Optional.ToDictionary(addonConfigs), Optional.ToNullable(provisioningState), fqdn.Value, Optional.ToNullable(httpsOnly), temporaryDisk.Value, persistentDisk.Value, customPersistentDisks ?? new ChangeTrackingList<AppCustomPersistentDisk>(), Optional.ToNullable(enableEndToEndTls), loadedCertificates ?? new ChangeTrackingList<AppLoadedCertificate>(), vnetAddons.Value, ingressSettings.Value, serializedAdditionalRawData);
+            return new AppPlatformAppProperties(
+                @public,
+                uri,
+                addonConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>(),
+                provisioningState,
+                fqdn,
+                httpsOnly,
+                temporaryDisk,
+                persistentDisk,
+                customPersistentDisks ?? new ChangeTrackingList<AppCustomPersistentDisk>(),
+                enableEndToEndTls,
+                loadedCertificates ?? new ChangeTrackingList<AppLoadedCertificate>(),
+                vnetAddons,
+                ingressSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformAppProperties>.Write(ModelReaderWriterOptions options)

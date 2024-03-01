@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<string> skuName = default;
-            Optional<ServiceAccountHostingModel> hostingModel = default;
-            Optional<string> planType = default;
-            Optional<string> tier = default;
-            Optional<int> maxCount = default;
-            Optional<CommitmentQuota> quota = default;
-            Optional<CommitmentCost> cost = default;
+            string kind = default;
+            string skuName = default;
+            ServiceAccountHostingModel? hostingModel = default;
+            string planType = default;
+            string tier = default;
+            int? maxCount = default;
+            CommitmentQuota quota = default;
+            CommitmentCost cost = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommitmentTier(kind.Value, skuName.Value, Optional.ToNullable(hostingModel), planType.Value, tier.Value, Optional.ToNullable(maxCount), quota.Value, cost.Value, serializedAdditionalRawData);
+            return new CommitmentTier(
+                kind,
+                skuName,
+                hostingModel,
+                planType,
+                tier,
+                maxCount,
+                quota,
+                cost,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommitmentTier>.Write(ModelReaderWriterOptions options)

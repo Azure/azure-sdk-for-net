@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> cognitiveServiceResourceId = default;
-            Optional<string> cognitiveServiceRegion = default;
-            Optional<string> cognitiveServiceSubscriptionKey = default;
-            Optional<bool> isEnabled = default;
-            Optional<string> customVoiceDeploymentId = default;
-            Optional<string> customSpeechModelId = default;
-            Optional<bool> isDefaultBotForCogSvcAccount = default;
+            ResourceIdentifier cognitiveServiceResourceId = default;
+            string cognitiveServiceRegion = default;
+            string cognitiveServiceSubscriptionKey = default;
+            bool? isEnabled = default;
+            string customVoiceDeploymentId = default;
+            string customSpeechModelId = default;
+            bool? isDefaultBotForCogSvcAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,7 +187,15 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DirectLineSpeechChannelProperties(cognitiveServiceResourceId.Value, cognitiveServiceRegion.Value, cognitiveServiceSubscriptionKey.Value, Optional.ToNullable(isEnabled), customVoiceDeploymentId.Value, customSpeechModelId.Value, Optional.ToNullable(isDefaultBotForCogSvcAccount), serializedAdditionalRawData);
+            return new DirectLineSpeechChannelProperties(
+                cognitiveServiceResourceId,
+                cognitiveServiceRegion,
+                cognitiveServiceSubscriptionKey,
+                isEnabled,
+                customVoiceDeploymentId,
+                customSpeechModelId,
+                isDefaultBotForCogSvcAccount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DirectLineSpeechChannelProperties>.Write(ModelReaderWriterOptions options)

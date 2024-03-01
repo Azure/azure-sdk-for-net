@@ -143,17 +143,17 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<ComputeSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ComputeSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> platformUpdateDomainCount = default;
-            Optional<int> platformFaultDomainCount = default;
+            SystemData systemData = default;
+            int? platformUpdateDomainCount = default;
+            int? platformFaultDomainCount = default;
             IList<WritableSubResource> virtualMachines = default;
-            Optional<WritableSubResource> proximityPlacementGroup = default;
+            WritableSubResource proximityPlacementGroup = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -284,7 +284,20 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilitySetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(platformUpdateDomainCount), Optional.ToNullable(platformFaultDomainCount), virtualMachines ?? new ChangeTrackingList<WritableSubResource>(), proximityPlacementGroup, statuses ?? new ChangeTrackingList<InstanceViewStatus>(), serializedAdditionalRawData);
+            return new AvailabilitySetData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                platformUpdateDomainCount,
+                platformFaultDomainCount,
+                virtualMachines ?? new ChangeTrackingList<WritableSubResource>(),
+                proximityPlacementGroup,
+                statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilitySetData>.Write(ModelReaderWriterOptions options)

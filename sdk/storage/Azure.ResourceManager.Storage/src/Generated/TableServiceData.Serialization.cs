@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<StorageCorsRules> cors = default;
+            SystemData systemData = default;
+            StorageCorsRules cors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableServiceData(id, name, type, systemData.Value, cors.Value, serializedAdditionalRawData);
+            return new TableServiceData(
+                id,
+                name,
+                type,
+                systemData,
+                cors,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TableServiceData>.Write(ModelReaderWriterOptions options)

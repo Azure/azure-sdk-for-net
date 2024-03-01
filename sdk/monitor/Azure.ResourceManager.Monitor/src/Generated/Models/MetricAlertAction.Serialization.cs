@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> actionGroupId = default;
-            Optional<IDictionary<string, string>> webHookProperties = default;
+            ResourceIdentifier actionGroupId = default;
+            IDictionary<string, string> webHookProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricAlertAction(actionGroupId.Value, Optional.ToDictionary(webHookProperties), serializedAdditionalRawData);
+            return new MetricAlertAction(actionGroupId, webHookProperties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricAlertAction>.Write(ModelReaderWriterOptions options)

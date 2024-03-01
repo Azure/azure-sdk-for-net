@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<JobTarget> members = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -164,7 +164,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerJobTargetGroupData(id, name, type, systemData.Value, members ?? new ChangeTrackingList<JobTarget>(), serializedAdditionalRawData);
+            return new SqlServerJobTargetGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                members ?? new ChangeTrackingList<JobTarget>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerJobTargetGroupData>.Write(ModelReaderWriterOptions options)

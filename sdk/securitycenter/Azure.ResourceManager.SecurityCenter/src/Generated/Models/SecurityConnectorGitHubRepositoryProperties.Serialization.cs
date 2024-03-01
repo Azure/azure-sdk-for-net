@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> provisioningStatusMessage = default;
-            Optional<DateTimeOffset> provisioningStatusUpdateTimeUtc = default;
-            Optional<DevOpsProvisioningState> provisioningState = default;
-            Optional<string> repoId = default;
-            Optional<string> repoName = default;
-            Optional<string> repoFullName = default;
-            Optional<ResourceOnboardingState> onboardingState = default;
-            Optional<Uri> repoUrl = default;
-            Optional<string> parentOwnerName = default;
+            string provisioningStatusMessage = default;
+            DateTimeOffset? provisioningStatusUpdateTimeUtc = default;
+            DevOpsProvisioningState? provisioningState = default;
+            string repoId = default;
+            string repoName = default;
+            string repoFullName = default;
+            ResourceOnboardingState? onboardingState = default;
+            Uri repoUrl = default;
+            string parentOwnerName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +189,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityConnectorGitHubRepositoryProperties(provisioningStatusMessage.Value, Optional.ToNullable(provisioningStatusUpdateTimeUtc), Optional.ToNullable(provisioningState), repoId.Value, repoName.Value, repoFullName.Value, Optional.ToNullable(onboardingState), repoUrl.Value, parentOwnerName.Value, serializedAdditionalRawData);
+            return new SecurityConnectorGitHubRepositoryProperties(
+                provisioningStatusMessage,
+                provisioningStatusUpdateTimeUtc,
+                provisioningState,
+                repoId,
+                repoName,
+                repoFullName,
+                onboardingState,
+                repoUrl,
+                parentOwnerName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityConnectorGitHubRepositoryProperties>.Write(ModelReaderWriterOptions options)

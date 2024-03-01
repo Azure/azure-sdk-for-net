@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             IReadOnlyList<FrontDoorUsage> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UsagesListResult(value ?? new ChangeTrackingList<FrontDoorUsage>(), nextLink.Value, serializedAdditionalRawData);
+            return new UsagesListResult(value ?? new ChangeTrackingList<FrontDoorUsage>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UsagesListResult>.Write(ModelReaderWriterOptions options)

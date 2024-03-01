@@ -141,18 +141,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> endpoint = default;
-            Optional<DateTimeOffset> startDateTimeUtc = default;
-            Optional<DateTimeOffset> endDateTimeUtc = default;
-            Optional<FrontDoorTimeSeriesInfoAggregationInterval> aggregationInterval = default;
-            Optional<FrontDoorTimeSeriesType> timeSeriesType = default;
-            Optional<string> country = default;
+            SystemData systemData = default;
+            Uri endpoint = default;
+            DateTimeOffset? startDateTimeUtc = default;
+            DateTimeOffset? endDateTimeUtc = default;
+            FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval = default;
+            FrontDoorTimeSeriesType? timeSeriesType = default;
+            string country = default;
             IList<FrontDoorTimeSeriesDataPoint> timeSeriesData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -283,7 +283,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorTimeSeriesInfo(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, endpoint.Value, Optional.ToNullable(startDateTimeUtc), Optional.ToNullable(endDateTimeUtc), Optional.ToNullable(aggregationInterval), Optional.ToNullable(timeSeriesType), country.Value, timeSeriesData ?? new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>(), serializedAdditionalRawData);
+            return new FrontDoorTimeSeriesInfo(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                endpoint,
+                startDateTimeUtc,
+                endDateTimeUtc,
+                aggregationInterval,
+                timeSeriesType,
+                country,
+                timeSeriesData ?? new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorTimeSeriesInfo>.Write(ModelReaderWriterOptions options)

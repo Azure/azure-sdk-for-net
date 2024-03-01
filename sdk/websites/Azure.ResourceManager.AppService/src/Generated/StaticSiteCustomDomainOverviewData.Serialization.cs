@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> domainName = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<CustomDomainStatus> status = default;
-            Optional<string> validationToken = default;
-            Optional<string> errorMessage = default;
+            SystemData systemData = default;
+            string domainName = default;
+            DateTimeOffset? createdOn = default;
+            CustomDomainStatus? status = default;
+            string validationToken = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,7 +213,18 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteCustomDomainOverviewData(id, name, type, systemData.Value, domainName.Value, Optional.ToNullable(createdOn), Optional.ToNullable(status), validationToken.Value, errorMessage.Value, kind.Value, serializedAdditionalRawData);
+            return new StaticSiteCustomDomainOverviewData(
+                id,
+                name,
+                type,
+                systemData,
+                domainName,
+                createdOn,
+                status,
+                validationToken,
+                errorMessage,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteCustomDomainOverviewData>.Write(ModelReaderWriterOptions options)

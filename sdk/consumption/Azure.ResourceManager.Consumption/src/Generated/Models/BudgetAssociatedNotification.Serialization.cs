@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.Consumption.Models
             IList<string> contactEmails = default;
             IList<string> contactRoles = default;
             IList<string> contactGroups = default;
-            Optional<NotificationThresholdType> thresholdType = default;
-            Optional<RecipientNotificationLanguageCode> locale = default;
+            NotificationThresholdType? thresholdType = default;
+            RecipientNotificationLanguageCode? locale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,16 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BudgetAssociatedNotification(enabled, @operator, threshold, contactEmails, contactRoles ?? new ChangeTrackingList<string>(), contactGroups ?? new ChangeTrackingList<string>(), Optional.ToNullable(thresholdType), Optional.ToNullable(locale), serializedAdditionalRawData);
+            return new BudgetAssociatedNotification(
+                enabled,
+                @operator,
+                threshold,
+                contactEmails,
+                contactRoles ?? new ChangeTrackingList<string>(),
+                contactGroups ?? new ChangeTrackingList<string>(),
+                thresholdType,
+                locale,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BudgetAssociatedNotification>.Write(ModelReaderWriterOptions options)

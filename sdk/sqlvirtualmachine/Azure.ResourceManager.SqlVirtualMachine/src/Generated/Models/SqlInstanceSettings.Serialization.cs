@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<string> collation = default;
-            Optional<int> maxDop = default;
-            Optional<bool> isOptimizeForAdHocWorkloadsEnabled = default;
-            Optional<int> minServerMemoryMB = default;
-            Optional<int> maxServerMemoryMB = default;
-            Optional<bool> isLpimEnabled = default;
-            Optional<bool> isIfiEnabled = default;
+            string collation = default;
+            int? maxDop = default;
+            bool? isOptimizeForAdHocWorkloadsEnabled = default;
+            int? minServerMemoryMB = default;
+            int? maxServerMemoryMB = default;
+            bool? isLpimEnabled = default;
+            bool? isIfiEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlInstanceSettings(collation.Value, Optional.ToNullable(maxDop), Optional.ToNullable(isOptimizeForAdHocWorkloadsEnabled), Optional.ToNullable(minServerMemoryMB), Optional.ToNullable(maxServerMemoryMB), Optional.ToNullable(isLpimEnabled), Optional.ToNullable(isIfiEnabled), serializedAdditionalRawData);
+            return new SqlInstanceSettings(
+                collation,
+                maxDop,
+                isOptimizeForAdHocWorkloadsEnabled,
+                minServerMemoryMB,
+                maxServerMemoryMB,
+                isLpimEnabled,
+                isIfiEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlInstanceSettings>.Write(ModelReaderWriterOptions options)

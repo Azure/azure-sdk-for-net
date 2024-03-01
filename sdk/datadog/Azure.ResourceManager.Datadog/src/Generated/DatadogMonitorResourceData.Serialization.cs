@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.Datadog
             {
                 return null;
             }
-            Optional<ResourceSku> sku = default;
-            Optional<MonitorProperties> properties = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ResourceSku sku = default;
+            MonitorProperties properties = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,17 @@ namespace Azure.ResourceManager.Datadog
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogMonitorResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, properties.Value, identity, serializedAdditionalRawData);
+            return new DatadogMonitorResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                properties,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogMonitorResourceData>.Write(ModelReaderWriterOptions options)

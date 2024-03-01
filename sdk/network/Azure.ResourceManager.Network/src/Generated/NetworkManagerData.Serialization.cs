@@ -141,18 +141,18 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> description = default;
-            Optional<NetworkManagerPropertiesNetworkManagerScopes> networkManagerScopes = default;
+            ETag? etag = default;
+            SystemData systemData = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            string description = default;
+            NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes = default;
             IList<NetworkConfigurationDeploymentType> networkManagerScopeAccesses = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<Guid> resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -285,7 +285,20 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), systemData, description.Value, networkManagerScopes.Value, networkManagerScopeAccesses ?? new ChangeTrackingList<NetworkConfigurationDeploymentType>(), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
+            return new NetworkManagerData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                systemData,
+                description,
+                networkManagerScopes,
+                networkManagerScopeAccesses ?? new ChangeTrackingList<NetworkConfigurationDeploymentType>(),
+                provisioningState,
+                resourceGuid);
         }
 
         BinaryData IPersistableModel<NetworkManagerData>.Write(ModelReaderWriterOptions options)

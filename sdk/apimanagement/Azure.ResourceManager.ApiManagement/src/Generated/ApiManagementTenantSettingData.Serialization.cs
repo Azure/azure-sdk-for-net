@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, string>> settings = default;
+            SystemData systemData = default;
+            IDictionary<string, string> settings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,13 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementTenantSettingData(id, name, type, systemData.Value, Optional.ToDictionary(settings), serializedAdditionalRawData);
+            return new ApiManagementTenantSettingData(
+                id,
+                name,
+                type,
+                systemData,
+                settings ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementTenantSettingData>.Write(ModelReaderWriterOptions options)

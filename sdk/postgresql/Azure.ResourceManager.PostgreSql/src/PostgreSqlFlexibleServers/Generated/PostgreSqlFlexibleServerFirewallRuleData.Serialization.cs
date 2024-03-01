@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IPAddress startIPAddress = default;
             IPAddress endIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerFirewallRuleData(id, name, type, systemData.Value, startIPAddress, endIPAddress, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerFirewallRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                startIPAddress,
+                endIPAddress,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerFirewallRuleData>.Write(ModelReaderWriterOptions options)

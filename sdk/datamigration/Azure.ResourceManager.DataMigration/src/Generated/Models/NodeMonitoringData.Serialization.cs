@@ -127,15 +127,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalProperties = default;
-            Optional<string> nodeName = default;
-            Optional<int> availableMemoryInMB = default;
-            Optional<int> cpuUtilization = default;
-            Optional<int> concurrentJobsLimit = default;
-            Optional<int> concurrentJobsRunning = default;
-            Optional<int> maxConcurrentJobs = default;
-            Optional<double> sentBytes = default;
-            Optional<double> receivedBytes = default;
+            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
+            string nodeName = default;
+            int? availableMemoryInMB = default;
+            int? cpuUtilization = default;
+            int? concurrentJobsLimit = default;
+            int? concurrentJobsRunning = default;
+            int? maxConcurrentJobs = default;
+            double? sentBytes = default;
+            double? receivedBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -235,7 +235,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodeMonitoringData(Optional.ToDictionary(additionalProperties), nodeName.Value, Optional.ToNullable(availableMemoryInMB), Optional.ToNullable(cpuUtilization), Optional.ToNullable(concurrentJobsLimit), Optional.ToNullable(concurrentJobsRunning), Optional.ToNullable(maxConcurrentJobs), Optional.ToNullable(sentBytes), Optional.ToNullable(receivedBytes), serializedAdditionalRawData);
+            return new NodeMonitoringData(
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                nodeName,
+                availableMemoryInMB,
+                cpuUtilization,
+                concurrentJobsLimit,
+                concurrentJobsRunning,
+                maxConcurrentJobs,
+                sentBytes,
+                receivedBytes,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodeMonitoringData>.Write(ModelReaderWriterOptions options)

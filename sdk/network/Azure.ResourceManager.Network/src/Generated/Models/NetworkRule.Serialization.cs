@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.Network.Models
             IList<string> sourceIPGroups = default;
             IList<string> destinationIPGroups = default;
             IList<string> destinationFqdns = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            string name = default;
+            string description = default;
             FirewallPolicyRuleType ruleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -279,7 +279,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkRule(name.Value, description.Value, ruleType, serializedAdditionalRawData, ipProtocols ?? new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>(), sourceAddresses ?? new ChangeTrackingList<string>(), destinationAddresses ?? new ChangeTrackingList<string>(), destinationPorts ?? new ChangeTrackingList<string>(), sourceIPGroups ?? new ChangeTrackingList<string>(), destinationIPGroups ?? new ChangeTrackingList<string>(), destinationFqdns ?? new ChangeTrackingList<string>());
+            return new NetworkRule(
+                name,
+                description,
+                ruleType,
+                serializedAdditionalRawData,
+                ipProtocols ?? new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>(),
+                sourceAddresses ?? new ChangeTrackingList<string>(),
+                destinationAddresses ?? new ChangeTrackingList<string>(),
+                destinationPorts ?? new ChangeTrackingList<string>(),
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
+                destinationIPGroups ?? new ChangeTrackingList<string>(),
+                destinationFqdns ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<NetworkRule>.Write(ModelReaderWriterOptions options)

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> workspaceId = default;
-            Optional<string> primaryKey = default;
+            string workspaceId = default;
+            string primaryKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterEnableClusterMonitoringContent(workspaceId.Value, primaryKey.Value, serializedAdditionalRawData);
+            return new HDInsightClusterEnableClusterMonitoringContent(workspaceId, primaryKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterEnableClusterMonitoringContent>.Write(ModelReaderWriterOptions options)

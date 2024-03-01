@@ -140,23 +140,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<ActivityDependency> dependsOn = default;
             IList<UserProperty> userProperties = default;
             object rootPath = default;
             object entryFilePath = default;
             IList<object> arguments = default;
-            Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
-            Optional<LinkedServiceReference> sparkJobLinkedService = default;
-            Optional<string> className = default;
-            Optional<object> proxyUser = default;
-            Optional<IDictionary<string, object>> sparkConfig = default;
+            HDInsightActivityDebugInfoOption? getDebugInfo = default;
+            LinkedServiceReference sparkJobLinkedService = default;
+            string className = default;
+            object proxyUser = default;
+            IDictionary<string, object> sparkConfig = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -339,7 +339,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightSparkActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, rootPath, entryFilePath, arguments ?? new ChangeTrackingList<object>(), Optional.ToNullable(getDebugInfo), sparkJobLinkedService.Value, className.Value, proxyUser.Value, Optional.ToDictionary(sparkConfig));
+            return new HDInsightSparkActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                rootPath,
+                entryFilePath,
+                arguments ?? new ChangeTrackingList<object>(),
+                getDebugInfo,
+                sparkJobLinkedService,
+                className,
+                proxyUser,
+                sparkConfig ?? new ChangeTrackingDictionary<string, object>());
         }
 
         internal partial class HDInsightSparkActivityConverter : JsonConverter<HDInsightSparkActivity>

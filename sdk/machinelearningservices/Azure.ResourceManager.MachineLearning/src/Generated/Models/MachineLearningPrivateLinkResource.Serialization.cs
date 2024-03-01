@@ -137,15 +137,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<MachineLearningSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            MachineLearningSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
+            SystemData systemData = default;
+            string groupId = default;
             IReadOnlyList<string> requiredMembers = default;
             IList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -265,7 +265,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningPrivateLinkResource(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new MachineLearningPrivateLinkResource(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                sku,
+                groupId,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningPrivateLinkResource>.Write(ModelReaderWriterOptions options)

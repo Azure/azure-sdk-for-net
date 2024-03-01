@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, DevCenterEnvironmentRole>> roles = default;
+            IDictionary<string, DevCenterEnvironmentRole> roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(Optional.ToDictionary(roles), serializedAdditionalRawData);
+            return new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment>.Write(ModelReaderWriterOptions options)

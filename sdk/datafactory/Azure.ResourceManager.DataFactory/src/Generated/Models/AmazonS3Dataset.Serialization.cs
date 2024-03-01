@@ -160,21 +160,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
-            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
+            string description = default;
+            DataFactoryElement<IList<DatasetDataElement>> structure = default;
+            DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            Optional<DatasetFolder> folder = default;
+            DatasetFolder folder = default;
             DataFactoryElement<string> bucketName = default;
-            Optional<DataFactoryElement<string>> key = default;
-            Optional<DataFactoryElement<string>> prefix = default;
-            Optional<DataFactoryElement<string>> version = default;
-            Optional<DataFactoryElement<string>> modifiedDatetimeStart = default;
-            Optional<DataFactoryElement<string>> modifiedDatetimeEnd = default;
-            Optional<DatasetStorageFormat> format = default;
-            Optional<DatasetCompression> compression = default;
+            DataFactoryElement<string> key = default;
+            DataFactoryElement<string> prefix = default;
+            DataFactoryElement<string> version = default;
+            DataFactoryElement<string> modifiedDatetimeStart = default;
+            DataFactoryElement<string> modifiedDatetimeEnd = default;
+            DatasetStorageFormat format = default;
+            DatasetCompression compression = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -339,7 +339,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonS3Dataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), folder.Value, additionalProperties, bucketName, key.Value, prefix.Value, version.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, format.Value, compression.Value);
+            return new AmazonS3Dataset(
+                type,
+                description,
+                structure,
+                schema,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                folder,
+                additionalProperties,
+                bucketName,
+                key,
+                prefix,
+                version,
+                modifiedDatetimeStart,
+                modifiedDatetimeEnd,
+                format,
+                compression);
         }
 
         BinaryData IPersistableModel<AmazonS3Dataset>.Write(ModelReaderWriterOptions options)

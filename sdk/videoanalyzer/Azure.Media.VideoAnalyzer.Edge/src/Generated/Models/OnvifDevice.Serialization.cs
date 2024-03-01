@@ -50,9 +50,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<OnvifHostName> hostname = default;
-            Optional<OnvifSystemDateTime> systemDateTime = default;
-            Optional<OnvifDns> dns = default;
+            OnvifHostName hostname = default;
+            OnvifSystemDateTime systemDateTime = default;
+            OnvifDns dns = default;
             IList<MediaProfile> mediaProfiles = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -98,7 +98,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new OnvifDevice(hostname.Value, systemDateTime.Value, dns.Value, mediaProfiles ?? new ChangeTrackingList<MediaProfile>());
+            return new OnvifDevice(hostname, systemDateTime, dns, mediaProfiles ?? new ChangeTrackingList<MediaProfile>());
         }
     }
 }

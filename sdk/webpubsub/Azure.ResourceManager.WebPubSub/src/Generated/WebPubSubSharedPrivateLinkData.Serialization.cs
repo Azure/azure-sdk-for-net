@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.WebPubSub
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<WebPubSubProvisioningState> provisioningState = default;
-            Optional<string> requestMessage = default;
-            Optional<WebPubSubSharedPrivateLinkStatus> status = default;
+            SystemData systemData = default;
+            string groupId = default;
+            ResourceIdentifier privateLinkResourceId = default;
+            WebPubSubProvisioningState? provisioningState = default;
+            string requestMessage = default;
+            WebPubSubSharedPrivateLinkStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +206,17 @@ namespace Azure.ResourceManager.WebPubSub
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubSharedPrivateLinkData(id, name, type, systemData.Value, groupId.Value, privateLinkResourceId.Value, Optional.ToNullable(provisioningState), requestMessage.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new WebPubSubSharedPrivateLinkData(
+                id,
+                name,
+                type,
+                systemData,
+                groupId,
+                privateLinkResourceId,
+                provisioningState,
+                requestMessage,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubSharedPrivateLinkData>.Write(ModelReaderWriterOptions options)

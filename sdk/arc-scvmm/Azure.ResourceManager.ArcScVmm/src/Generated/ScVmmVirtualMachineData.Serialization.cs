@@ -196,28 +196,28 @@ namespace Azure.ResourceManager.ArcScVmm
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> vmmServerId = default;
-            Optional<string> cloudId = default;
-            Optional<string> templateId = default;
-            Optional<string> checkpointType = default;
+            SystemData systemData = default;
+            string inventoryItemId = default;
+            string vmmServerId = default;
+            string cloudId = default;
+            string templateId = default;
+            string checkpointType = default;
             IList<Checkpoint> checkpoints = default;
             IList<AvailabilitySetListItem> availabilitySets = default;
-            Optional<OSProfile> osProfile = default;
-            Optional<HardwareProfile> hardwareProfile = default;
-            Optional<NetworkProfile> networkProfile = default;
-            Optional<StorageProfile> storageProfile = default;
-            Optional<string> vmName = default;
-            Optional<string> uuid = default;
-            Optional<int> generation = default;
-            Optional<string> powerState = default;
-            Optional<string> provisioningState = default;
+            OSProfile osProfile = default;
+            HardwareProfile hardwareProfile = default;
+            NetworkProfile networkProfile = default;
+            StorageProfile storageProfile = default;
+            string vmName = default;
+            string uuid = default;
+            int? generation = default;
+            string powerState = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -406,7 +406,31 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScVmmVirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, vmmServerId.Value, cloudId.Value, templateId.Value, checkpointType.Value, checkpoints ?? new ChangeTrackingList<Checkpoint>(), availabilitySets ?? new ChangeTrackingList<AvailabilitySetListItem>(), osProfile.Value, hardwareProfile.Value, networkProfile.Value, storageProfile.Value, vmName.Value, uuid.Value, Optional.ToNullable(generation), powerState.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new ScVmmVirtualMachineData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                inventoryItemId,
+                vmmServerId,
+                cloudId,
+                templateId,
+                checkpointType,
+                checkpoints ?? new ChangeTrackingList<Checkpoint>(),
+                availabilitySets ?? new ChangeTrackingList<AvailabilitySetListItem>(),
+                osProfile,
+                hardwareProfile,
+                networkProfile,
+                storageProfile,
+                vmName,
+                uuid,
+                generation,
+                powerState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScVmmVirtualMachineData>.Write(ModelReaderWriterOptions options)

@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MonitoringModelType modelType = default;
             MonitoringInputDataBase productionData = default;
             MonitoringInputDataBase referenceData = default;
-            Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            MonitoringNotificationMode? mode = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionDriftMonitoringSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData, metricThresholds, modelType, productionData, referenceData);
+            return new PredictionDriftMonitoringSignal(
+                mode,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                metricThresholds,
+                modelType,
+                productionData,
+                referenceData);
         }
 
         BinaryData IPersistableModel<PredictionDriftMonitoringSignal>.Write(ModelReaderWriterOptions options)

@@ -145,17 +145,17 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> hostName = default;
-            Optional<SessionAffinityEnabledState> sessionAffinityEnabledState = default;
-            Optional<int> sessionAffinityTtlSeconds = default;
-            Optional<WritableSubResource> webApplicationFirewallPolicyLink = default;
-            Optional<FrontDoorResourceState> resourceState = default;
-            Optional<FrontendEndpointCustomHttpsProvisioningState?> customHttpsProvisioningState = default;
-            Optional<FrontendEndpointCustomHttpsProvisioningSubstate?> customHttpsProvisioningSubstate = default;
-            Optional<CustomHttpsConfiguration> customHttpsConfiguration = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string hostName = default;
+            SessionAffinityEnabledState? sessionAffinityEnabledState = default;
+            int? sessionAffinityTtlSeconds = default;
+            WritableSubResource webApplicationFirewallPolicyLink = default;
+            FrontDoorResourceState? resourceState = default;
+            FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState = default;
+            FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate = default;
+            CustomHttpsConfiguration customHttpsConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -272,7 +272,19 @@ namespace Azure.ResourceManager.FrontDoor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontendEndpointData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, hostName.Value, Optional.ToNullable(sessionAffinityEnabledState), Optional.ToNullable(sessionAffinityTtlSeconds), webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsConfiguration.Value);
+            return new FrontendEndpointData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                hostName,
+                sessionAffinityEnabledState,
+                sessionAffinityTtlSeconds,
+                webApplicationFirewallPolicyLink,
+                resourceState,
+                customHttpsProvisioningState,
+                customHttpsProvisioningSubstate,
+                customHttpsConfiguration);
         }
 
         BinaryData IPersistableModel<FrontendEndpointData>.Write(ModelReaderWriterOptions options)

@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
-            Optional<DataFactoryElement<string>> copyBehavior = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
+            DataFactoryElement<string> copyBehavior = default;
             IList<DataFactoryMetadataItemInfo> metadata = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FileServerWriteSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, copyBehavior.Value, metadata ?? new ChangeTrackingList<DataFactoryMetadataItemInfo>(), additionalProperties);
+            return new FileServerWriteSettings(
+                type,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                copyBehavior,
+                metadata ?? new ChangeTrackingList<DataFactoryMetadataItemInfo>(),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<FileServerWriteSettings>.Write(ModelReaderWriterOptions options)

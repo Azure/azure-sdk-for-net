@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             SoftwareUpdateConfigurationOperatingSystemType operatingSystem = default;
-            Optional<WindowsUpdateConfigurationProperties> windows = default;
-            Optional<LinuxUpdateConfigurationProperties> linux = default;
-            Optional<TimeSpan> duration = default;
+            WindowsUpdateConfigurationProperties windows = default;
+            LinuxUpdateConfigurationProperties linux = default;
+            TimeSpan? duration = default;
             IList<string> azureVirtualMachines = default;
             IList<string> nonAzureComputerNames = default;
-            Optional<SoftwareUpdateConfigurationTargetProperties> targets = default;
+            SoftwareUpdateConfigurationTargetProperties targets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,7 +192,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationSpecificProperties(operatingSystem, windows.Value, linux.Value, Optional.ToNullable(duration), azureVirtualMachines ?? new ChangeTrackingList<string>(), nonAzureComputerNames ?? new ChangeTrackingList<string>(), targets.Value, serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationSpecificProperties(
+                operatingSystem,
+                windows,
+                linux,
+                duration,
+                azureVirtualMachines ?? new ChangeTrackingList<string>(),
+                nonAzureComputerNames ?? new ChangeTrackingList<string>(),
+                targets,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationSpecificProperties>.Write(ModelReaderWriterOptions options)

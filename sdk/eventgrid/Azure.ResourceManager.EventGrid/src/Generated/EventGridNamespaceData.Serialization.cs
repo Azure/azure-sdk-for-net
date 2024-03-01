@@ -162,22 +162,22 @@ namespace Azure.ResourceManager.EventGrid
             {
                 return null;
             }
-            Optional<NamespaceSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            NamespaceSku sku = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<EventGridPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<NamespaceProvisioningState> provisioningState = default;
-            Optional<TopicsConfiguration> topicsConfiguration = default;
-            Optional<TopicSpacesConfiguration> topicSpacesConfiguration = default;
-            Optional<bool> isZoneRedundant = default;
-            Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
+            NamespaceProvisioningState? provisioningState = default;
+            TopicsConfiguration topicsConfiguration = default;
+            TopicSpacesConfiguration topicSpacesConfiguration = default;
+            bool? isZoneRedundant = default;
+            EventGridPublicNetworkAccess? publicNetworkAccess = default;
             IList<EventGridInboundIPRule> inboundIPRules = default;
-            Optional<TlsVersion> minimumTlsVersionAllowed = default;
+            TlsVersion? minimumTlsVersionAllowed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -343,7 +343,24 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, privateEndpointConnections ?? new ChangeTrackingList<EventGridPrivateEndpointConnectionData>(), Optional.ToNullable(provisioningState), topicsConfiguration.Value, topicSpacesConfiguration.Value, Optional.ToNullable(isZoneRedundant), Optional.ToNullable(publicNetworkAccess), inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(), Optional.ToNullable(minimumTlsVersionAllowed), serializedAdditionalRawData);
+            return new EventGridNamespaceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                identity,
+                privateEndpointConnections ?? new ChangeTrackingList<EventGridPrivateEndpointConnectionData>(),
+                provisioningState,
+                topicsConfiguration,
+                topicSpacesConfiguration,
+                isZoneRedundant,
+                publicNetworkAccess,
+                inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
+                minimumTlsVersionAllowed,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridNamespaceData>.Write(ModelReaderWriterOptions options)

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier id = default;
             NetworkUsageUnit unit = default;
             long currentValue = default;
             long limit = default;
@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkUsage(id.Value, unit, currentValue, limit, name, serializedAdditionalRawData);
+            return new NetworkUsage(
+                id,
+                unit,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkUsage>.Write(ModelReaderWriterOptions options)

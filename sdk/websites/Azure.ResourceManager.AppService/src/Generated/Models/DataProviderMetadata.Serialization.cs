@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> providerName = default;
+            string providerName = default;
             IReadOnlyList<DataProviderKeyValuePair> propertyBag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProviderMetadata(providerName.Value, propertyBag ?? new ChangeTrackingList<DataProviderKeyValuePair>(), serializedAdditionalRawData);
+            return new DataProviderMetadata(providerName, propertyBag ?? new ChangeTrackingList<DataProviderKeyValuePair>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProviderMetadata>.Write(ModelReaderWriterOptions options)

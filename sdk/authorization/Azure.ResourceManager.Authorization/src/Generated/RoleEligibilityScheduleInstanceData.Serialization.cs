@@ -157,20 +157,20 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> scope = default;
-            Optional<ResourceIdentifier> roleDefinitionId = default;
-            Optional<Guid> principalId = default;
-            Optional<RoleManagementPrincipalType> principalType = default;
-            Optional<ResourceIdentifier> roleEligibilityScheduleId = default;
-            Optional<RoleManagementScheduleStatus> status = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> endDateTime = default;
-            Optional<RoleManagementScheduleMemberType> memberType = default;
-            Optional<string> condition = default;
-            Optional<string> conditionVersion = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<RoleManagementExpandedProperties> expandedProperties = default;
+            SystemData systemData = default;
+            string scope = default;
+            ResourceIdentifier roleDefinitionId = default;
+            Guid? principalId = default;
+            RoleManagementPrincipalType? principalType = default;
+            ResourceIdentifier roleEligibilityScheduleId = default;
+            RoleManagementScheduleStatus? status = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? endDateTime = default;
+            RoleManagementScheduleMemberType? memberType = default;
+            string condition = default;
+            string conditionVersion = default;
+            DateTimeOffset? createdOn = default;
+            RoleManagementExpandedProperties expandedProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -322,7 +322,25 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleEligibilityScheduleInstanceData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), roleEligibilityScheduleId.Value, Optional.ToNullable(status), Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToNullable(memberType), condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), expandedProperties.Value, serializedAdditionalRawData);
+            return new RoleEligibilityScheduleInstanceData(
+                id,
+                name,
+                type,
+                systemData,
+                scope,
+                roleDefinitionId,
+                principalId,
+                principalType,
+                roleEligibilityScheduleId,
+                status,
+                startDateTime,
+                endDateTime,
+                memberType,
+                condition,
+                conditionVersion,
+                createdOn,
+                expandedProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleEligibilityScheduleInstanceData>.Write(ModelReaderWriterOptions options)

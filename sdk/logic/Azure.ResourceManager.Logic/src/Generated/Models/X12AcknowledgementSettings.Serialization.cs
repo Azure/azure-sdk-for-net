@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.Logic.Models
             bool needTechnicalAcknowledgement = default;
             bool batchTechnicalAcknowledgements = default;
             bool needFunctionalAcknowledgement = default;
-            Optional<string> functionalAcknowledgementVersion = default;
+            string functionalAcknowledgementVersion = default;
             bool batchFunctionalAcknowledgements = default;
             bool needImplementationAcknowledgement = default;
-            Optional<string> implementationAcknowledgementVersion = default;
+            string implementationAcknowledgementVersion = default;
             bool batchImplementationAcknowledgements = default;
             bool needLoopForValidMessages = default;
             bool sendSynchronousAcknowledgement = default;
-            Optional<string> acknowledgementControlNumberPrefix = default;
-            Optional<string> acknowledgementControlNumberSuffix = default;
+            string acknowledgementControlNumberPrefix = default;
+            string acknowledgementControlNumberSuffix = default;
             int acknowledgementControlNumberLowerBound = default;
             int acknowledgementControlNumberUpperBound = default;
             bool rolloverAcknowledgementControlNumber = default;
@@ -206,7 +206,23 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X12AcknowledgementSettings(needTechnicalAcknowledgement, batchTechnicalAcknowledgements, needFunctionalAcknowledgement, functionalAcknowledgementVersion.Value, batchFunctionalAcknowledgements, needImplementationAcknowledgement, implementationAcknowledgementVersion.Value, batchImplementationAcknowledgements, needLoopForValidMessages, sendSynchronousAcknowledgement, acknowledgementControlNumberPrefix.Value, acknowledgementControlNumberSuffix.Value, acknowledgementControlNumberLowerBound, acknowledgementControlNumberUpperBound, rolloverAcknowledgementControlNumber, serializedAdditionalRawData);
+            return new X12AcknowledgementSettings(
+                needTechnicalAcknowledgement,
+                batchTechnicalAcknowledgements,
+                needFunctionalAcknowledgement,
+                functionalAcknowledgementVersion,
+                batchFunctionalAcknowledgements,
+                needImplementationAcknowledgement,
+                implementationAcknowledgementVersion,
+                batchImplementationAcknowledgements,
+                needLoopForValidMessages,
+                sendSynchronousAcknowledgement,
+                acknowledgementControlNumberPrefix,
+                acknowledgementControlNumberSuffix,
+                acknowledgementControlNumberLowerBound,
+                acknowledgementControlNumberUpperBound,
+                rolloverAcknowledgementControlNumber,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X12AcknowledgementSettings>.Write(ModelReaderWriterOptions options)

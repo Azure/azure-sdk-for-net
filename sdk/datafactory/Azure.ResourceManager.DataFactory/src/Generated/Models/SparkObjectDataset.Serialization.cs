@@ -145,16 +145,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
-            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
+            string description = default;
+            DataFactoryElement<IList<DatasetDataElement>> structure = default;
+            DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            Optional<DatasetFolder> folder = default;
-            Optional<BinaryData> tableName = default;
-            Optional<DataFactoryElement<string>> table = default;
-            Optional<DataFactoryElement<string>> schema0 = default;
+            DatasetFolder folder = default;
+            BinaryData tableName = default;
+            DataFactoryElement<string> table = default;
+            DataFactoryElement<string> schema0 = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -278,7 +278,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SparkObjectDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), folder.Value, additionalProperties, tableName.Value, table.Value, schema0.Value);
+            return new SparkObjectDataset(
+                type,
+                description,
+                structure,
+                schema,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                folder,
+                additionalProperties,
+                tableName,
+                table,
+                schema0);
         }
 
         BinaryData IPersistableModel<SparkObjectDataset>.Write(ModelReaderWriterOptions options)

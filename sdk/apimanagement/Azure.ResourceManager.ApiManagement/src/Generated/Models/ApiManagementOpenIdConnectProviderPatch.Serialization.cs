@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> metadataEndpoint = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
+            string displayName = default;
+            string description = default;
+            string metadataEndpoint = default;
+            string clientId = default;
+            string clientSecret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementOpenIdConnectProviderPatch(displayName.Value, description.Value, metadataEndpoint.Value, clientId.Value, clientSecret.Value, serializedAdditionalRawData);
+            return new ApiManagementOpenIdConnectProviderPatch(
+                displayName,
+                description,
+                metadataEndpoint,
+                clientId,
+                clientSecret,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementOpenIdConnectProviderPatch>.Write(ModelReaderWriterOptions options)

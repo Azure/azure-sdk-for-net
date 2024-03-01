@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<OracleOciDriverInfo> installedDriver = default;
+            OracleOciDriverInfo installedDriver = default;
             IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CheckOciDriverTaskOutput(installedDriver.Value, validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
+            return new CheckOciDriverTaskOutput(installedDriver, validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CheckOciDriverTaskOutput>.Write(ModelReaderWriterOptions options)

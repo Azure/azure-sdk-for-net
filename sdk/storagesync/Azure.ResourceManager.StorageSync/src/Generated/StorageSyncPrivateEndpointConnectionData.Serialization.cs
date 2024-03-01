@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.StorageSync
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<StorageSyncPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<StorageSyncPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            SubResource privateEndpoint = default;
+            StorageSyncPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            StorageSyncPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.StorageSync
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new StorageSyncPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

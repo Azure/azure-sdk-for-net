@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.DevSpaces
                 return null;
             }
             DevSpacesSku sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> hostSuffix = default;
-            Optional<string> dataPlaneFqdn = default;
-            Optional<string> targetContainerHostApiServerFqdn = default;
+            SystemData systemData = default;
+            ProvisioningState? provisioningState = default;
+            string hostSuffix = default;
+            string dataPlaneFqdn = default;
+            string targetContainerHostApiServerFqdn = default;
             string targetContainerHostResourceId = default;
             string targetContainerHostCredentialsBase64 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -245,7 +245,21 @@ namespace Azure.ResourceManager.DevSpaces
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControllerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(provisioningState), hostSuffix.Value, dataPlaneFqdn.Value, targetContainerHostApiServerFqdn.Value, targetContainerHostResourceId, targetContainerHostCredentialsBase64, serializedAdditionalRawData);
+            return new ControllerData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                provisioningState,
+                hostSuffix,
+                dataPlaneFqdn,
+                targetContainerHostApiServerFqdn,
+                targetContainerHostResourceId,
+                targetContainerHostCredentialsBase64,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControllerData>.Write(ModelReaderWriterOptions options)

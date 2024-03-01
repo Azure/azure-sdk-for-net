@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<SynapseIPFirewallRuleInfoData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseIPFirewallRuleInfoListResult(nextLink.Value, value ?? new ChangeTrackingList<SynapseIPFirewallRuleInfoData>(), serializedAdditionalRawData);
+            return new SynapseIPFirewallRuleInfoListResult(nextLink, value ?? new ChangeTrackingList<SynapseIPFirewallRuleInfoData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseIPFirewallRuleInfoListResult>.Write(ModelReaderWriterOptions options)

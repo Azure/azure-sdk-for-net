@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> volumeName = default;
-            Optional<long> capacityInBytes = default;
-            Optional<long> freeSpaceInBytes = default;
-            Optional<int> thresholdPercentage = default;
+            string volumeName = default;
+            long? capacityInBytes = default;
+            long? freeSpaceInBytes = default;
+            int? thresholdPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryRetentionVolume(volumeName.Value, Optional.ToNullable(capacityInBytes), Optional.ToNullable(freeSpaceInBytes), Optional.ToNullable(thresholdPercentage), serializedAdditionalRawData);
+            return new SiteRecoveryRetentionVolume(volumeName, capacityInBytes, freeSpaceInBytes, thresholdPercentage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryRetentionVolume>.Write(ModelReaderWriterOptions options)

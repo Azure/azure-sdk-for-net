@@ -93,9 +93,9 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             string text = default;
-            Optional<AudioTaskLabel> task = default;
-            Optional<string> language = default;
-            Optional<TimeSpan> duration = default;
+            AudioTaskLabel? task = default;
+            string language = default;
+            TimeSpan? duration = default;
             IReadOnlyList<AudioTranslationSegment> segments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -149,7 +149,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioTranslation(text, Optional.ToNullable(task), language.Value, Optional.ToNullable(duration), segments ?? new ChangeTrackingList<AudioTranslationSegment>(), serializedAdditionalRawData);
+            return new AudioTranslation(
+                text,
+                task,
+                language,
+                duration,
+                segments ?? new ChangeTrackingList<AudioTranslationSegment>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AudioTranslation>.Write(ModelReaderWriterOptions options)

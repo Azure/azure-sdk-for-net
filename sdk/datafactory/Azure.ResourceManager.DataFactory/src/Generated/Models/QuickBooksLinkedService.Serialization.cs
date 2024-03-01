@@ -163,19 +163,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            Optional<BinaryData> connectionProperties = default;
-            Optional<DataFactoryElement<string>> endpoint = default;
-            Optional<DataFactoryElement<string>> companyId = default;
-            Optional<DataFactoryElement<string>> consumerKey = default;
-            Optional<DataFactorySecretBaseDefinition> consumerSecret = default;
-            Optional<DataFactorySecretBaseDefinition> accessToken = default;
-            Optional<DataFactorySecretBaseDefinition> accessTokenSecret = default;
-            Optional<DataFactoryElement<bool>> useEncryptedEndpoints = default;
-            Optional<string> encryptedCredential = default;
+            BinaryData connectionProperties = default;
+            DataFactoryElement<string> endpoint = default;
+            DataFactoryElement<string> companyId = default;
+            DataFactoryElement<string> consumerKey = default;
+            DataFactorySecretBaseDefinition consumerSecret = default;
+            DataFactorySecretBaseDefinition accessToken = default;
+            DataFactorySecretBaseDefinition accessTokenSecret = default;
+            DataFactoryElement<bool> useEncryptedEndpoints = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -326,7 +326,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new QuickBooksLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, connectionProperties.Value, endpoint.Value, companyId.Value, consumerKey.Value, consumerSecret, accessToken, accessTokenSecret, useEncryptedEndpoints.Value, encryptedCredential.Value);
+            return new QuickBooksLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                connectionProperties,
+                endpoint,
+                companyId,
+                consumerKey,
+                consumerSecret,
+                accessToken,
+                accessTokenSecret,
+                useEncryptedEndpoints,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<QuickBooksLinkedService>.Write(ModelReaderWriterOptions options)

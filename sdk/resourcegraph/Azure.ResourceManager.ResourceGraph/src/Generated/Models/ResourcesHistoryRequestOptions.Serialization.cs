@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             {
                 return null;
             }
-            Optional<DateTimeInterval> interval = default;
-            Optional<int> top = default;
-            Optional<int> skip = default;
-            Optional<string> skipToken = default;
-            Optional<ResultFormat> resultFormat = default;
+            DateTimeInterval interval = default;
+            int? top = default;
+            int? skip = default;
+            string skipToken = default;
+            ResultFormat? resultFormat = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourcesHistoryRequestOptions(interval.Value, Optional.ToNullable(top), Optional.ToNullable(skip), skipToken.Value, Optional.ToNullable(resultFormat), serializedAdditionalRawData);
+            return new ResourcesHistoryRequestOptions(
+                interval,
+                top,
+                skip,
+                skipToken,
+                resultFormat,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourcesHistoryRequestOptions>.Write(ModelReaderWriterOptions options)

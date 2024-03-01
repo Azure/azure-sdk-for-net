@@ -149,18 +149,18 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<PerformanceLevelCapability> performanceLevel = default;
-            Optional<SqlSku> sku = default;
+            PerformanceLevelCapability performanceLevel = default;
+            SqlSku sku = default;
             IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes = default;
-            Optional<int> maxDatabaseCount = default;
-            Optional<MaxSizeCapability> includedMaxSize = default;
+            int? maxDatabaseCount = default;
+            MaxSizeCapability includedMaxSize = default;
             IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes = default;
             IReadOnlyList<MaxSizeRangeCapability> supportedPerDatabaseMaxSizes = default;
             IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels = default;
-            Optional<bool> zoneRedundant = default;
+            bool? zoneRedundant = default;
             IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -300,7 +300,20 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolPerformanceLevelCapability(performanceLevel.Value, sku.Value, supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(), Optional.ToNullable(maxDatabaseCount), includedMaxSize.Value, supportedMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(), supportedPerDatabaseMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(), supportedPerDatabaseMaxPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>(), Optional.ToNullable(zoneRedundant), supportedMaintenanceConfigurations ?? new ChangeTrackingList<MaintenanceConfigurationCapability>(), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ElasticPoolPerformanceLevelCapability(
+                performanceLevel,
+                sku,
+                supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(),
+                maxDatabaseCount,
+                includedMaxSize,
+                supportedMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
+                supportedPerDatabaseMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
+                supportedPerDatabaseMaxPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>(),
+                zoneRedundant,
+                supportedMaintenanceConfigurations ?? new ChangeTrackingList<MaintenanceConfigurationCapability>(),
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolPerformanceLevelCapability>.Write(ModelReaderWriterOptions options)

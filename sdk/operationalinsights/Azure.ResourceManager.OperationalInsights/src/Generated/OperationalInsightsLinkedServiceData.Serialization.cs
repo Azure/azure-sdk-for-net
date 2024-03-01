@@ -115,14 +115,14 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<ResourceIdentifier> writeAccessResourceId = default;
-            Optional<OperationalInsightsLinkedServiceEntityStatus> provisioningState = default;
+            SystemData systemData = default;
+            ResourceIdentifier resourceId = default;
+            ResourceIdentifier writeAccessResourceId = default;
+            OperationalInsightsLinkedServiceEntityStatus? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,7 +210,16 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsLinkedServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), resourceId.Value, writeAccessResourceId.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new OperationalInsightsLinkedServiceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                resourceId,
+                writeAccessResourceId,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsLinkedServiceData>.Write(ModelReaderWriterOptions options)

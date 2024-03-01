@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ArcKindEnum> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<HybridComputeLocation> locationData = default;
-            Optional<HybridComputeOSProfile> osProfile = default;
-            Optional<HybridComputeCloudMetadata> cloudMetadata = default;
-            Optional<AgentUpgrade> agentUpgrade = default;
-            Optional<ResourceIdentifier> parentClusterResourceId = default;
-            Optional<ResourceIdentifier> privateLinkScopeResourceId = default;
+            ManagedServiceIdentity identity = default;
+            ArcKindEnum? kind = default;
+            IDictionary<string, string> tags = default;
+            HybridComputeLocation locationData = default;
+            HybridComputeOSProfile osProfile = default;
+            HybridComputeCloudMetadata cloudMetadata = default;
+            AgentUpgrade agentUpgrade = default;
+            ResourceIdentifier parentClusterResourceId = default;
+            ResourceIdentifier privateLinkScopeResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,7 +236,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeMachinePatch(Optional.ToDictionary(tags), serializedAdditionalRawData, identity, Optional.ToNullable(kind), locationData.Value, osProfile.Value, cloudMetadata.Value, agentUpgrade.Value, parentClusterResourceId.Value, privateLinkScopeResourceId.Value);
+            return new HybridComputeMachinePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                identity,
+                kind,
+                locationData,
+                osProfile,
+                cloudMetadata,
+                agentUpgrade,
+                parentClusterResourceId,
+                privateLinkScopeResourceId);
         }
 
         BinaryData IPersistableModel<HybridComputeMachinePatch>.Write(ModelReaderWriterOptions options)

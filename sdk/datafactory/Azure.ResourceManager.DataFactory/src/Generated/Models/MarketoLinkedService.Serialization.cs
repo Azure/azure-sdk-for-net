@@ -140,17 +140,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> endpoint = default;
             DataFactoryElement<string> clientId = default;
-            Optional<DataFactorySecretBaseDefinition> clientSecret = default;
-            Optional<DataFactoryElement<bool>> useEncryptedEndpoints = default;
-            Optional<DataFactoryElement<bool>> useHostVerification = default;
-            Optional<DataFactoryElement<bool>> usePeerVerification = default;
-            Optional<string> encryptedCredential = default;
+            DataFactorySecretBaseDefinition clientSecret = default;
+            DataFactoryElement<bool> useEncryptedEndpoints = default;
+            DataFactoryElement<bool> useHostVerification = default;
+            DataFactoryElement<bool> usePeerVerification = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -275,7 +275,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MarketoLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, endpoint, clientId, clientSecret, useEncryptedEndpoints.Value, useHostVerification.Value, usePeerVerification.Value, encryptedCredential.Value);
+            return new MarketoLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                endpoint,
+                clientId,
+                clientSecret,
+                useEncryptedEndpoints,
+                useHostVerification,
+                usePeerVerification,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<MarketoLinkedService>.Write(ModelReaderWriterOptions options)

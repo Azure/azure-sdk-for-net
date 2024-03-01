@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             IList<TriggerPipelineReference> pipelines = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryTriggerRuntimeState> runtimeState = default;
+            string description = default;
+            DataFactoryTriggerRuntimeState? runtimeState = default;
             IList<BinaryData> annotations = default;
             ScheduleTriggerRecurrence recurrence = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -194,7 +194,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryScheduleTrigger(type, description.Value, Optional.ToNullable(runtimeState), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(), recurrence);
+            return new DataFactoryScheduleTrigger(
+                type,
+                description,
+                runtimeState,
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(),
+                recurrence);
         }
 
         BinaryData IPersistableModel<DataFactoryScheduleTrigger>.Write(ModelReaderWriterOptions options)

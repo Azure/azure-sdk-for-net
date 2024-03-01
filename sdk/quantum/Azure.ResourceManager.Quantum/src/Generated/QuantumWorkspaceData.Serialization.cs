@@ -137,18 +137,18 @@ namespace Azure.ResourceManager.Quantum
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<Provider> providers = default;
-            Optional<UsableStatus> usable = default;
-            Optional<ProvisioningStatus> provisioningState = default;
-            Optional<string> storageAccount = default;
-            Optional<Uri> endpointUri = default;
+            UsableStatus? usable = default;
+            ProvisioningStatus? provisioningState = default;
+            string storageAccount = default;
+            Uri endpointUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,7 +269,20 @@ namespace Azure.ResourceManager.Quantum
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuantumWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, providers ?? new ChangeTrackingList<Provider>(), Optional.ToNullable(usable), Optional.ToNullable(provisioningState), storageAccount.Value, endpointUri.Value, serializedAdditionalRawData);
+            return new QuantumWorkspaceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                providers ?? new ChangeTrackingList<Provider>(),
+                usable,
+                provisioningState,
+                storageAccount,
+                endpointUri,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuantumWorkspaceData>.Write(ModelReaderWriterOptions options)

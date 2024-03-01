@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<double> tokenRefreshExtensionHours = default;
-            Optional<FileSystemTokenStore> fileSystem = default;
-            Optional<AppServiceBlobStorageTokenStore> azureBlobStorage = default;
+            bool? enabled = default;
+            double? tokenRefreshExtensionHours = default;
+            FileSystemTokenStore fileSystem = default;
+            AppServiceBlobStorageTokenStore azureBlobStorage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceTokenStore(Optional.ToNullable(enabled), Optional.ToNullable(tokenRefreshExtensionHours), fileSystem.Value, azureBlobStorage.Value, serializedAdditionalRawData);
+            return new AppServiceTokenStore(enabled, tokenRefreshExtensionHours, fileSystem, azureBlobStorage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceTokenStore>.Write(ModelReaderWriterOptions options)

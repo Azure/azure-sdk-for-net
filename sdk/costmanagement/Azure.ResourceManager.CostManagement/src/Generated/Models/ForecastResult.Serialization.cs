@@ -162,15 +162,15 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> sku = default;
-            Optional<ETag> eTag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            AzureLocation? location = default;
+            string sku = default;
+            ETag? eTag = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> nextLink = default;
+            SystemData systemData = default;
+            string nextLink = default;
             IReadOnlyList<ForecastColumn> columns = default;
             IReadOnlyList<IList<BinaryData>> rows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -308,7 +308,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastResult(id, name, type, systemData.Value, nextLink.Value, columns ?? new ChangeTrackingList<ForecastColumn>(), rows ?? new ChangeTrackingList<IList<BinaryData>>(), Optional.ToNullable(location), sku.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ForecastResult(
+                id,
+                name,
+                type,
+                systemData,
+                nextLink,
+                columns ?? new ChangeTrackingList<ForecastColumn>(),
+                rows ?? new ChangeTrackingList<IList<BinaryData>>(),
+                location,
+                sku,
+                eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForecastResult>.Write(ModelReaderWriterOptions options)

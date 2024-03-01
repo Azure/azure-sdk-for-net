@@ -50,7 +50,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<bool> fromDhcp = default;
+            bool? fromDhcp = default;
             IList<string> ipv4Address = default;
             IList<string> ipv6Address = default;
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new OnvifDns(Optional.ToNullable(fromDhcp), ipv4Address ?? new ChangeTrackingList<string>(), ipv6Address ?? new ChangeTrackingList<string>());
+            return new OnvifDns(fromDhcp, ipv4Address ?? new ChangeTrackingList<string>(), ipv6Address ?? new ChangeTrackingList<string>());
         }
     }
 }

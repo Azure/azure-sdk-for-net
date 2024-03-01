@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 return null;
             }
             string name = default;
-            Optional<PostgreSqlSkuTier> tier = default;
-            Optional<int> capacity = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
+            PostgreSqlSkuTier? tier = default;
+            int? capacity = default;
+            string size = default;
+            string family = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlSku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity), size.Value, family.Value, serializedAdditionalRawData);
+            return new PostgreSqlSku(
+                name,
+                tier,
+                capacity,
+                size,
+                family,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlSku>.Write(ModelReaderWriterOptions options)

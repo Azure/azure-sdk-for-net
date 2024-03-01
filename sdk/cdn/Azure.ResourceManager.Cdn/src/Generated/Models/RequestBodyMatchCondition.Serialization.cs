@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             RequestBodyMatchConditionType typeName = default;
             RequestBodyOperator @operator = default;
-            Optional<bool> negateCondition = default;
+            bool? negateCondition = default;
             IList<string> matchValues = default;
             IList<PreTransformCategory> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequestBodyMatchCondition(typeName, @operator, Optional.ToNullable(negateCondition), matchValues ?? new ChangeTrackingList<string>(), transforms ?? new ChangeTrackingList<PreTransformCategory>(), serializedAdditionalRawData);
+            return new RequestBodyMatchCondition(
+                typeName,
+                @operator,
+                negateCondition,
+                matchValues ?? new ChangeTrackingList<string>(),
+                transforms ?? new ChangeTrackingList<PreTransformCategory>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequestBodyMatchCondition>.Write(ModelReaderWriterOptions options)

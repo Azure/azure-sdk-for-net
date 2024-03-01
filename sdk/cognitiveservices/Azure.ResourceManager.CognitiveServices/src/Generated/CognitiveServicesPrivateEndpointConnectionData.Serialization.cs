@@ -126,15 +126,15 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<ETag> etag = default;
+            AzureLocation? location = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<CognitiveServicesPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<CognitiveServicesPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            SubResource privateEndpoint = default;
+            CognitiveServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            CognitiveServicesPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IList<string> groupIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -241,7 +241,18 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(location), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), groupIds ?? new ChangeTrackingList<string>(), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new CognitiveServicesPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                groupIds ?? new ChangeTrackingList<string>(),
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

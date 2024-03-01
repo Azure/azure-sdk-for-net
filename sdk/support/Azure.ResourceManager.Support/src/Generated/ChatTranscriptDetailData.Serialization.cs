@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.Support
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<ChatTranscriptMessageProperties> messages = default;
-            Optional<DateTimeOffset> startTime = default;
+            DateTimeOffset? startTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.Support
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatTranscriptDetailData(id, name, type, systemData.Value, messages ?? new ChangeTrackingList<ChatTranscriptMessageProperties>(), Optional.ToNullable(startTime), serializedAdditionalRawData);
+            return new ChatTranscriptDetailData(
+                id,
+                name,
+                type,
+                systemData,
+                messages ?? new ChangeTrackingList<ChatTranscriptMessageProperties>(),
+                startTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatTranscriptDetailData>.Write(ModelReaderWriterOptions options)

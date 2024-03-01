@@ -55,8 +55,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> serviceIdentifier = default;
-            Optional<string> remoteIPAddress = default;
+            string serviceIdentifier = default;
+            string remoteIPAddress = default;
             IList<string> scopes = default;
             IList<string> endpoints = default;
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new DiscoveredOnvifDevice(serviceIdentifier.Value, remoteIPAddress.Value, scopes ?? new ChangeTrackingList<string>(), endpoints ?? new ChangeTrackingList<string>());
+            return new DiscoveredOnvifDevice(serviceIdentifier, remoteIPAddress, scopes ?? new ChangeTrackingList<string>(), endpoints ?? new ChangeTrackingList<string>());
         }
     }
 }

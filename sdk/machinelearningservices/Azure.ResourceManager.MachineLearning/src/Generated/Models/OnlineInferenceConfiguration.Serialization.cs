@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> configurations = default;
-            Optional<string> entryScript = default;
-            Optional<MachineLearningInferenceContainerRoute> livenessRoute = default;
-            Optional<MachineLearningInferenceContainerRoute> readinessRoute = default;
-            Optional<MachineLearningInferenceContainerRoute> scoringRoute = default;
+            IDictionary<string, string> configurations = default;
+            string entryScript = default;
+            MachineLearningInferenceContainerRoute livenessRoute = default;
+            MachineLearningInferenceContainerRoute readinessRoute = default;
+            MachineLearningInferenceContainerRoute scoringRoute = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +200,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OnlineInferenceConfiguration(Optional.ToDictionary(configurations), entryScript.Value, livenessRoute.Value, readinessRoute.Value, scoringRoute.Value, serializedAdditionalRawData);
+            return new OnlineInferenceConfiguration(
+                configurations ?? new ChangeTrackingDictionary<string, string>(),
+                entryScript,
+                livenessRoute,
+                readinessRoute,
+                scoringRoute,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OnlineInferenceConfiguration>.Write(ModelReaderWriterOptions options)

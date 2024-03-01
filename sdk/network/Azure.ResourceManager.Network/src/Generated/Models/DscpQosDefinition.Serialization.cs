@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<QosIPRange> destinationIPRanges = default;
             IList<QosPortRange> sourcePortRanges = default;
             IList<QosPortRange> destinationPortRanges = default;
-            Optional<ProtocolType> protocol = default;
+            ProtocolType? protocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +214,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscpQosDefinition(markings ?? new ChangeTrackingList<int>(), sourceIPRanges ?? new ChangeTrackingList<QosIPRange>(), destinationIPRanges ?? new ChangeTrackingList<QosIPRange>(), sourcePortRanges ?? new ChangeTrackingList<QosPortRange>(), destinationPortRanges ?? new ChangeTrackingList<QosPortRange>(), Optional.ToNullable(protocol), serializedAdditionalRawData);
+            return new DscpQosDefinition(
+                markings ?? new ChangeTrackingList<int>(),
+                sourceIPRanges ?? new ChangeTrackingList<QosIPRange>(),
+                destinationIPRanges ?? new ChangeTrackingList<QosIPRange>(),
+                sourcePortRanges ?? new ChangeTrackingList<QosPortRange>(),
+                destinationPortRanges ?? new ChangeTrackingList<QosPortRange>(),
+                protocol,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscpQosDefinition>.Write(ModelReaderWriterOptions options)

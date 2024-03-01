@@ -268,23 +268,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> positiveLabel = default;
-            Optional<ClassificationPrimaryMetric> primaryMetric = default;
-            Optional<ClassificationTrainingSettings> trainingSettings = default;
+            string positiveLabel = default;
+            ClassificationPrimaryMetric? primaryMetric = default;
+            ClassificationTrainingSettings trainingSettings = default;
             IList<string> cvSplitColumnNames = default;
-            Optional<TableVerticalFeaturizationSettings> featurizationSettings = default;
-            Optional<TableFixedParameters> fixedParameters = default;
-            Optional<TableVerticalLimitSettings> limitSettings = default;
-            Optional<NCrossValidations> nCrossValidations = default;
+            TableVerticalFeaturizationSettings featurizationSettings = default;
+            TableFixedParameters fixedParameters = default;
+            TableVerticalLimitSettings limitSettings = default;
+            NCrossValidations nCrossValidations = default;
             IList<TableParameterSubspace> searchSpace = default;
-            Optional<TableSweepSettings> sweepSettings = default;
-            Optional<MachineLearningTableJobInput> testData = default;
-            Optional<double?> testDataSize = default;
-            Optional<MachineLearningTableJobInput> validationData = default;
-            Optional<double?> validationDataSize = default;
-            Optional<string> weightColumnName = default;
-            Optional<MachineLearningLogVerbosity> logVerbosity = default;
-            Optional<string> targetColumnName = default;
+            TableSweepSettings sweepSettings = default;
+            MachineLearningTableJobInput testData = default;
+            double? testDataSize = default;
+            MachineLearningTableJobInput validationData = default;
+            double? validationDataSize = default;
+            string weightColumnName = default;
+            MachineLearningLogVerbosity? logVerbosity = default;
+            string targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -485,7 +485,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClassificationTask(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, positiveLabel.Value, Optional.ToNullable(primaryMetric), trainingSettings.Value, cvSplitColumnNames ?? new ChangeTrackingList<string>(), featurizationSettings.Value, fixedParameters.Value, limitSettings.Value, nCrossValidations.Value, searchSpace ?? new ChangeTrackingList<TableParameterSubspace>(), sweepSettings.Value, testData.Value, Optional.ToNullable(testDataSize), validationData.Value, Optional.ToNullable(validationDataSize), weightColumnName.Value);
+            return new ClassificationTask(
+                logVerbosity,
+                targetColumnName,
+                taskType,
+                trainingData,
+                serializedAdditionalRawData,
+                positiveLabel,
+                primaryMetric,
+                trainingSettings,
+                cvSplitColumnNames ?? new ChangeTrackingList<string>(),
+                featurizationSettings,
+                fixedParameters,
+                limitSettings,
+                nCrossValidations,
+                searchSpace ?? new ChangeTrackingList<TableParameterSubspace>(),
+                sweepSettings,
+                testData,
+                testDataSize,
+                validationData,
+                validationDataSize,
+                weightColumnName);
         }
 
         BinaryData IPersistableModel<ClassificationTask>.Write(ModelReaderWriterOptions options)

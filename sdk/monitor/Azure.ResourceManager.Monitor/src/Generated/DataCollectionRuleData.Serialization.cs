@@ -174,24 +174,24 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<DataCollectionRuleResourceKind> kind = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            DataCollectionRuleResourceKind? kind = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> immutableId = default;
-            Optional<ResourceIdentifier> dataCollectionEndpointId = default;
-            Optional<DataCollectionRuleMetadata> metadata = default;
-            Optional<IDictionary<string, DataStreamDeclaration>> streamDeclarations = default;
-            Optional<DataCollectionRuleDataSources> dataSources = default;
-            Optional<DataCollectionRuleDestinations> destinations = default;
+            SystemData systemData = default;
+            string description = default;
+            string immutableId = default;
+            ResourceIdentifier dataCollectionEndpointId = default;
+            DataCollectionRuleMetadata metadata = default;
+            IDictionary<string, DataStreamDeclaration> streamDeclarations = default;
+            DataCollectionRuleDataSources dataSources = default;
+            DataCollectionRuleDestinations destinations = default;
             IList<DataFlow> dataFlows = default;
-            Optional<DataCollectionRuleProvisioningState> provisioningState = default;
+            DataCollectionRuleProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -367,7 +367,26 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), identity, Optional.ToNullable(etag), description.Value, immutableId.Value, dataCollectionEndpointId.Value, metadata.Value, Optional.ToDictionary(streamDeclarations), dataSources.Value, destinations.Value, dataFlows ?? new ChangeTrackingList<DataFlow>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DataCollectionRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                kind,
+                identity,
+                etag,
+                description,
+                immutableId,
+                dataCollectionEndpointId,
+                metadata,
+                streamDeclarations ?? new ChangeTrackingDictionary<string, DataStreamDeclaration>(),
+                dataSources,
+                destinations,
+                dataFlows ?? new ChangeTrackingList<DataFlow>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleData>.Write(ModelReaderWriterOptions options)

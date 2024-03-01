@@ -92,9 +92,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             string name = default;
             string type = "Container";
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<ActivityDependency> dependsOn = default;
             IList<UserProperty> userProperties = default;
             IDictionary<string, object> additionalProperties = default;
@@ -165,7 +165,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ControlActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties);
+            return new ControlActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties);
         }
 
         internal partial class ControlActivityConverter : JsonConverter<ControlActivity>

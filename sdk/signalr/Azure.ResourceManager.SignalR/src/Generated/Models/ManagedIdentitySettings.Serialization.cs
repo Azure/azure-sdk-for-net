@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<string> resource = default;
+            string resource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedIdentitySettings(resource.Value, serializedAdditionalRawData);
+            return new ManagedIdentitySettings(resource, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedIdentitySettings>.Write(ModelReaderWriterOptions options)

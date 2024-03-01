@@ -112,14 +112,14 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<AppliedScopeType> appliedScopeType = default;
+            AppliedScopeType? appliedScopeType = default;
             IList<string> appliedScopes = default;
-            Optional<AppliedScopeProperties> appliedScopeProperties = default;
-            Optional<InstanceFlexibility> instanceFlexibility = default;
-            Optional<string> name = default;
-            Optional<bool> renew = default;
-            Optional<PatchPropertiesRenewProperties> renewProperties = default;
-            Optional<DateTimeOffset> reviewDateTime = default;
+            AppliedScopeProperties appliedScopeProperties = default;
+            InstanceFlexibility? instanceFlexibility = default;
+            string name = default;
+            bool? renew = default;
+            PatchPropertiesRenewProperties renewProperties = default;
+            DateTimeOffset? reviewDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,7 +215,16 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationDetailPatch(Optional.ToNullable(appliedScopeType), appliedScopes ?? new ChangeTrackingList<string>(), appliedScopeProperties.Value, Optional.ToNullable(instanceFlexibility), name.Value, Optional.ToNullable(renew), renewProperties.Value, Optional.ToNullable(reviewDateTime), serializedAdditionalRawData);
+            return new ReservationDetailPatch(
+                appliedScopeType,
+                appliedScopes ?? new ChangeTrackingList<string>(),
+                appliedScopeProperties,
+                instanceFlexibility,
+                name,
+                renew,
+                renewProperties,
+                reviewDateTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationDetailPatch>.Write(ModelReaderWriterOptions options)

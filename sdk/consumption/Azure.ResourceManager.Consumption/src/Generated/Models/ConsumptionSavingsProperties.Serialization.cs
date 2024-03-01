@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             IReadOnlyList<ConsumptionCalculatedSavingsProperties> calculatedSavings = default;
-            Optional<int> lookBackPeriod = default;
-            Optional<float> recommendedQuantity = default;
-            Optional<string> reservationOrderTerm = default;
-            Optional<string> savingsType = default;
-            Optional<string> unitOfMeasure = default;
+            int? lookBackPeriod = default;
+            float? recommendedQuantity = default;
+            string reservationOrderTerm = default;
+            string savingsType = default;
+            string unitOfMeasure = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionSavingsProperties(calculatedSavings ?? new ChangeTrackingList<ConsumptionCalculatedSavingsProperties>(), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(recommendedQuantity), reservationOrderTerm.Value, savingsType.Value, unitOfMeasure.Value, serializedAdditionalRawData);
+            return new ConsumptionSavingsProperties(
+                calculatedSavings ?? new ChangeTrackingList<ConsumptionCalculatedSavingsProperties>(),
+                lookBackPeriod,
+                recommendedQuantity,
+                reservationOrderTerm,
+                savingsType,
+                unitOfMeasure,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionSavingsProperties>.Write(ModelReaderWriterOptions options)

@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> relativePath = default;
-            Optional<string> builder = default;
-            Optional<string> agentPool = default;
-            Optional<AppPlatformBuildProvisioningState> provisioningState = default;
-            Optional<IDictionary<string, string>> env = default;
-            Optional<SubResource> triggeredBuildResult = default;
-            Optional<AppPlatformBuildResourceRequirements> resourceRequests = default;
+            string relativePath = default;
+            string builder = default;
+            string agentPool = default;
+            AppPlatformBuildProvisioningState? provisioningState = default;
+            IDictionary<string, string> env = default;
+            SubResource triggeredBuildResult = default;
+            AppPlatformBuildResourceRequirements resourceRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuildProperties(relativePath.Value, builder.Value, agentPool.Value, Optional.ToNullable(provisioningState), Optional.ToDictionary(env), triggeredBuildResult, resourceRequests.Value, serializedAdditionalRawData);
+            return new AppPlatformBuildProperties(
+                relativePath,
+                builder,
+                agentPool,
+                provisioningState,
+                env ?? new ChangeTrackingDictionary<string, string>(),
+                triggeredBuildResult,
+                resourceRequests,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformBuildProperties>.Write(ModelReaderWriterOptions options)

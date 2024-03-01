@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> driverName = default;
-            Optional<string> driverSize = default;
-            Optional<string> archiveChecksum = default;
-            Optional<string> oracleChecksum = default;
-            Optional<string> assemblyVersion = default;
+            string driverName = default;
+            string driverSize = default;
+            string archiveChecksum = default;
+            string oracleChecksum = default;
+            string assemblyVersion = default;
             IReadOnlyList<string> supportedOracleVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OracleOciDriverInfo(driverName.Value, driverSize.Value, archiveChecksum.Value, oracleChecksum.Value, assemblyVersion.Value, supportedOracleVersions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new OracleOciDriverInfo(
+                driverName,
+                driverSize,
+                archiveChecksum,
+                oracleChecksum,
+                assemblyVersion,
+                supportedOracleVersions ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OracleOciDriverInfo>.Write(ModelReaderWriterOptions options)

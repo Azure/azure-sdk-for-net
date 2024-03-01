@@ -129,22 +129,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object project = default;
-            Optional<object> additionalProjects = default;
-            Optional<object> requestGoogleDriveScope = default;
+            object additionalProjects = default;
+            object requestGoogleDriveScope = default;
             GoogleBigQueryAuthenticationType authenticationType = default;
-            Optional<SecretBase> refreshToken = default;
-            Optional<object> clientId = default;
-            Optional<SecretBase> clientSecret = default;
-            Optional<object> email = default;
-            Optional<object> keyFilePath = default;
-            Optional<object> trustedCertPath = default;
-            Optional<object> useSystemTrustStore = default;
-            Optional<object> encryptedCredential = default;
+            SecretBase refreshToken = default;
+            object clientId = default;
+            SecretBase clientSecret = default;
+            object email = default;
+            object keyFilePath = default;
+            object trustedCertPath = default;
+            object useSystemTrustStore = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -318,7 +318,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GoogleBigQueryLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), additionalProperties, project, additionalProjects.Value, requestGoogleDriveScope.Value, authenticationType, refreshToken.Value, clientId.Value, clientSecret.Value, email.Value, keyFilePath.Value, trustedCertPath.Value, useSystemTrustStore.Value, encryptedCredential.Value);
+            return new GoogleBigQueryLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                project,
+                additionalProjects,
+                requestGoogleDriveScope,
+                authenticationType,
+                refreshToken,
+                clientId,
+                clientSecret,
+                email,
+                keyFilePath,
+                trustedCertPath,
+                useSystemTrustStore,
+                encryptedCredential);
         }
 
         internal partial class GoogleBigQueryLinkedServiceConverter : JsonConverter<GoogleBigQueryLinkedService>

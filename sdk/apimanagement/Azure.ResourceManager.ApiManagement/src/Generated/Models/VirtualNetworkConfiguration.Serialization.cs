@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<Guid> vnetid = default;
-            Optional<string> subnetname = default;
-            Optional<ResourceIdentifier> subnetResourceId = default;
+            Guid? vnetid = default;
+            string subnetname = default;
+            ResourceIdentifier subnetResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkConfiguration(Optional.ToNullable(vnetid), subnetname.Value, subnetResourceId.Value, serializedAdditionalRawData);
+            return new VirtualNetworkConfiguration(vnetid, subnetname, subnetResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkConfiguration>.Write(ModelReaderWriterOptions options)

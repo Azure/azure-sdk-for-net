@@ -150,16 +150,16 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<VpnNatRuleType> type0 = default;
-            Optional<VpnNatRuleMode> mode = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            NetworkProvisioningState? provisioningState = default;
+            VpnNatRuleType? type0 = default;
+            VpnNatRuleMode? mode = default;
             IList<VpnNatRuleMapping> internalMappings = default;
             IList<VpnNatRuleMapping> externalMappings = default;
-            Optional<string> ipConfigurationId = default;
+            string ipConfigurationId = default;
             IReadOnlyList<WritableSubResource> egressVpnSiteLinkConnections = default;
             IReadOnlyList<WritableSubResource> ingressVpnSiteLinkConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -304,7 +304,20 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnGatewayNatRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(type0), Optional.ToNullable(mode), internalMappings ?? new ChangeTrackingList<VpnNatRuleMapping>(), externalMappings ?? new ChangeTrackingList<VpnNatRuleMapping>(), ipConfigurationId.Value, egressVpnSiteLinkConnections ?? new ChangeTrackingList<WritableSubResource>(), ingressVpnSiteLinkConnections ?? new ChangeTrackingList<WritableSubResource>());
+            return new VpnGatewayNatRuleData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                provisioningState,
+                type0,
+                mode,
+                internalMappings ?? new ChangeTrackingList<VpnNatRuleMapping>(),
+                externalMappings ?? new ChangeTrackingList<VpnNatRuleMapping>(),
+                ipConfigurationId,
+                egressVpnSiteLinkConnections ?? new ChangeTrackingList<WritableSubResource>(),
+                ingressVpnSiteLinkConnections ?? new ChangeTrackingList<WritableSubResource>());
         }
 
         BinaryData IPersistableModel<VpnGatewayNatRuleData>.Write(ModelReaderWriterOptions options)

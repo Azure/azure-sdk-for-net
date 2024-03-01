@@ -130,18 +130,18 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<string> subscriptionId = default;
-            Optional<string> displayName = default;
-            Optional<SubscriptionProvisioningState> provisioningState = default;
-            Optional<Uri> acceptOwnershipUrl = default;
-            Optional<AcceptOwnershipState> acceptOwnershipState = default;
-            Optional<string> billingScope = default;
-            Optional<SubscriptionWorkload> workload = default;
-            Optional<string> resellerId = default;
-            Optional<string> subscriptionOwnerId = default;
-            Optional<string> managementGroupId = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            string subscriptionId = default;
+            string displayName = default;
+            SubscriptionProvisioningState? provisioningState = default;
+            Uri acceptOwnershipUrl = default;
+            AcceptOwnershipState? acceptOwnershipState = default;
+            string billingScope = default;
+            SubscriptionWorkload? workload = default;
+            string resellerId = default;
+            string subscriptionOwnerId = default;
+            string managementGroupId = default;
+            DateTimeOffset? createdTime = default;
+            IReadOnlyDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,7 +241,20 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionAliasProperties(subscriptionId.Value, displayName.Value, Optional.ToNullable(provisioningState), acceptOwnershipUrl.Value, Optional.ToNullable(acceptOwnershipState), billingScope.Value, Optional.ToNullable(workload), resellerId.Value, subscriptionOwnerId.Value, managementGroupId.Value, Optional.ToNullable(createdTime), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new SubscriptionAliasProperties(
+                subscriptionId,
+                displayName,
+                provisioningState,
+                acceptOwnershipUrl,
+                acceptOwnershipState,
+                billingScope,
+                workload,
+                resellerId,
+                subscriptionOwnerId,
+                managementGroupId,
+                createdTime,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionAliasProperties>.Write(ModelReaderWriterOptions options)

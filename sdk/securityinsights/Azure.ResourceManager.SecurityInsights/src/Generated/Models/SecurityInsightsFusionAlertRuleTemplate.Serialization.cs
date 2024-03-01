@@ -159,15 +159,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> alertRulesCreatedByTemplateCount = default;
-            Optional<DateTimeOffset> createdDateUTC = default;
-            Optional<DateTimeOffset> lastUpdatedDateUTC = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
+            SystemData systemData = default;
+            int? alertRulesCreatedByTemplateCount = default;
+            DateTimeOffset? createdDateUTC = default;
+            DateTimeOffset? lastUpdatedDateUTC = default;
+            string description = default;
+            string displayName = default;
             IList<AlertRuleTemplateDataSource> requiredDataConnectors = default;
-            Optional<SecurityInsightsAlertRuleTemplateStatus> status = default;
-            Optional<SecurityInsightsAlertSeverity> severity = default;
+            SecurityInsightsAlertRuleTemplateStatus? status = default;
+            SecurityInsightsAlertSeverity? severity = default;
             IList<SecurityInsightsAttackTactic> tactics = default;
             IList<string> techniques = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -318,7 +318,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsFusionAlertRuleTemplate(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, requiredDataConnectors ?? new ChangeTrackingList<AlertRuleTemplateDataSource>(), Optional.ToNullable(status), Optional.ToNullable(severity), tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(), techniques ?? new ChangeTrackingList<string>());
+            return new SecurityInsightsFusionAlertRuleTemplate(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                alertRulesCreatedByTemplateCount,
+                createdDateUTC,
+                lastUpdatedDateUTC,
+                description,
+                displayName,
+                requiredDataConnectors ?? new ChangeTrackingList<AlertRuleTemplateDataSource>(),
+                status,
+                severity,
+                tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
+                techniques ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<SecurityInsightsFusionAlertRuleTemplate>.Write(ModelReaderWriterOptions options)

@@ -183,28 +183,28 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> virtualMachineResourceId = default;
-            Optional<string> provisioningState = default;
-            Optional<string> sqlImageOffer = default;
-            Optional<SqlServerLicenseType> sqlServerLicenseType = default;
-            Optional<SqlManagementMode> sqlManagement = default;
-            Optional<SqlImageSku> sqlImageSku = default;
-            Optional<ResourceIdentifier> sqlVmGroupResourceId = default;
-            Optional<WindowsServerFailoverClusterDomainCredentials> windowsServerFailoverClusterDomainCredentials = default;
-            Optional<IPAddress> windowsServerFailoverClusterStaticIP = default;
-            Optional<SqlVmAutoPatchingSettings> autoPatchingSettings = default;
-            Optional<SqlVmAutoBackupSettings> autoBackupSettings = default;
-            Optional<SqlVmKeyVaultCredentialSettings> keyVaultCredentialSettings = default;
-            Optional<SqlServerConfigurationsManagementSettings> serverConfigurationsManagementSettings = default;
-            Optional<SqlVmStorageConfigurationSettings> storageConfigurationSettings = default;
-            Optional<SqlVmAssessmentSettings> assessmentSettings = default;
+            SystemData systemData = default;
+            ResourceIdentifier virtualMachineResourceId = default;
+            string provisioningState = default;
+            string sqlImageOffer = default;
+            SqlServerLicenseType? sqlServerLicenseType = default;
+            SqlManagementMode? sqlManagement = default;
+            SqlImageSku? sqlImageSku = default;
+            ResourceIdentifier sqlVmGroupResourceId = default;
+            WindowsServerFailoverClusterDomainCredentials windowsServerFailoverClusterDomainCredentials = default;
+            IPAddress windowsServerFailoverClusterStaticIP = default;
+            SqlVmAutoPatchingSettings autoPatchingSettings = default;
+            SqlVmAutoBackupSettings autoBackupSettings = default;
+            SqlVmKeyVaultCredentialSettings keyVaultCredentialSettings = default;
+            SqlServerConfigurationsManagementSettings serverConfigurationsManagementSettings = default;
+            SqlVmStorageConfigurationSettings storageConfigurationSettings = default;
+            SqlVmAssessmentSettings assessmentSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -406,7 +406,30 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, virtualMachineResourceId.Value, provisioningState.Value, sqlImageOffer.Value, Optional.ToNullable(sqlServerLicenseType), Optional.ToNullable(sqlManagement), Optional.ToNullable(sqlImageSku), sqlVmGroupResourceId.Value, windowsServerFailoverClusterDomainCredentials.Value, windowsServerFailoverClusterStaticIP.Value, autoPatchingSettings.Value, autoBackupSettings.Value, keyVaultCredentialSettings.Value, serverConfigurationsManagementSettings.Value, storageConfigurationSettings.Value, assessmentSettings.Value, serializedAdditionalRawData);
+            return new SqlVmData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                virtualMachineResourceId,
+                provisioningState,
+                sqlImageOffer,
+                sqlServerLicenseType,
+                sqlManagement,
+                sqlImageSku,
+                sqlVmGroupResourceId,
+                windowsServerFailoverClusterDomainCredentials,
+                windowsServerFailoverClusterStaticIP,
+                autoPatchingSettings,
+                autoBackupSettings,
+                keyVaultCredentialSettings,
+                serverConfigurationsManagementSettings,
+                storageConfigurationSettings,
+                assessmentSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmData>.Write(ModelReaderWriterOptions options)

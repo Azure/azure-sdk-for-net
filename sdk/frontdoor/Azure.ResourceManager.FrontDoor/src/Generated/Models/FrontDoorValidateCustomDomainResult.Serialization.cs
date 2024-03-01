@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<bool> customDomainValidated = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
+            bool? customDomainValidated = default;
+            string reason = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorValidateCustomDomainResult(Optional.ToNullable(customDomainValidated), reason.Value, message.Value, serializedAdditionalRawData);
+            return new FrontDoorValidateCustomDomainResult(customDomainValidated, reason, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorValidateCustomDomainResult>.Write(ModelReaderWriterOptions options)

@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<SubResource> collectorPolicies = default;
-            Optional<SubResource> virtualHub = default;
-            Optional<CollectorProvisioningState> provisioningState = default;
+            SubResource virtualHub = default;
+            CollectorProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,7 +245,18 @@ namespace Azure.ResourceManager.NetworkFunction
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureTrafficCollectorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), collectorPolicies ?? new ChangeTrackingList<SubResource>(), virtualHub, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AzureTrafficCollectorData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                collectorPolicies ?? new ChangeTrackingList<SubResource>(),
+                virtualHub,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureTrafficCollectorData>.Write(ModelReaderWriterOptions options)

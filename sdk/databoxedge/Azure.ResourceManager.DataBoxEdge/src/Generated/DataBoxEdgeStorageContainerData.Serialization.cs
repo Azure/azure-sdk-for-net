@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DataBoxEdgeStorageContainerStatus> containerStatus = default;
+            SystemData systemData = default;
+            DataBoxEdgeStorageContainerStatus? containerStatus = default;
             DataBoxEdgeStorageContainerDataFormat dataFormat = default;
-            Optional<DataBoxEdgeRefreshDetails> refreshDetails = default;
-            Optional<DateTimeOffset> createdDateTime = default;
+            DataBoxEdgeRefreshDetails refreshDetails = default;
+            DateTimeOffset? createdDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,7 +192,16 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeStorageContainerData(id, name, type, systemData.Value, Optional.ToNullable(containerStatus), dataFormat, refreshDetails.Value, Optional.ToNullable(createdDateTime), serializedAdditionalRawData);
+            return new DataBoxEdgeStorageContainerData(
+                id,
+                name,
+                type,
+                systemData,
+                containerStatus,
+                dataFormat,
+                refreshDetails,
+                createdDateTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeStorageContainerData>.Write(ModelReaderWriterOptions options)

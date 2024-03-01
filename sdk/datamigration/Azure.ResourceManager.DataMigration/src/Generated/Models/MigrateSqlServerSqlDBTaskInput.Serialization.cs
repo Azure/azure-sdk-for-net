@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MigrateSqlServerSqlDBDatabaseInput> selectedDatabases = default;
-            Optional<MigrationValidationOptions> validationOptions = default;
-            Optional<string> startedOn = default;
-            Optional<string> encryptedKeyForSecureFields = default;
+            MigrationValidationOptions validationOptions = default;
+            string startedOn = default;
+            string encryptedKeyForSecureFields = default;
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -145,7 +145,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBTaskInput(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData, selectedDatabases, validationOptions.Value, startedOn.Value, encryptedKeyForSecureFields.Value);
+            return new MigrateSqlServerSqlDBTaskInput(
+                sourceConnectionInfo,
+                targetConnectionInfo,
+                serializedAdditionalRawData,
+                selectedDatabases,
+                validationOptions,
+                startedOn,
+                encryptedKeyForSecureFields);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskInput>.Write(ModelReaderWriterOptions options)

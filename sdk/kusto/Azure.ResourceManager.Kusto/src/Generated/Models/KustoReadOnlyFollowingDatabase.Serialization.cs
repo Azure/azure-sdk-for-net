@@ -150,23 +150,23 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             KustoKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KustoProvisioningState> provisioningState = default;
-            Optional<TimeSpan> softDeletePeriod = default;
-            Optional<TimeSpan> hotCachePeriod = default;
-            Optional<DatabaseStatistics> statistics = default;
-            Optional<string> leaderClusterResourceId = default;
-            Optional<string> attachedDatabaseConfigurationName = default;
-            Optional<KustoDatabasePrincipalsModificationKind> principalsModificationKind = default;
-            Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
-            Optional<string> originalDatabaseName = default;
-            Optional<KustoDatabaseShareOrigin> databaseShareOrigin = default;
-            Optional<SuspensionDetails> suspensionDetails = default;
+            SystemData systemData = default;
+            KustoProvisioningState? provisioningState = default;
+            TimeSpan? softDeletePeriod = default;
+            TimeSpan? hotCachePeriod = default;
+            DatabaseStatistics statistics = default;
+            string leaderClusterResourceId = default;
+            string attachedDatabaseConfigurationName = default;
+            KustoDatabasePrincipalsModificationKind? principalsModificationKind = default;
+            KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default;
+            string originalDatabaseName = default;
+            KustoDatabaseShareOrigin? databaseShareOrigin = default;
+            SuspensionDetails suspensionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -314,7 +314,25 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoReadOnlyFollowingDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, leaderClusterResourceId.Value, attachedDatabaseConfigurationName.Value, Optional.ToNullable(principalsModificationKind), tableLevelSharingProperties.Value, originalDatabaseName.Value, Optional.ToNullable(databaseShareOrigin), suspensionDetails.Value);
+            return new KustoReadOnlyFollowingDatabase(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                serializedAdditionalRawData,
+                provisioningState,
+                softDeletePeriod,
+                hotCachePeriod,
+                statistics,
+                leaderClusterResourceId,
+                attachedDatabaseConfigurationName,
+                principalsModificationKind,
+                tableLevelSharingProperties,
+                originalDatabaseName,
+                databaseShareOrigin,
+                suspensionDetails);
         }
 
         BinaryData IPersistableModel<KustoReadOnlyFollowingDatabase>.Write(ModelReaderWriterOptions options)

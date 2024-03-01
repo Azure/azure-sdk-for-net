@@ -8,7 +8,11 @@
 
 ### Bugs Fixed
 
+- When creating a new `ServiceBusMessage` from an existing `ServiceBusReceivedMessage`, diagnostic properties will now be properly reset.  Previously, they were incorrectly retained which led to the new message being indistinguishable from the old in traces.
+
 ### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.5, which includes several bug fixes.  One notable fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.  Another notable fix is for an obscure race condition that occurred when attempting to complete a message which caused the operation to hang.
 
 ## 7.17.3 (2024-02-14)
 

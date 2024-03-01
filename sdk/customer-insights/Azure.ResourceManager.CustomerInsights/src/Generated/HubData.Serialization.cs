@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.CustomerInsights
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> apiEndpoint = default;
-            Optional<string> webEndpoint = default;
-            Optional<string> provisioningState = default;
-            Optional<int> tenantFeatures = default;
-            Optional<HubBillingInfoFormat> hubBillingInfo = default;
+            SystemData systemData = default;
+            string apiEndpoint = default;
+            string webEndpoint = default;
+            string provisioningState = default;
+            int? tenantFeatures = default;
+            HubBillingInfoFormat hubBillingInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,7 +236,19 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HubData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, apiEndpoint.Value, webEndpoint.Value, provisioningState.Value, Optional.ToNullable(tenantFeatures), hubBillingInfo.Value, serializedAdditionalRawData);
+            return new HubData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                apiEndpoint,
+                webEndpoint,
+                provisioningState,
+                tenantFeatures,
+                hubBillingInfo,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HubData>.Write(ModelReaderWriterOptions options)

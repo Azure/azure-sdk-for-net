@@ -149,20 +149,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> endpoint = default;
             DataFactoryElement<string> marketplaceId = default;
             DataFactoryElement<string> sellerId = default;
-            Optional<DataFactorySecretBaseDefinition> mwsAuthToken = default;
+            DataFactorySecretBaseDefinition mwsAuthToken = default;
             DataFactoryElement<string> accessKeyId = default;
-            Optional<DataFactorySecretBaseDefinition> secretKey = default;
-            Optional<DataFactoryElement<bool>> useEncryptedEndpoints = default;
-            Optional<DataFactoryElement<bool>> useHostVerification = default;
-            Optional<DataFactoryElement<bool>> usePeerVerification = default;
-            Optional<string> encryptedCredential = default;
+            DataFactorySecretBaseDefinition secretKey = default;
+            DataFactoryElement<bool> useEncryptedEndpoints = default;
+            DataFactoryElement<bool> useHostVerification = default;
+            DataFactoryElement<bool> usePeerVerification = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -306,7 +306,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonMwsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, endpoint, marketplaceId, sellerId, mwsAuthToken, accessKeyId, secretKey, useEncryptedEndpoints.Value, useHostVerification.Value, usePeerVerification.Value, encryptedCredential.Value);
+            return new AmazonMwsLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                endpoint,
+                marketplaceId,
+                sellerId,
+                mwsAuthToken,
+                accessKeyId,
+                secretKey,
+                useEncryptedEndpoints,
+                useHostVerification,
+                usePeerVerification,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<AmazonMwsLinkedService>.Write(ModelReaderWriterOptions options)

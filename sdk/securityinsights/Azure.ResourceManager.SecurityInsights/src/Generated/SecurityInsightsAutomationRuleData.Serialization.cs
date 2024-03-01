@@ -128,19 +128,19 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string displayName = default;
             int order = default;
             SecurityInsightsAutomationRuleTriggeringLogic triggeringLogic = default;
             IList<SecurityInsightsAutomationRuleAction> actions = default;
-            Optional<DateTimeOffset> lastModifiedTimeUtc = default;
-            Optional<DateTimeOffset> createdTimeUtc = default;
-            Optional<SecurityInsightsClientInfo> lastModifiedBy = default;
-            Optional<SecurityInsightsClientInfo> createdBy = default;
+            DateTimeOffset? lastModifiedTimeUtc = default;
+            DateTimeOffset? createdTimeUtc = default;
+            SecurityInsightsClientInfo lastModifiedBy = default;
+            SecurityInsightsClientInfo createdBy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +257,21 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAutomationRuleData(id, name, type, systemData.Value, displayName, order, triggeringLogic, actions, Optional.ToNullable(lastModifiedTimeUtc), Optional.ToNullable(createdTimeUtc), lastModifiedBy.Value, createdBy.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityInsightsAutomationRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                order,
+                triggeringLogic,
+                actions,
+                lastModifiedTimeUtc,
+                createdTimeUtc,
+                lastModifiedBy,
+                createdBy,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAutomationRuleData>.Write(ModelReaderWriterOptions options)

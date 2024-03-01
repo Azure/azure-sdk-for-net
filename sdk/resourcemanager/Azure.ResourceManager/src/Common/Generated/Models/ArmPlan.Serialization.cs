@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.Models
             string name = default;
             string publisher = default;
             string product = default;
-            Optional<string> promotionCode = default;
-            Optional<string> version = default;
+            string promotionCode = default;
+            string version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new ArmPlan(name, publisher, product, promotionCode.Value, version.Value);
+            return new ArmPlan(name, publisher, product, promotionCode, version);
         }
 
         BinaryData IPersistableModel<ArmPlan>.Write(ModelReaderWriterOptions options)

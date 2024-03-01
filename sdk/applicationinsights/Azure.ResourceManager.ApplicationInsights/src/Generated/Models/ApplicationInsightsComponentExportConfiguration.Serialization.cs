@@ -159,25 +159,25 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> exportId = default;
-            Optional<string> instrumentationKey = default;
-            Optional<string> recordTypes = default;
-            Optional<string> applicationName = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> destinationStorageSubscriptionId = default;
-            Optional<string> destinationStorageLocationId = default;
-            Optional<string> destinationAccountId = default;
-            Optional<string> destinationType = default;
-            Optional<string> isUserEnabled = default;
-            Optional<string> lastUserUpdate = default;
-            Optional<string> notificationQueueEnabled = default;
-            Optional<string> exportStatus = default;
-            Optional<string> lastSuccessTime = default;
-            Optional<string> lastGapTime = default;
-            Optional<string> permanentErrorReason = default;
-            Optional<string> storageName = default;
-            Optional<string> containerName = default;
+            string exportId = default;
+            string instrumentationKey = default;
+            string recordTypes = default;
+            string applicationName = default;
+            string subscriptionId = default;
+            string resourceGroup = default;
+            string destinationStorageSubscriptionId = default;
+            string destinationStorageLocationId = default;
+            string destinationAccountId = default;
+            string destinationType = default;
+            string isUserEnabled = default;
+            string lastUserUpdate = default;
+            string notificationQueueEnabled = default;
+            string exportStatus = default;
+            string lastSuccessTime = default;
+            string lastGapTime = default;
+            string permanentErrorReason = default;
+            string storageName = default;
+            string containerName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -283,7 +283,27 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentExportConfiguration(exportId.Value, instrumentationKey.Value, recordTypes.Value, applicationName.Value, subscriptionId.Value, resourceGroup.Value, destinationStorageSubscriptionId.Value, destinationStorageLocationId.Value, destinationAccountId.Value, destinationType.Value, isUserEnabled.Value, lastUserUpdate.Value, notificationQueueEnabled.Value, exportStatus.Value, lastSuccessTime.Value, lastGapTime.Value, permanentErrorReason.Value, storageName.Value, containerName.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentExportConfiguration(
+                exportId,
+                instrumentationKey,
+                recordTypes,
+                applicationName,
+                subscriptionId,
+                resourceGroup,
+                destinationStorageSubscriptionId,
+                destinationStorageLocationId,
+                destinationAccountId,
+                destinationType,
+                isUserEnabled,
+                lastUserUpdate,
+                notificationQueueEnabled,
+                exportStatus,
+                lastSuccessTime,
+                lastGapTime,
+                permanentErrorReason,
+                storageName,
+                containerName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentExportConfiguration>.Write(ModelReaderWriterOptions options)

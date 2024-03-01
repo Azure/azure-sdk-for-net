@@ -164,17 +164,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<GuestConfigurationKind?> kind = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
-            Optional<Uri> contentUri = default;
-            Optional<string> contentHash = default;
-            Optional<GuestConfigurationAssignmentType?> assignmentType = default;
-            Optional<string> assignmentSource = default;
-            Optional<string> contentType = default;
+            GuestConfigurationKind? kind = default;
+            string name = default;
+            string version = default;
+            Uri contentUri = default;
+            string contentHash = default;
+            GuestConfigurationAssignmentType? assignmentType = default;
+            string assignmentSource = default;
+            string contentType = default;
             IList<GuestConfigurationParameter> configurationParameter = default;
             IList<GuestConfigurationParameter> configurationProtectedParameter = default;
-            Optional<LcmConfigurationSetting> configurationSetting = default;
+            LcmConfigurationSetting configurationSetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -287,7 +287,19 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationNavigation(Optional.ToNullable(kind), name.Value, version.Value, contentUri.Value, contentHash.Value, Optional.ToNullable(assignmentType), assignmentSource.Value, contentType.Value, configurationParameter ?? new ChangeTrackingList<GuestConfigurationParameter>(), configurationProtectedParameter ?? new ChangeTrackingList<GuestConfigurationParameter>(), configurationSetting.Value, serializedAdditionalRawData);
+            return new GuestConfigurationNavigation(
+                kind,
+                name,
+                version,
+                contentUri,
+                contentHash,
+                assignmentType,
+                assignmentSource,
+                contentType,
+                configurationParameter ?? new ChangeTrackingList<GuestConfigurationParameter>(),
+                configurationProtectedParameter ?? new ChangeTrackingList<GuestConfigurationParameter>(),
+                configurationSetting,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestConfigurationNavigation>.Write(ModelReaderWriterOptions options)

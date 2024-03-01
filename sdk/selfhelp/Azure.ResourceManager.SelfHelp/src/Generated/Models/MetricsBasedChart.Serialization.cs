@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AggregationType> aggregationType = default;
-            Optional<TimeSpan> timeSpanDuration = default;
-            Optional<string> title = default;
-            Optional<FilterGroup> filterGroup = default;
-            Optional<string> replacementKey = default;
+            string name = default;
+            AggregationType? aggregationType = default;
+            TimeSpan? timeSpanDuration = default;
+            string title = default;
+            FilterGroup filterGroup = default;
+            string replacementKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricsBasedChart(name.Value, Optional.ToNullable(aggregationType), Optional.ToNullable(timeSpanDuration), title.Value, filterGroup.Value, replacementKey.Value, serializedAdditionalRawData);
+            return new MetricsBasedChart(
+                name,
+                aggregationType,
+                timeSpanDuration,
+                title,
+                filterGroup,
+                replacementKey,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricsBasedChart>.Write(ModelReaderWriterOptions options)

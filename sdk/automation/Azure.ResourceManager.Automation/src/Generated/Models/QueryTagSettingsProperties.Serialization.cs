@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, IList<string>>> tags = default;
-            Optional<QueryTagOperator> filterOperator = default;
+            IDictionary<string, IList<string>> tags = default;
+            QueryTagOperator? filterOperator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryTagSettingsProperties(Optional.ToDictionary(tags), Optional.ToNullable(filterOperator), serializedAdditionalRawData);
+            return new QueryTagSettingsProperties(tags ?? new ChangeTrackingDictionary<string, IList<string>>(), filterOperator, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryTagSettingsProperties>.Write(ModelReaderWriterOptions options)

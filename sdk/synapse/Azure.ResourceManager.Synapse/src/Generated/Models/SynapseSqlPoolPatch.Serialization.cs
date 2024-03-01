@@ -143,20 +143,20 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<SynapseSku> sku = default;
-            Optional<long> maxSizeBytes = default;
-            Optional<string> collation = default;
-            Optional<string> sourceDatabaseId = default;
-            Optional<string> recoverableDatabaseId = default;
-            Optional<string> provisioningState = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> restorePointInTime = default;
-            Optional<SqlPoolCreateMode> createMode = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<SqlPoolStorageAccountType> storageAccountType = default;
-            Optional<DateTimeOffset> sourceDatabaseDeletionDate = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation? location = default;
+            SynapseSku sku = default;
+            long? maxSizeBytes = default;
+            string collation = default;
+            string sourceDatabaseId = default;
+            string recoverableDatabaseId = default;
+            string provisioningState = default;
+            string status = default;
+            DateTimeOffset? restorePointInTime = default;
+            SqlPoolCreateMode? createMode = default;
+            DateTimeOffset? creationDate = default;
+            SqlPoolStorageAccountType? storageAccountType = default;
+            DateTimeOffset? sourceDatabaseDeletionDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -290,7 +290,22 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSqlPoolPatch(Optional.ToDictionary(tags), Optional.ToNullable(location), sku.Value, Optional.ToNullable(maxSizeBytes), collation.Value, sourceDatabaseId.Value, recoverableDatabaseId.Value, provisioningState.Value, status.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(createMode), Optional.ToNullable(creationDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(sourceDatabaseDeletionDate), serializedAdditionalRawData);
+            return new SynapseSqlPoolPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                maxSizeBytes,
+                collation,
+                sourceDatabaseId,
+                recoverableDatabaseId,
+                provisioningState,
+                status,
+                restorePointInTime,
+                createMode,
+                creationDate,
+                storageAccountType,
+                sourceDatabaseDeletionDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSqlPoolPatch>.Write(ModelReaderWriterOptions options)

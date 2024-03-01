@@ -117,19 +117,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object connectionString = default;
-            Optional<AzureKeyVaultSecretReference> password = default;
-            Optional<object> servicePrincipalId = default;
-            Optional<SecretBase> servicePrincipalKey = default;
-            Optional<object> tenant = default;
-            Optional<object> azureCloudType = default;
-            Optional<SqlAlwaysEncryptedProperties> alwaysEncryptedSettings = default;
-            Optional<object> encryptedCredential = default;
-            Optional<CredentialReference> credential = default;
+            AzureKeyVaultSecretReference password = default;
+            object servicePrincipalId = default;
+            SecretBase servicePrincipalKey = default;
+            object tenant = default;
+            object azureCloudType = default;
+            SqlAlwaysEncryptedProperties alwaysEncryptedSettings = default;
+            object encryptedCredential = default;
+            CredentialReference credential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -280,7 +280,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureSqlDatabaseLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), additionalProperties, connectionString, password.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, alwaysEncryptedSettings.Value, encryptedCredential.Value, credential.Value);
+            return new AzureSqlDatabaseLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                connectionString,
+                password,
+                servicePrincipalId,
+                servicePrincipalKey,
+                tenant,
+                azureCloudType,
+                alwaysEncryptedSettings,
+                encryptedCredential,
+                credential);
         }
 
         internal partial class AzureSqlDatabaseLinkedServiceConverter : JsonConverter<AzureSqlDatabaseLinkedService>

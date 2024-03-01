@@ -159,24 +159,24 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ConsumptionAmount> originalAmount = default;
-            Optional<ConsumptionAmount> closedBalance = default;
-            Optional<ConsumptionLotSource> source = default;
-            Optional<DateTimeOffset> startDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> poNumber = default;
-            Optional<DateTimeOffset> purchasedDate = default;
-            Optional<ConsumptionLotStatus> status = default;
-            Optional<string> creditCurrency = default;
-            Optional<string> billingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> originalAmountInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> closedBalanceInBillingCurrency = default;
-            Optional<ConsumptionReseller> reseller = default;
+            SystemData systemData = default;
+            ConsumptionAmount originalAmount = default;
+            ConsumptionAmount closedBalance = default;
+            ConsumptionLotSource? source = default;
+            DateTimeOffset? startDate = default;
+            DateTimeOffset? expirationDate = default;
+            string poNumber = default;
+            DateTimeOffset? purchasedDate = default;
+            ConsumptionLotStatus? status = default;
+            string creditCurrency = default;
+            string billingCurrency = default;
+            ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency = default;
+            ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default;
+            ConsumptionReseller reseller = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -337,7 +337,26 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionLotSummary(id, name, type, systemData.Value, originalAmount.Value, closedBalance.Value, Optional.ToNullable(source), Optional.ToNullable(startDate), Optional.ToNullable(expirationDate), poNumber.Value, Optional.ToNullable(purchasedDate), Optional.ToNullable(status), creditCurrency.Value, billingCurrency.Value, originalAmountInBillingCurrency.Value, closedBalanceInBillingCurrency.Value, reseller.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new ConsumptionLotSummary(
+                id,
+                name,
+                type,
+                systemData,
+                originalAmount,
+                closedBalance,
+                source,
+                startDate,
+                expirationDate,
+                poNumber,
+                purchasedDate,
+                status,
+                creditCurrency,
+                billingCurrency,
+                originalAmountInBillingCurrency,
+                closedBalanceInBillingCurrency,
+                reseller,
+                eTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionLotSummary>.Write(ModelReaderWriterOptions options)

@@ -180,23 +180,23 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 return null;
             }
-            Optional<ApplicationInsightsKind> kind = default;
-            Optional<SystemData> systemData = default;
-            Optional<MyWorkbookManagedIdentity> identity = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IDictionary<string, string>> etag = default;
-            Optional<string> displayName = default;
-            Optional<string> serializedData = default;
-            Optional<string> version = default;
-            Optional<string> timeModified = default;
-            Optional<string> category = default;
-            Optional<string> userId = default;
-            Optional<string> sourceId = default;
-            Optional<Uri> storageUri = default;
+            ApplicationInsightsKind? kind = default;
+            SystemData systemData = default;
+            MyWorkbookManagedIdentity identity = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            IDictionary<string, string> etag = default;
+            string displayName = default;
+            string serializedData = default;
+            string version = default;
+            string timeModified = default;
+            string category = default;
+            string userId = default;
+            string sourceId = default;
+            Uri storageUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -348,7 +348,25 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MyWorkbookData(identity.Value, id.Value, name.Value, type.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToDictionary(etag), serializedAdditionalRawData, Optional.ToNullable(kind), systemData, displayName.Value, serializedData.Value, version.Value, timeModified.Value, category.Value, userId.Value, sourceId.Value, storageUri.Value);
+            return new MyWorkbookData(
+                identity,
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                etag ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                kind,
+                systemData,
+                displayName,
+                serializedData,
+                version,
+                timeModified,
+                category,
+                userId,
+                sourceId,
+                storageUri);
         }
 
         BinaryData IPersistableModel<MyWorkbookData>.Write(ModelReaderWriterOptions options)

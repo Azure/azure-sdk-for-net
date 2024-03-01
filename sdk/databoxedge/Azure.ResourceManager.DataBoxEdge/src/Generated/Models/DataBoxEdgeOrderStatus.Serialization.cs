@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             DataBoxEdgeOrderState status = default;
-            Optional<DateTimeOffset> updateDateTime = default;
-            Optional<string> comments = default;
-            Optional<DataBoxEdgeTrackingInfo> trackingInformation = default;
-            Optional<IReadOnlyDictionary<string, string>> additionalOrderDetails = default;
+            DateTimeOffset? updateDateTime = default;
+            string comments = default;
+            DataBoxEdgeTrackingInfo trackingInformation = default;
+            IReadOnlyDictionary<string, string> additionalOrderDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeOrderStatus(status, Optional.ToNullable(updateDateTime), comments.Value, trackingInformation.Value, Optional.ToDictionary(additionalOrderDetails), serializedAdditionalRawData);
+            return new DataBoxEdgeOrderStatus(
+                status,
+                updateDateTime,
+                comments,
+                trackingInformation,
+                additionalOrderDetails ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeOrderStatus>.Write(ModelReaderWriterOptions options)

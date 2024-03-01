@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<string> zones = default;
             IList<ResourceTypeSkuZoneDetail> zoneDetails = default;
             IList<string> extendedLocations = default;
-            Optional<ProviderHubExtendedLocationType> type = default;
+            ProviderHubExtendedLocationType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,7 +172,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeSkuLocationInfo(location, zones ?? new ChangeTrackingList<string>(), zoneDetails ?? new ChangeTrackingList<ResourceTypeSkuZoneDetail>(), extendedLocations ?? new ChangeTrackingList<string>(), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new ResourceTypeSkuLocationInfo(
+                location,
+                zones ?? new ChangeTrackingList<string>(),
+                zoneDetails ?? new ChangeTrackingList<ResourceTypeSkuZoneDetail>(),
+                extendedLocations ?? new ChangeTrackingList<string>(),
+                type,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeSkuLocationInfo>.Write(ModelReaderWriterOptions options)

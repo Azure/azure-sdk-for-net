@@ -104,17 +104,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object endpoint = default;
             object clientId = default;
-            Optional<SecretBase> clientSecret = default;
-            Optional<object> useEncryptedEndpoints = default;
-            Optional<object> useHostVerification = default;
-            Optional<object> usePeerVerification = default;
-            Optional<object> encryptedCredential = default;
+            SecretBase clientSecret = default;
+            object useEncryptedEndpoints = default;
+            object useHostVerification = default;
+            object usePeerVerification = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -243,7 +243,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ResponsysLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), additionalProperties, endpoint, clientId, clientSecret.Value, useEncryptedEndpoints.Value, useHostVerification.Value, usePeerVerification.Value, encryptedCredential.Value);
+            return new ResponsysLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                endpoint,
+                clientId,
+                clientSecret,
+                useEncryptedEndpoints,
+                useHostVerification,
+                usePeerVerification,
+                encryptedCredential);
         }
 
         internal partial class ResponsysLinkedServiceConverter : JsonConverter<ResponsysLinkedService>

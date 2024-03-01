@@ -87,13 +87,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SqlPoolReference sqlPool = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<ActivityDependency> dependsOn = default;
             IList<UserProperty> userProperties = default;
             object storedProcedureName = default;
-            Optional<object> storedProcedureParameters = default;
+            object storedProcedureParameters = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -193,7 +193,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlPoolStoredProcedureActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, sqlPool, storedProcedureName, storedProcedureParameters.Value);
+            return new SqlPoolStoredProcedureActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                sqlPool,
+                storedProcedureName,
+                storedProcedureParameters);
         }
 
         internal partial class SqlPoolStoredProcedureActivityConverter : JsonConverter<SqlPoolStoredProcedureActivity>

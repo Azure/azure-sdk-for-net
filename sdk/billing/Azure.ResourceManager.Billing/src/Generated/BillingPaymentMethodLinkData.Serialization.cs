@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Billing
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PaymentMethodProjectionProperties> paymentMethod = default;
+            SystemData systemData = default;
+            PaymentMethodProjectionProperties paymentMethod = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.Billing
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingPaymentMethodLinkData(id, name, type, systemData.Value, paymentMethod.Value, serializedAdditionalRawData);
+            return new BillingPaymentMethodLinkData(
+                id,
+                name,
+                type,
+                systemData,
+                paymentMethod,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingPaymentMethodLinkData>.Write(ModelReaderWriterOptions options)

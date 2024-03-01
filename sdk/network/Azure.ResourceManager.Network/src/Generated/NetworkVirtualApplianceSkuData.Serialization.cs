@@ -130,13 +130,13 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> vendor = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            string vendor = default;
             IReadOnlyList<string> availableVersions = default;
             IList<NetworkVirtualApplianceSkuInstances> availableScaleUnits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -249,7 +249,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkVirtualApplianceSkuData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), vendor.Value, availableVersions ?? new ChangeTrackingList<string>(), availableScaleUnits ?? new ChangeTrackingList<NetworkVirtualApplianceSkuInstances>());
+            return new NetworkVirtualApplianceSkuData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                vendor,
+                availableVersions ?? new ChangeTrackingList<string>(),
+                availableScaleUnits ?? new ChangeTrackingList<NetworkVirtualApplianceSkuInstances>());
         }
 
         BinaryData IPersistableModel<NetworkVirtualApplianceSkuData>.Write(ModelReaderWriterOptions options)

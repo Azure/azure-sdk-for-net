@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> endpoint = default;
+            string name = default;
+            string endpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorExperimentEndpointProperties(name.Value, endpoint.Value, serializedAdditionalRawData);
+            return new FrontDoorExperimentEndpointProperties(name, endpoint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorExperimentEndpointProperties>.Write(ModelReaderWriterOptions options)

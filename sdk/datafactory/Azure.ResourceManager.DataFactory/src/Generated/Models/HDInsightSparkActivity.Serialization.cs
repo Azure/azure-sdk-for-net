@@ -183,23 +183,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             DataFactoryElement<string> rootPath = default;
             DataFactoryElement<string> entryFilePath = default;
             IList<BinaryData> arguments = default;
-            Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
-            Optional<DataFactoryLinkedServiceReference> sparkJobLinkedService = default;
-            Optional<string> className = default;
-            Optional<DataFactoryElement<string>> proxyUser = default;
-            Optional<IDictionary<string, BinaryData>> sparkConfig = default;
+            HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default;
+            DataFactoryLinkedServiceReference sparkJobLinkedService = default;
+            string className = default;
+            DataFactoryElement<string> proxyUser = default;
+            IDictionary<string, BinaryData> sparkConfig = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -382,7 +382,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightSparkActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, rootPath, entryFilePath, arguments ?? new ChangeTrackingList<BinaryData>(), Optional.ToNullable(getDebugInfo), sparkJobLinkedService, className.Value, proxyUser.Value, Optional.ToDictionary(sparkConfig));
+            return new HDInsightSparkActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                rootPath,
+                entryFilePath,
+                arguments ?? new ChangeTrackingList<BinaryData>(),
+                getDebugInfo,
+                sparkJobLinkedService,
+                className,
+                proxyUser,
+                sparkConfig ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<HDInsightSparkActivity>.Write(ModelReaderWriterOptions options)

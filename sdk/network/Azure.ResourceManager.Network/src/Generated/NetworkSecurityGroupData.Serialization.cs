@@ -170,20 +170,20 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<bool> flushConnection = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            bool? flushConnection = default;
             IList<SecurityRuleData> securityRules = default;
             IReadOnlyList<SecurityRuleData> defaultSecurityRules = default;
             IReadOnlyList<NetworkInterfaceData> networkInterfaces = default;
             IReadOnlyList<SubnetData> subnets = default;
             IReadOnlyList<FlowLogData> flowLogs = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -358,7 +358,22 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityGroupData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(flushConnection), securityRules ?? new ChangeTrackingList<SecurityRuleData>(), defaultSecurityRules ?? new ChangeTrackingList<SecurityRuleData>(), networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(), subnets ?? new ChangeTrackingList<SubnetData>(), flowLogs ?? new ChangeTrackingList<FlowLogData>(), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new NetworkSecurityGroupData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                flushConnection,
+                securityRules ?? new ChangeTrackingList<SecurityRuleData>(),
+                defaultSecurityRules ?? new ChangeTrackingList<SecurityRuleData>(),
+                networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
+                subnets ?? new ChangeTrackingList<SubnetData>(),
+                flowLogs ?? new ChangeTrackingList<FlowLogData>(),
+                resourceGuid,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<NetworkSecurityGroupData>.Write(ModelReaderWriterOptions options)

@@ -190,27 +190,27 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetAppFileServiceLevel> serviceLevel = default;
-            Optional<long> usageThreshold = default;
-            Optional<VolumePatchPropertiesExportPolicy> exportPolicy = default;
-            Optional<float> throughputMibps = default;
-            Optional<NetAppVolumePatchDataProtection> dataProtection = default;
-            Optional<bool> isDefaultQuotaEnabled = default;
-            Optional<long> defaultUserQuotaInKiBs = default;
-            Optional<long> defaultGroupQuotaInKiBs = default;
-            Optional<string> unixPermissions = default;
-            Optional<bool> coolAccess = default;
-            Optional<int> coolnessPeriod = default;
-            Optional<CoolAccessRetrievalPolicy> coolAccessRetrievalPolicy = default;
-            Optional<bool> snapshotDirectoryVisible = default;
-            Optional<SmbAccessBasedEnumeration?> smbAccessBasedEnumeration = default;
-            Optional<SmbNonBrowsable> smbNonBrowsable = default;
+            SystemData systemData = default;
+            NetAppFileServiceLevel? serviceLevel = default;
+            long? usageThreshold = default;
+            VolumePatchPropertiesExportPolicy exportPolicy = default;
+            float? throughputMibps = default;
+            NetAppVolumePatchDataProtection dataProtection = default;
+            bool? isDefaultQuotaEnabled = default;
+            long? defaultUserQuotaInKiBs = default;
+            long? defaultGroupQuotaInKiBs = default;
+            string unixPermissions = default;
+            bool? coolAccess = default;
+            int? coolnessPeriod = default;
+            CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default;
+            bool? snapshotDirectoryVisible = default;
+            SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default;
+            SmbNonBrowsable? smbNonBrowsable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -413,7 +413,29 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumePatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(serviceLevel), Optional.ToNullable(usageThreshold), exportPolicy.Value, Optional.ToNullable(throughputMibps), dataProtection.Value, Optional.ToNullable(isDefaultQuotaEnabled), Optional.ToNullable(defaultUserQuotaInKiBs), Optional.ToNullable(defaultGroupQuotaInKiBs), unixPermissions.Value, Optional.ToNullable(coolAccess), Optional.ToNullable(coolnessPeriod), Optional.ToNullable(coolAccessRetrievalPolicy), Optional.ToNullable(snapshotDirectoryVisible), Optional.ToNullable(smbAccessBasedEnumeration), Optional.ToNullable(smbNonBrowsable), serializedAdditionalRawData);
+            return new NetAppVolumePatch(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                serviceLevel,
+                usageThreshold,
+                exportPolicy,
+                throughputMibps,
+                dataProtection,
+                isDefaultQuotaEnabled,
+                defaultUserQuotaInKiBs,
+                defaultGroupQuotaInKiBs,
+                unixPermissions,
+                coolAccess,
+                coolnessPeriod,
+                coolAccessRetrievalPolicy,
+                snapshotDirectoryVisible,
+                smbAccessBasedEnumeration,
+                smbNonBrowsable,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumePatch>.Write(ModelReaderWriterOptions options)

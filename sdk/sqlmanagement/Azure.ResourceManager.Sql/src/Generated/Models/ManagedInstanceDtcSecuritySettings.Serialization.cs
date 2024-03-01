@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ManagedInstanceDtcTransactionManagerCommunicationSettings> transactionManagerCommunicationSettings = default;
-            Optional<bool> xaTransactionsEnabled = default;
-            Optional<bool> snaLu6point2TransactionsEnabled = default;
-            Optional<int> xaTransactionsDefaultTimeout = default;
-            Optional<int> xaTransactionsMaximumTimeout = default;
+            ManagedInstanceDtcTransactionManagerCommunicationSettings transactionManagerCommunicationSettings = default;
+            bool? xaTransactionsEnabled = default;
+            bool? snaLu6point2TransactionsEnabled = default;
+            int? xaTransactionsDefaultTimeout = default;
+            int? xaTransactionsMaximumTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceDtcSecuritySettings(transactionManagerCommunicationSettings.Value, Optional.ToNullable(xaTransactionsEnabled), Optional.ToNullable(snaLu6point2TransactionsEnabled), Optional.ToNullable(xaTransactionsDefaultTimeout), Optional.ToNullable(xaTransactionsMaximumTimeout), serializedAdditionalRawData);
+            return new ManagedInstanceDtcSecuritySettings(
+                transactionManagerCommunicationSettings,
+                xaTransactionsEnabled,
+                snaLu6point2TransactionsEnabled,
+                xaTransactionsDefaultTimeout,
+                xaTransactionsMaximumTimeout,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceDtcSecuritySettings>.Write(ModelReaderWriterOptions options)

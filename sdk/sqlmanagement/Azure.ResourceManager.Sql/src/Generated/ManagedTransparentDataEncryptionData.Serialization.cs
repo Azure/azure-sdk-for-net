@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<TransparentDataEncryptionState> state = default;
+            SystemData systemData = default;
+            TransparentDataEncryptionState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedTransparentDataEncryptionData(id, name, type, systemData.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new ManagedTransparentDataEncryptionData(
+                id,
+                name,
+                type,
+                systemData,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedTransparentDataEncryptionData>.Write(ModelReaderWriterOptions options)

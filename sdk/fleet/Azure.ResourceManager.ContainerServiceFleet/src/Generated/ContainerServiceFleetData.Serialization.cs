@@ -118,15 +118,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? eTag = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<FleetProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            FleetProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,7 +219,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(eTag), identity, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ContainerServiceFleetData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                eTag,
+                identity,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetData>.Write(ModelReaderWriterOptions options)

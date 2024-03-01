@@ -83,7 +83,7 @@ namespace Azure.AI.AnomalyDetector
                 return null;
             }
             DateTimeOffset timestamp = default;
-            Optional<AnomalyValue> value = default;
+            AnomalyValue value = default;
             IReadOnlyList<ErrorResponse> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -123,7 +123,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnomalyState(timestamp, value.Value, errors ?? new ChangeTrackingList<ErrorResponse>(), serializedAdditionalRawData);
+            return new AnomalyState(timestamp, value, errors ?? new ChangeTrackingList<ErrorResponse>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnomalyState>.Write(ModelReaderWriterOptions options)

@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<HybridComputeLicense> assignedLicense = default;
-            Optional<LicenseAssignmentState> licenseAssignmentState = default;
-            Optional<EsuServerType> serverType = default;
-            Optional<EsuEligibility> esuEligibility = default;
-            Optional<EsuKeyState> esuKeyState = default;
-            Optional<Guid> assignedLicenseImmutableId = default;
+            HybridComputeLicense assignedLicense = default;
+            LicenseAssignmentState? licenseAssignmentState = default;
+            EsuServerType? serverType = default;
+            EsuEligibility? esuEligibility = default;
+            EsuKeyState? esuKeyState = default;
+            Guid? assignedLicenseImmutableId = default;
             IReadOnlyList<EsuKey> esuKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -189,7 +189,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LicenseProfileMachineInstanceViewEsuProperties(Optional.ToNullable(assignedLicenseImmutableId), esuKeys ?? new ChangeTrackingList<EsuKey>(), serializedAdditionalRawData, Optional.ToNullable(serverType), Optional.ToNullable(esuEligibility), Optional.ToNullable(esuKeyState), assignedLicense.Value, Optional.ToNullable(licenseAssignmentState));
+            return new LicenseProfileMachineInstanceViewEsuProperties(
+                assignedLicenseImmutableId,
+                esuKeys ?? new ChangeTrackingList<EsuKey>(),
+                serializedAdditionalRawData,
+                serverType,
+                esuEligibility,
+                esuKeyState,
+                assignedLicense,
+                licenseAssignmentState);
         }
 
         BinaryData IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>.Write(ModelReaderWriterOptions options)

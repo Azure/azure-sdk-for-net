@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<bool> isServiceRole = default;
+            string id = default;
+            string name = default;
+            bool? isServiceRole = default;
             IReadOnlyList<Permission> permissions = default;
             IReadOnlyList<string> scopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureRoleDefinition(id.Value, name.Value, Optional.ToNullable(isServiceRole), permissions ?? new ChangeTrackingList<Permission>(), scopes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AzureRoleDefinition(
+                id,
+                name,
+                isServiceRole,
+                permissions ?? new ChangeTrackingList<Permission>(),
+                scopes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureRoleDefinition>.Write(ModelReaderWriterOptions options)

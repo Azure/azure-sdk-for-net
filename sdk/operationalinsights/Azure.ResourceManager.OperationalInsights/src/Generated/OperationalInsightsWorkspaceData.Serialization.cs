@@ -190,27 +190,27 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<OperationalInsightsWorkspaceEntityStatus> provisioningState = default;
-            Optional<Guid> customerId = default;
-            Optional<OperationalInsightsWorkspaceSku> sku = default;
-            Optional<int?> retentionInDays = default;
-            Optional<OperationalInsightsWorkspaceCapping> workspaceCapping = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<DateTimeOffset> modifiedDate = default;
-            Optional<OperationalInsightsPublicNetworkAccessType> publicNetworkAccessForIngestion = default;
-            Optional<OperationalInsightsPublicNetworkAccessType> publicNetworkAccessForQuery = default;
-            Optional<bool> forceCmkForQuery = default;
+            SystemData systemData = default;
+            OperationalInsightsWorkspaceEntityStatus? provisioningState = default;
+            Guid? customerId = default;
+            OperationalInsightsWorkspaceSku sku = default;
+            int? retentionInDays = default;
+            OperationalInsightsWorkspaceCapping workspaceCapping = default;
+            DateTimeOffset? createdDate = default;
+            DateTimeOffset? modifiedDate = default;
+            OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default;
+            OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default;
+            bool? forceCmkForQuery = default;
             IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default;
-            Optional<OperationalInsightsWorkspaceFeatures> features = default;
-            Optional<ResourceIdentifier> defaultDataCollectionRuleResourceId = default;
+            OperationalInsightsWorkspaceFeatures features = default;
+            ResourceIdentifier defaultDataCollectionRuleResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -417,7 +417,29 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(customerId), sku.Value, Optional.ToNullable(retentionInDays), workspaceCapping.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(forceCmkForQuery), privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>(), features.Value, defaultDataCollectionRuleResourceId.Value, serializedAdditionalRawData);
+            return new OperationalInsightsWorkspaceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                etag,
+                provisioningState,
+                customerId,
+                sku,
+                retentionInDays,
+                workspaceCapping,
+                createdDate,
+                modifiedDate,
+                publicNetworkAccessForIngestion,
+                publicNetworkAccessForQuery,
+                forceCmkForQuery,
+                privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>(),
+                features,
+                defaultDataCollectionRuleResourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsWorkspaceData>.Write(ModelReaderWriterOptions options)

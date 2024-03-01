@@ -141,16 +141,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            Optional<DataFactoryElement<string>> authenticationType = default;
-            Optional<DataFactoryElement<string>> accessKeyId = default;
-            Optional<DataFactorySecretBaseDefinition> secretAccessKey = default;
-            Optional<DataFactoryElement<string>> serviceUrl = default;
-            Optional<DataFactorySecretBaseDefinition> sessionToken = default;
-            Optional<string> encryptedCredential = default;
+            DataFactoryElement<string> authenticationType = default;
+            DataFactoryElement<string> accessKeyId = default;
+            DataFactorySecretBaseDefinition secretAccessKey = default;
+            DataFactoryElement<string> serviceUrl = default;
+            DataFactorySecretBaseDefinition sessionToken = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -274,7 +274,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonS3LinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, authenticationType.Value, accessKeyId.Value, secretAccessKey, serviceUrl.Value, sessionToken, encryptedCredential.Value);
+            return new AmazonS3LinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                authenticationType,
+                accessKeyId,
+                secretAccessKey,
+                serviceUrl,
+                sessionToken,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<AmazonS3LinkedService>.Write(ModelReaderWriterOptions options)

@@ -96,13 +96,13 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<JobTargetGroupMembershipType> membershipType = default;
+            JobTargetGroupMembershipType? membershipType = default;
             JobTargetType type = default;
-            Optional<string> serverName = default;
-            Optional<string> databaseName = default;
-            Optional<string> elasticPoolName = default;
-            Optional<string> shardMapName = default;
-            Optional<string> refreshCredential = default;
+            string serverName = default;
+            string databaseName = default;
+            string elasticPoolName = default;
+            string shardMapName = default;
+            string refreshCredential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobTarget(Optional.ToNullable(membershipType), type, serverName.Value, databaseName.Value, elasticPoolName.Value, shardMapName.Value, refreshCredential.Value, serializedAdditionalRawData);
+            return new JobTarget(
+                membershipType,
+                type,
+                serverName,
+                databaseName,
+                elasticPoolName,
+                shardMapName,
+                refreshCredential,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobTarget>.Write(ModelReaderWriterOptions options)

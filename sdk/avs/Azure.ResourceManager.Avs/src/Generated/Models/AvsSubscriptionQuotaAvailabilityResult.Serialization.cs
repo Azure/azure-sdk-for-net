@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, int>> hostsRemaining = default;
-            Optional<AvsSubscriptionQuotaEnabled> quotaEnabled = default;
+            IReadOnlyDictionary<string, int> hostsRemaining = default;
+            AvsSubscriptionQuotaEnabled? quotaEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsSubscriptionQuotaAvailabilityResult(Optional.ToDictionary(hostsRemaining), Optional.ToNullable(quotaEnabled), serializedAdditionalRawData);
+            return new AvsSubscriptionQuotaAvailabilityResult(hostsRemaining ?? new ChangeTrackingDictionary<string, int>(), quotaEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsSubscriptionQuotaAvailabilityResult>.Write(ModelReaderWriterOptions options)

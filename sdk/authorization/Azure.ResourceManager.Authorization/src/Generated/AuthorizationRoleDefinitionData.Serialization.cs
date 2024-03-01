@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> roleName = default;
-            Optional<string> description = default;
-            Optional<AuthorizationRoleType> type0 = default;
+            SystemData systemData = default;
+            string roleName = default;
+            string description = default;
+            AuthorizationRoleType? type0 = default;
             IList<RoleDefinitionPermission> permissions = default;
             IList<string> assignableScopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -226,7 +226,17 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationRoleDefinitionData(id, name, type, systemData.Value, roleName.Value, description.Value, Optional.ToNullable(type0), permissions ?? new ChangeTrackingList<RoleDefinitionPermission>(), assignableScopes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AuthorizationRoleDefinitionData(
+                id,
+                name,
+                type,
+                systemData,
+                roleName,
+                description,
+                type0,
+                permissions ?? new ChangeTrackingList<RoleDefinitionPermission>(),
+                assignableScopes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationRoleDefinitionData>.Write(ModelReaderWriterOptions options)

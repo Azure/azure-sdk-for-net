@@ -115,14 +115,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 return null;
             }
             IList<AuthorizationRuleAccessRight> rights = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<string> keyName = default;
-            Optional<string> claimType = default;
-            Optional<string> claimValue = default;
-            Optional<DateTimeOffset> modifiedTime = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<int> revision = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            string keyName = default;
+            string claimType = default;
+            string claimValue = default;
+            DateTimeOffset? modifiedTime = default;
+            DateTimeOffset? createdTime = default;
+            int? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedAccessAuthorizationRuleProperties(rights ?? new ChangeTrackingList<AuthorizationRuleAccessRight>(), primaryKey.Value, secondaryKey.Value, keyName.Value, claimType.Value, claimValue.Value, Optional.ToNullable(modifiedTime), Optional.ToNullable(createdTime), Optional.ToNullable(revision), serializedAdditionalRawData);
+            return new SharedAccessAuthorizationRuleProperties(
+                rights ?? new ChangeTrackingList<AuthorizationRuleAccessRight>(),
+                primaryKey,
+                secondaryKey,
+                keyName,
+                claimType,
+                claimValue,
+                modifiedTime,
+                createdTime,
+                revision,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedAccessAuthorizationRuleProperties>.Write(ModelReaderWriterOptions options)

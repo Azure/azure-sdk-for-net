@@ -144,16 +144,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            string name = default;
+            string displayName = default;
+            string description = default;
             IList<OperationalInsightsColumn> columns = default;
             IReadOnlyList<OperationalInsightsColumn> standardColumns = default;
             IReadOnlyList<string> categories = default;
             IReadOnlyList<string> labels = default;
-            Optional<OperationalInsightsTableCreator> source = default;
-            Optional<OperationalInsightsTableType> tableType = default;
-            Optional<OperationalInsightsTableSubType> tableSubType = default;
+            OperationalInsightsTableCreator? source = default;
+            OperationalInsightsTableType? tableType = default;
+            OperationalInsightsTableSubType? tableSubType = default;
             IReadOnlyList<string> solutions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -277,7 +277,19 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsSchema(name.Value, displayName.Value, description.Value, columns ?? new ChangeTrackingList<OperationalInsightsColumn>(), standardColumns ?? new ChangeTrackingList<OperationalInsightsColumn>(), categories ?? new ChangeTrackingList<string>(), labels ?? new ChangeTrackingList<string>(), Optional.ToNullable(source), Optional.ToNullable(tableType), Optional.ToNullable(tableSubType), solutions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new OperationalInsightsSchema(
+                name,
+                displayName,
+                description,
+                columns ?? new ChangeTrackingList<OperationalInsightsColumn>(),
+                standardColumns ?? new ChangeTrackingList<OperationalInsightsColumn>(),
+                categories ?? new ChangeTrackingList<string>(),
+                labels ?? new ChangeTrackingList<string>(),
+                source,
+                tableType,
+                tableSubType,
+                solutions ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsSchema>.Write(ModelReaderWriterOptions options)

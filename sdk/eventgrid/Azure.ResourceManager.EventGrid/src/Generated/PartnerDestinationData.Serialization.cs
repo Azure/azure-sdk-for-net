@@ -137,19 +137,19 @@ namespace Azure.ResourceManager.EventGrid
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> partnerRegistrationImmutableId = default;
-            Optional<string> endpointServiceContext = default;
-            Optional<DateTimeOffset> expirationTimeIfNotActivatedUtc = default;
-            Optional<PartnerDestinationProvisioningState> provisioningState = default;
-            Optional<PartnerDestinationActivationState> activationState = default;
-            Optional<Uri> endpointBaseUri = default;
-            Optional<string> messageForActivation = default;
+            SystemData systemData = default;
+            Guid? partnerRegistrationImmutableId = default;
+            string endpointServiceContext = default;
+            DateTimeOffset? expirationTimeIfNotActivatedUtc = default;
+            PartnerDestinationProvisioningState? provisioningState = default;
+            PartnerDestinationActivationState? activationState = default;
+            Uri endpointBaseUri = default;
+            string messageForActivation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -270,7 +270,21 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerDestinationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(partnerRegistrationImmutableId), endpointServiceContext.Value, Optional.ToNullable(expirationTimeIfNotActivatedUtc), Optional.ToNullable(provisioningState), Optional.ToNullable(activationState), endpointBaseUri.Value, messageForActivation.Value, serializedAdditionalRawData);
+            return new PartnerDestinationData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                partnerRegistrationImmutableId,
+                endpointServiceContext,
+                expirationTimeIfNotActivatedUtc,
+                provisioningState,
+                activationState,
+                endpointBaseUri,
+                messageForActivation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerDestinationData>.Write(ModelReaderWriterOptions options)

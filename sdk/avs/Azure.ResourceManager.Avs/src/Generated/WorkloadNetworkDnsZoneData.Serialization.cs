@@ -143,14 +143,14 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
+            SystemData systemData = default;
+            string displayName = default;
             IList<string> domain = default;
             IList<IPAddress> dnsServerIPs = default;
-            Optional<IPAddress> sourceIP = default;
-            Optional<long> dnsServices = default;
-            Optional<WorkloadNetworkDnsZoneProvisioningState> provisioningState = default;
-            Optional<long> revision = default;
+            IPAddress sourceIP = default;
+            long? dnsServices = default;
+            WorkloadNetworkDnsZoneProvisioningState? provisioningState = default;
+            long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -273,7 +273,19 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkDnsZoneData(id, name, type, systemData.Value, displayName.Value, domain ?? new ChangeTrackingList<string>(), dnsServerIPs ?? new ChangeTrackingList<IPAddress>(), sourceIP.Value, Optional.ToNullable(dnsServices), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData);
+            return new WorkloadNetworkDnsZoneData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                domain ?? new ChangeTrackingList<string>(),
+                dnsServerIPs ?? new ChangeTrackingList<IPAddress>(),
+                sourceIP,
+                dnsServices,
+                provisioningState,
+                revision,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkDnsZoneData>.Write(ModelReaderWriterOptions options)

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 return null;
             }
             IReadOnlyList<ServiceBusQueueData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SBQueueListResult(value ?? new ChangeTrackingList<ServiceBusQueueData>(), nextLink.Value, serializedAdditionalRawData);
+            return new SBQueueListResult(value ?? new ChangeTrackingList<ServiceBusQueueData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SBQueueListResult>.Write(ModelReaderWriterOptions options)

@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<AvailabilityGroupListenerPrivateIPAddress> privateIPAddress = default;
-            Optional<ResourceIdentifier> publicIPAddressResourceId = default;
-            Optional<ResourceIdentifier> loadBalancerResourceId = default;
-            Optional<int> probePort = default;
+            AvailabilityGroupListenerPrivateIPAddress privateIPAddress = default;
+            ResourceIdentifier publicIPAddressResourceId = default;
+            ResourceIdentifier loadBalancerResourceId = default;
+            int? probePort = default;
             IList<ResourceIdentifier> sqlVmInstances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -171,7 +171,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilityGroupListenerLoadBalancerConfiguration(privateIPAddress.Value, publicIPAddressResourceId.Value, loadBalancerResourceId.Value, Optional.ToNullable(probePort), sqlVmInstances ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
+            return new AvailabilityGroupListenerLoadBalancerConfiguration(
+                privateIPAddress,
+                publicIPAddressResourceId,
+                loadBalancerResourceId,
+                probePort,
+                sqlVmInstances ?? new ChangeTrackingList<ResourceIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilityGroupListenerLoadBalancerConfiguration>.Write(ModelReaderWriterOptions options)

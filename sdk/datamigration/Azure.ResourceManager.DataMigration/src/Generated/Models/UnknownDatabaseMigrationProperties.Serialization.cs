@@ -132,19 +132,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             ResourceType kind = "Unknown";
-            Optional<string> scope = default;
-            Optional<string> provisioningState = default;
-            Optional<string> migrationStatus = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<SqlConnectionInformation> sourceSqlConnection = default;
-            Optional<string> sourceDatabaseName = default;
-            Optional<string> sourceServerName = default;
-            Optional<string> migrationService = default;
-            Optional<string> migrationOperationId = default;
-            Optional<ErrorInfo> migrationFailureError = default;
-            Optional<string> targetDatabaseCollation = default;
-            Optional<string> provisioningError = default;
+            string scope = default;
+            string provisioningState = default;
+            string migrationStatus = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            SqlConnectionInformation sourceSqlConnection = default;
+            string sourceDatabaseName = default;
+            string sourceServerName = default;
+            string migrationService = default;
+            string migrationOperationId = default;
+            ErrorInfo migrationFailureError = default;
+            string targetDatabaseCollation = default;
+            string provisioningError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,7 +241,22 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDatabaseMigrationProperties(kind, scope.Value, provisioningState.Value, migrationStatus.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceSqlConnection.Value, sourceDatabaseName.Value, sourceServerName.Value, migrationService.Value, migrationOperationId.Value, migrationFailureError.Value, targetDatabaseCollation.Value, provisioningError.Value, serializedAdditionalRawData);
+            return new UnknownDatabaseMigrationProperties(
+                kind,
+                scope,
+                provisioningState,
+                migrationStatus,
+                startedOn,
+                endedOn,
+                sourceSqlConnection,
+                sourceDatabaseName,
+                sourceServerName,
+                migrationService,
+                migrationOperationId,
+                migrationFailureError,
+                targetDatabaseCollation,
+                provisioningError,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseMigrationProperties>.Write(ModelReaderWriterOptions options)

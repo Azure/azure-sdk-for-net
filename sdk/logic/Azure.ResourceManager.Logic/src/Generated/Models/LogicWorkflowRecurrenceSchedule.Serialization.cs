@@ -199,7 +199,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRecurrenceSchedule(minutes ?? new ChangeTrackingList<int>(), hours ?? new ChangeTrackingList<int>(), weekDays ?? new ChangeTrackingList<LogicWorkflowDayOfWeek>(), monthDays ?? new ChangeTrackingList<int>(), monthlyOccurrences ?? new ChangeTrackingList<LogicWorkflowRecurrenceScheduleOccurrence>(), serializedAdditionalRawData);
+            return new LogicWorkflowRecurrenceSchedule(
+                minutes ?? new ChangeTrackingList<int>(),
+                hours ?? new ChangeTrackingList<int>(),
+                weekDays ?? new ChangeTrackingList<LogicWorkflowDayOfWeek>(),
+                monthDays ?? new ChangeTrackingList<int>(),
+                monthlyOccurrences ?? new ChangeTrackingList<LogicWorkflowRecurrenceScheduleOccurrence>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRecurrenceSchedule>.Write(ModelReaderWriterOptions options)

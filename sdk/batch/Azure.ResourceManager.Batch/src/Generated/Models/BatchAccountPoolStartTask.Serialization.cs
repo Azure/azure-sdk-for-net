@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> commandLine = default;
+            string commandLine = default;
             IList<BatchResourceFile> resourceFiles = default;
             IList<BatchEnvironmentSetting> environmentSettings = default;
-            Optional<BatchUserIdentity> userIdentity = default;
-            Optional<int> maxTaskRetryCount = default;
-            Optional<bool> waitForSuccess = default;
-            Optional<BatchTaskContainerSettings> containerSettings = default;
+            BatchUserIdentity userIdentity = default;
+            int? maxTaskRetryCount = default;
+            bool? waitForSuccess = default;
+            BatchTaskContainerSettings containerSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,15 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountPoolStartTask(commandLine.Value, resourceFiles ?? new ChangeTrackingList<BatchResourceFile>(), environmentSettings ?? new ChangeTrackingList<BatchEnvironmentSetting>(), userIdentity.Value, Optional.ToNullable(maxTaskRetryCount), Optional.ToNullable(waitForSuccess), containerSettings.Value, serializedAdditionalRawData);
+            return new BatchAccountPoolStartTask(
+                commandLine,
+                resourceFiles ?? new ChangeTrackingList<BatchResourceFile>(),
+                environmentSettings ?? new ChangeTrackingList<BatchEnvironmentSetting>(),
+                userIdentity,
+                maxTaskRetryCount,
+                waitForSuccess,
+                containerSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountPoolStartTask>.Write(ModelReaderWriterOptions options)

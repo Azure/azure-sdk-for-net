@@ -125,17 +125,17 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<CognitiveServicesSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<CognitiveServicesAccountProperties> properties = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string kind = default;
+            CognitiveServicesSku sku = default;
+            ManagedServiceIdentity identity = default;
+            CognitiveServicesAccountProperties properties = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,7 +230,19 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind.Value, sku.Value, identity, properties.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new CognitiveServicesAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                kind,
+                sku,
+                identity,
+                properties,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountData>.Write(ModelReaderWriterOptions options)

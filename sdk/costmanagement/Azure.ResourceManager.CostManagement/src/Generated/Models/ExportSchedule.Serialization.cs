@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<ExportScheduleStatusType> status = default;
-            Optional<ExportScheduleRecurrenceType> recurrence = default;
-            Optional<ExportRecurrencePeriod> recurrencePeriod = default;
+            ExportScheduleStatusType? status = default;
+            ExportScheduleRecurrenceType? recurrence = default;
+            ExportRecurrencePeriod recurrencePeriod = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportSchedule(Optional.ToNullable(status), Optional.ToNullable(recurrence), recurrencePeriod.Value, serializedAdditionalRawData);
+            return new ExportSchedule(status, recurrence, recurrencePeriod, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportSchedule>.Write(ModelReaderWriterOptions options)

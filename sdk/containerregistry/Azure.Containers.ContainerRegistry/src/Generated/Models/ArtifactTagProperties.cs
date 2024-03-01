@@ -19,26 +19,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>
         /// <param name="lastUpdatedOn"> Tag last update time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="registryLoginServer"/>, <paramref name="repositoryName"/>, <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
         internal ArtifactTagProperties(string registryLoginServer, string repositoryName, string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn)
         {
-            if (registryLoginServer == null)
-            {
-                throw new ArgumentNullException(nameof(registryLoginServer));
-            }
-            if (repositoryName == null)
-            {
-                throw new ArgumentNullException(nameof(repositoryName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (digest == null)
-            {
-                throw new ArgumentNullException(nameof(digest));
-            }
-
             RegistryLoginServer = registryLoginServer;
             RepositoryName = repositoryName;
             Name = name;

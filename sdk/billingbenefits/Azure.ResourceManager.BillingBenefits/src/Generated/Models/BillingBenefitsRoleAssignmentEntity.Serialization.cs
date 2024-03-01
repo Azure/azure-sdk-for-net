@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<string> principalId = default;
-            Optional<ResourceIdentifier> roleDefinitionId = default;
-            Optional<ResourceIdentifier> scope = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            string principalId = default;
+            ResourceIdentifier roleDefinitionId = default;
+            ResourceIdentifier scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +156,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsRoleAssignmentEntity(id.Value, name.Value, principalId.Value, roleDefinitionId.Value, scope.Value, serializedAdditionalRawData);
+            return new BillingBenefitsRoleAssignmentEntity(
+                id,
+                name,
+                principalId,
+                roleDefinitionId,
+                scope,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsRoleAssignmentEntity>.Write(ModelReaderWriterOptions options)

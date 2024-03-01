@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<StorageAccountCredentials> storageAccount = default;
-            Optional<ContainerRegistryCredentials> containerRegistry = default;
-            Optional<ContainerServiceCredentials> containerService = default;
-            Optional<AppInsightsCredentials> appInsights = default;
-            Optional<ServiceAuthConfiguration> serviceAuthConfiguration = default;
-            Optional<SslConfiguration> sslConfiguration = default;
+            StorageAccountCredentials storageAccount = default;
+            ContainerRegistryCredentials containerRegistry = default;
+            ContainerServiceCredentials containerService = default;
+            AppInsightsCredentials appInsights = default;
+            ServiceAuthConfiguration serviceAuthConfiguration = default;
+            SslConfiguration sslConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalizationClusterCredentials(storageAccount.Value, containerRegistry.Value, containerService.Value, appInsights.Value, serviceAuthConfiguration.Value, sslConfiguration.Value, serializedAdditionalRawData);
+            return new OperationalizationClusterCredentials(
+                storageAccount,
+                containerRegistry,
+                containerService,
+                appInsights,
+                serviceAuthConfiguration,
+                sslConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalizationClusterCredentials>.Write(ModelReaderWriterOptions options)

@@ -229,29 +229,29 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<bool> disableDeviceSas = default;
-            Optional<bool> disableModuleSas = default;
-            Optional<bool> restrictOutboundNetworkAccess = default;
+            bool? disableLocalAuth = default;
+            bool? disableDeviceSas = default;
+            bool? disableModuleSas = default;
+            bool? restrictOutboundNetworkAccess = default;
             IList<string> allowedFqdnList = default;
-            Optional<IotHubPublicNetworkAccess> publicNetworkAccess = default;
+            IotHubPublicNetworkAccess? publicNetworkAccess = default;
             IList<IotHubIPFilterRule> ipFilterRules = default;
-            Optional<IotHubNetworkRuleSetProperties> networkRuleSets = default;
-            Optional<string> minTlsVersion = default;
+            IotHubNetworkRuleSetProperties networkRuleSets = default;
+            string minTlsVersion = default;
             IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<string> provisioningState = default;
-            Optional<string> state = default;
-            Optional<string> hostName = default;
-            Optional<IDictionary<string, EventHubCompatibleEndpointProperties>> eventHubEndpoints = default;
-            Optional<IotHubRoutingProperties> routing = default;
-            Optional<IDictionary<string, IotHubStorageEndpointProperties>> storageEndpoints = default;
-            Optional<IDictionary<string, MessagingEndpointProperties>> messagingEndpoints = default;
-            Optional<bool> enableFileUploadNotifications = default;
-            Optional<CloudToDeviceProperties> cloudToDevice = default;
-            Optional<string> comments = default;
-            Optional<IotHubCapability> features = default;
+            string provisioningState = default;
+            string state = default;
+            string hostName = default;
+            IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints = default;
+            IotHubRoutingProperties routing = default;
+            IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints = default;
+            IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default;
+            bool? enableFileUploadNotifications = default;
+            CloudToDeviceProperties cloudToDevice = default;
+            string comments = default;
+            IotHubCapability? features = default;
             IReadOnlyList<IotHubLocationDescription> locations = default;
-            Optional<bool> enableDataResidency = default;
+            bool? enableDataResidency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -498,7 +498,32 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubProperties(authorizationPolicies ?? new ChangeTrackingList<SharedAccessSignatureAuthorizationRule>(), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableDeviceSas), Optional.ToNullable(disableModuleSas), Optional.ToNullable(restrictOutboundNetworkAccess), allowedFqdnList ?? new ChangeTrackingList<string>(), Optional.ToNullable(publicNetworkAccess), ipFilterRules ?? new ChangeTrackingList<IotHubIPFilterRule>(), networkRuleSets.Value, minTlsVersion.Value, privateEndpointConnections ?? new ChangeTrackingList<IotHubPrivateEndpointConnectionData>(), provisioningState.Value, state.Value, hostName.Value, Optional.ToDictionary(eventHubEndpoints), routing.Value, Optional.ToDictionary(storageEndpoints), Optional.ToDictionary(messagingEndpoints), Optional.ToNullable(enableFileUploadNotifications), cloudToDevice.Value, comments.Value, Optional.ToNullable(features), locations ?? new ChangeTrackingList<IotHubLocationDescription>(), Optional.ToNullable(enableDataResidency), serializedAdditionalRawData);
+            return new IotHubProperties(
+                authorizationPolicies ?? new ChangeTrackingList<SharedAccessSignatureAuthorizationRule>(),
+                disableLocalAuth,
+                disableDeviceSas,
+                disableModuleSas,
+                restrictOutboundNetworkAccess,
+                allowedFqdnList ?? new ChangeTrackingList<string>(),
+                publicNetworkAccess,
+                ipFilterRules ?? new ChangeTrackingList<IotHubIPFilterRule>(),
+                networkRuleSets,
+                minTlsVersion,
+                privateEndpointConnections ?? new ChangeTrackingList<IotHubPrivateEndpointConnectionData>(),
+                provisioningState,
+                state,
+                hostName,
+                eventHubEndpoints ?? new ChangeTrackingDictionary<string, EventHubCompatibleEndpointProperties>(),
+                routing,
+                storageEndpoints ?? new ChangeTrackingDictionary<string, IotHubStorageEndpointProperties>(),
+                messagingEndpoints ?? new ChangeTrackingDictionary<string, MessagingEndpointProperties>(),
+                enableFileUploadNotifications,
+                cloudToDevice,
+                comments,
+                features,
+                locations ?? new ChangeTrackingList<IotHubLocationDescription>(),
+                enableDataResidency,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubProperties>.Write(ModelReaderWriterOptions options)

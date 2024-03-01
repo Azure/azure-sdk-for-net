@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> awsExternalId = default;
+            string awsExternalId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudConnectors(awsExternalId.Value, serializedAdditionalRawData);
+            return new CloudConnectors(awsExternalId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudConnectors>.Write(ModelReaderWriterOptions options)

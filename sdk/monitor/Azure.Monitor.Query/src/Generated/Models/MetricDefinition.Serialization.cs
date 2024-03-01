@@ -19,18 +19,18 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            Optional<bool> isDimensionRequired = default;
-            Optional<string> resourceId = default;
-            Optional<string> @namespace = default;
-            Optional<LocalizableString> name = default;
-            Optional<string> displayDescription = default;
-            Optional<string> category = default;
-            Optional<MetricClass> metricClass = default;
-            Optional<MetricUnit> unit = default;
-            Optional<MetricAggregationType> primaryAggregationType = default;
+            bool? isDimensionRequired = default;
+            string resourceId = default;
+            string @namespace = default;
+            LocalizableString name = default;
+            string displayDescription = default;
+            string category = default;
+            MetricClass? metricClass = default;
+            MetricUnit? unit = default;
+            MetricAggregationType? primaryAggregationType = default;
             IReadOnlyList<MetricAggregationType> supportedAggregationTypes = default;
             IReadOnlyList<MetricAvailability> metricAvailabilities = default;
-            Optional<string> id = default;
+            string id = default;
             IReadOnlyList<LocalizableString> dimensions = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -147,7 +147,20 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricDefinition(Optional.ToNullable(isDimensionRequired), resourceId.Value, @namespace.Value, name.Value, displayDescription.Value, category.Value, Optional.ToNullable(metricClass), Optional.ToNullable(unit), Optional.ToNullable(primaryAggregationType), supportedAggregationTypes ?? new ChangeTrackingList<MetricAggregationType>(), metricAvailabilities ?? new ChangeTrackingList<MetricAvailability>(), id.Value, dimensions ?? new ChangeTrackingList<LocalizableString>());
+            return new MetricDefinition(
+                isDimensionRequired,
+                resourceId,
+                @namespace,
+                name,
+                displayDescription,
+                category,
+                metricClass,
+                unit,
+                primaryAggregationType,
+                supportedAggregationTypes ?? new ChangeTrackingList<MetricAggregationType>(),
+                metricAvailabilities ?? new ChangeTrackingList<MetricAvailability>(),
+                id,
+                dimensions ?? new ChangeTrackingList<LocalizableString>());
         }
     }
 }

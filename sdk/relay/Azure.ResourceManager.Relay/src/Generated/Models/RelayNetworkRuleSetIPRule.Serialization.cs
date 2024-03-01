@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Relay.Models
             {
                 return null;
             }
-            Optional<string> ipMask = default;
-            Optional<RelayNetworkRuleIPAction> action = default;
+            string ipMask = default;
+            RelayNetworkRuleIPAction? action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Relay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayNetworkRuleSetIPRule(ipMask.Value, Optional.ToNullable(action), serializedAdditionalRawData);
+            return new RelayNetworkRuleSetIPRule(ipMask, action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayNetworkRuleSetIPRule>.Write(ModelReaderWriterOptions options)

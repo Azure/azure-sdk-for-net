@@ -53,11 +53,11 @@ namespace Azure.Communication.MediaComposition
                 return null;
             }
             InputGroupType kind = "Unknown";
-            Optional<InputPosition> position = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
-            Optional<string> layer = default;
-            Optional<ScalingMode> scalingMode = default;
+            InputPosition position = default;
+            string width = default;
+            string height = default;
+            string layer = default;
+            ScalingMode? scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -99,7 +99,13 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new UnknownInputGroup(kind, position.Value, width.Value, height.Value, layer.Value, Optional.ToNullable(scalingMode));
+            return new UnknownInputGroup(
+                kind,
+                position,
+                width,
+                height,
+                layer,
+                scalingMode);
         }
     }
 }

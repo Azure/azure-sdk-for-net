@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformApiPortalProvisioningState> provisioningState = default;
-            Optional<bool> @public = default;
-            Optional<Uri> uri = default;
-            Optional<bool> httpsOnly = default;
+            AppPlatformApiPortalProvisioningState? provisioningState = default;
+            bool? @public = default;
+            Uri uri = default;
+            bool? httpsOnly = default;
             IList<ResourceIdentifier> gatewayIds = default;
             IList<Uri> sourceUris = default;
-            Optional<AppPlatformSsoProperties> ssoProperties = default;
-            Optional<AppPlatformApiPortalResourceRequirements> resourceRequests = default;
+            AppPlatformSsoProperties ssoProperties = default;
+            AppPlatformApiPortalResourceRequirements resourceRequests = default;
             IReadOnlyList<AppPlatformApiPortalInstance> instances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -263,7 +263,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformApiPortalProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(@public), uri.Value, Optional.ToNullable(httpsOnly), gatewayIds ?? new ChangeTrackingList<ResourceIdentifier>(), sourceUris ?? new ChangeTrackingList<Uri>(), ssoProperties.Value, resourceRequests.Value, instances ?? new ChangeTrackingList<AppPlatformApiPortalInstance>(), serializedAdditionalRawData);
+            return new AppPlatformApiPortalProperties(
+                provisioningState,
+                @public,
+                uri,
+                httpsOnly,
+                gatewayIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                sourceUris ?? new ChangeTrackingList<Uri>(),
+                ssoProperties,
+                resourceRequests,
+                instances ?? new ChangeTrackingList<AppPlatformApiPortalInstance>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformApiPortalProperties>.Write(ModelReaderWriterOptions options)

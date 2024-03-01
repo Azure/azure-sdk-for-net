@@ -41,7 +41,25 @@ namespace Azure.ResourceManager.IotCentral.Models
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<IotCentralPrivateEndpointConnectionData>();
 
-            return new IotCentralAppData(id, name, resourceType, systemData, tags, location, skuName.HasValue ? new IotCentralAppSkuInfo(skuName.Value, serializedAdditionalRawData: null) : null, identity, provisioningState, applicationId, displayName, subdomain, template, state, publicNetworkAccess, networkRuleSets, privateEndpointConnections?.ToList(), serializedAdditionalRawData: null);
+            return new IotCentralAppData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                skuName.HasValue ? new IotCentralAppSkuInfo(skuName.Value, serializedAdditionalRawData: null) : null,
+                identity,
+                provisioningState,
+                applicationId,
+                displayName,
+                subdomain,
+                template,
+                state,
+                publicNetworkAccess,
+                networkRuleSets,
+                privateEndpointConnections?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="IotCentral.IotCentralPrivateEndpointConnectionData"/>. </summary>
@@ -58,7 +76,16 @@ namespace Azure.ResourceManager.IotCentral.Models
         {
             groupIds ??= new List<string>();
 
-            return new IotCentralPrivateEndpointConnectionData(id, name, resourceType, systemData, groupIds?.ToList(), privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
+            return new IotCentralPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupIds?.ToList(),
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                connectionState,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotCentralAppPatch"/>. </summary>
@@ -80,7 +107,20 @@ namespace Azure.ResourceManager.IotCentral.Models
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<IotCentralPrivateEndpointConnectionData>();
 
-            return new IotCentralAppPatch(tags, skuName.HasValue ? new IotCentralAppSkuInfo(skuName.Value, serializedAdditionalRawData: null) : null, identity, provisioningState, applicationId, displayName, subdomain, template, state, publicNetworkAccess, networkRuleSets, privateEndpointConnections?.ToList(), serializedAdditionalRawData: null);
+            return new IotCentralAppPatch(
+                tags,
+                skuName.HasValue ? new IotCentralAppSkuInfo(skuName.Value, serializedAdditionalRawData: null) : null,
+                identity,
+                provisioningState,
+                applicationId,
+                displayName,
+                subdomain,
+                template,
+                state,
+                publicNetworkAccess,
+                networkRuleSets,
+                privateEndpointConnections?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="IotCentral.IotCentralPrivateLinkResourceData"/>. </summary>
@@ -97,7 +137,15 @@ namespace Azure.ResourceManager.IotCentral.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new IotCentralPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+            return new IotCentralPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotCentralAppNameAvailabilityContent"/>. </summary>
@@ -133,7 +181,16 @@ namespace Azure.ResourceManager.IotCentral.Models
         {
             locations ??= new List<IotCentralAppTemplateLocation>();
 
-            return new IotCentralAppTemplate(manifestId, manifestVersion, name, title, order, description, industry, locations?.ToList(), serializedAdditionalRawData: null);
+            return new IotCentralAppTemplate(
+                manifestId,
+                manifestVersion,
+                name,
+                title,
+                order,
+                description,
+                industry,
+                locations?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotCentralAppTemplateLocation"/>. </summary>

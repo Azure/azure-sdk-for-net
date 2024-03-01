@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> logoutEndpoint = default;
+            string logoutEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoginRoutes(logoutEndpoint.Value, serializedAdditionalRawData);
+            return new LoginRoutes(logoutEndpoint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoginRoutes>.Write(ModelReaderWriterOptions options)

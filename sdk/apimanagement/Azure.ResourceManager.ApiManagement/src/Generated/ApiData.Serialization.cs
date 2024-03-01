@@ -202,28 +202,28 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<AuthenticationSettingsContract> authenticationSettings = default;
-            Optional<SubscriptionKeyParameterNamesContract> subscriptionKeyParameterNames = default;
-            Optional<ApiType> type0 = default;
-            Optional<string> apiRevision = default;
-            Optional<string> apiVersion = default;
-            Optional<bool> isCurrent = default;
-            Optional<bool> isOnline = default;
-            Optional<string> apiRevisionDescription = default;
-            Optional<string> apiVersionDescription = default;
-            Optional<ResourceIdentifier> apiVersionSetId = default;
-            Optional<bool> subscriptionRequired = default;
-            Optional<Uri> termsOfServiceUri = default;
-            Optional<ApiContactInformation> contact = default;
-            Optional<ApiLicenseInformation> license = default;
-            Optional<ResourceIdentifier> sourceApiId = default;
-            Optional<string> displayName = default;
-            Optional<Uri> serviceUri = default;
-            Optional<string> path = default;
+            SystemData systemData = default;
+            string description = default;
+            AuthenticationSettingsContract authenticationSettings = default;
+            SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default;
+            ApiType? type0 = default;
+            string apiRevision = default;
+            string apiVersion = default;
+            bool? isCurrent = default;
+            bool? isOnline = default;
+            string apiRevisionDescription = default;
+            string apiVersionDescription = default;
+            ResourceIdentifier apiVersionSetId = default;
+            bool? subscriptionRequired = default;
+            Uri termsOfServiceUri = default;
+            ApiContactInformation contact = default;
+            ApiLicenseInformation license = default;
+            ResourceIdentifier sourceApiId = default;
+            string displayName = default;
+            Uri serviceUri = default;
+            string path = default;
             IList<ApiOperationInvokableProtocol> protocols = default;
-            Optional<ApiVersionSetContractDetails> apiVersionSet = default;
+            ApiVersionSetContractDetails apiVersionSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -436,7 +436,33 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiData(id, name, type, systemData.Value, description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type0), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, sourceApiId.Value, displayName.Value, serviceUri.Value, path.Value, protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>(), apiVersionSet.Value, serializedAdditionalRawData);
+            return new ApiData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                authenticationSettings,
+                subscriptionKeyParameterNames,
+                type0,
+                apiRevision,
+                apiVersion,
+                isCurrent,
+                isOnline,
+                apiRevisionDescription,
+                apiVersionDescription,
+                apiVersionSetId,
+                subscriptionRequired,
+                termsOfServiceUri,
+                contact,
+                license,
+                sourceApiId,
+                displayName,
+                serviceUri,
+                path,
+                protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>(),
+                apiVersionSet,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiData>.Write(ModelReaderWriterOptions options)

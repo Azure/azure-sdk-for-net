@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             WritableSubResource virtualNetwork = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<DnsResolverProvisioningState> provisioningState = default;
+            IDictionary<string, string> metadata = default;
+            DnsResolverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.DnsResolver
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsForwardingRulesetVirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToNullable(etag), virtualNetwork, Optional.ToDictionary(metadata), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DnsForwardingRulesetVirtualNetworkLinkData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                virtualNetwork,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>.Write(ModelReaderWriterOptions options)

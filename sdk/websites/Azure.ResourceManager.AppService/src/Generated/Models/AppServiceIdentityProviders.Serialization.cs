@@ -115,15 +115,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<AppServiceAadProvider> azureActiveDirectory = default;
-            Optional<AppServiceFacebookProvider> facebook = default;
-            Optional<AppServiceGitHubProvider> gitHub = default;
-            Optional<AppServiceGoogleProvider> google = default;
-            Optional<LegacyMicrosoftAccount> legacyMicrosoftAccount = default;
-            Optional<AppServiceTwitterProvider> twitter = default;
-            Optional<AppServiceAppleProvider> apple = default;
-            Optional<AppServiceStaticWebAppsProvider> azureStaticWebApps = default;
-            Optional<IDictionary<string, CustomOpenIdConnectProvider>> customOpenIdConnectProviders = default;
+            AppServiceAadProvider azureActiveDirectory = default;
+            AppServiceFacebookProvider facebook = default;
+            AppServiceGitHubProvider gitHub = default;
+            AppServiceGoogleProvider google = default;
+            LegacyMicrosoftAccount legacyMicrosoftAccount = default;
+            AppServiceTwitterProvider twitter = default;
+            AppServiceAppleProvider apple = default;
+            AppServiceStaticWebAppsProvider azureStaticWebApps = default;
+            IDictionary<string, CustomOpenIdConnectProvider> customOpenIdConnectProviders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceIdentityProviders(azureActiveDirectory.Value, facebook.Value, gitHub.Value, google.Value, legacyMicrosoftAccount.Value, twitter.Value, apple.Value, azureStaticWebApps.Value, Optional.ToDictionary(customOpenIdConnectProviders), serializedAdditionalRawData);
+            return new AppServiceIdentityProviders(
+                azureActiveDirectory,
+                facebook,
+                gitHub,
+                google,
+                legacyMicrosoftAccount,
+                twitter,
+                apple,
+                azureStaticWebApps,
+                customOpenIdConnectProviders ?? new ChangeTrackingDictionary<string, CustomOpenIdConnectProvider>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceIdentityProviders>.Write(ModelReaderWriterOptions options)

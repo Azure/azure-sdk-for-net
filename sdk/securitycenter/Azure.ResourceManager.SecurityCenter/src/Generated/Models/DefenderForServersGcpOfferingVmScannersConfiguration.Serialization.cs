@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<DefenderForServersScanningMode> scanningMode = default;
-            Optional<IDictionary<string, string>> exclusionTags = default;
+            DefenderForServersScanningMode? scanningMode = default;
+            IDictionary<string, string> exclusionTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForServersGcpOfferingVmScannersConfiguration(Optional.ToNullable(scanningMode), Optional.ToDictionary(exclusionTags), serializedAdditionalRawData);
+            return new DefenderForServersGcpOfferingVmScannersConfiguration(scanningMode, exclusionTags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderForServersGcpOfferingVmScannersConfiguration>.Write(ModelReaderWriterOptions options)

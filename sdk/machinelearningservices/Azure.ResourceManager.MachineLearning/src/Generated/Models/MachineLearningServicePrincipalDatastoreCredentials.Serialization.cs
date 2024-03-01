@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<Uri> authorityUrl = default;
+            Uri authorityUrl = default;
             Guid clientId = default;
-            Optional<Uri> resourceUrl = default;
+            Uri resourceUrl = default;
             MachineLearningServicePrincipalDatastoreSecrets secrets = default;
             Guid tenantId = default;
             CredentialsType credentialsType = default;
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningServicePrincipalDatastoreCredentials(credentialsType, serializedAdditionalRawData, authorityUrl.Value, clientId, resourceUrl.Value, secrets, tenantId);
+            return new MachineLearningServicePrincipalDatastoreCredentials(
+                credentialsType,
+                serializedAdditionalRawData,
+                authorityUrl,
+                clientId,
+                resourceUrl,
+                secrets,
+                tenantId);
         }
 
         BinaryData IPersistableModel<MachineLearningServicePrincipalDatastoreCredentials>.Write(ModelReaderWriterOptions options)

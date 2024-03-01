@@ -198,30 +198,30 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            string kind = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> administratorLogin = default;
-            Optional<string> administratorLoginPassword = default;
-            Optional<string> version = default;
-            Optional<string> state = default;
-            Optional<string> fullyQualifiedDomainName = default;
+            SystemData systemData = default;
+            string administratorLogin = default;
+            string administratorLoginPassword = default;
+            string version = default;
+            string state = default;
+            string fullyQualifiedDomainName = default;
             IReadOnlyList<SqlServerPrivateEndpointConnection> privateEndpointConnections = default;
-            Optional<SqlMinimalTlsVersion> minimalTlsVersion = default;
-            Optional<ServerNetworkAccessFlag> publicNetworkAccess = default;
-            Optional<ServerWorkspaceFeature> workspaceFeature = default;
-            Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
-            Optional<Guid> federatedClientId = default;
-            Optional<Uri> keyId = default;
-            Optional<ServerExternalAdministrator> administrators = default;
-            Optional<ServerNetworkAccessFlag> restrictOutboundNetworkAccess = default;
-            Optional<ServerNetworkAccessFlag> isIPv6Enabled = default;
-            Optional<ExternalGovernanceStatus> externalGovernanceStatus = default;
+            SqlMinimalTlsVersion? minimalTlsVersion = default;
+            ServerNetworkAccessFlag? publicNetworkAccess = default;
+            ServerWorkspaceFeature? workspaceFeature = default;
+            ResourceIdentifier primaryUserAssignedIdentityId = default;
+            Guid? federatedClientId = default;
+            Uri keyId = default;
+            ServerExternalAdministrator administrators = default;
+            ServerNetworkAccessFlag? restrictOutboundNetworkAccess = default;
+            ServerNetworkAccessFlag? isIPv6Enabled = default;
+            ExternalGovernanceStatus? externalGovernanceStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -431,7 +431,32 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, privateEndpointConnections ?? new ChangeTrackingList<SqlServerPrivateEndpointConnection>(), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToNullable(isIPv6Enabled), Optional.ToNullable(externalGovernanceStatus), serializedAdditionalRawData);
+            return new SqlServerData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                kind,
+                administratorLogin,
+                administratorLoginPassword,
+                version,
+                state,
+                fullyQualifiedDomainName,
+                privateEndpointConnections ?? new ChangeTrackingList<SqlServerPrivateEndpointConnection>(),
+                minimalTlsVersion,
+                publicNetworkAccess,
+                workspaceFeature,
+                primaryUserAssignedIdentityId,
+                federatedClientId,
+                keyId,
+                administrators,
+                restrictOutboundNetworkAccess,
+                isIPv6Enabled,
+                externalGovernanceStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerData>.Write(ModelReaderWriterOptions options)

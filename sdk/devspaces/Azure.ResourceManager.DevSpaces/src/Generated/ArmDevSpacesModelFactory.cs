@@ -44,7 +44,21 @@ namespace Azure.ResourceManager.DevSpaces.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ControllerData(id, name, resourceType, systemData, tags, location, sku, provisioningState, hostSuffix, dataPlaneFqdn, targetContainerHostApiServerFqdn, targetContainerHostResourceId, targetContainerHostCredentialsBase64, serializedAdditionalRawData: null);
+            return new ControllerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                provisioningState,
+                hostSuffix,
+                dataPlaneFqdn,
+                targetContainerHostApiServerFqdn,
+                targetContainerHostResourceId,
+                targetContainerHostCredentialsBase64,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ControllerConnectionDetailsList"/>. </summary>

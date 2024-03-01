@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<LoginType> loginType = default;
-            Optional<string> defaultDatabase = default;
-            Optional<bool> isEnabled = default;
-            Optional<MigrationEligibilityInfo> migrationEligibility = default;
-            Optional<string> id = default;
+            string name = default;
+            LoginType? loginType = default;
+            string defaultDatabase = default;
+            bool? isEnabled = default;
+            MigrationEligibilityInfo migrationEligibility = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,7 +160,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceSqlServerTaskOutputLoginLevel(id.Value, resultType, serializedAdditionalRawData, name.Value, Optional.ToNullable(loginType), defaultDatabase.Value, Optional.ToNullable(isEnabled), migrationEligibility.Value);
+            return new ConnectToSourceSqlServerTaskOutputLoginLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                name,
+                loginType,
+                defaultDatabase,
+                isEnabled,
+                migrationEligibility);
         }
 
         BinaryData IPersistableModel<ConnectToSourceSqlServerTaskOutputLoginLevel>.Write(ModelReaderWriterOptions options)

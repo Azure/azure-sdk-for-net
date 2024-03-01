@@ -161,23 +161,23 @@ namespace Azure.ResourceManager.Synapse
                 return null;
             }
             SynapseDataSourceSku sku = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KustoPoolState> state = default;
-            Optional<ResourceProvisioningState> provisioningState = default;
-            Optional<Uri> uri = default;
-            Optional<Uri> dataIngestionUri = default;
-            Optional<string> stateReason = default;
-            Optional<SynapseOptimizedAutoscale> optimizedAutoscale = default;
-            Optional<bool> enableStreamingIngest = default;
-            Optional<bool> enablePurge = default;
-            Optional<SynapseLanguageExtensionsList> languageExtensions = default;
-            Optional<Guid> workspaceUID = default;
+            SystemData systemData = default;
+            KustoPoolState? state = default;
+            ResourceProvisioningState? provisioningState = default;
+            Uri uri = default;
+            Uri dataIngestionUri = default;
+            string stateReason = default;
+            SynapseOptimizedAutoscale optimizedAutoscale = default;
+            bool? enableStreamingIngest = default;
+            bool? enablePurge = default;
+            SynapseLanguageExtensionsList languageExtensions = default;
+            Guid? workspaceUID = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -343,7 +343,26 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseKustoPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(etag), Optional.ToNullable(state), Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, optimizedAutoscale.Value, Optional.ToNullable(enableStreamingIngest), Optional.ToNullable(enablePurge), languageExtensions.Value, Optional.ToNullable(workspaceUID), serializedAdditionalRawData);
+            return new SynapseKustoPoolData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                etag,
+                state,
+                provisioningState,
+                uri,
+                dataIngestionUri,
+                stateReason,
+                optimizedAutoscale,
+                enableStreamingIngest,
+                enablePurge,
+                languageExtensions,
+                workspaceUID,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseKustoPoolData>.Write(ModelReaderWriterOptions options)

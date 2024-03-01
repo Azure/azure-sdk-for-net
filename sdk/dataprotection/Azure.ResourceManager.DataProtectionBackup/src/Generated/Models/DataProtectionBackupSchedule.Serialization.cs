@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             IList<string> repeatingTimeIntervals = default;
-            Optional<string> timeZone = default;
+            string timeZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupSchedule(repeatingTimeIntervals, timeZone.Value, serializedAdditionalRawData);
+            return new DataProtectionBackupSchedule(repeatingTimeIntervals, timeZone, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupSchedule>.Write(ModelReaderWriterOptions options)

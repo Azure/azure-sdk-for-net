@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.PostgreSql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> virtualNetworkSubnetId = default;
-            Optional<bool> ignoreMissingVnetServiceEndpoint = default;
-            Optional<PostgreSqlVirtualNetworkRuleState> state = default;
+            SystemData systemData = default;
+            ResourceIdentifier virtualNetworkSubnetId = default;
+            bool? ignoreMissingVnetServiceEndpoint = default;
+            PostgreSqlVirtualNetworkRuleState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,7 +184,15 @@ namespace Azure.ResourceManager.PostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlVirtualNetworkRuleData(id, name, type, systemData.Value, virtualNetworkSubnetId.Value, Optional.ToNullable(ignoreMissingVnetServiceEndpoint), Optional.ToNullable(state), serializedAdditionalRawData);
+            return new PostgreSqlVirtualNetworkRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                virtualNetworkSubnetId,
+                ignoreMissingVnetServiceEndpoint,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlVirtualNetworkRuleData>.Write(ModelReaderWriterOptions options)

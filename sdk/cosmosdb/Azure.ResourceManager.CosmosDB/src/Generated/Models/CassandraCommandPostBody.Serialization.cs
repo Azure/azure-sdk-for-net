@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string command = default;
-            Optional<IDictionary<string, string>> arguments = default;
+            IDictionary<string, string> arguments = default;
             string host = default;
-            Optional<bool> cassandraStopStart = default;
-            Optional<bool> readwrite = default;
+            bool? cassandraStopStart = default;
+            bool? readwrite = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraCommandPostBody(command, Optional.ToDictionary(arguments), host, Optional.ToNullable(cassandraStopStart), Optional.ToNullable(readwrite), serializedAdditionalRawData);
+            return new CassandraCommandPostBody(
+                command,
+                arguments ?? new ChangeTrackingDictionary<string, string>(),
+                host,
+                cassandraStopStart,
+                readwrite,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraCommandPostBody>.Write(ModelReaderWriterOptions options)

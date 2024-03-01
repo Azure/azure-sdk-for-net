@@ -123,16 +123,16 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Optional<MobileNetworkManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            MobileNetworkManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
-            Optional<KeyVaultKey> encryptionKey = default;
-            Optional<WritableSubResource> mobileNetwork = default;
+            SystemData systemData = default;
+            MobileNetworkProvisioningState? provisioningState = default;
+            KeyVaultKey encryptionKey = default;
+            WritableSubResource mobileNetwork = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -234,7 +234,18 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkSimGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), encryptionKey.Value, mobileNetwork, serializedAdditionalRawData);
+            return new MobileNetworkSimGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState,
+                encryptionKey,
+                mobileNetwork,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkSimGroupData>.Write(ModelReaderWriterOptions options)

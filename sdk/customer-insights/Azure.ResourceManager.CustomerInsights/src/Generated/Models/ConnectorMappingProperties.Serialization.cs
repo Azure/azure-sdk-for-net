@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> folderPath = default;
-            Optional<string> fileFilter = default;
-            Optional<bool> hasHeader = default;
+            string folderPath = default;
+            string fileFilter = default;
+            bool? hasHeader = default;
             ConnectorMappingErrorManagement errorManagement = default;
             ConnectorMappingFormat format = default;
             ConnectorMappingAvailability availability = default;
@@ -161,7 +161,16 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectorMappingProperties(folderPath.Value, fileFilter.Value, Optional.ToNullable(hasHeader), errorManagement, format, availability, structure, completeOperation, serializedAdditionalRawData);
+            return new ConnectorMappingProperties(
+                folderPath,
+                fileFilter,
+                hasHeader,
+                errorManagement,
+                format,
+                availability,
+                structure,
+                completeOperation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectorMappingProperties>.Write(ModelReaderWriterOptions options)

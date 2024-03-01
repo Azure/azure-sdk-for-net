@@ -225,12 +225,12 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
             IList<VpnGatewayTunnelingProtocol> vpnProtocols = default;
             IList<VpnAuthenticationType> vpnAuthenticationTypes = default;
             IList<VpnServerConfigVpnClientRootCertificate> vpnClientRootCertificates = default;
@@ -238,11 +238,11 @@ namespace Azure.ResourceManager.Network
             IList<VpnServerConfigRadiusServerRootCertificate> radiusServerRootCertificates = default;
             IList<VpnServerConfigRadiusClientRootCertificate> radiusClientRootCertificates = default;
             IList<IPsecPolicy> vpnClientIPsecPolicies = default;
-            Optional<string> radiusServerAddress = default;
-            Optional<string> radiusServerSecret = default;
+            string radiusServerAddress = default;
+            string radiusServerSecret = default;
             IList<RadiusServer> radiusServers = default;
-            Optional<AadAuthenticationParameters> aadAuthenticationParameters = default;
-            Optional<string> provisioningState = default;
+            AadAuthenticationParameters aadAuthenticationParameters = default;
+            string provisioningState = default;
             IReadOnlyList<P2SVpnGatewayData> p2sVpnGateways = default;
             IList<VpnServerConfigurationPolicyGroupData> configurationPolicyGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -486,7 +486,28 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnServerConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), vpnProtocols ?? new ChangeTrackingList<VpnGatewayTunnelingProtocol>(), vpnAuthenticationTypes ?? new ChangeTrackingList<VpnAuthenticationType>(), vpnClientRootCertificates ?? new ChangeTrackingList<VpnServerConfigVpnClientRootCertificate>(), vpnClientRevokedCertificates ?? new ChangeTrackingList<VpnServerConfigVpnClientRevokedCertificate>(), radiusServerRootCertificates ?? new ChangeTrackingList<VpnServerConfigRadiusServerRootCertificate>(), radiusClientRootCertificates ?? new ChangeTrackingList<VpnServerConfigRadiusClientRootCertificate>(), vpnClientIPsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(), radiusServerAddress.Value, radiusServerSecret.Value, radiusServers ?? new ChangeTrackingList<RadiusServer>(), aadAuthenticationParameters.Value, provisioningState.Value, p2sVpnGateways ?? new ChangeTrackingList<P2SVpnGatewayData>(), configurationPolicyGroups ?? new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>());
+            return new VpnServerConfigurationData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                vpnProtocols ?? new ChangeTrackingList<VpnGatewayTunnelingProtocol>(),
+                vpnAuthenticationTypes ?? new ChangeTrackingList<VpnAuthenticationType>(),
+                vpnClientRootCertificates ?? new ChangeTrackingList<VpnServerConfigVpnClientRootCertificate>(),
+                vpnClientRevokedCertificates ?? new ChangeTrackingList<VpnServerConfigVpnClientRevokedCertificate>(),
+                radiusServerRootCertificates ?? new ChangeTrackingList<VpnServerConfigRadiusServerRootCertificate>(),
+                radiusClientRootCertificates ?? new ChangeTrackingList<VpnServerConfigRadiusClientRootCertificate>(),
+                vpnClientIPsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
+                radiusServerAddress,
+                radiusServerSecret,
+                radiusServers ?? new ChangeTrackingList<RadiusServer>(),
+                aadAuthenticationParameters,
+                provisioningState,
+                p2sVpnGateways ?? new ChangeTrackingList<P2SVpnGatewayData>(),
+                configurationPolicyGroups ?? new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>());
         }
 
         BinaryData IPersistableModel<VpnServerConfigurationData>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<AggregatedReplicationState> aggregatedState = default;
+            AggregatedReplicationState? aggregatedState = default;
             IReadOnlyList<RegionalReplicationStatus> summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationStatus(Optional.ToNullable(aggregatedState), summary ?? new ChangeTrackingList<RegionalReplicationStatus>(), serializedAdditionalRawData);
+            return new ReplicationStatus(aggregatedState, summary ?? new ChangeTrackingList<RegionalReplicationStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationStatus>.Write(ModelReaderWriterOptions options)

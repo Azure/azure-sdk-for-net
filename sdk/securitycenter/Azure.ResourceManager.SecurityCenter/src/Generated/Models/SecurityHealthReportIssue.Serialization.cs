@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             string issueKey = default;
-            Optional<string> issueName = default;
+            string issueName = default;
             IList<string> securityValues = default;
-            Optional<string> issueDescription = default;
-            Optional<string> remediationSteps = default;
-            Optional<string> remediationScript = default;
-            Optional<IDictionary<string, string>> issueAdditionalData = default;
+            string issueDescription = default;
+            string remediationSteps = default;
+            string remediationScript = default;
+            IDictionary<string, string> issueAdditionalData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityHealthReportIssue(issueKey, issueName.Value, securityValues ?? new ChangeTrackingList<string>(), issueDescription.Value, remediationSteps.Value, remediationScript.Value, Optional.ToDictionary(issueAdditionalData), serializedAdditionalRawData);
+            return new SecurityHealthReportIssue(
+                issueKey,
+                issueName,
+                securityValues ?? new ChangeTrackingList<string>(),
+                issueDescription,
+                remediationSteps,
+                remediationScript,
+                issueAdditionalData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityHealthReportIssue>.Write(ModelReaderWriterOptions options)

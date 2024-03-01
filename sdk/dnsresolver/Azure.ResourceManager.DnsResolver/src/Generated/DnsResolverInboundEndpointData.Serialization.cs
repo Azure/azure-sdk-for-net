@@ -125,16 +125,16 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<InboundEndpointIPConfiguration> ipConfigurations = default;
-            Optional<DnsResolverProvisioningState> provisioningState = default;
-            Optional<Guid> resourceGuid = default;
+            DnsResolverProvisioningState? provisioningState = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -237,7 +237,18 @@ namespace Azure.ResourceManager.DnsResolver
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsResolverInboundEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), ipConfigurations, Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), serializedAdditionalRawData);
+            return new DnsResolverInboundEndpointData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                ipConfigurations,
+                provisioningState,
+                resourceGuid,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsResolverInboundEndpointData>.Write(ModelReaderWriterOptions options)

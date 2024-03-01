@@ -168,7 +168,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorTimeSeriesBaseline(aggregation, dimensions ?? new ChangeTrackingList<MonitorMetricSingleDimension>(), timestamps, data, metadataValues ?? new ChangeTrackingList<MonitorBaselineMetadata>(), serializedAdditionalRawData);
+            return new MonitorTimeSeriesBaseline(
+                aggregation,
+                dimensions ?? new ChangeTrackingList<MonitorMetricSingleDimension>(),
+                timestamps,
+                data,
+                metadataValues ?? new ChangeTrackingList<MonitorBaselineMetadata>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorTimeSeriesBaseline>.Write(ModelReaderWriterOptions options)

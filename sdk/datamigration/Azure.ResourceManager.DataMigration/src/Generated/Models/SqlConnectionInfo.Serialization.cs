@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string dataSource = default;
-            Optional<string> serverName = default;
-            Optional<int> port = default;
-            Optional<string> serverVersion = default;
-            Optional<string> serverBrandVersion = default;
-            Optional<string> resourceId = default;
-            Optional<AuthenticationType> authentication = default;
-            Optional<bool> encryptConnection = default;
-            Optional<string> additionalSettings = default;
-            Optional<bool> trustServerCertificate = default;
-            Optional<SqlSourcePlatform> platform = default;
+            string serverName = default;
+            int? port = default;
+            string serverVersion = default;
+            string serverBrandVersion = default;
+            string resourceId = default;
+            AuthenticationType? authentication = default;
+            bool? encryptConnection = default;
+            string additionalSettings = default;
+            bool? trustServerCertificate = default;
+            SqlSourcePlatform? platform = default;
             string type = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            string userName = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -242,7 +242,22 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData, dataSource, serverName.Value, Optional.ToNullable(port), serverVersion.Value, serverBrandVersion.Value, resourceId.Value, Optional.ToNullable(authentication), Optional.ToNullable(encryptConnection), additionalSettings.Value, Optional.ToNullable(trustServerCertificate), Optional.ToNullable(platform));
+            return new SqlConnectionInfo(
+                type,
+                userName,
+                password,
+                serializedAdditionalRawData,
+                dataSource,
+                serverName,
+                port,
+                serverVersion,
+                serverBrandVersion,
+                resourceId,
+                authentication,
+                encryptConnection,
+                additionalSettings,
+                trustServerCertificate,
+                platform);
         }
 
         BinaryData IPersistableModel<SqlConnectionInfo>.Write(ModelReaderWriterOptions options)

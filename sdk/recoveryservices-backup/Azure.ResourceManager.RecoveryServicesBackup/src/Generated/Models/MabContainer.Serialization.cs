@@ -131,19 +131,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<bool> canReRegister = default;
-            Optional<long> containerId = default;
-            Optional<long> protectedItemCount = default;
-            Optional<string> agentVersion = default;
-            Optional<MabContainerExtendedInfo> extendedInfo = default;
+            bool? canReRegister = default;
+            long? containerId = default;
+            long? protectedItemCount = default;
+            string agentVersion = default;
+            MabContainerExtendedInfo extendedInfo = default;
             IList<MabContainerHealthDetails> mabContainerHealthDetails = default;
-            Optional<string> containerHealthState = default;
-            Optional<string> friendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> registrationStatus = default;
-            Optional<string> healthStatus = default;
+            string containerHealthState = default;
+            string friendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string registrationStatus = default;
+            string healthStatus = default;
             ProtectableContainerType containerType = default;
-            Optional<string> protectableObjectType = default;
+            string protectableObjectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -248,7 +248,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MabContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, serializedAdditionalRawData, Optional.ToNullable(canReRegister), Optional.ToNullable(containerId), Optional.ToNullable(protectedItemCount), agentVersion.Value, extendedInfo.Value, mabContainerHealthDetails ?? new ChangeTrackingList<MabContainerHealthDetails>(), containerHealthState.Value);
+            return new MabContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                containerType,
+                protectableObjectType,
+                serializedAdditionalRawData,
+                canReRegister,
+                containerId,
+                protectedItemCount,
+                agentVersion,
+                extendedInfo,
+                mabContainerHealthDetails ?? new ChangeTrackingList<MabContainerHealthDetails>(),
+                containerHealthState);
         }
 
         BinaryData IPersistableModel<MabContainer>.Write(ModelReaderWriterOptions options)

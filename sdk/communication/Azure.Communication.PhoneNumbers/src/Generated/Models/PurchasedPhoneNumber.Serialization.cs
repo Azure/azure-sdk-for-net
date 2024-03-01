@@ -70,7 +70,15 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost);
+            return new PurchasedPhoneNumber(
+                id,
+                phoneNumber,
+                countryCode,
+                phoneNumberType,
+                capabilities,
+                assignmentType,
+                purchaseDate,
+                cost);
         }
     }
 }

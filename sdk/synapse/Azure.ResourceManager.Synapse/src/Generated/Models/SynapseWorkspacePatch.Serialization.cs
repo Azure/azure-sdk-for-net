@@ -120,15 +120,15 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> sqlAdministratorLoginPassword = default;
-            Optional<SynapseManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
-            Optional<SynapseWorkspaceRepositoryConfiguration> workspaceRepositoryConfiguration = default;
-            Optional<PurviewConfiguration> purviewConfiguration = default;
-            Optional<string> provisioningState = default;
-            Optional<SynapseEncryptionDetails> encryption = default;
-            Optional<WorkspacePublicNetworkAccess> publicNetworkAccess = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            string sqlAdministratorLoginPassword = default;
+            SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings = default;
+            SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = default;
+            PurviewConfiguration purviewConfiguration = default;
+            string provisioningState = default;
+            SynapseEncryptionDetails encryption = default;
+            WorkspacePublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,7 +230,17 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkspacePatch(Optional.ToDictionary(tags), identity, sqlAdministratorLoginPassword.Value, managedVirtualNetworkSettings.Value, workspaceRepositoryConfiguration.Value, purviewConfiguration.Value, provisioningState.Value, encryption.Value, Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new SynapseWorkspacePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                sqlAdministratorLoginPassword,
+                managedVirtualNetworkSettings,
+                workspaceRepositoryConfiguration,
+                purviewConfiguration,
+                provisioningState,
+                encryption,
+                publicNetworkAccess,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseWorkspacePatch>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 return null;
             }
             IReadOnlyList<ConfluentAgreement> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentAgreementListResult(value ?? new ChangeTrackingList<ConfluentAgreement>(), nextLink.Value, serializedAdditionalRawData);
+            return new ConfluentAgreementListResult(value ?? new ChangeTrackingList<ConfluentAgreement>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentAgreementListResult>.Write(ModelReaderWriterOptions options)

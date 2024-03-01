@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<ServiceAlertModificationEvent> modificationEvent = default;
-            Optional<string> oldValue = default;
-            Optional<string> newValue = default;
-            Optional<string> modifiedAt = default;
-            Optional<string> modifiedBy = default;
-            Optional<string> comments = default;
-            Optional<string> description = default;
+            ServiceAlertModificationEvent? modificationEvent = default;
+            string oldValue = default;
+            string newValue = default;
+            string modifiedAt = default;
+            string modifiedBy = default;
+            string comments = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAlertModificationItemInfo(Optional.ToNullable(modificationEvent), oldValue.Value, newValue.Value, modifiedAt.Value, modifiedBy.Value, comments.Value, description.Value, serializedAdditionalRawData);
+            return new ServiceAlertModificationItemInfo(
+                modificationEvent,
+                oldValue,
+                newValue,
+                modifiedAt,
+                modifiedBy,
+                comments,
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertModificationItemInfo>.Write(ModelReaderWriterOptions options)

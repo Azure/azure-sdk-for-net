@@ -162,21 +162,21 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<TriggeredJobRun> latestRun = default;
-            Optional<Uri> historyUrl = default;
-            Optional<Uri> schedulerLogsUrl = default;
-            Optional<string> runCommand = default;
-            Optional<Uri> url = default;
-            Optional<Uri> extraInfoUrl = default;
-            Optional<WebJobType> webJobType = default;
-            Optional<string> error = default;
-            Optional<bool> usingSdk = default;
-            Optional<IDictionary<string, BinaryData>> settings = default;
+            SystemData systemData = default;
+            TriggeredJobRun latestRun = default;
+            Uri historyUrl = default;
+            Uri schedulerLogsUrl = default;
+            string runCommand = default;
+            Uri url = default;
+            Uri extraInfoUrl = default;
+            WebJobType? webJobType = default;
+            string error = default;
+            bool? usingSdk = default;
+            IDictionary<string, BinaryData> settings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -322,7 +322,23 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TriggeredWebJobData(id, name, type, systemData.Value, latestRun.Value, historyUrl.Value, schedulerLogsUrl.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), Optional.ToDictionary(settings), kind.Value, serializedAdditionalRawData);
+            return new TriggeredWebJobData(
+                id,
+                name,
+                type,
+                systemData,
+                latestRun,
+                historyUrl,
+                schedulerLogsUrl,
+                runCommand,
+                url,
+                extraInfoUrl,
+                webJobType,
+                error,
+                usingSdk,
+                settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TriggeredWebJobData>.Write(ModelReaderWriterOptions options)

@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             IList<SubProtectionPolicy> subProtectionPolicy = default;
-            Optional<string> timeZone = default;
-            Optional<string> fabricName = default;
-            Optional<int> protectedItemsCount = default;
+            string timeZone = default;
+            string fabricName = default;
+            int? protectedItemsCount = default;
             string backupManagementType = default;
             IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenericProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, subProtectionPolicy ?? new ChangeTrackingList<SubProtectionPolicy>(), timeZone.Value, fabricName.Value);
+            return new GenericProtectionPolicy(
+                protectedItemsCount,
+                backupManagementType,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                subProtectionPolicy ?? new ChangeTrackingList<SubProtectionPolicy>(),
+                timeZone,
+                fabricName);
         }
 
         BinaryData IPersistableModel<GenericProtectionPolicy>.Write(ModelReaderWriterOptions options)

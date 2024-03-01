@@ -203,28 +203,28 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> clusterVersion = default;
-            Optional<string> clusterHdpVersion = default;
-            Optional<HDInsightOSType> osType = default;
-            Optional<HDInsightTier> tier = default;
-            Optional<string> clusterId = default;
+            string clusterVersion = default;
+            string clusterHdpVersion = default;
+            HDInsightOSType? osType = default;
+            HDInsightTier? tier = default;
+            string clusterId = default;
             HDInsightClusterDefinition clusterDefinition = default;
-            Optional<KafkaRestProperties> kafkaRestProperties = default;
-            Optional<HDInsightSecurityProfile> securityProfile = default;
-            Optional<ComputeProfile> computeProfile = default;
-            Optional<HDInsightClusterProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> clusterState = default;
-            Optional<QuotaInfo> quotaInfo = default;
+            KafkaRestProperties kafkaRestProperties = default;
+            HDInsightSecurityProfile securityProfile = default;
+            ComputeProfile computeProfile = default;
+            HDInsightClusterProvisioningState? provisioningState = default;
+            DateTimeOffset? createdDate = default;
+            string clusterState = default;
+            QuotaInfo quotaInfo = default;
             IList<ResponseError> errors = default;
             IList<ConnectivityEndpoint> connectivityEndpoints = default;
-            Optional<HDInsightDiskEncryptionProperties> diskEncryptionProperties = default;
-            Optional<EncryptionInTransitProperties> encryptionInTransitProperties = default;
-            Optional<StorageProfile> storageProfile = default;
-            Optional<string> minSupportedTlsVersion = default;
-            Optional<ExcludedServicesConfig> excludedServicesConfig = default;
-            Optional<HDInsightClusterNetworkProperties> networkProperties = default;
-            Optional<HDInsightComputeIsolationProperties> computeIsolationProperties = default;
+            HDInsightDiskEncryptionProperties diskEncryptionProperties = default;
+            EncryptionInTransitProperties encryptionInTransitProperties = default;
+            StorageProfile storageProfile = default;
+            string minSupportedTlsVersion = default;
+            ExcludedServicesConfig excludedServicesConfig = default;
+            HDInsightClusterNetworkProperties networkProperties = default;
+            HDInsightComputeIsolationProperties computeIsolationProperties = default;
             IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default;
             IReadOnlyList<HDInsightPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -449,7 +449,32 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterProperties(clusterVersion.Value, clusterHdpVersion.Value, Optional.ToNullable(osType), Optional.ToNullable(tier), clusterId.Value, clusterDefinition, kafkaRestProperties.Value, securityProfile.Value, computeProfile.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(createdDate), clusterState.Value, quotaInfo.Value, errors ?? new ChangeTrackingList<ResponseError>(), connectivityEndpoints ?? new ChangeTrackingList<ConnectivityEndpoint>(), diskEncryptionProperties.Value, encryptionInTransitProperties.Value, storageProfile.Value, minSupportedTlsVersion.Value, excludedServicesConfig.Value, networkProperties.Value, computeIsolationProperties.Value, privateLinkConfigurations ?? new ChangeTrackingList<HDInsightPrivateLinkConfiguration>(), privateEndpointConnections ?? new ChangeTrackingList<HDInsightPrivateEndpointConnectionData>(), serializedAdditionalRawData);
+            return new HDInsightClusterProperties(
+                clusterVersion,
+                clusterHdpVersion,
+                osType,
+                tier,
+                clusterId,
+                clusterDefinition,
+                kafkaRestProperties,
+                securityProfile,
+                computeProfile,
+                provisioningState,
+                createdDate,
+                clusterState,
+                quotaInfo,
+                errors ?? new ChangeTrackingList<ResponseError>(),
+                connectivityEndpoints ?? new ChangeTrackingList<ConnectivityEndpoint>(),
+                diskEncryptionProperties,
+                encryptionInTransitProperties,
+                storageProfile,
+                minSupportedTlsVersion,
+                excludedServicesConfig,
+                networkProperties,
+                computeIsolationProperties,
+                privateLinkConfigurations ?? new ChangeTrackingList<HDInsightPrivateLinkConfiguration>(),
+                privateEndpointConnections ?? new ChangeTrackingList<HDInsightPrivateEndpointConnectionData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterProperties>.Write(ModelReaderWriterOptions options)

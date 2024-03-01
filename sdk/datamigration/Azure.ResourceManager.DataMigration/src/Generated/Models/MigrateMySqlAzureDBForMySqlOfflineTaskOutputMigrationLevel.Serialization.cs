@@ -151,22 +151,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<long> durationInSeconds = default;
-            Optional<MigrationStatus> status = default;
-            Optional<string> statusMessage = default;
-            Optional<string> message = default;
-            Optional<string> databases = default;
-            Optional<string> databaseSummary = default;
-            Optional<MigrationReportResult> migrationReportResult = default;
-            Optional<string> sourceServerVersion = default;
-            Optional<string> sourceServerBrandVersion = default;
-            Optional<string> targetServerVersion = default;
-            Optional<string> targetServerBrandVersion = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            long? durationInSeconds = default;
+            MigrationStatus? status = default;
+            string statusMessage = default;
+            string message = default;
+            string databases = default;
+            string databaseSummary = default;
+            MigrationReportResult migrationReportResult = default;
+            string sourceServerVersion = default;
+            string sourceServerBrandVersion = default;
+            string targetServerVersion = default;
+            string targetServerBrandVersion = default;
             IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
-            Optional<DateTimeOffset> lastStorageUpdate = default;
-            Optional<string> id = default;
+            DateTimeOffset? lastStorageUpdate = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -296,7 +296,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(id.Value, resultType, serializedAdditionalRawData, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(durationInSeconds), Optional.ToNullable(status), statusMessage.Value, message.Value, databases.Value, databaseSummary.Value, migrationReportResult.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerVersion.Value, targetServerBrandVersion.Value, exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>(), Optional.ToNullable(lastStorageUpdate));
+            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                startedOn,
+                endedOn,
+                durationInSeconds,
+                status,
+                statusMessage,
+                message,
+                databases,
+                databaseSummary,
+                migrationReportResult,
+                sourceServerVersion,
+                sourceServerBrandVersion,
+                targetServerVersion,
+                targetServerBrandVersion,
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>(),
+                lastStorageUpdate);
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel>.Write(ModelReaderWriterOptions options)

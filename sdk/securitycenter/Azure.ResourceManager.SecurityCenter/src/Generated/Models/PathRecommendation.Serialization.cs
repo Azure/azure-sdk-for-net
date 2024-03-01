@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<RecommendationAction> action = default;
-            Optional<IotSecurityRecommendationType> type = default;
-            Optional<SecurityCenterPublisherInfo> publisherInfo = default;
-            Optional<bool> common = default;
+            string path = default;
+            RecommendationAction? action = default;
+            IotSecurityRecommendationType? type = default;
+            SecurityCenterPublisherInfo publisherInfo = default;
+            bool? common = default;
             IList<string> userSids = default;
             IList<UserRecommendation> usernames = default;
-            Optional<PathRecommendationFileType> fileType = default;
-            Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
+            PathRecommendationFileType? fileType = default;
+            SecurityCenterConfigurationStatus? configurationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +225,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PathRecommendation(path.Value, Optional.ToNullable(action), Optional.ToNullable(type), publisherInfo.Value, Optional.ToNullable(common), userSids ?? new ChangeTrackingList<string>(), usernames ?? new ChangeTrackingList<UserRecommendation>(), Optional.ToNullable(fileType), Optional.ToNullable(configurationStatus), serializedAdditionalRawData);
+            return new PathRecommendation(
+                path,
+                action,
+                type,
+                publisherInfo,
+                common,
+                userSids ?? new ChangeTrackingList<string>(),
+                usernames ?? new ChangeTrackingList<UserRecommendation>(),
+                fileType,
+                configurationStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PathRecommendation>.Write(ModelReaderWriterOptions options)

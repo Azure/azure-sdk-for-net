@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             string name = default;
             IotHubRoutingSource source = default;
-            Optional<string> condition = default;
+            string condition = default;
             IList<string> endpointNames = default;
             bool isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -127,7 +127,13 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingRuleProperties(name, source, condition.Value, endpointNames, isEnabled, serializedAdditionalRawData);
+            return new RoutingRuleProperties(
+                name,
+                source,
+                condition,
+                endpointNames,
+                isEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingRuleProperties>.Write(ModelReaderWriterOptions options)

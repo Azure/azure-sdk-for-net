@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             ContainerServiceMaintenanceSchedule schedule = default;
             int durationHours = default;
-            Optional<string> utcOffset = default;
-            Optional<string> startDate = default;
+            string utcOffset = default;
+            string startDate = default;
             string startTime = default;
             IList<ContainerServiceDateSpan> notAllowedDates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -145,7 +145,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceMaintenanceWindow(schedule, durationHours, utcOffset.Value, startDate.Value, startTime, notAllowedDates ?? new ChangeTrackingList<ContainerServiceDateSpan>(), serializedAdditionalRawData);
+            return new ContainerServiceMaintenanceWindow(
+                schedule,
+                durationHours,
+                utcOffset,
+                startDate,
+                startTime,
+                notAllowedDates ?? new ChangeTrackingList<ContainerServiceDateSpan>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceMaintenanceWindow>.Write(ModelReaderWriterOptions options)

@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Workloads
             {
                 return null;
             }
-            Optional<UserAssignedServiceIdentity> identity = default;
+            UserAssignedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WorkloadMonitorProvisioningState> provisioningState = default;
-            Optional<ResponseError> errors = default;
-            Optional<ProviderSpecificProperties> providerSettings = default;
+            SystemData systemData = default;
+            WorkloadMonitorProvisioningState? provisioningState = default;
+            ResponseError errors = default;
+            ProviderSpecificProperties providerSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +200,16 @@ namespace Azure.ResourceManager.Workloads
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapProviderInstanceData(id, name, type, systemData.Value, identity.Value, Optional.ToNullable(provisioningState), errors.Value, providerSettings.Value, serializedAdditionalRawData);
+            return new SapProviderInstanceData(
+                id,
+                name,
+                type,
+                systemData,
+                identity,
+                provisioningState,
+                errors,
+                providerSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapProviderInstanceData>.Write(ModelReaderWriterOptions options)

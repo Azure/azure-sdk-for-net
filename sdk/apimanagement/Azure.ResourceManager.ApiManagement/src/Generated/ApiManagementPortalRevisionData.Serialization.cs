@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> statusDetails = default;
-            Optional<PortalRevisionStatus> status = default;
-            Optional<bool> isCurrent = default;
-            Optional<DateTimeOffset> createdDateTime = default;
-            Optional<DateTimeOffset> updatedDateTime = default;
+            SystemData systemData = default;
+            string description = default;
+            string statusDetails = default;
+            PortalRevisionStatus? status = default;
+            bool? isCurrent = default;
+            DateTimeOffset? createdDateTime = default;
+            DateTimeOffset? updatedDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementPortalRevisionData(id, name, type, systemData.Value, description.Value, statusDetails.Value, Optional.ToNullable(status), Optional.ToNullable(isCurrent), Optional.ToNullable(createdDateTime), Optional.ToNullable(updatedDateTime), serializedAdditionalRawData);
+            return new ApiManagementPortalRevisionData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                statusDetails,
+                status,
+                isCurrent,
+                createdDateTime,
+                updatedDateTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementPortalRevisionData>.Write(ModelReaderWriterOptions options)

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,12 +17,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> documentId = default;
-            Optional<long> index = default;
-            Optional<string> endReason = default;
-            Optional<string> metadataLocation = default;
-            Optional<string> contentLocation = default;
-            Optional<string> deleteLocation = default;
+            string documentId = default;
+            long? index = default;
+            string endReason = default;
+            string metadataLocation = default;
+            string contentLocation = default;
+            string deleteLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documentId"u8))
@@ -61,7 +60,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRecordingChunkInfoProperties(documentId.Value, Optional.ToNullable(index), endReason.Value, metadataLocation.Value, contentLocation.Value, deleteLocation.Value);
+            return new AcsRecordingChunkInfoProperties(
+                documentId,
+                index,
+                endReason,
+                metadataLocation,
+                contentLocation,
+                deleteLocation);
         }
     }
 }

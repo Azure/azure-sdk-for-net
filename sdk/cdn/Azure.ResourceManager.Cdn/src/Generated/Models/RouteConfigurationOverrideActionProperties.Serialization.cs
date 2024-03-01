@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             RouteConfigurationOverrideActionType typeName = default;
-            Optional<OriginGroupOverride> originGroupOverride = default;
-            Optional<CacheConfiguration> cacheConfiguration = default;
+            OriginGroupOverride originGroupOverride = default;
+            CacheConfiguration cacheConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteConfigurationOverrideActionProperties(typeName, originGroupOverride.Value, cacheConfiguration.Value, serializedAdditionalRawData);
+            return new RouteConfigurationOverrideActionProperties(typeName, originGroupOverride, cacheConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteConfigurationOverrideActionProperties>.Write(ModelReaderWriterOptions options)

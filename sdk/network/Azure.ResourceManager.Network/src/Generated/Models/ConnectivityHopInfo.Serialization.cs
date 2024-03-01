@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> id = default;
-            Optional<string> address = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            string type = default;
+            string id = default;
+            string address = default;
+            ResourceIdentifier resourceId = default;
             IReadOnlyList<string> nextHopIds = default;
             IReadOnlyList<string> previousHopIds = default;
             IReadOnlyList<HopLink> links = default;
@@ -247,7 +247,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityHopInfo(type.Value, id.Value, address.Value, resourceId.Value, nextHopIds ?? new ChangeTrackingList<string>(), previousHopIds ?? new ChangeTrackingList<string>(), links ?? new ChangeTrackingList<HopLink>(), previousLinks ?? new ChangeTrackingList<HopLink>(), issues ?? new ChangeTrackingList<ConnectivityIssueInfo>(), serializedAdditionalRawData);
+            return new ConnectivityHopInfo(
+                type,
+                id,
+                address,
+                resourceId,
+                nextHopIds ?? new ChangeTrackingList<string>(),
+                previousHopIds ?? new ChangeTrackingList<string>(),
+                links ?? new ChangeTrackingList<HopLink>(),
+                previousLinks ?? new ChangeTrackingList<HopLink>(),
+                issues ?? new ChangeTrackingList<ConnectivityIssueInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityHopInfo>.Write(ModelReaderWriterOptions options)

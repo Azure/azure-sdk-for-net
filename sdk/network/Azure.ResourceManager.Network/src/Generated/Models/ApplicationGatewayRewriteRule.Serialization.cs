@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> ruleSequence = default;
+            string name = default;
+            int? ruleSequence = default;
             IList<ApplicationGatewayRewriteRuleCondition> conditions = default;
-            Optional<ApplicationGatewayRewriteRuleActionSet> actionSet = default;
+            ApplicationGatewayRewriteRuleActionSet actionSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayRewriteRule(name.Value, Optional.ToNullable(ruleSequence), conditions ?? new ChangeTrackingList<ApplicationGatewayRewriteRuleCondition>(), actionSet.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayRewriteRule(name, ruleSequence, conditions ?? new ChangeTrackingList<ApplicationGatewayRewriteRuleCondition>(), actionSet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayRewriteRule>.Write(ModelReaderWriterOptions options)

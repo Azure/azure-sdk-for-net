@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<Uri> blob = default;
-            Optional<Uri> queue = default;
-            Optional<Uri> table = default;
-            Optional<Uri> file = default;
-            Optional<Uri> web = default;
-            Optional<Uri> dfs = default;
-            Optional<StorageAccountMicrosoftEndpoints> microsoftEndpoints = default;
-            Optional<StorageAccountInternetEndpoints> internetEndpoints = default;
+            Uri blob = default;
+            Uri queue = default;
+            Uri table = default;
+            Uri file = default;
+            Uri web = default;
+            Uri dfs = default;
+            StorageAccountMicrosoftEndpoints microsoftEndpoints = default;
+            StorageAccountInternetEndpoints internetEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountEndpoints(blob.Value, queue.Value, table.Value, file.Value, web.Value, dfs.Value, microsoftEndpoints.Value, internetEndpoints.Value, serializedAdditionalRawData);
+            return new StorageAccountEndpoints(
+                blob,
+                queue,
+                table,
+                file,
+                web,
+                dfs,
+                microsoftEndpoints,
+                internetEndpoints,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountEndpoints>.Write(ModelReaderWriterOptions options)

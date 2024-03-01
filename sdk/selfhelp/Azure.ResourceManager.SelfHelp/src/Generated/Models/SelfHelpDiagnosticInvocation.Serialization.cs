@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> solutionId = default;
-            Optional<IDictionary<string, string>> additionalParameters = default;
+            string solutionId = default;
+            IDictionary<string, string> additionalParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpDiagnosticInvocation(solutionId.Value, Optional.ToDictionary(additionalParameters), serializedAdditionalRawData);
+            return new SelfHelpDiagnosticInvocation(solutionId, additionalParameters ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpDiagnosticInvocation>.Write(ModelReaderWriterOptions options)

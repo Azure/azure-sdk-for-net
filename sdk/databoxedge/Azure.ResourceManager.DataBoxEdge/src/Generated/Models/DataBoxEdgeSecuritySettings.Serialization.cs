@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             AsymmetricEncryptedSecret deviceAdminPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -146,7 +146,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeSecuritySettings(id, name, type, systemData.Value, deviceAdminPassword, serializedAdditionalRawData);
+            return new DataBoxEdgeSecuritySettings(
+                id,
+                name,
+                type,
+                systemData,
+                deviceAdminPassword,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeSecuritySettings>.Write(ModelReaderWriterOptions options)

@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> requestId = default;
-            Optional<string> operationType = default;
-            Optional<ResourceIdentifier> fromBackupResourceId = default;
-            Optional<ResourceIdentifier> toBackupResourceId = default;
-            Optional<SqlBackupStorageRedundancy> targetBackupStorageRedundancy = default;
-            Optional<string> status = default;
-            Optional<string> message = default;
+            SystemData systemData = default;
+            Guid? requestId = default;
+            string operationType = default;
+            ResourceIdentifier fromBackupResourceId = default;
+            ResourceIdentifier toBackupResourceId = default;
+            SqlBackupStorageRedundancy? targetBackupStorageRedundancy = default;
+            string status = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -231,7 +231,19 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LongTermRetentionBackupOperationResult(id, name, type, systemData.Value, Optional.ToNullable(requestId), operationType.Value, fromBackupResourceId.Value, toBackupResourceId.Value, Optional.ToNullable(targetBackupStorageRedundancy), status.Value, message.Value, serializedAdditionalRawData);
+            return new LongTermRetentionBackupOperationResult(
+                id,
+                name,
+                type,
+                systemData,
+                requestId,
+                operationType,
+                fromBackupResourceId,
+                toBackupResourceId,
+                targetBackupStorageRedundancy,
+                status,
+                message,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LongTermRetentionBackupOperationResult>.Write(ModelReaderWriterOptions options)

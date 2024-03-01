@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.Redis.Models
             ResourceIdentifier linkedRedisCacheId = default;
             AzureLocation linkedRedisCacheLocation = default;
             RedisLinkedServerRole serverRole = default;
-            Optional<string> geoReplicatedPrimaryHostName = default;
-            Optional<string> primaryHostName = default;
+            string geoReplicatedPrimaryHostName = default;
+            string primaryHostName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisLinkedServerWithPropertyCreateOrUpdateContent(linkedRedisCacheId, linkedRedisCacheLocation, serverRole, geoReplicatedPrimaryHostName.Value, primaryHostName.Value, serializedAdditionalRawData);
+            return new RedisLinkedServerWithPropertyCreateOrUpdateContent(
+                linkedRedisCacheId,
+                linkedRedisCacheLocation,
+                serverRole,
+                geoReplicatedPrimaryHostName,
+                primaryHostName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisLinkedServerWithPropertyCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

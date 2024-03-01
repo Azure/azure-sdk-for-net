@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<OptInHeaderType> optInHeaders = default;
+            OptInHeaderType? optInHeaders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequestHeaderOptions(Optional.ToNullable(optInHeaders), serializedAdditionalRawData);
+            return new RequestHeaderOptions(optInHeaders, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequestHeaderOptions>.Write(ModelReaderWriterOptions options)

@@ -117,13 +117,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<MongoDBMigrationSettings> input = default;
+            MongoDBMigrationSettings input = default;
             IReadOnlyList<MongoDBProgress> output = default;
             TaskType taskType = default;
             IReadOnlyList<ODataError> errors = default;
-            Optional<TaskState> state = default;
+            TaskState? state = default;
             IReadOnlyList<CommandProperties> commands = default;
-            Optional<IDictionary<string, string>> clientData = default;
+            IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,7 +213,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMongoDBTaskProperties(taskType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), commands ?? new ChangeTrackingList<CommandProperties>(), Optional.ToDictionary(clientData), serializedAdditionalRawData, input.Value, output ?? new ChangeTrackingList<MongoDBProgress>());
+            return new MigrateMongoDBTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                state,
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input,
+                output ?? new ChangeTrackingList<MongoDBProgress>());
         }
 
         BinaryData IPersistableModel<MigrateMongoDBTaskProperties>.Write(ModelReaderWriterOptions options)

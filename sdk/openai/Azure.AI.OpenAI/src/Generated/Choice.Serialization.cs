@@ -94,7 +94,7 @@ namespace Azure.AI.OpenAI
             }
             string text = default;
             int index = default;
-            Optional<ContentFilterResultsForChoice> contentFilterResults = default;
+            ContentFilterResultsForChoice contentFilterResults = default;
             CompletionsLogProbabilityModel logprobs = default;
             CompletionsFinishReason? finishReason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -146,7 +146,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Choice(text, index, contentFilterResults.Value, logprobs, finishReason, serializedAdditionalRawData);
+            return new Choice(
+                text,
+                index,
+                contentFilterResults,
+                logprobs,
+                finishReason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Choice>.Write(ModelReaderWriterOptions options)

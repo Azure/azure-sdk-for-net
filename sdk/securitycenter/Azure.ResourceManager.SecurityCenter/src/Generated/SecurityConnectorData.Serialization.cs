@@ -143,19 +143,19 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string kind = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> hierarchyIdentifier = default;
-            Optional<DateTimeOffset> hierarchyIdentifierTrialEndDate = default;
-            Optional<SecurityCenterCloudName> environmentName = default;
+            SystemData systemData = default;
+            string hierarchyIdentifier = default;
+            DateTimeOffset? hierarchyIdentifierTrialEndDate = default;
+            SecurityCenterCloudName? environmentName = default;
             IList<SecurityCenterCloudOffering> offerings = default;
-            Optional<SecurityConnectorEnvironment> environmentData = default;
+            SecurityConnectorEnvironment environmentData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -281,7 +281,21 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityConnectorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, hierarchyIdentifier.Value, Optional.ToNullable(hierarchyIdentifierTrialEndDate), Optional.ToNullable(environmentName), offerings ?? new ChangeTrackingList<SecurityCenterCloudOffering>(), environmentData.Value, kind.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityConnectorData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                hierarchyIdentifier,
+                hierarchyIdentifierTrialEndDate,
+                environmentName,
+                offerings ?? new ChangeTrackingList<SecurityCenterCloudOffering>(),
+                environmentData,
+                kind,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityConnectorData>.Write(ModelReaderWriterOptions options)

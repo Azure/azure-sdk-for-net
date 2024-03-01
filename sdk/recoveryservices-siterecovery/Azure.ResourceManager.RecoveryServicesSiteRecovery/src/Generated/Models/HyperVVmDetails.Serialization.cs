@@ -118,14 +118,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     case "VmmVirtualMachine": return VmmVmDetails.DeserializeVmmVmDetails(element, options);
                 }
             }
-            Optional<string> sourceItemId = default;
-            Optional<string> generation = default;
-            Optional<SiteRecoveryOSDetails> osDetails = default;
+            string sourceItemId = default;
+            string generation = default;
+            SiteRecoveryOSDetails osDetails = default;
             IReadOnlyList<SiteRecoveryDiskDetails> diskDetails = default;
-            Optional<HyperVVmDiskPresenceStatus> hasPhysicalDisk = default;
-            Optional<HyperVVmDiskPresenceStatus> hasFibreChannelAdapter = default;
-            Optional<HyperVVmDiskPresenceStatus> hasSharedVhd = default;
-            Optional<string> hyperVHostId = default;
+            HyperVVmDiskPresenceStatus? hasPhysicalDisk = default;
+            HyperVVmDiskPresenceStatus? hasFibreChannelAdapter = default;
+            HyperVVmDiskPresenceStatus? hasSharedVhd = default;
+            string hyperVHostId = default;
             string instanceType = "HyperVVirtualMachine";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -207,7 +207,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVVmDetails(instanceType, serializedAdditionalRawData, sourceItemId.Value, generation.Value, osDetails.Value, diskDetails ?? new ChangeTrackingList<SiteRecoveryDiskDetails>(), Optional.ToNullable(hasPhysicalDisk), Optional.ToNullable(hasFibreChannelAdapter), Optional.ToNullable(hasSharedVhd), hyperVHostId.Value);
+            return new HyperVVmDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                sourceItemId,
+                generation,
+                osDetails,
+                diskDetails ?? new ChangeTrackingList<SiteRecoveryDiskDetails>(),
+                hasPhysicalDisk,
+                hasFibreChannelAdapter,
+                hasSharedVhd,
+                hyperVHostId);
         }
 
         BinaryData IPersistableModel<HyperVVmDetails>.Write(ModelReaderWriterOptions options)

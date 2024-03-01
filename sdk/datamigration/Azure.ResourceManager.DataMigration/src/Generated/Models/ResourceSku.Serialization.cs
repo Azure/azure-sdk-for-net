@@ -149,13 +149,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<string> kind = default;
-            Optional<ResourceSkuCapacity> capacity = default;
+            string resourceType = default;
+            string name = default;
+            string tier = default;
+            string size = default;
+            string family = default;
+            string kind = default;
+            ResourceSkuCapacity capacity = default;
             IReadOnlyList<string> locations = default;
             IReadOnlyList<string> apiVersions = default;
             IReadOnlyList<ResourceSkuCosts> costs = default;
@@ -280,7 +280,20 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSku(resourceType.Value, name.Value, tier.Value, size.Value, family.Value, kind.Value, capacity.Value, locations ?? new ChangeTrackingList<string>(), apiVersions ?? new ChangeTrackingList<string>(), costs ?? new ChangeTrackingList<ResourceSkuCosts>(), capabilities ?? new ChangeTrackingList<ResourceSkuCapabilities>(), restrictions ?? new ChangeTrackingList<ResourceSkuRestrictions>(), serializedAdditionalRawData);
+            return new ResourceSku(
+                resourceType,
+                name,
+                tier,
+                size,
+                family,
+                kind,
+                capacity,
+                locations ?? new ChangeTrackingList<string>(),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                costs ?? new ChangeTrackingList<ResourceSkuCosts>(),
+                capabilities ?? new ChangeTrackingList<ResourceSkuCapabilities>(),
+                restrictions ?? new ChangeTrackingList<ResourceSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSku>.Write(ModelReaderWriterOptions options)

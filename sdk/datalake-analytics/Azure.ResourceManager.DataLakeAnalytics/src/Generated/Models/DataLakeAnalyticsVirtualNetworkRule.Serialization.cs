@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<DataLakeAnalyticsVirtualNetworkRuleState> virtualNetworkRuleState = default;
+            SystemData systemData = default;
+            ResourceIdentifier subnetId = default;
+            DataLakeAnalyticsVirtualNetworkRuleState? virtualNetworkRuleState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsVirtualNetworkRule(id, name, type, systemData.Value, subnetId.Value, Optional.ToNullable(virtualNetworkRuleState), serializedAdditionalRawData);
+            return new DataLakeAnalyticsVirtualNetworkRule(
+                id,
+                name,
+                type,
+                systemData,
+                subnetId,
+                virtualNetworkRuleState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsVirtualNetworkRule>.Write(ModelReaderWriterOptions options)

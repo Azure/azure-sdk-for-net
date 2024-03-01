@@ -116,8 +116,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
+            SystemData systemData = default;
+            string groupId = default;
             IReadOnlyList<string> requiredMembers = default;
             IReadOnlyList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -199,7 +199,15 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusPrivateLinkResource(id, name, type, systemData.Value, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ServiceBusPrivateLinkResource(
+                id,
+                name,
+                type,
+                systemData,
+                groupId,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusPrivateLinkResource>.Write(ModelReaderWriterOptions options)

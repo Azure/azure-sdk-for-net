@@ -909,73 +909,73 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<int?> numberOfWorkers = default;
+            int? numberOfWorkers = default;
             IList<string> defaultDocuments = default;
-            Optional<string> netFrameworkVersion = default;
-            Optional<string> phpVersion = default;
-            Optional<string> pythonVersion = default;
-            Optional<string> nodeVersion = default;
-            Optional<string> powerShellVersion = default;
-            Optional<string> linuxFxVersion = default;
-            Optional<string> windowsFxVersion = default;
-            Optional<bool?> requestTracingEnabled = default;
-            Optional<DateTimeOffset?> requestTracingExpirationTime = default;
-            Optional<bool?> remoteDebuggingEnabled = default;
-            Optional<string> remoteDebuggingVersion = default;
-            Optional<bool?> httpLoggingEnabled = default;
-            Optional<bool?> acrUseManagedIdentityCreds = default;
-            Optional<string> acrUserManagedIdentityId = default;
-            Optional<int?> logsDirectorySizeLimit = default;
-            Optional<bool?> detailedErrorLoggingEnabled = default;
-            Optional<string> publishingUsername = default;
+            string netFrameworkVersion = default;
+            string phpVersion = default;
+            string pythonVersion = default;
+            string nodeVersion = default;
+            string powerShellVersion = default;
+            string linuxFxVersion = default;
+            string windowsFxVersion = default;
+            bool? requestTracingEnabled = default;
+            DateTimeOffset? requestTracingExpirationTime = default;
+            bool? remoteDebuggingEnabled = default;
+            string remoteDebuggingVersion = default;
+            bool? httpLoggingEnabled = default;
+            bool? acrUseManagedIdentityCreds = default;
+            string acrUserManagedIdentityId = default;
+            int? logsDirectorySizeLimit = default;
+            bool? detailedErrorLoggingEnabled = default;
+            string publishingUsername = default;
             IList<AppServiceNameValuePair> appSettings = default;
             IList<ConnStringInfo> connectionStrings = default;
-            Optional<SiteMachineKey> machineKey = default;
+            SiteMachineKey machineKey = default;
             IList<HttpRequestHandlerMapping> handlerMappings = default;
-            Optional<string> documentRoot = default;
-            Optional<ScmType?> scmType = default;
-            Optional<bool?> use32BitWorkerProcess = default;
-            Optional<bool?> webSocketsEnabled = default;
-            Optional<bool?> alwaysOn = default;
-            Optional<string> javaVersion = default;
-            Optional<string> javaContainer = default;
-            Optional<string> javaContainerVersion = default;
-            Optional<string> appCommandLine = default;
-            Optional<ManagedPipelineMode?> managedPipelineMode = default;
+            string documentRoot = default;
+            ScmType? scmType = default;
+            bool? use32BitWorkerProcess = default;
+            bool? webSocketsEnabled = default;
+            bool? alwaysOn = default;
+            string javaVersion = default;
+            string javaContainer = default;
+            string javaContainerVersion = default;
+            string appCommandLine = default;
+            ManagedPipelineMode? managedPipelineMode = default;
             IList<VirtualApplication> virtualApplications = default;
-            Optional<SiteLoadBalancing?> loadBalancing = default;
-            Optional<RoutingRuleExperiments> experiments = default;
-            Optional<SiteLimits> limits = default;
-            Optional<bool?> autoHealEnabled = default;
-            Optional<AutoHealRules> autoHealRules = default;
-            Optional<string> tracingOptions = default;
-            Optional<string> vnetName = default;
-            Optional<bool?> vnetRouteAllEnabled = default;
-            Optional<int?> vnetPrivatePortsCount = default;
-            Optional<AppServiceCorsSettings> cors = default;
-            Optional<WebAppPushSettings> push = default;
-            Optional<AppServiceApiDefinitionInfo> apiDefinition = default;
-            Optional<ApiManagementConfig> apiManagementConfig = default;
-            Optional<string> autoSwapSlotName = default;
-            Optional<bool?> localMySqlEnabled = default;
-            Optional<int?> managedServiceIdentityId = default;
-            Optional<int?> xManagedServiceIdentityId = default;
-            Optional<string> keyVaultReferenceIdentity = default;
+            SiteLoadBalancing? loadBalancing = default;
+            RoutingRuleExperiments experiments = default;
+            SiteLimits limits = default;
+            bool? autoHealEnabled = default;
+            AutoHealRules autoHealRules = default;
+            string tracingOptions = default;
+            string vnetName = default;
+            bool? vnetRouteAllEnabled = default;
+            int? vnetPrivatePortsCount = default;
+            AppServiceCorsSettings cors = default;
+            WebAppPushSettings push = default;
+            AppServiceApiDefinitionInfo apiDefinition = default;
+            ApiManagementConfig apiManagementConfig = default;
+            string autoSwapSlotName = default;
+            bool? localMySqlEnabled = default;
+            int? managedServiceIdentityId = default;
+            int? xManagedServiceIdentityId = default;
+            string keyVaultReferenceIdentity = default;
             IList<AppServiceIPSecurityRestriction> ipSecurityRestrictions = default;
             IList<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = default;
-            Optional<bool?> scmIPSecurityRestrictionsUseMain = default;
-            Optional<bool?> http20Enabled = default;
-            Optional<AppServiceSupportedTlsVersion?> minTlsVersion = default;
-            Optional<AppServiceSupportedTlsVersion?> scmMinTlsVersion = default;
-            Optional<AppServiceFtpsState?> ftpsState = default;
-            Optional<int?> preWarmedInstanceCount = default;
-            Optional<int?> functionAppScaleLimit = default;
-            Optional<string> healthCheckPath = default;
-            Optional<bool?> functionsRuntimeScaleMonitoringEnabled = default;
-            Optional<string> websiteTimeZone = default;
-            Optional<int?> minimumElasticInstanceCount = default;
-            Optional<IDictionary<string, AppServiceStorageAccessInfo>> azureStorageAccounts = default;
-            Optional<string> publicNetworkAccess = default;
+            bool? scmIPSecurityRestrictionsUseMain = default;
+            bool? http20Enabled = default;
+            AppServiceSupportedTlsVersion? minTlsVersion = default;
+            AppServiceSupportedTlsVersion? scmMinTlsVersion = default;
+            AppServiceFtpsState? ftpsState = default;
+            int? preWarmedInstanceCount = default;
+            int? functionAppScaleLimit = default;
+            string healthCheckPath = default;
+            bool? functionsRuntimeScaleMonitoringEnabled = default;
+            string websiteTimeZone = default;
+            int? minimumElasticInstanceCount = default;
+            IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = default;
+            string publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -1696,7 +1696,75 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteConfigProperties(Optional.ToNullable(numberOfWorkers), defaultDocuments ?? new ChangeTrackingList<string>(), netFrameworkVersion.Value, phpVersion.Value, pythonVersion.Value, nodeVersion.Value, powerShellVersion.Value, linuxFxVersion.Value, windowsFxVersion.Value, Optional.ToNullable(requestTracingEnabled), Optional.ToNullable(requestTracingExpirationTime), Optional.ToNullable(remoteDebuggingEnabled), remoteDebuggingVersion.Value, Optional.ToNullable(httpLoggingEnabled), Optional.ToNullable(acrUseManagedIdentityCreds), acrUserManagedIdentityId.Value, Optional.ToNullable(logsDirectorySizeLimit), Optional.ToNullable(detailedErrorLoggingEnabled), publishingUsername.Value, appSettings ?? new ChangeTrackingList<AppServiceNameValuePair>(), connectionStrings ?? new ChangeTrackingList<ConnStringInfo>(), machineKey.Value, handlerMappings ?? new ChangeTrackingList<HttpRequestHandlerMapping>(), documentRoot.Value, Optional.ToNullable(scmType), Optional.ToNullable(use32BitWorkerProcess), Optional.ToNullable(webSocketsEnabled), Optional.ToNullable(alwaysOn), javaVersion.Value, javaContainer.Value, javaContainerVersion.Value, appCommandLine.Value, Optional.ToNullable(managedPipelineMode), virtualApplications ?? new ChangeTrackingList<VirtualApplication>(), Optional.ToNullable(loadBalancing), experiments.Value, limits.Value, Optional.ToNullable(autoHealEnabled), autoHealRules.Value, tracingOptions.Value, vnetName.Value, Optional.ToNullable(vnetRouteAllEnabled), Optional.ToNullable(vnetPrivatePortsCount), cors.Value, push.Value, apiDefinition.Value, apiManagementConfig.Value, autoSwapSlotName.Value, Optional.ToNullable(localMySqlEnabled), Optional.ToNullable(managedServiceIdentityId), Optional.ToNullable(xManagedServiceIdentityId), keyVaultReferenceIdentity.Value, ipSecurityRestrictions ?? new ChangeTrackingList<AppServiceIPSecurityRestriction>(), scmIPSecurityRestrictions ?? new ChangeTrackingList<AppServiceIPSecurityRestriction>(), Optional.ToNullable(scmIPSecurityRestrictionsUseMain), Optional.ToNullable(http20Enabled), Optional.ToNullable(minTlsVersion), Optional.ToNullable(scmMinTlsVersion), Optional.ToNullable(ftpsState), Optional.ToNullable(preWarmedInstanceCount), Optional.ToNullable(functionAppScaleLimit), healthCheckPath.Value, Optional.ToNullable(functionsRuntimeScaleMonitoringEnabled), websiteTimeZone.Value, Optional.ToNullable(minimumElasticInstanceCount), Optional.ToDictionary(azureStorageAccounts), publicNetworkAccess.Value, serializedAdditionalRawData);
+            return new SiteConfigProperties(
+                numberOfWorkers,
+                defaultDocuments ?? new ChangeTrackingList<string>(),
+                netFrameworkVersion,
+                phpVersion,
+                pythonVersion,
+                nodeVersion,
+                powerShellVersion,
+                linuxFxVersion,
+                windowsFxVersion,
+                requestTracingEnabled,
+                requestTracingExpirationTime,
+                remoteDebuggingEnabled,
+                remoteDebuggingVersion,
+                httpLoggingEnabled,
+                acrUseManagedIdentityCreds,
+                acrUserManagedIdentityId,
+                logsDirectorySizeLimit,
+                detailedErrorLoggingEnabled,
+                publishingUsername,
+                appSettings ?? new ChangeTrackingList<AppServiceNameValuePair>(),
+                connectionStrings ?? new ChangeTrackingList<ConnStringInfo>(),
+                machineKey,
+                handlerMappings ?? new ChangeTrackingList<HttpRequestHandlerMapping>(),
+                documentRoot,
+                scmType,
+                use32BitWorkerProcess,
+                webSocketsEnabled,
+                alwaysOn,
+                javaVersion,
+                javaContainer,
+                javaContainerVersion,
+                appCommandLine,
+                managedPipelineMode,
+                virtualApplications ?? new ChangeTrackingList<VirtualApplication>(),
+                loadBalancing,
+                experiments,
+                limits,
+                autoHealEnabled,
+                autoHealRules,
+                tracingOptions,
+                vnetName,
+                vnetRouteAllEnabled,
+                vnetPrivatePortsCount,
+                cors,
+                push,
+                apiDefinition,
+                apiManagementConfig,
+                autoSwapSlotName,
+                localMySqlEnabled,
+                managedServiceIdentityId,
+                xManagedServiceIdentityId,
+                keyVaultReferenceIdentity,
+                ipSecurityRestrictions ?? new ChangeTrackingList<AppServiceIPSecurityRestriction>(),
+                scmIPSecurityRestrictions ?? new ChangeTrackingList<AppServiceIPSecurityRestriction>(),
+                scmIPSecurityRestrictionsUseMain,
+                http20Enabled,
+                minTlsVersion,
+                scmMinTlsVersion,
+                ftpsState,
+                preWarmedInstanceCount,
+                functionAppScaleLimit,
+                healthCheckPath,
+                functionsRuntimeScaleMonitoringEnabled,
+                websiteTimeZone,
+                minimumElasticInstanceCount,
+                azureStorageAccounts ?? new ChangeTrackingDictionary<string, AppServiceStorageAccessInfo>(),
+                publicNetworkAccess,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteConfigProperties>.Write(ModelReaderWriterOptions options)

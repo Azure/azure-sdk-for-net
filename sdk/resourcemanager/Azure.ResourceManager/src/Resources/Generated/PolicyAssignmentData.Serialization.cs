@@ -187,20 +187,20 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            AzureLocation? location = default;
+            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> policyDefinitionId = default;
-            Optional<string> scope = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string policyDefinitionId = default;
+            string scope = default;
             IList<string> notScopes = default;
-            Optional<IDictionary<string, ArmPolicyParameterValue>> parameters = default;
-            Optional<string> description = default;
-            Optional<BinaryData> metadata = default;
-            Optional<EnforcementMode> enforcementMode = default;
+            IDictionary<string, ArmPolicyParameterValue> parameters = default;
+            string description = default;
+            BinaryData metadata = default;
+            EnforcementMode? enforcementMode = default;
             IList<NonComplianceMessage> nonComplianceMessages = default;
             IList<ResourceSelector> resourceSelectors = default;
             IList<PolicyOverride> overrides = default;
@@ -376,7 +376,25 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(location), identity, displayName.Value, policyDefinitionId.Value, scope.Value, notScopes ?? new ChangeTrackingList<string>(), Optional.ToDictionary(parameters), description.Value, metadata.Value, Optional.ToNullable(enforcementMode), nonComplianceMessages ?? new ChangeTrackingList<NonComplianceMessage>(), resourceSelectors ?? new ChangeTrackingList<ResourceSelector>(), overrides ?? new ChangeTrackingList<PolicyOverride>(), serializedAdditionalRawData);
+            return new PolicyAssignmentData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                identity,
+                displayName,
+                policyDefinitionId,
+                scope,
+                notScopes ?? new ChangeTrackingList<string>(),
+                parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameterValue>(),
+                description,
+                metadata,
+                enforcementMode,
+                nonComplianceMessages ?? new ChangeTrackingList<NonComplianceMessage>(),
+                resourceSelectors ?? new ChangeTrackingList<ResourceSelector>(),
+                overrides ?? new ChangeTrackingList<PolicyOverride>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyAssignmentData>.Write(ModelReaderWriterOptions options)

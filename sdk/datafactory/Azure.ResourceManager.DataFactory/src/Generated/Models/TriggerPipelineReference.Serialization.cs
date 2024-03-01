@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryPipelineReference> pipelineReference = default;
-            Optional<IDictionary<string, BinaryData>> parameters = default;
+            DataFactoryPipelineReference pipelineReference = default;
+            IDictionary<string, BinaryData> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TriggerPipelineReference(pipelineReference.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+            return new TriggerPipelineReference(pipelineReference, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TriggerPipelineReference>.Write(ModelReaderWriterOptions options)

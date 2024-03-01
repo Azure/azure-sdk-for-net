@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlAdministratorType> administratorType = default;
-            Optional<SqlServerPrincipalType> principalType = default;
-            Optional<string> login = default;
-            Optional<Guid> sid = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> azureADOnlyAuthentication = default;
+            SqlAdministratorType? administratorType = default;
+            SqlServerPrincipalType? principalType = default;
+            string login = default;
+            Guid? sid = default;
+            Guid? tenantId = default;
+            bool? azureADOnlyAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceExternalAdministrator(Optional.ToNullable(administratorType), Optional.ToNullable(principalType), login.Value, Optional.ToNullable(sid), Optional.ToNullable(tenantId), Optional.ToNullable(azureADOnlyAuthentication), serializedAdditionalRawData);
+            return new ManagedInstanceExternalAdministrator(
+                administratorType,
+                principalType,
+                login,
+                sid,
+                tenantId,
+                azureADOnlyAuthentication,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceExternalAdministrator>.Write(ModelReaderWriterOptions options)

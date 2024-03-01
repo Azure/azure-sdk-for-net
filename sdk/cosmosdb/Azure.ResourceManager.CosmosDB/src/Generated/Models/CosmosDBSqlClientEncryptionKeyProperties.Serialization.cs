@@ -100,13 +100,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> rid = default;
-            Optional<float> ts = default;
-            Optional<ETag> etag = default;
-            Optional<string> id = default;
-            Optional<string> encryptionAlgorithm = default;
-            Optional<byte[]> wrappedDataEncryptionKey = default;
-            Optional<CosmosDBKeyWrapMetadata> keyWrapMetadata = default;
+            string rid = default;
+            float? ts = default;
+            ETag? etag = default;
+            string id = default;
+            string encryptionAlgorithm = default;
+            byte[] wrappedDataEncryptionKey = default;
+            CosmosDBKeyWrapMetadata keyWrapMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlClientEncryptionKeyProperties(id.Value, encryptionAlgorithm.Value, wrappedDataEncryptionKey.Value, keyWrapMetadata.Value, serializedAdditionalRawData, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new CosmosDBSqlClientEncryptionKeyProperties(
+                id,
+                encryptionAlgorithm,
+                wrappedDataEncryptionKey,
+                keyWrapMetadata,
+                serializedAdditionalRawData,
+                rid,
+                ts,
+                etag);
         }
 
         BinaryData IPersistableModel<CosmosDBSqlClientEncryptionKeyProperties>.Write(ModelReaderWriterOptions options)

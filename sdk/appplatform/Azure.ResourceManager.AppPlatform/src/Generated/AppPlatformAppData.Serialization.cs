@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 return null;
             }
-            Optional<AppPlatformAppProperties> properties = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<AzureLocation> location = default;
+            AppPlatformAppProperties properties = default;
+            ManagedServiceIdentity identity = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.AppPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformAppData(id, name, type, systemData.Value, properties.Value, identity, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new AppPlatformAppData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                identity,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformAppData>.Write(ModelReaderWriterOptions options)

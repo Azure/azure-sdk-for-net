@@ -111,15 +111,15 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<H264Complexity> complexity = default;
+            H264Complexity? complexity = default;
             IList<H264Layer> layers = default;
-            Optional<H264RateControlMode> rateControlMode = default;
-            Optional<bool> sceneChangeDetection = default;
-            Optional<TimeSpan> keyFrameInterval = default;
-            Optional<InputVideoStretchMode> stretchMode = default;
-            Optional<VideoSyncMode> syncMode = default;
+            H264RateControlMode? rateControlMode = default;
+            bool? sceneChangeDetection = default;
+            TimeSpan? keyFrameInterval = default;
+            InputVideoStretchMode? stretchMode = default;
+            VideoSyncMode? syncMode = default;
             string odataType = default;
-            Optional<string> label = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,7 +208,17 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new H264Video(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), Optional.ToNullable(complexity), layers ?? new ChangeTrackingList<H264Layer>(), Optional.ToNullable(rateControlMode), Optional.ToNullable(sceneChangeDetection));
+            return new H264Video(
+                odataType,
+                label,
+                serializedAdditionalRawData,
+                keyFrameInterval,
+                stretchMode,
+                syncMode,
+                complexity,
+                layers ?? new ChangeTrackingList<H264Layer>(),
+                rateControlMode,
+                sceneChangeDetection);
         }
 
         BinaryData IPersistableModel<H264Video>.Write(ModelReaderWriterOptions options)

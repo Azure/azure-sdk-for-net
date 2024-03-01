@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceLocationDataContract> locationData = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            ResourceLocationDataContract locationData = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementGatewayData(id, name, type, systemData.Value, locationData.Value, description.Value, serializedAdditionalRawData);
+            return new ApiManagementGatewayData(
+                id,
+                name,
+                type,
+                systemData,
+                locationData,
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementGatewayData>.Write(ModelReaderWriterOptions options)
