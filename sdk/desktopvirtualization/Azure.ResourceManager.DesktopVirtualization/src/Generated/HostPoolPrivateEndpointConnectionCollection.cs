@@ -101,7 +101,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = await _hostPoolPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateByHostPoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, connection, cancellationToken).ConfigureAwait(false);
-                var operation = new DesktopVirtualizationArmOperation<HostPoolPrivateEndpointConnectionResource>(Response.FromValue(new HostPoolPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _hostPoolPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateByHostPoolRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, connection);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DesktopVirtualizationArmOperation<HostPoolPrivateEndpointConnectionResource>(Response.FromValue(new HostPoolPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -160,7 +162,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = _hostPoolPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateByHostPool(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, connection, cancellationToken);
-                var operation = new DesktopVirtualizationArmOperation<HostPoolPrivateEndpointConnectionResource>(Response.FromValue(new HostPoolPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _hostPoolPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateByHostPoolRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, connection);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DesktopVirtualizationArmOperation<HostPoolPrivateEndpointConnectionResource>(Response.FromValue(new HostPoolPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

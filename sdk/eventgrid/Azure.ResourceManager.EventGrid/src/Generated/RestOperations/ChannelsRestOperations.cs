@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.EventGrid
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string partnerNamespaceName, string channelName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/partnerNamespaces/", false);
+            uri.AppendPath(partnerNamespaceName, true);
+            uri.AppendPath("/channels/", false);
+            uri.AppendPath(channelName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string partnerNamespaceName, string channelName)
         {
             var message = _pipeline.CreateMessage();
@@ -179,6 +195,22 @@ namespace Azure.ResourceManager.EventGrid
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string partnerNamespaceName, string channelName, PartnerNamespaceChannelData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/partnerNamespaces/", false);
+            uri.AppendPath(partnerNamespaceName, true);
+            uri.AppendPath("/channels/", false);
+            uri.AppendPath(channelName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string partnerNamespaceName, string channelName, PartnerNamespaceChannelData data)
@@ -337,6 +369,22 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string partnerNamespaceName, string channelName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/partnerNamespaces/", false);
+            uri.AppendPath(partnerNamespaceName, true);
+            uri.AppendPath("/channels/", false);
+            uri.AppendPath(channelName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string partnerNamespaceName, string channelName)
         {
             var message = _pipeline.CreateMessage();
@@ -468,6 +516,22 @@ namespace Azure.ResourceManager.EventGrid
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string partnerNamespaceName, string channelName, PartnerNamespaceChannelPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/partnerNamespaces/", false);
+            uri.AppendPath(partnerNamespaceName, true);
+            uri.AppendPath("/channels/", false);
+            uri.AppendPath(channelName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string partnerNamespaceName, string channelName, PartnerNamespaceChannelPatch patch)
@@ -613,6 +677,29 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        internal RequestUriBuilder CreateListByPartnerNamespaceRequestUri(string subscriptionId, string resourceGroupName, string partnerNamespaceName, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/partnerNamespaces/", false);
+            uri.AppendPath(partnerNamespaceName, true);
+            uri.AppendPath("/channels", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListByPartnerNamespaceRequest(string subscriptionId, string resourceGroupName, string partnerNamespaceName, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -744,6 +831,23 @@ namespace Azure.ResourceManager.EventGrid
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetFullUriRequestUri(string subscriptionId, string resourceGroupName, string partnerNamespaceName, string channelName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/partnerNamespaces/", false);
+            uri.AppendPath(partnerNamespaceName, true);
+            uri.AppendPath("/channels/", false);
+            uri.AppendPath(channelName, true);
+            uri.AppendPath("/getFullUrl", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetFullUriRequest(string subscriptionId, string resourceGroupName, string partnerNamespaceName, string channelName)
@@ -885,6 +989,14 @@ namespace Azure.ResourceManager.EventGrid
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByPartnerNamespaceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string partnerNamespaceName, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByPartnerNamespaceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string partnerNamespaceName, string filter, int? top)
