@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Uri bomUrl = default;
             string sapBitsStorageAccountId = default;
             string softwareVersion = default;
-            Optional<HighAvailabilitySoftwareConfiguration> highAvailabilitySoftwareConfiguration = default;
+            HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration = default;
             SapSoftwareInstallationType softwareInstallationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 bomUrl,
                 sapBitsStorageAccountId,
                 softwareVersion,
-                highAvailabilitySoftwareConfiguration.Value);
+                highAvailabilitySoftwareConfiguration);
         }
 
         BinaryData IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>.Write(ModelReaderWriterOptions options)

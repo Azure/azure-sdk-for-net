@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 return null;
             }
             IReadOnlyList<StorageInsightData> value = default;
-            Optional<string> odataNextLink = default;
+            string odataNextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageInsightListResult(value ?? new ChangeTrackingList<StorageInsightData>(), odataNextLink.Value, serializedAdditionalRawData);
+            return new StorageInsightListResult(value ?? new ChangeTrackingList<StorageInsightData>(), odataNextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageInsightListResult>.Write(ModelReaderWriterOptions options)

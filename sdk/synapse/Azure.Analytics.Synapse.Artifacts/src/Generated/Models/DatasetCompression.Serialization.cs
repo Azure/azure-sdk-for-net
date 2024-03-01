@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             object type = default;
-            Optional<object> level = default;
+            object level = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -63,7 +63,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatasetCompression(type, level.Value, additionalProperties);
+            return new DatasetCompression(type, level, additionalProperties);
         }
 
         internal partial class DatasetCompressionConverter : JsonConverter<DatasetCompression>

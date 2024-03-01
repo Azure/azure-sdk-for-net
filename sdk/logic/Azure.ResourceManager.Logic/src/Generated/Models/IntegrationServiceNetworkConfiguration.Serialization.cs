@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> virtualNetworkAddressSpace = default;
-            Optional<IntegrationServiceEnvironmentAccessEndpoint> accessEndpoint = default;
+            string virtualNetworkAddressSpace = default;
+            IntegrationServiceEnvironmentAccessEndpoint accessEndpoint = default;
             IList<LogicResourceReference> subnets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceNetworkConfiguration(virtualNetworkAddressSpace.Value, accessEndpoint.Value, subnets ?? new ChangeTrackingList<LogicResourceReference>(), serializedAdditionalRawData);
+            return new IntegrationServiceNetworkConfiguration(virtualNetworkAddressSpace, accessEndpoint, subnets ?? new ChangeTrackingList<LogicResourceReference>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceNetworkConfiguration>.Write(ModelReaderWriterOptions options)

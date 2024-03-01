@@ -142,19 +142,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 return null;
             }
-            Optional<HardwareSecurityModulesSku> sku = default;
+            HardwareSecurityModulesSku sku = default;
             IList<string> zones = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetworkProfile> networkProfile = default;
-            Optional<NetworkProfile> managementNetworkProfile = default;
-            Optional<string> stampId = default;
-            Optional<string> statusMessage = default;
-            Optional<JsonWebKeyType> provisioningState = default;
+            SystemData systemData = default;
+            NetworkProfile networkProfile = default;
+            NetworkProfile managementNetworkProfile = default;
+            string stampId = default;
+            string statusMessage = default;
+            JsonWebKeyType? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -284,15 +284,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                networkProfile.Value,
-                managementNetworkProfile.Value,
-                stampId.Value,
-                statusMessage.Value,
-                Optional.ToNullable(provisioningState),
-                sku.Value,
+                networkProfile,
+                managementNetworkProfile,
+                stampId,
+                statusMessage,
+                provisioningState,
+                sku,
                 zones ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

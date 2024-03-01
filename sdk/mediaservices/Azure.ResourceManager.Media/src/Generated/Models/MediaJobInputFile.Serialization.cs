@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> filename = default;
+            string filename = default;
             string odataType = default;
             IList<TrackDescriptor> includedTracks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaJobInputFile(odataType, includedTracks ?? new ChangeTrackingList<TrackDescriptor>(), serializedAdditionalRawData, filename.Value);
+            return new MediaJobInputFile(odataType, includedTracks ?? new ChangeTrackingList<TrackDescriptor>(), serializedAdditionalRawData, filename);
         }
 
         BinaryData IPersistableModel<MediaJobInputFile>.Write(ModelReaderWriterOptions options)

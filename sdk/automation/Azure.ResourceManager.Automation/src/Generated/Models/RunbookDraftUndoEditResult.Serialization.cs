@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<AutomationHttpStatusCode> statusCode = default;
-            Optional<string> requestId = default;
+            AutomationHttpStatusCode? statusCode = default;
+            string requestId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunbookDraftUndoEditResult(Optional.ToNullable(statusCode), requestId.Value, serializedAdditionalRawData);
+            return new RunbookDraftUndoEditResult(statusCode, requestId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunbookDraftUndoEditResult>.Write(ModelReaderWriterOptions options)

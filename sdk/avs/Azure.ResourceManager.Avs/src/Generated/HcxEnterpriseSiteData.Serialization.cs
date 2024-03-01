@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> activationKey = default;
-            Optional<HcxEnterpriseSiteStatus> status = default;
+            SystemData systemData = default;
+            string activationKey = default;
+            HcxEnterpriseSiteStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,9 +169,9 @@ namespace Azure.ResourceManager.Avs
                 id,
                 name,
                 type,
-                systemData.Value,
-                activationKey.Value,
-                Optional.ToNullable(status),
+                systemData,
+                activationKey,
+                status,
                 serializedAdditionalRawData);
         }
 

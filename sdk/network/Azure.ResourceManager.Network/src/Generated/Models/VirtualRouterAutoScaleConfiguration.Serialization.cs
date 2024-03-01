@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<int> minCapacity = default;
+            int? minCapacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualRouterAutoScaleConfiguration(Optional.ToNullable(minCapacity), serializedAdditionalRawData);
+            return new VirtualRouterAutoScaleConfiguration(minCapacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualRouterAutoScaleConfiguration>.Write(ModelReaderWriterOptions options)

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> timerTriggerName = default;
-            Optional<string> scheduleOccurrence = default;
+            string timerTriggerName = default;
+            string scheduleOccurrence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTimerTriggerDescriptor(timerTriggerName.Value, scheduleOccurrence.Value, serializedAdditionalRawData);
+            return new ContainerRegistryTimerTriggerDescriptor(timerTriggerName, scheduleOccurrence, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTimerTriggerDescriptor>.Write(ModelReaderWriterOptions options)

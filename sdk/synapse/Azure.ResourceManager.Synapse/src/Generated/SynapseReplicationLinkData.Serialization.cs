@@ -144,21 +144,21 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isTerminationAllowed = default;
-            Optional<string> replicationMode = default;
-            Optional<string> partnerServer = default;
-            Optional<string> partnerDatabase = default;
-            Optional<AzureLocation> partnerLocation = default;
-            Optional<SynapseReplicationRole> role = default;
-            Optional<SynapseReplicationRole> partnerRole = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<int> percentComplete = default;
-            Optional<SynapseReplicationState> replicationState = default;
+            SystemData systemData = default;
+            bool? isTerminationAllowed = default;
+            string replicationMode = default;
+            string partnerServer = default;
+            string partnerDatabase = default;
+            AzureLocation? partnerLocation = default;
+            SynapseReplicationRole? role = default;
+            SynapseReplicationRole? partnerRole = default;
+            DateTimeOffset? startTime = default;
+            int? percentComplete = default;
+            SynapseReplicationState? replicationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -296,18 +296,18 @@ namespace Azure.ResourceManager.Synapse
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                Optional.ToNullable(isTerminationAllowed),
-                replicationMode.Value,
-                partnerServer.Value,
-                partnerDatabase.Value,
-                Optional.ToNullable(partnerLocation),
-                Optional.ToNullable(role),
-                Optional.ToNullable(partnerRole),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(percentComplete),
-                Optional.ToNullable(replicationState),
+                systemData,
+                location,
+                isTerminationAllowed,
+                replicationMode,
+                partnerServer,
+                partnerDatabase,
+                partnerLocation,
+                role,
+                partnerRole,
+                startTime,
+                percentComplete,
+                replicationState,
                 serializedAdditionalRawData);
         }
 

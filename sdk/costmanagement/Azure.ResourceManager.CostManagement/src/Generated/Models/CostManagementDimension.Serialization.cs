@@ -165,23 +165,23 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> sku = default;
-            Optional<ETag> eTag = default;
+            AzureLocation? location = default;
+            string sku = default;
+            ETag? eTag = default;
             IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<bool> filterEnabled = default;
-            Optional<bool> groupingEnabled = default;
+            SystemData systemData = default;
+            string description = default;
+            bool? filterEnabled = default;
+            bool? groupingEnabled = default;
             IReadOnlyList<string> data = default;
-            Optional<int> total = default;
-            Optional<string> category = default;
-            Optional<DateTimeOffset> usageStart = default;
-            Optional<DateTimeOffset> usageEnd = default;
-            Optional<string> nextLink = default;
+            int? total = default;
+            string category = default;
+            DateTimeOffset? usageStart = default;
+            DateTimeOffset? usageEnd = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -343,19 +343,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                Optional.ToNullable(filterEnabled),
-                Optional.ToNullable(groupingEnabled),
+                systemData,
+                description,
+                filterEnabled,
+                groupingEnabled,
                 data ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(total),
-                category.Value,
-                Optional.ToNullable(usageStart),
-                Optional.ToNullable(usageEnd),
-                nextLink.Value,
-                Optional.ToNullable(location),
-                sku.Value,
-                Optional.ToNullable(eTag),
+                total,
+                category,
+                usageStart,
+                usageEnd,
+                nextLink,
+                location,
+                sku,
+                eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

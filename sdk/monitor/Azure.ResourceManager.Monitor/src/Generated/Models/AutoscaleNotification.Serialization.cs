@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             MonitorOperationType operation = default;
-            Optional<EmailNotification> email = default;
+            EmailNotification email = default;
             IList<WebhookNotification> webhooks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleNotification(operation, email.Value, webhooks ?? new ChangeTrackingList<WebhookNotification>(), serializedAdditionalRawData);
+            return new AutoscaleNotification(operation, email, webhooks ?? new ChangeTrackingList<WebhookNotification>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleNotification>.Write(ModelReaderWriterOptions options)

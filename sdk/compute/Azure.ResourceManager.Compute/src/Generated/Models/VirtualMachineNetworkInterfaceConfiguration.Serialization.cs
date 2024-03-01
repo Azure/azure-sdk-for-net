@@ -136,18 +136,18 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            Optional<bool> primary = default;
-            Optional<ComputeDeleteOption> deleteOption = default;
-            Optional<bool> enableAcceleratedNetworking = default;
-            Optional<bool> disableTcpStateTracking = default;
-            Optional<bool> enableFpga = default;
-            Optional<bool> enableIPForwarding = default;
-            Optional<WritableSubResource> networkSecurityGroup = default;
-            Optional<VirtualMachineNetworkInterfaceDnsSettingsConfiguration> dnsSettings = default;
+            bool? primary = default;
+            ComputeDeleteOption? deleteOption = default;
+            bool? enableAcceleratedNetworking = default;
+            bool? disableTcpStateTracking = default;
+            bool? enableFpga = default;
+            bool? enableIPForwarding = default;
+            WritableSubResource networkSecurityGroup = default;
+            VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings = default;
             IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default;
-            Optional<WritableSubResource> dscpConfiguration = default;
-            Optional<ComputeNetworkInterfaceAuxiliaryMode> auxiliaryMode = default;
-            Optional<ComputeNetworkInterfaceAuxiliarySku> auxiliarySku = default;
+            WritableSubResource dscpConfiguration = default;
+            ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
+            ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -290,18 +290,18 @@ namespace Azure.ResourceManager.Compute.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineNetworkInterfaceConfiguration(
                 name,
-                Optional.ToNullable(primary),
-                Optional.ToNullable(deleteOption),
-                Optional.ToNullable(enableAcceleratedNetworking),
-                Optional.ToNullable(disableTcpStateTracking),
-                Optional.ToNullable(enableFpga),
-                Optional.ToNullable(enableIPForwarding),
+                primary,
+                deleteOption,
+                enableAcceleratedNetworking,
+                disableTcpStateTracking,
+                enableFpga,
+                enableIPForwarding,
                 networkSecurityGroup,
-                dnsSettings.Value,
+                dnsSettings,
                 ipConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>(),
                 dscpConfiguration,
-                Optional.ToNullable(auxiliaryMode),
-                Optional.ToNullable(auxiliarySku),
+                auxiliaryMode,
+                auxiliarySku,
                 serializedAdditionalRawData);
         }
 

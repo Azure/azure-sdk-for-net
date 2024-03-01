@@ -169,18 +169,18 @@ namespace Azure.ResourceManager.Hci
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HciProvisioningState> provisioningState = default;
-            Optional<ArcExtensionAggregateState> aggregateState = default;
+            SystemData systemData = default;
+            HciProvisioningState? provisioningState = default;
+            ArcExtensionAggregateState? aggregateState = default;
             IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails = default;
-            Optional<string> forceUpdateTag = default;
-            Optional<string> publisher = default;
-            Optional<string> type0 = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<BinaryData> settings = default;
-            Optional<BinaryData> protectedSettings = default;
-            Optional<bool> enableAutomaticUpgrade = default;
+            string forceUpdateTag = default;
+            string publisher = default;
+            string type0 = default;
+            string typeHandlerVersion = default;
+            bool? autoUpgradeMinorVersion = default;
+            BinaryData settings = default;
+            BinaryData protectedSettings = default;
+            bool? enableAutomaticUpgrade = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -331,18 +331,18 @@ namespace Azure.ResourceManager.Hci
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(aggregateState),
+                systemData,
+                provisioningState,
+                aggregateState,
                 perNodeExtensionDetails ?? new ChangeTrackingList<PerNodeExtensionState>(),
-                forceUpdateTag.Value,
-                publisher.Value,
-                type0.Value,
-                typeHandlerVersion.Value,
-                Optional.ToNullable(autoUpgradeMinorVersion),
-                settings.Value,
-                protectedSettings.Value,
-                Optional.ToNullable(enableAutomaticUpgrade),
+                forceUpdateTag,
+                publisher,
+                type0,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                settings,
+                protectedSettings,
+                enableAutomaticUpgrade,
                 serializedAdditionalRawData);
         }
 

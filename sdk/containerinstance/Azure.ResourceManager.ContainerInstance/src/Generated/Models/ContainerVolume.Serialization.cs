@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             string name = default;
-            Optional<ContainerInstanceAzureFileVolume> azureFile = default;
-            Optional<BinaryData> emptyDir = default;
+            ContainerInstanceAzureFileVolume azureFile = default;
+            BinaryData emptyDir = default;
             IDictionary<string, string> secret = default;
-            Optional<ContainerInstanceGitRepoVolume> gitRepo = default;
+            ContainerInstanceGitRepoVolume gitRepo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerVolume(
                 name,
-                azureFile.Value,
-                emptyDir.Value,
+                azureFile,
+                emptyDir,
                 secret ?? new ChangeTrackingDictionary<string, string>(),
-                gitRepo.Value,
+                gitRepo,
                 serializedAdditionalRawData);
         }
 

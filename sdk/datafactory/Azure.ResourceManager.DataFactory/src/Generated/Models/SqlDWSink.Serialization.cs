@@ -139,22 +139,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> preCopyScript = default;
-            Optional<DataFactoryElement<bool>> allowPolyBase = default;
-            Optional<PolybaseSettings> polyBaseSettings = default;
-            Optional<DataFactoryElement<bool>> allowCopyCommand = default;
-            Optional<DWCopyCommandSettings> copyCommandSettings = default;
-            Optional<DataFactoryElement<string>> tableOption = default;
-            Optional<DataFactoryElement<bool>> sqlWriterUseTableLock = default;
-            Optional<DataFactoryElement<string>> writeBehavior = default;
-            Optional<SqlDWUpsertSettings> upsertSettings = default;
+            DataFactoryElement<string> preCopyScript = default;
+            DataFactoryElement<bool> allowPolyBase = default;
+            PolybaseSettings polyBaseSettings = default;
+            DataFactoryElement<bool> allowCopyCommand = default;
+            DWCopyCommandSettings copyCommandSettings = default;
+            DataFactoryElement<string> tableOption = default;
+            DataFactoryElement<bool> sqlWriterUseTableLock = default;
+            DataFactoryElement<string> writeBehavior = default;
+            SqlDWUpsertSettings upsertSettings = default;
             string type = default;
-            Optional<DataFactoryElement<int>> writeBatchSize = default;
-            Optional<DataFactoryElement<string>> writeBatchTimeout = default;
-            Optional<DataFactoryElement<int>> sinkRetryCount = default;
-            Optional<DataFactoryElement<string>> sinkRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> writeBatchSize = default;
+            DataFactoryElement<string> writeBatchTimeout = default;
+            DataFactoryElement<int> sinkRetryCount = default;
+            DataFactoryElement<string> sinkRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -304,22 +304,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SqlDWSink(
                 type,
-                writeBatchSize.Value,
-                writeBatchTimeout.Value,
-                sinkRetryCount.Value,
-                sinkRetryWait.Value,
-                maxConcurrentConnections.Value,
-                disableMetricsCollection.Value,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
                 additionalProperties,
-                preCopyScript.Value,
-                allowPolyBase.Value,
-                polyBaseSettings.Value,
-                allowCopyCommand.Value,
-                copyCommandSettings.Value,
-                tableOption.Value,
-                sqlWriterUseTableLock.Value,
-                writeBehavior.Value,
-                upsertSettings.Value);
+                preCopyScript,
+                allowPolyBase,
+                polyBaseSettings,
+                allowCopyCommand,
+                copyCommandSettings,
+                tableOption,
+                sqlWriterUseTableLock,
+                writeBehavior,
+                upsertSettings);
         }
 
         BinaryData IPersistableModel<SqlDWSink>.Write(ModelReaderWriterOptions options)

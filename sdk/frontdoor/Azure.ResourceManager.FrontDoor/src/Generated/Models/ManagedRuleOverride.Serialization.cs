@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             string ruleId = default;
-            Optional<ManagedRuleEnabledState> enabledState = default;
-            Optional<RuleMatchActionType> action = default;
+            ManagedRuleEnabledState? enabledState = default;
+            RuleMatchActionType? action = default;
             IList<ManagedRuleExclusion> exclusions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleOverride(ruleId, Optional.ToNullable(enabledState), Optional.ToNullable(action), exclusions ?? new ChangeTrackingList<ManagedRuleExclusion>(), serializedAdditionalRawData);
+            return new ManagedRuleOverride(ruleId, enabledState, action, exclusions ?? new ChangeTrackingList<ManagedRuleExclusion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleOverride>.Write(ModelReaderWriterOptions options)

@@ -130,19 +130,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<ReportStatus> status = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> reportName = default;
-            Optional<string> offerGuid = default;
+            string id = default;
+            ReportStatus? status = default;
+            Guid? tenantId = default;
+            string reportName = default;
+            string offerGuid = default;
             string timeZone = default;
             DateTimeOffset triggerTime = default;
-            Optional<DateTimeOffset> nextTriggerTime = default;
-            Optional<DateTimeOffset> lastTriggerTime = default;
+            DateTimeOffset? nextTriggerTime = default;
+            DateTimeOffset? lastTriggerTime = default;
             IReadOnlyList<string> subscriptions = default;
             IList<ResourceMetadata> resources = default;
-            Optional<ReportComplianceStatus> complianceStatus = default;
-            Optional<ProvisioningState> provisioningState = default;
+            ReportComplianceStatus complianceStatus = default;
+            ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,19 +257,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ReportProperties(
-                id.Value,
-                Optional.ToNullable(status),
-                Optional.ToNullable(tenantId),
-                reportName.Value,
-                offerGuid.Value,
+                id,
+                status,
+                tenantId,
+                reportName,
+                offerGuid,
                 timeZone,
                 triggerTime,
-                Optional.ToNullable(nextTriggerTime),
-                Optional.ToNullable(lastTriggerTime),
+                nextTriggerTime,
+                lastTriggerTime,
                 subscriptions ?? new ChangeTrackingList<string>(),
                 resources,
-                complianceStatus.Value,
-                Optional.ToNullable(provisioningState),
+                complianceStatus,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

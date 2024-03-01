@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.Redis
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<RedisPatchScheduleSetting> scheduleEntries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -176,8 +176,8 @@ namespace Azure.ResourceManager.Redis
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
+                systemData,
+                location,
                 scheduleEntries,
                 serializedAdditionalRawData);
         }

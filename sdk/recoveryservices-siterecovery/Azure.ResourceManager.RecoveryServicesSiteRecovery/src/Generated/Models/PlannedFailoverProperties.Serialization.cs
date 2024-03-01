@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> failoverDirection = default;
-            Optional<PlannedFailoverProviderSpecificFailoverContent> providerSpecificDetails = default;
+            string failoverDirection = default;
+            PlannedFailoverProviderSpecificFailoverContent providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlannedFailoverProperties(failoverDirection.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new PlannedFailoverProperties(failoverDirection, providerSpecificDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlannedFailoverProperties>.Write(ModelReaderWriterOptions options)

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> wafPolicy = default;
+            WritableSubResource wafPolicy = default;
             IList<SecurityPolicyWebApplicationFirewallAssociation> associations = default;
             SecurityPolicyType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;

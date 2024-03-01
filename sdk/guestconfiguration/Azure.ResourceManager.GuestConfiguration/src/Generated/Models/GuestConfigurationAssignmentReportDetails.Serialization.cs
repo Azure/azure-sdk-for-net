@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<Guid> jobId = default;
-            Optional<GuestConfigurationAssignmentReportType> operationType = default;
+            AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            Guid? jobId = default;
+            GuestConfigurationAssignmentReportType? operationType = default;
             IReadOnlyList<AssignmentReportResourceInfo> resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -175,11 +175,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new GuestConfigurationAssignmentReportDetails(
-                Optional.ToNullable(complianceStatus),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                Optional.ToNullable(jobId),
-                Optional.ToNullable(operationType),
+                complianceStatus,
+                startTime,
+                endTime,
+                jobId,
+                operationType,
                 resources ?? new ChangeTrackingList<AssignmentReportResourceInfo>(),
                 serializedAdditionalRawData);
         }

@@ -49,7 +49,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             IList<LanguageDetectionDocumentResult> documents = default;
             IList<DocumentError> errors = default;
-            Optional<TextDocumentBatchStatistics> statistics = default;
+            TextDocumentBatchStatistics statistics = default;
             string modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -88,7 +88,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new LanguageDetectionResult(errors, statistics.Value, modelVersion, documents);
+            return new LanguageDetectionResult(errors, statistics, modelVersion, documents);
         }
     }
 }

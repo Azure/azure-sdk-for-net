@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> tier = default;
+            string name = default;
+            string tier = default;
             int capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodeTypeSku(name.Value, tier.Value, capacity, serializedAdditionalRawData);
+            return new NodeTypeSku(name, tier, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodeTypeSku>.Write(ModelReaderWriterOptions options)

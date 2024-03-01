@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<VerificationDnsRecord> domain = default;
-            Optional<VerificationDnsRecord> spf = default;
-            Optional<VerificationDnsRecord> dkim = default;
-            Optional<VerificationDnsRecord> dkiM2 = default;
-            Optional<VerificationDnsRecord> dmarc = default;
+            VerificationDnsRecord domain = default;
+            VerificationDnsRecord spf = default;
+            VerificationDnsRecord dkim = default;
+            VerificationDnsRecord dkiM2 = default;
+            VerificationDnsRecord dmarc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.Communication.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DomainPropertiesVerificationRecords(
-                domain.Value,
-                spf.Value,
-                dkim.Value,
-                dkiM2.Value,
-                dmarc.Value,
+                domain,
+                spf,
+                dkim,
+                dkiM2,
+                dmarc,
                 serializedAdditionalRawData);
         }
 

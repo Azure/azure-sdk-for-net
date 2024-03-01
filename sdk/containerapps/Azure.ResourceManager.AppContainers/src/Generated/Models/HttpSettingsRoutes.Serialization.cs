@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> apiPrefix = default;
+            string apiPrefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HttpSettingsRoutes(apiPrefix.Value, serializedAdditionalRawData);
+            return new HttpSettingsRoutes(apiPrefix, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HttpSettingsRoutes>.Write(ModelReaderWriterOptions options)

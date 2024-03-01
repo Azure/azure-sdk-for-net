@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> comments = default;
+            string comments = default;
             string instanceType = default;
             IReadOnlyDictionary<string, string> affectedObjectDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TestFailoverCleanupWorkflowModelCustomProperties(instanceType, affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, comments.Value);
+            return new TestFailoverCleanupWorkflowModelCustomProperties(instanceType, affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, comments);
         }
 
         BinaryData IPersistableModel<TestFailoverCleanupWorkflowModelCustomProperties>.Write(ModelReaderWriterOptions options)

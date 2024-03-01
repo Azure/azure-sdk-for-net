@@ -127,16 +127,16 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<ResourceType> type = default;
-            Optional<DateTimeOffset> publishedDate = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<bool> excludeFromLatest = default;
-            Optional<SharedGalleryImageVersionStorageProfile> storageProfile = default;
-            Optional<string> disclaimer = default;
+            string name = default;
+            AzureLocation? location = default;
+            ResourceType? type = default;
+            DateTimeOffset? publishedDate = default;
+            DateTimeOffset? endOfLifeDate = default;
+            bool? excludeFromLatest = default;
+            SharedGalleryImageVersionStorageProfile storageProfile = default;
+            string disclaimer = default;
             IReadOnlyDictionary<string, string> artifactTags = default;
-            Optional<string> uniqueId = default;
+            string uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -255,16 +255,16 @@ namespace Azure.ResourceManager.Compute
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CommunityGalleryImageVersionData(
-                name.Value,
-                Optional.ToNullable(location),
-                Optional.ToNullable(type),
-                uniqueId.Value,
+                name,
+                location,
+                type,
+                uniqueId,
                 serializedAdditionalRawData,
-                Optional.ToNullable(publishedDate),
-                Optional.ToNullable(endOfLifeDate),
-                Optional.ToNullable(excludeFromLatest),
-                storageProfile.Value,
-                disclaimer.Value,
+                publishedDate,
+                endOfLifeDate,
+                excludeFromLatest,
+                storageProfile,
+                disclaimer,
                 artifactTags ?? new ChangeTrackingDictionary<string, string>());
         }
 

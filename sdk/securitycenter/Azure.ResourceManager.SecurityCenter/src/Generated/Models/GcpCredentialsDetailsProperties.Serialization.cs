@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Uri tokenUri = default;
             Uri authProviderX509CertUrl = default;
             Uri clientX509CertUrl = default;
-            Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
+            AuthenticationProvisioningState? authenticationProvisioningState = default;
             IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions = default;
             AuthenticationType authenticationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new GcpCredentialsDetailsProperties(
-                Optional.ToNullable(authenticationProvisioningState),
+                authenticationProvisioningState,
                 grantedPermissions ?? new ChangeTrackingList<SecurityCenterCloudPermission>(),
                 authenticationType,
                 serializedAdditionalRawData,

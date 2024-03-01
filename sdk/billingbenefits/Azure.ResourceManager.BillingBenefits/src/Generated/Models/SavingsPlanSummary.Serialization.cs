@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<SavingsPlanSummaryCount> value = default;
+            string name = default;
+            SavingsPlanSummaryCount value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanSummary(name.Value, value.Value, serializedAdditionalRawData);
+            return new SavingsPlanSummary(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanSummary>.Write(ModelReaderWriterOptions options)

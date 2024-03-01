@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            Optional<bool> required = default;
-            Optional<GalleryApplicationCustomActionParameterType> type = default;
-            Optional<string> defaultValue = default;
-            Optional<string> description = default;
+            bool? required = default;
+            GalleryApplicationCustomActionParameterType? type = default;
+            string defaultValue = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Compute.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new GalleryApplicationCustomActionParameter(
                 name,
-                Optional.ToNullable(required),
-                Optional.ToNullable(type),
-                defaultValue.Value,
-                description.Value,
+                required,
+                type,
+                defaultValue,
+                description,
                 serializedAdditionalRawData);
         }
 

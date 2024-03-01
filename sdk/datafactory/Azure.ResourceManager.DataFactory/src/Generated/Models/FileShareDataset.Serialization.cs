@@ -158,20 +158,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
-            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
+            string description = default;
+            DataFactoryElement<IList<DatasetDataElement>> structure = default;
+            DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            Optional<DatasetFolder> folder = default;
-            Optional<DataFactoryElement<string>> folderPath = default;
-            Optional<DataFactoryElement<string>> fileName = default;
-            Optional<DataFactoryElement<string>> modifiedDatetimeStart = default;
-            Optional<DataFactoryElement<string>> modifiedDatetimeEnd = default;
-            Optional<DatasetStorageFormat> format = default;
-            Optional<DataFactoryElement<string>> fileFilter = default;
-            Optional<DatasetCompression> compression = default;
+            DatasetFolder folder = default;
+            DataFactoryElement<string> folderPath = default;
+            DataFactoryElement<string> fileName = default;
+            DataFactoryElement<string> modifiedDatetimeStart = default;
+            DataFactoryElement<string> modifiedDatetimeEnd = default;
+            DatasetStorageFormat format = default;
+            DataFactoryElement<string> fileFilter = default;
+            DatasetCompression compression = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -333,21 +333,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new FileShareDataset(
                 type,
-                description.Value,
-                structure.Value,
-                schema.Value,
+                description,
+                structure,
+                schema,
                 linkedServiceName,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
-                folder.Value,
+                folder,
                 additionalProperties,
-                folderPath.Value,
-                fileName.Value,
-                modifiedDatetimeStart.Value,
-                modifiedDatetimeEnd.Value,
-                format.Value,
-                fileFilter.Value,
-                compression.Value);
+                folderPath,
+                fileName,
+                modifiedDatetimeStart,
+                modifiedDatetimeEnd,
+                format,
+                fileFilter,
+                compression);
         }
 
         BinaryData IPersistableModel<FileShareDataset>.Write(ModelReaderWriterOptions options)

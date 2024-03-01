@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 return null;
             }
             IReadOnlyList<MoverResourceSetData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoveCollectionResultList(value ?? new ChangeTrackingList<MoverResourceSetData>(), nextLink.Value, serializedAdditionalRawData);
+            return new MoveCollectionResultList(value ?? new ChangeTrackingList<MoverResourceSetData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoveCollectionResultList>.Write(ModelReaderWriterOptions options)

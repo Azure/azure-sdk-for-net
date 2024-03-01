@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
             IReadOnlyList<string> availabilityZones = default;
             IReadOnlyList<string> additionalCapabilities = default;
-            Optional<StoragePoolSku> sku = default;
+            StoragePoolSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolZoneInfo(availabilityZones ?? new ChangeTrackingList<string>(), additionalCapabilities ?? new ChangeTrackingList<string>(), sku.Value, serializedAdditionalRawData);
+            return new DiskPoolZoneInfo(availabilityZones ?? new ChangeTrackingList<string>(), additionalCapabilities ?? new ChangeTrackingList<string>(), sku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolZoneInfo>.Write(ModelReaderWriterOptions options)

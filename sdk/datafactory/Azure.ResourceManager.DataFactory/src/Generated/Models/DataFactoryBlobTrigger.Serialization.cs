@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             IList<TriggerPipelineReference> pipelines = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryTriggerRuntimeState> runtimeState = default;
+            string description = default;
+            DataFactoryTriggerRuntimeState? runtimeState = default;
             IList<BinaryData> annotations = default;
             string folderPath = default;
             int maxConcurrency = default;
@@ -213,8 +213,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DataFactoryBlobTrigger(
                 type,
-                description.Value,
-                Optional.ToNullable(runtimeState),
+                description,
+                runtimeState,
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
                 pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(),

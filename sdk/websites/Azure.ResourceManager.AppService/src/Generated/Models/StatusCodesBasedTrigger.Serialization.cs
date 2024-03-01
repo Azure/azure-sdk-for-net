@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<int> status = default;
-            Optional<int> subStatus = default;
-            Optional<int> win32Status = default;
-            Optional<int> count = default;
-            Optional<string> timeInterval = default;
-            Optional<string> path = default;
+            int? status = default;
+            int? subStatus = default;
+            int? win32Status = default;
+            int? count = default;
+            string timeInterval = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StatusCodesBasedTrigger(
-                Optional.ToNullable(status),
-                Optional.ToNullable(subStatus),
-                Optional.ToNullable(win32Status),
-                Optional.ToNullable(count),
-                timeInterval.Value,
-                path.Value,
+                status,
+                subStatus,
+                win32Status,
+                count,
+                timeInterval,
+                path,
                 serializedAdditionalRawData);
         }
 

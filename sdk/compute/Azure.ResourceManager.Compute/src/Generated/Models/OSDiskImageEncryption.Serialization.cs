@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<OSDiskImageSecurityProfile> securityProfile = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
+            OSDiskImageSecurityProfile securityProfile = default;
+            ResourceIdentifier diskEncryptionSetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OSDiskImageEncryption(diskEncryptionSetId.Value, serializedAdditionalRawData, securityProfile.Value);
+            return new OSDiskImageEncryption(diskEncryptionSetId, serializedAdditionalRawData, securityProfile);
         }
 
         BinaryData IPersistableModel<OSDiskImageEncryption>.Write(ModelReaderWriterOptions options)

@@ -110,7 +110,7 @@ namespace Azure.AI.DocumentIntelligence
             IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
             IReadOnlyList<string> elements = default;
-            Optional<DocumentCaption> caption = default;
+            DocumentCaption caption = default;
             IReadOnlyList<DocumentFootnote> footnotes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -187,7 +187,7 @@ namespace Azure.AI.DocumentIntelligence
                 boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
                 spans,
                 elements ?? new ChangeTrackingList<string>(),
-                caption.Value,
+                caption,
                 footnotes ?? new ChangeTrackingList<DocumentFootnote>(),
                 serializedAdditionalRawData);
         }

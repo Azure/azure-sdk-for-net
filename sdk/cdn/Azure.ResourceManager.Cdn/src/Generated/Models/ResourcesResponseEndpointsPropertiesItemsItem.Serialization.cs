@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> endpointId = default;
-            Optional<bool> history = default;
+            string id = default;
+            string name = default;
+            string endpointId = default;
+            bool? history = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourcesResponseEndpointsPropertiesItemsItem(id.Value, name.Value, endpointId.Value, Optional.ToNullable(history), serializedAdditionalRawData);
+            return new ResourcesResponseEndpointsPropertiesItemsItem(id, name, endpointId, history, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourcesResponseEndpointsPropertiesItemsItem>.Write(ModelReaderWriterOptions options)

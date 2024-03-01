@@ -81,6 +81,8 @@ namespace Azure.Core
             RehydrationToken? rehydrationToken,
             string? apiVersionOverride = null)
         {
+            AssertNotNull(rehydrationToken, nameof(rehydrationToken));
+
             var lroDetails = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json).ToObjectFromJson<Dictionary<string, string>>();
             if (!Uri.TryCreate(lroDetails["initialUri"], UriKind.Absolute, out var startRequestUri))
             {
@@ -130,6 +132,13 @@ namespace Azure.Core
             OperationFinalStateVia finalStateVia,
             string? apiVersion)
         {
+            AssertNotNull(pipeline, nameof(pipeline));
+            AssertNotNull(requestMethod, nameof(requestMethod));
+            AssertNotNull(startRequestUri, nameof(startRequestUri));
+            AssertNotNull(nextRequestUri, nameof(nextRequestUri));
+            AssertNotNull(headerSource, nameof(headerSource));
+            AssertNotNull(finalStateVia, nameof(finalStateVia));
+
             _requestMethod = requestMethod;
             _headerSource = headerSource;
             _startRequestUri = startRequestUri;
@@ -484,6 +493,14 @@ namespace Azure.Core
 
             nextRequestUri = requestUri.AbsoluteUri;
             return HeaderSource.None;
+        }
+
+        private static void AssertNotNull<T>(T value, string name)
+        {
+            if (value is null)
+            {
+                throw new ArgumentNullException(name);
+            }
         }
 
         private enum HeaderSource

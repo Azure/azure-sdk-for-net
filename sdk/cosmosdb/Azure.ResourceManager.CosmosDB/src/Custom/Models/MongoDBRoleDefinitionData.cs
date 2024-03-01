@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB
         public MongoDBRoleDefinitionType? RoleDefinitionType { get; set; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void ReadRoleDefinitionType(JsonProperty property, ref Optional<MongoDBRoleDefinitionType> type)
+        internal static void ReadRoleDefinitionType(JsonProperty property, ref MongoDBRoleDefinitionType? type)
         {
             if (property.Value.ValueKind == JsonValueKind.Null)
             {

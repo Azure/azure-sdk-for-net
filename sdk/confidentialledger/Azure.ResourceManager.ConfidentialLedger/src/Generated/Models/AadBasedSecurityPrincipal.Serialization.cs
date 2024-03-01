@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Optional<Guid> principalId = default;
-            Optional<Guid> tenantId = default;
-            Optional<ConfidentialLedgerRoleName> ledgerRoleName = default;
+            Guid? principalId = default;
+            Guid? tenantId = default;
+            ConfidentialLedgerRoleName? ledgerRoleName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AadBasedSecurityPrincipal(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(ledgerRoleName), serializedAdditionalRawData);
+            return new AadBasedSecurityPrincipal(principalId, tenantId, ledgerRoleName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AadBasedSecurityPrincipal>.Write(ModelReaderWriterOptions options)

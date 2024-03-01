@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
+            string primaryKey = default;
+            string secondaryKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchServiceAdminKeyResult(primaryKey.Value, secondaryKey.Value, serializedAdditionalRawData);
+            return new SearchServiceAdminKeyResult(primaryKey, secondaryKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchServiceAdminKeyResult>.Write(ModelReaderWriterOptions options)

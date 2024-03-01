@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<bool> history = default;
+            string id = default;
+            string name = default;
+            bool? history = default;
             IReadOnlyList<ResourcesResponseEndpointsPropertiesItemsItem> customDomains = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourcesResponseEndpointsItem(id.Value, name.Value, Optional.ToNullable(history), customDomains ?? new ChangeTrackingList<ResourcesResponseEndpointsPropertiesItemsItem>(), serializedAdditionalRawData);
+            return new ResourcesResponseEndpointsItem(id, name, history, customDomains ?? new ChangeTrackingList<ResourcesResponseEndpointsPropertiesItemsItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourcesResponseEndpointsItem>.Write(ModelReaderWriterOptions options)

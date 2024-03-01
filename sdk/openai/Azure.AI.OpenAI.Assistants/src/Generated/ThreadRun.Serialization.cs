@@ -181,7 +181,7 @@ namespace Azure.AI.OpenAI.Assistants
             string threadId = default;
             string assistantId = default;
             RunStatus status = default;
-            Optional<RequiredAction> requiredAction = default;
+            RequiredAction requiredAction = default;
             RunError lastError = default;
             string model = default;
             string instructions = default;
@@ -330,7 +330,7 @@ namespace Azure.AI.OpenAI.Assistants
                 threadId,
                 assistantId,
                 status,
-                requiredAction.Value,
+                requiredAction,
                 lastError,
                 model,
                 instructions,

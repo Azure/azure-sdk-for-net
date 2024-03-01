@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> networkSecurityGroup = default;
-            Optional<EffectiveNetworkSecurityGroupAssociation> association = default;
+            WritableSubResource networkSecurityGroup = default;
+            EffectiveNetworkSecurityGroupAssociation association = default;
             IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules = default;
             IReadOnlyDictionary<string, IList<string>> tagMap = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveNetworkSecurityGroup(networkSecurityGroup, association.Value, effectiveSecurityRules ?? new ChangeTrackingList<EffectiveNetworkSecurityRule>(), tagMap ?? new ChangeTrackingDictionary<string, IList<string>>(), serializedAdditionalRawData);
+            return new EffectiveNetworkSecurityGroup(networkSecurityGroup, association, effectiveSecurityRules ?? new ChangeTrackingList<EffectiveNetworkSecurityRule>(), tagMap ?? new ChangeTrackingDictionary<string, IList<string>>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveNetworkSecurityGroup>.Write(ModelReaderWriterOptions options)

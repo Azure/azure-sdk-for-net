@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,10 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> assetName = default;
+            string assetName = default;
             string odataType = default;
-            Optional<MediaJobError> error = default;
-            Optional<string> label = default;
+            MediaJobError error = default;
+            string label = default;
             long progress = default;
             MediaJobState state = default;
             foreach (var property in element.EnumerateObject())
@@ -63,11 +62,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new MediaJobOutputAsset(
                 odataType,
-                error.Value,
-                label.Value,
+                error,
+                label,
                 progress,
                 state,
-                assetName.Value);
+                assetName);
         }
     }
 }

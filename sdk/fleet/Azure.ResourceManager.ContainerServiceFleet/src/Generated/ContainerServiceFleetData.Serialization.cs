@@ -118,15 +118,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            ETag? eTag = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<FleetProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            FleetProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,12 +223,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(eTag),
+                eTag,
                 identity,
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

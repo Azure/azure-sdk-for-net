@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string name = default;
-            Optional<string> codemirrorMode = default;
+            string codemirrorMode = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new NotebookLanguageInfo(name, codemirrorMode.Value, additionalProperties);
+            return new NotebookLanguageInfo(name, codemirrorMode, additionalProperties);
         }
 
         internal partial class NotebookLanguageInfoConverter : JsonConverter<NotebookLanguageInfo>

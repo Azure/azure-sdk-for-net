@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<ClientRegistration> registration = default;
-            Optional<LoginScopes> login = default;
-            Optional<AllowedAudiencesValidation> validation = default;
+            bool? enabled = default;
+            ClientRegistration registration = default;
+            LoginScopes login = default;
+            AllowedAudiencesValidation validation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceGoogleProvider(Optional.ToNullable(enabled), registration.Value, login.Value, validation.Value, serializedAdditionalRawData);
+            return new AppServiceGoogleProvider(enabled, registration, login, validation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceGoogleProvider>.Write(ModelReaderWriterOptions options)

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             UriFileExtensionMatchConditionType typeName = default;
             UriFileExtensionOperator @operator = default;
-            Optional<bool> negateCondition = default;
+            bool? negateCondition = default;
             IList<string> matchValues = default;
             IList<PreTransformCategory> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn.Models
             return new UriFileExtensionMatchCondition(
                 typeName,
                 @operator,
-                Optional.ToNullable(negateCondition),
+                negateCondition,
                 matchValues ?? new ChangeTrackingList<string>(),
                 transforms ?? new ChangeTrackingList<PreTransformCategory>(),
                 serializedAdditionalRawData);

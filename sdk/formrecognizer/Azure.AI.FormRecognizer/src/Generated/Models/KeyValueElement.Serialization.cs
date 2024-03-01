@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 return null;
             }
-            Optional<KeyValueType> type = default;
+            KeyValueType? type = default;
             string text = default;
             IReadOnlyList<float> boundingBox = default;
             IReadOnlyList<string> elements = default;
@@ -70,7 +70,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new KeyValueElement(Optional.ToNullable(type), text, boundingBox ?? new ChangeTrackingList<float>(), elements ?? new ChangeTrackingList<string>());
+            return new KeyValueElement(type, text, boundingBox ?? new ChangeTrackingList<float>(), elements ?? new ChangeTrackingList<string>());
         }
     }
 }

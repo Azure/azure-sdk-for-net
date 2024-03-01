@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> addressPrefix = default;
+            string name = default;
+            string addressPrefix = default;
             IList<string> addressPrefixes = default;
-            Optional<IPAllocationMethodEnum> ipAllocationMethod = default;
+            IPAllocationMethodEnum? ipAllocationMethod = default;
             IList<WritableSubResource> ipConfigurationReferences = default;
-            Optional<RouteTable> routeTable = default;
+            RouteTable routeTable = default;
             IList<IPPool> ipPools = default;
-            Optional<int> vlan = default;
+            int? vlan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -233,14 +233,14 @@ namespace Azure.ResourceManager.Hci.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new Subnet(
-                name.Value,
-                addressPrefix.Value,
+                name,
+                addressPrefix,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(ipAllocationMethod),
+                ipAllocationMethod,
                 ipConfigurationReferences ?? new ChangeTrackingList<WritableSubResource>(),
-                routeTable.Value,
+                routeTable,
                 ipPools ?? new ChangeTrackingList<IPPool>(),
-                Optional.ToNullable(vlan),
+                vlan,
                 serializedAdditionalRawData);
         }
 

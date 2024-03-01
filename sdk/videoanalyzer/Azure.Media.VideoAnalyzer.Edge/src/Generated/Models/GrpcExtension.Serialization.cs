@@ -53,10 +53,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             GrpcExtensionDataTransfer dataTransfer = default;
-            Optional<string> extensionConfiguration = default;
+            string extensionConfiguration = default;
             EndpointBase endpoint = default;
             ImageProperties image = default;
-            Optional<SamplingOptions> samplingOptions = default;
+            SamplingOptions samplingOptions = default;
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
@@ -118,9 +118,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 inputs,
                 endpoint,
                 image,
-                samplingOptions.Value,
+                samplingOptions,
                 dataTransfer,
-                extensionConfiguration.Value);
+                extensionConfiguration);
         }
     }
 }

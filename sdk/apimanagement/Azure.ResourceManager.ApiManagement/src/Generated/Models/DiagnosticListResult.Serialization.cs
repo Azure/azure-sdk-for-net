@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             IReadOnlyList<DiagnosticContractData> value = default;
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            long? count = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticListResult(value ?? new ChangeTrackingList<DiagnosticContractData>(), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
+            return new DiagnosticListResult(value ?? new ChangeTrackingList<DiagnosticContractData>(), count, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticListResult>.Write(ModelReaderWriterOptions options)

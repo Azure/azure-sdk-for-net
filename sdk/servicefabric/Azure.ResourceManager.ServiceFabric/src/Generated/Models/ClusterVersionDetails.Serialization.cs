@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<string> codeVersion = default;
-            Optional<DateTimeOffset> supportExpiryUtc = default;
-            Optional<ClusterEnvironment> environment = default;
+            string codeVersion = default;
+            DateTimeOffset? supportExpiryUtc = default;
+            ClusterEnvironment? environment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterVersionDetails(codeVersion.Value, Optional.ToNullable(supportExpiryUtc), Optional.ToNullable(environment), serializedAdditionalRawData);
+            return new ClusterVersionDetails(codeVersion, supportExpiryUtc, environment, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterVersionDetails>.Write(ModelReaderWriterOptions options)

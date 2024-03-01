@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> resourceGroupName = default;
-            Optional<string> scope = default;
-            Optional<Guid> scopeTenantId = default;
-            Optional<PurviewAccountScopeType> scopeType = default;
-            Optional<string> subscriptionId = default;
+            string accountName = default;
+            string resourceGroupName = default;
+            string scope = default;
+            Guid? scopeTenantId = default;
+            PurviewAccountScopeType? scopeType = default;
+            string subscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.Purview.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DefaultPurviewAccountPayload(
-                accountName.Value,
-                resourceGroupName.Value,
-                scope.Value,
-                Optional.ToNullable(scopeTenantId),
-                Optional.ToNullable(scopeType),
-                subscriptionId.Value,
+                accountName,
+                resourceGroupName,
+                scope,
+                scopeTenantId,
+                scopeType,
+                subscriptionId,
                 serializedAdditionalRawData);
         }
 

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DataBoxDoubleEncryption> doubleEncryption = default;
-            Optional<HardwareEncryption> hardwareEncryption = default;
+            DataBoxDoubleEncryption? doubleEncryption = default;
+            HardwareEncryption? hardwareEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEncryptionPreferences(Optional.ToNullable(doubleEncryption), Optional.ToNullable(hardwareEncryption), serializedAdditionalRawData);
+            return new DataBoxEncryptionPreferences(doubleEncryption, hardwareEncryption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEncryptionPreferences>.Write(ModelReaderWriterOptions options)

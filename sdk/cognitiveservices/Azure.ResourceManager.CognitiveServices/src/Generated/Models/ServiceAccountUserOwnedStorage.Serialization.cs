@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<Guid> identityClientId = default;
+            ResourceIdentifier resourceId = default;
+            Guid? identityClientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAccountUserOwnedStorage(resourceId.Value, Optional.ToNullable(identityClientId), serializedAdditionalRawData);
+            return new ServiceAccountUserOwnedStorage(resourceId, identityClientId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAccountUserOwnedStorage>.Write(ModelReaderWriterOptions options)

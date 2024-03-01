@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IReadOnlyDictionary<string, string> additionalDetails = default;
             int taskId = default;
             string taskName = default;
-            Optional<string> taskProgress = default;
+            string taskProgress = default;
             string taskStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 additionalDetails ?? new ChangeTrackingDictionary<string, string>(),
                 taskId,
                 taskName,
-                taskProgress.Value,
+                taskProgress,
                 taskStatus,
                 serializedAdditionalRawData);
         }

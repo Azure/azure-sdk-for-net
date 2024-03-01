@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> eventHubResourceId = default;
-            Optional<string> name = default;
+            ResourceIdentifier eventHubResourceId = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionRuleEventHubDirectDestination(eventHubResourceId.Value, name.Value, serializedAdditionalRawData);
+            return new DataCollectionRuleEventHubDirectDestination(eventHubResourceId, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleEventHubDirectDestination>.Write(ModelReaderWriterOptions options)

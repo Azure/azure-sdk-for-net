@@ -137,13 +137,13 @@ namespace Azure.ResourceManager.HDInsight.Containers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HDInsightProvisioningStatus> provisioningState = default;
-            Optional<string> clusterType = default;
-            Optional<string> deploymentId = default;
-            Optional<ComputeProfile> computeProfile = default;
-            Optional<ClusterProfile> clusterProfile = default;
-            Optional<string> status = default;
+            SystemData systemData = default;
+            HDInsightProvisioningStatus? provisioningState = default;
+            string clusterType = default;
+            string deploymentId = default;
+            ComputeProfile computeProfile = default;
+            ClusterProfile clusterProfile = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -255,15 +255,15 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
-                clusterType.Value,
-                deploymentId.Value,
-                computeProfile.Value,
-                clusterProfile.Value,
-                status.Value,
+                provisioningState,
+                clusterType,
+                deploymentId,
+                computeProfile,
+                clusterProfile,
+                status,
                 serializedAdditionalRawData);
         }
 

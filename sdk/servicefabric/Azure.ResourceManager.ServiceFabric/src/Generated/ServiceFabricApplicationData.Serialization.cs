@@ -179,24 +179,24 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> typeVersion = default;
+            SystemData systemData = default;
+            string typeVersion = default;
             IDictionary<string, string> parameters = default;
-            Optional<ApplicationUpgradePolicy> upgradePolicy = default;
-            Optional<long> minimumNodes = default;
-            Optional<long> maximumNodes = default;
-            Optional<bool> removeApplicationCapacity = default;
+            ApplicationUpgradePolicy upgradePolicy = default;
+            long? minimumNodes = default;
+            long? maximumNodes = default;
+            bool? removeApplicationCapacity = default;
             IList<ApplicationMetricDescription> metrics = default;
             IList<ApplicationUserAssignedIdentity> managedIdentities = default;
-            Optional<string> provisioningState = default;
-            Optional<string> typeName = default;
+            string provisioningState = default;
+            string typeName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -377,21 +377,21 @@ namespace Azure.ResourceManager.ServiceFabric
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                typeVersion.Value,
+                typeVersion,
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
-                upgradePolicy.Value,
-                Optional.ToNullable(minimumNodes),
-                Optional.ToNullable(maximumNodes),
-                Optional.ToNullable(removeApplicationCapacity),
+                upgradePolicy,
+                minimumNodes,
+                maximumNodes,
+                removeApplicationCapacity,
                 metrics ?? new ChangeTrackingList<ApplicationMetricDescription>(),
                 managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentity>(),
-                provisioningState.Value,
-                typeName.Value,
-                Optional.ToNullable(etag),
+                provisioningState,
+                typeName,
+                etag,
                 serializedAdditionalRawData);
         }
 

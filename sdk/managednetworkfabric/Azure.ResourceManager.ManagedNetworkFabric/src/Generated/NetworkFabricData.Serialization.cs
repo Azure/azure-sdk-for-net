@@ -196,25 +196,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
+            SystemData systemData = default;
+            string annotation = default;
             string networkFabricSku = default;
-            Optional<string> fabricVersion = default;
+            string fabricVersion = default;
             IReadOnlyList<string> routerIds = default;
             ResourceIdentifier networkFabricControllerId = default;
-            Optional<int> rackCount = default;
+            int? rackCount = default;
             int serverCountPerRack = default;
             string ipv4Prefix = default;
-            Optional<string> ipv6Prefix = default;
+            string ipv6Prefix = default;
             long fabricAsn = default;
             TerminalServerConfiguration terminalServerConfiguration = default;
             ManagementNetworkConfigurationProperties managementNetworkConfiguration = default;
             IReadOnlyList<string> racks = default;
             IReadOnlyList<string> l2IsolationDomains = default;
             IReadOnlyList<string> l3IsolationDomains = default;
-            Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -426,27 +426,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation.Value,
+                annotation,
                 networkFabricSku,
-                fabricVersion.Value,
+                fabricVersion,
                 routerIds ?? new ChangeTrackingList<string>(),
                 networkFabricControllerId,
-                Optional.ToNullable(rackCount),
+                rackCount,
                 serverCountPerRack,
                 ipv4Prefix,
-                ipv6Prefix.Value,
+                ipv6Prefix,
                 fabricAsn,
                 terminalServerConfiguration,
                 managementNetworkConfiguration,
                 racks ?? new ChangeTrackingList<string>(),
                 l2IsolationDomains ?? new ChangeTrackingList<string>(),
                 l3IsolationDomains ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(configurationState),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(administrativeState),
+                configurationState,
+                provisioningState,
+                administrativeState,
                 serializedAdditionalRawData);
         }
 

@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Network.Models
             }
             IList<string> dnsServers = default;
             IReadOnlyList<string> appliedDnsServers = default;
-            Optional<string> internalDnsNameLabel = default;
-            Optional<string> internalFqdn = default;
-            Optional<string> internalDomainNameSuffix = default;
+            string internalDnsNameLabel = default;
+            string internalFqdn = default;
+            string internalDomainNameSuffix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,9 +160,9 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkInterfaceDnsSettings(
                 dnsServers ?? new ChangeTrackingList<string>(),
                 appliedDnsServers ?? new ChangeTrackingList<string>(),
-                internalDnsNameLabel.Value,
-                internalFqdn.Value,
-                internalDomainNameSuffix.Value,
+                internalDnsNameLabel,
+                internalFqdn,
+                internalDomainNameSuffix,
                 serializedAdditionalRawData);
         }
 

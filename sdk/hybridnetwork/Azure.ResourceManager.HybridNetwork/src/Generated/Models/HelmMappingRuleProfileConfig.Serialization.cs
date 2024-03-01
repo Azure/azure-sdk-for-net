@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<HelmInstallConfig> installOptions = default;
-            Optional<HelmUpgradeConfig> upgradeOptions = default;
+            HelmInstallConfig installOptions = default;
+            HelmUpgradeConfig upgradeOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HelmMappingRuleProfileConfig(installOptions.Value, upgradeOptions.Value, serializedAdditionalRawData);
+            return new HelmMappingRuleProfileConfig(installOptions, upgradeOptions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HelmMappingRuleProfileConfig>.Write(ModelReaderWriterOptions options)

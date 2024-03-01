@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MonitoringFeatureDataType dataType = "Unknown";
-            Optional<MonitoringThreshold> threshold = default;
+            MonitoringThreshold threshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDataQualityMetricThresholdBase(dataType, threshold.Value, serializedAdditionalRawData);
+            return new UnknownDataQualityMetricThresholdBase(dataType, threshold, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataQualityMetricThresholdBase>.Write(ModelReaderWriterOptions options)

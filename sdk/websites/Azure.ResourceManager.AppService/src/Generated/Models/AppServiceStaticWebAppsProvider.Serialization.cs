@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<AppServiceStaticWebAppsRegistration> registration = default;
+            bool? enabled = default;
+            AppServiceStaticWebAppsRegistration registration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceStaticWebAppsProvider(Optional.ToNullable(enabled), registration.Value, serializedAdditionalRawData);
+            return new AppServiceStaticWebAppsProvider(enabled, registration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceStaticWebAppsProvider>.Write(ModelReaderWriterOptions options)

@@ -131,13 +131,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> id0 = default;
-            Optional<AsyncOperationStatus> status = default;
-            Optional<DateTimeOffset> started = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<string> resultInfo = default;
-            Optional<ErrorResponseBody> error = default;
+            SystemData systemData = default;
+            string id0 = default;
+            AsyncOperationStatus? status = default;
+            DateTimeOffset? started = default;
+            DateTimeOffset? updated = default;
+            string resultInfo = default;
+            ErrorResponseBody error = default;
             IReadOnlyList<OperationResultLogItemContract> actionLog = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -249,13 +249,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                id0.Value,
-                Optional.ToNullable(status),
-                Optional.ToNullable(started),
-                Optional.ToNullable(updated),
-                resultInfo.Value,
-                error.Value,
+                systemData,
+                id0,
+                status,
+                started,
+                updated,
+                resultInfo,
+                error,
                 actionLog ?? new ChangeTrackingList<OperationResultLogItemContract>(),
                 serializedAdditionalRawData);
         }

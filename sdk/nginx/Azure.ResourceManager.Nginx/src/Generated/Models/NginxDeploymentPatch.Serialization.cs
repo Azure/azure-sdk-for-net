@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
-            Optional<NginxResourceSku> sku = default;
-            Optional<AzureLocation> location = default;
-            Optional<NginxDeploymentUpdateProperties> properties = default;
+            NginxResourceSku sku = default;
+            AzureLocation? location = default;
+            NginxDeploymentUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxDeploymentPatch(
                 identity,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                sku.Value,
-                Optional.ToNullable(location),
-                properties.Value,
+                sku,
+                location,
+                properties,
                 serializedAdditionalRawData);
         }
 

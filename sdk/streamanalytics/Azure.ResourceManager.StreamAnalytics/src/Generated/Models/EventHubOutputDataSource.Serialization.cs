@@ -115,13 +115,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> serviceBusNamespace = default;
-            Optional<string> sharedAccessPolicyName = default;
-            Optional<string> sharedAccessPolicyKey = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
-            Optional<string> eventHubName = default;
-            Optional<int> partitionCount = default;
-            Optional<string> partitionKey = default;
+            string serviceBusNamespace = default;
+            string sharedAccessPolicyName = default;
+            string sharedAccessPolicyKey = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
+            string eventHubName = default;
+            int? partitionCount = default;
+            string partitionKey = default;
             IList<string> propertyColumns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -210,13 +210,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new EventHubOutputDataSource(
                 type,
                 serializedAdditionalRawData,
-                serviceBusNamespace.Value,
-                sharedAccessPolicyName.Value,
-                sharedAccessPolicyKey.Value,
-                Optional.ToNullable(authenticationMode),
-                eventHubName.Value,
-                Optional.ToNullable(partitionCount),
-                partitionKey.Value,
+                serviceBusNamespace,
+                sharedAccessPolicyName,
+                sharedAccessPolicyKey,
+                authenticationMode,
+                eventHubName,
+                partitionCount,
+                partitionKey,
                 propertyColumns ?? new ChangeTrackingList<string>());
         }
 

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> linkStatus = default;
-            Optional<string> macAddress = default;
-            Optional<string> name = default;
-            Optional<string> networkInterfaceId = default;
+            string linkStatus = default;
+            string macAddress = default;
+            string name = default;
+            string networkInterfaceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HardwareInventoryNetworkInterface(linkStatus.Value, macAddress.Value, name.Value, networkInterfaceId.Value, serializedAdditionalRawData);
+            return new HardwareInventoryNetworkInterface(linkStatus, macAddress, name, networkInterfaceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HardwareInventoryNetworkInterface>.Write(ModelReaderWriterOptions options)

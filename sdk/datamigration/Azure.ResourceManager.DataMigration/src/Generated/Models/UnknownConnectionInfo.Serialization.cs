@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            string userName = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData);
+            return new UnknownConnectionInfo(type, userName, password, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionInfo>.Write(ModelReaderWriterOptions options)

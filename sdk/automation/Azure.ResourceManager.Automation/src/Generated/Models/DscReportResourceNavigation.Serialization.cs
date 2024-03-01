@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> resourceId = default;
+            string resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscReportResourceNavigation(resourceId.Value, serializedAdditionalRawData);
+            return new DscReportResourceNavigation(resourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscReportResourceNavigation>.Write(ModelReaderWriterOptions options)

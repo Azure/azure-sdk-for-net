@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,9 +17,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
-            Optional<string> transactionId = default;
-            Optional<string> threadId = default;
+            CommunicationIdentifierModel recipientCommunicationIdentifier = default;
+            string transactionId = default;
+            string threadId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recipientCommunicationIdentifier"u8))
@@ -43,7 +42,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatEventBaseProperties(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value);
+            return new AcsChatEventBaseProperties(recipientCommunicationIdentifier, transactionId, threadId);
         }
     }
 }

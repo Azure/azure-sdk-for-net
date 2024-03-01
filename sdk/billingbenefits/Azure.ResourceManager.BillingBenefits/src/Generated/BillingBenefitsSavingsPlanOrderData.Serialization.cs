@@ -165,20 +165,20 @@ namespace Azure.ResourceManager.BillingBenefits
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<BillingBenefitsProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> billingScopeId = default;
-            Optional<ResourceIdentifier> billingProfileId = default;
-            Optional<string> customerId = default;
-            Optional<ResourceIdentifier> billingAccountId = default;
-            Optional<BillingBenefitsTerm> term = default;
-            Optional<BillingBenefitsBillingPlan> billingPlan = default;
-            Optional<DateTimeOffset> expiryDateTime = default;
-            Optional<DateTimeOffset> benefitStartTime = default;
-            Optional<BillingPlanInformation> planInformation = default;
+            SystemData systemData = default;
+            string displayName = default;
+            BillingBenefitsProvisioningState? provisioningState = default;
+            ResourceIdentifier billingScopeId = default;
+            ResourceIdentifier billingProfileId = default;
+            string customerId = default;
+            ResourceIdentifier billingAccountId = default;
+            BillingBenefitsTerm? term = default;
+            BillingBenefitsBillingPlan? billingPlan = default;
+            DateTimeOffset? expiryDateTime = default;
+            DateTimeOffset? benefitStartTime = default;
+            BillingPlanInformation planInformation = default;
             IList<string> savingsPlans = default;
-            Optional<BillingBenefitsExtendedStatusInfo> extendedStatusInfo = default;
+            BillingBenefitsExtendedStatusInfo extendedStatusInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -348,21 +348,21 @@ namespace Azure.ResourceManager.BillingBenefits
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 sku,
-                displayName.Value,
-                Optional.ToNullable(provisioningState),
-                billingScopeId.Value,
-                billingProfileId.Value,
-                customerId.Value,
-                billingAccountId.Value,
-                Optional.ToNullable(term),
-                Optional.ToNullable(billingPlan),
-                Optional.ToNullable(expiryDateTime),
-                Optional.ToNullable(benefitStartTime),
-                planInformation.Value,
+                displayName,
+                provisioningState,
+                billingScopeId,
+                billingProfileId,
+                customerId,
+                billingAccountId,
+                term,
+                billingPlan,
+                expiryDateTime,
+                benefitStartTime,
+                planInformation,
                 savingsPlans ?? new ChangeTrackingList<string>(),
-                extendedStatusInfo.Value,
+                extendedStatusInfo,
                 serializedAdditionalRawData);
         }
 

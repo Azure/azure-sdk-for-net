@@ -57,9 +57,9 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<OciDescriptor> config = default;
+            OciDescriptor config = default;
             IList<OciDescriptor> layers = default;
-            Optional<OciAnnotations> annotations = default;
+            OciAnnotations annotations = default;
             int schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -102,7 +102,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new OciImageManifest(config.Value, layers ?? new ChangeTrackingList<OciDescriptor>(), annotations.Value, schemaVersion);
+            return new OciImageManifest(config, layers ?? new ChangeTrackingList<OciDescriptor>(), annotations, schemaVersion);
         }
 
         internal partial class OciImageManifestConverter : JsonConverter<OciImageManifest>

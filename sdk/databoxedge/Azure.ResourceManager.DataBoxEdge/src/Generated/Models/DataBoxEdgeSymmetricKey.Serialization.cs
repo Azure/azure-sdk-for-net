@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<AsymmetricEncryptedSecret> connectionString = default;
+            AsymmetricEncryptedSecret connectionString = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeSymmetricKey(connectionString.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeSymmetricKey(connectionString, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeSymmetricKey>.Write(ModelReaderWriterOptions options)

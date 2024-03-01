@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             IDictionary<string, BinaryData> globalParameters = default;
@@ -321,14 +321,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new AzureMLBatchExecutionActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
                 additionalProperties,
                 linkedServiceName,
-                policy.Value,
+                policy,
                 globalParameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 webServiceOutputs ?? new ChangeTrackingDictionary<string, AzureMLWebServiceFile>(),
                 webServiceInputs ?? new ChangeTrackingDictionary<string, AzureMLWebServiceFile>());

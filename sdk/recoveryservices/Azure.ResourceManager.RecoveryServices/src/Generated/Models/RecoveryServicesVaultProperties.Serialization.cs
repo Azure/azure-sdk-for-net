@@ -144,21 +144,21 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<string> provisioningState = default;
-            Optional<VaultUpgradeDetails> upgradeDetails = default;
+            string provisioningState = default;
+            VaultUpgradeDetails upgradeDetails = default;
             IReadOnlyList<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections = default;
-            Optional<VaultPrivateEndpointState> privateEndpointStateForBackup = default;
-            Optional<VaultPrivateEndpointState> privateEndpointStateForSiteRecovery = default;
-            Optional<VaultPropertiesEncryption> encryption = default;
-            Optional<VaultPropertiesMoveDetails> moveDetails = default;
-            Optional<ResourceMoveState> moveState = default;
-            Optional<BackupStorageVersion> backupStorageVersion = default;
-            Optional<VaultPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<VaultMonitoringSettings> monitoringSettings = default;
-            Optional<RestoreSettings> restoreSettings = default;
-            Optional<VaultPropertiesRedundancySettings> redundancySettings = default;
-            Optional<RecoveryServicesSecuritySettings> securitySettings = default;
-            Optional<SecureScoreLevel> secureScore = default;
+            VaultPrivateEndpointState? privateEndpointStateForBackup = default;
+            VaultPrivateEndpointState? privateEndpointStateForSiteRecovery = default;
+            VaultPropertiesEncryption encryption = default;
+            VaultPropertiesMoveDetails moveDetails = default;
+            ResourceMoveState? moveState = default;
+            BackupStorageVersion? backupStorageVersion = default;
+            VaultPublicNetworkAccess? publicNetworkAccess = default;
+            VaultMonitoringSettings monitoringSettings = default;
+            RestoreSettings restoreSettings = default;
+            VaultPropertiesRedundancySettings redundancySettings = default;
+            RecoveryServicesSecuritySettings securitySettings = default;
+            SecureScoreLevel? secureScore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -306,21 +306,21 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RecoveryServicesVaultProperties(
-                provisioningState.Value,
-                upgradeDetails.Value,
+                provisioningState,
+                upgradeDetails,
                 privateEndpointConnections ?? new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>(),
-                Optional.ToNullable(privateEndpointStateForBackup),
-                Optional.ToNullable(privateEndpointStateForSiteRecovery),
-                encryption.Value,
-                moveDetails.Value,
-                Optional.ToNullable(moveState),
-                Optional.ToNullable(backupStorageVersion),
-                Optional.ToNullable(publicNetworkAccess),
-                monitoringSettings.Value,
-                restoreSettings.Value,
-                redundancySettings.Value,
-                securitySettings.Value,
-                Optional.ToNullable(secureScore),
+                privateEndpointStateForBackup,
+                privateEndpointStateForSiteRecovery,
+                encryption,
+                moveDetails,
+                moveState,
+                backupStorageVersion,
+                publicNetworkAccess,
+                monitoringSettings,
+                restoreSettings,
+                redundancySettings,
+                securitySettings,
+                secureScore,
                 serializedAdditionalRawData);
         }
 

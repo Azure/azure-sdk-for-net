@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             IReadOnlyList<IntegrationServiceEnvironmentSkuDefinition> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentSkuList(value ?? new ChangeTrackingList<IntegrationServiceEnvironmentSkuDefinition>(), nextLink.Value, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentSkuList(value ?? new ChangeTrackingList<IntegrationServiceEnvironmentSkuDefinition>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentSkuList>.Write(ModelReaderWriterOptions options)

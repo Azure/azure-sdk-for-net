@@ -156,20 +156,20 @@ namespace Azure.ResourceManager.KeyVault.Models
             Guid tenantId = default;
             KeyVaultSku sku = default;
             IList<KeyVaultAccessPolicy> accessPolicies = default;
-            Optional<Uri> vaultUri = default;
-            Optional<string> hsmPoolResourceId = default;
-            Optional<bool> enabledForDeployment = default;
-            Optional<bool> enabledForDiskEncryption = default;
-            Optional<bool> enabledForTemplateDeployment = default;
-            Optional<bool> enableSoftDelete = default;
-            Optional<int> softDeleteRetentionInDays = default;
-            Optional<bool> enableRbacAuthorization = default;
-            Optional<KeyVaultCreateMode> createMode = default;
-            Optional<bool> enablePurgeProtection = default;
-            Optional<KeyVaultNetworkRuleSet> networkAcls = default;
-            Optional<KeyVaultProvisioningState> provisioningState = default;
+            Uri vaultUri = default;
+            string hsmPoolResourceId = default;
+            bool? enabledForDeployment = default;
+            bool? enabledForDiskEncryption = default;
+            bool? enabledForTemplateDeployment = default;
+            bool? enableSoftDelete = default;
+            int? softDeleteRetentionInDays = default;
+            bool? enableRbacAuthorization = default;
+            KeyVaultCreateMode? createMode = default;
+            bool? enablePurgeProtection = default;
+            KeyVaultNetworkRuleSet networkAcls = default;
+            KeyVaultProvisioningState? provisioningState = default;
             IReadOnlyList<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections = default;
-            Optional<string> publicNetworkAccess = default;
+            string publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -331,20 +331,20 @@ namespace Azure.ResourceManager.KeyVault.Models
                 tenantId,
                 sku,
                 accessPolicies ?? new ChangeTrackingList<KeyVaultAccessPolicy>(),
-                vaultUri.Value,
-                hsmPoolResourceId.Value,
-                Optional.ToNullable(enabledForDeployment),
-                Optional.ToNullable(enabledForDiskEncryption),
-                Optional.ToNullable(enabledForTemplateDeployment),
-                Optional.ToNullable(enableSoftDelete),
-                Optional.ToNullable(softDeleteRetentionInDays),
-                Optional.ToNullable(enableRbacAuthorization),
-                Optional.ToNullable(createMode),
-                Optional.ToNullable(enablePurgeProtection),
-                networkAcls.Value,
-                Optional.ToNullable(provisioningState),
+                vaultUri,
+                hsmPoolResourceId,
+                enabledForDeployment,
+                enabledForDiskEncryption,
+                enabledForTemplateDeployment,
+                enableSoftDelete,
+                softDeleteRetentionInDays,
+                enableRbacAuthorization,
+                createMode,
+                enablePurgeProtection,
+                networkAcls,
+                provisioningState,
                 privateEndpointConnections ?? new ChangeTrackingList<KeyVaultPrivateEndpointConnectionItemData>(),
-                publicNetworkAccess.Value,
+                publicNetworkAccess,
                 serializedAdditionalRawData);
         }
 

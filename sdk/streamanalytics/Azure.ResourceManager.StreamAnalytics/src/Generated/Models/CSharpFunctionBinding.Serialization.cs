@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> dllPath = default;
-            Optional<string> @class = default;
-            Optional<string> method = default;
-            Optional<StreamingJobFunctionUpdateMode> updateMode = default;
+            string dllPath = default;
+            string @class = default;
+            string method = default;
+            StreamingJobFunctionUpdateMode? updateMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new CSharpFunctionBinding(
                 type,
                 serializedAdditionalRawData,
-                dllPath.Value,
-                @class.Value,
-                method.Value,
-                Optional.ToNullable(updateMode));
+                dllPath,
+                @class,
+                method,
+                updateMode);
         }
 
         BinaryData IPersistableModel<CSharpFunctionBinding>.Write(ModelReaderWriterOptions options)

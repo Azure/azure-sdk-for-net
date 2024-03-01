@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<AzureCoreArmTemplateArtifactProfile> artifactProfile = default;
-            Optional<AzureCoreArmTemplateDeployMappingRuleProfile> deployParametersMappingRuleProfile = default;
+            AzureCoreArmTemplateArtifactProfile artifactProfile = default;
+            AzureCoreArmTemplateDeployMappingRuleProfile deployParametersMappingRuleProfile = default;
             AzureCoreArtifactType artifactType = default;
-            Optional<string> name = default;
-            Optional<DependsOnProfile> dependsOnProfile = default;
+            string name = default;
+            DependsOnProfile dependsOnProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AzureCoreNetworkFunctionArmTemplateApplication(
-                name.Value,
-                dependsOnProfile.Value,
+                name,
+                dependsOnProfile,
                 serializedAdditionalRawData,
                 artifactType,
-                artifactProfile.Value,
-                deployParametersMappingRuleProfile.Value);
+                artifactProfile,
+                deployParametersMappingRuleProfile);
         }
 
         BinaryData IPersistableModel<AzureCoreNetworkFunctionArmTemplateApplication>.Write(ModelReaderWriterOptions options)

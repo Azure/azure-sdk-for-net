@@ -45,12 +45,12 @@ namespace Azure.Messaging.EventGrid.Models
                 return null;
             }
             string id = default;
-            Optional<string> topic = default;
+            string topic = default;
             string subject = default;
             JsonElement data = default;
             string eventType = default;
             DateTimeOffset eventTime = default;
-            Optional<string> metadataVersion = default;
+            string metadataVersion = default;
             string dataVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -97,12 +97,12 @@ namespace Azure.Messaging.EventGrid.Models
             }
             return new EventGridEventInternal(
                 id,
-                topic.Value,
+                topic,
                 subject,
                 data,
                 eventType,
                 eventTime,
-                metadataVersion.Value,
+                metadataVersion,
                 dataVersion);
         }
 

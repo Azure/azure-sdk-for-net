@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<GallerySharingPermissionType> permissions = default;
+            GallerySharingPermissionType? permissions = default;
             IReadOnlyList<SharingProfileGroup> groups = default;
-            Optional<CommunityGalleryInfo> communityGalleryInfo = default;
+            CommunityGalleryInfo communityGalleryInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharingProfile(Optional.ToNullable(permissions), groups ?? new ChangeTrackingList<SharingProfileGroup>(), communityGalleryInfo.Value, serializedAdditionalRawData);
+            return new SharingProfile(permissions, groups ?? new ChangeTrackingList<SharingProfileGroup>(), communityGalleryInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharingProfile>.Write(ModelReaderWriterOptions options)

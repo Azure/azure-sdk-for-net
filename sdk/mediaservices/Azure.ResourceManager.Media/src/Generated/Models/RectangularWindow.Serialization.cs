@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> left = default;
-            Optional<string> top = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
+            string left = default;
+            string top = default;
+            string width = default;
+            string height = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RectangularWindow(left.Value, top.Value, width.Value, height.Value, serializedAdditionalRawData);
+            return new RectangularWindow(left, top, width, height, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RectangularWindow>.Write(ModelReaderWriterOptions options)

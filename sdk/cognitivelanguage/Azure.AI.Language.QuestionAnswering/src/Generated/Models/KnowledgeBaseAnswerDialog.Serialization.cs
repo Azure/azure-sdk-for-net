@@ -19,7 +19,7 @@ namespace Azure.AI.Language.QuestionAnswering
             {
                 return null;
             }
-            Optional<bool> isContextOnly = default;
+            bool? isContextOnly = default;
             IReadOnlyList<KnowledgeBaseAnswerPrompt> prompts = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     continue;
                 }
             }
-            return new KnowledgeBaseAnswerDialog(Optional.ToNullable(isContextOnly), prompts ?? new ChangeTrackingList<KnowledgeBaseAnswerPrompt>());
+            return new KnowledgeBaseAnswerDialog(isContextOnly, prompts ?? new ChangeTrackingList<KnowledgeBaseAnswerPrompt>());
         }
     }
 }

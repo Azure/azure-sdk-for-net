@@ -171,16 +171,16 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string azureGroupId = default;
-            Optional<BareMetalMachineKeySetDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
+            BareMetalMachineKeySetDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
             DateTimeOffset expiration = default;
             IList<IPAddress> jumpHostsAllowed = default;
-            Optional<DateTimeOffset> lastValidation = default;
-            Optional<string> osGroupName = default;
+            DateTimeOffset? lastValidation = default;
+            string osGroupName = default;
             BareMetalMachineKeySetPrivilegeLevel privilegeLevel = default;
-            Optional<BareMetalMachineKeySetProvisioningState> provisioningState = default;
+            BareMetalMachineKeySetProvisioningState? provisioningState = default;
             IList<KeySetUser> userList = default;
             IReadOnlyList<KeySetUserStatus> userListStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -350,19 +350,19 @@ namespace Azure.ResourceManager.NetworkCloud
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
                 azureGroupId,
-                Optional.ToNullable(detailedStatus),
-                detailedStatusMessage.Value,
+                detailedStatus,
+                detailedStatusMessage,
                 expiration,
                 jumpHostsAllowed,
-                Optional.ToNullable(lastValidation),
-                osGroupName.Value,
+                lastValidation,
+                osGroupName,
                 privilegeLevel,
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 userList,
                 userListStatus ?? new ChangeTrackingList<KeySetUserStatus>(),
                 serializedAdditionalRawData);

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 return null;
             }
             IReadOnlyList<VirtualWorkspaceData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceList(value ?? new ChangeTrackingList<VirtualWorkspaceData>(), nextLink.Value, serializedAdditionalRawData);
+            return new WorkspaceList(value ?? new ChangeTrackingList<VirtualWorkspaceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceList>.Write(ModelReaderWriterOptions options)

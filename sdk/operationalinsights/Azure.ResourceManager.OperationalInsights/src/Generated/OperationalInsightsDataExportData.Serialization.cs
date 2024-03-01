@@ -143,15 +143,15 @@ namespace Azure.ResourceManager.OperationalInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> dataExportId = default;
+            SystemData systemData = default;
+            Guid? dataExportId = default;
             IList<string> tableNames = default;
-            Optional<bool> enable = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<DateTimeOffset> lastModifiedDate = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<OperationalInsightsDataExportDestinationType> type0 = default;
-            Optional<string> eventHubName = default;
+            bool? enable = default;
+            DateTimeOffset? createdDate = default;
+            DateTimeOffset? lastModifiedDate = default;
+            ResourceIdentifier resourceId = default;
+            OperationalInsightsDataExportDestinationType? type0 = default;
+            string eventHubName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -299,15 +299,15 @@ namespace Azure.ResourceManager.OperationalInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(dataExportId),
+                systemData,
+                dataExportId,
                 tableNames ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(enable),
-                Optional.ToNullable(createdDate),
-                Optional.ToNullable(lastModifiedDate),
-                resourceId.Value,
-                Optional.ToNullable(type0),
-                eventHubName.Value,
+                enable,
+                createdDate,
+                lastModifiedDate,
+                resourceId,
+                type0,
+                eventHubName,
                 serializedAdditionalRawData);
         }
 

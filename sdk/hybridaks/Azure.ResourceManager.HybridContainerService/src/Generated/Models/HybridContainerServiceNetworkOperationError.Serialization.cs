@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
+            string code = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceNetworkOperationError(code.Value, message.Value, serializedAdditionalRawData);
+            return new HybridContainerServiceNetworkOperationError(code, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceNetworkOperationError>.Write(ModelReaderWriterOptions options)

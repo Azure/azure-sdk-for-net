@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<BillingBenefitsPrice> pricingCurrencyTotal = default;
-            Optional<DateTimeOffset> startDate = default;
-            Optional<DateTimeOffset> nextPaymentDueDate = default;
+            BillingBenefitsPrice pricingCurrencyTotal = default;
+            DateTimeOffset? startDate = default;
+            DateTimeOffset? nextPaymentDueDate = default;
             IList<SavingsPlanOrderPaymentDetail> transactions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingPlanInformation(pricingCurrencyTotal.Value, Optional.ToNullable(startDate), Optional.ToNullable(nextPaymentDueDate), transactions ?? new ChangeTrackingList<SavingsPlanOrderPaymentDetail>(), serializedAdditionalRawData);
+            return new BillingPlanInformation(pricingCurrencyTotal, startDate, nextPaymentDueDate, transactions ?? new ChangeTrackingList<SavingsPlanOrderPaymentDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingPlanInformation>.Write(ModelReaderWriterOptions options)

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<long> currentValue = default;
-            Optional<long> limit = default;
-            Optional<SignalRUsageName> name = default;
-            Optional<string> unit = default;
+            ResourceIdentifier id = default;
+            long? currentValue = default;
+            long? limit = default;
+            SignalRUsageName name = default;
+            string unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.SignalR.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SignalRUsage(
-                id.Value,
-                Optional.ToNullable(currentValue),
-                Optional.ToNullable(limit),
-                name.Value,
-                unit.Value,
+                id,
+                currentValue,
+                limit,
+                name,
+                unit,
                 serializedAdditionalRawData);
         }
 

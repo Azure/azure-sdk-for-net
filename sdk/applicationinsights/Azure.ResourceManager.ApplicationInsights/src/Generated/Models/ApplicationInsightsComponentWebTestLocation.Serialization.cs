@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> tag = default;
+            string displayName = default;
+            string tag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentWebTestLocation(displayName.Value, tag.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentWebTestLocation(displayName, tag, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentWebTestLocation>.Write(ModelReaderWriterOptions options)

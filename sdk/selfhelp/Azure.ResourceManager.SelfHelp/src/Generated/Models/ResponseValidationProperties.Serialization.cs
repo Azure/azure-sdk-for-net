@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> regex = default;
-            Optional<bool> isRequired = default;
-            Optional<string> validationErrorMessage = default;
-            Optional<long> maxLength = default;
+            string regex = default;
+            bool? isRequired = default;
+            string validationErrorMessage = default;
+            long? maxLength = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResponseValidationProperties(regex.Value, Optional.ToNullable(isRequired), validationErrorMessage.Value, Optional.ToNullable(maxLength), serializedAdditionalRawData);
+            return new ResponseValidationProperties(regex, isRequired, validationErrorMessage, maxLength, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResponseValidationProperties>.Write(ModelReaderWriterOptions options)

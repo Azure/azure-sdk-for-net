@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> continuationToken = default;
+            string continuationToken = default;
             DateTimeOffset lastUpdatedAfter = default;
             DateTimeOffset lastUpdatedBefore = default;
             IList<RunQueryFilter> filters = default;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RunFilterContent(
-                continuationToken.Value,
+                continuationToken,
                 lastUpdatedAfter,
                 lastUpdatedBefore,
                 filters ?? new ChangeTrackingList<RunQueryFilter>(),

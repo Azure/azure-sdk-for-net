@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> terms = default;
-            Optional<bool> subscriptionRequired = default;
-            Optional<bool> approvalRequired = default;
-            Optional<int> subscriptionsLimit = default;
-            Optional<ApiManagementProductState> state = default;
-            Optional<string> displayName = default;
+            SystemData systemData = default;
+            string description = default;
+            string terms = default;
+            bool? subscriptionRequired = default;
+            bool? approvalRequired = default;
+            int? subscriptionsLimit = default;
+            ApiManagementProductState? state = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,14 +236,14 @@ namespace Azure.ResourceManager.ApiManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                terms.Value,
-                Optional.ToNullable(subscriptionRequired),
-                Optional.ToNullable(approvalRequired),
-                Optional.ToNullable(subscriptionsLimit),
-                Optional.ToNullable(state),
-                displayName.Value,
+                systemData,
+                description,
+                terms,
+                subscriptionRequired,
+                approvalRequired,
+                subscriptionsLimit,
+                state,
+                displayName,
                 serializedAdditionalRawData);
         }
 

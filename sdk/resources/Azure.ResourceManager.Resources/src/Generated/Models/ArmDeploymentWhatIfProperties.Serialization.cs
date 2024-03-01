@@ -120,15 +120,15 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ArmDeploymentWhatIfSettings> whatIfSettings = default;
-            Optional<BinaryData> template = default;
-            Optional<ArmDeploymentTemplateLink> templateLink = default;
-            Optional<BinaryData> parameters = default;
-            Optional<ArmDeploymentParametersLink> parametersLink = default;
+            ArmDeploymentWhatIfSettings whatIfSettings = default;
+            BinaryData template = default;
+            ArmDeploymentTemplateLink templateLink = default;
+            BinaryData parameters = default;
+            ArmDeploymentParametersLink parametersLink = default;
             ArmDeploymentMode mode = default;
-            Optional<DebugSetting> debugSetting = default;
-            Optional<ErrorDeployment> onErrorDeployment = default;
-            Optional<ExpressionEvaluationOptions> expressionEvaluationOptions = default;
+            DebugSetting debugSetting = default;
+            ErrorDeployment onErrorDeployment = default;
+            ExpressionEvaluationOptions expressionEvaluationOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,16 +217,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ArmDeploymentWhatIfProperties(
-                template.Value,
-                templateLink.Value,
-                parameters.Value,
-                parametersLink.Value,
+                template,
+                templateLink,
+                parameters,
+                parametersLink,
                 mode,
-                debugSetting.Value,
-                onErrorDeployment.Value,
-                expressionEvaluationOptions.Value,
+                debugSetting,
+                onErrorDeployment,
+                expressionEvaluationOptions,
                 serializedAdditionalRawData,
-                whatIfSettings.Value);
+                whatIfSettings);
         }
 
         BinaryData IPersistableModel<ArmDeploymentWhatIfProperties>.Write(ModelReaderWriterOptions options)

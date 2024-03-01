@@ -91,15 +91,15 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             SearchIndexerDataSourceType type = default;
             DataSourceCredentials credentials = default;
             SearchIndexerDataContainer container = default;
-            Optional<SearchIndexerDataIdentity> identity = default;
-            Optional<DataChangeDetectionPolicy> dataChangeDetectionPolicy = default;
-            Optional<DataDeletionDetectionPolicy> dataDeletionDetectionPolicy = default;
-            Optional<string> odataEtag = default;
-            Optional<SearchResourceEncryptionKey> encryptionKey = default;
+            SearchIndexerDataIdentity identity = default;
+            DataChangeDetectionPolicy dataChangeDetectionPolicy = default;
+            DataDeletionDetectionPolicy dataDeletionDetectionPolicy = default;
+            string odataEtag = default;
+            SearchResourceEncryptionKey encryptionKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -175,15 +175,15 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new SearchIndexerDataSourceConnection(
                 name,
-                description.Value,
+                description,
                 type,
                 credentials,
                 container,
-                identity.Value,
-                dataChangeDetectionPolicy.Value,
-                dataDeletionDetectionPolicy.Value,
-                odataEtag.Value,
-                encryptionKey.Value);
+                identity,
+                dataChangeDetectionPolicy,
+                dataDeletionDetectionPolicy,
+                odataEtag,
+                encryptionKey);
         }
     }
 }

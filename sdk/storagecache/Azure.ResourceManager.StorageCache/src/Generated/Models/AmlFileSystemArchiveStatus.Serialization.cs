@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<ArchiveStatusType> state = default;
-            Optional<DateTimeOffset> lastCompletionTime = default;
-            Optional<DateTimeOffset> lastStartedTime = default;
-            Optional<int> percentComplete = default;
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
+            ArchiveStatusType? state = default;
+            DateTimeOffset? lastCompletionTime = default;
+            DateTimeOffset? lastStartedTime = default;
+            int? percentComplete = default;
+            string errorCode = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AmlFileSystemArchiveStatus(
-                Optional.ToNullable(state),
-                Optional.ToNullable(lastCompletionTime),
-                Optional.ToNullable(lastStartedTime),
-                Optional.ToNullable(percentComplete),
-                errorCode.Value,
-                errorMessage.Value,
+                state,
+                lastCompletionTime,
+                lastStartedTime,
+                percentComplete,
+                errorCode,
+                errorMessage,
                 serializedAdditionalRawData);
         }
 

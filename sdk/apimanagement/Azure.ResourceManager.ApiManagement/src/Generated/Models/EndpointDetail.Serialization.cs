@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<int> port = default;
-            Optional<string> region = default;
+            int? port = default;
+            string region = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointDetail(Optional.ToNullable(port), region.Value, serializedAdditionalRawData);
+            return new EndpointDetail(port, region, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointDetail>.Write(ModelReaderWriterOptions options)

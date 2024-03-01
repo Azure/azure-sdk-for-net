@@ -126,16 +126,16 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> thumbprintAlgorithm = default;
-            Optional<string> thumbprint = default;
-            Optional<BatchAccountCertificateFormat> format = default;
-            Optional<BinaryData> data = default;
-            Optional<string> password = default;
+            SystemData systemData = default;
+            string thumbprintAlgorithm = default;
+            string thumbprint = default;
+            BatchAccountCertificateFormat? format = default;
+            BinaryData data = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,13 +228,13 @@ namespace Azure.ResourceManager.Batch.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                thumbprintAlgorithm.Value,
-                thumbprint.Value,
-                Optional.ToNullable(format),
-                data.Value,
-                password.Value,
-                Optional.ToNullable(etag),
+                systemData,
+                thumbprintAlgorithm,
+                thumbprint,
+                format,
+                data,
+                password,
+                etag,
                 serializedAdditionalRawData);
         }
 

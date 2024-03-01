@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HybridWorkerGroup> groupType = default;
-            Optional<RunAsCredentialAssociationProperty> credential = default;
+            SystemData systemData = default;
+            HybridWorkerGroup? groupType = default;
+            RunAsCredentialAssociationProperty credential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.Automation
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(groupType),
-                credential.Value,
+                systemData,
+                groupType,
+                credential,
                 serializedAdditionalRawData);
         }
 

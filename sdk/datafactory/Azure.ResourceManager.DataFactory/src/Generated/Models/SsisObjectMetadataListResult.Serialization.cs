@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             IReadOnlyList<SsisObjectMetadata> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisObjectMetadataListResult(value ?? new ChangeTrackingList<SsisObjectMetadata>(), nextLink.Value, serializedAdditionalRawData);
+            return new SsisObjectMetadataListResult(value ?? new ChangeTrackingList<SsisObjectMetadata>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsisObjectMetadataListResult>.Write(ModelReaderWriterOptions options)

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             IReadOnlyList<DataReplicationFabricData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationFabricListResult(value ?? new ChangeTrackingList<DataReplicationFabricData>(), nextLink.Value, serializedAdditionalRawData);
+            return new DataReplicationFabricListResult(value ?? new ChangeTrackingList<DataReplicationFabricData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationFabricListResult>.Write(ModelReaderWriterOptions options)

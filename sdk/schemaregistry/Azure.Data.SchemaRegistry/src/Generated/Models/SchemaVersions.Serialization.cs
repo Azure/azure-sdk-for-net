@@ -20,7 +20,7 @@ namespace Azure.Data.SchemaRegistry.Models
                 return null;
             }
             IReadOnlyList<int> schemaVersions = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaVersions"u8))
@@ -43,7 +43,7 @@ namespace Azure.Data.SchemaRegistry.Models
                     continue;
                 }
             }
-            return new SchemaVersions(schemaVersions ?? new ChangeTrackingList<int>(), nextLink.Value);
+            return new SchemaVersions(schemaVersions ?? new ChangeTrackingList<int>(), nextLink);
         }
     }
 }

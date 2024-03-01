@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> assessmentTimestampUtcDate = default;
-            Optional<int> resourceCount = default;
+            SystemData systemData = default;
+            DateTimeOffset? assessmentTimestampUtcDate = default;
+            int? resourceCount = default;
             IReadOnlyList<ComplianceSegment> assessmentResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(assessmentTimestampUtcDate),
-                Optional.ToNullable(resourceCount),
+                systemData,
+                assessmentTimestampUtcDate,
+                resourceCount,
                 assessmentResult ?? new ChangeTrackingList<ComplianceSegment>(),
                 serializedAdditionalRawData);
         }

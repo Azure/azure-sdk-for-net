@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void ReadLongitude(JsonProperty property, ref Optional<double> longitude)
+        internal static void ReadLongitude(JsonProperty property, ref double? longitude)
         {
             if (property.Value.ValueKind == JsonValueKind.Null)
                 return;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void ReadLatitude(JsonProperty property, ref Optional<double> latitude)
+        internal static void ReadLatitude(JsonProperty property, ref double? latitude)
         {
             if (property.Value.ValueKind == JsonValueKind.Null)
                 return;

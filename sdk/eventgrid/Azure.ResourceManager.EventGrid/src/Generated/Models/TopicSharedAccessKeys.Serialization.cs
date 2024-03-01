@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> key1 = default;
-            Optional<string> key2 = default;
+            string key1 = default;
+            string key2 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopicSharedAccessKeys(key1.Value, key2.Value, serializedAdditionalRawData);
+            return new TopicSharedAccessKeys(key1, key2, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopicSharedAccessKeys>.Write(ModelReaderWriterOptions options)

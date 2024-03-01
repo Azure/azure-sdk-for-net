@@ -115,15 +115,15 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<GrafanaZoneRedundancy> zoneRedundancy = default;
-            Optional<GrafanaApiKey> apiKey = default;
-            Optional<DeterministicOutboundIP> deterministicOutboundIP = default;
-            Optional<GrafanaPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<GrafanaIntegrations> grafanaIntegrations = default;
-            Optional<EnterpriseConfigurations> enterpriseConfigurations = default;
-            Optional<GrafanaConfigurations> grafanaConfigurations = default;
+            GrafanaZoneRedundancy? zoneRedundancy = default;
+            GrafanaApiKey? apiKey = default;
+            DeterministicOutboundIP? deterministicOutboundIP = default;
+            GrafanaPublicNetworkAccess? publicNetworkAccess = default;
+            GrafanaIntegrations grafanaIntegrations = default;
+            EnterpriseConfigurations enterpriseConfigurations = default;
+            GrafanaConfigurations grafanaConfigurations = default;
             IDictionary<string, GrafanaPlugin> grafanaPlugins = default;
-            Optional<string> grafanaMajorVersion = default;
+            string grafanaMajorVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,15 +217,15 @@ namespace Azure.ResourceManager.Grafana.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagedGrafanaPatchProperties(
-                Optional.ToNullable(zoneRedundancy),
-                Optional.ToNullable(apiKey),
-                Optional.ToNullable(deterministicOutboundIP),
-                Optional.ToNullable(publicNetworkAccess),
-                grafanaIntegrations.Value,
-                enterpriseConfigurations.Value,
-                grafanaConfigurations.Value,
+                zoneRedundancy,
+                apiKey,
+                deterministicOutboundIP,
+                publicNetworkAccess,
+                grafanaIntegrations,
+                enterpriseConfigurations,
+                grafanaConfigurations,
                 grafanaPlugins ?? new ChangeTrackingDictionary<string, GrafanaPlugin>(),
-                grafanaMajorVersion.Value,
+                grafanaMajorVersion,
                 serializedAdditionalRawData);
         }
 

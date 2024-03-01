@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             DateTimeOffset startDate = default;
-            Optional<DateTimeOffset> endDate = default;
+            DateTimeOffset? endDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BudgetTimePeriod(startDate, Optional.ToNullable(endDate), serializedAdditionalRawData);
+            return new BudgetTimePeriod(startDate, endDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BudgetTimePeriod>.Write(ModelReaderWriterOptions options)

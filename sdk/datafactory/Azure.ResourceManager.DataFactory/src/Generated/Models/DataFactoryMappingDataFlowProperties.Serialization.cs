@@ -147,13 +147,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
+            string description = default;
             IList<BinaryData> annotations = default;
-            Optional<DataFlowFolder> folder = default;
+            DataFlowFolder folder = default;
             IList<DataFlowSource> sources = default;
             IList<DataFlowSink> sinks = default;
             IList<DataFlowTransformation> transformations = default;
-            Optional<string> script = default;
+            string script = default;
             IList<string> scriptLines = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -280,14 +280,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataFactoryMappingDataFlowProperties(
                 type,
-                description.Value,
+                description,
                 annotations ?? new ChangeTrackingList<BinaryData>(),
-                folder.Value,
+                folder,
                 serializedAdditionalRawData,
                 sources ?? new ChangeTrackingList<DataFlowSource>(),
                 sinks ?? new ChangeTrackingList<DataFlowSink>(),
                 transformations ?? new ChangeTrackingList<DataFlowTransformation>(),
-                script.Value,
+                script,
                 scriptLines ?? new ChangeTrackingList<string>());
         }
 

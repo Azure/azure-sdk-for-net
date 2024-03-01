@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             AdministrativeCredentials adminCredentials = default;
             long rackSlot = default;
             string serialNumber = default;
-            Optional<string> storageApplianceName = default;
+            string storageApplianceName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageApplianceConfiguration(adminCredentials, rackSlot, serialNumber, storageApplianceName.Value, serializedAdditionalRawData);
+            return new StorageApplianceConfiguration(adminCredentials, rackSlot, serialNumber, storageApplianceName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageApplianceConfiguration>.Write(ModelReaderWriterOptions options)

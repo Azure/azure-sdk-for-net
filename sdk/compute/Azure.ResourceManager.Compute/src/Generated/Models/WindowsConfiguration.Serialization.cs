@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> provisionVmAgent = default;
-            Optional<bool> enableAutomaticUpdates = default;
-            Optional<string> timeZone = default;
+            bool? provisionVmAgent = default;
+            bool? enableAutomaticUpdates = default;
+            string timeZone = default;
             IList<AdditionalUnattendContent> additionalUnattendContent = default;
-            Optional<PatchSettings> patchSettings = default;
-            Optional<WinRMConfiguration> winRM = default;
-            Optional<bool> enableVmAgentPlatformUpdates = default;
+            PatchSettings patchSettings = default;
+            WinRMConfiguration winRM = default;
+            bool? enableVmAgentPlatformUpdates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,13 +186,13 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new WindowsConfiguration(
-                Optional.ToNullable(provisionVmAgent),
-                Optional.ToNullable(enableAutomaticUpdates),
-                timeZone.Value,
+                provisionVmAgent,
+                enableAutomaticUpdates,
+                timeZone,
                 additionalUnattendContent ?? new ChangeTrackingList<AdditionalUnattendContent>(),
-                patchSettings.Value,
-                winRM.Value,
-                Optional.ToNullable(enableVmAgentPlatformUpdates),
+                patchSettings,
+                winRM,
+                enableVmAgentPlatformUpdates,
                 serializedAdditionalRawData);
         }
 

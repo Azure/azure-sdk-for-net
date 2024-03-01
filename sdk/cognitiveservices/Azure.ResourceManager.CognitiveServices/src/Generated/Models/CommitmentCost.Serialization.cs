@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> commitmentMeterId = default;
-            Optional<string> overageMeterId = default;
+            string commitmentMeterId = default;
+            string overageMeterId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommitmentCost(commitmentMeterId.Value, overageMeterId.Value, serializedAdditionalRawData);
+            return new CommitmentCost(commitmentMeterId, overageMeterId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommitmentCost>.Write(ModelReaderWriterOptions options)

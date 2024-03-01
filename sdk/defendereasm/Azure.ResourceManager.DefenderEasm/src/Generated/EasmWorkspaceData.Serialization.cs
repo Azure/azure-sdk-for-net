@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.DefenderEasm
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EasmResourceProvisioningState> provisioningState = default;
-            Optional<string> dataPlaneEndpoint = default;
+            SystemData systemData = default;
+            EasmResourceProvisioningState? provisioningState = default;
+            string dataPlaneEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,11 +203,11 @@ namespace Azure.ResourceManager.DefenderEasm
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
-                dataPlaneEndpoint.Value,
+                provisioningState,
+                dataPlaneEndpoint,
                 serializedAdditionalRawData);
         }
 

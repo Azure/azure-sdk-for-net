@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> annotation = default;
-            Optional<NetworkFabricConfigurationType> configurationType = default;
-            Optional<Uri> tapRulesUrl = default;
+            string annotation = default;
+            NetworkFabricConfigurationType? configurationType = default;
+            Uri tapRulesUrl = default;
             IList<NetworkTapRuleMatchConfiguration> matchConfigurations = default;
             IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -209,9 +209,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkTapRulePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                annotation.Value,
-                Optional.ToNullable(configurationType),
-                tapRulesUrl.Value,
+                annotation,
+                configurationType,
+                tapRulesUrl,
                 matchConfigurations ?? new ChangeTrackingList<NetworkTapRuleMatchConfiguration>(),
                 dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>());
         }

@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
+            string description = default;
             IList<BinaryData> annotations = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryManagedIdentityCredentialProperties(type, description.Value, annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, resourceId.Value);
+            return new DataFactoryManagedIdentityCredentialProperties(type, description, annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, resourceId);
         }
 
         BinaryData IPersistableModel<DataFactoryManagedIdentityCredentialProperties>.Write(ModelReaderWriterOptions options)

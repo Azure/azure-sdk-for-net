@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.VideoAnalyzerPreset": return VideoAnalyzerPreset.DeserializeVideoAnalyzerPreset(element, options);
                 }
             }
-            Optional<string> audioLanguage = default;
-            Optional<AudioAnalysisMode> mode = default;
+            string audioLanguage = default;
+            AudioAnalysisMode? mode = default;
             IDictionary<string, string> experimentalOptions = default;
             string odataType = "#Microsoft.Media.AudioAnalyzerPreset";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioAnalyzerPreset(odataType, serializedAdditionalRawData, audioLanguage.Value, Optional.ToNullable(mode), experimentalOptions ?? new ChangeTrackingDictionary<string, string>());
+            return new AudioAnalyzerPreset(odataType, serializedAdditionalRawData, audioLanguage, mode, experimentalOptions ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<AudioAnalyzerPreset>.Write(ModelReaderWriterOptions options)

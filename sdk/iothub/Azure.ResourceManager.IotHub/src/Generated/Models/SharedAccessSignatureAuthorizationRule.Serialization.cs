@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             string keyName = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
+            string primaryKey = default;
+            string secondaryKey = default;
             IotHubSharedAccessRight rights = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedAccessSignatureAuthorizationRule(keyName, primaryKey.Value, secondaryKey.Value, rights, serializedAdditionalRawData);
+            return new SharedAccessSignatureAuthorizationRule(keyName, primaryKey, secondaryKey, rights, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedAccessSignatureAuthorizationRule>.Write(ModelReaderWriterOptions options)

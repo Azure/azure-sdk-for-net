@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> source = default;
-            Optional<MachineLearningSourceType> sourceType = default;
-            Optional<string> mountName = default;
-            Optional<MachineLearningMountAction> mountAction = default;
-            Optional<string> createdBy = default;
-            Optional<string> mountPath = default;
-            Optional<MachineLearningMountState> mountState = default;
-            Optional<DateTimeOffset> mountedOn = default;
-            Optional<string> error = default;
+            string source = default;
+            MachineLearningSourceType? sourceType = default;
+            string mountName = default;
+            MachineLearningMountAction? mountAction = default;
+            string createdBy = default;
+            string mountPath = default;
+            MachineLearningMountState? mountState = default;
+            DateTimeOffset? mountedOn = default;
+            string error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,15 +190,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningComputeInstanceDataMount(
-                source.Value,
-                Optional.ToNullable(sourceType),
-                mountName.Value,
-                Optional.ToNullable(mountAction),
-                createdBy.Value,
-                mountPath.Value,
-                Optional.ToNullable(mountState),
-                Optional.ToNullable(mountedOn),
-                error.Value,
+                source,
+                sourceType,
+                mountName,
+                mountAction,
+                createdBy,
+                mountPath,
+                mountState,
+                mountedOn,
+                error,
                 serializedAdditionalRawData);
         }
 

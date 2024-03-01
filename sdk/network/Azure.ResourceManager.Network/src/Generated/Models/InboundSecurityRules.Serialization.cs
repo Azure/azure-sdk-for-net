@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<InboundSecurityRulesProtocol> protocol = default;
-            Optional<string> sourceAddressPrefix = default;
-            Optional<int> destinationPortRange = default;
+            InboundSecurityRulesProtocol? protocol = default;
+            string sourceAddressPrefix = default;
+            int? destinationPortRange = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InboundSecurityRules(Optional.ToNullable(protocol), sourceAddressPrefix.Value, Optional.ToNullable(destinationPortRange), serializedAdditionalRawData);
+            return new InboundSecurityRules(protocol, sourceAddressPrefix, destinationPortRange, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InboundSecurityRules>.Write(ModelReaderWriterOptions options)

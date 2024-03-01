@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> recoveryPointId = default;
-            Optional<DateTimeOffset> recoveryPointTime = default;
+            string recoveryPointId = default;
+            DateTimeOffset? recoveryPointTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestoreJobRecoveryPointDetails(recoveryPointId.Value, Optional.ToNullable(recoveryPointTime), serializedAdditionalRawData);
+            return new RestoreJobRecoveryPointDetails(recoveryPointId, recoveryPointTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestoreJobRecoveryPointDetails>.Write(ModelReaderWriterOptions options)

@@ -145,13 +145,13 @@ namespace Azure.ResourceManager.MobileNetwork
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            MobileNetworkProvisioningState? provisioningState = default;
             IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState = default;
             Ambr ueAmbr = default;
             WritableSubResource defaultSlice = default;
-            Optional<int> rfspIndex = default;
-            Optional<int> registrationTimer = default;
+            int? rfspIndex = default;
+            int? registrationTimer = default;
             IList<MobileNetworkSliceConfiguration> sliceConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -283,15 +283,15 @@ namespace Azure.ResourceManager.MobileNetwork
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 siteProvisioningState ?? new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>(),
                 ueAmbr,
                 defaultSlice,
-                Optional.ToNullable(rfspIndex),
-                Optional.ToNullable(registrationTimer),
+                rfspIndex,
+                registrationTimer,
                 sliceConfigurations,
                 serializedAdditionalRawData);
         }

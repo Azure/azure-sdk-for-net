@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             IList<BackupDayOfWeek> daysOfTheWeek = default;
             IList<DateTimeOffset> retentionTimes = default;
-            Optional<RetentionDuration> retentionDuration = default;
+            RetentionDuration retentionDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WeeklyRetentionSchedule(daysOfTheWeek ?? new ChangeTrackingList<BackupDayOfWeek>(), retentionTimes ?? new ChangeTrackingList<DateTimeOffset>(), retentionDuration.Value, serializedAdditionalRawData);
+            return new WeeklyRetentionSchedule(daysOfTheWeek ?? new ChangeTrackingList<BackupDayOfWeek>(), retentionTimes ?? new ChangeTrackingList<DateTimeOffset>(), retentionDuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WeeklyRetentionSchedule>.Write(ModelReaderWriterOptions options)

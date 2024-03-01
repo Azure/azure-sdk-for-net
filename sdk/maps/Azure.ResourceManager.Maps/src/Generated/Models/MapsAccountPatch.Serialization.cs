@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.Maps.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<MapsAccountKind> kind = default;
-            Optional<MapsSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<Guid> uniqueId = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<string> provisioningState = default;
+            MapsAccountKind? kind = default;
+            MapsSku sku = default;
+            ManagedServiceIdentity identity = default;
+            Guid? uniqueId = default;
+            bool? disableLocalAuth = default;
+            string provisioningState = default;
             IList<MapsLinkedResource> linkedResources = default;
-            Optional<CorsRules> cors = default;
+            CorsRules cors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,14 +244,14 @@ namespace Azure.ResourceManager.Maps.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MapsAccountPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(kind),
-                sku.Value,
+                kind,
+                sku,
                 identity,
-                Optional.ToNullable(uniqueId),
-                Optional.ToNullable(disableLocalAuth),
-                provisioningState.Value,
+                uniqueId,
+                disableLocalAuth,
+                provisioningState,
                 linkedResources ?? new ChangeTrackingList<MapsLinkedResource>(),
-                cors.Value,
+                cors,
                 serializedAdditionalRawData);
         }
 

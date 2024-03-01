@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             string resultType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownMigrateSqlServerSqlMISyncTaskOutput(id.Value, resultType, serializedAdditionalRawData);
+            return new UnknownMigrateSqlServerSqlMISyncTaskOutput(id, resultType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMISyncTaskOutput>.Write(ModelReaderWriterOptions options)

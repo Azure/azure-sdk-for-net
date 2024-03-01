@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,8 +20,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> validationCode = default;
-            Optional<string> validationUrl = default;
+            string validationCode = default;
+            string validationUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationCode"u8))
@@ -36,7 +35,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new SubscriptionValidationEventData(validationCode.Value, validationUrl.Value);
+            return new SubscriptionValidationEventData(validationCode, validationUrl);
         }
 
         internal partial class SubscriptionValidationEventDataConverter : JsonConverter<SubscriptionValidationEventData>

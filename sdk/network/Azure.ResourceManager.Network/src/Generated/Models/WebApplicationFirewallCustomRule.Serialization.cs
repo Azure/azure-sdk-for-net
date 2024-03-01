@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ETag> etag = default;
+            string name = default;
+            ETag? etag = default;
             int priority = default;
-            Optional<WebApplicationFirewallState> state = default;
-            Optional<ApplicationGatewayFirewallRateLimitDuration> rateLimitDuration = default;
-            Optional<int> rateLimitThreshold = default;
+            WebApplicationFirewallState? state = default;
+            ApplicationGatewayFirewallRateLimitDuration? rateLimitDuration = default;
+            int? rateLimitThreshold = default;
             WebApplicationFirewallRuleType ruleType = default;
             IList<MatchCondition> matchConditions = default;
             IList<GroupByUserSession> groupByUserSession = default;
@@ -214,12 +214,12 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new WebApplicationFirewallCustomRule(
-                name.Value,
-                Optional.ToNullable(etag),
+                name,
+                etag,
                 priority,
-                Optional.ToNullable(state),
-                Optional.ToNullable(rateLimitDuration),
-                Optional.ToNullable(rateLimitThreshold),
+                state,
+                rateLimitDuration,
+                rateLimitThreshold,
                 ruleType,
                 matchConditions,
                 groupByUserSession ?? new ChangeTrackingList<GroupByUserSession>(),

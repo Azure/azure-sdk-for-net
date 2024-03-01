@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> integrityKey = default;
-            Optional<string> encryptionKey = default;
-            Optional<string> encryptionKeyThumbprint = default;
-            Optional<string> algorithm = default;
+            SystemData systemData = default;
+            string integrityKey = default;
+            string encryptionKey = default;
+            string encryptionKeyThumbprint = default;
+            string algorithm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,12 +202,12 @@ namespace Azure.ResourceManager.RecoveryServices
                 id,
                 name,
                 type,
-                systemData.Value,
-                integrityKey.Value,
-                encryptionKey.Value,
-                encryptionKeyThumbprint.Value,
-                algorithm.Value,
-                Optional.ToNullable(etag),
+                systemData,
+                integrityKey,
+                encryptionKey,
+                encryptionKeyThumbprint,
+                algorithm,
+                etag,
                 serializedAdditionalRawData);
         }
 

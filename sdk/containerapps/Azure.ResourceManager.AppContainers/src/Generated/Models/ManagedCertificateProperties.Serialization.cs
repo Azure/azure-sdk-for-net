@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppCertificateProvisioningState> provisioningState = default;
-            Optional<string> subjectName = default;
-            Optional<string> error = default;
-            Optional<ManagedCertificateDomainControlValidation> domainControlValidation = default;
-            Optional<string> validationToken = default;
+            ContainerAppCertificateProvisioningState? provisioningState = default;
+            string subjectName = default;
+            string error = default;
+            ManagedCertificateDomainControlValidation? domainControlValidation = default;
+            string validationToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagedCertificateProperties(
-                Optional.ToNullable(provisioningState),
-                subjectName.Value,
-                error.Value,
-                Optional.ToNullable(domainControlValidation),
-                validationToken.Value,
+                provisioningState,
+                subjectName,
+                error,
+                domainControlValidation,
+                validationToken,
                 serializedAdditionalRawData);
         }
 
