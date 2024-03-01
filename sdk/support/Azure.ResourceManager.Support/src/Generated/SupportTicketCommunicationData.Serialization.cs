@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Support
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
             SystemData systemData = default;
             SupportTicketCommunicationType? communicationType = default;
             SupportTicketCommunicationDirection? communicationDirection = default;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Support
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ResourceType(property.Value.GetString());
+                    type = new Core.ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))

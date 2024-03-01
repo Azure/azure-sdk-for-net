@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="body"> Body of the communication. </param>
         /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the communication was created. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SupportTicketCommunicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SupportTicketCommunicationType? communicationType, SupportTicketCommunicationDirection? communicationDirection, string sender, string subject, string body, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SupportTicketCommunicationData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, SupportTicketCommunicationType? communicationType, SupportTicketCommunicationDirection? communicationDirection, string sender, string subject, string body, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CommunicationType = communicationType;
             CommunicationDirection = communicationDirection;

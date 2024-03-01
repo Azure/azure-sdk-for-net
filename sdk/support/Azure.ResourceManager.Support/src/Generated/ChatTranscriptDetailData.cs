@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="messages"> List of chat transcript communication resources. </param>
         /// <param name="startOn"> Time in UTC (ISO 8601 format) when the chat began. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatTranscriptDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ChatTranscriptMessageProperties> messages, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ChatTranscriptDetailData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IList<ChatTranscriptMessageProperties> messages, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Messages = messages;
             StartOn = startOn;

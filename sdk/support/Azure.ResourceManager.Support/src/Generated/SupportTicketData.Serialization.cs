@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && EnrollmentId != null)
+            if (EnrollmentId != null)
             {
                 writer.WritePropertyName("enrollmentId"u8);
                 writer.WriteStringValue(EnrollmentId);
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Support
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
             SystemData systemData = default;
             string supportTicketId = default;
             string description = default;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Support
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ResourceType(property.Value.GetString());
+                    type = new Core.ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))
