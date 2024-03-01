@@ -17,6 +17,10 @@ namespace Azure.Core.Pipeline
     public class RetryPolicy : HttpPipelinePolicy
     {
         private readonly int _maxRetries;
+
+        /// <summary>
+        /// Gets the delay to use for computing the interval between retry attempts.
+        /// </summary>
         private readonly DelayStrategy _delayStrategy;
 
         private readonly RetryPolicyAdapter _clientModelPolicy;
