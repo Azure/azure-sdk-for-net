@@ -8,7 +8,7 @@ This release is the first stable release of the IoT Firmware Defense Management 
 
 - Updated Microsoft.IoTfirmwareDefense API version to `2024-01-10`
 - Added new Get operations and models for fetching firmware analysis results and result summaries as resources.
-- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Other Changes
 
@@ -19,7 +19,7 @@ This release is the first stable release of the IoT Firmware Defense Management 
 
 ### Features Added
 
-- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
