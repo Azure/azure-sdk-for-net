@@ -132,27 +132,13 @@ public partial class ChatCompletionsOptions : IUtf8JsonSerializable
         }
         if (Optional.IsDefined(EnableLogProbabilities))
         {
-            if (EnableLogProbabilities != null)
-            {
-                writer.WritePropertyName("logprobs"u8);
-                writer.WriteBooleanValue(EnableLogProbabilities.Value);
-            }
-            else
-            {
-                writer.WriteNull("logprobs");
-            }
+            writer.WritePropertyName("logprobs"u8);
+            writer.WriteBooleanValue(EnableLogProbabilities.Value);
         }
         if (Optional.IsDefined(LogProbabilitiesPerToken))
         {
-            if (LogProbabilitiesPerToken != null)
-            {
-                writer.WritePropertyName("top_logprobs"u8);
-                writer.WriteNumberValue(LogProbabilitiesPerToken.Value);
-            }
-            else
-            {
-                writer.WriteNull("top_logprobs");
-            }
+            writer.WritePropertyName("top_logprobs"u8);
+            writer.WriteNumberValue(LogProbabilitiesPerToken.Value);
         }
         if (Optional.IsDefined(ResponseFormat))
         {
