@@ -27,7 +27,7 @@ steps:
       # template to stay below the devops max.
       targetType: inline
       script: |
-        $req = Invoke-WebRequest https://raw.githubusercontent.com/$(Build.Repository.Name)/main/eng/common/scripts/sparse-checkout.ps1
+        $req = Invoke-WebRequest "https://raw.githubusercontent.com/$(Build.Repository.Name)/main/eng/common/scripts/sparse-checkout.ps1"
         $req.RawContent | Out-File $(Agent.TempDirectory)/sparse-checkout.ps1
         # Paths may be sourced as a yaml object literal OR a dynamically generated variable json string.
         # If the latter, convertToJson will wrap the 'string' in quotes, so remove them.
