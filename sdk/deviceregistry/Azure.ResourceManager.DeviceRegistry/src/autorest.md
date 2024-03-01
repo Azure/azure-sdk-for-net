@@ -53,9 +53,4 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
 
-directive:
-  - from: asset.json
-    where: $.definitions.AssetProperties
-    transform: >
-      $["x-ms-client-name"] = "AdrAssetProperties";
 ```
