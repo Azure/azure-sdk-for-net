@@ -38,7 +38,7 @@ stages:
                 - template: pipelines/steps/net-signing.yml@azure-sdk-build-tools
                   parameters:
                     PackagesPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}
-                    path: $(Pipeline.Workspace)/azure-sdk-build-tools
+                    BuildToolsPath: $(Pipeline.Workspace)/azure-sdk-build-tools
 
                 - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
                   parameters:
