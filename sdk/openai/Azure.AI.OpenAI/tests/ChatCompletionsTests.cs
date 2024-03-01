@@ -82,11 +82,13 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         [RecordedTest]
+        [TestCase(Service.Azure, Ignore = "logprobs is not yet supported on azure endpoint")]
         [TestCase(Service.NonAzure)]
         public async Task ChatCompletionsLogProbabilities(Service serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
             string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, Scenario.ChatCompletions);
+
             int topLogprobs = 3;
             ChatCompletionsOptions requestOptions = new()
             {
