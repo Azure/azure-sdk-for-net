@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
+            string domainName = default;
             IReadOnlyList<EndpointDetail> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointDependency(domainName.Value, endpointDetails ?? new ChangeTrackingList<EndpointDetail>(), serializedAdditionalRawData);
+            return new EndpointDependency(domainName, endpointDetails ?? new ChangeTrackingList<EndpointDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointDependency>.Write(ModelReaderWriterOptions options)

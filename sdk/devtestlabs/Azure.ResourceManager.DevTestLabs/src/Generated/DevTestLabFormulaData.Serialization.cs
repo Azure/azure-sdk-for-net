@@ -147,15 +147,15 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> author = default;
-            Optional<string> osType = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<DevTestLabVmCreationContent> formulaContent = default;
-            Optional<FormulaPropertiesFromVm> vm = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            SystemData systemData = default;
+            string description = default;
+            string author = default;
+            string osType = default;
+            DateTimeOffset? creationDate = default;
+            DevTestLabVmCreationContent formulaContent = default;
+            FormulaPropertiesFromVm vm = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -281,17 +281,17 @@ namespace Azure.ResourceManager.DevTestLabs
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                description.Value,
-                author.Value,
-                osType.Value,
-                Optional.ToNullable(creationDate),
-                formulaContent.Value,
-                vm.Value,
-                provisioningState.Value,
-                Optional.ToNullable(uniqueIdentifier),
+                description,
+                author,
+                osType,
+                creationDate,
+                formulaContent,
+                vm,
+                provisioningState,
+                uniqueIdentifier,
                 serializedAdditionalRawData);
         }
 

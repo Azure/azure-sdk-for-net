@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> trend = default;
+            string trend = default;
             IReadOnlyList<ReservationUtilizationAggregates> aggregates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationPropertiesUtilization(trend.Value, aggregates ?? new ChangeTrackingList<ReservationUtilizationAggregates>(), serializedAdditionalRawData);
+            return new ReservationPropertiesUtilization(trend, aggregates ?? new ChangeTrackingList<ReservationUtilizationAggregates>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationPropertiesUtilization>.Write(ModelReaderWriterOptions options)

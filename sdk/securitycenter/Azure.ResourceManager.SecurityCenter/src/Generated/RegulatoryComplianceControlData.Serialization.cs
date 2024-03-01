@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<RegulatoryComplianceState> state = default;
-            Optional<int> passedAssessments = default;
-            Optional<int> failedAssessments = default;
-            Optional<int> skippedAssessments = default;
+            SystemData systemData = default;
+            string description = default;
+            RegulatoryComplianceState? state = default;
+            int? passedAssessments = default;
+            int? failedAssessments = default;
+            int? skippedAssessments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,12 +214,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(passedAssessments),
-                Optional.ToNullable(failedAssessments),
-                Optional.ToNullable(skippedAssessments),
+                systemData,
+                description,
+                state,
+                passedAssessments,
+                failedAssessments,
+                skippedAssessments,
                 serializedAdditionalRawData);
         }
 

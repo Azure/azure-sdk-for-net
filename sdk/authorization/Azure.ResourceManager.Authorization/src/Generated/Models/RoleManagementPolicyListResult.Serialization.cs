@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 return null;
             }
             IReadOnlyList<RoleManagementPolicyData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyListResult(value ?? new ChangeTrackingList<RoleManagementPolicyData>(), nextLink.Value, serializedAdditionalRawData);
+            return new RoleManagementPolicyListResult(value ?? new ChangeTrackingList<RoleManagementPolicyData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyListResult>.Write(ModelReaderWriterOptions options)

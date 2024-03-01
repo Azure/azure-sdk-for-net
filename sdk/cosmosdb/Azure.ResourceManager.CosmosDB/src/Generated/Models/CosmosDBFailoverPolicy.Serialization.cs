@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<AzureLocation> locationName = default;
-            Optional<int> failoverPriority = default;
+            string id = default;
+            AzureLocation? locationName = default;
+            int? failoverPriority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBFailoverPolicy(id.Value, Optional.ToNullable(locationName), Optional.ToNullable(failoverPriority), serializedAdditionalRawData);
+            return new CosmosDBFailoverPolicy(id, locationName, failoverPriority, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBFailoverPolicy>.Write(ModelReaderWriterOptions options)

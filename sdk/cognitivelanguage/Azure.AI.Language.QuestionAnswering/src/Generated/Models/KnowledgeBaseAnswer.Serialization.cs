@@ -20,13 +20,13 @@ namespace Azure.AI.Language.QuestionAnswering
                 return null;
             }
             IReadOnlyList<string> questions = default;
-            Optional<string> answer = default;
-            Optional<double> confidenceScore = default;
-            Optional<int> id = default;
-            Optional<string> source = default;
+            string answer = default;
+            double? confidenceScore = default;
+            int? id = default;
+            string source = default;
             IReadOnlyDictionary<string, string> metadata = default;
-            Optional<KnowledgeBaseAnswerDialog> dialog = default;
-            Optional<AnswerSpan> answerSpan = default;
+            KnowledgeBaseAnswerDialog dialog = default;
+            AnswerSpan answerSpan = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("questions"u8))
@@ -106,13 +106,13 @@ namespace Azure.AI.Language.QuestionAnswering
             }
             return new KnowledgeBaseAnswer(
                 questions ?? new ChangeTrackingList<string>(),
-                answer.Value,
-                Optional.ToNullable(confidenceScore),
-                Optional.ToNullable(id),
-                source.Value,
+                answer,
+                confidenceScore,
+                id,
+                source,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
-                dialog.Value,
-                answerSpan.Value);
+                dialog,
+                answerSpan);
         }
     }
 }

@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> fabricObjectId = default;
-            Optional<ResourceIdentifier> recoveryContainerId = default;
+            ResourceIdentifier fabricObjectId = default;
+            ResourceIdentifier recoveryContainerId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2ACrossClusterMigrationEnableProtectionContent(instanceType, serializedAdditionalRawData, fabricObjectId.Value, recoveryContainerId.Value);
+            return new A2ACrossClusterMigrationEnableProtectionContent(instanceType, serializedAdditionalRawData, fabricObjectId, recoveryContainerId);
         }
 
         BinaryData IPersistableModel<A2ACrossClusterMigrationEnableProtectionContent>.Write(ModelReaderWriterOptions options)

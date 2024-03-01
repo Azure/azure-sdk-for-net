@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             IReadOnlyList<ServiceFabricManagedClusterData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterListResult(value ?? new ChangeTrackingList<ServiceFabricManagedClusterData>(), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedClusterListResult(value ?? new ChangeTrackingList<ServiceFabricManagedClusterData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterListResult>.Write(ModelReaderWriterOptions options)

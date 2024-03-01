@@ -169,24 +169,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             ResourceIdentifier fabricObjectId = default;
-            Optional<ResourceIdentifier> recoveryContainerId = default;
-            Optional<ResourceIdentifier> recoveryResourceGroupId = default;
-            Optional<string> recoveryCloudServiceId = default;
-            Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
-            Optional<ResourceIdentifier> recoveryProximityPlacementGroupId = default;
+            ResourceIdentifier recoveryContainerId = default;
+            ResourceIdentifier recoveryResourceGroupId = default;
+            string recoveryCloudServiceId = default;
+            ResourceIdentifier recoveryAvailabilitySetId = default;
+            ResourceIdentifier recoveryProximityPlacementGroupId = default;
             IList<A2AVmDiskDetails> vmDisks = default;
             IList<A2AVmManagedDiskDetails> vmManagedDisks = default;
-            Optional<string> multiVmGroupName = default;
-            Optional<string> multiVmGroupId = default;
-            Optional<ResourceIdentifier> recoveryBootDiagStorageAccountId = default;
-            Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
-            Optional<string> recoveryAvailabilityZone = default;
-            Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
-            Optional<ResourceIdentifier> recoveryAzureNetworkId = default;
-            Optional<string> recoverySubnetName = default;
-            Optional<ResourceIdentifier> recoveryVirtualMachineScaleSetId = default;
-            Optional<ResourceIdentifier> recoveryCapacityReservationGroupId = default;
-            Optional<AutoProtectionOfDataDisk> autoProtectionOfDataDisk = default;
+            string multiVmGroupName = default;
+            string multiVmGroupId = default;
+            ResourceIdentifier recoveryBootDiagStorageAccountId = default;
+            SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
+            string recoveryAvailabilityZone = default;
+            SiteRecoveryExtendedLocation recoveryExtendedLocation = default;
+            ResourceIdentifier recoveryAzureNetworkId = default;
+            string recoverySubnetName = default;
+            ResourceIdentifier recoveryVirtualMachineScaleSetId = default;
+            ResourceIdentifier recoveryCapacityReservationGroupId = default;
+            AutoProtectionOfDataDisk? autoProtectionOfDataDisk = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -364,24 +364,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 instanceType,
                 serializedAdditionalRawData,
                 fabricObjectId,
-                recoveryContainerId.Value,
-                recoveryResourceGroupId.Value,
-                recoveryCloudServiceId.Value,
-                recoveryAvailabilitySetId.Value,
-                recoveryProximityPlacementGroupId.Value,
+                recoveryContainerId,
+                recoveryResourceGroupId,
+                recoveryCloudServiceId,
+                recoveryAvailabilitySetId,
+                recoveryProximityPlacementGroupId,
                 vmDisks ?? new ChangeTrackingList<A2AVmDiskDetails>(),
                 vmManagedDisks ?? new ChangeTrackingList<A2AVmManagedDiskDetails>(),
-                multiVmGroupName.Value,
-                multiVmGroupId.Value,
-                recoveryBootDiagStorageAccountId.Value,
-                diskEncryptionInfo.Value,
-                recoveryAvailabilityZone.Value,
-                recoveryExtendedLocation.Value,
-                recoveryAzureNetworkId.Value,
-                recoverySubnetName.Value,
-                recoveryVirtualMachineScaleSetId.Value,
-                recoveryCapacityReservationGroupId.Value,
-                Optional.ToNullable(autoProtectionOfDataDisk));
+                multiVmGroupName,
+                multiVmGroupId,
+                recoveryBootDiagStorageAccountId,
+                diskEncryptionInfo,
+                recoveryAvailabilityZone,
+                recoveryExtendedLocation,
+                recoveryAzureNetworkId,
+                recoverySubnetName,
+                recoveryVirtualMachineScaleSetId,
+                recoveryCapacityReservationGroupId,
+                autoProtectionOfDataDisk);
         }
 
         BinaryData IPersistableModel<A2AEnableProtectionContent>.Write(ModelReaderWriterOptions options)

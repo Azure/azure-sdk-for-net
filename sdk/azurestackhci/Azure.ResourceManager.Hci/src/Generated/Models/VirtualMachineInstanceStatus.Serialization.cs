@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<PowerStateEnum> powerState = default;
-            Optional<VirtualMachineInstanceStatusProvisioningStatus> provisioningStatus = default;
+            string errorCode = default;
+            string errorMessage = default;
+            PowerStateEnum? powerState = default;
+            VirtualMachineInstanceStatusProvisioningStatus provisioningStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstanceStatus(errorCode.Value, errorMessage.Value, Optional.ToNullable(powerState), provisioningStatus.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstanceStatus(errorCode, errorMessage, powerState, provisioningStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstanceStatus>.Write(ModelReaderWriterOptions options)

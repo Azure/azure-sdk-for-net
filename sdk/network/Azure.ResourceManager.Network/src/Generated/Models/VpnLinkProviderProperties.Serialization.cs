@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> linkProviderName = default;
-            Optional<int> linkSpeedInMbps = default;
+            string linkProviderName = default;
+            int? linkSpeedInMbps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnLinkProviderProperties(linkProviderName.Value, Optional.ToNullable(linkSpeedInMbps), serializedAdditionalRawData);
+            return new VpnLinkProviderProperties(linkProviderName, linkSpeedInMbps, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnLinkProviderProperties>.Write(ModelReaderWriterOptions options)

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<int> cpu = default;
+            int? cpu = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryAgentProperties(Optional.ToNullable(cpu), serializedAdditionalRawData);
+            return new ContainerRegistryAgentProperties(cpu, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryAgentProperties>.Write(ModelReaderWriterOptions options)

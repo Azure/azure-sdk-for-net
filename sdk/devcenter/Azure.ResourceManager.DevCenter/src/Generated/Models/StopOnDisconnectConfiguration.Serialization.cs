@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<StopOnDisconnectEnableStatus> status = default;
-            Optional<int> gracePeriodMinutes = default;
+            StopOnDisconnectEnableStatus? status = default;
+            int? gracePeriodMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StopOnDisconnectConfiguration(Optional.ToNullable(status), Optional.ToNullable(gracePeriodMinutes), serializedAdditionalRawData);
+            return new StopOnDisconnectConfiguration(status, gracePeriodMinutes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StopOnDisconnectConfiguration>.Write(ModelReaderWriterOptions options)

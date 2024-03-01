@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> self = default;
-            Optional<string> rid = default;
-            Optional<float> ts = default;
-            Optional<ETag> etag = default;
+            string self = default;
+            string rid = default;
+            float? ts = default;
+            ETag? etag = default;
             string id = default;
             Optional<CosmosDBIndexingPolicy> indexingPolicy = default;
             Optional<CosmosDBContainerPartitionKey> partitionKey = default;
@@ -324,10 +324,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 materializedViewDefinition.Value,
                 computedProperties ?? new ChangeTrackingList<ComputedProperty>(),
                 serializedAdditionalRawData,
-                self.Value,
-                rid.Value,
-                Optional.ToNullable(ts),
-                Optional.ToNullable(etag));
+                self,
+                rid,
+                ts,
+                etag);
         }
 
         BinaryData IPersistableModel<RestorableSqlContainerPropertiesResourceContainer>.Write(ModelReaderWriterOptions options)

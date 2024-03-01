@@ -260,34 +260,34 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SynapseDataLakeStorageAccountDetails> defaultDataLakeStorage = default;
-            Optional<string> sqlAdministratorLoginPassword = default;
-            Optional<string> managedResourceGroupName = default;
-            Optional<string> provisioningState = default;
-            Optional<string> sqlAdministratorLogin = default;
-            Optional<VirtualNetworkProfile> virtualNetworkProfile = default;
+            SystemData systemData = default;
+            SynapseDataLakeStorageAccountDetails defaultDataLakeStorage = default;
+            string sqlAdministratorLoginPassword = default;
+            string managedResourceGroupName = default;
+            string provisioningState = default;
+            string sqlAdministratorLogin = default;
+            VirtualNetworkProfile virtualNetworkProfile = default;
             IDictionary<string, string> connectivityEndpoints = default;
-            Optional<string> managedVirtualNetwork = default;
+            string managedVirtualNetwork = default;
             IList<SynapsePrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<SynapseEncryptionDetails> encryption = default;
-            Optional<Guid> workspaceUID = default;
+            SynapseEncryptionDetails encryption = default;
+            Guid? workspaceUID = default;
             IReadOnlyDictionary<string, BinaryData> extraProperties = default;
-            Optional<SynapseManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
-            Optional<SynapseWorkspaceRepositoryConfiguration> workspaceRepositoryConfiguration = default;
-            Optional<PurviewConfiguration> purviewConfiguration = default;
-            Optional<ResourceIdentifier> adlaResourceId = default;
-            Optional<WorkspacePublicNetworkAccess> publicNetworkAccess = default;
-            Optional<CspWorkspaceAdminProperties> cspWorkspaceAdminProperties = default;
+            SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings = default;
+            SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = default;
+            PurviewConfiguration purviewConfiguration = default;
+            ResourceIdentifier adlaResourceId = default;
+            WorkspacePublicNetworkAccess? publicNetworkAccess = default;
+            CspWorkspaceAdminProperties cspWorkspaceAdminProperties = default;
             IReadOnlyDictionary<string, BinaryData> settings = default;
-            Optional<bool> azureADOnlyAuthentication = default;
-            Optional<bool> trustedServiceBypassEnabled = default;
+            bool? azureADOnlyAuthentication = default;
+            bool? trustedServiceBypassEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -570,31 +570,31 @@ namespace Azure.ResourceManager.Synapse
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                defaultDataLakeStorage.Value,
-                sqlAdministratorLoginPassword.Value,
-                managedResourceGroupName.Value,
-                provisioningState.Value,
-                sqlAdministratorLogin.Value,
-                virtualNetworkProfile.Value,
+                defaultDataLakeStorage,
+                sqlAdministratorLoginPassword,
+                managedResourceGroupName,
+                provisioningState,
+                sqlAdministratorLogin,
+                virtualNetworkProfile,
                 connectivityEndpoints ?? new ChangeTrackingDictionary<string, string>(),
-                managedVirtualNetwork.Value,
+                managedVirtualNetwork,
                 privateEndpointConnections ?? new ChangeTrackingList<SynapsePrivateEndpointConnectionData>(),
-                encryption.Value,
-                Optional.ToNullable(workspaceUID),
+                encryption,
+                workspaceUID,
                 extraProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                managedVirtualNetworkSettings.Value,
-                workspaceRepositoryConfiguration.Value,
-                purviewConfiguration.Value,
-                adlaResourceId.Value,
-                Optional.ToNullable(publicNetworkAccess),
-                cspWorkspaceAdminProperties.Value,
+                managedVirtualNetworkSettings,
+                workspaceRepositoryConfiguration,
+                purviewConfiguration,
+                adlaResourceId,
+                publicNetworkAccess,
+                cspWorkspaceAdminProperties,
                 settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                Optional.ToNullable(azureADOnlyAuthentication),
-                Optional.ToNullable(trustedServiceBypassEnabled),
+                azureADOnlyAuthentication,
+                trustedServiceBypassEnabled,
                 serializedAdditionalRawData);
         }
 

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<AutomationContentHash> hash = default;
-            Optional<AutomationContentSourceType> type = default;
-            Optional<string> value = default;
-            Optional<string> version = default;
+            AutomationContentHash hash = default;
+            AutomationContentSourceType? type = default;
+            string value = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationContentSource(hash.Value, Optional.ToNullable(type), value.Value, version.Value, serializedAdditionalRawData);
+            return new AutomationContentSource(hash, type, value, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationContentSource>.Write(ModelReaderWriterOptions options)

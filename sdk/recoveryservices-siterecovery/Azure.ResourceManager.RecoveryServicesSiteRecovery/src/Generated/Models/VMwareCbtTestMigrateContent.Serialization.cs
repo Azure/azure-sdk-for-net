@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceIdentifier recoveryPointId = default;
             ResourceIdentifier networkId = default;
             IList<VMwareCbtNicContent> vmNics = default;
-            Optional<string> osUpgradeVersion = default;
+            string osUpgradeVersion = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 recoveryPointId,
                 networkId,
                 vmNics ?? new ChangeTrackingList<VMwareCbtNicContent>(),
-                osUpgradeVersion.Value);
+                osUpgradeVersion);
         }
 
         BinaryData IPersistableModel<VMwareCbtTestMigrateContent>.Write(ModelReaderWriterOptions options)

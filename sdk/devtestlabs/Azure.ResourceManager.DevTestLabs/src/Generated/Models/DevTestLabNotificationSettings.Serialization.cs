@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<DevTestLabEnableStatus> status = default;
-            Optional<int> timeInMinutes = default;
-            Optional<Uri> webhookUrl = default;
-            Optional<string> emailRecipient = default;
-            Optional<string> notificationLocale = default;
+            DevTestLabEnableStatus? status = default;
+            int? timeInMinutes = default;
+            Uri webhookUrl = default;
+            string emailRecipient = default;
+            string notificationLocale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevTestLabNotificationSettings(
-                Optional.ToNullable(status),
-                Optional.ToNullable(timeInMinutes),
-                webhookUrl.Value,
-                emailRecipient.Value,
-                notificationLocale.Value,
+                status,
+                timeInMinutes,
+                webhookUrl,
+                emailRecipient,
+                notificationLocale,
                 serializedAdditionalRawData);
         }
 

@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<RoutePolicyConditionType> type = default;
-            Optional<ResourceIdentifier> ipPrefixId = default;
+            RoutePolicyConditionType? type = default;
+            ResourceIdentifier ipPrefixId = default;
             IList<ResourceIdentifier> ipExtendedCommunityIds = default;
             IList<ResourceIdentifier> ipCommunityIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StatementConditionProperties(ipCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData, Optional.ToNullable(type), ipPrefixId.Value, ipExtendedCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>());
+            return new StatementConditionProperties(ipCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData, type, ipPrefixId, ipExtendedCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>());
         }
 
         BinaryData IPersistableModel<StatementConditionProperties>.Write(ModelReaderWriterOptions options)

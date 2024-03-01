@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<MonitorPublicNetworkAccess> publicNetworkAccess = default;
+            MonitorPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionEndpointNetworkAcls(Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new DataCollectionEndpointNetworkAcls(publicNetworkAccess, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionEndpointNetworkAcls>.Write(ModelReaderWriterOptions options)

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> allocationPercentage = default;
+            string name = default;
+            int? allocationPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageTargetSpaceAllocation(name.Value, Optional.ToNullable(allocationPercentage), serializedAdditionalRawData);
+            return new StorageTargetSpaceAllocation(name, allocationPercentage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageTargetSpaceAllocation>.Write(ModelReaderWriterOptions options)

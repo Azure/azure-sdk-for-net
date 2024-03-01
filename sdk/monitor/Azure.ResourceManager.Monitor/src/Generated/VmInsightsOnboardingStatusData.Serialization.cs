@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<OnboardingStatus> onboardingStatus = default;
-            Optional<DataStatus> dataStatus = default;
+            SystemData systemData = default;
+            ResourceIdentifier resourceId = default;
+            OnboardingStatus? onboardingStatus = default;
+            DataStatus? dataStatus = default;
             IReadOnlyList<DataContainer> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -213,10 +213,10 @@ namespace Azure.ResourceManager.Monitor
                 id,
                 name,
                 type,
-                systemData.Value,
-                resourceId.Value,
-                Optional.ToNullable(onboardingStatus),
-                Optional.ToNullable(dataStatus),
+                systemData,
+                resourceId,
+                onboardingStatus,
+                dataStatus,
                 data ?? new ChangeTrackingList<DataContainer>(),
                 serializedAdditionalRawData);
         }

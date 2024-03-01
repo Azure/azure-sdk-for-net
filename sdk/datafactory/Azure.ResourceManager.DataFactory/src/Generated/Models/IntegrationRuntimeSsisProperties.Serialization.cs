@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IntegrationRuntimeSsisCatalogInfo> catalogInfo = default;
-            Optional<IntegrationRuntimeLicenseType> licenseType = default;
-            Optional<IntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;
-            Optional<IntegrationRuntimeDataProxyProperties> dataProxyProperties = default;
-            Optional<IntegrationRuntimeEdition> edition = default;
+            IntegrationRuntimeSsisCatalogInfo catalogInfo = default;
+            IntegrationRuntimeLicenseType? licenseType = default;
+            IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties = default;
+            IntegrationRuntimeDataProxyProperties dataProxyProperties = default;
+            IntegrationRuntimeEdition? edition = default;
             IList<CustomSetupBase> expressCustomSetupProperties = default;
             IList<DataFactoryPackageStore> packageStores = default;
-            Optional<DataFactoryCredentialReference> credential = default;
+            DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,14 +209,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new IntegrationRuntimeSsisProperties(
-                catalogInfo.Value,
-                Optional.ToNullable(licenseType),
-                customSetupScriptProperties.Value,
-                dataProxyProperties.Value,
-                Optional.ToNullable(edition),
+                catalogInfo,
+                licenseType,
+                customSetupScriptProperties,
+                dataProxyProperties,
+                edition,
                 expressCustomSetupProperties ?? new ChangeTrackingList<CustomSetupBase>(),
                 packageStores ?? new ChangeTrackingList<DataFactoryPackageStore>(),
-                credential.Value,
+                credential,
                 additionalProperties);
         }
 

@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> vmwareSiteId = default;
-            Optional<ResourceIdentifier> physicalSiteId = default;
-            Optional<ResourceIdentifier> migrationSolutionId = default;
-            Optional<string> serviceEndpoint = default;
-            Optional<ResourceIdentifier> serviceResourceId = default;
-            Optional<string> serviceContainerId = default;
+            ResourceIdentifier vmwareSiteId = default;
+            ResourceIdentifier physicalSiteId = default;
+            ResourceIdentifier migrationSolutionId = default;
+            string serviceEndpoint = default;
+            ResourceIdentifier serviceResourceId = default;
+            string serviceContainerId = default;
             IReadOnlyList<SiteRecoveryProcessServerDetails> processServers = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -192,12 +192,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareV2FabricSpecificDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                vmwareSiteId.Value,
-                physicalSiteId.Value,
-                migrationSolutionId.Value,
-                serviceEndpoint.Value,
-                serviceResourceId.Value,
-                serviceContainerId.Value,
+                vmwareSiteId,
+                physicalSiteId,
+                migrationSolutionId,
+                serviceEndpoint,
+                serviceResourceId,
+                serviceContainerId,
                 processServers ?? new ChangeTrackingList<SiteRecoveryProcessServerDetails>());
         }
 

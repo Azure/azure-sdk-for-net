@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<string> jobId = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<IotHubJobType> type = default;
-            Optional<IotHubJobStatus> status = default;
-            Optional<string> failureReason = default;
-            Optional<string> statusMessage = default;
-            Optional<string> parentJobId = default;
+            string jobId = default;
+            DateTimeOffset? startTimeUtc = default;
+            DateTimeOffset? endTimeUtc = default;
+            IotHubJobType? type = default;
+            IotHubJobStatus? status = default;
+            string failureReason = default;
+            string statusMessage = default;
+            string parentJobId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,14 +179,14 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IotHubJobInfo(
-                jobId.Value,
-                Optional.ToNullable(startTimeUtc),
-                Optional.ToNullable(endTimeUtc),
-                Optional.ToNullable(type),
-                Optional.ToNullable(status),
-                failureReason.Value,
-                statusMessage.Value,
-                parentJobId.Value,
+                jobId,
+                startTimeUtc,
+                endTimeUtc,
+                type,
+                status,
+                failureReason,
+                statusMessage,
+                parentJobId,
                 serializedAdditionalRawData);
         }
 

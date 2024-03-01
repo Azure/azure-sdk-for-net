@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             string name = default;
-            Optional<bool> isGlobal = default;
+            bool? isGlobal = default;
             IDictionary<string, AutomationConnectionFieldDefinition> fieldDefinitions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationConnectionTypeCreateOrUpdateContent(name, Optional.ToNullable(isGlobal), fieldDefinitions, serializedAdditionalRawData);
+            return new AutomationConnectionTypeCreateOrUpdateContent(name, isGlobal, fieldDefinitions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationConnectionTypeCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

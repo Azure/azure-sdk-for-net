@@ -158,12 +158,12 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string description = default;
             IList<LinkedTemplateArtifact> linkedTemplates = default;
-            Optional<BinaryData> metadata = default;
-            Optional<BinaryData> mainTemplate = default;
-            Optional<BinaryData> uiFormDefinition = default;
+            BinaryData metadata = default;
+            BinaryData mainTemplate = default;
+            BinaryData uiFormDefinition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -279,14 +279,14 @@ namespace Azure.ResourceManager.Resources
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                description.Value,
+                description,
                 linkedTemplates ?? new ChangeTrackingList<LinkedTemplateArtifact>(),
-                metadata.Value,
-                mainTemplate.Value,
-                uiFormDefinition.Value,
+                metadata,
+                mainTemplate,
+                uiFormDefinition,
                 serializedAdditionalRawData);
         }
 

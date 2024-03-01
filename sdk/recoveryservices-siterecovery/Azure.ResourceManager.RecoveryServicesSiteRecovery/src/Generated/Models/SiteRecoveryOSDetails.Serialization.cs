@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> osType = default;
-            Optional<string> productType = default;
-            Optional<string> osEdition = default;
-            Optional<string> osVersion = default;
-            Optional<string> osMajorVersion = default;
-            Optional<string> osMinorVersion = default;
+            string osType = default;
+            string productType = default;
+            string osEdition = default;
+            string osVersion = default;
+            string osMajorVersion = default;
+            string osMinorVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryOSDetails(
-                osType.Value,
-                productType.Value,
-                osEdition.Value,
-                osVersion.Value,
-                osMajorVersion.Value,
-                osMinorVersion.Value,
+                osType,
+                productType,
+                osEdition,
+                osVersion,
+                osMajorVersion,
+                osMinorVersion,
                 serializedAdditionalRawData);
         }
 

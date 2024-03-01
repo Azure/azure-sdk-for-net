@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> cloudRoleArn = default;
+            bool? enabled = default;
+            string cloudRoleArn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForDatabasesAwsOfferingRds(Optional.ToNullable(enabled), cloudRoleArn.Value, serializedAdditionalRawData);
+            return new DefenderForDatabasesAwsOfferingRds(enabled, cloudRoleArn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderForDatabasesAwsOfferingRds>.Write(ModelReaderWriterOptions options)

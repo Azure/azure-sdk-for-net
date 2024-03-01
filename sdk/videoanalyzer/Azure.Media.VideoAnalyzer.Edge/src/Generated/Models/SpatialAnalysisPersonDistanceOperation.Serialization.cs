@@ -70,13 +70,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             IList<SpatialAnalysisPersonDistanceZoneEvents> zones = default;
-            Optional<string> debug = default;
-            Optional<string> calibrationConfiguration = default;
-            Optional<string> cameraConfiguration = default;
-            Optional<string> cameraCalibratorNodeConfiguration = default;
-            Optional<string> detectorNodeConfiguration = default;
-            Optional<string> trackerNodeConfiguration = default;
-            Optional<string> enableFaceMaskClassifier = default;
+            string debug = default;
+            string calibrationConfiguration = default;
+            string cameraConfiguration = default;
+            string cameraCalibratorNodeConfiguration = default;
+            string detectorNodeConfiguration = default;
+            string trackerNodeConfiguration = default;
+            string enableFaceMaskClassifier = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -133,13 +133,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             return new SpatialAnalysisPersonDistanceOperation(
                 type,
-                debug.Value,
-                calibrationConfiguration.Value,
-                cameraConfiguration.Value,
-                cameraCalibratorNodeConfiguration.Value,
-                detectorNodeConfiguration.Value,
-                trackerNodeConfiguration.Value,
-                enableFaceMaskClassifier.Value,
+                debug,
+                calibrationConfiguration,
+                cameraConfiguration,
+                cameraCalibratorNodeConfiguration,
+                detectorNodeConfiguration,
+                trackerNodeConfiguration,
+                enableFaceMaskClassifier,
                 zones);
         }
     }

@@ -159,24 +159,24 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<ArcVmExtendedLocation> extendedLocation = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            ArcVmExtendedLocation extendedLocation = default;
+            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<VirtualMachineInstancePropertiesHardwareProfile> hardwareProfile = default;
-            Optional<VirtualMachineInstancePropertiesNetworkProfile> networkProfile = default;
-            Optional<VirtualMachineInstancePropertiesOSProfile> osProfile = default;
-            Optional<VirtualMachineInstancePropertiesSecurityProfile> securityProfile = default;
-            Optional<VirtualMachineInstancePropertiesStorageProfile> storageProfile = default;
-            Optional<HttpProxyConfiguration> httpProxyConfig = default;
-            Optional<ProvisioningStateEnum> provisioningState = default;
-            Optional<VirtualMachineInstanceView> instanceView = default;
-            Optional<VirtualMachineInstanceStatus> status = default;
-            Optional<GuestAgentInstallStatus> guestAgentInstallStatus = default;
-            Optional<string> vmId = default;
-            Optional<string> resourceUid = default;
+            SystemData systemData = default;
+            VirtualMachineInstancePropertiesHardwareProfile hardwareProfile = default;
+            VirtualMachineInstancePropertiesNetworkProfile networkProfile = default;
+            VirtualMachineInstancePropertiesOSProfile osProfile = default;
+            VirtualMachineInstancePropertiesSecurityProfile securityProfile = default;
+            VirtualMachineInstancePropertiesStorageProfile storageProfile = default;
+            HttpProxyConfiguration httpProxyConfig = default;
+            ProvisioningStateEnum? provisioningState = default;
+            VirtualMachineInstanceView instanceView = default;
+            VirtualMachineInstanceStatus status = default;
+            GuestAgentInstallStatus guestAgentInstallStatus = default;
+            string vmId = default;
+            string resourceUid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -345,21 +345,21 @@ namespace Azure.ResourceManager.Hci
                 id,
                 name,
                 type,
-                systemData.Value,
-                extendedLocation.Value,
+                systemData,
+                extendedLocation,
                 identity,
-                hardwareProfile.Value,
-                networkProfile.Value,
-                osProfile.Value,
-                securityProfile.Value,
-                storageProfile.Value,
-                httpProxyConfig.Value,
-                Optional.ToNullable(provisioningState),
-                instanceView.Value,
-                status.Value,
-                guestAgentInstallStatus.Value,
-                vmId.Value,
-                resourceUid.Value,
+                hardwareProfile,
+                networkProfile,
+                osProfile,
+                securityProfile,
+                storageProfile,
+                httpProxyConfig,
+                provisioningState,
+                instanceView,
+                status,
+                guestAgentInstallStatus,
+                vmId,
+                resourceUid,
                 serializedAdditionalRawData);
         }
 

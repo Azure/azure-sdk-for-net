@@ -138,16 +138,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> host = default;
-            Optional<DataFactorySecretBaseDefinition> accessToken = default;
-            Optional<DataFactoryElement<bool>> useEncryptedEndpoints = default;
-            Optional<DataFactoryElement<bool>> useHostVerification = default;
-            Optional<DataFactoryElement<bool>> usePeerVerification = default;
-            Optional<string> encryptedCredential = default;
+            DataFactorySecretBaseDefinition accessToken = default;
+            DataFactoryElement<bool> useEncryptedEndpoints = default;
+            DataFactoryElement<bool> useHostVerification = default;
+            DataFactoryElement<bool> usePeerVerification = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,17 +269,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new ShopifyLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
                 host,
                 accessToken,
-                useEncryptedEndpoints.Value,
-                useHostVerification.Value,
-                usePeerVerification.Value,
-                encryptedCredential.Value);
+                useEncryptedEndpoints,
+                useHostVerification,
+                usePeerVerification,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<ShopifyLinkedService>.Write(ModelReaderWriterOptions options)

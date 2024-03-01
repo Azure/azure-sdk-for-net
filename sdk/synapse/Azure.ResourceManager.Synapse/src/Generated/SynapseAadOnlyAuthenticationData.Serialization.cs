@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> azureADOnlyAuthentication = default;
-            Optional<AadAuthenticationState> state = default;
-            Optional<DateTimeOffset> creationDate = default;
+            SystemData systemData = default;
+            bool? azureADOnlyAuthentication = default;
+            AadAuthenticationState? state = default;
+            DateTimeOffset? creationDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.Synapse
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(azureADOnlyAuthentication),
-                Optional.ToNullable(state),
-                Optional.ToNullable(creationDate),
+                systemData,
+                azureADOnlyAuthentication,
+                state,
+                creationDate,
                 serializedAdditionalRawData);
         }
 

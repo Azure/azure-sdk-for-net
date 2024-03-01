@@ -128,15 +128,15 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<Uri> appPackageUrl = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            Uri appPackageUrl = default;
             IReadOnlyDictionary<string, string> defaultParameterList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -244,13 +244,13 @@ namespace Azure.ResourceManager.ServiceFabric
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState.Value,
-                appPackageUrl.Value,
+                provisioningState,
+                appPackageUrl,
                 defaultParameterList ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(etag),
+                etag,
                 serializedAdditionalRawData);
         }
 

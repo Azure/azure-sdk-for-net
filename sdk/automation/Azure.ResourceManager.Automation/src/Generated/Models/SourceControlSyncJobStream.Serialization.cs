@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> sourceControlSyncJobStreamId = default;
-            Optional<string> summary = default;
-            Optional<DateTimeOffset?> time = default;
-            Optional<SourceControlStreamType> streamType = default;
+            ResourceIdentifier id = default;
+            string sourceControlSyncJobStreamId = default;
+            string summary = default;
+            DateTimeOffset? time = default;
+            SourceControlStreamType? streamType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,11 +165,11 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SourceControlSyncJobStream(
-                id.Value,
-                sourceControlSyncJobStreamId.Value,
-                summary.Value,
-                Optional.ToNullable(time),
-                Optional.ToNullable(streamType),
+                id,
+                sourceControlSyncJobStreamId,
+                summary,
+                time,
+                streamType,
                 serializedAdditionalRawData);
         }
 

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> phrase = default;
-            Optional<string> variable = default;
-            Optional<ResourceTypeAliasPatternType> type = default;
+            string phrase = default;
+            string variable = default;
+            ResourceTypeAliasPatternType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeAliasPattern(phrase.Value, variable.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new ResourceTypeAliasPattern(phrase, variable, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeAliasPattern>.Write(ModelReaderWriterOptions options)

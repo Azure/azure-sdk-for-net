@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> category = default;
+            string category = default;
             IReadOnlyList<MachineLearningFqdnEndpoint> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningFqdnEndpointsProperties(category.Value, endpoints ?? new ChangeTrackingList<MachineLearningFqdnEndpoint>(), serializedAdditionalRawData);
+            return new MachineLearningFqdnEndpointsProperties(category, endpoints ?? new ChangeTrackingList<MachineLearningFqdnEndpoint>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningFqdnEndpointsProperties>.Write(ModelReaderWriterOptions options)

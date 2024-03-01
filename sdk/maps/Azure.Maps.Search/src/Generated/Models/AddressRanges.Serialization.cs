@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
@@ -18,10 +17,10 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<string> rangeLeft = default;
-            Optional<string> rangeRight = default;
-            Optional<LatLongPairAbbreviated> @from = default;
-            Optional<LatLongPairAbbreviated> to = default;
+            string rangeLeft = default;
+            string rangeRight = default;
+            LatLongPairAbbreviated @from = default;
+            LatLongPairAbbreviated to = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rangeLeft"u8))
@@ -53,7 +52,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new AddressRanges(rangeLeft.Value, rangeRight.Value, @from.Value, to.Value);
+            return new AddressRanges(rangeLeft, rangeRight, @from, to);
         }
     }
 }

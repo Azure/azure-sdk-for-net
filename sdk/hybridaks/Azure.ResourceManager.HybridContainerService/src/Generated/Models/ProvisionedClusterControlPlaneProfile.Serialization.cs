@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<int> count = default;
-            Optional<string> vmSize = default;
-            Optional<ControlPlaneProfileControlPlaneEndpoint> controlPlaneEndpoint = default;
+            int? count = default;
+            string vmSize = default;
+            ControlPlaneProfileControlPlaneEndpoint controlPlaneEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterControlPlaneProfile(Optional.ToNullable(count), vmSize.Value, controlPlaneEndpoint.Value, serializedAdditionalRawData);
+            return new ProvisionedClusterControlPlaneProfile(count, vmSize, controlPlaneEndpoint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterControlPlaneProfile>.Write(ModelReaderWriterOptions options)

@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<BinaryData> error = default;
-            Optional<LogicWorkflowParameterType> type = default;
-            Optional<BinaryData> value = default;
-            Optional<BinaryData> metadata = default;
-            Optional<string> description = default;
+            BinaryData error = default;
+            LogicWorkflowParameterType? type = default;
+            BinaryData value = default;
+            BinaryData metadata = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,12 +167,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LogicWorkflowOutputParameterInfo(
-                Optional.ToNullable(type),
-                value.Value,
-                metadata.Value,
-                description.Value,
+                type,
+                value,
+                metadata,
+                description,
                 serializedAdditionalRawData,
-                error.Value);
+                error);
         }
 
         BinaryData IPersistableModel<LogicWorkflowOutputParameterInfo>.Write(ModelReaderWriterOptions options)

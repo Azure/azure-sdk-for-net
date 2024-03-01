@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            string name = default;
+            ResourceType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfidentialLedgerNameAvailabilityContent(name.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new ConfidentialLedgerNameAvailabilityContent(name, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfidentialLedgerNameAvailabilityContent>.Write(ModelReaderWriterOptions options)

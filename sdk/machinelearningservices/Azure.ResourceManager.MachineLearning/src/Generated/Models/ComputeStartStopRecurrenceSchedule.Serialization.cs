@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningRecurrenceFrequency> frequency = default;
-            Optional<int> interval = default;
-            Optional<string> startTime = default;
-            Optional<string> timeZone = default;
-            Optional<MachineLearningRecurrenceSchedule> schedule = default;
+            MachineLearningRecurrenceFrequency? frequency = default;
+            int? interval = default;
+            string startTime = default;
+            string timeZone = default;
+            MachineLearningRecurrenceSchedule schedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ComputeStartStopRecurrenceSchedule(
-                Optional.ToNullable(frequency),
-                Optional.ToNullable(interval),
-                startTime.Value,
-                timeZone.Value,
-                schedule.Value,
+                frequency,
+                interval,
+                startTime,
+                timeZone,
+                schedule,
                 serializedAdditionalRawData);
         }
 

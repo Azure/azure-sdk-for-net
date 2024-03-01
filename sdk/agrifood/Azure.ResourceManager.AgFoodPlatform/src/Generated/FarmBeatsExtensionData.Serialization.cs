@@ -147,16 +147,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> targetResourceType = default;
-            Optional<string> farmBeatsExtensionId = default;
-            Optional<string> farmBeatsExtensionName = default;
-            Optional<string> farmBeatsExtensionVersion = default;
-            Optional<string> publisherId = default;
-            Optional<string> description = default;
-            Optional<string> extensionCategory = default;
-            Optional<string> extensionAuthLink = default;
-            Optional<string> extensionApiDocsLink = default;
+            SystemData systemData = default;
+            string targetResourceType = default;
+            string farmBeatsExtensionId = default;
+            string farmBeatsExtensionName = default;
+            string farmBeatsExtensionVersion = default;
+            string publisherId = default;
+            string description = default;
+            string extensionCategory = default;
+            string extensionAuthLink = default;
+            string extensionApiDocsLink = default;
             IReadOnlyList<DetailedInformation> detailedInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -267,16 +267,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 id,
                 name,
                 type,
-                systemData.Value,
-                targetResourceType.Value,
-                farmBeatsExtensionId.Value,
-                farmBeatsExtensionName.Value,
-                farmBeatsExtensionVersion.Value,
-                publisherId.Value,
-                description.Value,
-                extensionCategory.Value,
-                extensionAuthLink.Value,
-                extensionApiDocsLink.Value,
+                systemData,
+                targetResourceType,
+                farmBeatsExtensionId,
+                farmBeatsExtensionName,
+                farmBeatsExtensionVersion,
+                publisherId,
+                description,
+                extensionCategory,
+                extensionAuthLink,
+                extensionApiDocsLink,
                 detailedInformation ?? new ChangeTrackingList<DetailedInformation>(),
                 serializedAdditionalRawData);
         }

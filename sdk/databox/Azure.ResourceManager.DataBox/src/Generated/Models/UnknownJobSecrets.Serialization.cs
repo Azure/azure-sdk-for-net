@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataBoxOrderType jobSecretsType = default;
-            Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
-            Optional<ResponseError> error = default;
+            DataCenterAccessSecurityCode dcAccessSecurityCode = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, serializedAdditionalRawData);
+            return new UnknownJobSecrets(jobSecretsType, dcAccessSecurityCode, error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobSecrets>.Write(ModelReaderWriterOptions options)

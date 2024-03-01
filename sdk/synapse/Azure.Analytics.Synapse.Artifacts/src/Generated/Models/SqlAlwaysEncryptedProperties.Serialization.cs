@@ -45,9 +45,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType = default;
-            Optional<object> servicePrincipalId = default;
-            Optional<SecretBase> servicePrincipalKey = default;
-            Optional<CredentialReference> credential = default;
+            object servicePrincipalId = default;
+            SecretBase servicePrincipalKey = default;
+            CredentialReference credential = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alwaysEncryptedAkvAuthType"u8))
@@ -83,7 +83,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SqlAlwaysEncryptedProperties(alwaysEncryptedAkvAuthType, servicePrincipalId.Value, servicePrincipalKey.Value, credential.Value);
+            return new SqlAlwaysEncryptedProperties(alwaysEncryptedAkvAuthType, servicePrincipalId, servicePrincipalKey, credential);
         }
 
         internal partial class SqlAlwaysEncryptedPropertiesConverter : JsonConverter<SqlAlwaysEncryptedProperties>

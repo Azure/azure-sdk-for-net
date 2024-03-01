@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> delayEvaluation = default;
-            Optional<int> evaluationInterval = default;
+            int? delayEvaluation = default;
+            int? evaluationInterval = default;
             EarlyTerminationPolicyType policyType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownEarlyTerminationPolicy(Optional.ToNullable(delayEvaluation), Optional.ToNullable(evaluationInterval), policyType, serializedAdditionalRawData);
+            return new UnknownEarlyTerminationPolicy(delayEvaluation, evaluationInterval, policyType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningEarlyTerminationPolicy>.Write(ModelReaderWriterOptions options)

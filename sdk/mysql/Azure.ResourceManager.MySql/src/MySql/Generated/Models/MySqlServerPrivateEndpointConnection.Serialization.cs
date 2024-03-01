@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<MySqlServerPrivateEndpointConnectionProperties> properties = default;
+            ResourceIdentifier id = default;
+            MySqlServerPrivateEndpointConnectionProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerPrivateEndpointConnection(id.Value, properties.Value, serializedAdditionalRawData);
+            return new MySqlServerPrivateEndpointConnection(id, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerPrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
-            Optional<string> databaseName = default;
-            Optional<string> customData = default;
+            SystemData systemData = default;
+            string userName = default;
+            string password = default;
+            string databaseName = default;
+            string customData = default;
             IList<MongoDBRole> roles = default;
-            Optional<string> mechanisms = default;
+            string mechanisms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,13 +223,13 @@ namespace Azure.ResourceManager.CosmosDB
                 id,
                 name,
                 type,
-                systemData.Value,
-                userName.Value,
-                password.Value,
-                databaseName.Value,
-                customData.Value,
+                systemData,
+                userName,
+                password,
+                databaseName,
+                customData,
                 roles ?? new ChangeTrackingList<MongoDBRole>(),
-                mechanisms.Value,
+                mechanisms,
                 serializedAdditionalRawData);
         }
 

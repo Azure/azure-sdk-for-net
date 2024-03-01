@@ -278,40 +278,40 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             string displayName = default;
-            Optional<string> description = default;
-            Optional<Uri> iconUrl = default;
+            string description = default;
+            Uri iconUrl = default;
             Uri endpoint = default;
-            Optional<string> endpointVersion = default;
+            string endpointVersion = default;
             IDictionary<string, string> allSettings = default;
             IDictionary<string, string> parameters = default;
-            Optional<Uri> manifestUrl = default;
-            Optional<BotMsaAppType> msaAppType = default;
+            Uri manifestUrl = default;
+            BotMsaAppType? msaAppType = default;
             string msaAppId = default;
-            Optional<string> msaAppTenantId = default;
-            Optional<ResourceIdentifier> msaAppMSIResourceId = default;
+            string msaAppTenantId = default;
+            ResourceIdentifier msaAppMSIResourceId = default;
             IReadOnlyList<string> configuredChannels = default;
             IReadOnlyList<string> enabledChannels = default;
-            Optional<string> developerAppInsightKey = default;
-            Optional<string> developerAppInsightsApiKey = default;
-            Optional<string> developerAppInsightsApplicationId = default;
+            string developerAppInsightKey = default;
+            string developerAppInsightsApiKey = default;
+            string developerAppInsightsApplicationId = default;
             IList<string> luisAppIds = default;
-            Optional<string> luisKey = default;
-            Optional<bool> isCmekEnabled = default;
-            Optional<Uri> cmekKeyVaultUrl = default;
-            Optional<string> cmekEncryptionStatus = default;
-            Optional<Guid> tenantId = default;
-            Optional<BotServicePublicNetworkAccess> publicNetworkAccess = default;
-            Optional<bool> isStreamingSupported = default;
-            Optional<bool> isDeveloperAppInsightsApiKeySet = default;
-            Optional<string> migrationToken = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<string> schemaTransformationVersion = default;
-            Optional<ResourceIdentifier> storageResourceId = default;
+            string luisKey = default;
+            bool? isCmekEnabled = default;
+            Uri cmekKeyVaultUrl = default;
+            string cmekEncryptionStatus = default;
+            Guid? tenantId = default;
+            BotServicePublicNetworkAccess? publicNetworkAccess = default;
+            bool? isStreamingSupported = default;
+            bool? isDeveloperAppInsightsApiKeySet = default;
+            string migrationToken = default;
+            bool? disableLocalAuth = default;
+            string schemaTransformationVersion = default;
+            ResourceIdentifier storageResourceId = default;
             IReadOnlyList<BotServicePrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<string> openWithHint = default;
-            Optional<string> appPasswordHint = default;
-            Optional<string> provisioningState = default;
-            Optional<string> publishingCredentials = default;
+            string openWithHint = default;
+            string appPasswordHint = default;
+            string provisioningState = default;
+            string publishingCredentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -611,40 +611,40 @@ namespace Azure.ResourceManager.BotService.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BotProperties(
                 displayName,
-                description.Value,
-                iconUrl.Value,
+                description,
+                iconUrl,
                 endpoint,
-                endpointVersion.Value,
+                endpointVersion,
                 allSettings ?? new ChangeTrackingDictionary<string, string>(),
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
-                manifestUrl.Value,
-                Optional.ToNullable(msaAppType),
+                manifestUrl,
+                msaAppType,
                 msaAppId,
-                msaAppTenantId.Value,
-                msaAppMSIResourceId.Value,
+                msaAppTenantId,
+                msaAppMSIResourceId,
                 configuredChannels ?? new ChangeTrackingList<string>(),
                 enabledChannels ?? new ChangeTrackingList<string>(),
-                developerAppInsightKey.Value,
-                developerAppInsightsApiKey.Value,
-                developerAppInsightsApplicationId.Value,
+                developerAppInsightKey,
+                developerAppInsightsApiKey,
+                developerAppInsightsApplicationId,
                 luisAppIds ?? new ChangeTrackingList<string>(),
-                luisKey.Value,
-                Optional.ToNullable(isCmekEnabled),
-                cmekKeyVaultUrl.Value,
-                cmekEncryptionStatus.Value,
-                Optional.ToNullable(tenantId),
-                Optional.ToNullable(publicNetworkAccess),
-                Optional.ToNullable(isStreamingSupported),
-                Optional.ToNullable(isDeveloperAppInsightsApiKeySet),
-                migrationToken.Value,
-                Optional.ToNullable(disableLocalAuth),
-                schemaTransformationVersion.Value,
-                storageResourceId.Value,
+                luisKey,
+                isCmekEnabled,
+                cmekKeyVaultUrl,
+                cmekEncryptionStatus,
+                tenantId,
+                publicNetworkAccess,
+                isStreamingSupported,
+                isDeveloperAppInsightsApiKeySet,
+                migrationToken,
+                disableLocalAuth,
+                schemaTransformationVersion,
+                storageResourceId,
                 privateEndpointConnections ?? new ChangeTrackingList<BotServicePrivateEndpointConnectionData>(),
-                openWithHint.Value,
-                appPasswordHint.Value,
-                provisioningState.Value,
-                publishingCredentials.Value,
+                openWithHint,
+                appPasswordHint,
+                provisioningState,
+                publishingCredentials,
                 serializedAdditionalRawData);
         }
 

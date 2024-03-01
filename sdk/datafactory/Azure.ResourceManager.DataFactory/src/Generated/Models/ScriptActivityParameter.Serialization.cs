@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> name = default;
-            Optional<ScriptActivityParameterType> type = default;
-            Optional<DataFactoryElement<string>> value = default;
-            Optional<ScriptActivityParameterDirection> direction = default;
-            Optional<int> size = default;
+            DataFactoryElement<string> name = default;
+            ScriptActivityParameterType? type = default;
+            DataFactoryElement<string> value = default;
+            ScriptActivityParameterDirection? direction = default;
+            int? size = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,11 +151,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ScriptActivityParameter(
-                name.Value,
-                Optional.ToNullable(type),
-                value.Value,
-                Optional.ToNullable(direction),
-                Optional.ToNullable(size),
+                name,
+                type,
+                value,
+                direction,
+                size,
                 serializedAdditionalRawData);
         }
 

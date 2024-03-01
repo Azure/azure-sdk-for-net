@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformUserSourceInfo> source = default;
-            Optional<AppPlatformDeploymentSettings> deploymentSettings = default;
-            Optional<AppPlatformDeploymentProvisioningState> provisioningState = default;
-            Optional<AppPlatformDeploymentStatus> status = default;
-            Optional<bool> active = default;
+            AppPlatformUserSourceInfo source = default;
+            AppPlatformDeploymentSettings deploymentSettings = default;
+            AppPlatformDeploymentProvisioningState? provisioningState = default;
+            AppPlatformDeploymentStatus? status = default;
+            bool? active = default;
             IReadOnlyList<AppPlatformDeploymentInstance> instances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -175,11 +175,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppPlatformDeploymentProperties(
-                source.Value,
-                deploymentSettings.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(status),
-                Optional.ToNullable(active),
+                source,
+                deploymentSettings,
+                provisioningState,
+                status,
+                active,
                 instances ?? new ChangeTrackingList<AppPlatformDeploymentInstance>(),
                 serializedAdditionalRawData);
         }

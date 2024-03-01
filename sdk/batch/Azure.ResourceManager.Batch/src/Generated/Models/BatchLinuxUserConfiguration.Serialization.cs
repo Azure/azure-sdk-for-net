@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<int> uid = default;
-            Optional<int> gid = default;
-            Optional<string> sshPrivateKey = default;
+            int? uid = default;
+            int? gid = default;
+            string sshPrivateKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchLinuxUserConfiguration(Optional.ToNullable(uid), Optional.ToNullable(gid), sshPrivateKey.Value, serializedAdditionalRawData);
+            return new BatchLinuxUserConfiguration(uid, gid, sshPrivateKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchLinuxUserConfiguration>.Write(ModelReaderWriterOptions options)

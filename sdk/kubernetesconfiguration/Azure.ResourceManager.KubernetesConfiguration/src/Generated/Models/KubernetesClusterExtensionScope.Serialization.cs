@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<ScopeCluster> cluster = default;
-            Optional<ScopeNamespace> @namespace = default;
+            ScopeCluster cluster = default;
+            ScopeNamespace @namespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterExtensionScope(cluster.Value, @namespace.Value, serializedAdditionalRawData);
+            return new KubernetesClusterExtensionScope(cluster, @namespace, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterExtensionScope>.Write(ModelReaderWriterOptions options)

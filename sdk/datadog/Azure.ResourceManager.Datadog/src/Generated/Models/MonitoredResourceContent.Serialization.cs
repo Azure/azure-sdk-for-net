@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<bool> sendingMetrics = default;
-            Optional<string> reasonForMetricsStatus = default;
-            Optional<bool> sendingLogs = default;
-            Optional<string> reasonForLogsStatus = default;
+            string id = default;
+            bool? sendingMetrics = default;
+            string reasonForMetricsStatus = default;
+            bool? sendingLogs = default;
+            string reasonForLogsStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.Datadog.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MonitoredResourceContent(
-                id.Value,
-                Optional.ToNullable(sendingMetrics),
-                reasonForMetricsStatus.Value,
-                Optional.ToNullable(sendingLogs),
-                reasonForLogsStatus.Value,
+                id,
+                sendingMetrics,
+                reasonForMetricsStatus,
+                sendingLogs,
+                reasonForLogsStatus,
                 serializedAdditionalRawData);
         }
 

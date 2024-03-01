@@ -61,10 +61,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> anomalyAlertingConfigurationId = default;
+            string anomalyAlertingConfigurationId = default;
             string name = default;
-            Optional<string> description = default;
-            Optional<MetricAlertConfigurationsOperator> crossMetricsOperator = default;
+            string description = default;
+            MetricAlertConfigurationsOperator? crossMetricsOperator = default;
             IList<string> splitAlertByDimensions = default;
             IList<string> hookIds = default;
             IList<MetricAlertConfiguration> metricAlertingConfigurations = default;
@@ -130,10 +130,10 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
             }
             return new AnomalyAlertConfiguration(
-                anomalyAlertingConfigurationId.Value,
+                anomalyAlertingConfigurationId,
                 name,
-                description.Value,
-                Optional.ToNullable(crossMetricsOperator),
+                description,
+                crossMetricsOperator,
                 splitAlertByDimensions ?? new ChangeTrackingList<string>(),
                 hookIds,
                 metricAlertingConfigurations);

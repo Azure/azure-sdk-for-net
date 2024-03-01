@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.ServiceNetworking
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> fqdn = default;
-            Optional<ProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string fqdn = default;
+            ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,11 +203,11 @@ namespace Azure.ResourceManager.ServiceNetworking
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                fqdn.Value,
-                Optional.ToNullable(provisioningState),
+                fqdn,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

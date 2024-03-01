@@ -125,16 +125,16 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<HealthcareApisProvisioningState> provisioningState = default;
+            HealthcareApisProvisioningState? provisioningState = default;
             IList<HealthcareApisServiceAccessPolicyEntry> accessPolicies = default;
-            Optional<HealthcareApisServiceCosmosDbConfiguration> cosmosDbConfiguration = default;
-            Optional<HealthcareApisServiceAuthenticationConfiguration> authenticationConfiguration = default;
-            Optional<HealthcareApisServiceCorsConfiguration> corsConfiguration = default;
-            Optional<ServiceExportConfigurationInfo> exportConfiguration = default;
+            HealthcareApisServiceCosmosDbConfiguration cosmosDbConfiguration = default;
+            HealthcareApisServiceAuthenticationConfiguration authenticationConfiguration = default;
+            HealthcareApisServiceCorsConfiguration corsConfiguration = default;
+            ServiceExportConfigurationInfo exportConfiguration = default;
             IList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<HealthcareApisServiceAcrConfiguration> acrConfiguration = default;
-            Optional<HealthcareApisServiceImportConfiguration> importConfiguration = default;
+            HealthcareApisPublicNetworkAccess? publicNetworkAccess = default;
+            HealthcareApisServiceAcrConfiguration acrConfiguration = default;
+            HealthcareApisServiceImportConfiguration importConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -246,16 +246,16 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HealthcareApisServiceProperties(
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 accessPolicies ?? new ChangeTrackingList<HealthcareApisServiceAccessPolicyEntry>(),
-                cosmosDbConfiguration.Value,
-                authenticationConfiguration.Value,
-                corsConfiguration.Value,
-                exportConfiguration.Value,
+                cosmosDbConfiguration,
+                authenticationConfiguration,
+                corsConfiguration,
+                exportConfiguration,
                 privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>(),
-                Optional.ToNullable(publicNetworkAccess),
-                acrConfiguration.Value,
-                importConfiguration.Value,
+                publicNetworkAccess,
+                acrConfiguration,
+                importConfiguration,
                 serializedAdditionalRawData);
         }
 

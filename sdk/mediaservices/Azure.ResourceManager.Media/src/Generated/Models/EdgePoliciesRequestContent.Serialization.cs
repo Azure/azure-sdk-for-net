@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> deviceId = default;
+            string deviceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgePoliciesRequestContent(deviceId.Value, serializedAdditionalRawData);
+            return new EdgePoliciesRequestContent(deviceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgePoliciesRequestContent>.Write(ModelReaderWriterOptions options)

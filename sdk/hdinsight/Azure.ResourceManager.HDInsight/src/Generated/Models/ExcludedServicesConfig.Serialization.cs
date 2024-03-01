@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> excludedServicesConfigId = default;
-            Optional<string> excludedServicesList = default;
+            string excludedServicesConfigId = default;
+            string excludedServicesList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExcludedServicesConfig(excludedServicesConfigId.Value, excludedServicesList.Value, serializedAdditionalRawData);
+            return new ExcludedServicesConfig(excludedServicesConfigId, excludedServicesList, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExcludedServicesConfig>.Write(ModelReaderWriterOptions options)

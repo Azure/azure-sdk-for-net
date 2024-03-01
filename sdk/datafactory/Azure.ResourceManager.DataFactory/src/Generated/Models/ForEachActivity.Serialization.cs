@@ -124,13 +124,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
-            Optional<bool> isSequential = default;
-            Optional<int> batchCount = default;
+            bool? isSequential = default;
+            int? batchCount = default;
             DataFactoryExpression items = default;
             IList<PipelineActivity> activities = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -249,14 +249,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ForEachActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
                 additionalProperties,
-                Optional.ToNullable(isSequential),
-                Optional.ToNullable(batchCount),
+                isSequential,
+                batchCount,
                 items,
                 activities);
         }

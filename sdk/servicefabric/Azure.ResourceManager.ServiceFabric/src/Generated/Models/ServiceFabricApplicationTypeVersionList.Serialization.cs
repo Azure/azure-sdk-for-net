@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             IReadOnlyList<ServiceFabricApplicationTypeVersionData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricApplicationTypeVersionList(value ?? new ChangeTrackingList<ServiceFabricApplicationTypeVersionData>(), nextLink.Value, serializedAdditionalRawData);
+            return new ServiceFabricApplicationTypeVersionList(value ?? new ChangeTrackingList<ServiceFabricApplicationTypeVersionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricApplicationTypeVersionList>.Write(ModelReaderWriterOptions options)

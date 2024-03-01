@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<bool> isEligibleForMigration = default;
+            bool? isEligibleForMigration = default;
             IReadOnlyList<string> validationMessages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrationEligibilityInfo(Optional.ToNullable(isEligibleForMigration), validationMessages ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new MigrationEligibilityInfo(isEligibleForMigration, validationMessages ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrationEligibilityInfo>.Write(ModelReaderWriterOptions options)

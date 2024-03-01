@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             IList<string> linkedDomains = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;

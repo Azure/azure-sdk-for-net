@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> targetProtectionContainerId = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<ReplicationProviderSpecificContainerMappingContent> providerSpecificContent = default;
+            ResourceIdentifier targetProtectionContainerId = default;
+            ResourceIdentifier policyId = default;
+            ReplicationProviderSpecificContainerMappingContent providerSpecificContent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryCreateProtectionContainerMappingProperties(targetProtectionContainerId.Value, policyId.Value, providerSpecificContent.Value, serializedAdditionalRawData);
+            return new SiteRecoveryCreateProtectionContainerMappingProperties(targetProtectionContainerId, policyId, providerSpecificContent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryCreateProtectionContainerMappingProperties>.Write(ModelReaderWriterOptions options)

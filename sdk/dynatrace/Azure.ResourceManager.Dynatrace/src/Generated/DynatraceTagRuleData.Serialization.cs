@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Dynatrace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DynatraceMonitorResourceLogRules> logRules = default;
-            Optional<DynatraceMonitorResourceMetricRules> metricRules = default;
-            Optional<DynatraceProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            DynatraceMonitorResourceLogRules logRules = default;
+            DynatraceMonitorResourceMetricRules metricRules = default;
+            DynatraceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.Dynatrace
                 id,
                 name,
                 type,
-                systemData.Value,
-                logRules.Value,
-                metricRules.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                logRules,
+                metricRules,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

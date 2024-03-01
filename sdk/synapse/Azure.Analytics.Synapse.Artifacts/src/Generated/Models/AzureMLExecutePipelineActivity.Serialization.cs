@@ -107,20 +107,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<ActivityDependency> dependsOn = default;
             IList<UserProperty> userProperties = default;
             object mlPipelineId = default;
-            Optional<object> experimentName = default;
-            Optional<object> mlPipelineParameters = default;
-            Optional<object> mlParentRunId = default;
-            Optional<object> continueOnStepFailure = default;
+            object experimentName = default;
+            object mlPipelineParameters = default;
+            object mlParentRunId = default;
+            object continueOnStepFailure = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -263,19 +263,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new AzureMLExecutePipelineActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<UserProperty>(),
                 additionalProperties,
-                linkedServiceName.Value,
-                policy.Value,
+                linkedServiceName,
+                policy,
                 mlPipelineId,
-                experimentName.Value,
-                mlPipelineParameters.Value,
-                mlParentRunId.Value,
-                continueOnStepFailure.Value);
+                experimentName,
+                mlPipelineParameters,
+                mlParentRunId,
+                continueOnStepFailure);
         }
 
         internal partial class AzureMLExecutePipelineActivityConverter : JsonConverter<AzureMLExecutePipelineActivity>

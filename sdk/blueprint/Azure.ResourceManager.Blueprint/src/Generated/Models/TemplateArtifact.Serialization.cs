@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.Blueprint.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
             IList<string> dependsOn = default;
             BinaryData template = default;
-            Optional<string> resourceGroup = default;
+            string resourceGroup = default;
             IDictionary<string, ParameterValue> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -242,14 +242,14 @@ namespace Azure.ResourceManager.Blueprint.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
-                displayName.Value,
-                description.Value,
+                displayName,
+                description,
                 dependsOn ?? new ChangeTrackingList<string>(),
                 template,
-                resourceGroup.Value,
+                resourceGroup,
                 parameters);
         }
 

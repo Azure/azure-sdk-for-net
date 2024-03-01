@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<int> mtu = default;
+            int? mtu = default;
             IList<ResourceIdentifier> interfaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Layer2Configuration(Optional.ToNullable(mtu), interfaces ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
+            return new Layer2Configuration(mtu, interfaces ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Layer2Configuration>.Write(ModelReaderWriterOptions options)

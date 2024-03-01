@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             string keyspaceName = default;
             string tableName = default;
-            Optional<string> remoteAccountName = default;
+            string remoteAccountName = default;
             DataTransferComponent component = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();

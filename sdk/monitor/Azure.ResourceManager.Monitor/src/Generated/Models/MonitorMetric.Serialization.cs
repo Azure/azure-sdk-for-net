@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.Monitor.Models
             string id = default;
             string type = default;
             MonitorLocalizableString name = default;
-            Optional<string> displayDescription = default;
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
+            string displayDescription = default;
+            string errorCode = default;
+            string errorMessage = default;
             MonitorMetricUnit unit = default;
             IReadOnlyList<MonitorTimeSeriesElement> timeseries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.Monitor.Models
                 id,
                 type,
                 name,
-                displayDescription.Value,
-                errorCode.Value,
-                errorMessage.Value,
+                displayDescription,
+                errorCode,
+                errorMessage,
                 unit,
                 timeseries,
                 serializedAdditionalRawData);

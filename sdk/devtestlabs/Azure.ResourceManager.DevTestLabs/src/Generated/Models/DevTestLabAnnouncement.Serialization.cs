@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> markdown = default;
-            Optional<DevTestLabEnableStatus> enabled = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<bool> expired = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            string title = default;
+            string markdown = default;
+            DevTestLabEnableStatus? enabled = default;
+            DateTimeOffset? expirationDate = default;
+            bool? expired = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,13 +168,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevTestLabAnnouncement(
-                title.Value,
-                markdown.Value,
-                Optional.ToNullable(enabled),
-                Optional.ToNullable(expirationDate),
-                Optional.ToNullable(expired),
-                provisioningState.Value,
-                Optional.ToNullable(uniqueIdentifier),
+                title,
+                markdown,
+                enabled,
+                expirationDate,
+                expired,
+                provisioningState,
+                uniqueIdentifier,
                 serializedAdditionalRawData);
         }
 

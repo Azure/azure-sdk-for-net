@@ -137,18 +137,18 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<ArcVmExtendedLocation> extendedLocation = default;
+            ArcVmExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<IPConfiguration> ipConfigurations = default;
-            Optional<string> macAddress = default;
-            Optional<InterfaceDnsSettings> dnsSettings = default;
-            Optional<ProvisioningStateEnum> provisioningState = default;
-            Optional<NetworkInterfaceStatus> status = default;
+            string macAddress = default;
+            InterfaceDnsSettings dnsSettings = default;
+            ProvisioningStateEnum? provisioningState = default;
+            NetworkInterfaceStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -273,15 +273,15 @@ namespace Azure.ResourceManager.Hci
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                extendedLocation.Value,
+                extendedLocation,
                 ipConfigurations ?? new ChangeTrackingList<IPConfiguration>(),
-                macAddress.Value,
-                dnsSettings.Value,
-                Optional.ToNullable(provisioningState),
-                status.Value,
+                macAddress,
+                dnsSettings,
+                provisioningState,
+                status,
                 serializedAdditionalRawData);
         }
 

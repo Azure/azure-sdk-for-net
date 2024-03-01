@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             IList<CustomerSubscriptionRegisteredFeatures> registeredFeatures = default;
-            Optional<string> locationPlacementId = default;
+            string locationPlacementId = default;
             string quotaId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomerSubscriptionDetails(registeredFeatures ?? new ChangeTrackingList<CustomerSubscriptionRegisteredFeatures>(), locationPlacementId.Value, quotaId, serializedAdditionalRawData);
+            return new CustomerSubscriptionDetails(registeredFeatures ?? new ChangeTrackingList<CustomerSubscriptionRegisteredFeatures>(), locationPlacementId, quotaId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomerSubscriptionDetails>.Write(ModelReaderWriterOptions options)

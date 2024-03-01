@@ -224,24 +224,24 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EntityType> entityType = default;
-            Optional<string> entityTypeName = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> kpiName = default;
+            SystemData systemData = default;
+            EntityType? entityType = default;
+            string entityTypeName = default;
+            Guid? tenantId = default;
+            string kpiName = default;
             IDictionary<string, string> displayName = default;
             IDictionary<string, string> description = default;
-            Optional<CalculationWindowType> calculationWindow = default;
-            Optional<string> calculationWindowFieldName = default;
-            Optional<KpiFunction> function = default;
-            Optional<string> expression = default;
-            Optional<string> unit = default;
-            Optional<string> filter = default;
+            CalculationWindowType? calculationWindow = default;
+            string calculationWindowFieldName = default;
+            KpiFunction? function = default;
+            string expression = default;
+            string unit = default;
+            string filter = default;
             IList<string> groupBy = default;
             IReadOnlyList<KpiGroupByMetadata> groupByMetadata = default;
             IReadOnlyList<KpiParticipantProfilesMetadata> participantProfilesMetadata = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<KpiThresholds> thresHolds = default;
+            ProvisioningState? provisioningState = default;
+            KpiThresholds thresHolds = default;
             IList<KpiAlias> aliases = default;
             IList<KpiExtract> extracts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -476,24 +476,24 @@ namespace Azure.ResourceManager.CustomerInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(entityType),
-                entityTypeName.Value,
-                Optional.ToNullable(tenantId),
-                kpiName.Value,
+                systemData,
+                entityType,
+                entityTypeName,
+                tenantId,
+                kpiName,
                 displayName ?? new ChangeTrackingDictionary<string, string>(),
                 description ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(calculationWindow),
-                calculationWindowFieldName.Value,
-                Optional.ToNullable(function),
-                expression.Value,
-                unit.Value,
-                filter.Value,
+                calculationWindow,
+                calculationWindowFieldName,
+                function,
+                expression,
+                unit,
+                filter,
                 groupBy ?? new ChangeTrackingList<string>(),
                 groupByMetadata ?? new ChangeTrackingList<KpiGroupByMetadata>(),
                 participantProfilesMetadata ?? new ChangeTrackingList<KpiParticipantProfilesMetadata>(),
-                Optional.ToNullable(provisioningState),
-                thresHolds.Value,
+                provisioningState,
+                thresHolds,
                 aliases ?? new ChangeTrackingList<KpiAlias>(),
                 extracts ?? new ChangeTrackingList<KpiExtract>(),
                 serializedAdditionalRawData);

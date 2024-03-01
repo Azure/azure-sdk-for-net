@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<string> mpnsCertificate = default;
-            Optional<string> certificateKey = default;
-            Optional<string> thumbprint = default;
+            string mpnsCertificate = default;
+            string certificateKey = default;
+            string thumbprint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubMpnsCredential(mpnsCertificate.Value, certificateKey.Value, thumbprint.Value, serializedAdditionalRawData);
+            return new NotificationHubMpnsCredential(mpnsCertificate, certificateKey, thumbprint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubMpnsCredential>.Write(ModelReaderWriterOptions options)

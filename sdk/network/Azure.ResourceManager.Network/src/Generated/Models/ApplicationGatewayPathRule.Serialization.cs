@@ -134,18 +134,18 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
             IList<string> paths = default;
-            Optional<WritableSubResource> backendAddressPool = default;
-            Optional<WritableSubResource> backendHttpSettings = default;
-            Optional<WritableSubResource> redirectConfiguration = default;
-            Optional<WritableSubResource> rewriteRuleSet = default;
-            Optional<WritableSubResource> loadDistributionPolicy = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<WritableSubResource> firewallPolicy = default;
+            WritableSubResource backendAddressPool = default;
+            WritableSubResource backendHttpSettings = default;
+            WritableSubResource redirectConfiguration = default;
+            WritableSubResource rewriteRuleSet = default;
+            WritableSubResource loadDistributionPolicy = default;
+            NetworkProvisioningState? provisioningState = default;
+            WritableSubResource firewallPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -278,18 +278,18 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationGatewayPathRule(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 paths ?? new ChangeTrackingList<string>(),
                 backendAddressPool,
                 backendHttpSettings,
                 redirectConfiguration,
                 rewriteRuleSet,
                 loadDistributionPolicy,
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 firewallPolicy);
         }
 

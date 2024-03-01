@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             IReadOnlyList<DataBoxEdgeNode> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeNodeList(value ?? new ChangeTrackingList<DataBoxEdgeNode>(), nextLink.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeNodeList(value ?? new ChangeTrackingList<DataBoxEdgeNode>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeNodeList>.Write(ModelReaderWriterOptions options)

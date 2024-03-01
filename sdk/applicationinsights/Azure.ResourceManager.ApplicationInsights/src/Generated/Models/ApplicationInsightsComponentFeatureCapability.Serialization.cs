@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> value = default;
-            Optional<string> unit = default;
-            Optional<string> meterId = default;
-            Optional<string> meterRateFrequency = default;
+            string name = default;
+            string description = default;
+            string value = default;
+            string unit = default;
+            string meterId = default;
+            string meterRateFrequency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationInsightsComponentFeatureCapability(
-                name.Value,
-                description.Value,
-                value.Value,
-                unit.Value,
-                meterId.Value,
-                meterRateFrequency.Value,
+                name,
+                description,
+                value,
+                unit,
+                meterId,
+                meterRateFrequency,
                 serializedAdditionalRawData);
         }
 

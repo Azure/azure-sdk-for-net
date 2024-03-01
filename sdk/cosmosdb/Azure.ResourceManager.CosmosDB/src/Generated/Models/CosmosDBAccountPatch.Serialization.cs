@@ -296,29 +296,29 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ConsistencyPolicy> consistencyPolicy = default;
+            AzureLocation? location = default;
+            ManagedServiceIdentity identity = default;
+            ConsistencyPolicy consistencyPolicy = default;
             IList<CosmosDBAccountLocation> locations = default;
             IList<CosmosDBIPAddressOrRange> ipRules = default;
-            Optional<bool> isVirtualNetworkFilterEnabled = default;
-            Optional<bool> enableAutomaticFailover = default;
+            bool? isVirtualNetworkFilterEnabled = default;
+            bool? enableAutomaticFailover = default;
             IList<CosmosDBAccountCapability> capabilities = default;
             IList<CosmosDBVirtualNetworkRule> virtualNetworkRules = default;
-            Optional<bool> enableMultipleWriteLocations = default;
-            Optional<bool> enableCassandraConnector = default;
-            Optional<ConnectorOffer> connectorOffer = default;
-            Optional<bool> disableKeyBasedMetadataWriteAccess = default;
-            Optional<Uri> keyVaultKeyUri = default;
-            Optional<string> defaultIdentity = default;
-            Optional<CosmosDBPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<bool> enableFreeTier = default;
-            Optional<ApiProperties> apiProperties = default;
-            Optional<bool> enableAnalyticalStorage = default;
-            Optional<AnalyticalStorageConfiguration> analyticalStorageConfiguration = default;
-            Optional<CosmosDBAccountBackupPolicy> backupPolicy = default;
+            bool? enableMultipleWriteLocations = default;
+            bool? enableCassandraConnector = default;
+            ConnectorOffer? connectorOffer = default;
+            bool? disableKeyBasedMetadataWriteAccess = default;
+            Uri keyVaultKeyUri = default;
+            string defaultIdentity = default;
+            CosmosDBPublicNetworkAccess? publicNetworkAccess = default;
+            bool? enableFreeTier = default;
+            ApiProperties apiProperties = default;
+            bool? enableAnalyticalStorage = default;
+            AnalyticalStorageConfiguration analyticalStorageConfiguration = default;
+            CosmosDBAccountBackupPolicy backupPolicy = default;
             IList<CosmosDBAccountCorsPolicy> cors = default;
-            Optional<NetworkAclBypass> networkAclBypass = default;
+            NetworkAclBypass? networkAclBypass = default;
             IList<ResourceIdentifier> networkAclBypassResourceIds = default;
             Optional<DiagnosticLogSettings> diagnosticLogSettings = default;
             Optional<bool> disableLocalAuth = default;
@@ -724,29 +724,29 @@ namespace Azure.ResourceManager.CosmosDB.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CosmosDBAccountPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(location),
+                location,
                 identity,
-                consistencyPolicy.Value,
+                consistencyPolicy,
                 locations ?? new ChangeTrackingList<CosmosDBAccountLocation>(),
                 ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>(),
-                Optional.ToNullable(isVirtualNetworkFilterEnabled),
-                Optional.ToNullable(enableAutomaticFailover),
+                isVirtualNetworkFilterEnabled,
+                enableAutomaticFailover,
                 capabilities ?? new ChangeTrackingList<CosmosDBAccountCapability>(),
                 virtualNetworkRules ?? new ChangeTrackingList<CosmosDBVirtualNetworkRule>(),
-                Optional.ToNullable(enableMultipleWriteLocations),
-                Optional.ToNullable(enableCassandraConnector),
-                Optional.ToNullable(connectorOffer),
-                Optional.ToNullable(disableKeyBasedMetadataWriteAccess),
-                keyVaultKeyUri.Value,
-                defaultIdentity.Value,
-                Optional.ToNullable(publicNetworkAccess),
-                Optional.ToNullable(enableFreeTier),
-                apiProperties.Value,
-                Optional.ToNullable(enableAnalyticalStorage),
-                analyticalStorageConfiguration.Value,
-                backupPolicy.Value,
+                enableMultipleWriteLocations,
+                enableCassandraConnector,
+                connectorOffer,
+                disableKeyBasedMetadataWriteAccess,
+                keyVaultKeyUri,
+                defaultIdentity,
+                publicNetworkAccess,
+                enableFreeTier,
+                apiProperties,
+                enableAnalyticalStorage,
+                analyticalStorageConfiguration,
+                backupPolicy,
                 cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>(),
-                Optional.ToNullable(networkAclBypass),
+                networkAclBypass,
                 networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 diagnosticLogSettings.Value,
                 Optional.ToNullable(disableLocalAuth),

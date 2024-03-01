@@ -56,7 +56,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<SentenceSentimentInternal> sentences = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
-            Optional<TextDocumentStatistics> statistics = default;
+            TextDocumentStatistics? statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sentiment"u8))
@@ -107,7 +107,7 @@ namespace Azure.AI.TextAnalytics.Models
             return new SentimentResponseDocumentsItem(
                 id,
                 warnings,
-                Optional.ToNullable(statistics),
+                statistics,
                 sentiment,
                 confidenceScores,
                 sentences);

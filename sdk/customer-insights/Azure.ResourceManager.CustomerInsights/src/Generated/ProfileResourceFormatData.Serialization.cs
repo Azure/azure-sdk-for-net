@@ -237,24 +237,24 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, IList<string>> attributes = default;
             IDictionary<string, string> description = default;
             IDictionary<string, string> displayName = default;
             IDictionary<string, IDictionary<string, string>> localizedAttributes = default;
-            Optional<string> smallImage = default;
-            Optional<string> mediumImage = default;
-            Optional<string> largeImage = default;
-            Optional<string> apiEntitySetName = default;
-            Optional<EntityType> entityType = default;
+            string smallImage = default;
+            string mediumImage = default;
+            string largeImage = default;
+            string apiEntitySetName = default;
+            EntityType? entityType = default;
             IList<PropertyDefinition> fields = default;
-            Optional<int> instancesCount = default;
-            Optional<DateTimeOffset> lastChangedUtc = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> schemaItemTypeLink = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> timestampFieldName = default;
-            Optional<string> typeName = default;
+            int? instancesCount = default;
+            DateTimeOffset? lastChangedUtc = default;
+            ProvisioningState? provisioningState = default;
+            string schemaItemTypeLink = default;
+            Guid? tenantId = default;
+            string timestampFieldName = default;
+            string typeName = default;
             IList<StrongId> strongIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -494,24 +494,24 @@ namespace Azure.ResourceManager.CustomerInsights
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 attributes ?? new ChangeTrackingDictionary<string, IList<string>>(),
                 description ?? new ChangeTrackingDictionary<string, string>(),
                 displayName ?? new ChangeTrackingDictionary<string, string>(),
                 localizedAttributes ?? new ChangeTrackingDictionary<string, IDictionary<string, string>>(),
-                smallImage.Value,
-                mediumImage.Value,
-                largeImage.Value,
-                apiEntitySetName.Value,
-                Optional.ToNullable(entityType),
+                smallImage,
+                mediumImage,
+                largeImage,
+                apiEntitySetName,
+                entityType,
                 fields ?? new ChangeTrackingList<PropertyDefinition>(),
-                Optional.ToNullable(instancesCount),
-                Optional.ToNullable(lastChangedUtc),
-                Optional.ToNullable(provisioningState),
-                schemaItemTypeLink.Value,
-                Optional.ToNullable(tenantId),
-                timestampFieldName.Value,
-                typeName.Value,
+                instancesCount,
+                lastChangedUtc,
+                provisioningState,
+                schemaItemTypeLink,
+                tenantId,
+                timestampFieldName,
+                typeName,
                 strongIds ?? new ChangeTrackingList<StrongId>(),
                 serializedAdditionalRawData);
         }

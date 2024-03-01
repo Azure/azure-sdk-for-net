@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            string id = default;
+            string name = default;
+            string type = default;
             AzureLocation location = default;
             IDictionary<string, string> tags = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PowerBIDedicatedResourceData(
-                id.Value,
-                name.Value,
-                type.Value,
+                id,
+                name,
+                type,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                systemData.Value,
+                systemData,
                 serializedAdditionalRawData);
         }
 

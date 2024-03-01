@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 return null;
             }
             IList<MySqlFlexibleServerConfigurationForBatchUpdate> value = default;
-            Optional<MySqlFlexibleServerConfigurationResetAllToDefault> resetAllToDefault = default;
+            MySqlFlexibleServerConfigurationResetAllToDefault? resetAllToDefault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerConfigurationListForBatchUpdate(value ?? new ChangeTrackingList<MySqlFlexibleServerConfigurationForBatchUpdate>(), Optional.ToNullable(resetAllToDefault), serializedAdditionalRawData);
+            return new MySqlFlexibleServerConfigurationListForBatchUpdate(value ?? new ChangeTrackingList<MySqlFlexibleServerConfigurationForBatchUpdate>(), resetAllToDefault, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerConfigurationListForBatchUpdate>.Write(ModelReaderWriterOptions options)

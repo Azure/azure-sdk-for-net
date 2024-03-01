@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.Support
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
+            SystemData systemData = default;
+            string displayName = default;
             IReadOnlyList<SecondaryConsentEnabled> secondaryConsentEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -179,8 +179,8 @@ namespace Azure.ResourceManager.Support
                 id,
                 name,
                 type,
-                systemData.Value,
-                displayName.Value,
+                systemData,
+                displayName,
                 secondaryConsentEnabled ?? new ChangeTrackingList<SecondaryConsentEnabled>(),
                 serializedAdditionalRawData);
         }

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             ManagedClusterPoolUpgradeProfile controlPlaneProfile = default;
             IReadOnlyList<ManagedClusterPoolUpgradeProfile> agentPoolProfiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ContainerService
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 controlPlaneProfile,
                 agentPoolProfiles,
                 serializedAdditionalRawData);

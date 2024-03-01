@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<NetworkFabricConfigurationType> configurationType = default;
-            Optional<Uri> aclsUrl = default;
-            Optional<CommunityActionType> defaultAction = default;
+            NetworkFabricConfigurationType? configurationType = default;
+            Uri aclsUrl = default;
+            CommunityActionType? defaultAction = default;
             IList<AccessControlListMatchConfiguration> matchConfigurations = default;
             IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
-            Optional<string> annotation = default;
+            string annotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,12 +224,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricAccessControlListPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(configurationType),
-                aclsUrl.Value,
-                Optional.ToNullable(defaultAction),
+                configurationType,
+                aclsUrl,
+                defaultAction,
                 matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>(),
                 dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>(),
-                annotation.Value);
+                annotation);
         }
 
         BinaryData IPersistableModel<NetworkFabricAccessControlListPatch>.Write(ModelReaderWriterOptions options)

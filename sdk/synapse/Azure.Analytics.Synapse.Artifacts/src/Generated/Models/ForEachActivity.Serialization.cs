@@ -96,13 +96,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<ActivityDependency> dependsOn = default;
             IList<UserProperty> userProperties = default;
-            Optional<bool> isSequential = default;
-            Optional<int> batchCount = default;
+            bool? isSequential = default;
+            int? batchCount = default;
             Expression items = default;
             IList<Activity> activities = default;
             IDictionary<string, object> additionalProperties = default;
@@ -221,14 +221,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ForEachActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<UserProperty>(),
                 additionalProperties,
-                Optional.ToNullable(isSequential),
-                Optional.ToNullable(batchCount),
+                isSequential,
+                batchCount,
                 items,
                 activities);
         }

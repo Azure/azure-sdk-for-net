@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<DeviceProvisioningServicesSku> name = default;
+            DeviceProvisioningServicesSku? name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceProvisioningServicesSkuDefinition(Optional.ToNullable(name), serializedAdditionalRawData);
+            return new DeviceProvisioningServicesSkuDefinition(name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceProvisioningServicesSkuDefinition>.Write(ModelReaderWriterOptions options)

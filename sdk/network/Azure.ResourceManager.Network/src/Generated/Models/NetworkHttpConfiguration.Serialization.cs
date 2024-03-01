@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<NetworkWatcherHttpMethod> method = default;
+            NetworkWatcherHttpMethod? method = default;
             IList<NetworkWatcherHttpHeader> headers = default;
             IList<int> validStatusCodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkHttpConfiguration(Optional.ToNullable(method), headers ?? new ChangeTrackingList<NetworkWatcherHttpHeader>(), validStatusCodes ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
+            return new NetworkHttpConfiguration(method, headers ?? new ChangeTrackingList<NetworkWatcherHttpHeader>(), validStatusCodes ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkHttpConfiguration>.Write(ModelReaderWriterOptions options)

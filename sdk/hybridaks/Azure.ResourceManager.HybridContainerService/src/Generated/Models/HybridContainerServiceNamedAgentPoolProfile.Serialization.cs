@@ -135,18 +135,18 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<int> count = default;
-            Optional<string> vmSize = default;
-            Optional<string> kubernetesVersion = default;
-            Optional<string> name = default;
-            Optional<HybridContainerServiceOSType> osType = default;
-            Optional<HybridContainerServiceOSSku> ossku = default;
+            int? count = default;
+            string vmSize = default;
+            string kubernetesVersion = default;
+            string name = default;
+            HybridContainerServiceOSType? osType = default;
+            HybridContainerServiceOSSku? ossku = default;
             IDictionary<string, string> nodeLabels = default;
             IList<string> nodeTaints = default;
-            Optional<int> maxCount = default;
-            Optional<int> minCount = default;
-            Optional<bool> enableAutoScaling = default;
-            Optional<int> maxPods = default;
+            int? maxCount = default;
+            int? minCount = default;
+            bool? enableAutoScaling = default;
+            int? maxPods = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,19 +264,19 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HybridContainerServiceNamedAgentPoolProfile(
-                Optional.ToNullable(osType),
-                Optional.ToNullable(ossku),
+                osType,
+                ossku,
                 nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
                 nodeTaints ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(maxCount),
-                Optional.ToNullable(minCount),
-                Optional.ToNullable(enableAutoScaling),
-                Optional.ToNullable(maxPods),
+                maxCount,
+                minCount,
+                enableAutoScaling,
+                maxPods,
                 serializedAdditionalRawData,
-                Optional.ToNullable(count),
-                vmSize.Value,
-                kubernetesVersion.Value,
-                name.Value);
+                count,
+                vmSize,
+                kubernetesVersion,
+                name);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>.Write(ModelReaderWriterOptions options)

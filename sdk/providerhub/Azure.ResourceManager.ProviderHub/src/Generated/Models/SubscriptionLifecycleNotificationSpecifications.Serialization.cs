@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             IList<SubscriptionStateOverrideAction> subscriptionStateOverrideActions = default;
-            Optional<TimeSpan> softDeleteTtl = default;
+            TimeSpan? softDeleteTtl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionLifecycleNotificationSpecifications(subscriptionStateOverrideActions ?? new ChangeTrackingList<SubscriptionStateOverrideAction>(), Optional.ToNullable(softDeleteTtl), serializedAdditionalRawData);
+            return new SubscriptionLifecycleNotificationSpecifications(subscriptionStateOverrideActions ?? new ChangeTrackingList<SubscriptionStateOverrideAction>(), softDeleteTtl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionLifecycleNotificationSpecifications>.Write(ModelReaderWriterOptions options)

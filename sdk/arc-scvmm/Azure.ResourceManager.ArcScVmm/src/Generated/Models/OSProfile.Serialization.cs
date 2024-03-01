@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<string> adminPassword = default;
-            Optional<string> computerName = default;
-            Optional<OSType> osType = default;
-            Optional<string> osName = default;
+            string adminPassword = default;
+            string computerName = default;
+            OSType? osType = default;
+            string osName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OSProfile(adminPassword.Value, computerName.Value, Optional.ToNullable(osType), osName.Value, serializedAdditionalRawData);
+            return new OSProfile(adminPassword, computerName, osType, osName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OSProfile>.Write(ModelReaderWriterOptions options)

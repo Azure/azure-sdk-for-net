@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> addressRange = default;
+            string addressRange = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlowAccessControlIPAddressRange(addressRange.Value, serializedAdditionalRawData);
+            return new FlowAccessControlIPAddressRange(addressRange, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlowAccessControlIPAddressRange>.Write(ModelReaderWriterOptions options)

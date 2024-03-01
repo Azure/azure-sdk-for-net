@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> fullyQualifiedDomainName = default;
+            string name = default;
+            string fullyQualifiedDomainName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlServerNameItem(name.Value, fullyQualifiedDomainName.Value, serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlServerNameItem(name, fullyQualifiedDomainName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlServerNameItem>.Write(ModelReaderWriterOptions options)

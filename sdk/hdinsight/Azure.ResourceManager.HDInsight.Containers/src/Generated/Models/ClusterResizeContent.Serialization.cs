@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> targetWorkerNodeCount = default;
+            SystemData systemData = default;
+            int? targetWorkerNodeCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,10 +191,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(targetWorkerNodeCount),
+                targetWorkerNodeCount,
                 serializedAdditionalRawData);
         }
 

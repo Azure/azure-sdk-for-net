@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Support.Models
             PreferredContactMethod preferredContactMethod = default;
             string primaryEmailAddress = default;
             IList<string> additionalEmailAddresses = default;
-            Optional<string> phoneNumber = default;
+            string phoneNumber = default;
             string preferredTimeZone = default;
             string country = default;
             string preferredSupportLanguage = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Support.Models
                 preferredContactMethod,
                 primaryEmailAddress,
                 additionalEmailAddresses ?? new ChangeTrackingList<string>(),
-                phoneNumber.Value,
+                phoneNumber,
                 preferredTimeZone,
                 country,
                 preferredSupportLanguage,

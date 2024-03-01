@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<BackupErrorDetail> errorDetail = default;
+            string status = default;
+            BackupErrorDetail errorDetail = default;
             IList<WorkloadInquiryDetails> inquiryDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadContainerInquiryInfo(status.Value, errorDetail.Value, inquiryDetails ?? new ChangeTrackingList<WorkloadInquiryDetails>(), serializedAdditionalRawData);
+            return new WorkloadContainerInquiryInfo(status, errorDetail, inquiryDetails ?? new ChangeTrackingList<WorkloadInquiryDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadContainerInquiryInfo>.Write(ModelReaderWriterOptions options)

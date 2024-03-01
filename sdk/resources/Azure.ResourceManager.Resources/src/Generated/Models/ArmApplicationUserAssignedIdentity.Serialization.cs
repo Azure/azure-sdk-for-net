@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<Guid> principalId = default;
-            Optional<Guid> tenantId = default;
+            Guid? principalId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationUserAssignedIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new ArmApplicationUserAssignedIdentity(principalId, tenantId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmApplicationUserAssignedIdentity>.Write(ModelReaderWriterOptions options)

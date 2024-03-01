@@ -190,27 +190,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> host = default;
-            Optional<DataFactoryElement<int>> port = default;
-            Optional<HiveServerType> serverType = default;
-            Optional<HiveThriftTransportProtocol> thriftTransportProtocol = default;
+            DataFactoryElement<int> port = default;
+            HiveServerType? serverType = default;
+            HiveThriftTransportProtocol? thriftTransportProtocol = default;
             HiveAuthenticationType authenticationType = default;
-            Optional<DataFactoryElement<bool>> serviceDiscoveryMode = default;
-            Optional<DataFactoryElement<string>> zooKeeperNameSpace = default;
-            Optional<DataFactoryElement<bool>> useNativeQuery = default;
-            Optional<DataFactoryElement<string>> username = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<DataFactoryElement<string>> httpPath = default;
-            Optional<DataFactoryElement<bool>> enableSsl = default;
-            Optional<DataFactoryElement<string>> trustedCertPath = default;
-            Optional<DataFactoryElement<bool>> useSystemTrustStore = default;
-            Optional<DataFactoryElement<bool>> allowHostNameCNMismatch = default;
-            Optional<DataFactoryElement<bool>> allowSelfSignedServerCert = default;
-            Optional<string> encryptedCredential = default;
+            DataFactoryElement<bool> serviceDiscoveryMode = default;
+            DataFactoryElement<string> zooKeeperNameSpace = default;
+            DataFactoryElement<bool> useNativeQuery = default;
+            DataFactoryElement<string> username = default;
+            DataFactorySecretBaseDefinition password = default;
+            DataFactoryElement<string> httpPath = default;
+            DataFactoryElement<bool> enableSsl = default;
+            DataFactoryElement<string> trustedCertPath = default;
+            DataFactoryElement<bool> useSystemTrustStore = default;
+            DataFactoryElement<bool> allowHostNameCNMismatch = default;
+            DataFactoryElement<bool> allowSelfSignedServerCert = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -427,28 +427,28 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new HiveLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
                 host,
-                port.Value,
-                Optional.ToNullable(serverType),
-                Optional.ToNullable(thriftTransportProtocol),
+                port,
+                serverType,
+                thriftTransportProtocol,
                 authenticationType,
-                serviceDiscoveryMode.Value,
-                zooKeeperNameSpace.Value,
-                useNativeQuery.Value,
-                username.Value,
+                serviceDiscoveryMode,
+                zooKeeperNameSpace,
+                useNativeQuery,
+                username,
                 password,
-                httpPath.Value,
-                enableSsl.Value,
-                trustedCertPath.Value,
-                useSystemTrustStore.Value,
-                allowHostNameCNMismatch.Value,
-                allowSelfSignedServerCert.Value,
-                encryptedCredential.Value);
+                httpPath,
+                enableSsl,
+                trustedCertPath,
+                useSystemTrustStore,
+                allowHostNameCNMismatch,
+                allowSelfSignedServerCert,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<HiveLinkedService>.Write(ModelReaderWriterOptions options)

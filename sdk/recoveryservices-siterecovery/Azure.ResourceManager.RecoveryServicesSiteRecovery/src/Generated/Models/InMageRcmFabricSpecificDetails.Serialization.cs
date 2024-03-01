@@ -186,14 +186,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> vmwareSiteId = default;
-            Optional<ResourceIdentifier> physicalSiteId = default;
-            Optional<string> serviceEndpoint = default;
-            Optional<ResourceIdentifier> serviceResourceId = default;
-            Optional<string> serviceContainerId = default;
-            Optional<Uri> dataPlaneUri = default;
-            Optional<Uri> controlPlaneUri = default;
-            Optional<IdentityProviderDetails> sourceAgentIdentityDetails = default;
+            ResourceIdentifier vmwareSiteId = default;
+            ResourceIdentifier physicalSiteId = default;
+            string serviceEndpoint = default;
+            ResourceIdentifier serviceResourceId = default;
+            string serviceContainerId = default;
+            Uri dataPlaneUri = default;
+            Uri controlPlaneUri = default;
+            IdentityProviderDetails sourceAgentIdentityDetails = default;
             IReadOnlyList<SiteRecoveryProcessServerDetails> processServers = default;
             IReadOnlyList<RcmProxyDetails> rcmProxies = default;
             IReadOnlyList<PushInstallerDetails> pushInstallers = default;
@@ -397,14 +397,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmFabricSpecificDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                vmwareSiteId.Value,
-                physicalSiteId.Value,
-                serviceEndpoint.Value,
-                serviceResourceId.Value,
-                serviceContainerId.Value,
-                dataPlaneUri.Value,
-                controlPlaneUri.Value,
-                sourceAgentIdentityDetails.Value,
+                vmwareSiteId,
+                physicalSiteId,
+                serviceEndpoint,
+                serviceResourceId,
+                serviceContainerId,
+                dataPlaneUri,
+                controlPlaneUri,
+                sourceAgentIdentityDetails,
                 processServers ?? new ChangeTrackingList<SiteRecoveryProcessServerDetails>(),
                 rcmProxies ?? new ChangeTrackingList<RcmProxyDetails>(),
                 pushInstallers ?? new ChangeTrackingList<PushInstallerDetails>(),

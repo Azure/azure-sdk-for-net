@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ArmResourceDefinitionResourceElementTemplate> configuration = default;
-            Optional<string> name = default;
+            ArmResourceDefinitionResourceElementTemplate configuration = default;
+            string name = default;
             Type type = default;
-            Optional<DependsOnProfile> dependsOnProfile = default;
+            DependsOnProfile dependsOnProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmResourceDefinitionResourceElementTemplateDetails(name.Value, type, dependsOnProfile.Value, serializedAdditionalRawData, configuration.Value);
+            return new ArmResourceDefinitionResourceElementTemplateDetails(name, type, dependsOnProfile, serializedAdditionalRawData, configuration);
         }
 
         BinaryData IPersistableModel<ArmResourceDefinitionResourceElementTemplateDetails>.Write(ModelReaderWriterOptions options)

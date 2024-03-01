@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<long> minimum = default;
-            Optional<long> maximum = default;
-            Optional<long> @default = default;
-            Optional<ComputeResourceSkuCapacityScaleType> scaleType = default;
+            long? minimum = default;
+            long? maximum = default;
+            long? @default = default;
+            ComputeResourceSkuCapacityScaleType? scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeResourceSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType), serializedAdditionalRawData);
+            return new ComputeResourceSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeResourceSkuCapacity>.Write(ModelReaderWriterOptions options)

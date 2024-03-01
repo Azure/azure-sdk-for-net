@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<AgentPoolAvailableVersion> agentPoolVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 agentPoolVersions ?? new ChangeTrackingList<AgentPoolAvailableVersion>(),
                 serializedAdditionalRawData);
         }

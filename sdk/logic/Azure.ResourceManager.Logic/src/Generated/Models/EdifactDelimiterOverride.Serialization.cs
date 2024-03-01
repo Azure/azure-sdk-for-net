@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> messageId = default;
-            Optional<string> messageVersion = default;
-            Optional<string> messageRelease = default;
+            string messageId = default;
+            string messageVersion = default;
+            string messageRelease = default;
             int dataElementSeparator = default;
             int componentSeparator = default;
             int segmentTerminator = default;
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.Logic.Models
             SegmentTerminatorSuffix segmentTerminatorSuffix = default;
             EdifactDecimalIndicator decimalPointIndicator = default;
             int releaseIndicator = default;
-            Optional<string> messageAssociationAssignedCode = default;
-            Optional<string> targetNamespace = default;
+            string messageAssociationAssignedCode = default;
+            string targetNamespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,9 +186,9 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EdifactDelimiterOverride(
-                messageId.Value,
-                messageVersion.Value,
-                messageRelease.Value,
+                messageId,
+                messageVersion,
+                messageRelease,
                 dataElementSeparator,
                 componentSeparator,
                 segmentTerminator,
@@ -196,8 +196,8 @@ namespace Azure.ResourceManager.Logic.Models
                 segmentTerminatorSuffix,
                 decimalPointIndicator,
                 releaseIndicator,
-                messageAssociationAssignedCode.Value,
-                targetNamespace.Value,
+                messageAssociationAssignedCode,
+                targetNamespace,
                 serializedAdditionalRawData);
         }
 

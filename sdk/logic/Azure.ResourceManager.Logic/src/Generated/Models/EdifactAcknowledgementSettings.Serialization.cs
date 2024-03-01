@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.Logic.Models
             bool batchFunctionalAcknowledgements = default;
             bool needLoopForValidMessages = default;
             bool sendSynchronousAcknowledgement = default;
-            Optional<string> acknowledgementControlNumberPrefix = default;
-            Optional<string> acknowledgementControlNumberSuffix = default;
+            string acknowledgementControlNumberPrefix = default;
+            string acknowledgementControlNumberSuffix = default;
             int acknowledgementControlNumberLowerBound = default;
             int acknowledgementControlNumberUpperBound = default;
             bool rolloverAcknowledgementControlNumber = default;
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.Logic.Models
                 batchFunctionalAcknowledgements,
                 needLoopForValidMessages,
                 sendSynchronousAcknowledgement,
-                acknowledgementControlNumberPrefix.Value,
-                acknowledgementControlNumberSuffix.Value,
+                acknowledgementControlNumberPrefix,
+                acknowledgementControlNumberSuffix,
                 acknowledgementControlNumberLowerBound,
                 acknowledgementControlNumberUpperBound,
                 rolloverAcknowledgementControlNumber,

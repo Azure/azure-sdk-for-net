@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             FrontDoorCertificateType certificateType = default;
-            Optional<FrontDoorMinimumTlsVersion> minimumTlsVersion = default;
-            Optional<FrontDoorCustomDomainHttpsContentSecret> secret = default;
+            FrontDoorMinimumTlsVersion? minimumTlsVersion = default;
+            FrontDoorCustomDomainHttpsContentSecret secret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorCustomDomainHttpsContent(certificateType, Optional.ToNullable(minimumTlsVersion), secret.Value, serializedAdditionalRawData);
+            return new FrontDoorCustomDomainHttpsContent(certificateType, minimumTlsVersion, secret, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorCustomDomainHttpsContent>.Write(ModelReaderWriterOptions options)

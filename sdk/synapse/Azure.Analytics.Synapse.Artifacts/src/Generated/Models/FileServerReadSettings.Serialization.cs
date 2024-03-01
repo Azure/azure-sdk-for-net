@@ -90,18 +90,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> recursive = default;
-            Optional<object> wildcardFolderPath = default;
-            Optional<object> wildcardFileName = default;
-            Optional<object> fileListPath = default;
-            Optional<object> enablePartitionDiscovery = default;
-            Optional<object> partitionRootPath = default;
-            Optional<object> deleteFilesAfterCompletion = default;
-            Optional<object> modifiedDatetimeStart = default;
-            Optional<object> modifiedDatetimeEnd = default;
-            Optional<object> fileFilter = default;
+            object recursive = default;
+            object wildcardFolderPath = default;
+            object wildcardFileName = default;
+            object fileListPath = default;
+            object enablePartitionDiscovery = default;
+            object partitionRootPath = default;
+            object deleteFilesAfterCompletion = default;
+            object modifiedDatetimeStart = default;
+            object modifiedDatetimeEnd = default;
+            object fileFilter = default;
             string type = default;
-            Optional<object> maxConcurrentConnections = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -215,18 +215,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new FileServerReadSettings(
                 type,
-                maxConcurrentConnections.Value,
+                maxConcurrentConnections,
                 additionalProperties,
-                recursive.Value,
-                wildcardFolderPath.Value,
-                wildcardFileName.Value,
-                fileListPath.Value,
-                enablePartitionDiscovery.Value,
-                partitionRootPath.Value,
-                deleteFilesAfterCompletion.Value,
-                modifiedDatetimeStart.Value,
-                modifiedDatetimeEnd.Value,
-                fileFilter.Value);
+                recursive,
+                wildcardFolderPath,
+                wildcardFileName,
+                fileListPath,
+                enablePartitionDiscovery,
+                partitionRootPath,
+                deleteFilesAfterCompletion,
+                modifiedDatetimeStart,
+                modifiedDatetimeEnd,
+                fileFilter);
         }
 
         internal partial class FileServerReadSettingsConverter : JsonConverter<FileServerReadSettings>

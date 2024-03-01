@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<TimeSpan> timeGrain = default;
-            Optional<TimeSpan> retention = default;
+            TimeSpan? timeGrain = default;
+            TimeSpan? retention = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorMetricAvailability(Optional.ToNullable(timeGrain), Optional.ToNullable(retention), serializedAdditionalRawData);
+            return new MonitorMetricAvailability(timeGrain, retention, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorMetricAvailability>.Write(ModelReaderWriterOptions options)

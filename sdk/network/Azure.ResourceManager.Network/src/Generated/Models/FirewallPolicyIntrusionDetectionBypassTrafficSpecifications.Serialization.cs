@@ -129,9 +129,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<FirewallPolicyIntrusionDetectionProtocol> protocol = default;
+            string name = default;
+            string description = default;
+            FirewallPolicyIntrusionDetectionProtocol? protocol = default;
             IList<string> sourceAddresses = default;
             IList<string> destinationAddresses = default;
             IList<string> destinationPorts = default;
@@ -237,9 +237,9 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FirewallPolicyIntrusionDetectionBypassTrafficSpecifications(
-                name.Value,
-                description.Value,
-                Optional.ToNullable(protocol),
+                name,
+                description,
+                protocol,
                 sourceAddresses ?? new ChangeTrackingList<string>(),
                 destinationAddresses ?? new ChangeTrackingList<string>(),
                 destinationPorts ?? new ChangeTrackingList<string>(),

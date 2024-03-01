@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<DataFactoryElement<string>> folderPath = default;
-            Optional<DataFactoryElement<string>> fileName = default;
+            DataFactoryElement<string> folderPath = default;
+            DataFactoryElement<string> fileName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownDatasetLocation(type, folderPath.Value, fileName.Value, additionalProperties);
+            return new UnknownDatasetLocation(type, folderPath, fileName, additionalProperties);
         }
 
         BinaryData IPersistableModel<DatasetLocation>.Write(ModelReaderWriterOptions options)

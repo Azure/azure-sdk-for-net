@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<DataBoxEdgeEtcdInfo> etcdInfo = default;
+            DataBoxEdgeEtcdInfo etcdInfo = default;
             IReadOnlyList<EdgeKubernetesNodeInfo> nodes = default;
             string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesClusterInfo(etcdInfo.Value, nodes ?? new ChangeTrackingList<EdgeKubernetesNodeInfo>(), version, serializedAdditionalRawData);
+            return new EdgeKubernetesClusterInfo(etcdInfo, nodes ?? new ChangeTrackingList<EdgeKubernetesNodeInfo>(), version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeKubernetesClusterInfo>.Write(ModelReaderWriterOptions options)

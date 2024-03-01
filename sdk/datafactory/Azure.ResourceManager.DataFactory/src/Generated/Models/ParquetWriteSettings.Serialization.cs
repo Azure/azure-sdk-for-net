@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<int>> maxRowsPerFile = default;
-            Optional<DataFactoryElement<string>> fileNamePrefix = default;
+            DataFactoryElement<int> maxRowsPerFile = default;
+            DataFactoryElement<string> fileNamePrefix = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ParquetWriteSettings(type, additionalProperties, maxRowsPerFile.Value, fileNamePrefix.Value);
+            return new ParquetWriteSettings(type, additionalProperties, maxRowsPerFile, fileNamePrefix);
         }
 
         BinaryData IPersistableModel<ParquetWriteSettings>.Write(ModelReaderWriterOptions options)

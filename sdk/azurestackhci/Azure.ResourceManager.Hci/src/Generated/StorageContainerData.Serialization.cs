@@ -122,16 +122,16 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<ArcVmExtendedLocation> extendedLocation = default;
+            ArcVmExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> path = default;
-            Optional<ProvisioningStateEnum> provisioningState = default;
-            Optional<StorageContainerStatus> status = default;
+            SystemData systemData = default;
+            string path = default;
+            ProvisioningStateEnum? provisioningState = default;
+            StorageContainerStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -233,13 +233,13 @@ namespace Azure.ResourceManager.Hci
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                extendedLocation.Value,
-                path.Value,
-                Optional.ToNullable(provisioningState),
-                status.Value,
+                extendedLocation,
+                path,
+                provisioningState,
+                status,
                 serializedAdditionalRawData);
         }
 

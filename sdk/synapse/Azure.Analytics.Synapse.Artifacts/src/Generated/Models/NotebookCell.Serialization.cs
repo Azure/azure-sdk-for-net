@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string cellType = default;
             object metadata = default;
             IList<string> source = default;
-            Optional<object> attachments = default;
+            object attachments = default;
             IList<NotebookCellOutputItem> outputs = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -126,7 +126,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 cellType,
                 metadata,
                 source,
-                attachments.Value,
+                attachments,
                 outputs ?? new ChangeTrackingList<NotebookCellOutputItem>(),
                 additionalProperties);
         }

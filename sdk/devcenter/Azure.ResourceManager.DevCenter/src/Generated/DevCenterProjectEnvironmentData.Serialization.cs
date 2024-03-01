@@ -138,18 +138,18 @@ namespace Azure.ResourceManager.DevCenter
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> deploymentTargetId = default;
-            Optional<EnvironmentTypeEnableStatus> status = default;
-            Optional<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment> creatorRoleAssignment = default;
+            SystemData systemData = default;
+            ResourceIdentifier deploymentTargetId = default;
+            EnvironmentTypeEnableStatus? status = default;
+            ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment creatorRoleAssignment = default;
             IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
+            DevCenterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -278,15 +278,15 @@ namespace Azure.ResourceManager.DevCenter
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                deploymentTargetId.Value,
-                Optional.ToNullable(status),
-                creatorRoleAssignment.Value,
+                deploymentTargetId,
+                status,
+                creatorRoleAssignment,
                 userRoleAssignments ?? new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

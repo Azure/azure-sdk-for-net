@@ -92,10 +92,10 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<string> queueId = default;
-            Optional<int> priority = default;
+            string queueId = default;
+            int? priority = default;
             IList<RouterWorkerSelector> workerSelectors = default;
-            Optional<string> id = default;
+            string id = default;
             ExceptionActionKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -146,11 +146,11 @@ namespace Azure.Communication.JobRouter
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManualReclassifyExceptionAction(
-                id.Value,
+                id,
                 kind,
                 serializedAdditionalRawData,
-                queueId.Value,
-                Optional.ToNullable(priority),
+                queueId,
+                priority,
                 workerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>());
         }
 

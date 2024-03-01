@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<GranularityType> granularity = default;
-            Optional<ForecastDatasetConfiguration> configuration = default;
+            GranularityType? granularity = default;
+            ForecastDatasetConfiguration configuration = default;
             IDictionary<string, ForecastAggregation> aggregation = default;
-            Optional<ForecastFilter> filter = default;
+            ForecastFilter filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastDataset(Optional.ToNullable(granularity), configuration.Value, aggregation, filter.Value, serializedAdditionalRawData);
+            return new ForecastDataset(granularity, configuration, aggregation, filter, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForecastDataset>.Write(ModelReaderWriterOptions options)

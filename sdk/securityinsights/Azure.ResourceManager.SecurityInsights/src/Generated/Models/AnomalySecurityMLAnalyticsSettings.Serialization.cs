@@ -189,25 +189,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             SecurityMLAnalyticsSettingsKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> lastModifiedUtc = default;
+            SystemData systemData = default;
+            string description = default;
+            string displayName = default;
+            bool? enabled = default;
+            DateTimeOffset? lastModifiedUtc = default;
             IList<SecurityMLAnalyticsSettingsDataSource> requiredDataConnectors = default;
             IList<SecurityInsightsAttackTactic> tactics = default;
             IList<string> techniques = default;
-            Optional<string> anomalyVersion = default;
-            Optional<BinaryData> customizableObservations = default;
-            Optional<TimeSpan> frequency = default;
-            Optional<AnomalySecurityMLAnalyticsSettingsStatus> settingsStatus = default;
-            Optional<bool> isDefaultSettings = default;
-            Optional<int> anomalySettingsVersion = default;
-            Optional<Guid> settingsDefinitionId = default;
+            string anomalyVersion = default;
+            BinaryData customizableObservations = default;
+            TimeSpan? frequency = default;
+            AnomalySecurityMLAnalyticsSettingsStatus? settingsStatus = default;
+            bool? isDefaultSettings = default;
+            int? anomalySettingsVersion = default;
+            Guid? settingsDefinitionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -401,24 +401,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
-                Optional.ToNullable(etag),
+                etag,
                 serializedAdditionalRawData,
-                description.Value,
-                displayName.Value,
-                Optional.ToNullable(enabled),
-                Optional.ToNullable(lastModifiedUtc),
+                description,
+                displayName,
+                enabled,
+                lastModifiedUtc,
                 requiredDataConnectors ?? new ChangeTrackingList<SecurityMLAnalyticsSettingsDataSource>(),
                 tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
                 techniques ?? new ChangeTrackingList<string>(),
-                anomalyVersion.Value,
-                customizableObservations.Value,
-                Optional.ToNullable(frequency),
-                Optional.ToNullable(settingsStatus),
-                Optional.ToNullable(isDefaultSettings),
-                Optional.ToNullable(anomalySettingsVersion),
-                Optional.ToNullable(settingsDefinitionId));
+                anomalyVersion,
+                customizableObservations,
+                frequency,
+                settingsStatus,
+                isDefaultSettings,
+                anomalySettingsVersion,
+                settingsDefinitionId);
         }
 
         BinaryData IPersistableModel<AnomalySecurityMLAnalyticsSettings>.Write(ModelReaderWriterOptions options)

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> limit = default;
-            Optional<long> currentValue = default;
-            Optional<ContainerRegistryUsageUnit> unit = default;
+            string name = default;
+            long? limit = default;
+            long? currentValue = default;
+            ContainerRegistryUsageUnit? unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryUsage(name.Value, Optional.ToNullable(limit), Optional.ToNullable(currentValue), Optional.ToNullable(unit), serializedAdditionalRawData);
+            return new ContainerRegistryUsage(name, limit, currentValue, unit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryUsage>.Write(ModelReaderWriterOptions options)

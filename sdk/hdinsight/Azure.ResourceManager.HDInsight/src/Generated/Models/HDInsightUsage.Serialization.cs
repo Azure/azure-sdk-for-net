@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> unit = default;
-            Optional<long> currentValue = default;
-            Optional<long> limit = default;
-            Optional<HDInsightLocalizedName> name = default;
+            string unit = default;
+            long? currentValue = default;
+            long? limit = default;
+            HDInsightLocalizedName name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightUsage(unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, serializedAdditionalRawData);
+            return new HDInsightUsage(unit, currentValue, limit, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightUsage>.Write(ModelReaderWriterOptions options)

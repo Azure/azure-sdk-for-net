@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,9 +20,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> clientAuthenticationName = default;
-            Optional<string> clientName = default;
-            Optional<string> namespaceName = default;
+            string clientAuthenticationName = default;
+            string clientName = default;
+            string namespaceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientAuthenticationName"u8))
@@ -42,7 +41,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new EventGridMqttClientEventData(clientAuthenticationName.Value, clientName.Value, namespaceName.Value);
+            return new EventGridMqttClientEventData(clientAuthenticationName, clientName, namespaceName);
         }
 
         internal partial class EventGridMqttClientEventDataConverter : JsonConverter<EventGridMqttClientEventData>

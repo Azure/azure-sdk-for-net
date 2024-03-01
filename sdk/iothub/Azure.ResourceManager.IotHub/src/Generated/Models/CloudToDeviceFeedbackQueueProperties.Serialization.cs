@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<TimeSpan> lockDurationAsIso8601 = default;
-            Optional<TimeSpan> ttlAsIso8601 = default;
-            Optional<int> maxDeliveryCount = default;
+            TimeSpan? lockDurationAsIso8601 = default;
+            TimeSpan? ttlAsIso8601 = default;
+            int? maxDeliveryCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudToDeviceFeedbackQueueProperties(Optional.ToNullable(lockDurationAsIso8601), Optional.ToNullable(ttlAsIso8601), Optional.ToNullable(maxDeliveryCount), serializedAdditionalRawData);
+            return new CloudToDeviceFeedbackQueueProperties(lockDurationAsIso8601, ttlAsIso8601, maxDeliveryCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudToDeviceFeedbackQueueProperties>.Write(ModelReaderWriterOptions options)

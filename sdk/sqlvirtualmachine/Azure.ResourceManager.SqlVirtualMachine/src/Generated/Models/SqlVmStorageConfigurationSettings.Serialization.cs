@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<SqlStorageSettings> sqlDataSettings = default;
-            Optional<SqlStorageSettings> sqlLogSettings = default;
-            Optional<SqlTempDBSettings> sqlTempDBSettings = default;
-            Optional<bool> sqlSystemDBOnDataDisk = default;
-            Optional<SqlVmDiskConfigurationType> diskConfigurationType = default;
-            Optional<SqlVmStorageWorkloadType> storageWorkloadType = default;
+            SqlStorageSettings sqlDataSettings = default;
+            SqlStorageSettings sqlLogSettings = default;
+            SqlTempDBSettings sqlTempDBSettings = default;
+            bool? sqlSystemDBOnDataDisk = default;
+            SqlVmDiskConfigurationType? diskConfigurationType = default;
+            SqlVmStorageWorkloadType? storageWorkloadType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SqlVmStorageConfigurationSettings(
-                sqlDataSettings.Value,
-                sqlLogSettings.Value,
-                sqlTempDBSettings.Value,
-                Optional.ToNullable(sqlSystemDBOnDataDisk),
-                Optional.ToNullable(diskConfigurationType),
-                Optional.ToNullable(storageWorkloadType),
+                sqlDataSettings,
+                sqlLogSettings,
+                sqlTempDBSettings,
+                sqlSystemDBOnDataDisk,
+                diskConfigurationType,
+                storageWorkloadType,
                 serializedAdditionalRawData);
         }
 

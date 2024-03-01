@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> jobName = default;
+            string jobName = default;
             DataTransferDataSourceSink source = default;
             DataTransferDataSourceSink destination = default;
             Optional<string> status = default;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataTransferJobProperties(
-                jobName.Value,
+                jobName,
                 source,
                 destination,
                 status.Value,

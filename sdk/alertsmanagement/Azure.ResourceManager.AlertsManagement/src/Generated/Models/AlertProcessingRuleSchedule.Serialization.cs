@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> effectiveFrom = default;
-            Optional<DateTimeOffset> effectiveUntil = default;
-            Optional<string> timeZone = default;
+            DateTimeOffset? effectiveFrom = default;
+            DateTimeOffset? effectiveUntil = default;
+            string timeZone = default;
             IList<AlertProcessingRuleRecurrence> recurrences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertProcessingRuleSchedule(Optional.ToNullable(effectiveFrom), Optional.ToNullable(effectiveUntil), timeZone.Value, recurrences ?? new ChangeTrackingList<AlertProcessingRuleRecurrence>(), serializedAdditionalRawData);
+            return new AlertProcessingRuleSchedule(effectiveFrom, effectiveUntil, timeZone, recurrences ?? new ChangeTrackingList<AlertProcessingRuleRecurrence>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertProcessingRuleSchedule>.Write(ModelReaderWriterOptions options)

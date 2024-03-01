@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<AzureMonitorAlertSettings> azureMonitorAlertSettings = default;
+            AzureMonitorAlertSettings azureMonitorAlertSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitoringSettings(azureMonitorAlertSettings.Value, serializedAdditionalRawData);
+            return new MonitoringSettings(azureMonitorAlertSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringSettings>.Write(ModelReaderWriterOptions options)

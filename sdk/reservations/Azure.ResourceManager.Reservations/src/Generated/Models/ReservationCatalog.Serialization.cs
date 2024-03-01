@@ -160,16 +160,16 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> name = default;
+            string resourceType = default;
+            string name = default;
             IReadOnlyDictionary<string, IList<ReservationBillingPlan>> billingPlans = default;
             IReadOnlyList<ReservationTerm> terms = default;
             IReadOnlyList<AzureLocation> locations = default;
             IReadOnlyList<SkuProperty> skuProperties = default;
-            Optional<ReservationCatalogMsrp> msrp = default;
+            ReservationCatalogMsrp msrp = default;
             IReadOnlyList<SkuRestriction> restrictions = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
+            string tier = default;
+            string size = default;
             IReadOnlyList<SkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -307,16 +307,16 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ReservationCatalog(
-                resourceType.Value,
-                name.Value,
+                resourceType,
+                name,
                 billingPlans ?? new ChangeTrackingDictionary<string, IList<ReservationBillingPlan>>(),
                 terms ?? new ChangeTrackingList<ReservationTerm>(),
                 locations ?? new ChangeTrackingList<AzureLocation>(),
                 skuProperties ?? new ChangeTrackingList<SkuProperty>(),
-                msrp.Value,
+                msrp,
                 restrictions ?? new ChangeTrackingList<SkuRestriction>(),
-                tier.Value,
-                size.Value,
+                tier,
+                size,
                 capabilities ?? new ChangeTrackingList<SkuCapability>(),
                 serializedAdditionalRawData);
         }

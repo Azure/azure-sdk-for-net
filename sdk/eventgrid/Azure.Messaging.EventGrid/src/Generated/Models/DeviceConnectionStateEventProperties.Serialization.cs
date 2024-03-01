@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,10 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> deviceId = default;
-            Optional<string> moduleId = default;
-            Optional<string> hubName = default;
-            Optional<DeviceConnectionStateEventInfo> deviceConnectionStateEventInfo = default;
+            string deviceId = default;
+            string moduleId = default;
+            string hubName = default;
+            DeviceConnectionStateEventInfo deviceConnectionStateEventInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -49,7 +48,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new DeviceConnectionStateEventProperties(deviceId.Value, moduleId.Value, hubName.Value, deviceConnectionStateEventInfo.Value);
+            return new DeviceConnectionStateEventProperties(deviceId, moduleId, hubName, deviceConnectionStateEventInfo);
         }
     }
 }

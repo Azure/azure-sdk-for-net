@@ -140,22 +140,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<ActivityDependency> dependsOn = default;
             IList<UserProperty> userProperties = default;
             object rootPath = default;
             object entryFilePath = default;
             IList<object> arguments = default;
-            Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
-            Optional<LinkedServiceReference> sparkJobLinkedService = default;
-            Optional<string> className = default;
-            Optional<object> proxyUser = default;
+            HDInsightActivityDebugInfoOption? getDebugInfo = default;
+            LinkedServiceReference sparkJobLinkedService = default;
+            string className = default;
+            object proxyUser = default;
             IDictionary<string, object> sparkConfig = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -342,21 +342,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new HDInsightSparkActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<UserProperty>(),
                 additionalProperties,
-                linkedServiceName.Value,
-                policy.Value,
+                linkedServiceName,
+                policy,
                 rootPath,
                 entryFilePath,
                 arguments ?? new ChangeTrackingList<object>(),
-                Optional.ToNullable(getDebugInfo),
-                sparkJobLinkedService.Value,
-                className.Value,
-                proxyUser.Value,
+                getDebugInfo,
+                sparkJobLinkedService,
+                className,
+                proxyUser,
                 sparkConfig ?? new ChangeTrackingDictionary<string, object>());
         }
 

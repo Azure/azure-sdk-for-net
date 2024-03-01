@@ -112,18 +112,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object url = default;
-            Optional<HttpAuthenticationType> authenticationType = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<object> embeddedCertData = default;
-            Optional<object> certThumbprint = default;
-            Optional<object> encryptedCredential = default;
-            Optional<object> enableServerCertificateValidation = default;
+            HttpAuthenticationType? authenticationType = default;
+            object userName = default;
+            SecretBase password = default;
+            object embeddedCertData = default;
+            object certThumbprint = default;
+            object encryptedCredential = default;
+            object enableServerCertificateValidation = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -267,19 +267,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new HttpLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
                 url,
-                Optional.ToNullable(authenticationType),
-                userName.Value,
-                password.Value,
-                embeddedCertData.Value,
-                certThumbprint.Value,
-                encryptedCredential.Value,
-                enableServerCertificateValidation.Value);
+                authenticationType,
+                userName,
+                password,
+                embeddedCertData,
+                certThumbprint,
+                encryptedCredential,
+                enableServerCertificateValidation);
         }
 
         internal partial class HttpLinkedServiceConverter : JsonConverter<HttpLinkedService>

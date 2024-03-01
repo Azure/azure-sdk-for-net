@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             string nicId = default;
             string isPrimaryNic = default;
-            Optional<string> targetSubnetName = default;
-            Optional<IPAddress> targetStaticIPAddress = default;
-            Optional<string> isSelectedForMigration = default;
-            Optional<string> targetNicName = default;
-            Optional<string> testSubnetName = default;
-            Optional<IPAddress> testStaticIPAddress = default;
+            string targetSubnetName = default;
+            IPAddress targetStaticIPAddress = default;
+            string isSelectedForMigration = default;
+            string targetNicName = default;
+            string testSubnetName = default;
+            IPAddress testStaticIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,12 +168,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareCbtNicContent(
                 nicId,
                 isPrimaryNic,
-                targetSubnetName.Value,
-                targetStaticIPAddress.Value,
-                isSelectedForMigration.Value,
-                targetNicName.Value,
-                testSubnetName.Value,
-                testStaticIPAddress.Value,
+                targetSubnetName,
+                targetStaticIPAddress,
+                isSelectedForMigration,
+                targetNicName,
+                testSubnetName,
+                testStaticIPAddress,
                 serializedAdditionalRawData);
         }
 

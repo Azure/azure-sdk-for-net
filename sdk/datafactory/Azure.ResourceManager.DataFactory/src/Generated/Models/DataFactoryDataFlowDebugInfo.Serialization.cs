@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryDataFlowProperties properties = default;
-            Optional<string> name = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryDataFlowDebugInfo(name.Value, serializedAdditionalRawData, properties);
+            return new DataFactoryDataFlowDebugInfo(name, serializedAdditionalRawData, properties);
         }
 
         BinaryData IPersistableModel<DataFactoryDataFlowDebugInfo>.Write(ModelReaderWriterOptions options)

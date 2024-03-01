@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<ResourceRecommendationBaseData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceRecommendationBaseListResult(nextLink.Value, value ?? new ChangeTrackingList<ResourceRecommendationBaseData>(), serializedAdditionalRawData);
+            return new ResourceRecommendationBaseListResult(nextLink, value ?? new ChangeTrackingList<ResourceRecommendationBaseData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceRecommendationBaseListResult>.Write(ModelReaderWriterOptions options)

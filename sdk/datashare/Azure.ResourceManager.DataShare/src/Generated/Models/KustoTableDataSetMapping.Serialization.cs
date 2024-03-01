@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             Guid dataSetId = default;
-            Optional<DataSetMappingStatus> dataSetMappingStatus = default;
+            DataSetMappingStatus? dataSetMappingStatus = default;
             ResourceIdentifier kustoClusterResourceId = default;
-            Optional<AzureLocation> location = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            AzureLocation? location = default;
+            DataShareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,14 +211,14 @@ namespace Azure.ResourceManager.DataShare.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
                 dataSetId,
-                Optional.ToNullable(dataSetMappingStatus),
+                dataSetMappingStatus,
                 kustoClusterResourceId,
-                Optional.ToNullable(location),
-                Optional.ToNullable(provisioningState));
+                location,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<KustoTableDataSetMapping>.Write(ModelReaderWriterOptions options)

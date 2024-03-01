@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IList<IaasVmBackupJobTaskDetails> tasksList = default;
             IDictionary<string, string> propertyBag = default;
             IDictionary<string, string> internalPropertyBag = default;
-            Optional<double> progressPercentage = default;
-            Optional<string> estimatedRemainingDuration = default;
-            Optional<string> dynamicErrorMessage = default;
+            double? progressPercentage = default;
+            string estimatedRemainingDuration = default;
+            string dynamicErrorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tasksList ?? new ChangeTrackingList<IaasVmBackupJobTaskDetails>(),
                 propertyBag ?? new ChangeTrackingDictionary<string, string>(),
                 internalPropertyBag ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(progressPercentage),
-                estimatedRemainingDuration.Value,
-                dynamicErrorMessage.Value,
+                progressPercentage,
+                estimatedRemainingDuration,
+                dynamicErrorMessage,
                 serializedAdditionalRawData);
         }
 

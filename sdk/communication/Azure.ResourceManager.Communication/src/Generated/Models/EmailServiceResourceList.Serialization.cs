@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Communication.Models
                 return null;
             }
             IReadOnlyList<EmailServiceResourceData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmailServiceResourceList(value ?? new ChangeTrackingList<EmailServiceResourceData>(), nextLink.Value, serializedAdditionalRawData);
+            return new EmailServiceResourceList(value ?? new ChangeTrackingList<EmailServiceResourceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmailServiceResourceList>.Write(ModelReaderWriterOptions options)

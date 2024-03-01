@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             IReadOnlyList<WorkloadNetworkDnsServiceData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkDnsServicesList(value ?? new ChangeTrackingList<WorkloadNetworkDnsServiceData>(), nextLink.Value, serializedAdditionalRawData);
+            return new WorkloadNetworkDnsServicesList(value ?? new ChangeTrackingList<WorkloadNetworkDnsServiceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkDnsServicesList>.Write(ModelReaderWriterOptions options)

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<bool> nameAvailable = default;
-            Optional<string> name = default;
-            Optional<string> message = default;
-            Optional<KustoPoolNameUnavailableReason> reason = default;
+            bool? nameAvailable = default;
+            string name = default;
+            string message = default;
+            KustoPoolNameUnavailableReason? reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoPoolNameAvailabilityResult(Optional.ToNullable(nameAvailable), name.Value, message.Value, Optional.ToNullable(reason), serializedAdditionalRawData);
+            return new KustoPoolNameAvailabilityResult(nameAvailable, name, message, reason, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoPoolNameAvailabilityResult>.Write(ModelReaderWriterOptions options)

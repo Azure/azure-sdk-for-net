@@ -50,7 +50,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<SemanticField> titleField = default;
+            SemanticField titleField = default;
             IList<SemanticField> prioritizedContentFields = default;
             IList<SemanticField> prioritizedKeywordsFields = default;
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SemanticPrioritizedFields(titleField.Value, prioritizedContentFields ?? new ChangeTrackingList<SemanticField>(), prioritizedKeywordsFields ?? new ChangeTrackingList<SemanticField>());
+            return new SemanticPrioritizedFields(titleField, prioritizedContentFields ?? new ChangeTrackingList<SemanticField>(), prioritizedKeywordsFields ?? new ChangeTrackingList<SemanticField>());
         }
     }
 }

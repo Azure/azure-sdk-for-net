@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ChangeDirectoryResult> reservationOrder = default;
+            ChangeDirectoryResult reservationOrder = default;
             IReadOnlyList<ChangeDirectoryResult> reservations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChangeDirectoryDetail(reservationOrder.Value, reservations ?? new ChangeTrackingList<ChangeDirectoryResult>(), serializedAdditionalRawData);
+            return new ChangeDirectoryDetail(reservationOrder, reservations ?? new ChangeTrackingList<ChangeDirectoryResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChangeDirectoryDetail>.Write(ModelReaderWriterOptions options)

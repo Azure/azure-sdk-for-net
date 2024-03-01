@@ -179,17 +179,17 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 return null;
             }
-            Optional<string> connectionStringPrimaryKey = default;
-            Optional<string> connectionStringSecondaryKey = default;
-            Optional<Uri> endpointUri = default;
-            Optional<string> entityPath = default;
+            string connectionStringPrimaryKey = default;
+            string connectionStringSecondaryKey = default;
+            Uri endpointUri = default;
+            string entityPath = default;
             EndpointType endpointType = default;
-            Optional<DigitalTwinsEndpointProvisioningState?> provisioningState = default;
-            Optional<DateTimeOffset?> createdTime = default;
-            Optional<DigitalTwinsAuthenticationType> authenticationType = default;
-            Optional<string> deadLetterSecret = default;
-            Optional<Uri> deadLetterUri = default;
-            Optional<DigitalTwinsManagedIdentityReference> identity = default;
+            DigitalTwinsEndpointProvisioningState? provisioningState = default;
+            DateTimeOffset? createdTime = default;
+            DigitalTwinsAuthenticationType? authenticationType = default;
+            string deadLetterSecret = default;
+            Uri deadLetterUri = default;
+            DigitalTwinsManagedIdentityReference identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -306,17 +306,17 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DigitalTwinsEventHubProperties(
                 endpointType,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(authenticationType),
-                deadLetterSecret.Value,
-                deadLetterUri.Value,
-                identity.Value,
+                provisioningState,
+                createdTime,
+                authenticationType,
+                deadLetterSecret,
+                deadLetterUri,
+                identity,
                 serializedAdditionalRawData,
-                connectionStringPrimaryKey.Value,
-                connectionStringSecondaryKey.Value,
-                endpointUri.Value,
-                entityPath.Value);
+                connectionStringPrimaryKey,
+                connectionStringSecondaryKey,
+                endpointUri,
+                entityPath);
         }
 
         BinaryData IPersistableModel<DigitalTwinsEventHubProperties>.Write(ModelReaderWriterOptions options)

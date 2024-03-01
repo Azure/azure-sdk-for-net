@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> partitionColumnName = default;
+            object partitionColumnName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionColumnName"u8))
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SapHanaPartitionSettings(partitionColumnName.Value);
+            return new SapHanaPartitionSettings(partitionColumnName);
         }
 
         internal partial class SapHanaPartitionSettingsConverter : JsonConverter<SapHanaPartitionSettings>

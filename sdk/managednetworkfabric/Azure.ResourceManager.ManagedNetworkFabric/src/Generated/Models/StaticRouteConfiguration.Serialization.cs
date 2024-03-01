@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<BfdConfiguration> bfdConfiguration = default;
+            BfdConfiguration bfdConfiguration = default;
             IList<StaticRouteProperties> ipv4Routes = default;
             IList<StaticRouteProperties> ipv6Routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticRouteConfiguration(bfdConfiguration.Value, ipv4Routes ?? new ChangeTrackingList<StaticRouteProperties>(), ipv6Routes ?? new ChangeTrackingList<StaticRouteProperties>(), serializedAdditionalRawData);
+            return new StaticRouteConfiguration(bfdConfiguration, ipv4Routes ?? new ChangeTrackingList<StaticRouteProperties>(), ipv6Routes ?? new ChangeTrackingList<StaticRouteProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticRouteConfiguration>.Write(ModelReaderWriterOptions options)

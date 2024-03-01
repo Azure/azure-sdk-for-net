@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> productId = default;
-            Optional<string> skuId = default;
-            Optional<string> termId = default;
+            string productId = default;
+            string skuId = default;
+            string termId = default;
             BillingType billingType = default;
-            Optional<double> multiplier = default;
-            Optional<EdgeOrderProductChargingType> chargingType = default;
+            double? multiplier = default;
+            EdgeOrderProductChargingType? chargingType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,12 +147,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PurchaseMeterDetails(
                 billingType,
-                Optional.ToNullable(multiplier),
-                Optional.ToNullable(chargingType),
+                multiplier,
+                chargingType,
                 serializedAdditionalRawData,
-                productId.Value,
-                skuId.Value,
-                termId.Value);
+                productId,
+                skuId,
+                termId);
         }
 
         BinaryData IPersistableModel<PurchaseMeterDetails>.Write(ModelReaderWriterOptions options)

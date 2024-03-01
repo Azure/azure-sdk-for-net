@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> diskSerialNumber = default;
-            Optional<string> errorLogLink = default;
-            Optional<string> verboseLogLink = default;
+            string diskSerialNumber = default;
+            string errorLogLink = default;
+            string verboseLogLink = default;
             DataBoxOrderType copyLogDetailsType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxDiskCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData, diskSerialNumber.Value, errorLogLink.Value, verboseLogLink.Value);
+            return new DataBoxDiskCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData, diskSerialNumber, errorLogLink, verboseLogLink);
         }
 
         BinaryData IPersistableModel<DataBoxDiskCopyLogDetails>.Write(ModelReaderWriterOptions options)

@@ -152,15 +152,15 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> devBoxDefinitionName = default;
-            Optional<string> networkConnectionName = default;
-            Optional<DevCenterLicenseType> licenseType = default;
-            Optional<LocalAdminStatus> localAdministrator = default;
-            Optional<StopOnDisconnectConfiguration> stopOnDisconnect = default;
-            Optional<DevCenterHealthStatus> healthStatus = default;
+            SystemData systemData = default;
+            string devBoxDefinitionName = default;
+            string networkConnectionName = default;
+            DevCenterLicenseType? licenseType = default;
+            LocalAdminStatus? localAdministrator = default;
+            StopOnDisconnectConfiguration stopOnDisconnect = default;
+            DevCenterHealthStatus? healthStatus = default;
             IReadOnlyList<DevCenterHealthStatusDetail> healthStatusDetails = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
+            DevCenterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -299,17 +299,17 @@ namespace Azure.ResourceManager.DevCenter
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                devBoxDefinitionName.Value,
-                networkConnectionName.Value,
-                Optional.ToNullable(licenseType),
-                Optional.ToNullable(localAdministrator),
-                stopOnDisconnect.Value,
-                Optional.ToNullable(healthStatus),
+                devBoxDefinitionName,
+                networkConnectionName,
+                licenseType,
+                localAdministrator,
+                stopOnDisconnect,
+                healthStatus,
                 healthStatusDetails ?? new ChangeTrackingList<DevCenterHealthStatusDetail>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

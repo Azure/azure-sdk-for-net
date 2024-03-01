@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<NetworkCloudVolumeData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VolumeList(nextLink.Value, value ?? new ChangeTrackingList<NetworkCloudVolumeData>(), serializedAdditionalRawData);
+            return new VolumeList(nextLink, value ?? new ChangeTrackingList<NetworkCloudVolumeData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VolumeList>.Write(ModelReaderWriterOptions options)

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<KubernetesConfigurationComplianceStateType> complianceState = default;
-            Optional<DateTimeOffset> lastConfigApplied = default;
-            Optional<string> message = default;
-            Optional<KubernetesConfigurationMesageLevel> messageLevel = default;
+            KubernetesConfigurationComplianceStateType? complianceState = default;
+            DateTimeOffset? lastConfigApplied = default;
+            string message = default;
+            KubernetesConfigurationMesageLevel? messageLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesConfigurationComplianceStatus(Optional.ToNullable(complianceState), Optional.ToNullable(lastConfigApplied), message.Value, Optional.ToNullable(messageLevel), serializedAdditionalRawData);
+            return new KubernetesConfigurationComplianceStatus(complianceState, lastConfigApplied, message, messageLevel, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesConfigurationComplianceStatus>.Write(ModelReaderWriterOptions options)

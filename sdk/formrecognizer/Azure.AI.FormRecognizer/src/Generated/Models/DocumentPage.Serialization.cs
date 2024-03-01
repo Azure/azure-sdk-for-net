@@ -20,10 +20,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             int pageNumber = default;
-            Optional<float> angle = default;
-            Optional<float> width = default;
-            Optional<float> height = default;
-            Optional<V3LengthUnit> unit = default;
+            float? angle = default;
+            float? width = default;
+            float? height = default;
+            V3LengthUnit? unit = default;
             IReadOnlyList<DocumentSpan> spans = default;
             IReadOnlyList<DocumentWord> words = default;
             IReadOnlyList<DocumentSelectionMark> selectionMarks = default;
@@ -156,10 +156,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             return new DocumentPage(
                 pageNumber,
-                Optional.ToNullable(angle),
-                Optional.ToNullable(width),
-                Optional.ToNullable(height),
-                Optional.ToNullable(unit),
+                angle,
+                width,
+                height,
+                unit,
                 spans,
                 words ?? new ChangeTrackingList<DocumentWord>(),
                 selectionMarks ?? new ChangeTrackingList<DocumentSelectionMark>(),

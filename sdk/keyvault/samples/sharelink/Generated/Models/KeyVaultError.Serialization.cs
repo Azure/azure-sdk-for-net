@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Optional<Error> error = default;
+            Error error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -31,7 +30,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new KeyVaultError(error.Value);
+            return new KeyVaultError(error);
         }
     }
 }

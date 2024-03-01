@@ -137,18 +137,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<long> rackSlot = default;
-            Optional<BootstrapProtocol> bootstrapProtocol = default;
-            Optional<long> cpuCores = default;
-            Optional<long> cpuSockets = default;
+            long? rackSlot = default;
+            BootstrapProtocol? bootstrapProtocol = default;
+            long? cpuCores = default;
+            long? cpuSockets = default;
             IReadOnlyList<MachineDisk> disks = default;
-            Optional<string> generation = default;
-            Optional<string> hardwareVersion = default;
-            Optional<long> memoryCapacityGB = default;
-            Optional<string> model = default;
+            string generation = default;
+            string hardwareVersion = default;
+            long? memoryCapacityGB = default;
+            string model = default;
             IReadOnlyList<NetworkCloudNetworkInterface> networkInterfaces = default;
-            Optional<long> totalThreads = default;
-            Optional<string> vendor = default;
+            long? totalThreads = default;
+            string vendor = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -274,18 +274,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineSkuSlot(
-                Optional.ToNullable(rackSlot),
-                Optional.ToNullable(bootstrapProtocol),
-                Optional.ToNullable(cpuCores),
-                Optional.ToNullable(cpuSockets),
+                rackSlot,
+                bootstrapProtocol,
+                cpuCores,
+                cpuSockets,
                 disks ?? new ChangeTrackingList<MachineDisk>(),
-                generation.Value,
-                hardwareVersion.Value,
-                Optional.ToNullable(memoryCapacityGB),
-                model.Value,
+                generation,
+                hardwareVersion,
+                memoryCapacityGB,
+                model,
                 networkInterfaces ?? new ChangeTrackingList<NetworkCloudNetworkInterface>(),
-                Optional.ToNullable(totalThreads),
-                vendor.Value,
+                totalThreads,
+                vendor,
                 serializedAdditionalRawData);
         }
 

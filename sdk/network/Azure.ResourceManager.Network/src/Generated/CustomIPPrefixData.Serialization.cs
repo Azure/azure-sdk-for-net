@@ -206,29 +206,29 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ETag> etag = default;
+            ExtendedLocation extendedLocation = default;
+            ETag? etag = default;
             IList<string> zones = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<string> asn = default;
-            Optional<string> cidr = default;
-            Optional<string> signedMessage = default;
-            Optional<string> authorizationMessage = default;
-            Optional<WritableSubResource> customIPPrefixParent = default;
+            string asn = default;
+            string cidr = default;
+            string signedMessage = default;
+            string authorizationMessage = default;
+            WritableSubResource customIPPrefixParent = default;
             IReadOnlyList<WritableSubResource> childCustomIPPrefixes = default;
-            Optional<CommissionedState> commissionedState = default;
-            Optional<bool> expressRouteAdvertise = default;
-            Optional<CidrAdvertisingGeoCode> geo = default;
-            Optional<bool> noInternetAdvertise = default;
-            Optional<CustomIPPrefixType> prefixType = default;
+            CommissionedState? commissionedState = default;
+            bool? expressRouteAdvertise = default;
+            CidrAdvertisingGeoCode? geo = default;
+            bool? noInternetAdvertise = default;
+            CustomIPPrefixType? prefixType = default;
             IReadOnlyList<WritableSubResource> publicIPPrefixes = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<string> failedReason = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            Guid? resourceGuid = default;
+            string failedReason = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -455,30 +455,30 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CustomIPPrefixData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 extendedLocation,
-                Optional.ToNullable(etag),
+                etag,
                 zones ?? new ChangeTrackingList<string>(),
-                asn.Value,
-                cidr.Value,
-                signedMessage.Value,
-                authorizationMessage.Value,
+                asn,
+                cidr,
+                signedMessage,
+                authorizationMessage,
                 customIPPrefixParent,
                 childCustomIPPrefixes ?? new ChangeTrackingList<WritableSubResource>(),
-                Optional.ToNullable(commissionedState),
-                Optional.ToNullable(expressRouteAdvertise),
-                Optional.ToNullable(geo),
-                Optional.ToNullable(noInternetAdvertise),
-                Optional.ToNullable(prefixType),
+                commissionedState,
+                expressRouteAdvertise,
+                geo,
+                noInternetAdvertise,
+                prefixType,
                 publicIPPrefixes ?? new ChangeTrackingList<WritableSubResource>(),
-                Optional.ToNullable(resourceGuid),
-                failedReason.Value,
-                Optional.ToNullable(provisioningState));
+                resourceGuid,
+                failedReason,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<CustomIPPrefixData>.Write(ModelReaderWriterOptions options)

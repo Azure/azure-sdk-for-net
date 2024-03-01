@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IReadOnlyList<SecurityContactData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityContactList(value ?? new ChangeTrackingList<SecurityContactData>(), nextLink.Value, serializedAdditionalRawData);
+            return new SecurityContactList(value ?? new ChangeTrackingList<SecurityContactData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityContactList>.Write(ModelReaderWriterOptions options)

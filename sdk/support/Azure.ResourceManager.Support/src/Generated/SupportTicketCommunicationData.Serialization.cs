@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Support
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SupportTicketCommunicationType> communicationType = default;
-            Optional<SupportTicketCommunicationDirection> communicationDirection = default;
-            Optional<string> sender = default;
-            Optional<string> subject = default;
-            Optional<string> body = default;
-            Optional<DateTimeOffset> createdDate = default;
+            SystemData systemData = default;
+            SupportTicketCommunicationType? communicationType = default;
+            SupportTicketCommunicationDirection? communicationDirection = default;
+            string sender = default;
+            string subject = default;
+            string body = default;
+            DateTimeOffset? createdDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,13 +221,13 @@ namespace Azure.ResourceManager.Support
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(communicationType),
-                Optional.ToNullable(communicationDirection),
-                sender.Value,
-                subject.Value,
-                body.Value,
-                Optional.ToNullable(createdDate),
+                systemData,
+                communicationType,
+                communicationDirection,
+                sender,
+                subject,
+                body,
+                createdDate,
                 serializedAdditionalRawData);
         }
 

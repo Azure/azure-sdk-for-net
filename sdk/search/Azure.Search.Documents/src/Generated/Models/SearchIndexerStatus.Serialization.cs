@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IndexerStatus status = default;
-            Optional<IndexerExecutionResult> lastResult = default;
+            IndexerExecutionResult lastResult = default;
             IReadOnlyList<IndexerExecutionResult> executionHistory = default;
             SearchIndexerLimits limits = default;
             foreach (var property in element.EnumerateObject())
@@ -56,7 +55,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerStatus(status, lastResult.Value, executionHistory, limits);
+            return new SearchIndexerStatus(status, lastResult, executionHistory, limits);
         }
     }
 }

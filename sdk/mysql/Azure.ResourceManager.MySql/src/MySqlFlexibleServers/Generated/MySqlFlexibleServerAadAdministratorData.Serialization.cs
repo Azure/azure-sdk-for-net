@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MySqlFlexibleServerAdministratorType> administratorType = default;
-            Optional<string> login = default;
-            Optional<string> sid = default;
-            Optional<Guid> tenantId = default;
-            Optional<ResourceIdentifier> identityResourceId = default;
+            SystemData systemData = default;
+            MySqlFlexibleServerAdministratorType? administratorType = default;
+            string login = default;
+            string sid = default;
+            Guid? tenantId = default;
+            ResourceIdentifier identityResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(administratorType),
-                login.Value,
-                sid.Value,
-                Optional.ToNullable(tenantId),
-                identityResourceId.Value,
+                systemData,
+                administratorType,
+                login,
+                sid,
+                tenantId,
+                identityResourceId,
                 serializedAdditionalRawData);
         }
 

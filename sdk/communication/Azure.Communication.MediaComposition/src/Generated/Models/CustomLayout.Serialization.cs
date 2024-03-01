@@ -65,9 +65,9 @@ namespace Azure.Communication.MediaComposition
             IDictionary<string, LayoutLayer> layers = default;
             IDictionary<string, InputGroup> inputGroups = default;
             LayoutType kind = default;
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> placeholderImageUri = default;
-            Optional<ScalingMode> scalingMode = default;
+            LayoutResolution resolution = default;
+            string placeholderImageUri = default;
+            ScalingMode? scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("layers"u8))
@@ -125,9 +125,9 @@ namespace Azure.Communication.MediaComposition
             }
             return new CustomLayout(
                 kind,
-                resolution.Value,
-                placeholderImageUri.Value,
-                Optional.ToNullable(scalingMode),
+                resolution,
+                placeholderImageUri,
+                scalingMode,
                 layers ?? new ChangeTrackingDictionary<string, LayoutLayer>(),
                 inputGroups);
         }

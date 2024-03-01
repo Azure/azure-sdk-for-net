@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.Blueprint.Models
                 return null;
             }
             IReadOnlyList<string> managedResources = default;
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<DateTimeOffset> lastModified = default;
+            DateTimeOffset? timeCreated = default;
+            DateTimeOffset? lastModified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentStatus(Optional.ToNullable(timeCreated), Optional.ToNullable(lastModified), serializedAdditionalRawData, managedResources ?? new ChangeTrackingList<string>());
+            return new AssignmentStatus(timeCreated, lastModified, serializedAdditionalRawData, managedResources ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<AssignmentStatus>.Write(ModelReaderWriterOptions options)
