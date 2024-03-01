@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<FirewallPolicyIntrusionDetectionStateType> mode = default;
-            Optional<FirewallPolicyIntrusionDetectionProfileType> profile = default;
-            Optional<FirewallPolicyIntrusionDetectionConfiguration> configuration = default;
+            FirewallPolicyIntrusionDetectionStateType? mode = default;
+            FirewallPolicyIntrusionDetectionProfileType? profile = default;
+            FirewallPolicyIntrusionDetectionConfiguration configuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyIntrusionDetection(Optional.ToNullable(mode), Optional.ToNullable(profile), configuration.Value, serializedAdditionalRawData);
+            return new FirewallPolicyIntrusionDetection(mode, profile, configuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyIntrusionDetection>.Write(ModelReaderWriterOptions options)

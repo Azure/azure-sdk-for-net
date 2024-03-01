@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<AzureResourceManagerError> error = default;
+            AzureResourceManagerError error = default;
             IList<AssignmentJobCreatedResult> resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentDeploymentJobResult(error.Value, resources ?? new ChangeTrackingList<AssignmentJobCreatedResult>(), serializedAdditionalRawData);
+            return new AssignmentDeploymentJobResult(error, resources ?? new ChangeTrackingList<AssignmentJobCreatedResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentDeploymentJobResult>.Write(ModelReaderWriterOptions options)

@@ -92,7 +92,7 @@ namespace Azure.Communication.JobRouter
             }
             ETag etag = default;
             string id = default;
-            Optional<string> name = default;
+            string name = default;
             IList<ExceptionRule> exceptionRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,7 +133,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExceptionPolicy(etag, id, name.Value, exceptionRules ?? new ChangeTrackingList<ExceptionRule>(), serializedAdditionalRawData);
+            return new ExceptionPolicy(etag, id, name, exceptionRules ?? new ChangeTrackingList<ExceptionRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExceptionPolicy>.Write(ModelReaderWriterOptions options)

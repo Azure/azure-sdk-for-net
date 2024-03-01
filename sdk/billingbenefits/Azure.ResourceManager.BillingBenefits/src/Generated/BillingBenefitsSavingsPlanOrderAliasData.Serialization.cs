@@ -142,20 +142,20 @@ namespace Azure.ResourceManager.BillingBenefits
                 return null;
             }
             BillingBenefitsSku sku = default;
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<ResourceIdentifier> savingsPlanOrderId = default;
-            Optional<BillingBenefitsProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> billingScopeId = default;
-            Optional<BillingBenefitsTerm> term = default;
-            Optional<BillingBenefitsBillingPlan> billingPlan = default;
-            Optional<BillingBenefitsAppliedScopeType> appliedScopeType = default;
-            Optional<BillingBenefitsAppliedScopeProperties> appliedScopeProperties = default;
-            Optional<BillingBenefitsCommitment> commitment = default;
+            SystemData systemData = default;
+            string displayName = default;
+            ResourceIdentifier savingsPlanOrderId = default;
+            BillingBenefitsProvisioningState? provisioningState = default;
+            ResourceIdentifier billingScopeId = default;
+            BillingBenefitsTerm? term = default;
+            BillingBenefitsBillingPlan? billingPlan = default;
+            BillingBenefitsAppliedScopeType? appliedScopeType = default;
+            BillingBenefitsAppliedScopeProperties appliedScopeProperties = default;
+            BillingBenefitsCommitment commitment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -293,18 +293,18 @@ namespace Azure.ResourceManager.BillingBenefits
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 sku,
-                kind.Value,
-                displayName.Value,
-                savingsPlanOrderId.Value,
-                Optional.ToNullable(provisioningState),
-                billingScopeId.Value,
-                Optional.ToNullable(term),
-                Optional.ToNullable(billingPlan),
-                Optional.ToNullable(appliedScopeType),
-                appliedScopeProperties.Value,
-                commitment.Value,
+                kind,
+                displayName,
+                savingsPlanOrderId,
+                provisioningState,
+                billingScopeId,
+                term,
+                billingPlan,
+                appliedScopeType,
+                appliedScopeProperties,
+                commitment,
                 serializedAdditionalRawData);
         }
 

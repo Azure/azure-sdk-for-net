@@ -158,19 +158,19 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             SearchFieldDataType type = default;
-            Optional<bool> key = default;
-            Optional<bool> retrievable = default;
-            Optional<bool> stored = default;
-            Optional<bool> searchable = default;
-            Optional<bool> filterable = default;
-            Optional<bool> sortable = default;
-            Optional<bool> facetable = default;
-            Optional<LexicalAnalyzerName?> analyzer = default;
-            Optional<LexicalAnalyzerName?> searchAnalyzer = default;
-            Optional<LexicalAnalyzerName?> indexAnalyzer = default;
-            Optional<LexicalNormalizerName?> normalizer = default;
-            Optional<int?> dimensions = default;
-            Optional<string> vectorSearchProfile = default;
+            bool? key = default;
+            bool? retrievable = default;
+            bool? stored = default;
+            bool? searchable = default;
+            bool? filterable = default;
+            bool? sortable = default;
+            bool? facetable = default;
+            LexicalAnalyzerName? analyzer = default;
+            LexicalAnalyzerName? searchAnalyzer = default;
+            LexicalAnalyzerName? indexAnalyzer = default;
+            LexicalNormalizerName? normalizer = default;
+            int? dimensions = default;
+            string vectorSearchProfile = default;
             IList<string> synonymMaps = default;
             IList<SearchField> fields = default;
             foreach (var property in element.EnumerateObject())
@@ -340,19 +340,19 @@ namespace Azure.Search.Documents.Indexes.Models
             return new SearchField(
                 name,
                 type,
-                Optional.ToNullable(key),
-                Optional.ToNullable(retrievable),
-                Optional.ToNullable(stored),
-                Optional.ToNullable(searchable),
-                Optional.ToNullable(filterable),
-                Optional.ToNullable(sortable),
-                Optional.ToNullable(facetable),
-                Optional.ToNullable(analyzer),
-                Optional.ToNullable(searchAnalyzer),
-                Optional.ToNullable(indexAnalyzer),
-                Optional.ToNullable(normalizer),
-                Optional.ToNullable(dimensions),
-                vectorSearchProfile.Value,
+                key,
+                retrievable,
+                stored,
+                searchable,
+                filterable,
+                sortable,
+                facetable,
+                analyzer,
+                searchAnalyzer,
+                indexAnalyzer,
+                normalizer,
+                dimensions,
+                vectorSearchProfile,
                 synonymMaps ?? new ChangeTrackingList<string>(),
                 fields ?? new ChangeTrackingList<SearchField>());
         }

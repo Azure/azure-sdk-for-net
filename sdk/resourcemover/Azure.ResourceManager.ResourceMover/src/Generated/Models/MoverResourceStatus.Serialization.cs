@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<MoverResourceMoveState> moveState = default;
-            Optional<MoverResourceJobStatus> jobStatus = default;
-            Optional<MoveResourceError> errors = default;
+            MoverResourceMoveState? moveState = default;
+            MoverResourceJobStatus jobStatus = default;
+            MoveResourceError errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceStatus(Optional.ToNullable(moveState), jobStatus.Value, errors.Value, serializedAdditionalRawData);
+            return new MoverResourceStatus(moveState, jobStatus, errors, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceStatus>.Write(ModelReaderWriterOptions options)

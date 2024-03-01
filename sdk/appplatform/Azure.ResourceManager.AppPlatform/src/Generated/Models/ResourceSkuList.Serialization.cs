@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 return null;
             }
             IReadOnlyList<AvailableAppPlatformSku> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSkuList(value ?? new ChangeTrackingList<AvailableAppPlatformSku>(), nextLink.Value, serializedAdditionalRawData);
+            return new ResourceSkuList(value ?? new ChangeTrackingList<AvailableAppPlatformSku>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSkuList>.Write(ModelReaderWriterOptions options)

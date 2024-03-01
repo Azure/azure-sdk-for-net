@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
             string offer = default;
             AddonType addonType = default;
-            Optional<AddonProvisioningState> provisioningState = default;
+            AddonProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AddonHcxProperties(addonType, Optional.ToNullable(provisioningState), serializedAdditionalRawData, offer);
+            return new AddonHcxProperties(addonType, provisioningState, serializedAdditionalRawData, offer);
         }
 
         BinaryData IPersistableModel<AddonHcxProperties>.Write(ModelReaderWriterOptions options)

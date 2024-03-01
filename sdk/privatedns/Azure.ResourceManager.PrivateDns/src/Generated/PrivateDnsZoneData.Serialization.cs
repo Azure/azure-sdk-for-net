@@ -148,21 +148,21 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> maxNumberOfRecordSets = default;
-            Optional<long> numberOfRecordSets = default;
-            Optional<long> maxNumberOfVirtualNetworkLinks = default;
-            Optional<long> numberOfVirtualNetworkLinks = default;
-            Optional<long> maxNumberOfVirtualNetworkLinksWithRegistration = default;
-            Optional<long> numberOfVirtualNetworkLinksWithRegistration = default;
-            Optional<PrivateDnsProvisioningState> privateDnsProvisioningState = default;
-            Optional<string> internalId = default;
+            SystemData systemData = default;
+            long? maxNumberOfRecordSets = default;
+            long? numberOfRecordSets = default;
+            long? maxNumberOfVirtualNetworkLinks = default;
+            long? numberOfVirtualNetworkLinks = default;
+            long? maxNumberOfVirtualNetworkLinksWithRegistration = default;
+            long? numberOfVirtualNetworkLinksWithRegistration = default;
+            PrivateDnsProvisioningState? privateDnsProvisioningState = default;
+            string internalId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -309,18 +309,18 @@ namespace Azure.ResourceManager.PrivateDns
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(maxNumberOfRecordSets),
-                Optional.ToNullable(numberOfRecordSets),
-                Optional.ToNullable(maxNumberOfVirtualNetworkLinks),
-                Optional.ToNullable(numberOfVirtualNetworkLinks),
-                Optional.ToNullable(maxNumberOfVirtualNetworkLinksWithRegistration),
-                Optional.ToNullable(numberOfVirtualNetworkLinksWithRegistration),
-                Optional.ToNullable(privateDnsProvisioningState),
-                internalId.Value,
+                etag,
+                maxNumberOfRecordSets,
+                numberOfRecordSets,
+                maxNumberOfVirtualNetworkLinks,
+                numberOfVirtualNetworkLinks,
+                maxNumberOfVirtualNetworkLinksWithRegistration,
+                numberOfVirtualNetworkLinksWithRegistration,
+                privateDnsProvisioningState,
+                internalId,
                 serializedAdditionalRawData);
         }
 

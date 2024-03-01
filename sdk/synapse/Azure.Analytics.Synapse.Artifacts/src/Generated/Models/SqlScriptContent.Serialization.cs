@@ -51,9 +51,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string query = default;
-            Optional<SqlConnection> currentConnection = default;
-            Optional<int> resultLimit = default;
-            Optional<SqlScriptMetadata> metadata = default;
+            SqlConnection currentConnection = default;
+            int? resultLimit = default;
+            SqlScriptMetadata metadata = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlScriptContent(query, currentConnection.Value, Optional.ToNullable(resultLimit), metadata.Value, additionalProperties);
+            return new SqlScriptContent(query, currentConnection, resultLimit, metadata, additionalProperties);
         }
 
         internal partial class SqlScriptContentConverter : JsonConverter<SqlScriptContent>

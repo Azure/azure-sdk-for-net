@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<string> target = default;
-            Optional<string> additionalErrorInfo = default;
+            string code = default;
+            string message = default;
+            string target = default;
+            string additionalErrorInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraError(code.Value, message.Value, target.Value, additionalErrorInfo.Value, serializedAdditionalRawData);
+            return new CassandraError(code, message, target, additionalErrorInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraError>.Write(ModelReaderWriterOptions options)

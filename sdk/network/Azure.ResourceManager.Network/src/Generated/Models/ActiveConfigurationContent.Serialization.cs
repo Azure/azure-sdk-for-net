@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IList<AzureLocation> regions = default;
-            Optional<string> skipToken = default;
+            string skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActiveConfigurationContent(regions ?? new ChangeTrackingList<AzureLocation>(), skipToken.Value, serializedAdditionalRawData);
+            return new ActiveConfigurationContent(regions ?? new ChangeTrackingList<AzureLocation>(), skipToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActiveConfigurationContent>.Write(ModelReaderWriterOptions options)

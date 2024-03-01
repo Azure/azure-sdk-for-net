@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             VCenterInventoryType inventoryType = default;
-            Optional<string> managedResourceId = default;
-            Optional<string> moRefId = default;
-            Optional<string> moName = default;
-            Optional<VMwareResourceProvisioningState> provisioningState = default;
+            string managedResourceId = default;
+            string moRefId = default;
+            string moName = default;
+            VMwareResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,13 +210,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 id,
                 name,
                 type,
-                systemData.Value,
-                kind.Value,
+                systemData,
+                kind,
                 inventoryType,
-                managedResourceId.Value,
-                moRefId.Value,
-                moName.Value,
-                Optional.ToNullable(provisioningState),
+                managedResourceId,
+                moRefId,
+                moName,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

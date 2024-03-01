@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<ProviderSubscriptionState> state = default;
+            ProviderSubscriptionState? state = default;
             IList<string> allowedActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderSubscriptionStateRule(Optional.ToNullable(state), allowedActions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ProviderSubscriptionStateRule(state, allowedActions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderSubscriptionStateRule>.Write(ModelReaderWriterOptions options)

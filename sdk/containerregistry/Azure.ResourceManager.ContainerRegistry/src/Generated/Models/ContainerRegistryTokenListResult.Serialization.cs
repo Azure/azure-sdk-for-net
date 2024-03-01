@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             IReadOnlyList<ContainerRegistryTokenData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTokenListResult(value ?? new ChangeTrackingList<ContainerRegistryTokenData>(), nextLink.Value, serializedAdditionalRawData);
+            return new ContainerRegistryTokenListResult(value ?? new ChangeTrackingList<ContainerRegistryTokenData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTokenListResult>.Write(ModelReaderWriterOptions options)

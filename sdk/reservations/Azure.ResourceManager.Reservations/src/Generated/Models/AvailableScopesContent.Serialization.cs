@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<AvailableScopeRequestProperties> properties = default;
+            AvailableScopeRequestProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableScopesContent(properties.Value, serializedAdditionalRawData);
+            return new AvailableScopesContent(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableScopesContent>.Write(ModelReaderWriterOptions options)

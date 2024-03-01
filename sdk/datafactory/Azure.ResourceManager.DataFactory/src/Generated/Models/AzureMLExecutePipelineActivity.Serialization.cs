@@ -161,23 +161,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
-            Optional<DataFactoryElement<string>> mlPipelineId = default;
-            Optional<DataFactoryElement<string>> mlPipelineEndpointId = default;
-            Optional<DataFactoryElement<string>> version = default;
-            Optional<DataFactoryElement<string>> experimentName = default;
-            Optional<DataFactoryElement<IDictionary<string, string>>> mlPipelineParameters = default;
-            Optional<BinaryData> dataPathAssignments = default;
-            Optional<DataFactoryElement<string>> mlParentRunId = default;
-            Optional<DataFactoryElement<bool>> continueOnStepFailure = default;
+            DataFactoryElement<string> mlPipelineId = default;
+            DataFactoryElement<string> mlPipelineEndpointId = default;
+            DataFactoryElement<string> version = default;
+            DataFactoryElement<string> experimentName = default;
+            DataFactoryElement<IDictionary<string, string>> mlPipelineParameters = default;
+            BinaryData dataPathAssignments = default;
+            DataFactoryElement<string> mlParentRunId = default;
+            DataFactoryElement<bool> continueOnStepFailure = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -351,22 +351,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new AzureMLExecutePipelineActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
                 additionalProperties,
                 linkedServiceName,
-                policy.Value,
-                mlPipelineId.Value,
-                mlPipelineEndpointId.Value,
-                version.Value,
-                experimentName.Value,
-                mlPipelineParameters.Value,
-                dataPathAssignments.Value,
-                mlParentRunId.Value,
-                continueOnStepFailure.Value);
+                policy,
+                mlPipelineId,
+                mlPipelineEndpointId,
+                version,
+                experimentName,
+                mlPipelineParameters,
+                dataPathAssignments,
+                mlParentRunId,
+                continueOnStepFailure);
         }
 
         BinaryData IPersistableModel<AzureMLExecutePipelineActivity>.Write(ModelReaderWriterOptions options)

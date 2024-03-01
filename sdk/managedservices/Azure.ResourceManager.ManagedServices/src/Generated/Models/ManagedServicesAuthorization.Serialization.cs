@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 return null;
             }
             Guid principalId = default;
-            Optional<string> principalIdDisplayName = default;
+            string principalIdDisplayName = default;
             string roleDefinitionId = default;
             IList<Guid> delegatedRoleDefinitionIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesAuthorization(principalId, principalIdDisplayName.Value, roleDefinitionId, delegatedRoleDefinitionIds ?? new ChangeTrackingList<Guid>(), serializedAdditionalRawData);
+            return new ManagedServicesAuthorization(principalId, principalIdDisplayName, roleDefinitionId, delegatedRoleDefinitionIds ?? new ChangeTrackingList<Guid>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesAuthorization>.Write(ModelReaderWriterOptions options)

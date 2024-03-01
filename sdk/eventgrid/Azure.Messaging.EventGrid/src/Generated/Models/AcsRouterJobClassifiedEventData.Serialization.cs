@@ -22,16 +22,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<AcsRouterQueueDetails> queueDetails = default;
-            Optional<string> classificationPolicyId = default;
-            Optional<int> priority = default;
+            AcsRouterQueueDetails queueDetails = default;
+            string classificationPolicyId = default;
+            int? priority = default;
             IReadOnlyList<AcsRouterWorkerSelector> attachedWorkerSelectors = default;
-            Optional<string> queueId = default;
+            string queueId = default;
             IReadOnlyDictionary<string, string> labels = default;
             IReadOnlyDictionary<string, string> tags = default;
-            Optional<string> jobId = default;
-            Optional<string> channelReference = default;
-            Optional<string> channelId = default;
+            string jobId = default;
+            string channelReference = default;
+            string channelId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queueDetails"u8))
@@ -121,15 +121,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AcsRouterJobClassifiedEventData(
-                jobId.Value,
-                channelReference.Value,
-                channelId.Value,
-                queueId.Value,
+                jobId,
+                channelReference,
+                channelId,
+                queueId,
                 labels ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                queueDetails.Value,
-                classificationPolicyId.Value,
-                Optional.ToNullable(priority),
+                queueDetails,
+                classificationPolicyId,
+                priority,
                 attachedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>());
         }
 

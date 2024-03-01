@@ -22,7 +22,7 @@ namespace Azure.Communication.JobRouter
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void ReadExpiresAfter(JsonProperty property, ref Optional<TimeSpan> expiresAfter)
+        internal static void ReadExpiresAfter(JsonProperty property, ref TimeSpan? expiresAfter)
         {
             if (property.Value.ValueKind == JsonValueKind.Null)
             {

@@ -143,19 +143,19 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> accountId = default;
-            Optional<MonitorWorkspaceMetrics> metrics = default;
-            Optional<MonitorProvisioningState> provisioningState = default;
-            Optional<MonitorWorkspaceDefaultIngestionSettings> defaultIngestionSettings = default;
+            SystemData systemData = default;
+            string accountId = default;
+            MonitorWorkspaceMetrics metrics = default;
+            MonitorProvisioningState? provisioningState = default;
+            MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings = default;
             IReadOnlyList<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections = default;
-            Optional<MonitorWorkspacePublicNetworkAccess> publicNetworkAccess = default;
+            MonitorWorkspacePublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -289,16 +289,16 @@ namespace Azure.ResourceManager.Monitor
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
-                accountId.Value,
-                metrics.Value,
-                Optional.ToNullable(provisioningState),
-                defaultIngestionSettings.Value,
+                etag,
+                accountId,
+                metrics,
+                provisioningState,
+                defaultIngestionSettings,
                 privateEndpointConnections ?? new ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>(),
-                Optional.ToNullable(publicNetworkAccess),
+                publicNetworkAccess,
                 serializedAdditionalRawData);
         }
 

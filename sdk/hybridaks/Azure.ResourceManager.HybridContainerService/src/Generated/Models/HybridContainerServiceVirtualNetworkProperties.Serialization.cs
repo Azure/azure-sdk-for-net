@@ -124,15 +124,15 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<InfraVnetProfile> infraVnetProfile = default;
+            InfraVnetProfile infraVnetProfile = default;
             IList<KubernetesVirtualIPItem> vipPool = default;
             IList<VirtualMachineIPItem> vmipPool = default;
             IList<string> dnsServers = default;
-            Optional<string> gateway = default;
-            Optional<string> ipAddressPrefix = default;
-            Optional<int> vlanId = default;
-            Optional<HybridContainerServiceProvisioningState> provisioningState = default;
-            Optional<HybridContainerServiceNetworkStatus> status = default;
+            string gateway = default;
+            string ipAddressPrefix = default;
+            int? vlanId = default;
+            HybridContainerServiceProvisioningState? provisioningState = default;
+            HybridContainerServiceNetworkStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,15 +232,15 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HybridContainerServiceVirtualNetworkProperties(
-                infraVnetProfile.Value,
+                infraVnetProfile,
                 vipPool ?? new ChangeTrackingList<KubernetesVirtualIPItem>(),
                 vmipPool ?? new ChangeTrackingList<VirtualMachineIPItem>(),
                 dnsServers ?? new ChangeTrackingList<string>(),
-                gateway.Value,
-                ipAddressPrefix.Value,
-                Optional.ToNullable(vlanId),
-                Optional.ToNullable(provisioningState),
-                status.Value,
+                gateway,
+                ipAddressPrefix,
+                vlanId,
+                provisioningState,
+                status,
                 serializedAdditionalRawData);
         }
 

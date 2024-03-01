@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             bool sendToOwners = default;
             IList<string> customEmailAddresses = default;
-            Optional<string> locale = default;
+            string locale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationEmailConfigurationProperties(sendToOwners, customEmailAddresses ?? new ChangeTrackingList<string>(), locale.Value, serializedAdditionalRawData);
+            return new DataReplicationEmailConfigurationProperties(sendToOwners, customEmailAddresses ?? new ChangeTrackingList<string>(), locale, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationEmailConfigurationProperties>.Write(ModelReaderWriterOptions options)

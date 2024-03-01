@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             ExportType type = default;
             TimeframeType timeframe = default;
-            Optional<ExportTimePeriod> timePeriod = default;
-            Optional<ExportDataset> dataSet = default;
+            ExportTimePeriod timePeriod = default;
+            ExportDataset dataSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportDefinition(type, timeframe, timePeriod.Value, dataSet.Value, serializedAdditionalRawData);
+            return new ExportDefinition(type, timeframe, timePeriod, dataSet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportDefinition>.Write(ModelReaderWriterOptions options)

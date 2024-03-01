@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> target = default;
-            Optional<string> message = default;
+            string code = default;
+            string target = default;
+            string message = default;
             IList<ExtendedErrorInfo> details = default;
             IList<TypedErrorInfo> additionalInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ExtendedErrorInfo(
-                code.Value,
-                target.Value,
-                message.Value,
+                code,
+                target,
+                message,
                 details ?? new ChangeTrackingList<ExtendedErrorInfo>(),
                 additionalInfo ?? new ChangeTrackingList<TypedErrorInfo>(),
                 serializedAdditionalRawData);

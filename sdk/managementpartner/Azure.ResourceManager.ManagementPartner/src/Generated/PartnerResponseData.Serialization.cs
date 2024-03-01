@@ -134,19 +134,19 @@ namespace Azure.ResourceManager.ManagementPartner
             {
                 return null;
             }
-            Optional<int> etag = default;
+            int? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> partnerId = default;
-            Optional<string> partnerName = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> objectId = default;
-            Optional<int> version = default;
-            Optional<DateTimeOffset> updatedTime = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<ManagementPartnerState> state = default;
+            SystemData systemData = default;
+            string partnerId = default;
+            string partnerName = default;
+            Guid? tenantId = default;
+            string objectId = default;
+            int? version = default;
+            DateTimeOffset? updatedTime = default;
+            DateTimeOffset? createdTime = default;
+            ManagementPartnerState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -266,16 +266,16 @@ namespace Azure.ResourceManager.ManagementPartner
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(etag),
-                partnerId.Value,
-                partnerName.Value,
-                Optional.ToNullable(tenantId),
-                objectId.Value,
-                Optional.ToNullable(version),
-                Optional.ToNullable(updatedTime),
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(state),
+                systemData,
+                etag,
+                partnerId,
+                partnerName,
+                tenantId,
+                objectId,
+                version,
+                updatedTime,
+                createdTime,
+                state,
                 serializedAdditionalRawData);
         }
 

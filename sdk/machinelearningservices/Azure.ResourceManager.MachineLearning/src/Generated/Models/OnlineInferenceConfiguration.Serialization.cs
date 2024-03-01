@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IDictionary<string, string> configurations = default;
-            Optional<string> entryScript = default;
-            Optional<MachineLearningInferenceContainerRoute> livenessRoute = default;
-            Optional<MachineLearningInferenceContainerRoute> readinessRoute = default;
-            Optional<MachineLearningInferenceContainerRoute> scoringRoute = default;
+            string entryScript = default;
+            MachineLearningInferenceContainerRoute livenessRoute = default;
+            MachineLearningInferenceContainerRoute readinessRoute = default;
+            MachineLearningInferenceContainerRoute scoringRoute = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,10 +202,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new OnlineInferenceConfiguration(
                 configurations ?? new ChangeTrackingDictionary<string, string>(),
-                entryScript.Value,
-                livenessRoute.Value,
-                readinessRoute.Value,
-                scoringRoute.Value,
+                entryScript,
+                livenessRoute,
+                readinessRoute,
+                scoringRoute,
                 serializedAdditionalRawData);
         }
 

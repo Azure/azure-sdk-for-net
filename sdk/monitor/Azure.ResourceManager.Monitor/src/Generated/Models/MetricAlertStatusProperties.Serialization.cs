@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IReadOnlyDictionary<string, string> dimensions = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> timestamp = default;
+            string status = default;
+            DateTimeOffset? timestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricAlertStatusProperties(dimensions ?? new ChangeTrackingDictionary<string, string>(), status.Value, Optional.ToNullable(timestamp), serializedAdditionalRawData);
+            return new MetricAlertStatusProperties(dimensions ?? new ChangeTrackingDictionary<string, string>(), status, timestamp, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricAlertStatusProperties>.Write(ModelReaderWriterOptions options)

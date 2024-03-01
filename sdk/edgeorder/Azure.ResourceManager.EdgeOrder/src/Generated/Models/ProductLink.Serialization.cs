@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<ProductLinkType> linkType = default;
-            Optional<Uri> linkUrl = default;
+            ProductLinkType? linkType = default;
+            Uri linkUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductLink(Optional.ToNullable(linkType), linkUrl.Value, serializedAdditionalRawData);
+            return new ProductLink(linkType, linkUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductLink>.Write(ModelReaderWriterOptions options)

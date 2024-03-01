@@ -20,10 +20,10 @@ namespace Azure.IoT.TimeSeriesInsights
                 return null;
             }
             IReadOnlyList<object> timeSeriesId = default;
-            Optional<string> name = default;
-            Optional<string> typeId = default;
+            string name = default;
+            string typeId = default;
             IReadOnlyList<string> hierarchyIds = default;
-            Optional<InstanceHitHighlights> highlights = default;
+            InstanceHitHighlights highlights = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeSeriesId"u8))
@@ -81,7 +81,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new InstanceHit(timeSeriesId ?? new ChangeTrackingList<object>(), name.Value, typeId.Value, hierarchyIds ?? new ChangeTrackingList<string>(), highlights.Value);
+            return new InstanceHit(timeSeriesId ?? new ChangeTrackingList<object>(), name, typeId, hierarchyIds ?? new ChangeTrackingList<string>(), highlights);
         }
     }
 }

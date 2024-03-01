@@ -40,7 +40,7 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<MessageContentCategory> contentCategory = default;
+            MessageContentCategory? contentCategory = default;
             IList<MessageExampleSequence> examples = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -68,7 +68,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new UseCase(Optional.ToNullable(contentCategory), examples ?? new ChangeTrackingList<MessageExampleSequence>());
+            return new UseCase(contentCategory, examples ?? new ChangeTrackingList<MessageExampleSequence>());
         }
     }
 }

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             {
                 return null;
             }
-            Optional<string> provider = default;
-            Optional<string> resource = default;
-            Optional<string> operation = default;
-            Optional<string> description = default;
+            string provider = default;
+            string resource = default;
+            string operation = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationDisplay(provider.Value, resource.Value, operation.Value, description.Value, serializedAdditionalRawData);
+            return new OperationDisplay(provider, resource, operation, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationDisplay>.Write(ModelReaderWriterOptions options)

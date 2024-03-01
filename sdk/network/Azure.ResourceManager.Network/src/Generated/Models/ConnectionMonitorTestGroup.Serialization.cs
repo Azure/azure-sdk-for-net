@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string name = default;
-            Optional<bool> disable = default;
+            bool? disable = default;
             IList<string> testConfigurations = default;
             IList<string> sources = default;
             IList<string> destinations = default;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConnectionMonitorTestGroup(
                 name,
-                Optional.ToNullable(disable),
+                disable,
                 testConfigurations,
                 sources,
                 destinations,

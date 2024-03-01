@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             DeviceProvisioningServiceProperties properties = default;
             DeviceProvisioningServicesSkuInfo sku = default;
             IDictionary<string, string> tags = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
+                etag,
                 properties,
                 sku,
                 serializedAdditionalRawData);

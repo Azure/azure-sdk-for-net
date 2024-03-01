@@ -20,9 +20,9 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 return null;
             }
-            Optional<string> displayName = default;
+            string displayName = default;
             DateTimeOffset createdDateTime = default;
-            Optional<DateTimeOffset> expirationDateTime = default;
+            DateTimeOffset? expirationDateTime = default;
             Guid jobId = default;
             DateTimeOffset lastUpdateDateTime = default;
             State status = default;
@@ -65,11 +65,11 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             return new AnalyzeJobMetadata(
                 createdDateTime,
-                Optional.ToNullable(expirationDateTime),
+                expirationDateTime,
                 jobId,
                 lastUpdateDateTime,
                 status,
-                displayName.Value);
+                displayName);
         }
     }
 }

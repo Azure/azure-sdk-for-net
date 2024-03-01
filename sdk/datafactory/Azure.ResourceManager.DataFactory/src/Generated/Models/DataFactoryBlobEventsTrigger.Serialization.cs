@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             IList<TriggerPipelineReference> pipelines = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryTriggerRuntimeState> runtimeState = default;
+            string description = default;
+            DataFactoryTriggerRuntimeState? runtimeState = default;
             IList<BinaryData> annotations = default;
-            Optional<string> blobPathBeginsWith = default;
-            Optional<string> blobPathEndsWith = default;
-            Optional<bool> ignoreEmptyBlobs = default;
+            string blobPathBeginsWith = default;
+            string blobPathEndsWith = default;
+            bool? ignoreEmptyBlobs = default;
             IList<DataFactoryBlobEventType> events = default;
             string scope = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DataFactoryBlobEventsTrigger(
                 type,
-                description.Value,
-                Optional.ToNullable(runtimeState),
+                description,
+                runtimeState,
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
                 pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(),
-                blobPathBeginsWith.Value,
-                blobPathEndsWith.Value,
-                Optional.ToNullable(ignoreEmptyBlobs),
+                blobPathBeginsWith,
+                blobPathEndsWith,
+                ignoreEmptyBlobs,
                 events,
                 scope);
         }

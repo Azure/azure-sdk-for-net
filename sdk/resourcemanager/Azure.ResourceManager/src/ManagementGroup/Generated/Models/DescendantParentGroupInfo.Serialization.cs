@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DescendantParentGroupInfo(id.Value, serializedAdditionalRawData);
+            return new DescendantParentGroupInfo(id, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DescendantParentGroupInfo>.Write(ModelReaderWriterOptions options)

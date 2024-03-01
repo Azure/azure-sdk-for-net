@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<Uri> vaultUri = default;
-            Optional<string> keyName = default;
-            Optional<string> keyVersion = default;
+            Uri vaultUri = default;
+            string keyName = default;
+            string keyVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterDiskEncryptionContent(vaultUri.Value, keyName.Value, keyVersion.Value, serializedAdditionalRawData);
+            return new HDInsightClusterDiskEncryptionContent(vaultUri, keyName, keyVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterDiskEncryptionContent>.Write(ModelReaderWriterOptions options)

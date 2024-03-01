@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFlowComputeType> computeType = default;
-            Optional<int> coreCount = default;
-            Optional<int> timeToLive = default;
-            Optional<bool> cleanup = default;
+            DataFlowComputeType? computeType = default;
+            int? coreCount = default;
+            int? timeToLive = default;
+            bool? cleanup = default;
             IList<IntegrationRuntimeDataFlowCustomItem> customProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new IntegrationRuntimeDataFlowProperties(
-                Optional.ToNullable(computeType),
-                Optional.ToNullable(coreCount),
-                Optional.ToNullable(timeToLive),
-                Optional.ToNullable(cleanup),
+                computeType,
+                coreCount,
+                timeToLive,
+                cleanup,
                 customProperties ?? new ChangeTrackingList<IntegrationRuntimeDataFlowCustomItem>(),
                 additionalProperties);
         }

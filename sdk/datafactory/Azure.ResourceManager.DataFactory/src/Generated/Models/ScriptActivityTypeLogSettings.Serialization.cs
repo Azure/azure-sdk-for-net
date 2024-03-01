@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             ScriptActivityLogDestination logDestination = default;
-            Optional<LogLocationSettings> logLocationSettings = default;
+            LogLocationSettings logLocationSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptActivityTypeLogSettings(logDestination, logLocationSettings.Value, serializedAdditionalRawData);
+            return new ScriptActivityTypeLogSettings(logDestination, logLocationSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptActivityTypeLogSettings>.Write(ModelReaderWriterOptions options)

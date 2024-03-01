@@ -47,10 +47,10 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             VectorQueryKind kind = "Unknown";
-            Optional<int> k = default;
-            Optional<string> fields = default;
-            Optional<bool> exhaustive = default;
-            Optional<double> oversampling = default;
+            int? k = default;
+            string fields = default;
+            bool? exhaustive = default;
+            double? oversampling = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -91,7 +91,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new UnknownVectorQuery(kind, Optional.ToNullable(k), fields.Value, Optional.ToNullable(exhaustive), Optional.ToNullable(oversampling));
+            return new UnknownVectorQuery(kind, k, fields, exhaustive, oversampling);
         }
     }
 }

@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.Peering
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> prefix = default;
-            Optional<PeeringPrefixValidationState> prefixValidationState = default;
-            Optional<PeeringLearnedType> learnedType = default;
-            Optional<string> errorMessage = default;
+            SystemData systemData = default;
+            string prefix = default;
+            PeeringPrefixValidationState? prefixValidationState = default;
+            PeeringLearnedType? learnedType = default;
+            string errorMessage = default;
             IReadOnlyList<PeeringServicePrefixEvent> events = default;
-            Optional<string> peeringServicePrefixKey = default;
-            Optional<PeeringProvisioningState> provisioningState = default;
+            string peeringServicePrefixKey = default;
+            PeeringProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -246,14 +246,14 @@ namespace Azure.ResourceManager.Peering
                 id,
                 name,
                 type,
-                systemData.Value,
-                prefix.Value,
-                Optional.ToNullable(prefixValidationState),
-                Optional.ToNullable(learnedType),
-                errorMessage.Value,
+                systemData,
+                prefix,
+                prefixValidationState,
+                learnedType,
+                errorMessage,
                 events ?? new ChangeTrackingList<PeeringServicePrefixEvent>(),
-                peeringServicePrefixKey.Value,
-                Optional.ToNullable(provisioningState),
+                peeringServicePrefixKey,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

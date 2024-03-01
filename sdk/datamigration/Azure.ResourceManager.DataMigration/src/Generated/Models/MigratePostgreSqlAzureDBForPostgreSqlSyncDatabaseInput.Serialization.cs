@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> targetDatabaseName = default;
+            string name = default;
+            string id = default;
+            string targetDatabaseName = default;
             IDictionary<string, BinaryData> migrationSetting = default;
             IDictionary<string, string> sourceSetting = default;
             IDictionary<string, string> targetSetting = default;
@@ -230,9 +230,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput(
-                name.Value,
-                id.Value,
-                targetDatabaseName.Value,
+                name,
+                id,
+                targetDatabaseName,
                 migrationSetting ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 sourceSetting ?? new ChangeTrackingDictionary<string, string>(),
                 targetSetting ?? new ChangeTrackingDictionary<string, string>(),

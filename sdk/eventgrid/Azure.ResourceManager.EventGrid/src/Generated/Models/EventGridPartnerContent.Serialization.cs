@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<Guid> partnerRegistrationImmutableId = default;
-            Optional<string> partnerName = default;
-            Optional<DateTimeOffset> authorizationExpirationTimeInUtc = default;
+            Guid? partnerRegistrationImmutableId = default;
+            string partnerName = default;
+            DateTimeOffset? authorizationExpirationTimeInUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridPartnerContent(Optional.ToNullable(partnerRegistrationImmutableId), partnerName.Value, Optional.ToNullable(authorizationExpirationTimeInUtc), serializedAdditionalRawData);
+            return new EventGridPartnerContent(partnerRegistrationImmutableId, partnerName, authorizationExpirationTimeInUtc, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridPartnerContent>.Write(ModelReaderWriterOptions options)

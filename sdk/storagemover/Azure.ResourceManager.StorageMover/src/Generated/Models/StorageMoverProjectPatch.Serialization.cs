@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageMoverProjectPatch(description.Value, serializedAdditionalRawData);
+            return new StorageMoverProjectPatch(description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageMoverProjectPatch>.Write(ModelReaderWriterOptions options)

@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string target = default;
-            Optional<PacketCaptureMachineScope> scope = default;
-            Optional<PacketCaptureTargetType> targetType = default;
-            Optional<long> bytesToCapturePerPacket = default;
-            Optional<long> totalBytesPerSession = default;
-            Optional<int> timeLimitInSeconds = default;
+            PacketCaptureMachineScope scope = default;
+            PacketCaptureTargetType? targetType = default;
+            long? bytesToCapturePerPacket = default;
+            long? totalBytesPerSession = default;
+            int? timeLimitInSeconds = default;
             PacketCaptureStorageLocation storageLocation = default;
             IList<PacketCaptureFilter> filters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -207,11 +207,11 @@ namespace Azure.ResourceManager.Network.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PacketCaptureCreateOrUpdateContent(
                 target,
-                scope.Value,
-                Optional.ToNullable(targetType),
-                Optional.ToNullable(bytesToCapturePerPacket),
-                Optional.ToNullable(totalBytesPerSession),
-                Optional.ToNullable(timeLimitInSeconds),
+                scope,
+                targetType,
+                bytesToCapturePerPacket,
+                totalBytesPerSession,
+                timeLimitInSeconds,
                 storageLocation,
                 filters ?? new ChangeTrackingList<PacketCaptureFilter>(),
                 serializedAdditionalRawData);

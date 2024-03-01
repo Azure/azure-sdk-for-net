@@ -119,13 +119,13 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Optional<string> ledgerName = default;
-            Optional<Uri> ledgerUri = default;
-            Optional<Uri> identityServiceUri = default;
-            Optional<string> ledgerInternalNamespace = default;
-            Optional<ConfidentialLedgerRunningState> runningState = default;
-            Optional<ConfidentialLedgerType> ledgerType = default;
-            Optional<ConfidentialLedgerProvisioningState> provisioningState = default;
+            string ledgerName = default;
+            Uri ledgerUri = default;
+            Uri identityServiceUri = default;
+            string ledgerInternalNamespace = default;
+            ConfidentialLedgerRunningState? runningState = default;
+            ConfidentialLedgerType? ledgerType = default;
+            ConfidentialLedgerProvisioningState? provisioningState = default;
             IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals = default;
             IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -222,13 +222,13 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConfidentialLedgerProperties(
-                ledgerName.Value,
-                ledgerUri.Value,
-                identityServiceUri.Value,
-                ledgerInternalNamespace.Value,
-                Optional.ToNullable(runningState),
-                Optional.ToNullable(ledgerType),
-                Optional.ToNullable(provisioningState),
+                ledgerName,
+                ledgerUri,
+                identityServiceUri,
+                ledgerInternalNamespace,
+                runningState,
+                ledgerType,
+                provisioningState,
                 aadBasedSecurityPrincipals ?? new ChangeTrackingList<AadBasedSecurityPrincipal>(),
                 certBasedSecurityPrincipals ?? new ChangeTrackingList<CertBasedSecurityPrincipal>(),
                 serializedAdditionalRawData);

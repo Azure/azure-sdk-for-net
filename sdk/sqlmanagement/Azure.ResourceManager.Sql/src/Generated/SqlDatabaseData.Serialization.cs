@@ -368,64 +368,64 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<SqlSku> sku = default;
-            Optional<string> kind = default;
-            Optional<string> managedBy = default;
-            Optional<DatabaseIdentity> identity = default;
+            SqlSku sku = default;
+            string kind = default;
+            string managedBy = default;
+            DatabaseIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SqlDatabaseCreateMode> createMode = default;
-            Optional<string> collation = default;
-            Optional<long> maxSizeBytes = default;
-            Optional<SampleSchemaName> sampleName = default;
-            Optional<ResourceIdentifier> elasticPoolId = default;
-            Optional<ResourceIdentifier> sourceDatabaseId = default;
-            Optional<SqlDatabaseStatus> status = default;
-            Optional<Guid> databaseId = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<string> currentServiceObjectiveName = default;
-            Optional<string> requestedServiceObjectiveName = default;
-            Optional<AzureLocation> defaultSecondaryLocation = default;
-            Optional<ResourceIdentifier> failoverGroupId = default;
-            Optional<DateTimeOffset> restorePointInTime = default;
-            Optional<DateTimeOffset> sourceDatabaseDeletionDate = default;
-            Optional<ResourceIdentifier> recoveryServicesRecoveryPointId = default;
-            Optional<ResourceIdentifier> longTermRetentionBackupResourceId = default;
-            Optional<ResourceIdentifier> recoverableDatabaseId = default;
-            Optional<ResourceIdentifier> restorableDroppedDatabaseId = default;
-            Optional<CatalogCollationType> catalogCollation = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<DatabaseLicenseType> licenseType = default;
-            Optional<long> maxLogSizeBytes = default;
-            Optional<DateTimeOffset> earliestRestoreDate = default;
-            Optional<DatabaseReadScale> readScale = default;
-            Optional<int> highAvailabilityReplicaCount = default;
-            Optional<SecondaryType> secondaryType = default;
-            Optional<SqlSku> currentSku = default;
-            Optional<int> autoPauseDelay = default;
-            Optional<SqlBackupStorageRedundancy> currentBackupStorageRedundancy = default;
-            Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
-            Optional<double> minCapacity = default;
-            Optional<DateTimeOffset> pausedDate = default;
-            Optional<DateTimeOffset> resumedDate = default;
-            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
-            Optional<bool> isLedgerOn = default;
-            Optional<bool> isInfraEncryptionEnabled = default;
-            Optional<Guid> federatedClientId = default;
+            SystemData systemData = default;
+            SqlDatabaseCreateMode? createMode = default;
+            string collation = default;
+            long? maxSizeBytes = default;
+            SampleSchemaName? sampleName = default;
+            ResourceIdentifier elasticPoolId = default;
+            ResourceIdentifier sourceDatabaseId = default;
+            SqlDatabaseStatus? status = default;
+            Guid? databaseId = default;
+            DateTimeOffset? creationDate = default;
+            string currentServiceObjectiveName = default;
+            string requestedServiceObjectiveName = default;
+            AzureLocation? defaultSecondaryLocation = default;
+            ResourceIdentifier failoverGroupId = default;
+            DateTimeOffset? restorePointInTime = default;
+            DateTimeOffset? sourceDatabaseDeletionDate = default;
+            ResourceIdentifier recoveryServicesRecoveryPointId = default;
+            ResourceIdentifier longTermRetentionBackupResourceId = default;
+            ResourceIdentifier recoverableDatabaseId = default;
+            ResourceIdentifier restorableDroppedDatabaseId = default;
+            CatalogCollationType? catalogCollation = default;
+            bool? zoneRedundant = default;
+            DatabaseLicenseType? licenseType = default;
+            long? maxLogSizeBytes = default;
+            DateTimeOffset? earliestRestoreDate = default;
+            DatabaseReadScale? readScale = default;
+            int? highAvailabilityReplicaCount = default;
+            SecondaryType? secondaryType = default;
+            SqlSku currentSku = default;
+            int? autoPauseDelay = default;
+            SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default;
+            SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default;
+            double? minCapacity = default;
+            DateTimeOffset? pausedDate = default;
+            DateTimeOffset? resumedDate = default;
+            ResourceIdentifier maintenanceConfigurationId = default;
+            bool? isLedgerOn = default;
+            bool? isInfraEncryptionEnabled = default;
+            Guid? federatedClientId = default;
             IDictionary<string, SqlDatabaseKey> keys = default;
-            Optional<string> encryptionProtector = default;
-            Optional<SqlAlwaysEncryptedEnclaveType> preferredEnclaveType = default;
-            Optional<bool> useFreeLimit = default;
-            Optional<FreeLimitExhaustionBehavior> freeLimitExhaustionBehavior = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<bool> manualCutover = default;
-            Optional<bool> performCutover = default;
-            Optional<SqlAvailabilityZoneType> availabilityZone = default;
-            Optional<bool> encryptionProtectorAutoRotation = default;
+            string encryptionProtector = default;
+            SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default;
+            bool? useFreeLimit = default;
+            FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = default;
+            ResourceIdentifier sourceResourceId = default;
+            bool? manualCutover = default;
+            bool? performCutover = default;
+            SqlAvailabilityZoneType? availabilityZone = default;
+            bool? encryptionProtectorAutoRotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -944,61 +944,61 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku.Value,
-                kind.Value,
-                managedBy.Value,
-                identity.Value,
-                Optional.ToNullable(createMode),
-                collation.Value,
-                Optional.ToNullable(maxSizeBytes),
-                Optional.ToNullable(sampleName),
-                elasticPoolId.Value,
-                sourceDatabaseId.Value,
-                Optional.ToNullable(status),
-                Optional.ToNullable(databaseId),
-                Optional.ToNullable(creationDate),
-                currentServiceObjectiveName.Value,
-                requestedServiceObjectiveName.Value,
-                Optional.ToNullable(defaultSecondaryLocation),
-                failoverGroupId.Value,
-                Optional.ToNullable(restorePointInTime),
-                Optional.ToNullable(sourceDatabaseDeletionDate),
-                recoveryServicesRecoveryPointId.Value,
-                longTermRetentionBackupResourceId.Value,
-                recoverableDatabaseId.Value,
-                restorableDroppedDatabaseId.Value,
-                Optional.ToNullable(catalogCollation),
-                Optional.ToNullable(zoneRedundant),
-                Optional.ToNullable(licenseType),
-                Optional.ToNullable(maxLogSizeBytes),
-                Optional.ToNullable(earliestRestoreDate),
-                Optional.ToNullable(readScale),
-                Optional.ToNullable(highAvailabilityReplicaCount),
-                Optional.ToNullable(secondaryType),
-                currentSku.Value,
-                Optional.ToNullable(autoPauseDelay),
-                Optional.ToNullable(currentBackupStorageRedundancy),
-                Optional.ToNullable(requestedBackupStorageRedundancy),
-                Optional.ToNullable(minCapacity),
-                Optional.ToNullable(pausedDate),
-                Optional.ToNullable(resumedDate),
-                maintenanceConfigurationId.Value,
-                Optional.ToNullable(isLedgerOn),
-                Optional.ToNullable(isInfraEncryptionEnabled),
-                Optional.ToNullable(federatedClientId),
+                sku,
+                kind,
+                managedBy,
+                identity,
+                createMode,
+                collation,
+                maxSizeBytes,
+                sampleName,
+                elasticPoolId,
+                sourceDatabaseId,
+                status,
+                databaseId,
+                creationDate,
+                currentServiceObjectiveName,
+                requestedServiceObjectiveName,
+                defaultSecondaryLocation,
+                failoverGroupId,
+                restorePointInTime,
+                sourceDatabaseDeletionDate,
+                recoveryServicesRecoveryPointId,
+                longTermRetentionBackupResourceId,
+                recoverableDatabaseId,
+                restorableDroppedDatabaseId,
+                catalogCollation,
+                zoneRedundant,
+                licenseType,
+                maxLogSizeBytes,
+                earliestRestoreDate,
+                readScale,
+                highAvailabilityReplicaCount,
+                secondaryType,
+                currentSku,
+                autoPauseDelay,
+                currentBackupStorageRedundancy,
+                requestedBackupStorageRedundancy,
+                minCapacity,
+                pausedDate,
+                resumedDate,
+                maintenanceConfigurationId,
+                isLedgerOn,
+                isInfraEncryptionEnabled,
+                federatedClientId,
                 keys ?? new ChangeTrackingDictionary<string, SqlDatabaseKey>(),
-                encryptionProtector.Value,
-                Optional.ToNullable(preferredEnclaveType),
-                Optional.ToNullable(useFreeLimit),
-                Optional.ToNullable(freeLimitExhaustionBehavior),
-                sourceResourceId.Value,
-                Optional.ToNullable(manualCutover),
-                Optional.ToNullable(performCutover),
-                Optional.ToNullable(availabilityZone),
-                Optional.ToNullable(encryptionProtectorAutoRotation),
+                encryptionProtector,
+                preferredEnclaveType,
+                useFreeLimit,
+                freeLimitExhaustionBehavior,
+                sourceResourceId,
+                manualCutover,
+                performCutover,
+                availabilityZone,
+                encryptionProtectorAutoRotation,
                 serializedAdditionalRawData);
         }
 

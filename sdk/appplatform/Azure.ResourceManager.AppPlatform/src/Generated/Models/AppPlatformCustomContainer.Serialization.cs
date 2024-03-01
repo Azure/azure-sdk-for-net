@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> server = default;
-            Optional<string> containerImage = default;
+            string server = default;
+            string containerImage = default;
             IList<string> command = default;
             IList<string> args = default;
-            Optional<AppPlatformImageRegistryCredential> imageRegistryCredential = default;
-            Optional<string> languageFramework = default;
+            AppPlatformImageRegistryCredential imageRegistryCredential = default;
+            string languageFramework = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppPlatformCustomContainer(
-                server.Value,
-                containerImage.Value,
+                server,
+                containerImage,
                 command ?? new ChangeTrackingList<string>(),
                 args ?? new ChangeTrackingList<string>(),
-                imageRegistryCredential.Value,
-                languageFramework.Value,
+                imageRegistryCredential,
+                languageFramework,
                 serializedAdditionalRawData);
         }
 

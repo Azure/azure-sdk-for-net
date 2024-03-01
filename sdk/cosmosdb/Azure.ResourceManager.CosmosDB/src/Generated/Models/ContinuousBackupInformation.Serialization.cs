@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> latestRestorableTimestamp = default;
+            DateTimeOffset? latestRestorableTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContinuousBackupInformation(Optional.ToNullable(latestRestorableTimestamp), serializedAdditionalRawData);
+            return new ContinuousBackupInformation(latestRestorableTimestamp, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContinuousBackupInformation>.Write(ModelReaderWriterOptions options)

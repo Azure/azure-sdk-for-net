@@ -220,21 +220,21 @@ namespace Azure.ResourceManager.Logic
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<LogicWorkflowRunActionCorrelation> correlation = default;
-            Optional<LogicWorkflowStatus> status = default;
-            Optional<string> code = default;
-            Optional<BinaryData> error = default;
-            Optional<Guid> trackingId = default;
-            Optional<BinaryData> inputs = default;
-            Optional<LogicContentLink> inputsLink = default;
-            Optional<BinaryData> outputs = default;
-            Optional<LogicContentLink> outputsLink = default;
-            Optional<BinaryData> trackedProperties = default;
+            SystemData systemData = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            LogicWorkflowRunActionCorrelation correlation = default;
+            LogicWorkflowStatus? status = default;
+            string code = default;
+            BinaryData error = default;
+            Guid? trackingId = default;
+            BinaryData inputs = default;
+            LogicContentLink inputsLink = default;
+            BinaryData outputs = default;
+            LogicContentLink outputsLink = default;
+            BinaryData trackedProperties = default;
             IList<LogicWorkRetryHistory> retryHistory = default;
-            Optional<int> iterationCount = default;
+            int? iterationCount = default;
             IList<LogicWorkflowRepetitionIndex> repetitionIndexes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -446,23 +446,23 @@ namespace Azure.ResourceManager.Logic
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                correlation.Value,
-                Optional.ToNullable(status),
-                code.Value,
-                error.Value,
-                Optional.ToNullable(trackingId),
-                inputs.Value,
-                inputsLink.Value,
-                outputs.Value,
-                outputsLink.Value,
-                trackedProperties.Value,
+                startTime,
+                endTime,
+                correlation,
+                status,
+                code,
+                error,
+                trackingId,
+                inputs,
+                inputsLink,
+                outputs,
+                outputsLink,
+                trackedProperties,
                 retryHistory ?? new ChangeTrackingList<LogicWorkRetryHistory>(),
-                Optional.ToNullable(iterationCount),
+                iterationCount,
                 repetitionIndexes ?? new ChangeTrackingList<LogicWorkflowRepetitionIndex>(),
                 serializedAdditionalRawData);
         }

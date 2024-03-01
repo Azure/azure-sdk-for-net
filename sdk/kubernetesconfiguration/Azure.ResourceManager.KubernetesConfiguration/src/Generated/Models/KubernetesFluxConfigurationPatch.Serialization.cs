@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<KubernetesConfigurationSourceKind?> sourceKind = default;
-            Optional<bool?> suspend = default;
-            Optional<KubernetesGitRepositoryUpdateContent> gitRepository = default;
-            Optional<KubernetesBucketUpdateContent> bucket = default;
-            Optional<KubernetesAzureBlobUpdateContent> azureBlob = default;
+            KubernetesConfigurationSourceKind? sourceKind = default;
+            bool? suspend = default;
+            KubernetesGitRepositoryUpdateContent gitRepository = default;
+            KubernetesBucketUpdateContent bucket = default;
+            KubernetesAzureBlobUpdateContent azureBlob = default;
             IDictionary<string, KustomizationUpdateContent> kustomizations = default;
             IDictionary<string, string> configurationProtectedSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new KubernetesFluxConfigurationPatch(
-                Optional.ToNullable(sourceKind),
-                Optional.ToNullable(suspend),
-                gitRepository.Value,
-                bucket.Value,
-                azureBlob.Value,
+                sourceKind,
+                suspend,
+                gitRepository,
+                bucket,
+                azureBlob,
                 kustomizations ?? new ChangeTrackingDictionary<string, KustomizationUpdateContent>(),
                 configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);

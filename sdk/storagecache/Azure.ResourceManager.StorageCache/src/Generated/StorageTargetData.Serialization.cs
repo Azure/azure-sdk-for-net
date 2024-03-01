@@ -144,20 +144,20 @@ namespace Azure.ResourceManager.StorageCache
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<NamespaceJunction> junctions = default;
-            Optional<StorageTargetType> targetType = default;
-            Optional<StorageCacheProvisioningStateType> provisioningState = default;
-            Optional<StorageTargetOperationalStateType> state = default;
-            Optional<Nfs3Target> nfs3 = default;
-            Optional<ClfsTarget> clfs = default;
-            Optional<UnknownTarget> unknown = default;
-            Optional<BlobNfsTarget> blobNfs = default;
-            Optional<int> allocationPercentage = default;
+            StorageTargetType? targetType = default;
+            StorageCacheProvisioningStateType? provisioningState = default;
+            StorageTargetOperationalStateType? state = default;
+            Nfs3Target nfs3 = default;
+            ClfsTarget clfs = default;
+            UnknownTarget unknown = default;
+            BlobNfsTarget blobNfs = default;
+            int? allocationPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -303,17 +303,17 @@ namespace Azure.ResourceManager.StorageCache
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 junctions ?? new ChangeTrackingList<NamespaceJunction>(),
-                Optional.ToNullable(targetType),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(state),
-                nfs3.Value,
-                clfs.Value,
-                unknown.Value,
-                blobNfs.Value,
-                Optional.ToNullable(allocationPercentage),
-                Optional.ToNullable(location),
+                targetType,
+                provisioningState,
+                state,
+                nfs3,
+                clfs,
+                unknown,
+                blobNfs,
+                allocationPercentage,
+                location,
                 serializedAdditionalRawData);
         }
 

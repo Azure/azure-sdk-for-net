@@ -123,15 +123,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> backupName = default;
-            Optional<bool> enabled = default;
-            Optional<Uri> storageAccountUrl = default;
-            Optional<WebAppBackupSchedule> backupSchedule = default;
+            SystemData systemData = default;
+            string backupName = default;
+            bool? enabled = default;
+            Uri storageAccountUrl = default;
+            WebAppBackupSchedule backupSchedule = default;
             IList<AppServiceDatabaseBackupSetting> databases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -234,13 +234,13 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                backupName.Value,
-                Optional.ToNullable(enabled),
-                storageAccountUrl.Value,
-                backupSchedule.Value,
+                systemData,
+                backupName,
+                enabled,
+                storageAccountUrl,
+                backupSchedule,
                 databases ?? new ChangeTrackingList<AppServiceDatabaseBackupSetting>(),
-                kind.Value,
+                kind,
                 serializedAdditionalRawData);
         }
 

@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Support
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> expirationTime = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? expirationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.Support
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(createdOn),
-                Optional.ToNullable(expirationTime),
+                systemData,
+                createdOn,
+                expirationTime,
                 serializedAdditionalRawData);
         }
 

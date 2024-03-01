@@ -41,7 +41,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             string keyVaultEndpoint = default;
             string keyVaultClientId = default;
-            Optional<string> keyVaultClientSecret = default;
+            string keyVaultClientSecret = default;
             string servicePrincipalIdNameInKV = default;
             string servicePrincipalSecretNameInKV = default;
             string tenantId = default;
@@ -81,7 +81,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             return new ServicePrincipalInKVParam(
                 keyVaultEndpoint,
                 keyVaultClientId,
-                keyVaultClientSecret.Value,
+                keyVaultClientSecret,
                 servicePrincipalIdNameInKV,
                 servicePrincipalSecretNameInKV,
                 tenantId);

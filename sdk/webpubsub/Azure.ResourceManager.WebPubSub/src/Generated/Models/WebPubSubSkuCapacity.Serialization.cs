@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<int> minimum = default;
-            Optional<int> maximum = default;
-            Optional<int> @default = default;
+            int? minimum = default;
+            int? maximum = default;
+            int? @default = default;
             IReadOnlyList<int> allowedValues = default;
-            Optional<WebPubSubScaleType> scaleType = default;
+            WebPubSubScaleType? scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,11 +160,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new WebPubSubSkuCapacity(
-                Optional.ToNullable(minimum),
-                Optional.ToNullable(maximum),
-                Optional.ToNullable(@default),
+                minimum,
+                maximum,
+                @default,
                 allowedValues ?? new ChangeTrackingList<int>(),
-                Optional.ToNullable(scaleType),
+                scaleType,
                 serializedAdditionalRawData);
         }
 

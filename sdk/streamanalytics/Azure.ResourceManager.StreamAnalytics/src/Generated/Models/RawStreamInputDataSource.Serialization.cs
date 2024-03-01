@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<BinaryData> payload = default;
-            Optional<Uri> payloadUri = default;
+            BinaryData payload = default;
+            Uri payloadUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RawStreamInputDataSource(type, serializedAdditionalRawData, payload.Value, payloadUri.Value);
+            return new RawStreamInputDataSource(type, serializedAdditionalRawData, payload, payloadUri);
         }
 
         BinaryData IPersistableModel<RawStreamInputDataSource>.Write(ModelReaderWriterOptions options)

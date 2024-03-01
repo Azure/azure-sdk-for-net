@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TechnicalTicketDetails(resourceId.Value, serializedAdditionalRawData);
+            return new TechnicalTicketDetails(resourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TechnicalTicketDetails>.Write(ModelReaderWriterOptions options)

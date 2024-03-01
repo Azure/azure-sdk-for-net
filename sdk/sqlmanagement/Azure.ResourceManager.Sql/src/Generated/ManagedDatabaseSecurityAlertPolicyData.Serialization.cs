@@ -142,15 +142,15 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SecurityAlertPolicyState> state = default;
+            SystemData systemData = default;
+            SecurityAlertPolicyState? state = default;
             IList<string> disabledAlerts = default;
             IList<string> emailAddresses = default;
-            Optional<bool> emailAccountAdmins = default;
-            Optional<string> storageEndpoint = default;
-            Optional<string> storageAccountAccessKey = default;
-            Optional<int> retentionDays = default;
-            Optional<DateTimeOffset> creationTime = default;
+            bool? emailAccountAdmins = default;
+            string storageEndpoint = default;
+            string storageAccountAccessKey = default;
+            int? retentionDays = default;
+            DateTimeOffset? creationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -275,15 +275,15 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(state),
+                systemData,
+                state,
                 disabledAlerts ?? new ChangeTrackingList<string>(),
                 emailAddresses ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(emailAccountAdmins),
-                storageEndpoint.Value,
-                storageAccountAccessKey.Value,
-                Optional.ToNullable(retentionDays),
-                Optional.ToNullable(creationTime),
+                emailAccountAdmins,
+                storageEndpoint,
+                storageAccountAccessKey,
+                retentionDays,
+                creationTime,
                 serializedAdditionalRawData);
         }
 

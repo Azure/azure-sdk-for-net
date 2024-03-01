@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> reportCreatorTenantId = default;
+            string reportCreatorTenantId = default;
             DownloadType downloadType = default;
-            Optional<string> offerGuid = default;
+            string offerGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotDownloadContent(reportCreatorTenantId.Value, downloadType, offerGuid.Value, serializedAdditionalRawData);
+            return new SnapshotDownloadContent(reportCreatorTenantId, downloadType, offerGuid, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotDownloadContent>.Write(ModelReaderWriterOptions options)

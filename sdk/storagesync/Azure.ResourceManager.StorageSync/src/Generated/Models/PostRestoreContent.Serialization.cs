@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<string> partition = default;
-            Optional<string> replicaGroup = default;
-            Optional<string> requestId = default;
-            Optional<Uri> azureFileShareUri = default;
-            Optional<string> status = default;
-            Optional<Uri> sourceAzureFileShareUri = default;
-            Optional<string> failedFileList = default;
+            string partition = default;
+            string replicaGroup = default;
+            string requestId = default;
+            Uri azureFileShareUri = default;
+            string status = default;
+            Uri sourceAzureFileShareUri = default;
+            string failedFileList = default;
             IList<RestoreFileSpec> restoreFileSpec = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -185,13 +185,13 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PostRestoreContent(
-                partition.Value,
-                replicaGroup.Value,
-                requestId.Value,
-                azureFileShareUri.Value,
-                status.Value,
-                sourceAzureFileShareUri.Value,
-                failedFileList.Value,
+                partition,
+                replicaGroup,
+                requestId,
+                azureFileShareUri,
+                status,
+                sourceAzureFileShareUri,
+                failedFileList,
                 restoreFileSpec ?? new ChangeTrackingList<RestoreFileSpec>(),
                 serializedAdditionalRawData);
         }

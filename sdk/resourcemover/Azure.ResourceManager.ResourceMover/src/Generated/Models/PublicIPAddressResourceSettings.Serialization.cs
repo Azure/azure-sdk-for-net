@@ -113,14 +113,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> domainNameLabel = default;
-            Optional<string> fqdn = default;
-            Optional<string> publicIPAllocationMethod = default;
-            Optional<string> sku = default;
-            Optional<string> zones = default;
+            string domainNameLabel = default;
+            string fqdn = default;
+            string publicIPAllocationMethod = default;
+            string sku = default;
+            string zones = default;
             string resourceType = default;
-            Optional<string> targetResourceName = default;
-            Optional<string> targetResourceGroupName = default;
+            string targetResourceName = default;
+            string targetResourceGroupName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,15 +187,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PublicIPAddressResourceSettings(
                 resourceType,
-                targetResourceName.Value,
-                targetResourceGroupName.Value,
+                targetResourceName,
+                targetResourceGroupName,
                 serializedAdditionalRawData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                domainNameLabel.Value,
-                fqdn.Value,
-                publicIPAllocationMethod.Value,
-                sku.Value,
-                zones.Value);
+                domainNameLabel,
+                fqdn,
+                publicIPAllocationMethod,
+                sku,
+                zones);
         }
 
         BinaryData IPersistableModel<PublicIPAddressResourceSettings>.Write(ModelReaderWriterOptions options)

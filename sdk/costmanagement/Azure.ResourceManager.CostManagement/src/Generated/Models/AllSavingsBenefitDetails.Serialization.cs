@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<decimal> overageCost = default;
-            Optional<decimal> benefitCost = default;
-            Optional<decimal> totalCost = default;
-            Optional<decimal> savingsAmount = default;
-            Optional<decimal> savingsPercentage = default;
-            Optional<decimal> coveragePercentage = default;
-            Optional<decimal> commitmentAmount = default;
-            Optional<decimal> averageUtilizationPercentage = default;
-            Optional<decimal> wastageCost = default;
+            decimal? overageCost = default;
+            decimal? benefitCost = default;
+            decimal? totalCost = default;
+            decimal? savingsAmount = default;
+            decimal? savingsPercentage = default;
+            decimal? coveragePercentage = default;
+            decimal? commitmentAmount = default;
+            decimal? averageUtilizationPercentage = default;
+            decimal? wastageCost = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,15 +210,15 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AllSavingsBenefitDetails(
-                Optional.ToNullable(overageCost),
-                Optional.ToNullable(benefitCost),
-                Optional.ToNullable(totalCost),
-                Optional.ToNullable(savingsAmount),
-                Optional.ToNullable(savingsPercentage),
-                Optional.ToNullable(coveragePercentage),
-                Optional.ToNullable(commitmentAmount),
-                Optional.ToNullable(averageUtilizationPercentage),
-                Optional.ToNullable(wastageCost),
+                overageCost,
+                benefitCost,
+                totalCost,
+                savingsAmount,
+                savingsPercentage,
+                coveragePercentage,
+                commitmentAmount,
+                averageUtilizationPercentage,
+                wastageCost,
                 serializedAdditionalRawData);
         }
 

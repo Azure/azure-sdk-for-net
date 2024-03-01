@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> keyVaultId = default;
-            Optional<Uri> keyVaultUri = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<string> storageAccountSasSecretName = default;
-            Optional<string> serviceBusConnectionStringSecretName = default;
-            Optional<string> targetLocation = default;
+            ResourceIdentifier keyVaultId = default;
+            Uri keyVaultUri = default;
+            ResourceIdentifier storageAccountId = default;
+            string storageAccountSasSecretName = default;
+            string serviceBusConnectionStringSecretName = default;
+            string targetLocation = default;
             IReadOnlyDictionary<string, int> roleSizeToNicCountMap = default;
             IReadOnlyList<string> excludedSkus = default;
             string instanceType = default;
@@ -214,12 +214,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareCbtProtectionContainerMappingDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                keyVaultId.Value,
-                keyVaultUri.Value,
-                storageAccountId.Value,
-                storageAccountSasSecretName.Value,
-                serviceBusConnectionStringSecretName.Value,
-                targetLocation.Value,
+                keyVaultId,
+                keyVaultUri,
+                storageAccountId,
+                storageAccountSasSecretName,
+                serviceBusConnectionStringSecretName,
+                targetLocation,
                 roleSizeToNicCountMap ?? new ChangeTrackingDictionary<string, int>(),
                 excludedSkus ?? new ChangeTrackingList<string>());
         }

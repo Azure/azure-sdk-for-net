@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<string> groupId = default;
-            Optional<string> requestMessage = default;
-            Optional<AzureLocation> resourceRegion = default;
-            Optional<SharedSearchServicePrivateLinkResourceStatus> status = default;
-            Optional<SharedSearchServicePrivateLinkResourceProvisioningState> provisioningState = default;
+            ResourceIdentifier privateLinkResourceId = default;
+            string groupId = default;
+            string requestMessage = default;
+            AzureLocation? resourceRegion = default;
+            SharedSearchServicePrivateLinkResourceStatus? status = default;
+            SharedSearchServicePrivateLinkResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.Search.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SharedSearchServicePrivateLinkResourceProperties(
-                privateLinkResourceId.Value,
-                groupId.Value,
-                requestMessage.Value,
-                Optional.ToNullable(resourceRegion),
-                Optional.ToNullable(status),
-                Optional.ToNullable(provisioningState),
+                privateLinkResourceId,
+                groupId,
+                requestMessage,
+                resourceRegion,
+                status,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

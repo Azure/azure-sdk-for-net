@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> serverHostname = default;
-            Optional<int> serverPort = default;
-            Optional<string> serviceUserDistinguishedName = default;
-            Optional<string> serviceUserPassword = default;
-            Optional<string> searchBaseDistinguishedName = default;
-            Optional<string> searchFilterTemplate = default;
+            string serverHostname = default;
+            int? serverPort = default;
+            string serviceUserDistinguishedName = default;
+            string serviceUserPassword = default;
+            string searchBaseDistinguishedName = default;
+            string searchFilterTemplate = default;
             IList<CassandraCertificate> serverCertificates = default;
-            Optional<int> connectionTimeoutInMs = default;
+            int? connectionTimeoutInMs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,14 +185,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AuthenticationMethodLdapProperties(
-                serverHostname.Value,
-                Optional.ToNullable(serverPort),
-                serviceUserDistinguishedName.Value,
-                serviceUserPassword.Value,
-                searchBaseDistinguishedName.Value,
-                searchFilterTemplate.Value,
+                serverHostname,
+                serverPort,
+                serviceUserDistinguishedName,
+                serviceUserPassword,
+                searchBaseDistinguishedName,
+                searchFilterTemplate,
                 serverCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
-                Optional.ToNullable(connectionTimeoutInMs),
+                connectionTimeoutInMs,
                 serializedAdditionalRawData);
         }
 

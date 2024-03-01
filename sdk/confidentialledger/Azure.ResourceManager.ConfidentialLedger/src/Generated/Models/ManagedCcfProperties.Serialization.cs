@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Optional<string> appName = default;
-            Optional<Uri> appUri = default;
-            Optional<Uri> identityServiceUri = default;
+            string appName = default;
+            Uri appUri = default;
+            Uri identityServiceUri = default;
             IList<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates = default;
-            Optional<ConfidentialLedgerDeploymentType> deploymentType = default;
-            Optional<ConfidentialLedgerProvisioningState> provisioningState = default;
-            Optional<int> nodeCount = default;
+            ConfidentialLedgerDeploymentType deploymentType = default;
+            ConfidentialLedgerProvisioningState? provisioningState = default;
+            int? nodeCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,13 +186,13 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagedCcfProperties(
-                appName.Value,
-                appUri.Value,
-                identityServiceUri.Value,
+                appName,
+                appUri,
+                identityServiceUri,
                 memberIdentityCertificates ?? new ChangeTrackingList<ConfidentialLedgerMemberIdentityCertificate>(),
-                deploymentType.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(nodeCount),
+                deploymentType,
+                provisioningState,
+                nodeCount,
                 serializedAdditionalRawData);
         }
 

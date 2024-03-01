@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<bool> isRequired = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<LogicApiDeploymentParameterVisibility> visibility = default;
+            string type = default;
+            bool? isRequired = default;
+            string displayName = default;
+            string description = default;
+            LogicApiDeploymentParameterVisibility? visibility = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LogicApiDeploymentParameterMetadata(
-                type.Value,
-                Optional.ToNullable(isRequired),
-                displayName.Value,
-                description.Value,
-                Optional.ToNullable(visibility),
+                type,
+                isRequired,
+                displayName,
+                description,
+                visibility,
                 serializedAdditionalRawData);
         }
 

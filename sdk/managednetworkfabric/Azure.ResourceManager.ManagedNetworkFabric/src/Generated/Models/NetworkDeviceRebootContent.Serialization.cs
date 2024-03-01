@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<NetworkDeviceRebootType> rebootType = default;
+            NetworkDeviceRebootType? rebootType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkDeviceRebootContent(Optional.ToNullable(rebootType), serializedAdditionalRawData);
+            return new NetworkDeviceRebootContent(rebootType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkDeviceRebootContent>.Write(ModelReaderWriterOptions options)

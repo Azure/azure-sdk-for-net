@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier id = default;
             IReadOnlyList<SecurityRuleData> securityRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubnetAssociation(id.Value, securityRules ?? new ChangeTrackingList<SecurityRuleData>(), serializedAdditionalRawData);
+            return new SubnetAssociation(id, securityRules ?? new ChangeTrackingList<SecurityRuleData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubnetAssociation>.Write(ModelReaderWriterOptions options)

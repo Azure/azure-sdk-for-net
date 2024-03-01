@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             string labelName = default;
-            Optional<SecurityInsightsIncidentLabelType> labelType = default;
+            SecurityInsightsIncidentLabelType? labelType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIncidentLabel(labelName, Optional.ToNullable(labelType), serializedAdditionalRawData);
+            return new SecurityInsightsIncidentLabel(labelName, labelType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIncidentLabel>.Write(ModelReaderWriterOptions options)

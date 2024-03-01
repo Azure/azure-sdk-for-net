@@ -202,31 +202,31 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Optional<EventHubsSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            EventHubsSku sku = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EventHubsTlsVersion> minimumTlsVersion = default;
-            Optional<string> provisioningState = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<string> serviceBusEndpoint = default;
-            Optional<ResourceIdentifier> clusterArmId = default;
-            Optional<string> metricId = default;
-            Optional<bool> isAutoInflateEnabled = default;
-            Optional<EventHubsPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<int> maximumThroughputUnits = default;
-            Optional<bool> kafkaEnabled = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<EventHubsEncryption> encryption = default;
+            SystemData systemData = default;
+            EventHubsTlsVersion? minimumTlsVersion = default;
+            string provisioningState = default;
+            string status = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
+            string serviceBusEndpoint = default;
+            ResourceIdentifier clusterArmId = default;
+            string metricId = default;
+            bool? isAutoInflateEnabled = default;
+            EventHubsPublicNetworkAccess? publicNetworkAccess = default;
+            int? maximumThroughputUnits = default;
+            bool? kafkaEnabled = default;
+            bool? zoneRedundant = default;
+            EventHubsEncryption encryption = default;
             IList<EventHubsPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<string> alternateName = default;
+            bool? disableLocalAuth = default;
+            string alternateName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -452,28 +452,28 @@ namespace Azure.ResourceManager.EventHubs
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku.Value,
+                sku,
                 identity,
-                Optional.ToNullable(minimumTlsVersion),
-                provisioningState.Value,
-                status.Value,
-                Optional.ToNullable(createdAt),
-                Optional.ToNullable(updatedAt),
-                serviceBusEndpoint.Value,
-                clusterArmId.Value,
-                metricId.Value,
-                Optional.ToNullable(isAutoInflateEnabled),
-                Optional.ToNullable(publicNetworkAccess),
-                Optional.ToNullable(maximumThroughputUnits),
-                Optional.ToNullable(kafkaEnabled),
-                Optional.ToNullable(zoneRedundant),
-                encryption.Value,
+                minimumTlsVersion,
+                provisioningState,
+                status,
+                createdAt,
+                updatedAt,
+                serviceBusEndpoint,
+                clusterArmId,
+                metricId,
+                isAutoInflateEnabled,
+                publicNetworkAccess,
+                maximumThroughputUnits,
+                kafkaEnabled,
+                zoneRedundant,
+                encryption,
                 privateEndpointConnections ?? new ChangeTrackingList<EventHubsPrivateEndpointConnectionData>(),
-                Optional.ToNullable(disableLocalAuth),
-                alternateName.Value,
+                disableLocalAuth,
+                alternateName,
                 serializedAdditionalRawData);
         }
 

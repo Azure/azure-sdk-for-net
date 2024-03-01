@@ -51,8 +51,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             EndpointBase endpoint = default;
-            Optional<ImageProperties> image = default;
-            Optional<SamplingOptions> samplingOptions = default;
+            ImageProperties image = default;
+            SamplingOptions samplingOptions = default;
             SpatialAnalysisOperationBase operation = default;
             string type = default;
             string name = default;
@@ -113,8 +113,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 name,
                 inputs,
                 endpoint,
-                image.Value,
-                samplingOptions.Value,
+                image,
+                samplingOptions,
                 operation);
         }
     }

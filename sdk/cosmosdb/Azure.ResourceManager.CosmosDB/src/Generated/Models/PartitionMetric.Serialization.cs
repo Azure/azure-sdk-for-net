@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<Guid> partitionId = default;
-            Optional<string> partitionKeyRangeId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> timeGrain = default;
-            Optional<CosmosDBMetricUnitType> unit = default;
-            Optional<CosmosDBMetricName> name = default;
+            Guid? partitionId = default;
+            string partitionKeyRangeId = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string timeGrain = default;
+            CosmosDBMetricUnitType? unit = default;
+            CosmosDBMetricName name = default;
             IReadOnlyList<CosmosDBMetricValue> metricValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -197,15 +197,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PartitionMetric(
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                timeGrain.Value,
-                Optional.ToNullable(unit),
-                name.Value,
+                startTime,
+                endTime,
+                timeGrain,
+                unit,
+                name,
                 metricValues ?? new ChangeTrackingList<CosmosDBMetricValue>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(partitionId),
-                partitionKeyRangeId.Value);
+                partitionId,
+                partitionKeyRangeId);
         }
 
         BinaryData IPersistableModel<PartitionMetric>.Write(ModelReaderWriterOptions options)

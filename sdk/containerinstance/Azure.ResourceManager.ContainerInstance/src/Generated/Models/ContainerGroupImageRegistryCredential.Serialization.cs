@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             string server = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> identity = default;
-            Optional<Uri> identityUrl = default;
+            string username = default;
+            string password = default;
+            string identity = default;
+            Uri identityUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerGroupImageRegistryCredential(
                 server,
-                username.Value,
-                password.Value,
-                identity.Value,
-                identityUrl.Value,
+                username,
+                password,
+                identity,
+                identityUrl,
                 serializedAdditionalRawData);
         }
 

@@ -25,10 +25,10 @@ namespace Azure.Containers.ContainerRegistry
             string digest = default;
             DateTimeOffset createdTime = default;
             DateTimeOffset lastUpdateTime = default;
-            Optional<bool> deleteEnabled = default;
-            Optional<bool> writeEnabled = default;
-            Optional<bool> listEnabled = default;
-            Optional<bool> readEnabled = default;
+            bool? deleteEnabled = default;
+            bool? writeEnabled = default;
+            bool? listEnabled = default;
+            bool? readEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registry"u8))
@@ -129,10 +129,10 @@ namespace Azure.Containers.ContainerRegistry
                 digest,
                 createdTime,
                 lastUpdateTime,
-                Optional.ToNullable(deleteEnabled),
-                Optional.ToNullable(writeEnabled),
-                Optional.ToNullable(listEnabled),
-                Optional.ToNullable(readEnabled));
+                deleteEnabled,
+                writeEnabled,
+                listEnabled,
+                readEnabled);
         }
     }
 }

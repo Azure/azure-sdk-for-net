@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<Status> status = default;
-            Optional<int> minReplicas = default;
-            Optional<int> maxReplicas = default;
-            Optional<float> targetUtilization = default;
-            Optional<int> refreshPeriodInSeconds = default;
+            Status? status = default;
+            int? minReplicas = default;
+            int? maxReplicas = default;
+            float? targetUtilization = default;
+            int? refreshPeriodInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AutoScaleConfiguration(
-                Optional.ToNullable(status),
-                Optional.ToNullable(minReplicas),
-                Optional.ToNullable(maxReplicas),
-                Optional.ToNullable(targetUtilization),
-                Optional.ToNullable(refreshPeriodInSeconds),
+                status,
+                minReplicas,
+                maxReplicas,
+                targetUtilization,
+                refreshPeriodInSeconds,
                 serializedAdditionalRawData);
         }
 

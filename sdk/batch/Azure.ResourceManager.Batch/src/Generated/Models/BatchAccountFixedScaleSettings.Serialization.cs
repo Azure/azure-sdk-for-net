@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<TimeSpan> resizeTimeout = default;
-            Optional<int> targetDedicatedNodes = default;
-            Optional<int> targetLowPriorityNodes = default;
-            Optional<BatchNodeDeallocationOption> nodeDeallocationOption = default;
+            TimeSpan? resizeTimeout = default;
+            int? targetDedicatedNodes = default;
+            int? targetLowPriorityNodes = default;
+            BatchNodeDeallocationOption? nodeDeallocationOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountFixedScaleSettings(Optional.ToNullable(resizeTimeout), Optional.ToNullable(targetDedicatedNodes), Optional.ToNullable(targetLowPriorityNodes), Optional.ToNullable(nodeDeallocationOption), serializedAdditionalRawData);
+            return new BatchAccountFixedScaleSettings(resizeTimeout, targetDedicatedNodes, targetLowPriorityNodes, nodeDeallocationOption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountFixedScaleSettings>.Write(ModelReaderWriterOptions options)

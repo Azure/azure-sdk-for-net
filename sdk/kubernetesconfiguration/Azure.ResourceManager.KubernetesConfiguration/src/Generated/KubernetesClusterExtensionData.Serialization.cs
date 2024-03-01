@@ -254,27 +254,27 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ArmPlan> plan = default;
+            ManagedServiceIdentity identity = default;
+            ArmPlan plan = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> extensionType = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<string> releaseTrain = default;
-            Optional<string> version = default;
-            Optional<KubernetesClusterExtensionScope> scope = default;
+            SystemData systemData = default;
+            string extensionType = default;
+            bool? autoUpgradeMinorVersion = default;
+            string releaseTrain = default;
+            string version = default;
+            KubernetesClusterExtensionScope scope = default;
             IDictionary<string, string> configurationSettings = default;
             IDictionary<string, string> configurationProtectedSettings = default;
-            Optional<string> currentVersion = default;
-            Optional<KubernetesConfigurationProvisioningState> provisioningState = default;
+            string currentVersion = default;
+            KubernetesConfigurationProvisioningState? provisioningState = default;
             IList<KubernetesClusterExtensionStatus> statuses = default;
-            Optional<ResponseError> errorInfo = default;
+            ResponseError errorInfo = default;
             IReadOnlyDictionary<string, string> customLocationSettings = default;
-            Optional<Uri> packageUri = default;
-            Optional<ManagedServiceIdentity> aksAssignedIdentity = default;
-            Optional<bool> isSystemExtension = default;
+            Uri packageUri = default;
+            ManagedServiceIdentity aksAssignedIdentity = default;
+            bool? isSystemExtension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -498,24 +498,24 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 identity,
                 plan,
-                extensionType.Value,
-                Optional.ToNullable(autoUpgradeMinorVersion),
-                releaseTrain.Value,
-                version.Value,
-                scope.Value,
+                extensionType,
+                autoUpgradeMinorVersion,
+                releaseTrain,
+                version,
+                scope,
                 configurationSettings ?? new ChangeTrackingDictionary<string, string>(),
                 configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
-                currentVersion.Value,
-                Optional.ToNullable(provisioningState),
+                currentVersion,
+                provisioningState,
                 statuses ?? new ChangeTrackingList<KubernetesClusterExtensionStatus>(),
-                errorInfo.Value,
+                errorInfo,
                 customLocationSettings ?? new ChangeTrackingDictionary<string, string>(),
-                packageUri.Value,
+                packageUri,
                 aksAssignedIdentity,
-                Optional.ToNullable(isSystemExtension),
+                isSystemExtension,
                 serializedAdditionalRawData);
         }
 

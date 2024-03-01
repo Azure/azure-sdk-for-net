@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.Monitor.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<string> groupIds = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<MonitorPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<MonitorPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SubResource privateEndpoint = default;
+            MonitorPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            MonitorPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 groupIds ?? new ChangeTrackingList<string>(),
                 privateEndpoint,
-                privateLinkServiceConnectionState.Value,
-                Optional.ToNullable(provisioningState),
+                privateLinkServiceConnectionState,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

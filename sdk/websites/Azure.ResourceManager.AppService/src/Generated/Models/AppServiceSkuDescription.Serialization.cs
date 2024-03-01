@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<int> capacity = default;
-            Optional<AppServiceSkuCapacity> skuCapacity = default;
+            string name = default;
+            string tier = default;
+            string size = default;
+            string family = default;
+            int? capacity = default;
+            AppServiceSkuCapacity skuCapacity = default;
             IList<AzureLocation> locations = default;
             IList<AppServiceSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -199,12 +199,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppServiceSkuDescription(
-                name.Value,
-                tier.Value,
-                size.Value,
-                family.Value,
-                Optional.ToNullable(capacity),
-                skuCapacity.Value,
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                skuCapacity,
                 locations ?? new ChangeTrackingList<AzureLocation>(),
                 capabilities ?? new ChangeTrackingList<AppServiceSkuCapability>(),
                 serializedAdditionalRawData);

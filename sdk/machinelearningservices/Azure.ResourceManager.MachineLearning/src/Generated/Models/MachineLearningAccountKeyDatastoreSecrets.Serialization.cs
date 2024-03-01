@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> key = default;
+            string key = default;
             SecretsType secretsType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningAccountKeyDatastoreSecrets(secretsType, serializedAdditionalRawData, key.Value);
+            return new MachineLearningAccountKeyDatastoreSecrets(secretsType, serializedAdditionalRawData, key);
         }
 
         BinaryData IPersistableModel<MachineLearningAccountKeyDatastoreSecrets>.Write(ModelReaderWriterOptions options)

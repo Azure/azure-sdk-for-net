@@ -124,18 +124,18 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<HciPrecheckResultTags> tags = default;
-            Optional<string> title = default;
-            Optional<HciClusterStatus> status = default;
-            Optional<UpdateSeverity> severity = default;
-            Optional<string> description = default;
-            Optional<string> remediation = default;
-            Optional<string> targetResourceId = default;
-            Optional<string> targetResourceName = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> additionalData = default;
-            Optional<string> healthCheckSource = default;
+            string name = default;
+            HciPrecheckResultTags tags = default;
+            string title = default;
+            HciClusterStatus? status = default;
+            UpdateSeverity? severity = default;
+            string description = default;
+            string remediation = default;
+            string targetResourceId = default;
+            string targetResourceName = default;
+            DateTimeOffset? timestamp = default;
+            string additionalData = default;
+            string healthCheckSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,18 +223,18 @@ namespace Azure.ResourceManager.Hci.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HciPrecheckResult(
-                name.Value,
-                tags.Value,
-                title.Value,
-                Optional.ToNullable(status),
-                Optional.ToNullable(severity),
-                description.Value,
-                remediation.Value,
-                targetResourceId.Value,
-                targetResourceName.Value,
-                Optional.ToNullable(timestamp),
-                additionalData.Value,
-                healthCheckSource.Value,
+                name,
+                tags,
+                title,
+                status,
+                severity,
+                description,
+                remediation,
+                targetResourceId,
+                targetResourceName,
+                timestamp,
+                additionalData,
+                healthCheckSource,
                 serializedAdditionalRawData);
         }
 

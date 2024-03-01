@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> origin = default;
-            Optional<BinaryData> properties = default;
-            Optional<bool> isDataAction = default;
+            string name = default;
+            string displayName = default;
+            string description = default;
+            string origin = default;
+            BinaryData properties = default;
+            bool? isDataAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,12 +164,12 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AuthorizationProviderOperationInfo(
-                name.Value,
-                displayName.Value,
-                description.Value,
-                origin.Value,
-                properties.Value,
-                Optional.ToNullable(isDataAction),
+                name,
+                displayName,
+                description,
+                origin,
+                properties,
+                isDataAction,
                 serializedAdditionalRawData);
         }
 

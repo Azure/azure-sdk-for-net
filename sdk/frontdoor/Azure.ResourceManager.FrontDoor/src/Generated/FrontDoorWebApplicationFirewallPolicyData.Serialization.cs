@@ -169,22 +169,22 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<FrontDoorSku> sku = default;
+            ETag? etag = default;
+            FrontDoorSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<FrontDoorWebApplicationFirewallPolicySettings> policySettings = default;
-            Optional<CustomRuleList> customRules = default;
-            Optional<ManagedRuleSetList> managedRules = default;
+            SystemData systemData = default;
+            FrontDoorWebApplicationFirewallPolicySettings policySettings = default;
+            CustomRuleList customRules = default;
+            ManagedRuleSetList managedRules = default;
             IReadOnlyList<SubResource> frontendEndpointLinks = default;
             IReadOnlyList<SubResource> routingRuleLinks = default;
             IReadOnlyList<SubResource> securityPolicyLinks = default;
-            Optional<string> provisioningState = default;
-            Optional<FrontDoorWebApplicationFirewallPolicyResourceState> resourceState = default;
+            string provisioningState = default;
+            FrontDoorWebApplicationFirewallPolicyResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -355,19 +355,19 @@ namespace Azure.ResourceManager.FrontDoor
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
-                sku.Value,
-                policySettings.Value,
-                customRules.Value,
-                managedRules.Value,
+                etag,
+                sku,
+                policySettings,
+                customRules,
+                managedRules,
                 frontendEndpointLinks ?? new ChangeTrackingList<SubResource>(),
                 routingRuleLinks ?? new ChangeTrackingList<SubResource>(),
                 securityPolicyLinks ?? new ChangeTrackingList<SubResource>(),
-                provisioningState.Value,
-                Optional.ToNullable(resourceState),
+                provisioningState,
+                resourceState,
                 serializedAdditionalRawData);
         }
 

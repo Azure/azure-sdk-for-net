@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<long> cacheHitBytes = default;
-            Optional<long> cacheMissBytes = default;
-            Optional<int> cacheHitBytesPercent = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            long? cacheHitBytes = default;
+            long? cacheMissBytes = default;
+            int? cacheHitBytesPercent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudTieringCachePerformance(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(cacheHitBytes), Optional.ToNullable(cacheMissBytes), Optional.ToNullable(cacheHitBytesPercent), serializedAdditionalRawData);
+            return new CloudTieringCachePerformance(lastUpdatedTimestamp, cacheHitBytes, cacheMissBytes, cacheHitBytesPercent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudTieringCachePerformance>.Write(ModelReaderWriterOptions options)

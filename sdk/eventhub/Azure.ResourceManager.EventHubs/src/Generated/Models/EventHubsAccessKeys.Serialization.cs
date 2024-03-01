@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<string> primaryConnectionString = default;
-            Optional<string> secondaryConnectionString = default;
-            Optional<string> aliasPrimaryConnectionString = default;
-            Optional<string> aliasSecondaryConnectionString = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<string> keyName = default;
+            string primaryConnectionString = default;
+            string secondaryConnectionString = default;
+            string aliasPrimaryConnectionString = default;
+            string aliasSecondaryConnectionString = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            string keyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,13 +152,13 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EventHubsAccessKeys(
-                primaryConnectionString.Value,
-                secondaryConnectionString.Value,
-                aliasPrimaryConnectionString.Value,
-                aliasSecondaryConnectionString.Value,
-                primaryKey.Value,
-                secondaryKey.Value,
-                keyName.Value,
+                primaryConnectionString,
+                secondaryConnectionString,
+                aliasPrimaryConnectionString,
+                aliasSecondaryConnectionString,
+                primaryKey,
+                secondaryKey,
+                keyName,
                 serializedAdditionalRawData);
         }
 

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchNodePlacementPolicyType> policy = default;
+            BatchNodePlacementPolicyType? policy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodePlacementConfiguration(Optional.ToNullable(policy), serializedAdditionalRawData);
+            return new NodePlacementConfiguration(policy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodePlacementConfiguration>.Write(ModelReaderWriterOptions options)

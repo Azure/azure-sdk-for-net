@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             TaskType taskType = "Unknown";
             IReadOnlyList<ODataError> errors = default;
-            Optional<TaskState> state = default;
+            TaskState? state = default;
             IReadOnlyList<CommandProperties> commands = default;
             IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UnknownProjectTaskProperties(
                 taskType,
                 errors ?? new ChangeTrackingList<ODataError>(),
-                Optional.ToNullable(state),
+                state,
                 commands ?? new ChangeTrackingList<CommandProperties>(),
                 clientData ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);

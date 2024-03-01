@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<AutomationRulePropertyArrayChangedConditionSupportedArrayType> arrayType = default;
-            Optional<AutomationRulePropertyArrayChangedConditionSupportedChangeType> changeType = default;
+            AutomationRulePropertyArrayChangedConditionSupportedArrayType? arrayType = default;
+            AutomationRulePropertyArrayChangedConditionSupportedChangeType? changeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRulePropertyArrayChangedValuesCondition(Optional.ToNullable(arrayType), Optional.ToNullable(changeType), serializedAdditionalRawData);
+            return new AutomationRulePropertyArrayChangedValuesCondition(arrayType, changeType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRulePropertyArrayChangedValuesCondition>.Write(ModelReaderWriterOptions options)

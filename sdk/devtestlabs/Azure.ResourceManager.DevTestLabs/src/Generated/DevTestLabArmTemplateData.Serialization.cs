@@ -159,15 +159,15 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> publisher = default;
-            Optional<string> icon = default;
-            Optional<BinaryData> contents = default;
-            Optional<DateTimeOffset> createdDate = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            string publisher = default;
+            string icon = default;
+            BinaryData contents = default;
+            DateTimeOffset? createdDate = default;
             IReadOnlyList<DevTestLabParametersValueFileInfo> parametersValueFilesInfo = default;
-            Optional<bool> enabled = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -298,17 +298,17 @@ namespace Azure.ResourceManager.DevTestLabs
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                displayName.Value,
-                description.Value,
-                publisher.Value,
-                icon.Value,
-                contents.Value,
-                Optional.ToNullable(createdDate),
+                displayName,
+                description,
+                publisher,
+                icon,
+                contents,
+                createdDate,
                 parametersValueFilesInfo ?? new ChangeTrackingList<DevTestLabParametersValueFileInfo>(),
-                Optional.ToNullable(enabled),
+                enabled,
                 serializedAdditionalRawData);
         }
 

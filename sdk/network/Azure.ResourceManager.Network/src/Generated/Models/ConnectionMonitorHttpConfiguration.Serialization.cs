@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<int> port = default;
-            Optional<NetworkHttpConfigurationMethod> method = default;
-            Optional<string> path = default;
+            int? port = default;
+            NetworkHttpConfigurationMethod? method = default;
+            string path = default;
             IList<NetworkWatcherHttpHeader> requestHeaders = default;
             IList<string> validStatusCodeRanges = default;
-            Optional<bool> preferHTTPS = default;
+            bool? preferHTTPS = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,12 +181,12 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConnectionMonitorHttpConfiguration(
-                Optional.ToNullable(port),
-                Optional.ToNullable(method),
-                path.Value,
+                port,
+                method,
+                path,
                 requestHeaders ?? new ChangeTrackingList<NetworkWatcherHttpHeader>(),
                 validStatusCodeRanges ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(preferHTTPS),
+                preferHTTPS,
                 serializedAdditionalRawData);
         }
 

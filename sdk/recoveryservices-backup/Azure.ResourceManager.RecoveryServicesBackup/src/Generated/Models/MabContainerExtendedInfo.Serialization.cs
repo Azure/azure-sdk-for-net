@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastRefreshedAt = default;
-            Optional<BackupItemType> backupItemType = default;
+            DateTimeOffset? lastRefreshedAt = default;
+            BackupItemType? backupItemType = default;
             IList<string> backupItems = default;
-            Optional<string> policyName = default;
-            Optional<string> lastBackupStatus = default;
+            string policyName = default;
+            string lastBackupStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MabContainerExtendedInfo(
-                Optional.ToNullable(lastRefreshedAt),
-                Optional.ToNullable(backupItemType),
+                lastRefreshedAt,
+                backupItemType,
                 backupItems ?? new ChangeTrackingList<string>(),
-                policyName.Value,
-                lastBackupStatus.Value,
+                policyName,
+                lastBackupStatus,
                 serializedAdditionalRawData);
         }
 

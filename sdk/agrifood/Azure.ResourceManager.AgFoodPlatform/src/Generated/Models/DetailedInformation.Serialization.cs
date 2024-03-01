@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 return null;
             }
-            Optional<string> apiName = default;
+            string apiName = default;
             IReadOnlyList<string> customParameters = default;
             IReadOnlyList<string> platformParameters = default;
-            Optional<UnitSystemsInfo> unitsSupported = default;
+            UnitSystemsInfo unitsSupported = default;
             IReadOnlyList<string> apiInputParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DetailedInformation(
-                apiName.Value,
+                apiName,
                 customParameters ?? new ChangeTrackingList<string>(),
                 platformParameters ?? new ChangeTrackingList<string>(),
-                unitsSupported.Value,
+                unitsSupported,
                 apiInputParameters ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

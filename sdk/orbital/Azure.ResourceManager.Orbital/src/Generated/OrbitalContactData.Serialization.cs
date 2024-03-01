@@ -181,28 +181,28 @@ namespace Azure.ResourceManager.Orbital
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<OrbitalProvisioningState> provisioningState = default;
-            Optional<OrbitalContactStatus> status = default;
-            Optional<DateTimeOffset> reservationStartTime = default;
-            Optional<DateTimeOffset> reservationEndTime = default;
-            Optional<DateTimeOffset> rxStartTime = default;
-            Optional<DateTimeOffset> rxEndTime = default;
-            Optional<DateTimeOffset> txStartTime = default;
-            Optional<DateTimeOffset> txEndTime = default;
-            Optional<string> errorMessage = default;
-            Optional<float> maximumElevationDegrees = default;
-            Optional<float> startAzimuthDegrees = default;
-            Optional<float> endAzimuthDegrees = default;
-            Optional<string> groundStationName = default;
-            Optional<float> startElevationDegrees = default;
-            Optional<float> endElevationDegrees = default;
-            Optional<OrbitalContactAntennaConfiguration> antennaConfiguration = default;
-            Optional<WritableSubResource> contactProfile = default;
+            SystemData systemData = default;
+            OrbitalProvisioningState? provisioningState = default;
+            OrbitalContactStatus? status = default;
+            DateTimeOffset? reservationStartTime = default;
+            DateTimeOffset? reservationEndTime = default;
+            DateTimeOffset? rxStartTime = default;
+            DateTimeOffset? rxEndTime = default;
+            DateTimeOffset? txStartTime = default;
+            DateTimeOffset? txEndTime = default;
+            string errorMessage = default;
+            float? maximumElevationDegrees = default;
+            float? startAzimuthDegrees = default;
+            float? endAzimuthDegrees = default;
+            string groundStationName = default;
+            float? startElevationDegrees = default;
+            float? endElevationDegrees = default;
+            OrbitalContactAntennaConfiguration antennaConfiguration = default;
+            WritableSubResource contactProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -407,24 +407,24 @@ namespace Azure.ResourceManager.Orbital
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(status),
-                Optional.ToNullable(reservationStartTime),
-                Optional.ToNullable(reservationEndTime),
-                Optional.ToNullable(rxStartTime),
-                Optional.ToNullable(rxEndTime),
-                Optional.ToNullable(txStartTime),
-                Optional.ToNullable(txEndTime),
-                errorMessage.Value,
-                Optional.ToNullable(maximumElevationDegrees),
-                Optional.ToNullable(startAzimuthDegrees),
-                Optional.ToNullable(endAzimuthDegrees),
-                groundStationName.Value,
-                Optional.ToNullable(startElevationDegrees),
-                Optional.ToNullable(endElevationDegrees),
-                antennaConfiguration.Value,
+                systemData,
+                etag,
+                provisioningState,
+                status,
+                reservationStartTime,
+                reservationEndTime,
+                rxStartTime,
+                rxEndTime,
+                txStartTime,
+                txEndTime,
+                errorMessage,
+                maximumElevationDegrees,
+                startAzimuthDegrees,
+                endAzimuthDegrees,
+                groundStationName,
+                startElevationDegrees,
+                endElevationDegrees,
+                antennaConfiguration,
                 contactProfile,
                 serializedAdditionalRawData);
         }

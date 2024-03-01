@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IReadOnlyList<ServiceObjectiveCapability> supportedServiceLevelObjectives = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<ReadScaleCapability> readScale = default;
+            bool? zoneRedundant = default;
+            ReadScaleCapability readScale = default;
             IReadOnlyList<StorageCapability> supportedStorageCapabilities = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,13 +192,13 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EditionCapability(
-                name.Value,
+                name,
                 supportedServiceLevelObjectives ?? new ChangeTrackingList<ServiceObjectiveCapability>(),
-                Optional.ToNullable(zoneRedundant),
-                readScale.Value,
+                zoneRedundant,
+                readScale,
                 supportedStorageCapabilities ?? new ChangeTrackingList<StorageCapability>(),
-                Optional.ToNullable(status),
-                reason.Value,
+                status,
+                reason,
                 serializedAdditionalRawData);
         }
 

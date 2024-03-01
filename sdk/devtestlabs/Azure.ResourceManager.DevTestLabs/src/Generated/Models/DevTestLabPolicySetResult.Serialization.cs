@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<bool> hasError = default;
+            bool? hasError = default;
             IReadOnlyList<DevTestLabPolicyViolation> policyViolations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabPolicySetResult(Optional.ToNullable(hasError), policyViolations ?? new ChangeTrackingList<DevTestLabPolicyViolation>(), serializedAdditionalRawData);
+            return new DevTestLabPolicySetResult(hasError, policyViolations ?? new ChangeTrackingList<DevTestLabPolicyViolation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabPolicySetResult>.Write(ModelReaderWriterOptions options)

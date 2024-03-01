@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<BenefitRecommendationUsageGrain> usageGrain = default;
+            BenefitRecommendationUsageGrain? usageGrain = default;
             IReadOnlyList<decimal> charges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendationUsageDetails(Optional.ToNullable(usageGrain), charges ?? new ChangeTrackingList<decimal>(), serializedAdditionalRawData);
+            return new RecommendationUsageDetails(usageGrain, charges ?? new ChangeTrackingList<decimal>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendationUsageDetails>.Write(ModelReaderWriterOptions options)

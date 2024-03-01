@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> @internal = default;
-            Optional<ResourceIdentifier> infrastructureSubnetId = default;
-            Optional<string> dockerBridgeCidr = default;
-            Optional<string> platformReservedCidr = default;
-            Optional<string> platformReservedDnsIP = default;
+            bool? @internal = default;
+            ResourceIdentifier infrastructureSubnetId = default;
+            string dockerBridgeCidr = default;
+            string platformReservedCidr = default;
+            string platformReservedDnsIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppVnetConfiguration(
-                Optional.ToNullable(@internal),
-                infrastructureSubnetId.Value,
-                dockerBridgeCidr.Value,
-                platformReservedCidr.Value,
-                platformReservedDnsIP.Value,
+                @internal,
+                infrastructureSubnetId,
+                dockerBridgeCidr,
+                platformReservedCidr,
+                platformReservedDnsIP,
                 serializedAdditionalRawData);
         }
 

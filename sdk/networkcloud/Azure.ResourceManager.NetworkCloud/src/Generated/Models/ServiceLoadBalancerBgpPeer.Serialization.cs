@@ -105,16 +105,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<BfdEnabled> bfdEnabled = default;
-            Optional<BgpMultiHop> bgpMultiHop = default;
-            Optional<string> holdTime = default;
-            Optional<string> keepAliveTime = default;
-            Optional<long> myAsn = default;
+            BfdEnabled? bfdEnabled = default;
+            BgpMultiHop? bgpMultiHop = default;
+            string holdTime = default;
+            string keepAliveTime = default;
+            long? myAsn = default;
             string name = default;
-            Optional<string> password = default;
+            string password = default;
             string peerAddress = default;
             long peerAsn = default;
-            Optional<long> peerPort = default;
+            long? peerPort = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,16 +192,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ServiceLoadBalancerBgpPeer(
-                Optional.ToNullable(bfdEnabled),
-                Optional.ToNullable(bgpMultiHop),
-                holdTime.Value,
-                keepAliveTime.Value,
-                Optional.ToNullable(myAsn),
+                bfdEnabled,
+                bgpMultiHop,
+                holdTime,
+                keepAliveTime,
+                myAsn,
                 name,
-                password.Value,
+                password,
                 peerAddress,
                 peerAsn,
-                Optional.ToNullable(peerPort),
+                peerPort,
                 serializedAdditionalRawData);
         }
 

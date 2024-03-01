@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<float> onDemandCost = default;
-            Optional<float> overageCost = default;
-            Optional<float> quantity = default;
-            Optional<float> reservationCost = default;
-            Optional<float> totalReservationCost = default;
-            Optional<float> reservedUnitCount = default;
-            Optional<float> savings = default;
+            float? onDemandCost = default;
+            float? overageCost = default;
+            float? quantity = default;
+            float? reservationCost = default;
+            float? totalReservationCost = default;
+            float? reservedUnitCount = default;
+            float? savings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,13 +180,13 @@ namespace Azure.ResourceManager.Consumption.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConsumptionCalculatedSavingsProperties(
-                Optional.ToNullable(onDemandCost),
-                Optional.ToNullable(overageCost),
-                Optional.ToNullable(quantity),
-                Optional.ToNullable(reservationCost),
-                Optional.ToNullable(totalReservationCost),
-                Optional.ToNullable(reservedUnitCount),
-                Optional.ToNullable(savings),
+                onDemandCost,
+                overageCost,
+                quantity,
+                reservationCost,
+                totalReservationCost,
+                reservedUnitCount,
+                savings,
                 serializedAdditionalRawData);
         }
 

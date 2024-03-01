@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string name = default;
             string script = default;
-            Optional<string> description = default;
+            string description = default;
             IList<GalleryApplicationCustomActionParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryApplicationCustomAction(name, script, description.Value, parameters ?? new ChangeTrackingList<GalleryApplicationCustomActionParameter>(), serializedAdditionalRawData);
+            return new GalleryApplicationCustomAction(name, script, description, parameters ?? new ChangeTrackingList<GalleryApplicationCustomActionParameter>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryApplicationCustomAction>.Write(ModelReaderWriterOptions options)

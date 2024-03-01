@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<EdgeRemoteApplicationType> remoteApplicationType = default;
-            Optional<EdgeRemoteApplicationAccessLevel> accessLevel = default;
-            Optional<DateTimeOffset> expirationTimeStampInUtc = default;
+            EdgeRemoteApplicationType? remoteApplicationType = default;
+            EdgeRemoteApplicationAccessLevel? accessLevel = default;
+            DateTimeOffset? expirationTimeStampInUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeRemoteSupportSettings(Optional.ToNullable(remoteApplicationType), Optional.ToNullable(accessLevel), Optional.ToNullable(expirationTimeStampInUtc), serializedAdditionalRawData);
+            return new EdgeRemoteSupportSettings(remoteApplicationType, accessLevel, expirationTimeStampInUtc, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeRemoteSupportSettings>.Write(ModelReaderWriterOptions options)

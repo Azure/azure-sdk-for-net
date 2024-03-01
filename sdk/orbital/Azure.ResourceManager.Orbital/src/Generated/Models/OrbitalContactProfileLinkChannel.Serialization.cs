@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Orbital.Models
             float centerFrequencyMHz = default;
             float bandwidthMHz = default;
             OrbitalContactEndpoint endPoint = default;
-            Optional<string> modulationConfiguration = default;
-            Optional<string> demodulationConfiguration = default;
-            Optional<string> encodingConfiguration = default;
-            Optional<string> decodingConfiguration = default;
+            string modulationConfiguration = default;
+            string demodulationConfiguration = default;
+            string encodingConfiguration = default;
+            string decodingConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.Orbital.Models
                 centerFrequencyMHz,
                 bandwidthMHz,
                 endPoint,
-                modulationConfiguration.Value,
-                demodulationConfiguration.Value,
-                encodingConfiguration.Value,
-                decodingConfiguration.Value,
+                modulationConfiguration,
+                demodulationConfiguration,
+                encodingConfiguration,
+                decodingConfiguration,
                 serializedAdditionalRawData);
         }
 

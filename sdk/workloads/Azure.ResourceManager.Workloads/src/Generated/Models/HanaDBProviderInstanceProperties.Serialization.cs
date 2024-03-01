@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> hostname = default;
-            Optional<string> dbName = default;
-            Optional<string> sqlPort = default;
-            Optional<string> instanceNumber = default;
-            Optional<string> dbUsername = default;
-            Optional<string> dbPassword = default;
-            Optional<Uri> dbPasswordUri = default;
-            Optional<Uri> sslCertificateUri = default;
-            Optional<string> sslHostNameInCertificate = default;
-            Optional<SapSslPreference> sslPreference = default;
-            Optional<string> sapSid = default;
+            string hostname = default;
+            string dbName = default;
+            string sqlPort = default;
+            string instanceNumber = default;
+            string dbUsername = default;
+            string dbPassword = default;
+            Uri dbPasswordUri = default;
+            Uri sslCertificateUri = default;
+            string sslHostNameInCertificate = default;
+            SapSslPreference? sslPreference = default;
+            string sapSid = default;
             string providerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -218,17 +218,17 @@ namespace Azure.ResourceManager.Workloads.Models
             return new HanaDBProviderInstanceProperties(
                 providerType,
                 serializedAdditionalRawData,
-                hostname.Value,
-                dbName.Value,
-                sqlPort.Value,
-                instanceNumber.Value,
-                dbUsername.Value,
-                dbPassword.Value,
-                dbPasswordUri.Value,
-                sslCertificateUri.Value,
-                sslHostNameInCertificate.Value,
-                Optional.ToNullable(sslPreference),
-                sapSid.Value);
+                hostname,
+                dbName,
+                sqlPort,
+                instanceNumber,
+                dbUsername,
+                dbPassword,
+                dbPasswordUri,
+                sslCertificateUri,
+                sslHostNameInCertificate,
+                sslPreference,
+                sapSid);
         }
 
         BinaryData IPersistableModel<HanaDBProviderInstanceProperties>.Write(ModelReaderWriterOptions options)

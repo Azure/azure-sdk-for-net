@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<ResourceType> type = default;
-            Optional<string> name = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> displayName = default;
-            Optional<CreateManagementGroupDetails> details = default;
+            string id = default;
+            ResourceType? type = default;
+            string name = default;
+            Guid? tenantId = default;
+            string displayName = default;
+            CreateManagementGroupDetails details = default;
             IReadOnlyList<ManagementGroupChildOptions> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -213,12 +213,12 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagementGroupCreateOrUpdateContent(
-                id.Value,
-                Optional.ToNullable(type),
-                name.Value,
-                Optional.ToNullable(tenantId),
-                displayName.Value,
-                details.Value,
+                id,
+                type,
+                name,
+                tenantId,
+                displayName,
+                details,
                 children ?? new ChangeTrackingList<ManagementGroupChildOptions>(),
                 serializedAdditionalRawData);
         }

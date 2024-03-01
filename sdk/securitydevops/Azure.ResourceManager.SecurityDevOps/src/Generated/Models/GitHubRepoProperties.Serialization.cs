@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<long> accountId = default;
-            Optional<Uri> repoUrl = default;
-            Optional<string> ownerName = default;
+            ProvisioningState? provisioningState = default;
+            long? accountId = default;
+            Uri repoUrl = default;
+            string ownerName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitHubRepoProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(accountId), repoUrl.Value, ownerName.Value, serializedAdditionalRawData);
+            return new GitHubRepoProperties(provisioningState, accountId, repoUrl, ownerName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitHubRepoProperties>.Write(ModelReaderWriterOptions options)

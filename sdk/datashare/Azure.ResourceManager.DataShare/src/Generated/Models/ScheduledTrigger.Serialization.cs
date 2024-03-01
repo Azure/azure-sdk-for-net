@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdAt = default;
+            DataShareProvisioningState? provisioningState = default;
             DataShareSynchronizationRecurrenceInterval recurrenceInterval = default;
-            Optional<SynchronizationMode> synchronizationMode = default;
+            SynchronizationMode? synchronizationMode = default;
             DateTimeOffset synchronizationTime = default;
-            Optional<DataShareTriggerStatus> triggerStatus = default;
-            Optional<string> userName = default;
+            DataShareTriggerStatus? triggerStatus = default;
+            string userName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -237,16 +237,16 @@ namespace Azure.ResourceManager.DataShare.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
-                Optional.ToNullable(createdAt),
-                Optional.ToNullable(provisioningState),
+                createdAt,
+                provisioningState,
                 recurrenceInterval,
-                Optional.ToNullable(synchronizationMode),
+                synchronizationMode,
                 synchronizationTime,
-                Optional.ToNullable(triggerStatus),
-                userName.Value);
+                triggerStatus,
+                userName);
         }
 
         BinaryData IPersistableModel<ScheduledTrigger>.Write(ModelReaderWriterOptions options)

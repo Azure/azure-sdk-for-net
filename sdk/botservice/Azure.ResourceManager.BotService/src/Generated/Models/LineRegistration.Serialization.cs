@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> generatedId = default;
-            Optional<string> channelSecret = default;
-            Optional<string> channelAccessToken = default;
+            string generatedId = default;
+            string channelSecret = default;
+            string channelAccessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LineRegistration(generatedId.Value, channelSecret.Value, channelAccessToken.Value, serializedAdditionalRawData);
+            return new LineRegistration(generatedId, channelSecret, channelAccessToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LineRegistration>.Write(ModelReaderWriterOptions options)

@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<ApplicationServerVirtualMachineType> type = default;
-            Optional<ResourceIdentifier> virtualMachineId = default;
+            ApplicationServerVirtualMachineType? type = default;
+            ResourceIdentifier virtualMachineId = default;
             IReadOnlyList<SubResource> storageDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationServerVmDetails(Optional.ToNullable(type), virtualMachineId.Value, storageDetails ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
+            return new ApplicationServerVmDetails(type, virtualMachineId, storageDetails ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationServerVmDetails>.Write(ModelReaderWriterOptions options)

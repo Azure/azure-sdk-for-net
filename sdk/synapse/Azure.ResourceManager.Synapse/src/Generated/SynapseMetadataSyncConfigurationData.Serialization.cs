@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> enabled = default;
-            Optional<int> syncIntervalInMinutes = default;
+            SystemData systemData = default;
+            bool? enabled = default;
+            int? syncIntervalInMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.Synapse
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(enabled),
-                Optional.ToNullable(syncIntervalInMinutes),
+                systemData,
+                enabled,
+                syncIntervalInMinutes,
                 serializedAdditionalRawData);
         }
 

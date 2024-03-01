@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<bool> isDefault = default;
+            bool? isDefault = default;
             IList<SourceLifeCycle> lifecycles = default;
             string name = default;
             string objectType = default;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionRetentionRule(name, objectType, serializedAdditionalRawData, Optional.ToNullable(isDefault), lifecycles);
+            return new DataProtectionRetentionRule(name, objectType, serializedAdditionalRawData, isDefault, lifecycles);
         }
 
         BinaryData IPersistableModel<DataProtectionRetentionRule>.Write(ModelReaderWriterOptions options)

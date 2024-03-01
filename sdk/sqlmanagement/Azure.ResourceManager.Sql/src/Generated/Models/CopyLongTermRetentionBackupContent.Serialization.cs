@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> targetSubscriptionId = default;
-            Optional<string> targetResourceGroup = default;
-            Optional<ResourceIdentifier> targetServerResourceId = default;
-            Optional<string> targetServerFullyQualifiedDomainName = default;
-            Optional<string> targetDatabaseName = default;
-            Optional<SqlBackupStorageRedundancy> targetBackupStorageRedundancy = default;
+            string targetSubscriptionId = default;
+            string targetResourceGroup = default;
+            ResourceIdentifier targetServerResourceId = default;
+            string targetServerFullyQualifiedDomainName = default;
+            string targetDatabaseName = default;
+            SqlBackupStorageRedundancy? targetBackupStorageRedundancy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,12 +164,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CopyLongTermRetentionBackupContent(
-                targetSubscriptionId.Value,
-                targetResourceGroup.Value,
-                targetServerResourceId.Value,
-                targetServerFullyQualifiedDomainName.Value,
-                targetDatabaseName.Value,
-                Optional.ToNullable(targetBackupStorageRedundancy),
+                targetSubscriptionId,
+                targetResourceGroup,
+                targetServerResourceId,
+                targetServerFullyQualifiedDomainName,
+                targetDatabaseName,
+                targetBackupStorageRedundancy,
                 serializedAdditionalRawData);
         }
 

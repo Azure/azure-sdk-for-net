@@ -132,9 +132,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<int> priority = default;
-            Optional<string> author = default;
-            Optional<BinaryData> templateData = default;
+            int? priority = default;
+            string author = default;
+            BinaryData templateData = default;
             IList<WorkbookTemplateGallery> galleries = default;
             IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localized = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -238,9 +238,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new WorkbookTemplatePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(priority),
-                author.Value,
-                templateData.Value,
+                priority,
+                author,
+                templateData,
                 galleries ?? new ChangeTrackingList<WorkbookTemplateGallery>(),
                 localized ?? new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>(),
                 serializedAdditionalRawData);

@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> deploymentId = default;
-            Optional<string> modelId = default;
+            string deploymentId = default;
+            string modelId = default;
             ModelTaskType taskType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitoringTarget(deploymentId.Value, modelId.Value, taskType, serializedAdditionalRawData);
+            return new MonitoringTarget(deploymentId, modelId, taskType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringTarget>.Write(ModelReaderWriterOptions options)

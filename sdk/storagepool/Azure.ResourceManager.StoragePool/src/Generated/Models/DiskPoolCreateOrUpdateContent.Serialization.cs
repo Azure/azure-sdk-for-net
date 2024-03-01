@@ -154,12 +154,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             StoragePoolSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            Optional<string> managedBy = default;
+            string managedBy = default;
             IList<string> managedByExtended = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<string> availabilityZones = default;
             IList<WritableSubResource> disks = default;
             ResourceIdentifier subnetId = default;
@@ -304,11 +304,11 @@ namespace Azure.ResourceManager.StoragePool.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                managedBy.Value,
+                managedBy,
                 managedByExtended ?? new ChangeTrackingList<string>(),
                 availabilityZones ?? new ChangeTrackingList<string>(),
                 disks ?? new ChangeTrackingList<WritableSubResource>(),

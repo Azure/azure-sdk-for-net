@@ -217,29 +217,29 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> collation = default;
-            Optional<ManagedDatabaseStatus> status = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<DateTimeOffset> earliestRestorePoint = default;
-            Optional<DateTimeOffset> restorePointInTime = default;
-            Optional<AzureLocation> defaultSecondaryLocation = default;
-            Optional<CatalogCollationType> catalogCollation = default;
-            Optional<ManagedDatabaseCreateMode> createMode = default;
-            Optional<Uri> storageContainerUri = default;
-            Optional<ResourceIdentifier> sourceDatabaseId = default;
-            Optional<ResourceIdentifier> crossSubscriptionSourceDatabaseId = default;
-            Optional<ResourceIdentifier> restorableDroppedDatabaseId = default;
-            Optional<ResourceIdentifier> crossSubscriptionRestorableDroppedDatabaseId = default;
-            Optional<string> storageContainerIdentity = default;
-            Optional<string> storageContainerSasToken = default;
-            Optional<ResourceIdentifier> failoverGroupId = default;
-            Optional<ResourceIdentifier> recoverableDatabaseId = default;
-            Optional<ResourceIdentifier> longTermRetentionBackupResourceId = default;
-            Optional<bool> autoCompleteRestore = default;
-            Optional<string> lastBackupName = default;
-            Optional<ResourceIdentifier> crossSubscriptionTargetManagedInstanceId = default;
-            Optional<bool> isLedgerOn = default;
+            SystemData systemData = default;
+            string collation = default;
+            ManagedDatabaseStatus? status = default;
+            DateTimeOffset? creationDate = default;
+            DateTimeOffset? earliestRestorePoint = default;
+            DateTimeOffset? restorePointInTime = default;
+            AzureLocation? defaultSecondaryLocation = default;
+            CatalogCollationType? catalogCollation = default;
+            ManagedDatabaseCreateMode? createMode = default;
+            Uri storageContainerUri = default;
+            ResourceIdentifier sourceDatabaseId = default;
+            ResourceIdentifier crossSubscriptionSourceDatabaseId = default;
+            ResourceIdentifier restorableDroppedDatabaseId = default;
+            ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId = default;
+            string storageContainerIdentity = default;
+            string storageContainerSasToken = default;
+            ResourceIdentifier failoverGroupId = default;
+            ResourceIdentifier recoverableDatabaseId = default;
+            ResourceIdentifier longTermRetentionBackupResourceId = default;
+            bool? autoCompleteRestore = default;
+            string lastBackupName = default;
+            ResourceIdentifier crossSubscriptionTargetManagedInstanceId = default;
+            bool? isLedgerOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -491,31 +491,31 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                collation.Value,
-                Optional.ToNullable(status),
-                Optional.ToNullable(creationDate),
-                Optional.ToNullable(earliestRestorePoint),
-                Optional.ToNullable(restorePointInTime),
-                Optional.ToNullable(defaultSecondaryLocation),
-                Optional.ToNullable(catalogCollation),
-                Optional.ToNullable(createMode),
-                storageContainerUri.Value,
-                sourceDatabaseId.Value,
-                crossSubscriptionSourceDatabaseId.Value,
-                restorableDroppedDatabaseId.Value,
-                crossSubscriptionRestorableDroppedDatabaseId.Value,
-                storageContainerIdentity.Value,
-                storageContainerSasToken.Value,
-                failoverGroupId.Value,
-                recoverableDatabaseId.Value,
-                longTermRetentionBackupResourceId.Value,
-                Optional.ToNullable(autoCompleteRestore),
-                lastBackupName.Value,
-                crossSubscriptionTargetManagedInstanceId.Value,
-                Optional.ToNullable(isLedgerOn),
+                collation,
+                status,
+                creationDate,
+                earliestRestorePoint,
+                restorePointInTime,
+                defaultSecondaryLocation,
+                catalogCollation,
+                createMode,
+                storageContainerUri,
+                sourceDatabaseId,
+                crossSubscriptionSourceDatabaseId,
+                restorableDroppedDatabaseId,
+                crossSubscriptionRestorableDroppedDatabaseId,
+                storageContainerIdentity,
+                storageContainerSasToken,
+                failoverGroupId,
+                recoverableDatabaseId,
+                longTermRetentionBackupResourceId,
+                autoCompleteRestore,
+                lastBackupName,
+                crossSubscriptionTargetManagedInstanceId,
+                isLedgerOn,
                 serializedAdditionalRawData);
         }
 

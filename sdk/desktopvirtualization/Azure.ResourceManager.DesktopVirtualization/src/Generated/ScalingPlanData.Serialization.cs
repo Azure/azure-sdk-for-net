@@ -180,24 +180,24 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 return null;
             }
-            Optional<ResourceIdentifier> managedBy = default;
-            Optional<string> kind = default;
-            Optional<ETag> etag = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<DesktopVirtualizationSku> sku = default;
-            Optional<ArmPlan> plan = default;
+            ResourceIdentifier managedBy = default;
+            string kind = default;
+            ETag? etag = default;
+            ManagedServiceIdentity identity = default;
+            DesktopVirtualizationSku sku = default;
+            ArmPlan plan = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> objectId = default;
-            Optional<string> description = default;
-            Optional<string> friendlyName = default;
+            SystemData systemData = default;
+            string objectId = default;
+            string description = default;
+            string friendlyName = default;
             string timeZone = default;
-            Optional<ScalingHostPoolType> hostPoolType = default;
-            Optional<string> exclusionTag = default;
+            ScalingHostPoolType? hostPoolType = default;
+            string exclusionTag = default;
             IList<ScalingSchedule> schedules = default;
             IList<ScalingHostPoolReference> hostPoolReferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -381,22 +381,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                objectId.Value,
-                description.Value,
-                friendlyName.Value,
+                objectId,
+                description,
+                friendlyName,
                 timeZone,
-                Optional.ToNullable(hostPoolType),
-                exclusionTag.Value,
+                hostPoolType,
+                exclusionTag,
                 schedules ?? new ChangeTrackingList<ScalingSchedule>(),
                 hostPoolReferences ?? new ChangeTrackingList<ScalingHostPoolReference>(),
-                managedBy.Value,
-                kind.Value,
-                Optional.ToNullable(etag),
+                managedBy,
+                kind,
+                etag,
                 identity,
-                sku.Value,
+                sku,
                 plan,
                 serializedAdditionalRawData);
         }

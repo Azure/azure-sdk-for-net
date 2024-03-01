@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<ServiceAlertEssentials> essentials = default;
-            Optional<BinaryData> context = default;
-            Optional<BinaryData> egressConfig = default;
+            ServiceAlertEssentials essentials = default;
+            BinaryData context = default;
+            BinaryData egressConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAlertProperties(essentials.Value, context.Value, egressConfig.Value, serializedAdditionalRawData);
+            return new ServiceAlertProperties(essentials, context, egressConfig, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertProperties>.Write(ModelReaderWriterOptions options)

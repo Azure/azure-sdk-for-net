@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> metric = default;
-            Optional<long> value = default;
-            Optional<float> percentage = default;
+            string metric = default;
+            long? value = default;
+            float? percentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RankingsResponseTablesPropertiesItemsMetricsItem(metric.Value, Optional.ToNullable(value), Optional.ToNullable(percentage), serializedAdditionalRawData);
+            return new RankingsResponseTablesPropertiesItemsMetricsItem(metric, value, percentage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RankingsResponseTablesPropertiesItemsMetricsItem>.Write(ModelReaderWriterOptions options)

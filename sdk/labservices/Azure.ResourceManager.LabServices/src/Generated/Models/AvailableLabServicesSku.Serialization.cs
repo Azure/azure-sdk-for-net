@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> name = default;
-            Optional<AvailableLabServicesSkuTier> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<AvailableLabServicesSkuCapacity> capacity = default;
+            string resourceType = default;
+            string name = default;
+            AvailableLabServicesSkuTier? tier = default;
+            string size = default;
+            string family = default;
+            AvailableLabServicesSkuCapacity capacity = default;
             IReadOnlyList<AvailableLabServicesSkuCapability> capabilities = default;
             IReadOnlyList<AzureLocation> locations = default;
             IReadOnlyList<AvailableLabServicesSkuCost> costs = default;
@@ -249,12 +249,12 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AvailableLabServicesSku(
-                resourceType.Value,
-                name.Value,
-                Optional.ToNullable(tier),
-                size.Value,
-                family.Value,
-                capacity.Value,
+                resourceType,
+                name,
+                tier,
+                size,
+                family,
+                capacity,
                 capabilities ?? new ChangeTrackingList<AvailableLabServicesSkuCapability>(),
                 locations ?? new ChangeTrackingList<AzureLocation>(),
                 costs ?? new ChangeTrackingList<AvailableLabServicesSkuCost>(),

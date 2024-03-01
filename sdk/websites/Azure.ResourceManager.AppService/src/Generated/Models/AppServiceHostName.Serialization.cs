@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IReadOnlyList<string> siteNames = default;
-            Optional<string> azureResourceName = default;
-            Optional<AppServiceResourceType> azureResourceType = default;
-            Optional<CustomHostNameDnsRecordType> customHostNameDnsRecordType = default;
-            Optional<AppServiceHostNameType> hostNameType = default;
+            string azureResourceName = default;
+            AppServiceResourceType? azureResourceType = default;
+            CustomHostNameDnsRecordType? customHostNameDnsRecordType = default;
+            AppServiceHostNameType? hostNameType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,12 +167,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppServiceHostName(
-                name.Value,
+                name,
                 siteNames ?? new ChangeTrackingList<string>(),
-                azureResourceName.Value,
-                Optional.ToNullable(azureResourceType),
-                Optional.ToNullable(customHostNameDnsRecordType),
-                Optional.ToNullable(hostNameType),
+                azureResourceName,
+                azureResourceType,
+                customHostNameDnsRecordType,
+                hostNameType,
                 serializedAdditionalRawData);
         }
 

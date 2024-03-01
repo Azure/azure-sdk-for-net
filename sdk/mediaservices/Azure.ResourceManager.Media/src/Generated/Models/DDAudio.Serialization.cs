@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<int> channels = default;
-            Optional<int> samplingRate = default;
-            Optional<int> bitrate = default;
+            int? channels = default;
+            int? samplingRate = default;
+            int? bitrate = default;
             string odataType = default;
-            Optional<string> label = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.Media.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DDAudio(
                 odataType,
-                label.Value,
+                label,
                 serializedAdditionalRawData,
-                Optional.ToNullable(channels),
-                Optional.ToNullable(samplingRate),
-                Optional.ToNullable(bitrate));
+                channels,
+                samplingRate,
+                bitrate);
         }
 
         BinaryData IPersistableModel<DDAudio>.Write(ModelReaderWriterOptions options)

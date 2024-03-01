@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.BotService.Models
             }
             IList<TelephonyPhoneNumbers> phoneNumbers = default;
             IList<TelephonyChannelResourceApiConfiguration> apiConfigurations = default;
-            Optional<string> cognitiveServiceSubscriptionKey = default;
-            Optional<string> cognitiveServiceRegion = default;
-            Optional<string> defaultLocale = default;
-            Optional<string> premiumSku = default;
-            Optional<bool> isEnabled = default;
+            string cognitiveServiceSubscriptionKey = default;
+            string cognitiveServiceRegion = default;
+            string defaultLocale = default;
+            string premiumSku = default;
+            bool? isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -234,11 +234,11 @@ namespace Azure.ResourceManager.BotService.Models
             return new TelephonyChannelProperties(
                 phoneNumbers ?? new ChangeTrackingList<TelephonyPhoneNumbers>(),
                 apiConfigurations ?? new ChangeTrackingList<TelephonyChannelResourceApiConfiguration>(),
-                cognitiveServiceSubscriptionKey.Value,
-                cognitiveServiceRegion.Value,
-                defaultLocale.Value,
-                premiumSku.Value,
-                Optional.ToNullable(isEnabled),
+                cognitiveServiceSubscriptionKey,
+                cognitiveServiceRegion,
+                defaultLocale,
+                premiumSku,
+                isEnabled,
                 serializedAdditionalRawData);
         }
 

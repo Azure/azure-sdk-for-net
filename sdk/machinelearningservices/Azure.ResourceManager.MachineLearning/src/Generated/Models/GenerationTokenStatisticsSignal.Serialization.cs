@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IList<GenerationTokenStatisticsMetricThreshold> metricThresholds = default;
-            Optional<MonitoringInputDataBase> productionData = default;
+            MonitoringInputDataBase productionData = default;
             double samplingRate = default;
-            Optional<MonitoringNotificationMode> mode = default;
+            MonitoringNotificationMode? mode = default;
             IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -181,12 +181,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new GenerationTokenStatisticsSignal(
-                Optional.ToNullable(mode),
+                mode,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 signalType,
                 serializedAdditionalRawData,
                 metricThresholds,
-                productionData.Value,
+                productionData,
                 samplingRate);
         }
 

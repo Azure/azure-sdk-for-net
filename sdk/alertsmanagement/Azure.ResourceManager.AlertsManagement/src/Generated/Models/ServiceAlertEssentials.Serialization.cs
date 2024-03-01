@@ -159,25 +159,25 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<ServiceAlertSeverity> severity = default;
-            Optional<ServiceAlertSignalType> signalType = default;
-            Optional<ServiceAlertState> alertState = default;
-            Optional<MonitorCondition> monitorCondition = default;
-            Optional<string> targetResource = default;
-            Optional<string> targetResourceName = default;
-            Optional<string> targetResourceGroup = default;
-            Optional<string> targetResourceType = default;
-            Optional<MonitorServiceSourceForAlert> monitorService = default;
-            Optional<string> alertRule = default;
-            Optional<string> sourceCreatedId = default;
-            Optional<Guid> smartGroupId = default;
-            Optional<string> smartGroupingReason = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> lastModifiedDateTime = default;
-            Optional<DateTimeOffset> monitorConditionResolvedDateTime = default;
-            Optional<string> lastModifiedUserName = default;
-            Optional<ServiceAlertActionStatus> actionStatus = default;
-            Optional<string> description = default;
+            ServiceAlertSeverity? severity = default;
+            ServiceAlertSignalType? signalType = default;
+            ServiceAlertState? alertState = default;
+            MonitorCondition? monitorCondition = default;
+            string targetResource = default;
+            string targetResourceName = default;
+            string targetResourceGroup = default;
+            string targetResourceType = default;
+            MonitorServiceSourceForAlert? monitorService = default;
+            string alertRule = default;
+            string sourceCreatedId = default;
+            Guid? smartGroupId = default;
+            string smartGroupingReason = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? lastModifiedDateTime = default;
+            DateTimeOffset? monitorConditionResolvedDateTime = default;
+            string lastModifiedUserName = default;
+            ServiceAlertActionStatus actionStatus = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -324,25 +324,25 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ServiceAlertEssentials(
-                Optional.ToNullable(severity),
-                Optional.ToNullable(signalType),
-                Optional.ToNullable(alertState),
-                Optional.ToNullable(monitorCondition),
-                targetResource.Value,
-                targetResourceName.Value,
-                targetResourceGroup.Value,
-                targetResourceType.Value,
-                Optional.ToNullable(monitorService),
-                alertRule.Value,
-                sourceCreatedId.Value,
-                Optional.ToNullable(smartGroupId),
-                smartGroupingReason.Value,
-                Optional.ToNullable(startDateTime),
-                Optional.ToNullable(lastModifiedDateTime),
-                Optional.ToNullable(monitorConditionResolvedDateTime),
-                lastModifiedUserName.Value,
-                actionStatus.Value,
-                description.Value,
+                severity,
+                signalType,
+                alertState,
+                monitorCondition,
+                targetResource,
+                targetResourceName,
+                targetResourceGroup,
+                targetResourceType,
+                monitorService,
+                alertRule,
+                sourceCreatedId,
+                smartGroupId,
+                smartGroupingReason,
+                startDateTime,
+                lastModifiedDateTime,
+                monitorConditionResolvedDateTime,
+                lastModifiedUserName,
+                actionStatus,
+                description,
                 serializedAdditionalRawData);
         }
 

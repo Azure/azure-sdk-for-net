@@ -147,16 +147,16 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<ResourceIdentifier> serviceBusRuleId = default;
-            Optional<ResourceIdentifier> eventHubAuthorizationRuleId = default;
-            Optional<string> eventHubName = default;
+            SystemData systemData = default;
+            ResourceIdentifier storageAccountId = default;
+            ResourceIdentifier serviceBusRuleId = default;
+            ResourceIdentifier eventHubAuthorizationRuleId = default;
+            string eventHubName = default;
             IList<MetricSettings> metrics = default;
             IList<LogSettings> logs = default;
-            Optional<ResourceIdentifier> workspaceId = default;
-            Optional<ResourceIdentifier> marketplacePartnerId = default;
-            Optional<string> logAnalyticsDestinationType = default;
+            ResourceIdentifier workspaceId = default;
+            ResourceIdentifier marketplacePartnerId = default;
+            string logAnalyticsDestinationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -290,16 +290,16 @@ namespace Azure.ResourceManager.Monitor
                 id,
                 name,
                 type,
-                systemData.Value,
-                storageAccountId.Value,
-                serviceBusRuleId.Value,
-                eventHubAuthorizationRuleId.Value,
-                eventHubName.Value,
+                systemData,
+                storageAccountId,
+                serviceBusRuleId,
+                eventHubAuthorizationRuleId,
+                eventHubName,
                 metrics ?? new ChangeTrackingList<MetricSettings>(),
                 logs ?? new ChangeTrackingList<LogSettings>(),
-                workspaceId.Value,
-                marketplacePartnerId.Value,
-                logAnalyticsDestinationType.Value,
+                workspaceId,
+                marketplacePartnerId,
+                logAnalyticsDestinationType,
                 serializedAdditionalRawData);
         }
 

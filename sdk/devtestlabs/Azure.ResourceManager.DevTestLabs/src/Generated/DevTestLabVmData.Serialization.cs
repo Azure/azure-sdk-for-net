@@ -297,42 +297,42 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> notes = default;
-            Optional<string> ownerObjectId = default;
-            Optional<string> ownerUserPrincipalName = default;
-            Optional<string> createdByUserId = default;
-            Optional<string> createdByUser = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<ResourceIdentifier> computeId = default;
-            Optional<string> customImageId = default;
-            Optional<string> osType = default;
-            Optional<string> size = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
-            Optional<string> sshKey = default;
-            Optional<bool> isAuthenticationWithSshKey = default;
-            Optional<string> fqdn = default;
-            Optional<string> labSubnetName = default;
-            Optional<ResourceIdentifier> labVirtualNetworkId = default;
-            Optional<bool> disallowPublicIPAddress = default;
+            SystemData systemData = default;
+            string notes = default;
+            string ownerObjectId = default;
+            string ownerUserPrincipalName = default;
+            string createdByUserId = default;
+            string createdByUser = default;
+            DateTimeOffset? createdDate = default;
+            ResourceIdentifier computeId = default;
+            string customImageId = default;
+            string osType = default;
+            string size = default;
+            string userName = default;
+            string password = default;
+            string sshKey = default;
+            bool? isAuthenticationWithSshKey = default;
+            string fqdn = default;
+            string labSubnetName = default;
+            ResourceIdentifier labVirtualNetworkId = default;
+            bool? disallowPublicIPAddress = default;
             IList<DevTestLabArtifactInstallInfo> artifacts = default;
-            Optional<DevTestLabArtifactDeploymentStatus> artifactDeploymentStatus = default;
-            Optional<DevTestLabGalleryImageReference> galleryImageReference = default;
-            Optional<string> planId = default;
-            Optional<ComputeVmProperties> computeVm = default;
-            Optional<DevTestLabNetworkInterface> networkInterface = default;
-            Optional<DevTestLabApplicableSchedule> applicableSchedule = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<bool> allowClaim = default;
-            Optional<string> storageType = default;
-            Optional<DevTestLabVmCreationSource> vmCreationSource = default;
-            Optional<ResourceIdentifier> environmentId = default;
+            DevTestLabArtifactDeploymentStatus artifactDeploymentStatus = default;
+            DevTestLabGalleryImageReference galleryImageReference = default;
+            string planId = default;
+            ComputeVmProperties computeVm = default;
+            DevTestLabNetworkInterface networkInterface = default;
+            DevTestLabApplicableSchedule applicableSchedule = default;
+            DateTimeOffset? expirationDate = default;
+            bool? allowClaim = default;
+            string storageType = default;
+            DevTestLabVmCreationSource? vmCreationSource = default;
+            ResourceIdentifier environmentId = default;
             IList<DevTestLabDataDiskProperties> dataDiskParameters = default;
             IList<DevTestLabScheduleCreationParameter> scheduleParameters = default;
-            Optional<string> lastKnownPowerState = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            string lastKnownPowerState = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -664,44 +664,44 @@ namespace Azure.ResourceManager.DevTestLabs
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                notes.Value,
-                ownerObjectId.Value,
-                ownerUserPrincipalName.Value,
-                createdByUserId.Value,
-                createdByUser.Value,
-                Optional.ToNullable(createdDate),
-                computeId.Value,
-                customImageId.Value,
-                osType.Value,
-                size.Value,
-                userName.Value,
-                password.Value,
-                sshKey.Value,
-                Optional.ToNullable(isAuthenticationWithSshKey),
-                fqdn.Value,
-                labSubnetName.Value,
-                labVirtualNetworkId.Value,
-                Optional.ToNullable(disallowPublicIPAddress),
+                notes,
+                ownerObjectId,
+                ownerUserPrincipalName,
+                createdByUserId,
+                createdByUser,
+                createdDate,
+                computeId,
+                customImageId,
+                osType,
+                size,
+                userName,
+                password,
+                sshKey,
+                isAuthenticationWithSshKey,
+                fqdn,
+                labSubnetName,
+                labVirtualNetworkId,
+                disallowPublicIPAddress,
                 artifacts ?? new ChangeTrackingList<DevTestLabArtifactInstallInfo>(),
-                artifactDeploymentStatus.Value,
-                galleryImageReference.Value,
-                planId.Value,
-                computeVm.Value,
-                networkInterface.Value,
-                applicableSchedule.Value,
-                Optional.ToNullable(expirationDate),
-                Optional.ToNullable(allowClaim),
-                storageType.Value,
-                Optional.ToNullable(vmCreationSource),
-                environmentId.Value,
+                artifactDeploymentStatus,
+                galleryImageReference,
+                planId,
+                computeVm,
+                networkInterface,
+                applicableSchedule,
+                expirationDate,
+                allowClaim,
+                storageType,
+                vmCreationSource,
+                environmentId,
                 dataDiskParameters ?? new ChangeTrackingList<DevTestLabDataDiskProperties>(),
                 scheduleParameters ?? new ChangeTrackingList<DevTestLabScheduleCreationParameter>(),
-                lastKnownPowerState.Value,
-                provisioningState.Value,
-                Optional.ToNullable(uniqueIdentifier),
+                lastKnownPowerState,
+                provisioningState,
+                uniqueIdentifier,
                 serializedAdditionalRawData);
         }
 

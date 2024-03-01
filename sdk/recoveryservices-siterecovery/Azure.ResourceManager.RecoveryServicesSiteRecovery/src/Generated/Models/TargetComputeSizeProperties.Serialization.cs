@@ -124,15 +124,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> friendlyName = default;
-            Optional<int> cpuCoresCount = default;
-            Optional<int> vCpusAvailable = default;
-            Optional<double> memoryInGB = default;
-            Optional<int> maxDataDiskCount = default;
-            Optional<int> maxNicsCount = default;
+            string name = default;
+            string friendlyName = default;
+            int? cpuCoresCount = default;
+            int? vCpusAvailable = default;
+            double? memoryInGB = default;
+            int? maxDataDiskCount = default;
+            int? maxNicsCount = default;
             IReadOnlyList<SiteRecoveryComputeSizeErrorDetails> errors = default;
-            Optional<string> highIopsSupported = default;
+            string highIopsSupported = default;
             IReadOnlyList<string> hyperVGenerations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -233,15 +233,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TargetComputeSizeProperties(
-                name.Value,
-                friendlyName.Value,
-                Optional.ToNullable(cpuCoresCount),
-                Optional.ToNullable(vCpusAvailable),
-                Optional.ToNullable(memoryInGB),
-                Optional.ToNullable(maxDataDiskCount),
-                Optional.ToNullable(maxNicsCount),
+                name,
+                friendlyName,
+                cpuCoresCount,
+                vCpusAvailable,
+                memoryInGB,
+                maxDataDiskCount,
+                maxNicsCount,
                 errors ?? new ChangeTrackingList<SiteRecoveryComputeSizeErrorDetails>(),
-                highIopsSupported.Value,
+                highIopsSupported,
                 hyperVGenerations ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
