@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Support
                     {
                         LookUpResourceIdResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LookUpResourceIdResult.DeserializeLookUpResourceIdResponse(document.RootElement);
+                        value = LookUpResourceIdResult.DeserializeLookUpResourceIdResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Support
                     {
                         LookUpResourceIdResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LookUpResourceIdResult.DeserializeLookUpResourceIdResponse(document.RootElement);
+                        value = LookUpResourceIdResult.DeserializeLookUpResourceIdResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

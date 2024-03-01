@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLookUpResourceIdResponse(document.RootElement, options);
+            return DeserializeLookUpResourceIdResult(document.RootElement, options);
         }
 
-        internal static LookUpResourceIdResult DeserializeLookUpResourceIdResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LookUpResourceIdResult DeserializeLookUpResourceIdResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Support.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeLookUpResourceIdResponse(document.RootElement, options);
+                        return DeserializeLookUpResourceIdResult(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(LookUpResourceIdResult)} does not support '{options.Format}' format.");

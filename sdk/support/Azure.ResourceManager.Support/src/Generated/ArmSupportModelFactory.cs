@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Initializes a new instance of <see cref="Models.LookUpResourceIdResult"/>. </summary>
         /// <param name="resourceId"> The resource Id of support resource type. </param>
         /// <returns> A new <see cref="Models.LookUpResourceIdResult"/> instance for mocking. </returns>
-        public static LookUpResourceIdResult LookUpResourceIdResponse(string resourceId = null)
+        public static LookUpResourceIdResult LookUpResourceIdResult(string resourceId = null)
         {
             return new LookUpResourceIdResult(resourceId, serializedAdditionalRawData: null);
         }
