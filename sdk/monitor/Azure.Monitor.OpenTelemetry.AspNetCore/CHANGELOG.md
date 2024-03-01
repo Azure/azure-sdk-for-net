@@ -7,11 +7,12 @@
 * Added ASP.NET Core and HTTP Client metrics. This enables the automatic
   collection of metrics for ASP.NET Core and outgoing HTTP requests. For
   detailed lists of metrics produced by each instrumentation, see the [ASP.NET
-  Core Instrumentation]
-  (https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.AspNetCore/README.md)
+  Core
+  Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.AspNetCore/README.md)
   and the [HTTP Client
   Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.Http/README.md)
   documentation.
+  ([#42307](https://github.com/Azure/azure-sdk-for-net/pull/42307))
 
 ### Breaking Changes
 
