@@ -17,7 +17,7 @@ namespace Azure.Communication
             writer.WriteStartObject();
             writer.WritePropertyName("appId"u8);
             writer.WriteStringValue(AppId);
-            if (Optional.IsDefined(Cloud))
+            if (Cloud.HasValue)
             {
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud.Value.ToString());
@@ -32,7 +32,7 @@ namespace Azure.Communication
                 return null;
             }
             string appId = default;
-            Optional<CommunicationCloudEnvironmentModel> cloud = default;
+            CommunicationCloudEnvironmentModel? cloud = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appId"u8))
@@ -50,7 +50,7 @@ namespace Azure.Communication
                     continue;
                 }
             }
-            return new MicrosoftTeamsAppIdentifierModel(appId, Optional.ToNullable(cloud));
+            return new MicrosoftTeamsAppIdentifierModel(appId, cloud);
         }
     }
 }

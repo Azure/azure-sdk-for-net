@@ -18,9 +18,9 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<CommunicationIdentifierModel> identifier = default;
-            Optional<bool> isMuted = default;
-            Optional<bool> isOnHold = default;
+            CommunicationIdentifierModel identifier = default;
+            bool? isMuted = default;
+            bool? isOnHold = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identifier"u8))
@@ -51,7 +51,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new CallParticipantInternal(identifier.Value, Optional.ToNullable(isMuted), Optional.ToNullable(isOnHold));
+            return new CallParticipantInternal(identifier, isMuted, isOnHold);
         }
     }
 }
