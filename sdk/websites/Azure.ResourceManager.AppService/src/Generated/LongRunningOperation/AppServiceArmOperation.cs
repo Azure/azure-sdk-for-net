@@ -20,20 +20,31 @@ namespace Azure.ResourceManager.AppService
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal _operation;
+        private readonly RehydrationToken? _rehydrationToken;
+        private readonly NextLinkOperationImplementation _nextLinkOperation;
 
         /// <summary> Initializes a new instance of AppServiceArmOperation for mocking. </summary>
         protected AppServiceArmOperation()
         {
         }
 
-        internal AppServiceArmOperation(Response response)
+        internal AppServiceArmOperation(Response response, RehydrationToken? rehydrationToken = null)
         {
             _operation = OperationInternal.Succeeded(response);
+            _rehydrationToken = rehydrationToken;
         }
 
         internal AppServiceArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
+            if (nextLinkOperation is NextLinkOperationImplementation nextLinkOperationValue)
+            {
+                _nextLinkOperation = nextLinkOperationValue;
+            }
+            else
+            {
+                _rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
+            }
             _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "AppServiceArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
@@ -42,6 +53,9 @@ namespace Azure.ResourceManager.AppService
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public override string Id => throw new NotImplementedException();
 #pragma warning restore CA1822
+
+        /// <inheritdoc />
+        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken() ?? _rehydrationToken;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;

@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.Subscription
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCancelRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Subscription/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -116,6 +127,17 @@ namespace Azure.ResourceManager.Subscription
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRenameRequestUri(string subscriptionId, SubscriptionName body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Subscription/rename", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRenameRequest(string subscriptionId, SubscriptionName body)
@@ -213,6 +235,17 @@ namespace Azure.ResourceManager.Subscription
             }
         }
 
+        internal RequestUriBuilder CreateEnableRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Subscription/enable", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateEnableRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -292,6 +325,17 @@ namespace Azure.ResourceManager.Subscription
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAcceptOwnershipRequestUri(string subscriptionId, AcceptOwnershipContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Subscription/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/acceptOwnership", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAcceptOwnershipRequest(string subscriptionId, AcceptOwnershipContent content)
@@ -377,6 +421,17 @@ namespace Azure.ResourceManager.Subscription
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAcceptOwnershipStatusRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Subscription/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/acceptOwnershipStatus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAcceptOwnershipStatusRequest(string subscriptionId)

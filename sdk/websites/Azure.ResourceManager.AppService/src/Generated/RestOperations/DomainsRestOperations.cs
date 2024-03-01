@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.AppService
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckAvailabilityRequestUri(string subscriptionId, AppServiceDomainNameIdentifier identifier)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DomainRegistration/checkDomainAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckAvailabilityRequest(string subscriptionId, AppServiceDomainNameIdentifier identifier)
         {
             var message = _pipeline.CreateMessage();
@@ -132,6 +143,17 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DomainRegistration/domains", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -213,6 +235,17 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateGetControlCenterSsoRequestRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DomainRegistration/generateSsoRequest", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetControlCenterSsoRequestRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -292,6 +325,17 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRecommendationsRequestUri(string subscriptionId, DomainRecommendationSearchContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DomainRegistration/listDomainRecommendations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRecommendationsRequest(string subscriptionId, DomainRecommendationSearchContent content)
@@ -387,6 +431,19 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DomainRegistration/domains", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -488,6 +545,20 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string domainName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DomainRegistration/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string domainName)
@@ -612,6 +683,20 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string domainName, AppServiceDomainData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DomainRegistration/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string domainName, AppServiceDomainData data)
@@ -740,6 +825,24 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string domainName, bool? forceHardDeleteDomain)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DomainRegistration/domains/", false);
+            uri.AppendPath(domainName, true);
+            if (forceHardDeleteDomain != null)
+            {
+                uri.AppendQuery("forceHardDeleteDomain", forceHardDeleteDomain.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string domainName, bool? forceHardDeleteDomain)
         {
             var message = _pipeline.CreateMessage();
@@ -856,6 +959,20 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string domainName, AppServiceDomainPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DomainRegistration/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string domainName, AppServiceDomainPatch patch)
@@ -994,6 +1111,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListOwnershipIdentifiersRequestUri(string subscriptionId, string resourceGroupName, string domainName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DomainRegistration/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/domainOwnershipIdentifiers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListOwnershipIdentifiersRequest(string subscriptionId, string resourceGroupName, string domainName)
         {
             var message = _pipeline.CreateMessage();
@@ -1113,6 +1245,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetOwnershipIdentifierRequestUri(string subscriptionId, string resourceGroupName, string domainName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DomainRegistration/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/domainOwnershipIdentifiers/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetOwnershipIdentifierRequest(string subscriptionId, string resourceGroupName, string domainName, string name)
@@ -1257,6 +1405,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateOwnershipIdentifierRequestUri(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DomainRegistration/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/domainOwnershipIdentifiers/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateOwnershipIdentifierRequest(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData data)
@@ -1413,6 +1577,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateDeleteOwnershipIdentifierRequestUri(string subscriptionId, string resourceGroupName, string domainName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DomainRegistration/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/domainOwnershipIdentifiers/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteOwnershipIdentifierRequest(string subscriptionId, string resourceGroupName, string domainName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -1543,6 +1723,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateOwnershipIdentifierRequestUri(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DomainRegistration/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/domainOwnershipIdentifiers/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateOwnershipIdentifierRequest(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData data)
@@ -1699,6 +1895,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateRenewRequestUri(string subscriptionId, string resourceGroupName, string domainName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DomainRegistration/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/renew", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRenewRequest(string subscriptionId, string resourceGroupName, string domainName)
         {
             var message = _pipeline.CreateMessage();
@@ -1814,6 +2025,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -1900,6 +2119,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRecommendationsNextPageRequestUri(string nextLink, string subscriptionId, DomainRecommendationSearchContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListRecommendationsNextPageRequest(string nextLink, string subscriptionId, DomainRecommendationSearchContent content)
@@ -1998,6 +2225,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -2104,6 +2339,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOwnershipIdentifiersNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string domainName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListOwnershipIdentifiersNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string domainName)

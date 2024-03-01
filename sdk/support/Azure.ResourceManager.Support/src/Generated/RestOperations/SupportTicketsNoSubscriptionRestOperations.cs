@@ -37,6 +37,15 @@ namespace Azure.ResourceManager.Support
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(SupportNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckNameAvailabilityRequest(SupportNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -110,6 +119,23 @@ namespace Azure.ResourceManager.Support
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(int? top, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/supportTickets", false);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(int? top, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -175,6 +201,16 @@ namespace Azure.ResourceManager.Support
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string supportTicketName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/supportTickets/", false);
+            uri.AppendPath(supportTicketName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string supportTicketName)
@@ -259,6 +295,16 @@ namespace Azure.ResourceManager.Support
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string supportTicketName, UpdateSupportTicket updateSupportTicket)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/supportTickets/", false);
+            uri.AppendPath(supportTicketName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string supportTicketName, UpdateSupportTicket updateSupportTicket)
@@ -355,6 +401,16 @@ namespace Azure.ResourceManager.Support
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string supportTicketName, SupportTicketData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/supportTickets/", false);
+            uri.AppendPath(supportTicketName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string supportTicketName, SupportTicketData data)
         {
             var message = _pipeline.CreateMessage();
@@ -439,6 +495,14 @@ namespace Azure.ResourceManager.Support
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, int? top, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, int? top, string filter)
