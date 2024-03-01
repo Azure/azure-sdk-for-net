@@ -93,12 +93,13 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// This adapter adapts the Azure.Core <see cref="HttpPipeline"/> type's
-        /// <see cref="ReadOnlyMemory{HttpPipelinePolicy}"/> policy collection to
-        /// the System.ClientModel <see cref="IReadOnlyList{PipelinePolicy}"/>
-        /// policy collection.
+        /// This type adapts the policy collection in Azure.Core's
+        /// <see cref="HttpPipeline"/>, which is of type
+        /// <see cref="ReadOnlyMemory{HttpPipelinePolicy}"/>, to the
+        /// System.ClientModel policy collection, which is of type
+        /// <see cref="IReadOnlyList{PipelinePolicy}"/>.
         ///
-        /// This type allows Azure.Core <see cref="HttpPipelinePolicy"/> instances
+        /// This allows Azure.Core <see cref="HttpPipelinePolicy"/> instances
         /// to be called from the System.ClientModel <see cref="ClientPipeline"/>.
         /// This is because System.ClientModel policies of type
         /// <see cref="PipelinePolicy"/> will pass the policy collection as an
