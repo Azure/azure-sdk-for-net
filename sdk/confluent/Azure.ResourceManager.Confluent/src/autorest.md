@@ -69,4 +69,7 @@ override-operation-name:
   Validations_ValidateOrganization: ValidateOrganization
 directive:
   - remove-operation: OrganizationOperations_List
+
+irregular-plural-words:
+  access: access
 ```
