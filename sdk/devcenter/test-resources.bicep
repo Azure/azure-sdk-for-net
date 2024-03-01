@@ -170,7 +170,7 @@ resource catalog 'Microsoft.DevCenter/devcenters/catalogs@2022-09-01-preview' = 
     gitHub: {
       branch: 'main'
       secretIdentifier: catalogPatIdentifier
-      path: '/NewFormat'
+      path: '/Environments'
       uri: gitUri
     }
   }
