@@ -72,25 +72,25 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         {
             var data = new WebSiteData(location)
             {
-                /*Reserved = false,
+                /*IsReserved = false,
                 IsXenon = false,
-                HyperV = false,
-                SiteConfig = new SiteConfig
+                IsHyperV = false,
+                SiteConfig = new SiteConfigProperties()
                 {
                     NetFrameworkVersion = "v4.6",
                     AppSettings =
                     {
-                        new NameValuePair
+                        new AppServiceNameValuePair
                         {
                             Name = "WEBSITE_NODE_DEFAULT_VERSION",
                             Value = "10.14"
                         }
                     },
-                    LocalMySqlEnabled = false,
-                    Http20Enabled = true
+                    IsLocalMySqlEnabled = false,
+                    IsHttp20Enabled = true
                 },
-                ScmSiteAlsoStopped = false,
-                HttpsOnly = false*/
+                IsScmSiteAlsoStopped = false,
+                IsHttpsOnly = false*/
             };
             return data;
         }
