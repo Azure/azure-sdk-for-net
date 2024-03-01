@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.Hci
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string resourceUri)
         {
             var message = _pipeline.CreateMessage();
@@ -110,6 +121,17 @@ namespace Azure.ResourceManager.Hci
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, VirtualMachineInstanceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, VirtualMachineInstanceData data)
@@ -189,6 +211,17 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string resourceUri)
         {
             var message = _pipeline.CreateMessage();
@@ -250,6 +283,17 @@ namespace Azure.ResourceManager.Hci
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string resourceUri, VirtualMachineInstancePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string resourceUri, VirtualMachineInstancePatch patch)
@@ -329,6 +373,17 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
+        internal RequestUriBuilder CreateStartRequestUri(string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStartRequest(string resourceUri)
         {
             var message = _pipeline.CreateMessage();
@@ -390,6 +445,17 @@ namespace Azure.ResourceManager.Hci
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStopRequestUri(string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/stop", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStopRequest(string resourceUri)
@@ -455,6 +521,17 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
+        internal RequestUriBuilder CreateRestartRequestUri(string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/restart", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRestartRequest(string resourceUri)
         {
             var message = _pipeline.CreateMessage();
@@ -516,6 +593,17 @@ namespace Azure.ResourceManager.Hci
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/virtualMachineInstances", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string resourceUri)
@@ -587,6 +675,14 @@ namespace Azure.ResourceManager.Hci
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceUri)

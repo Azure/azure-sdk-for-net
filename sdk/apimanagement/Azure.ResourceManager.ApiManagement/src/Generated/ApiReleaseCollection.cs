@@ -101,7 +101,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiReleaseRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, releaseId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiReleaseResource>(Response.FromValue(new ApiReleaseResource(Client, response), response.GetRawResponse()));
+                var uri = _apiReleaseRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, releaseId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiReleaseResource>(Response.FromValue(new ApiReleaseResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -161,7 +163,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiReleaseRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, releaseId, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiReleaseResource>(Response.FromValue(new ApiReleaseResource(Client, response), response.GetRawResponse()));
+                var uri = _apiReleaseRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, releaseId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiReleaseResource>(Response.FromValue(new ApiReleaseResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

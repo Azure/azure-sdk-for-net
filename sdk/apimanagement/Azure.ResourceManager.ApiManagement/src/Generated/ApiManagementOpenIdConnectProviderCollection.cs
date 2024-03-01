@@ -101,7 +101,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, openId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementOpenIdConnectProviderResource>(Response.FromValue(new ApiManagementOpenIdConnectProviderResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, openId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiManagementOpenIdConnectProviderResource>(Response.FromValue(new ApiManagementOpenIdConnectProviderResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -161,7 +163,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, openId, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementOpenIdConnectProviderResource>(Response.FromValue(new ApiManagementOpenIdConnectProviderResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, openId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiManagementOpenIdConnectProviderResource>(Response.FromValue(new ApiManagementOpenIdConnectProviderResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
