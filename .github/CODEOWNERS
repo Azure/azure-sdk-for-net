@@ -188,7 +188,7 @@
 /sdk/contentsafety/                                                @bowgong @mengaims @JieZhou000
 
 # ServiceLabel: %Cognitive - Content Safety
-# ServiceOwners:                     	                             @bowgong @mengaims @JieZhou000
+# ServiceOwners:                     	                            @bowgong @mengaims @JieZhou000
 
 # PRLabel: %Cognitive - Custom Vision
 /sdk/cognitiveservices/Vision.CustomVision*/                       @areddish @tburns10
