@@ -182,7 +182,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             // Add a 4-hour tolerance because the model could have been cached before this test.
             Assert.That(operationDetails.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
-            Assert.That(operationDetails.LastUpdatedOn, Is.GreaterThan(operationDetails.LastUpdatedOn));
+            Assert.That(operationDetails.LastUpdatedOn, Is.GreaterThan(operationDetails.CreatedOn));
             Assert.That(operationDetails.Tags, Is.EquivalentTo(tags));
         }
     }

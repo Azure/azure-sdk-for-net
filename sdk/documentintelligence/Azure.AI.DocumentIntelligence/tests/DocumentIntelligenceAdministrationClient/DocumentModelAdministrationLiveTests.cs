@@ -82,7 +82,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             // Add a 4-hour tolerance because the model could have been cached before this test.
             Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
-            Assert.That(model.ExpiresOn, Is.GreaterThan(model.ExpiresOn));
+            Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
             Assert.That(model.Tags, Is.EquivalentTo(content.Tags));
 
             Assert.That(model.AzureBlobSource, Is.Null);
@@ -191,7 +191,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             // Add a 4-hour tolerance because the model could have been cached before this test.
             Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
-            Assert.That(model.ExpiresOn, Is.GreaterThan(model.ExpiresOn));
+            Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
             Assert.That(model.Tags, Is.EquivalentTo(tags));
 
             Assert.That(model.AzureBlobSource, Is.Null);
@@ -256,7 +256,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             // Add a 4-hour tolerance because the model could have been cached before this test.
             Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
-            Assert.That(model.ExpiresOn, Is.GreaterThan(model.ExpiresOn));
+            Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
             Assert.That(model.Tags, Is.EquivalentTo(content.Tags));
 
             Assert.That(model.AzureBlobSource, Is.Null);
