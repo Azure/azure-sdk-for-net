@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<LogRules> logRules = default;
-            Optional<MetricRules> metricRules = default;
+            ProvisioningState? provisioningState = default;
+            LogRules logRules = default;
+            MetricRules metricRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitoringTagRulesProperties(Optional.ToNullable(provisioningState), logRules.Value, metricRules.Value, serializedAdditionalRawData);
+            return new MonitoringTagRulesProperties(provisioningState, logRules, metricRules, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringTagRulesProperties>.Write(ModelReaderWriterOptions options)

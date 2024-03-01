@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> customerId = default;
-            Optional<string> sharedKey = default;
+            string customerId = default;
+            string sharedKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppLogAnalyticsConfiguration(customerId.Value, sharedKey.Value, serializedAdditionalRawData);
+            return new ContainerAppLogAnalyticsConfiguration(customerId, sharedKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppLogAnalyticsConfiguration>.Write(ModelReaderWriterOptions options)

@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> id0 = default;
-            Optional<string> principalId = default;
-            Optional<bool> enabled = default;
+            SystemData systemData = default;
+            string id0 = default;
+            string principalId = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.ApiManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                id0.Value,
-                principalId.Value,
-                Optional.ToNullable(enabled),
+                systemData,
+                id0,
+                principalId,
+                enabled,
                 serializedAdditionalRawData);
         }
 

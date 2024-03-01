@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Uri uri = default;
             string label = default;
             IList<string> searchPaths = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> hostKey = default;
-            Optional<string> hostKeyAlgorithm = default;
-            Optional<string> privateKey = default;
-            Optional<bool> strictHostKeyChecking = default;
+            string username = default;
+            string password = default;
+            string hostKey = default;
+            string hostKeyAlgorithm = default;
+            string privateKey = default;
+            bool? strictHostKeyChecking = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,12 +217,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 uri,
                 label,
                 searchPaths ?? new ChangeTrackingList<string>(),
-                username.Value,
-                password.Value,
-                hostKey.Value,
-                hostKeyAlgorithm.Value,
-                privateKey.Value,
-                Optional.ToNullable(strictHostKeyChecking),
+                username,
+                password,
+                hostKey,
+                hostKeyAlgorithm,
+                privateKey,
+                strictHostKeyChecking,
                 serializedAdditionalRawData);
         }
 

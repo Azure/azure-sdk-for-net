@@ -33,7 +33,7 @@ namespace Azure.Communication.MediaComposition.Models
                 return null;
             }
             int zIndex = default;
-            Optional<LayerVisibility> visibility = default;
+            LayerVisibility? visibility = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zIndex"u8))
@@ -51,7 +51,7 @@ namespace Azure.Communication.MediaComposition.Models
                     continue;
                 }
             }
-            return new LayoutLayer(zIndex, Optional.ToNullable(visibility));
+            return new LayoutLayer(zIndex, visibility);
         }
     }
 }

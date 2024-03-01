@@ -19,8 +19,8 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
+            string code = default;
+            string message = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -38,7 +38,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TimeSeriesOperationErrorDetails(code.Value, message.Value, additionalProperties);
+            return new TimeSeriesOperationErrorDetails(code, message, additionalProperties);
         }
     }
 }

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
+            string domainName = default;
             IList<EndpointDetail> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointDependency(domainName.Value, endpointDetails ?? new ChangeTrackingList<EndpointDetail>(), serializedAdditionalRawData);
+            return new EndpointDependency(domainName, endpointDetails ?? new ChangeTrackingList<EndpointDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointDependency>.Write(ModelReaderWriterOptions options)

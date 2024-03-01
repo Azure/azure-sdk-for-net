@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 return null;
             }
             IReadOnlyList<BenefitRecommendationModel> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BenefitRecommendationsListResult(value ?? new ChangeTrackingList<BenefitRecommendationModel>(), nextLink.Value, serializedAdditionalRawData);
+            return new BenefitRecommendationsListResult(value ?? new ChangeTrackingList<BenefitRecommendationModel>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BenefitRecommendationsListResult>.Write(ModelReaderWriterOptions options)

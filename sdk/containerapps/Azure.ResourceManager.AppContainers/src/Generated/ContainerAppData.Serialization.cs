@@ -189,27 +189,27 @@ namespace Azure.ResourceManager.AppContainers
             {
                 return null;
             }
-            Optional<ContainerAppExtendedLocation> extendedLocation = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> managedBy = default;
+            ContainerAppExtendedLocation extendedLocation = default;
+            ManagedServiceIdentity identity = default;
+            string managedBy = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerAppProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> managedEnvironmentId = default;
-            Optional<ResourceIdentifier> environmentId = default;
-            Optional<string> workloadProfileName = default;
-            Optional<string> latestRevisionName = default;
-            Optional<string> latestReadyRevisionName = default;
-            Optional<string> latestRevisionFqdn = default;
-            Optional<string> customDomainVerificationId = default;
-            Optional<ContainerAppConfiguration> configuration = default;
-            Optional<ContainerAppTemplate> template = default;
+            SystemData systemData = default;
+            ContainerAppProvisioningState? provisioningState = default;
+            ResourceIdentifier managedEnvironmentId = default;
+            ResourceIdentifier environmentId = default;
+            string workloadProfileName = default;
+            string latestRevisionName = default;
+            string latestReadyRevisionName = default;
+            string latestRevisionFqdn = default;
+            string customDomainVerificationId = default;
+            ContainerAppConfiguration configuration = default;
+            ContainerAppTemplate template = default;
             IReadOnlyList<IPAddress> outboundIPAddresses = default;
-            Optional<Uri> eventStreamEndpoint = default;
+            Uri eventStreamEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -403,24 +403,24 @@ namespace Azure.ResourceManager.AppContainers
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                extendedLocation.Value,
+                extendedLocation,
                 identity,
-                managedBy.Value,
-                Optional.ToNullable(provisioningState),
-                managedEnvironmentId.Value,
-                environmentId.Value,
-                workloadProfileName.Value,
-                latestRevisionName.Value,
-                latestReadyRevisionName.Value,
-                latestRevisionFqdn.Value,
-                customDomainVerificationId.Value,
-                configuration.Value,
-                template.Value,
+                managedBy,
+                provisioningState,
+                managedEnvironmentId,
+                environmentId,
+                workloadProfileName,
+                latestRevisionName,
+                latestReadyRevisionName,
+                latestRevisionFqdn,
+                customDomainVerificationId,
+                configuration,
+                template,
                 outboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
-                eventStreamEndpoint.Value,
+                eventStreamEndpoint,
                 serializedAdditionalRawData);
         }
 

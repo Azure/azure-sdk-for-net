@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             ResourceIdentifier sourceArmResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProxyResourceReferenceInfo(sourceArmResourceId, serializedAdditionalRawData, name.Value);
+            return new ProxyResourceReferenceInfo(sourceArmResourceId, serializedAdditionalRawData, name);
         }
 
         BinaryData IPersistableModel<ProxyResourceReferenceInfo>.Write(ModelReaderWriterOptions options)

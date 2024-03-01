@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             IReadOnlyList<SqlServerJobVersionData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobVersionListResult(value ?? new ChangeTrackingList<SqlServerJobVersionData>(), nextLink.Value, serializedAdditionalRawData);
+            return new JobVersionListResult(value ?? new ChangeTrackingList<SqlServerJobVersionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobVersionListResult>.Write(ModelReaderWriterOptions options)

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ArtifactChangeStateProperties> properties = default;
+            ArtifactChangeStateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArtifactChangeState(properties.Value, serializedAdditionalRawData);
+            return new ArtifactChangeState(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArtifactChangeState>.Write(ModelReaderWriterOptions options)

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<long> minimum = default;
-            Optional<long> maximum = default;
-            Optional<long> @default = default;
-            Optional<IotHubScaleType> scaleType = default;
+            long? minimum = default;
+            long? maximum = default;
+            long? @default = default;
+            IotHubScaleType? scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType), serializedAdditionalRawData);
+            return new IotHubCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubCapacity>.Write(ModelReaderWriterOptions options)

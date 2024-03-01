@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> identifier = default;
-            Optional<string> columnName = default;
+            string identifier = default;
+            string columnName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsFieldMapping(identifier.Value, columnName.Value, serializedAdditionalRawData);
+            return new SecurityInsightsFieldMapping(identifier, columnName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsFieldMapping>.Write(ModelReaderWriterOptions options)

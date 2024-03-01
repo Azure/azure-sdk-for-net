@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<int> occurrence = default;
-            Optional<AutomationDayOfWeek> day = default;
+            int? occurrence = default;
+            AutomationDayOfWeek? day = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAdvancedScheduleMonthlyOccurrence(Optional.ToNullable(occurrence), Optional.ToNullable(day), serializedAdditionalRawData);
+            return new AutomationAdvancedScheduleMonthlyOccurrence(occurrence, day, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAdvancedScheduleMonthlyOccurrence>.Write(ModelReaderWriterOptions options)

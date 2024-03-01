@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> validation = default;
-            Optional<string> validationKey = default;
-            Optional<string> decryption = default;
-            Optional<string> decryptionKey = default;
+            string validation = default;
+            string validationKey = default;
+            string decryption = default;
+            string decryptionKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteMachineKey(validation.Value, validationKey.Value, decryption.Value, decryptionKey.Value, serializedAdditionalRawData);
+            return new SiteMachineKey(validation, validationKey, decryption, decryptionKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteMachineKey>.Write(ModelReaderWriterOptions options)

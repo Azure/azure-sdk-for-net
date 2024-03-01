@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> diskLunId = default;
-            Optional<AutoProtectionOfDataDisk> diskAutoProtectionStatus = default;
+            int? diskLunId = default;
+            AutoProtectionOfDataDisk? diskAutoProtectionStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AUnprotectedDiskDetails(Optional.ToNullable(diskLunId), Optional.ToNullable(diskAutoProtectionStatus), serializedAdditionalRawData);
+            return new A2AUnprotectedDiskDetails(diskLunId, diskAutoProtectionStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<A2AUnprotectedDiskDetails>.Write(ModelReaderWriterOptions options)

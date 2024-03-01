@@ -85,10 +85,10 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<ContentFilterResult> sexual = default;
-            Optional<ContentFilterResult> violence = default;
-            Optional<ContentFilterResult> hate = default;
-            Optional<ContentFilterResult> selfHarm = default;
+            ContentFilterResult sexual = default;
+            ContentFilterResult violence = default;
+            ContentFilterResult hate = default;
+            ContentFilterResult selfHarm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageGenerationContentFilterResults(sexual.Value, violence.Value, hate.Value, selfHarm.Value, serializedAdditionalRawData);
+            return new ImageGenerationContentFilterResults(sexual, violence, hate, selfHarm, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageGenerationContentFilterResults>.Write(ModelReaderWriterOptions options)

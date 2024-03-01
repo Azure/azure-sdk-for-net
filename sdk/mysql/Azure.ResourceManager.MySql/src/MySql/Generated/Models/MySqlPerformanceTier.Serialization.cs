@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<int> maxBackupRetentionDays = default;
-            Optional<int> minBackupRetentionDays = default;
-            Optional<int> maxStorageMB = default;
-            Optional<int> minLargeStorageMB = default;
-            Optional<int> maxLargeStorageMB = default;
-            Optional<int> minStorageMB = default;
+            string id = default;
+            int? maxBackupRetentionDays = default;
+            int? minBackupRetentionDays = default;
+            int? maxStorageMB = default;
+            int? minLargeStorageMB = default;
+            int? maxLargeStorageMB = default;
+            int? minStorageMB = default;
             IReadOnlyList<MySqlPerformanceTierServiceLevelObjectives> serviceLevelObjectives = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -201,13 +201,13 @@ namespace Azure.ResourceManager.MySql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MySqlPerformanceTier(
-                id.Value,
-                Optional.ToNullable(maxBackupRetentionDays),
-                Optional.ToNullable(minBackupRetentionDays),
-                Optional.ToNullable(maxStorageMB),
-                Optional.ToNullable(minLargeStorageMB),
-                Optional.ToNullable(maxLargeStorageMB),
-                Optional.ToNullable(minStorageMB),
+                id,
+                maxBackupRetentionDays,
+                minBackupRetentionDays,
+                maxStorageMB,
+                minLargeStorageMB,
+                maxLargeStorageMB,
+                minStorageMB,
                 serviceLevelObjectives ?? new ChangeTrackingList<MySqlPerformanceTierServiceLevelObjectives>(),
                 serializedAdditionalRawData);
         }

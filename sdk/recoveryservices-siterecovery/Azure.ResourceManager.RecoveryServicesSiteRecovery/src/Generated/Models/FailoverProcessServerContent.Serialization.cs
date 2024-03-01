@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<FailoverProcessServerProperties> properties = default;
+            FailoverProcessServerProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverProcessServerContent(properties.Value, serializedAdditionalRawData);
+            return new FailoverProcessServerContent(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverProcessServerContent>.Write(ModelReaderWriterOptions options)

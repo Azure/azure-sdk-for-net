@@ -128,16 +128,16 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<NotificationHubSku> sku = default;
+            NotificationHubSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> success = default;
-            Optional<int> failure = default;
-            Optional<BinaryData> results = default;
+            SystemData systemData = default;
+            int? success = default;
+            int? failure = default;
+            BinaryData results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,13 +243,13 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(success),
-                Optional.ToNullable(failure),
-                results.Value,
-                sku.Value,
+                success,
+                failure,
+                results,
+                sku,
                 serializedAdditionalRawData);
         }
 

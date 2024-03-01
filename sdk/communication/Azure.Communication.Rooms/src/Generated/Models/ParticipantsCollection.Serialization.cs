@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.Rooms
 {
@@ -20,7 +19,7 @@ namespace Azure.Communication.Rooms
                 return null;
             }
             IReadOnlyList<RoomParticipant> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -39,7 +38,7 @@ namespace Azure.Communication.Rooms
                     continue;
                 }
             }
-            return new ParticipantsCollection(value, nextLink.Value);
+            return new ParticipantsCollection(value, nextLink);
         }
     }
 }

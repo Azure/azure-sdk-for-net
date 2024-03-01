@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Relay
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<RelayPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<RelayPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            WritableSubResource privateEndpoint = default;
+            RelayPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            RelayPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,11 +204,11 @@ namespace Azure.ResourceManager.Relay
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 privateEndpoint,
-                privateLinkServiceConnectionState.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(location),
+                privateLinkServiceConnectionState,
+                provisioningState,
+                location,
                 serializedAdditionalRawData);
         }
 

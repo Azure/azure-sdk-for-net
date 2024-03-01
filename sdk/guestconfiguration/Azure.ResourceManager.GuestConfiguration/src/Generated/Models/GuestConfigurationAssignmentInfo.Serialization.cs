@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<GuestConfigurationInfo> configuration = default;
+            string name = default;
+            GuestConfigurationInfo configuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationAssignmentInfo(name.Value, configuration.Value, serializedAdditionalRawData);
+            return new GuestConfigurationAssignmentInfo(name, configuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestConfigurationAssignmentInfo>.Write(ModelReaderWriterOptions options)

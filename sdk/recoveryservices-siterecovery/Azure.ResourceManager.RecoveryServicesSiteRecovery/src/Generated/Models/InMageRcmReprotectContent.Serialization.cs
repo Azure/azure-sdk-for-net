@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string reprotectAgentId = default;
             string datastoreName = default;
             ResourceIdentifier logStorageAccountId = default;
-            Optional<ResourceIdentifier> policyId = default;
+            ResourceIdentifier policyId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 reprotectAgentId,
                 datastoreName,
                 logStorageAccountId,
-                policyId.Value);
+                policyId);
         }
 
         BinaryData IPersistableModel<InMageRcmReprotectContent>.Write(ModelReaderWriterOptions options)

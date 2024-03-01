@@ -89,7 +89,7 @@ namespace Azure.Communication.Messages.Models.Channels
             {
                 return null;
             }
-            Optional<BinaryData> content = default;
+            BinaryData content = default;
             string name = default;
             string language = default;
             MessageTemplateStatus status = default;
@@ -139,7 +139,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 status,
                 kind,
                 serializedAdditionalRawData,
-                content.Value);
+                content);
         }
 
         BinaryData IPersistableModel<WhatsAppMessageTemplateItem>.Write(ModelReaderWriterOptions options)

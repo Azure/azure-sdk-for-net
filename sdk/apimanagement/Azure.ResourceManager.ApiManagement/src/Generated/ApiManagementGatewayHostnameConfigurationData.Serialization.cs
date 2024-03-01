@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> hostname = default;
-            Optional<string> certificateId = default;
-            Optional<bool> negotiateClientCertificate = default;
-            Optional<bool> tls10Enabled = default;
-            Optional<bool> tls11Enabled = default;
-            Optional<bool> http2Enabled = default;
+            SystemData systemData = default;
+            string hostname = default;
+            string certificateId = default;
+            bool? negotiateClientCertificate = default;
+            bool? tls10Enabled = default;
+            bool? tls11Enabled = default;
+            bool? http2Enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,13 +224,13 @@ namespace Azure.ResourceManager.ApiManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                hostname.Value,
-                certificateId.Value,
-                Optional.ToNullable(negotiateClientCertificate),
-                Optional.ToNullable(tls10Enabled),
-                Optional.ToNullable(tls11Enabled),
-                Optional.ToNullable(http2Enabled),
+                systemData,
+                hostname,
+                certificateId,
+                negotiateClientCertificate,
+                tls10Enabled,
+                tls11Enabled,
+                http2Enabled,
                 serializedAdditionalRawData);
         }
 

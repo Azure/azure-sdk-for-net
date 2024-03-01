@@ -119,18 +119,18 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<OnYourDataAuthenticationOptions> authentication = default;
-            Optional<int> topNDocuments = default;
-            Optional<bool> inScope = default;
-            Optional<int> strictness = default;
-            Optional<string> roleInformation = default;
+            OnYourDataAuthenticationOptions authentication = default;
+            int? topNDocuments = default;
+            bool? inScope = default;
+            int? strictness = default;
+            string roleInformation = default;
             Uri endpoint = default;
             string indexName = default;
-            Optional<AzureSearchIndexFieldMappingOptions> fieldsMapping = default;
-            Optional<AzureSearchQueryType> queryType = default;
-            Optional<string> semanticConfiguration = default;
-            Optional<string> filter = default;
-            Optional<OnYourDataVectorizationSource> embeddingDependency = default;
+            AzureSearchIndexFieldMappingOptions fieldsMapping = default;
+            AzureSearchQueryType? queryType = default;
+            string semanticConfiguration = default;
+            string filter = default;
+            OnYourDataVectorizationSource embeddingDependency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,18 +230,18 @@ namespace Azure.AI.OpenAI
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AzureSearchChatExtensionParameters(
-                authentication.Value,
-                Optional.ToNullable(topNDocuments),
-                Optional.ToNullable(inScope),
-                Optional.ToNullable(strictness),
-                roleInformation.Value,
+                authentication,
+                topNDocuments,
+                inScope,
+                strictness,
+                roleInformation,
                 endpoint,
                 indexName,
-                fieldsMapping.Value,
-                Optional.ToNullable(queryType),
-                semanticConfiguration.Value,
-                filter.Value,
-                embeddingDependency.Value,
+                fieldsMapping,
+                queryType,
+                semanticConfiguration,
+                filter,
+                embeddingDependency,
                 serializedAdditionalRawData);
         }
 

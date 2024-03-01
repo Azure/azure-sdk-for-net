@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<Uri> diskUri = default;
-            Optional<string> managedDiskId = default;
-            Optional<int> diskSizeGiB = default;
+            string name = default;
+            Uri diskUri = default;
+            string managedDiskId = default;
+            int? diskSizeGiB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeDataDisk(name.Value, diskUri.Value, managedDiskId.Value, Optional.ToNullable(diskSizeGiB), serializedAdditionalRawData);
+            return new ComputeDataDisk(name, diskUri, managedDiskId, diskSizeGiB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeDataDisk>.Write(ModelReaderWriterOptions options)

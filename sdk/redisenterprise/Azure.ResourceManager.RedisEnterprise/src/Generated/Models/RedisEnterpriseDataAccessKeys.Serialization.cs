@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
+            string primaryKey = default;
+            string secondaryKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseDataAccessKeys(primaryKey.Value, secondaryKey.Value, serializedAdditionalRawData);
+            return new RedisEnterpriseDataAccessKeys(primaryKey, secondaryKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseDataAccessKeys>.Write(ModelReaderWriterOptions options)

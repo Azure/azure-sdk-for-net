@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> workloadIdentityProviderId = default;
-            Optional<string> serviceAccountEmailAddress = default;
-            Optional<string> azureActiveDirectoryAppName = default;
+            string workloadIdentityProviderId = default;
+            string serviceAccountEmailAddress = default;
+            string azureActiveDirectoryAppName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderCspmGcpOfferingCiemDiscovery(workloadIdentityProviderId.Value, serviceAccountEmailAddress.Value, azureActiveDirectoryAppName.Value, serializedAdditionalRawData);
+            return new DefenderCspmGcpOfferingCiemDiscovery(workloadIdentityProviderId, serviceAccountEmailAddress, azureActiveDirectoryAppName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderCspmGcpOfferingCiemDiscovery>.Write(ModelReaderWriterOptions options)

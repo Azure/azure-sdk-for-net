@@ -166,19 +166,19 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             AdministrativeCredentials administratorCredentials = default;
-            Optional<long> capacity = default;
-            Optional<long> capacityUsed = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<StorageApplianceDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<IPAddress> managementIPv4Address = default;
-            Optional<StorageApplianceProvisioningState> provisioningState = default;
+            long? capacity = default;
+            long? capacityUsed = default;
+            ResourceIdentifier clusterId = default;
+            StorageApplianceDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            IPAddress managementIPv4Address = default;
+            StorageApplianceProvisioningState? provisioningState = default;
             ResourceIdentifier rackId = default;
             long rackSlot = default;
-            Optional<RemoteVendorManagementFeature> remoteVendorManagementFeature = default;
-            Optional<RemoteVendorManagementStatus> remoteVendorManagementStatus = default;
+            RemoteVendorManagementFeature? remoteVendorManagementFeature = default;
+            RemoteVendorManagementStatus? remoteVendorManagementStatus = default;
             string serialNumber = default;
             string storageApplianceSkuId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -357,22 +357,22 @@ namespace Azure.ResourceManager.NetworkCloud
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
                 administratorCredentials,
-                Optional.ToNullable(capacity),
-                Optional.ToNullable(capacityUsed),
-                clusterId.Value,
-                Optional.ToNullable(detailedStatus),
-                detailedStatusMessage.Value,
-                managementIPv4Address.Value,
-                Optional.ToNullable(provisioningState),
+                capacity,
+                capacityUsed,
+                clusterId,
+                detailedStatus,
+                detailedStatusMessage,
+                managementIPv4Address,
+                provisioningState,
                 rackId,
                 rackSlot,
-                Optional.ToNullable(remoteVendorManagementFeature),
-                Optional.ToNullable(remoteVendorManagementStatus),
+                remoteVendorManagementFeature,
+                remoteVendorManagementStatus,
                 serialNumber,
                 storageApplianceSkuId,
                 serializedAdditionalRawData);

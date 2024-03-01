@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<CosmosDBForPostgreSqlConfigurationDataType> dataType = default;
-            Optional<string> allowedValues = default;
-            Optional<bool> requiresRestart = default;
+            SystemData systemData = default;
+            string description = default;
+            CosmosDBForPostgreSqlConfigurationDataType? dataType = default;
+            string allowedValues = default;
+            bool? requiresRestart = default;
             IList<CosmosDBForPostgreSqlServerRoleGroupConfiguration> serverRoleGroupConfigurations = default;
-            Optional<CosmosDBForPostgreSqlProvisioningState> provisioningState = default;
+            CosmosDBForPostgreSqlProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -235,13 +235,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                Optional.ToNullable(dataType),
-                allowedValues.Value,
-                Optional.ToNullable(requiresRestart),
+                systemData,
+                description,
+                dataType,
+                allowedValues,
+                requiresRestart,
                 serverRoleGroupConfigurations ?? new ChangeTrackingList<CosmosDBForPostgreSqlServerRoleGroupConfiguration>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

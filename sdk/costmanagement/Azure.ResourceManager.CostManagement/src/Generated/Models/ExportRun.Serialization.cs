@@ -139,20 +139,20 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ExportRunExecutionType> executionType = default;
-            Optional<ExportRunExecutionStatus> status = default;
-            Optional<string> submittedBy = default;
-            Optional<DateTimeOffset> submittedTime = default;
-            Optional<DateTimeOffset> processingStartTime = default;
-            Optional<DateTimeOffset> processingEndTime = default;
-            Optional<string> fileName = default;
-            Optional<CommonExportProperties> runSettings = default;
-            Optional<ExportRunErrorDetails> error = default;
+            SystemData systemData = default;
+            ExportRunExecutionType? executionType = default;
+            ExportRunExecutionStatus? status = default;
+            string submittedBy = default;
+            DateTimeOffset? submittedTime = default;
+            DateTimeOffset? processingStartTime = default;
+            DateTimeOffset? processingEndTime = default;
+            string fileName = default;
+            CommonExportProperties runSettings = default;
+            ExportRunErrorDetails error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -285,17 +285,17 @@ namespace Azure.ResourceManager.CostManagement.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(executionType),
-                Optional.ToNullable(status),
-                submittedBy.Value,
-                Optional.ToNullable(submittedTime),
-                Optional.ToNullable(processingStartTime),
-                Optional.ToNullable(processingEndTime),
-                fileName.Value,
-                runSettings.Value,
-                error.Value,
-                Optional.ToNullable(eTag),
+                systemData,
+                executionType,
+                status,
+                submittedBy,
+                submittedTime,
+                processingStartTime,
+                processingEndTime,
+                fileName,
+                runSettings,
+                error,
+                eTag,
                 serializedAdditionalRawData);
         }
 

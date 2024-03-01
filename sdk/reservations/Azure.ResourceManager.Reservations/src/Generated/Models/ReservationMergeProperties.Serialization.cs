@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> mergeDestination = default;
+            string mergeDestination = default;
             IReadOnlyList<string> mergeSources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationMergeProperties(mergeDestination.Value, mergeSources ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ReservationMergeProperties(mergeDestination, mergeSources ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationMergeProperties>.Write(ModelReaderWriterOptions options)

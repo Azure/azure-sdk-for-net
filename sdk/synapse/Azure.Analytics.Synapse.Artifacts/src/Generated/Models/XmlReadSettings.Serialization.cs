@@ -60,11 +60,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<CompressionReadSettings> compressionProperties = default;
-            Optional<object> validationMode = default;
-            Optional<object> detectDataType = default;
-            Optional<object> namespaces = default;
-            Optional<object> namespacePrefixes = default;
+            CompressionReadSettings compressionProperties = default;
+            object validationMode = default;
+            object detectDataType = default;
+            object namespaces = default;
+            object namespacePrefixes = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -126,11 +126,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new XmlReadSettings(
                 type,
                 additionalProperties,
-                compressionProperties.Value,
-                validationMode.Value,
-                detectDataType.Value,
-                namespaces.Value,
-                namespacePrefixes.Value);
+                compressionProperties,
+                validationMode,
+                detectDataType,
+                namespaces,
+                namespacePrefixes);
         }
 
         internal partial class XmlReadSettingsConverter : JsonConverter<XmlReadSettings>

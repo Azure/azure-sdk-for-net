@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 return null;
             }
             ElasticSanSkuName name = default;
-            Optional<ElasticSanSkuTier> tier = default;
-            Optional<string> resourceType = default;
+            ElasticSanSkuTier? tier = default;
+            string resourceType = default;
             IReadOnlyList<string> locations = default;
             IReadOnlyList<ElasticSanSkuLocationInfo> locationInfo = default;
             IReadOnlyList<ElasticSanSkuCapability> capabilities = default;
@@ -185,8 +185,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ElasticSanSkuInformation(
                 name,
-                Optional.ToNullable(tier),
-                resourceType.Value,
+                tier,
+                resourceType,
                 locations ?? new ChangeTrackingList<string>(),
                 locationInfo ?? new ChangeTrackingList<ElasticSanSkuLocationInfo>(),
                 capabilities ?? new ChangeTrackingList<ElasticSanSkuCapability>(),

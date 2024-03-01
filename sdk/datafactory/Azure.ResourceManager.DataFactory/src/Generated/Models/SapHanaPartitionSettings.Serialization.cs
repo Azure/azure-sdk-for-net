@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> partitionColumnName = default;
+            DataFactoryElement<string> partitionColumnName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapHanaPartitionSettings(partitionColumnName.Value, serializedAdditionalRawData);
+            return new SapHanaPartitionSettings(partitionColumnName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapHanaPartitionSettings>.Write(ModelReaderWriterOptions options)

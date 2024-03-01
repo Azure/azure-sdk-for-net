@@ -131,13 +131,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> relayConnectionString = default;
-            Optional<string> serviceBusConnectionString = default;
-            Optional<string> extensionPrincipalId = default;
-            Optional<string> extensionInstanceReleaseTrain = default;
-            Optional<string> vcName = default;
-            Optional<string> @namespace = default;
-            Optional<string> defaultInstanceType = default;
+            string relayConnectionString = default;
+            string serviceBusConnectionString = default;
+            string extensionPrincipalId = default;
+            string extensionInstanceReleaseTrain = default;
+            string vcName = default;
+            string @namespace = default;
+            string defaultInstanceType = default;
             IDictionary<string, MachineLearningInstanceTypeSchema> instanceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -214,13 +214,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningKubernetesProperties(
-                relayConnectionString.Value,
-                serviceBusConnectionString.Value,
-                extensionPrincipalId.Value,
-                extensionInstanceReleaseTrain.Value,
-                vcName.Value,
-                @namespace.Value,
-                defaultInstanceType.Value,
+                relayConnectionString,
+                serviceBusConnectionString,
+                extensionPrincipalId,
+                extensionInstanceReleaseTrain,
+                vcName,
+                @namespace,
+                defaultInstanceType,
                 instanceTypes ?? new ChangeTrackingDictionary<string, MachineLearningInstanceTypeSchema>(),
                 serializedAdditionalRawData);
         }

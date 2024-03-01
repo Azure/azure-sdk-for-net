@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.WebPubSub
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WebPubSubProvisioningState> provisioningState = default;
-            Optional<PrivateEndpoint> privateEndpoint = default;
+            SystemData systemData = default;
+            WebPubSubProvisioningState? provisioningState = default;
+            PrivateEndpoint privateEndpoint = default;
             IReadOnlyList<string> groupIds = default;
-            Optional<WebPubSubPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            WebPubSubPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.WebPubSub
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                privateEndpoint.Value,
+                systemData,
+                provisioningState,
+                privateEndpoint,
                 groupIds ?? new ChangeTrackingList<string>(),
-                privateLinkServiceConnectionState.Value,
+                privateLinkServiceConnectionState,
                 serializedAdditionalRawData);
         }
 

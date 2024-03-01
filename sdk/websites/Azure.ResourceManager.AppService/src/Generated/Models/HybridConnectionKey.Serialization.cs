@@ -103,13 +103,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> sendKeyName = default;
-            Optional<string> sendKeyValue = default;
+            SystemData systemData = default;
+            string sendKeyName = default;
+            string sendKeyValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                sendKeyName.Value,
-                sendKeyValue.Value,
-                kind.Value,
+                systemData,
+                sendKeyName,
+                sendKeyValue,
+                kind,
                 serializedAdditionalRawData);
         }
 

@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<bool> considerWarningAsError = default;
-            Optional<int> maxPercentUnhealthyDeployedApplications = default;
-            Optional<ArmServiceTypeHealthPolicy> defaultServiceTypeHealthPolicy = default;
+            bool? considerWarningAsError = default;
+            int? maxPercentUnhealthyDeployedApplications = default;
+            ArmServiceTypeHealthPolicy defaultServiceTypeHealthPolicy = default;
             IDictionary<string, ArmServiceTypeHealthPolicy> serviceTypeHealthPolicyMap = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationHealthPolicy(Optional.ToNullable(considerWarningAsError), Optional.ToNullable(maxPercentUnhealthyDeployedApplications), defaultServiceTypeHealthPolicy.Value, serviceTypeHealthPolicyMap ?? new ChangeTrackingDictionary<string, ArmServiceTypeHealthPolicy>(), serializedAdditionalRawData);
+            return new ArmApplicationHealthPolicy(considerWarningAsError, maxPercentUnhealthyDeployedApplications, defaultServiceTypeHealthPolicy, serviceTypeHealthPolicyMap ?? new ChangeTrackingDictionary<string, ArmServiceTypeHealthPolicy>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmApplicationHealthPolicy>.Write(ModelReaderWriterOptions options)

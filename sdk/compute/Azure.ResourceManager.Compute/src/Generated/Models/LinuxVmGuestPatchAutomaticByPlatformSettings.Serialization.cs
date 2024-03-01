@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<LinuxVmGuestPatchAutomaticByPlatformRebootSetting> rebootSetting = default;
-            Optional<bool> bypassPlatformSafetyChecksOnUserSchedule = default;
+            LinuxVmGuestPatchAutomaticByPlatformRebootSetting? rebootSetting = default;
+            bool? bypassPlatformSafetyChecksOnUserSchedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinuxVmGuestPatchAutomaticByPlatformSettings(Optional.ToNullable(rebootSetting), Optional.ToNullable(bypassPlatformSafetyChecksOnUserSchedule), serializedAdditionalRawData);
+            return new LinuxVmGuestPatchAutomaticByPlatformSettings(rebootSetting, bypassPlatformSafetyChecksOnUserSchedule, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinuxVmGuestPatchAutomaticByPlatformSettings>.Write(ModelReaderWriterOptions options)

@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> targetDatabaseName = default;
-            Optional<string> schemaName = default;
+            string id = default;
+            string name = default;
+            string targetDatabaseName = default;
+            string schemaName = default;
             IDictionary<string, string> tableMap = default;
             IDictionary<string, string> migrationSetting = default;
             IDictionary<string, string> sourceSetting = default;
@@ -223,10 +223,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MigrateSqlServerSqlDBSyncDatabaseInput(
-                id.Value,
-                name.Value,
-                targetDatabaseName.Value,
-                schemaName.Value,
+                id,
+                name,
+                targetDatabaseName,
+                schemaName,
                 tableMap ?? new ChangeTrackingDictionary<string, string>(),
                 migrationSetting ?? new ChangeTrackingDictionary<string, string>(),
                 sourceSetting ?? new ChangeTrackingDictionary<string, string>(),

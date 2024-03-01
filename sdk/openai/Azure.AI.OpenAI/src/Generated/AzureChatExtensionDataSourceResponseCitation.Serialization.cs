@@ -88,10 +88,10 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             string content = default;
-            Optional<string> title = default;
-            Optional<string> url = default;
-            Optional<string> filepath = default;
-            Optional<string> chunkId = default;
+            string title = default;
+            string url = default;
+            string filepath = default;
+            string chunkId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,10 +129,10 @@ namespace Azure.AI.OpenAI
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AzureChatExtensionDataSourceResponseCitation(
                 content,
-                title.Value,
-                url.Value,
-                filepath.Value,
-                chunkId.Value,
+                title,
+                url,
+                filepath,
+                chunkId,
                 serializedAdditionalRawData);
         }
 

@@ -173,25 +173,25 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<DataCollectionEndpointResourceKind> kind = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
+            DataCollectionEndpointResourceKind? kind = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> immutableId = default;
-            Optional<DataCollectionEndpointConfigurationAccess> configurationAccess = default;
-            Optional<DataCollectionEndpointLogsIngestion> logsIngestion = default;
-            Optional<DataCollectionEndpointMetricsIngestion> metricsIngestion = default;
-            Optional<DataCollectionEndpointNetworkAcls> networkAcls = default;
-            Optional<DataCollectionEndpointProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string description = default;
+            string immutableId = default;
+            DataCollectionEndpointConfigurationAccess configurationAccess = default;
+            DataCollectionEndpointLogsIngestion logsIngestion = default;
+            DataCollectionEndpointMetricsIngestion metricsIngestion = default;
+            DataCollectionEndpointNetworkAcls networkAcls = default;
+            DataCollectionEndpointProvisioningState? provisioningState = default;
             IReadOnlyList<DataCollectionRulePrivateLinkScopedResourceInfo> privateLinkScopedResources = default;
-            Optional<DataCollectionEndpointFailoverConfiguration> failoverConfiguration = default;
-            Optional<DataCollectionEndpointMetadata> metadata = default;
+            DataCollectionEndpointFailoverConfiguration failoverConfiguration = default;
+            DataCollectionEndpointMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -375,22 +375,22 @@ namespace Azure.ResourceManager.Monitor
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(kind),
+                kind,
                 identity,
-                Optional.ToNullable(etag),
-                description.Value,
-                immutableId.Value,
-                configurationAccess.Value,
-                logsIngestion.Value,
-                metricsIngestion.Value,
-                networkAcls.Value,
-                Optional.ToNullable(provisioningState),
+                etag,
+                description,
+                immutableId,
+                configurationAccess,
+                logsIngestion,
+                metricsIngestion,
+                networkAcls,
+                provisioningState,
                 privateLinkScopedResources ?? new ChangeTrackingList<DataCollectionRulePrivateLinkScopedResourceInfo>(),
-                failoverConfiguration.Value,
-                metadata.Value,
+                failoverConfiguration,
+                metadata,
                 serializedAdditionalRawData);
         }
 

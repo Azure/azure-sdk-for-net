@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> lastModified = default;
+            SystemData systemData = default;
+            DateTimeOffset? created = default;
+            string description = default;
+            DateTimeOffset? lastModified = default;
             IList<MediaTransformOutput> outputs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -209,10 +209,10 @@ namespace Azure.ResourceManager.Media
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(created),
-                description.Value,
-                Optional.ToNullable(lastModified),
+                systemData,
+                created,
+                description,
+                lastModified,
                 outputs ?? new ChangeTrackingList<MediaTransformOutput>(),
                 serializedAdditionalRawData);
         }

@@ -169,16 +169,16 @@ namespace Azure.ResourceManager.Marketplace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uniqueOfferId = default;
-            Optional<string> offerDisplayName = default;
-            Optional<string> publisherDisplayName = default;
-            Optional<ETag> eTag = default;
-            Optional<Guid> privateStoreId = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> modifiedAt = default;
+            SystemData systemData = default;
+            string uniqueOfferId = default;
+            string offerDisplayName = default;
+            string publisherDisplayName = default;
+            ETag? eTag = default;
+            Guid? privateStoreId = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? modifiedAt = default;
             IList<string> specificPlanIdsLimitation = default;
-            Optional<bool> updateSuppressedDueIdempotence = default;
+            bool? updateSuppressedDueIdempotence = default;
             IDictionary<string, Uri> iconFileUris = default;
             IList<PrivateStorePlan> plans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -340,16 +340,16 @@ namespace Azure.ResourceManager.Marketplace
                 id,
                 name,
                 type,
-                systemData.Value,
-                uniqueOfferId.Value,
-                offerDisplayName.Value,
-                publisherDisplayName.Value,
-                Optional.ToNullable(eTag),
-                Optional.ToNullable(privateStoreId),
-                Optional.ToNullable(createdAt),
-                Optional.ToNullable(modifiedAt),
+                systemData,
+                uniqueOfferId,
+                offerDisplayName,
+                publisherDisplayName,
+                eTag,
+                privateStoreId,
+                createdAt,
+                modifiedAt,
                 specificPlanIdsLimitation ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(updateSuppressedDueIdempotence),
+                updateSuppressedDueIdempotence,
                 iconFileUris ?? new ChangeTrackingDictionary<string, Uri>(),
                 plans ?? new ChangeTrackingList<PrivateStorePlan>(),
                 serializedAdditionalRawData);

@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             IList<DataFlowStream> streams = default;
             IList<string> destinations = default;
-            Optional<string> transformKql = default;
-            Optional<string> outputStream = default;
-            Optional<string> builtInTransform = default;
+            string transformKql = default;
+            string outputStream = default;
+            string builtInTransform = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,9 +160,9 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DataFlow(
                 streams ?? new ChangeTrackingList<DataFlowStream>(),
                 destinations ?? new ChangeTrackingList<string>(),
-                transformKql.Value,
-                outputStream.Value,
-                builtInTransform.Value,
+                transformKql,
+                outputStream,
+                builtInTransform,
                 serializedAdditionalRawData);
         }
 

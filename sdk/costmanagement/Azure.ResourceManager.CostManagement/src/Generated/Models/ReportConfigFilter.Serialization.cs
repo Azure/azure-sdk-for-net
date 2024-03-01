@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             IList<ReportConfigFilter> and = default;
             IList<ReportConfigFilter> or = default;
-            Optional<ReportConfigComparisonExpression> dimensions = default;
-            Optional<ReportConfigComparisonExpression> tags = default;
+            ReportConfigComparisonExpression dimensions = default;
+            ReportConfigComparisonExpression tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportConfigFilter(and ?? new ChangeTrackingList<ReportConfigFilter>(), or ?? new ChangeTrackingList<ReportConfigFilter>(), dimensions.Value, tags.Value, serializedAdditionalRawData);
+            return new ReportConfigFilter(and ?? new ChangeTrackingList<ReportConfigFilter>(), or ?? new ChangeTrackingList<ReportConfigFilter>(), dimensions, tags, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportConfigFilter>.Write(ModelReaderWriterOptions options)

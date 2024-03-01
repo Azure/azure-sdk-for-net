@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> targetServerVersion = default;
+            string targetServerVersion = default;
             IReadOnlyList<string> databases = default;
-            Optional<string> targetServerBrandVersion = default;
+            string targetServerBrandVersion = default;
             IReadOnlyList<ReportableException> validationErrors = default;
             IReadOnlyList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem> databaseSchemaMap = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput(
-                targetServerVersion.Value,
+                targetServerVersion,
                 databases ?? new ChangeTrackingList<string>(),
-                targetServerBrandVersion.Value,
+                targetServerBrandVersion,
                 validationErrors ?? new ChangeTrackingList<ReportableException>(),
                 databaseSchemaMap ?? new ChangeTrackingList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem>(),
                 serializedAdditionalRawData);

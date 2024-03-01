@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> value = default;
+            string name = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionSkuProperty(name.Value, value.Value, serializedAdditionalRawData);
+            return new ConsumptionSkuProperty(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionSkuProperty>.Write(ModelReaderWriterOptions options)

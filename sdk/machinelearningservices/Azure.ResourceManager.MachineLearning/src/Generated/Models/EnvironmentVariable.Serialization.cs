@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<EnvironmentVariableType> type = default;
-            Optional<string> value = default;
+            EnvironmentVariableType? type = default;
+            string value = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new EnvironmentVariable(Optional.ToNullable(type), value.Value, additionalProperties);
+            return new EnvironmentVariable(type, value, additionalProperties);
         }
 
         BinaryData IPersistableModel<EnvironmentVariable>.Write(ModelReaderWriterOptions options)

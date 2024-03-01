@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             bool enabled = default;
-            Optional<VirtualNetworkEncryptionEnforcement> enforcement = default;
+            VirtualNetworkEncryptionEnforcement? enforcement = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkEncryption(enabled, Optional.ToNullable(enforcement), serializedAdditionalRawData);
+            return new VirtualNetworkEncryption(enabled, enforcement, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkEncryption>.Write(ModelReaderWriterOptions options)

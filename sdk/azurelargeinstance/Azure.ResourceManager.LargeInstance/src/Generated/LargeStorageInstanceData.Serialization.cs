@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.LargeInstance
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> azureLargeStorageInstanceUniqueIdentifier = default;
-            Optional<LargeInstanceStorageProperties> storageProperties = default;
+            SystemData systemData = default;
+            string azureLargeStorageInstanceUniqueIdentifier = default;
+            LargeInstanceStorageProperties storageProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,9 +203,9 @@ namespace Azure.ResourceManager.LargeInstance
                 id,
                 name,
                 type,
-                systemData.Value,
-                azureLargeStorageInstanceUniqueIdentifier.Value,
-                storageProperties.Value,
+                systemData,
+                azureLargeStorageInstanceUniqueIdentifier,
+                storageProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 serializedAdditionalRawData);

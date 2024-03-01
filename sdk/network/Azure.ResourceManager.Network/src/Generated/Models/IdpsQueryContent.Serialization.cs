@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IList<IdpsQueryFilterItems> filters = default;
-            Optional<string> search = default;
-            Optional<IdpsQueryOrderBy> orderBy = default;
-            Optional<int> resultsPerPage = default;
-            Optional<int> skip = default;
+            string search = default;
+            IdpsQueryOrderBy orderBy = default;
+            int? resultsPerPage = default;
+            int? skip = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.Network.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IdpsQueryContent(
                 filters ?? new ChangeTrackingList<IdpsQueryFilterItems>(),
-                search.Value,
-                orderBy.Value,
-                Optional.ToNullable(resultsPerPage),
-                Optional.ToNullable(skip),
+                search,
+                orderBy,
+                resultsPerPage,
+                skip,
                 serializedAdditionalRawData);
         }
 

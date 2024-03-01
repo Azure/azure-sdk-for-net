@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<TwitterRegistration> registration = default;
+            bool? enabled = default;
+            TwitterRegistration registration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceTwitterProvider(Optional.ToNullable(enabled), registration.Value, serializedAdditionalRawData);
+            return new AppServiceTwitterProvider(enabled, registration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceTwitterProvider>.Write(ModelReaderWriterOptions options)

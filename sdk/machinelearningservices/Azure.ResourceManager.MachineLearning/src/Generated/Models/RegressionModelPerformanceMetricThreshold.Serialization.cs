@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             RegressionModelPerformanceMetric metric = default;
             MonitoringModelType modelType = default;
-            Optional<MonitoringThreshold> threshold = default;
+            MonitoringThreshold threshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegressionModelPerformanceMetricThreshold(modelType, threshold.Value, serializedAdditionalRawData, metric);
+            return new RegressionModelPerformanceMetricThreshold(modelType, threshold, serializedAdditionalRawData, metric);
         }
 
         BinaryData IPersistableModel<RegressionModelPerformanceMetricThreshold>.Write(ModelReaderWriterOptions options)

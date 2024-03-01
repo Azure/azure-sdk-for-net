@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<string> resourceName = default;
-            Optional<string> eventType = default;
-            Optional<string> eventName = default;
-            Optional<DateTimeOffset> timeOfOccurrence = default;
-            Optional<string> severity = default;
-            Optional<string> description = default;
-            Optional<string> correlationId = default;
+            ResourceType? resourceType = default;
+            string resourceName = default;
+            string eventType = default;
+            string eventName = default;
+            DateTimeOffset? timeOfOccurrence = default;
+            string severity = default;
+            string description = default;
+            string correlationId = default;
             IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             EventModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -204,14 +204,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataReplicationEventProperties(
-                Optional.ToNullable(resourceType),
-                resourceName.Value,
-                eventType.Value,
-                eventName.Value,
-                Optional.ToNullable(timeOfOccurrence),
-                severity.Value,
-                description.Value,
-                correlationId.Value,
+                resourceType,
+                resourceName,
+                eventType,
+                eventName,
+                timeOfOccurrence,
+                severity,
+                description,
+                correlationId,
                 healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(),
                 customProperties,
                 serializedAdditionalRawData);

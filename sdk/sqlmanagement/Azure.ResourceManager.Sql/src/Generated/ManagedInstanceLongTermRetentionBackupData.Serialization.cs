@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> managedInstanceName = default;
-            Optional<DateTimeOffset> managedInstanceCreateTime = default;
-            Optional<string> databaseName = default;
-            Optional<DateTimeOffset> databaseDeletionTime = default;
-            Optional<DateTimeOffset> backupTime = default;
-            Optional<DateTimeOffset> backupExpirationTime = default;
-            Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
+            SystemData systemData = default;
+            string managedInstanceName = default;
+            DateTimeOffset? managedInstanceCreateTime = default;
+            string databaseName = default;
+            DateTimeOffset? databaseDeletionTime = default;
+            DateTimeOffset? backupTime = default;
+            DateTimeOffset? backupExpirationTime = default;
+            SqlBackupStorageRedundancy? backupStorageRedundancy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,14 +240,14 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                managedInstanceName.Value,
-                Optional.ToNullable(managedInstanceCreateTime),
-                databaseName.Value,
-                Optional.ToNullable(databaseDeletionTime),
-                Optional.ToNullable(backupTime),
-                Optional.ToNullable(backupExpirationTime),
-                Optional.ToNullable(backupStorageRedundancy),
+                systemData,
+                managedInstanceName,
+                managedInstanceCreateTime,
+                databaseName,
+                databaseDeletionTime,
+                backupTime,
+                backupExpirationTime,
+                backupStorageRedundancy,
                 serializedAdditionalRawData);
         }
 

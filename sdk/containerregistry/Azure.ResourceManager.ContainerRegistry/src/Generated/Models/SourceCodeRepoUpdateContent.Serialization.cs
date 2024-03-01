@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<SourceControlType> sourceControlType = default;
-            Optional<Uri> repositoryUrl = default;
-            Optional<string> branch = default;
-            Optional<SourceCodeRepoAuthInfoUpdateContent> sourceControlAuthProperties = default;
+            SourceControlType? sourceControlType = default;
+            Uri repositoryUrl = default;
+            string branch = default;
+            SourceCodeRepoAuthInfoUpdateContent sourceControlAuthProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceCodeRepoUpdateContent(Optional.ToNullable(sourceControlType), repositoryUrl.Value, branch.Value, sourceControlAuthProperties.Value, serializedAdditionalRawData);
+            return new SourceCodeRepoUpdateContent(sourceControlType, repositoryUrl, branch, sourceControlAuthProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceCodeRepoUpdateContent>.Write(ModelReaderWriterOptions options)

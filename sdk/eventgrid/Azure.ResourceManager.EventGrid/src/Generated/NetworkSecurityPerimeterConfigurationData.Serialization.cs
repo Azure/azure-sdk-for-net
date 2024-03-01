@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetworkSecurityPerimeterConfigProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            NetworkSecurityPerimeterConfigProvisioningState? provisioningState = default;
             IList<NetworkSecurityPerimeterConfigurationIssues> provisioningIssues = default;
-            Optional<NetworkSecurityPerimeterInfo> networkSecurityPerimeter = default;
-            Optional<ResourceAssociation> resourceAssociation = default;
-            Optional<NetworkSecurityPerimeterConfigurationProfile> profile = default;
+            NetworkSecurityPerimeterInfo networkSecurityPerimeter = default;
+            ResourceAssociation resourceAssociation = default;
+            NetworkSecurityPerimeterConfigurationProfile profile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.EventGrid
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                provisioningState,
                 provisioningIssues ?? new ChangeTrackingList<NetworkSecurityPerimeterConfigurationIssues>(),
-                networkSecurityPerimeter.Value,
-                resourceAssociation.Value,
-                profile.Value,
+                networkSecurityPerimeter,
+                resourceAssociation,
+                profile,
                 serializedAdditionalRawData);
         }
 

@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AsymmetricEncryptedSecret> encryptedPassword = default;
+            SystemData systemData = default;
+            AsymmetricEncryptedSecret encryptedPassword = default;
             IReadOnlyList<ShareAccessRight> shareAccessRights = default;
             DataBoxEdgeUserType userType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -191,8 +191,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                 id,
                 name,
                 type,
-                systemData.Value,
-                encryptedPassword.Value,
+                systemData,
+                encryptedPassword,
                 shareAccessRights ?? new ChangeTrackingList<ShareAccessRight>(),
                 userType,
                 serializedAdditionalRawData);

@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> networkSiblingSetId = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<string> networkSiblingSetStateId = default;
-            Optional<NetAppNetworkFeature> networkFeatures = default;
-            Optional<NetworkSiblingSetProvisioningState> provisioningState = default;
+            string networkSiblingSetId = default;
+            ResourceIdentifier subnetId = default;
+            string networkSiblingSetStateId = default;
+            NetAppNetworkFeature? networkFeatures = default;
+            NetworkSiblingSetProvisioningState? provisioningState = default;
             IReadOnlyList<NicInfo> nicInfoList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -167,11 +167,11 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkSiblingSet(
-                networkSiblingSetId.Value,
-                subnetId.Value,
-                networkSiblingSetStateId.Value,
-                Optional.ToNullable(networkFeatures),
-                Optional.ToNullable(provisioningState),
+                networkSiblingSetId,
+                subnetId,
+                networkSiblingSetStateId,
+                networkFeatures,
+                provisioningState,
                 nicInfoList ?? new ChangeTrackingList<NicInfo>(),
                 serializedAdditionalRawData);
         }

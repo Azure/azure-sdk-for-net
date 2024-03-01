@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<Uri> sasUri = default;
+            Uri sasUri = default;
             PendingUploadCredentialType credentialType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SasCredentialDto(credentialType, serializedAdditionalRawData, sasUri.Value);
+            return new SasCredentialDto(credentialType, serializedAdditionalRawData, sasUri);
         }
 
         BinaryData IPersistableModel<SasCredentialDto>.Write(ModelReaderWriterOptions options)

@@ -50,11 +50,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<ScalarQuantizationParameters> scalarQuantizationParameters = default;
+            ScalarQuantizationParameters scalarQuantizationParameters = default;
             string name = default;
             VectorSearchCompressionKind kind = default;
-            Optional<bool> rerankWithOriginalVectors = default;
-            Optional<double?> defaultOversampling = default;
+            bool? rerankWithOriginalVectors = default;
+            double? defaultOversampling = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scalarQuantizationParameters"u8))
@@ -96,7 +96,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ScalarQuantizationCompressionConfiguration(name, kind, Optional.ToNullable(rerankWithOriginalVectors), Optional.ToNullable(defaultOversampling), scalarQuantizationParameters.Value);
+            return new ScalarQuantizationCompressionConfiguration(name, kind, rerankWithOriginalVectors, defaultOversampling, scalarQuantizationParameters);
         }
     }
 }

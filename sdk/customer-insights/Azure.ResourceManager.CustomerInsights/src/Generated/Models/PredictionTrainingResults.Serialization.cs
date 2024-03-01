@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> scoreName = default;
-            Optional<PredictionDistributionDefinition> predictionDistribution = default;
+            Guid? tenantId = default;
+            string scoreName = default;
+            PredictionDistributionDefinition predictionDistribution = default;
             IReadOnlyList<CanonicalProfileDefinition> canonicalProfiles = default;
-            Optional<long> primaryProfileInstanceCount = default;
+            long? primaryProfileInstanceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PredictionTrainingResults(
-                Optional.ToNullable(tenantId),
-                scoreName.Value,
-                predictionDistribution.Value,
+                tenantId,
+                scoreName,
+                predictionDistribution,
                 canonicalProfiles ?? new ChangeTrackingList<CanonicalProfileDefinition>(),
-                Optional.ToNullable(primaryProfileInstanceCount),
+                primaryProfileInstanceCount,
                 serializedAdditionalRawData);
         }
 

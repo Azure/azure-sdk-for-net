@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> privateEndpoint = default;
+            SystemData systemData = default;
+            WritableSubResource privateEndpoint = default;
             IList<string> groupIds = default;
-            Optional<AutomationPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
+            AutomationPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.Automation
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 privateEndpoint,
                 groupIds ?? new ChangeTrackingList<string>(),
-                privateLinkServiceConnectionState.Value,
+                privateLinkServiceConnectionState,
                 serializedAdditionalRawData);
         }
 

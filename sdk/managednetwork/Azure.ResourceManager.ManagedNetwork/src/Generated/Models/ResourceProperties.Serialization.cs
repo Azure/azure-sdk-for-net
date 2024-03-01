@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ETag> etag = default;
+            ProvisioningState? provisioningState = default;
+            ETag? etag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new ResourceProperties(provisioningState, etag, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceProperties>.Write(ModelReaderWriterOptions options)

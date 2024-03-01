@@ -99,16 +99,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object server = default;
-            Optional<object> username = default;
-            Optional<SecretBase> password = default;
+            object username = default;
+            SecretBase password = default;
             object database = default;
-            Optional<object> port = default;
-            Optional<object> encryptedCredential = default;
+            object port = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -230,17 +230,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AmazonRedshiftLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
                 server,
-                username.Value,
-                password.Value,
+                username,
+                password,
                 database,
-                port.Value,
-                encryptedCredential.Value);
+                port,
+                encryptedCredential);
         }
 
         internal partial class AmazonRedshiftLinkedServiceConverter : JsonConverter<AmazonRedshiftLinkedService>

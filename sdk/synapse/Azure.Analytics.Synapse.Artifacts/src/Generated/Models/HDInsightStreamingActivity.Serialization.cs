@@ -176,25 +176,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<ActivityDependency> dependsOn = default;
             IList<UserProperty> userProperties = default;
             IList<LinkedServiceReference> storageLinkedServices = default;
             IList<object> arguments = default;
-            Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
+            HDInsightActivityDebugInfoOption? getDebugInfo = default;
             object mapper = default;
             object reducer = default;
             object input = default;
             object output = default;
             IList<object> filePaths = default;
-            Optional<LinkedServiceReference> fileLinkedService = default;
-            Optional<object> combiner = default;
+            LinkedServiceReference fileLinkedService = default;
+            object combiner = default;
             IList<object> commandEnvironment = default;
             IDictionary<string, object> defines = default;
             IDictionary<string, object> additionalProperties = default;
@@ -439,24 +439,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new HDInsightStreamingActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<UserProperty>(),
                 additionalProperties,
-                linkedServiceName.Value,
-                policy.Value,
+                linkedServiceName,
+                policy,
                 storageLinkedServices ?? new ChangeTrackingList<LinkedServiceReference>(),
                 arguments ?? new ChangeTrackingList<object>(),
-                Optional.ToNullable(getDebugInfo),
+                getDebugInfo,
                 mapper,
                 reducer,
                 input,
                 output,
                 filePaths,
-                fileLinkedService.Value,
-                combiner.Value,
+                fileLinkedService,
+                combiner,
                 commandEnvironment ?? new ChangeTrackingList<object>(),
                 defines ?? new ChangeTrackingDictionary<string, object>());
         }

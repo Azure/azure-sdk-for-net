@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<NetworkDeviceAdministrativeState> state = default;
+            NetworkDeviceAdministrativeState? state = default;
             IList<ResourceIdentifier> resourceIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateDeviceAdministrativeStateContent(resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData, Optional.ToNullable(state));
+            return new UpdateDeviceAdministrativeStateContent(resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData, state);
         }
 
         BinaryData IPersistableModel<UpdateDeviceAdministrativeStateContent>.Write(ModelReaderWriterOptions options)

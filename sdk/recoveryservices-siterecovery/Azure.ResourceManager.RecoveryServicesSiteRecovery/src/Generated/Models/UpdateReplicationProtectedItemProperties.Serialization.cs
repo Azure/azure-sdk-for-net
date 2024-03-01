@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> recoveryAzureVmName = default;
-            Optional<string> recoveryAzureVmSize = default;
-            Optional<ResourceIdentifier> selectedRecoveryAzureNetworkId = default;
-            Optional<ResourceIdentifier> selectedTfoAzureNetworkId = default;
-            Optional<string> selectedSourceNicId = default;
-            Optional<string> enableRdpOnTargetOption = default;
+            string recoveryAzureVmName = default;
+            string recoveryAzureVmSize = default;
+            ResourceIdentifier selectedRecoveryAzureNetworkId = default;
+            ResourceIdentifier selectedTfoAzureNetworkId = default;
+            string selectedSourceNicId = default;
+            string enableRdpOnTargetOption = default;
             IList<VmNicContentDetails> vmNics = default;
-            Optional<SiteRecoveryLicenseType> licenseType = default;
-            Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
-            Optional<UpdateReplicationProtectedItemProviderContent> providerSpecificDetails = default;
+            SiteRecoveryLicenseType? licenseType = default;
+            ResourceIdentifier recoveryAvailabilitySetId = default;
+            UpdateReplicationProtectedItemProviderContent providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,16 +219,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UpdateReplicationProtectedItemProperties(
-                recoveryAzureVmName.Value,
-                recoveryAzureVmSize.Value,
-                selectedRecoveryAzureNetworkId.Value,
-                selectedTfoAzureNetworkId.Value,
-                selectedSourceNicId.Value,
-                enableRdpOnTargetOption.Value,
+                recoveryAzureVmName,
+                recoveryAzureVmSize,
+                selectedRecoveryAzureNetworkId,
+                selectedTfoAzureNetworkId,
+                selectedSourceNicId,
+                enableRdpOnTargetOption,
                 vmNics ?? new ChangeTrackingList<VmNicContentDetails>(),
-                Optional.ToNullable(licenseType),
-                recoveryAvailabilitySetId.Value,
-                providerSpecificDetails.Value,
+                licenseType,
+                recoveryAvailabilitySetId,
+                providerSpecificDetails,
                 serializedAdditionalRawData);
         }
 

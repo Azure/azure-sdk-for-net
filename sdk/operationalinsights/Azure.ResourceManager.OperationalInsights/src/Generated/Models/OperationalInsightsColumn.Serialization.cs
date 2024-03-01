@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<OperationalInsightsColumnType> type = default;
-            Optional<OperationalInsightsColumnDataTypeHint> dataTypeHint = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<bool> isDefaultDisplay = default;
-            Optional<bool> isHidden = default;
+            string name = default;
+            OperationalInsightsColumnType? type = default;
+            OperationalInsightsColumnDataTypeHint? dataTypeHint = default;
+            string displayName = default;
+            string description = default;
+            bool? isDefaultDisplay = default;
+            bool? isHidden = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,13 +168,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new OperationalInsightsColumn(
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(dataTypeHint),
-                displayName.Value,
-                description.Value,
-                Optional.ToNullable(isDefaultDisplay),
-                Optional.ToNullable(isHidden),
+                name,
+                type,
+                dataTypeHint,
+                displayName,
+                description,
+                isDefaultDisplay,
+                isHidden,
                 serializedAdditionalRawData);
         }
 

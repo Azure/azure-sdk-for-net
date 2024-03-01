@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<int> unHealthyVmCount = default;
-            Optional<int> unHealthyProviderCount = default;
-            Optional<int> eventsCount = default;
-            Optional<int> deprecatedProviderCount = default;
-            Optional<int> supportedProviderCount = default;
-            Optional<int> unsupportedProviderCount = default;
+            int? unHealthyVmCount = default;
+            int? unHealthyProviderCount = default;
+            int? eventsCount = default;
+            int? deprecatedProviderCount = default;
+            int? supportedProviderCount = default;
+            int? unsupportedProviderCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VaultMonitoringSummary(
-                Optional.ToNullable(unHealthyVmCount),
-                Optional.ToNullable(unHealthyProviderCount),
-                Optional.ToNullable(eventsCount),
-                Optional.ToNullable(deprecatedProviderCount),
-                Optional.ToNullable(supportedProviderCount),
-                Optional.ToNullable(unsupportedProviderCount),
+                unHealthyVmCount,
+                unHealthyProviderCount,
+                eventsCount,
+                deprecatedProviderCount,
+                supportedProviderCount,
+                unsupportedProviderCount,
                 serializedAdditionalRawData);
         }
 

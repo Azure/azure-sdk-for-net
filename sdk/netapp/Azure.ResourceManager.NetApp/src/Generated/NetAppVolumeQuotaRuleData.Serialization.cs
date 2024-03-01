@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.NetApp
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetAppProvisioningState> provisioningState = default;
-            Optional<long> quotaSizeInKiBs = default;
-            Optional<NetAppVolumeQuotaType> quotaType = default;
-            Optional<string> quotaTarget = default;
+            SystemData systemData = default;
+            NetAppProvisioningState? provisioningState = default;
+            long? quotaSizeInKiBs = default;
+            NetAppVolumeQuotaType? quotaType = default;
+            string quotaTarget = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -233,13 +233,13 @@ namespace Azure.ResourceManager.NetApp
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(quotaSizeInKiBs),
-                Optional.ToNullable(quotaType),
-                quotaTarget.Value,
+                provisioningState,
+                quotaSizeInKiBs,
+                quotaType,
+                quotaTarget,
                 serializedAdditionalRawData);
         }
 

@@ -84,9 +84,9 @@ namespace Azure.AI.OpenAI
             }
             string input = default;
             SpeechVoice voice = default;
-            Optional<SpeechGenerationResponseFormat> responseFormat = default;
-            Optional<float> speed = default;
-            Optional<string> model = default;
+            SpeechGenerationResponseFormat? responseFormat = default;
+            float? speed = default;
+            string model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,9 +133,9 @@ namespace Azure.AI.OpenAI
             return new SpeechGenerationOptions(
                 input,
                 voice,
-                Optional.ToNullable(responseFormat),
-                Optional.ToNullable(speed),
-                model.Value,
+                responseFormat,
+                speed,
+                model,
                 serializedAdditionalRawData);
         }
 

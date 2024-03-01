@@ -87,10 +87,10 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<string> user = default;
-            Optional<string> model = default;
+            string user = default;
+            string model = default;
             IList<string> input = default;
-            Optional<string> inputType = default;
+            string inputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmbeddingsOptions(user.Value, model.Value, input, inputType.Value, serializedAdditionalRawData);
+            return new EmbeddingsOptions(user, model, input, inputType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmbeddingsOptions>.Write(ModelReaderWriterOptions options)

@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IList<string> zones = default;
             IReadOnlyList<IPAddress> publicIPAddresses = default;
             IReadOnlyList<IPAddress> privateIPAddresses = default;
-            Optional<ResourceIdentifier> publicIPAddressId = default;
-            Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
-            Optional<Uri> gatewayRegionalUri = default;
-            Optional<bool> disableGateway = default;
-            Optional<PlatformVersion> platformVersion = default;
+            ResourceIdentifier publicIPAddressId = default;
+            VirtualNetworkConfiguration virtualNetworkConfiguration = default;
+            Uri gatewayRegionalUri = default;
+            bool? disableGateway = default;
+            PlatformVersion? platformVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -271,11 +271,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 zones ?? new ChangeTrackingList<string>(),
                 publicIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 privateIPAddresses ?? new ChangeTrackingList<IPAddress>(),
-                publicIPAddressId.Value,
-                virtualNetworkConfiguration.Value,
-                gatewayRegionalUri.Value,
-                Optional.ToNullable(disableGateway),
-                Optional.ToNullable(platformVersion),
+                publicIPAddressId,
+                virtualNetworkConfiguration,
+                gatewayRegionalUri,
+                disableGateway,
+                platformVersion,
                 serializedAdditionalRawData);
         }
 

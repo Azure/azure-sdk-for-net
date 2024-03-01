@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 return null;
             }
             string resourceType = default;
-            Optional<string> targetResourceName = default;
-            Optional<string> targetResourceGroupName = default;
+            string targetResourceName = default;
+            string targetResourceGroupName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData);
+            return new SqlServerResourceSettings(resourceType, targetResourceName, targetResourceGroupName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerResourceSettings>.Write(ModelReaderWriterOptions options)

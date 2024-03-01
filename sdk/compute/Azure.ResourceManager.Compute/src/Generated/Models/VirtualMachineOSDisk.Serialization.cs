@@ -121,18 +121,18 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<SupportedOperatingSystemType> osType = default;
-            Optional<DiskEncryptionSettings> encryptionSettings = default;
-            Optional<string> name = default;
-            Optional<VirtualHardDisk> vhd = default;
-            Optional<VirtualHardDisk> image = default;
-            Optional<CachingType> caching = default;
-            Optional<bool> writeAcceleratorEnabled = default;
-            Optional<DiffDiskSettings> diffDiskSettings = default;
+            SupportedOperatingSystemType? osType = default;
+            DiskEncryptionSettings encryptionSettings = default;
+            string name = default;
+            VirtualHardDisk vhd = default;
+            VirtualHardDisk image = default;
+            CachingType? caching = default;
+            bool? writeAcceleratorEnabled = default;
+            DiffDiskSettings diffDiskSettings = default;
             DiskCreateOptionType createOption = default;
-            Optional<int> diskSizeGB = default;
-            Optional<VirtualMachineManagedDisk> managedDisk = default;
-            Optional<DiskDeleteOptionType> deleteOption = default;
+            int? diskSizeGB = default;
+            VirtualMachineManagedDisk managedDisk = default;
+            DiskDeleteOptionType? deleteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,18 +244,18 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineOSDisk(
-                Optional.ToNullable(osType),
-                encryptionSettings.Value,
-                name.Value,
-                vhd.Value,
-                image.Value,
-                Optional.ToNullable(caching),
-                Optional.ToNullable(writeAcceleratorEnabled),
-                diffDiskSettings.Value,
+                osType,
+                encryptionSettings,
+                name,
+                vhd,
+                image,
+                caching,
+                writeAcceleratorEnabled,
+                diffDiskSettings,
                 createOption,
-                Optional.ToNullable(diskSizeGB),
-                managedDisk.Value,
-                Optional.ToNullable(deleteOption),
+                diskSizeGB,
+                managedDisk,
+                deleteOption,
                 serializedAdditionalRawData);
         }
 

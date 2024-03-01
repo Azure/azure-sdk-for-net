@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<bool> secureBootEnabled = default;
+            bool? secureBootEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UefiSettings(Optional.ToNullable(secureBootEnabled), serializedAdditionalRawData);
+            return new UefiSettings(secureBootEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UefiSettings>.Write(ModelReaderWriterOptions options)

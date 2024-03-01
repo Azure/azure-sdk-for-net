@@ -153,21 +153,21 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             IList<string> prompt = default;
-            Optional<int> maxTokens = default;
-            Optional<float> temperature = default;
-            Optional<float> topP = default;
+            int? maxTokens = default;
+            float? temperature = default;
+            float? topP = default;
             IDictionary<int, int> logitBias = default;
-            Optional<string> user = default;
-            Optional<int> n = default;
-            Optional<int> logprobs = default;
-            Optional<string> suffix = default;
-            Optional<bool> echo = default;
+            string user = default;
+            int? n = default;
+            int? logprobs = default;
+            string suffix = default;
+            bool? echo = default;
             IList<string> stop = default;
-            Optional<float> presencePenalty = default;
-            Optional<float> frequencyPenalty = default;
-            Optional<int> bestOf = default;
-            Optional<bool> stream = default;
-            Optional<string> model = default;
+            float? presencePenalty = default;
+            float? frequencyPenalty = default;
+            int? bestOf = default;
+            bool? stream = default;
+            string model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -314,21 +314,21 @@ namespace Azure.AI.OpenAI
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CompletionsOptions(
                 prompt,
-                Optional.ToNullable(maxTokens),
-                Optional.ToNullable(temperature),
-                Optional.ToNullable(topP),
+                maxTokens,
+                temperature,
+                topP,
                 logitBias ?? new ChangeTrackingDictionary<int, int>(),
-                user.Value,
-                Optional.ToNullable(n),
-                Optional.ToNullable(logprobs),
-                suffix.Value,
-                Optional.ToNullable(echo),
+                user,
+                n,
+                logprobs,
+                suffix,
+                echo,
                 stop ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(presencePenalty),
-                Optional.ToNullable(frequencyPenalty),
-                Optional.ToNullable(bestOf),
-                Optional.ToNullable(stream),
-                model.Value,
+                presencePenalty,
+                frequencyPenalty,
+                bestOf,
+                stream,
+                model,
                 serializedAdditionalRawData);
         }
 

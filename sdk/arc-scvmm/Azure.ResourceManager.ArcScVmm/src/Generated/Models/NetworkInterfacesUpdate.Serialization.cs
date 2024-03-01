@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> macAddress = default;
-            Optional<string> virtualNetworkId = default;
-            Optional<AllocationMethod> ipv4AddressType = default;
-            Optional<AllocationMethod> ipv6AddressType = default;
-            Optional<AllocationMethod> macAddressType = default;
-            Optional<string> nicId = default;
+            string name = default;
+            string macAddress = default;
+            string virtualNetworkId = default;
+            AllocationMethod? ipv4AddressType = default;
+            AllocationMethod? ipv6AddressType = default;
+            AllocationMethod? macAddressType = default;
+            string nicId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,13 +164,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkInterfacesUpdate(
-                name.Value,
-                macAddress.Value,
-                virtualNetworkId.Value,
-                Optional.ToNullable(ipv4AddressType),
-                Optional.ToNullable(ipv6AddressType),
-                Optional.ToNullable(macAddressType),
-                nicId.Value,
+                name,
+                macAddress,
+                virtualNetworkId,
+                ipv4AddressType,
+                ipv6AddressType,
+                macAddressType,
+                nicId,
                 serializedAdditionalRawData);
         }
 

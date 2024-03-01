@@ -56,9 +56,9 @@ namespace Azure.AI.TextAnalytics.Models
             }
             ErrorCode code = default;
             string message = default;
-            Optional<string> target = default;
+            string target = default;
             IList<Error> details = default;
-            Optional<InnerErrorModel> innererror = default;
+            InnerErrorModel innererror = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -107,9 +107,9 @@ namespace Azure.AI.TextAnalytics.Models
             return new Error(
                 code,
                 message,
-                target.Value,
+                target,
                 details ?? new ChangeTrackingList<Error>(),
-                innererror.Value,
+                innererror,
                 additionalProperties);
         }
     }

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
             UriRewriteActionType typeName = default;
             string sourcePattern = default;
             string destination = default;
-            Optional<bool> preserveUnmatchedPath = default;
+            bool? preserveUnmatchedPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UriRewriteActionProperties(typeName, sourcePattern, destination, Optional.ToNullable(preserveUnmatchedPath), serializedAdditionalRawData);
+            return new UriRewriteActionProperties(typeName, sourcePattern, destination, preserveUnmatchedPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UriRewriteActionProperties>.Write(ModelReaderWriterOptions options)

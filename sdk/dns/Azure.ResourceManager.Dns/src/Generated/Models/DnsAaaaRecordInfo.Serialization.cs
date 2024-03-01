@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipv6Address = default;
+            IPAddress ipv6Address = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsAaaaRecordInfo(ipv6Address.Value, serializedAdditionalRawData);
+            return new DnsAaaaRecordInfo(ipv6Address, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsAaaaRecordInfo>.Write(ModelReaderWriterOptions options)

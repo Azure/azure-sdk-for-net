@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<SqlSynapseLinkWorkspaceInfo> workspaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 workspaces ?? new ChangeTrackingList<SqlSynapseLinkWorkspaceInfo>(),
                 serializedAdditionalRawData);
         }

@@ -165,15 +165,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int?> gradientAccumulationSteps = default;
-            Optional<float?> learningRate = default;
-            Optional<NlpLearningRateScheduler> learningRateScheduler = default;
-            Optional<string> modelName = default;
-            Optional<int?> numberOfEpochs = default;
-            Optional<int?> trainingBatchSize = default;
-            Optional<int?> validationBatchSize = default;
-            Optional<float?> warmupRatio = default;
-            Optional<float?> weightDecay = default;
+            int? gradientAccumulationSteps = default;
+            float? learningRate = default;
+            NlpLearningRateScheduler? learningRateScheduler = default;
+            string modelName = default;
+            int? numberOfEpochs = default;
+            int? trainingBatchSize = default;
+            int? validationBatchSize = default;
+            float? warmupRatio = default;
+            float? weightDecay = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -274,15 +274,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NlpFixedParameters(
-                Optional.ToNullable(gradientAccumulationSteps),
-                Optional.ToNullable(learningRate),
-                Optional.ToNullable(learningRateScheduler),
-                modelName.Value,
-                Optional.ToNullable(numberOfEpochs),
-                Optional.ToNullable(trainingBatchSize),
-                Optional.ToNullable(validationBatchSize),
-                Optional.ToNullable(warmupRatio),
-                Optional.ToNullable(weightDecay),
+                gradientAccumulationSteps,
+                learningRate,
+                learningRateScheduler,
+                modelName,
+                numberOfEpochs,
+                trainingBatchSize,
+                validationBatchSize,
+                warmupRatio,
+                weightDecay,
                 serializedAdditionalRawData);
         }
 

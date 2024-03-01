@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -19,8 +18,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             string code = default;
-            Optional<string> message = default;
-            Optional<InnerError> innererror = default;
+            string message = default;
+            InnerError innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -43,7 +42,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new InnerError(code, message.Value, innererror.Value);
+            return new InnerError(code, message, innererror);
         }
     }
 }

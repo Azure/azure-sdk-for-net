@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             IReadOnlyList<IntegrationServiceEnvironmentNetworkDependency> outboundNetworkDependencies = default;
-            Optional<IntegrationServiceEnvironmentNetworkDependencyHealth> outboundNetworkHealth = default;
+            IntegrationServiceEnvironmentNetworkDependencyHealth outboundNetworkHealth = default;
             IntegrationServiceEnvironmentNetworkEndPointAccessibilityState networkDependencyHealthState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentSubnetNetworkHealth(outboundNetworkDependencies ?? new ChangeTrackingList<IntegrationServiceEnvironmentNetworkDependency>(), outboundNetworkHealth.Value, networkDependencyHealthState, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentSubnetNetworkHealth(outboundNetworkDependencies ?? new ChangeTrackingList<IntegrationServiceEnvironmentNetworkDependency>(), outboundNetworkHealth, networkDependencyHealthState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentSubnetNetworkHealth>.Write(ModelReaderWriterOptions options)

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> emailAddress = default;
-            Optional<string> phoneNumber = default;
+            string name = default;
+            string emailAddress = default;
+            string phoneNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserInfo(name.Value, emailAddress.Value, phoneNumber.Value, serializedAdditionalRawData);
+            return new UserInfo(name, emailAddress, phoneNumber, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserInfo>.Write(ModelReaderWriterOptions options)

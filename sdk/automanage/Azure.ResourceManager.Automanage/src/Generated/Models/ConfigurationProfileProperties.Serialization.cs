@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Automanage.Models
             {
                 return null;
             }
-            Optional<BinaryData> configuration = default;
+            BinaryData configuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationProfileProperties(configuration.Value, serializedAdditionalRawData);
+            return new ConfigurationProfileProperties(configuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationProfileProperties>.Write(ModelReaderWriterOptions options)

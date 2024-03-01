@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Quota.Models
                 return null;
             }
             IReadOnlyList<CurrentUsagesBaseData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UsagesLimits(value ?? new ChangeTrackingList<CurrentUsagesBaseData>(), nextLink.Value, serializedAdditionalRawData);
+            return new UsagesLimits(value ?? new ChangeTrackingList<CurrentUsagesBaseData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UsagesLimits>.Write(ModelReaderWriterOptions options)

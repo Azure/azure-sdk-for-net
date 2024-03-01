@@ -90,11 +90,11 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<string> b64Json = default;
-            Optional<ImageGenerationContentFilterResults> contentFilterResults = default;
-            Optional<string> revisedPrompt = default;
-            Optional<ImageGenerationPromptFilterResults> promptFilterResults = default;
+            Uri url = default;
+            string b64Json = default;
+            ImageGenerationContentFilterResults contentFilterResults = default;
+            string revisedPrompt = default;
+            ImageGenerationPromptFilterResults promptFilterResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,11 +143,11 @@ namespace Azure.AI.OpenAI
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ImageGenerationData(
-                url.Value,
-                b64Json.Value,
-                contentFilterResults.Value,
-                revisedPrompt.Value,
-                promptFilterResults.Value,
+                url,
+                b64Json,
+                contentFilterResults,
+                revisedPrompt,
+                promptFilterResults,
                 serializedAdditionalRawData);
         }
 

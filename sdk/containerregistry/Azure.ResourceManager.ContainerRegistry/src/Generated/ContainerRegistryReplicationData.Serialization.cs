@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.ContainerRegistry
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerRegistryProvisioningState> provisioningState = default;
-            Optional<ContainerRegistryResourceStatus> status = default;
-            Optional<bool> regionEndpointEnabled = default;
-            Optional<ContainerRegistryZoneRedundancy> zoneRedundancy = default;
+            SystemData systemData = default;
+            ContainerRegistryProvisioningState? provisioningState = default;
+            ContainerRegistryResourceStatus status = default;
+            bool? regionEndpointEnabled = default;
+            ContainerRegistryZoneRedundancy? zoneRedundancy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -237,13 +237,13 @@ namespace Azure.ResourceManager.ContainerRegistry
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
-                status.Value,
-                Optional.ToNullable(regionEndpointEnabled),
-                Optional.ToNullable(zoneRedundancy),
+                provisioningState,
+                status,
+                regionEndpointEnabled,
+                zoneRedundancy,
                 serializedAdditionalRawData);
         }
 

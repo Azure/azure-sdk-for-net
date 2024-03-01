@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -21,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             IReadOnlyList<DocumentEntities> documents = default;
             IReadOnlyList<DocumentError> errors = default;
-            Optional<RequestStatistics> statistics = default;
+            RequestStatistics statistics = default;
             string modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -60,7 +59,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new EntitiesResult(documents, errors, statistics.Value, modelVersion);
+            return new EntitiesResult(documents, errors, statistics, modelVersion);
         }
     }
 }

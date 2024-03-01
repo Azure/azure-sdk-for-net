@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IList<string> branchNames = default;
-            Optional<AnnotateDefaultBranchState> annotateDefaultBranch = default;
+            AnnotateDefaultBranchState? annotateDefaultBranch = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetBranchConfiguration(branchNames ?? new ChangeTrackingList<string>(), Optional.ToNullable(annotateDefaultBranch), serializedAdditionalRawData);
+            return new TargetBranchConfiguration(branchNames ?? new ChangeTrackingList<string>(), annotateDefaultBranch, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetBranchConfiguration>.Write(ModelReaderWriterOptions options)

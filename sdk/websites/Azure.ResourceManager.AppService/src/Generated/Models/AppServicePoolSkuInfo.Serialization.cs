@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<AppServiceSkuDescription> sku = default;
-            Optional<AppServiceSkuCapacity> capacity = default;
+            ResourceType? resourceType = default;
+            AppServiceSkuDescription sku = default;
+            AppServiceSkuCapacity capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServicePoolSkuInfo(Optional.ToNullable(resourceType), sku.Value, capacity.Value, serializedAdditionalRawData);
+            return new AppServicePoolSkuInfo(resourceType, sku, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServicePoolSkuInfo>.Write(ModelReaderWriterOptions options)

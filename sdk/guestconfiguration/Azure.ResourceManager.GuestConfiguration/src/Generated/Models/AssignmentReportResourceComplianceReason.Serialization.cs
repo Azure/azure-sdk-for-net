@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<string> phrase = default;
-            Optional<string> code = default;
+            string phrase = default;
+            string code = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentReportResourceComplianceReason(phrase.Value, code.Value, serializedAdditionalRawData);
+            return new AssignmentReportResourceComplianceReason(phrase, code, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentReportResourceComplianceReason>.Write(ModelReaderWriterOptions options)

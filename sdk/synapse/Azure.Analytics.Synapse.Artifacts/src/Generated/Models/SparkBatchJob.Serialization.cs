@@ -22,23 +22,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<SparkBatchJobState> livyInfo = default;
-            Optional<string> name = default;
-            Optional<string> workspaceName = default;
-            Optional<string> sparkPoolName = default;
-            Optional<string> submitterName = default;
-            Optional<string> submitterId = default;
-            Optional<string> artifactId = default;
-            Optional<SparkJobType> jobType = default;
-            Optional<SparkBatchJobResultType> result = default;
-            Optional<SparkScheduler> schedulerInfo = default;
-            Optional<SparkServicePlugin> pluginInfo = default;
+            SparkBatchJobState livyInfo = default;
+            string name = default;
+            string workspaceName = default;
+            string sparkPoolName = default;
+            string submitterName = default;
+            string submitterId = default;
+            string artifactId = default;
+            SparkJobType? jobType = default;
+            SparkBatchJobResultType? result = default;
+            SparkScheduler schedulerInfo = default;
+            SparkServicePlugin pluginInfo = default;
             IReadOnlyList<SparkServiceError> errorInfo = default;
             IReadOnlyDictionary<string, string> tags = default;
             int id = default;
-            Optional<string> appId = default;
+            string appId = default;
             IReadOnlyDictionary<string, string> appInfo = default;
-            Optional<LivyStates> state = default;
+            LivyStates? state = default;
             IReadOnlyList<string> log = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -199,23 +199,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new SparkBatchJob(
-                livyInfo.Value,
-                name.Value,
-                workspaceName.Value,
-                sparkPoolName.Value,
-                submitterName.Value,
-                submitterId.Value,
-                artifactId.Value,
-                Optional.ToNullable(jobType),
-                Optional.ToNullable(result),
-                schedulerInfo.Value,
-                pluginInfo.Value,
+                livyInfo,
+                name,
+                workspaceName,
+                sparkPoolName,
+                submitterName,
+                submitterId,
+                artifactId,
+                jobType,
+                result,
+                schedulerInfo,
+                pluginInfo,
                 errorInfo ?? new ChangeTrackingList<SparkServiceError>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 id,
-                appId.Value,
+                appId,
                 appInfo ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(state),
+                state,
                 log ?? new ChangeTrackingList<string>());
         }
 

@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> objectName = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<MigrationState> state = default;
-            Optional<string> statusMessage = default;
-            Optional<long> itemsCount = default;
-            Optional<long> itemsCompletedCount = default;
-            Optional<string> errorPrefix = default;
-            Optional<string> resultPrefix = default;
-            Optional<DateTimeOffset> lastStorageUpdate = default;
-            Optional<string> id = default;
+            string objectName = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            MigrationState? state = default;
+            string statusMessage = default;
+            long? itemsCount = default;
+            long? itemsCompletedCount = default;
+            string errorPrefix = default;
+            string resultPrefix = default;
+            DateTimeOffset? lastStorageUpdate = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -228,19 +228,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel(
-                id.Value,
+                id,
                 resultType,
                 serializedAdditionalRawData,
-                objectName.Value,
-                Optional.ToNullable(startedOn),
-                Optional.ToNullable(endedOn),
-                Optional.ToNullable(state),
-                statusMessage.Value,
-                Optional.ToNullable(itemsCount),
-                Optional.ToNullable(itemsCompletedCount),
-                errorPrefix.Value,
-                resultPrefix.Value,
-                Optional.ToNullable(lastStorageUpdate));
+                objectName,
+                startedOn,
+                endedOn,
+                state,
+                statusMessage,
+                itemsCount,
+                itemsCompletedCount,
+                errorPrefix,
+                resultPrefix,
+                lastStorageUpdate);
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel>.Write(ModelReaderWriterOptions options)

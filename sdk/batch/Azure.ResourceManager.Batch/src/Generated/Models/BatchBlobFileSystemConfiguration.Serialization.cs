@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Batch.Models
             }
             string accountName = default;
             string containerName = default;
-            Optional<string> accountKey = default;
-            Optional<string> sasKey = default;
-            Optional<string> blobfuseOptions = default;
+            string accountKey = default;
+            string sasKey = default;
+            string blobfuseOptions = default;
             string relativeMountPath = default;
-            Optional<ComputeNodeIdentityReference> identityReference = default;
+            ComputeNodeIdentityReference identityReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchBlobFileSystemConfiguration(
                 accountName,
                 containerName,
-                accountKey.Value,
-                sasKey.Value,
-                blobfuseOptions.Value,
+                accountKey,
+                sasKey,
+                blobfuseOptions,
                 relativeMountPath,
-                identityReference.Value,
+                identityReference,
                 serializedAdditionalRawData);
         }
 

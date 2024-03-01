@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -18,7 +17,7 @@ namespace Azure.Communication.PhoneNumbers
             {
                 return null;
             }
-            Optional<string> areaCode = default;
+            string areaCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("areaCode"u8))
@@ -27,7 +26,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new PhoneNumberAreaCode(areaCode.Value);
+            return new PhoneNumberAreaCode(areaCode);
         }
     }
 }

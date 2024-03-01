@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> timeGrain = default;
+            string name = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string timeGrain = default;
             IReadOnlyList<PerfMonSample> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PerfMonSet(
-                name.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                timeGrain.Value,
+                name,
+                startTime,
+                endTime,
+                timeGrain,
                 values ?? new ChangeTrackingList<PerfMonSample>(),
                 serializedAdditionalRawData);
         }

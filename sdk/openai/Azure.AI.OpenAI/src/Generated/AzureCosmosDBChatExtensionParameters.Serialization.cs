@@ -100,11 +100,11 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<OnYourDataAuthenticationOptions> authentication = default;
-            Optional<int> topNDocuments = default;
-            Optional<bool> inScope = default;
-            Optional<int> strictness = default;
-            Optional<string> roleInformation = default;
+            OnYourDataAuthenticationOptions authentication = default;
+            int? topNDocuments = default;
+            bool? inScope = default;
+            int? strictness = default;
+            string roleInformation = default;
             string databaseName = default;
             string containerName = default;
             string indexName = default;
@@ -187,11 +187,11 @@ namespace Azure.AI.OpenAI
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AzureCosmosDBChatExtensionParameters(
-                authentication.Value,
-                Optional.ToNullable(topNDocuments),
-                Optional.ToNullable(inScope),
-                Optional.ToNullable(strictness),
-                roleInformation.Value,
+                authentication,
+                topNDocuments,
+                inScope,
+                strictness,
+                roleInformation,
                 databaseName,
                 containerName,
                 indexName,

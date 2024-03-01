@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> recoveryPointExpiryTimeInUTC = default;
+            DateTimeOffset? recoveryPointExpiryTimeInUTC = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmBackupContent(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointExpiryTimeInUTC));
+            return new IaasVmBackupContent(objectType, serializedAdditionalRawData, recoveryPointExpiryTimeInUTC);
         }
 
         BinaryData IPersistableModel<IaasVmBackupContent>.Write(ModelReaderWriterOptions options)

@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             IList<string> nodes = default;
-            Optional<bool> force = default;
-            Optional<ServiceFabricManagedClusterUpdateType> updateType = default;
+            bool? force = default;
+            ServiceFabricManagedClusterUpdateType? updateType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodeTypeActionContent(nodes ?? new ChangeTrackingList<string>(), Optional.ToNullable(force), Optional.ToNullable(updateType), serializedAdditionalRawData);
+            return new NodeTypeActionContent(nodes ?? new ChangeTrackingList<string>(), force, updateType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodeTypeActionContent>.Write(ModelReaderWriterOptions options)

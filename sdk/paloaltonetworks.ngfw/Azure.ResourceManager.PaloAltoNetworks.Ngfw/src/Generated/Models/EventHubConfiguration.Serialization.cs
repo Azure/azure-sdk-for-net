@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> name = default;
-            Optional<string> nameSpace = default;
-            Optional<string> policyName = default;
+            ResourceIdentifier id = default;
+            string subscriptionId = default;
+            string name = default;
+            string nameSpace = default;
+            string policyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EventHubConfiguration(
-                id.Value,
-                subscriptionId.Value,
-                name.Value,
-                nameSpace.Value,
-                policyName.Value,
+                id,
+                subscriptionId,
+                name,
+                nameSpace,
+                policyName,
                 serializedAdditionalRawData);
         }
 

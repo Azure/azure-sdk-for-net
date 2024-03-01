@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<StoragePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<StoragePrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            SubResource privateEndpoint = default;
+            StoragePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            StoragePrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.Storage
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 privateEndpoint,
-                privateLinkServiceConnectionState.Value,
-                Optional.ToNullable(provisioningState),
+                privateLinkServiceConnectionState,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

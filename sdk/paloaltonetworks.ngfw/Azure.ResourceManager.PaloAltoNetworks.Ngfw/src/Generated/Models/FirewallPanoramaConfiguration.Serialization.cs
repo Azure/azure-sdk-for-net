@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 return null;
             }
             string configString = default;
-            Optional<string> vmAuthKey = default;
-            Optional<string> panoramaServer = default;
-            Optional<string> panoramaServer2 = default;
-            Optional<string> dgName = default;
-            Optional<string> tplName = default;
-            Optional<string> cgName = default;
-            Optional<string> hostName = default;
+            string vmAuthKey = default;
+            string panoramaServer = default;
+            string panoramaServer2 = default;
+            string dgName = default;
+            string tplName = default;
+            string cgName = default;
+            string hostName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,13 +161,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FirewallPanoramaConfiguration(
                 configString,
-                vmAuthKey.Value,
-                panoramaServer.Value,
-                panoramaServer2.Value,
-                dgName.Value,
-                tplName.Value,
-                cgName.Value,
-                hostName.Value,
+                vmAuthKey,
+                panoramaServer,
+                panoramaServer2,
+                dgName,
+                tplName,
+                cgName,
+                hostName,
                 serializedAdditionalRawData);
         }
 

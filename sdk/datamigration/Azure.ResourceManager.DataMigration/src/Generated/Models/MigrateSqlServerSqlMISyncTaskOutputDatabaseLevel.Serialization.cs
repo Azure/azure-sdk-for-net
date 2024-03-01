@@ -136,18 +136,18 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> sourceDatabaseName = default;
-            Optional<DatabaseMigrationState> migrationState = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<BackupSetInfo> fullBackupSetInfo = default;
-            Optional<BackupSetInfo> lastRestoredBackupSetInfo = default;
+            string sourceDatabaseName = default;
+            DatabaseMigrationState? migrationState = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            BackupSetInfo fullBackupSetInfo = default;
+            BackupSetInfo lastRestoredBackupSetInfo = default;
             IReadOnlyList<BackupSetInfo> activeBackupSets = default;
-            Optional<string> containerName = default;
-            Optional<string> errorPrefix = default;
-            Optional<bool> isFullBackupRestored = default;
+            string containerName = default;
+            string errorPrefix = default;
+            bool? isFullBackupRestored = default;
             IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
-            Optional<string> id = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -267,19 +267,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(
-                id.Value,
+                id,
                 resultType,
                 serializedAdditionalRawData,
-                sourceDatabaseName.Value,
-                Optional.ToNullable(migrationState),
-                Optional.ToNullable(startedOn),
-                Optional.ToNullable(endedOn),
-                fullBackupSetInfo.Value,
-                lastRestoredBackupSetInfo.Value,
+                sourceDatabaseName,
+                migrationState,
+                startedOn,
+                endedOn,
+                fullBackupSetInfo,
+                lastRestoredBackupSetInfo,
                 activeBackupSets ?? new ChangeTrackingList<BackupSetInfo>(),
-                containerName.Value,
-                errorPrefix.Value,
-                Optional.ToNullable(isFullBackupRestored),
+                containerName,
+                errorPrefix,
+                isFullBackupRestored,
                 exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
         }
 

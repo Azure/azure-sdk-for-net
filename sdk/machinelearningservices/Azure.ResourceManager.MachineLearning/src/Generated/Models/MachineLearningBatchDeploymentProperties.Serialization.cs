@@ -231,21 +231,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> compute = default;
-            Optional<BatchDeploymentConfiguration> deploymentConfiguration = default;
-            Optional<int> errorThreshold = default;
-            Optional<MachineLearningBatchLoggingLevel> loggingLevel = default;
-            Optional<int> maxConcurrencyPerInstance = default;
-            Optional<long> miniBatchSize = default;
-            Optional<MachineLearningAssetReferenceBase> model = default;
-            Optional<MachineLearningBatchOutputAction> outputAction = default;
-            Optional<string> outputFileName = default;
-            Optional<MachineLearningDeploymentProvisioningState> provisioningState = default;
-            Optional<MachineLearningDeploymentResourceConfiguration> resources = default;
-            Optional<MachineLearningBatchRetrySettings> retrySettings = default;
-            Optional<MachineLearningCodeConfiguration> codeConfiguration = default;
-            Optional<string> description = default;
-            Optional<string> environmentId = default;
+            string compute = default;
+            BatchDeploymentConfiguration deploymentConfiguration = default;
+            int? errorThreshold = default;
+            MachineLearningBatchLoggingLevel? loggingLevel = default;
+            int? maxConcurrencyPerInstance = default;
+            long? miniBatchSize = default;
+            MachineLearningAssetReferenceBase model = default;
+            MachineLearningBatchOutputAction? outputAction = default;
+            string outputFileName = default;
+            MachineLearningDeploymentProvisioningState? provisioningState = default;
+            MachineLearningDeploymentResourceConfiguration resources = default;
+            MachineLearningBatchRetrySettings retrySettings = default;
+            MachineLearningCodeConfiguration codeConfiguration = default;
+            string description = default;
+            string environmentId = default;
             IDictionary<string, string> environmentVariables = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -428,24 +428,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningBatchDeploymentProperties(
-                codeConfiguration.Value,
-                description.Value,
-                environmentId.Value,
+                codeConfiguration,
+                description,
+                environmentId,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                compute.Value,
-                deploymentConfiguration.Value,
-                Optional.ToNullable(errorThreshold),
-                Optional.ToNullable(loggingLevel),
-                Optional.ToNullable(maxConcurrencyPerInstance),
-                Optional.ToNullable(miniBatchSize),
-                model.Value,
-                Optional.ToNullable(outputAction),
-                outputFileName.Value,
-                Optional.ToNullable(provisioningState),
-                resources.Value,
-                retrySettings.Value);
+                compute,
+                deploymentConfiguration,
+                errorThreshold,
+                loggingLevel,
+                maxConcurrencyPerInstance,
+                miniBatchSize,
+                model,
+                outputAction,
+                outputFileName,
+                provisioningState,
+                resources,
+                retrySettings);
         }
 
         BinaryData IPersistableModel<MachineLearningBatchDeploymentProperties>.Write(ModelReaderWriterOptions options)

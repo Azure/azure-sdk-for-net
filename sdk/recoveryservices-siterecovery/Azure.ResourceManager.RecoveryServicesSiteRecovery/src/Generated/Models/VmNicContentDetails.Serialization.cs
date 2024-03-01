@@ -139,20 +139,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> nicId = default;
+            string nicId = default;
             IList<HyperVFailoverIPConfigDetails> ipConfigs = default;
-            Optional<string> selectionType = default;
-            Optional<string> recoveryNetworkSecurityGroupId = default;
-            Optional<bool> enableAcceleratedNetworkingOnRecovery = default;
-            Optional<string> tfoNetworkSecurityGroupId = default;
-            Optional<bool> enableAcceleratedNetworkingOnTfo = default;
-            Optional<string> recoveryNicName = default;
-            Optional<string> recoveryNicResourceGroupName = default;
-            Optional<bool> reuseExistingNic = default;
-            Optional<string> tfoNicName = default;
-            Optional<string> tfoNicResourceGroupName = default;
-            Optional<bool> tfoReuseExistingNic = default;
-            Optional<string> targetNicName = default;
+            string selectionType = default;
+            string recoveryNetworkSecurityGroupId = default;
+            bool? enableAcceleratedNetworkingOnRecovery = default;
+            string tfoNetworkSecurityGroupId = default;
+            bool? enableAcceleratedNetworkingOnTfo = default;
+            string recoveryNicName = default;
+            string recoveryNicResourceGroupName = default;
+            bool? reuseExistingNic = default;
+            string tfoNicName = default;
+            string tfoNicResourceGroupName = default;
+            bool? tfoReuseExistingNic = default;
+            string targetNicName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -259,20 +259,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VmNicContentDetails(
-                nicId.Value,
+                nicId,
                 ipConfigs ?? new ChangeTrackingList<HyperVFailoverIPConfigDetails>(),
-                selectionType.Value,
-                recoveryNetworkSecurityGroupId.Value,
-                Optional.ToNullable(enableAcceleratedNetworkingOnRecovery),
-                tfoNetworkSecurityGroupId.Value,
-                Optional.ToNullable(enableAcceleratedNetworkingOnTfo),
-                recoveryNicName.Value,
-                recoveryNicResourceGroupName.Value,
-                Optional.ToNullable(reuseExistingNic),
-                tfoNicName.Value,
-                tfoNicResourceGroupName.Value,
-                Optional.ToNullable(tfoReuseExistingNic),
-                targetNicName.Value,
+                selectionType,
+                recoveryNetworkSecurityGroupId,
+                enableAcceleratedNetworkingOnRecovery,
+                tfoNetworkSecurityGroupId,
+                enableAcceleratedNetworkingOnTfo,
+                recoveryNicName,
+                recoveryNicResourceGroupName,
+                reuseExistingNic,
+                tfoNicName,
+                tfoNicResourceGroupName,
+                tfoReuseExistingNic,
+                targetNicName,
                 serializedAdditionalRawData);
         }
 

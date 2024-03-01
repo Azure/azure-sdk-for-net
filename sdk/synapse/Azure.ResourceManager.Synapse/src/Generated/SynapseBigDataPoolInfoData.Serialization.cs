@@ -207,26 +207,26 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<BigDataPoolAutoScaleProperties> autoScale = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<BigDataPoolAutoPauseProperties> autoPause = default;
-            Optional<bool> isComputeIsolationEnabled = default;
-            Optional<bool> isAutotuneEnabled = default;
-            Optional<bool> sessionLevelPackagesEnabled = default;
-            Optional<int> cacheSize = default;
-            Optional<SynapseDynamicExecutorAllocation> dynamicExecutorAllocation = default;
-            Optional<string> sparkEventsFolder = default;
-            Optional<int> nodeCount = default;
-            Optional<BigDataPoolLibraryRequirements> libraryRequirements = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            BigDataPoolAutoScaleProperties autoScale = default;
+            DateTimeOffset? creationDate = default;
+            BigDataPoolAutoPauseProperties autoPause = default;
+            bool? isComputeIsolationEnabled = default;
+            bool? isAutotuneEnabled = default;
+            bool? sessionLevelPackagesEnabled = default;
+            int? cacheSize = default;
+            SynapseDynamicExecutorAllocation dynamicExecutorAllocation = default;
+            string sparkEventsFolder = default;
+            int? nodeCount = default;
+            BigDataPoolLibraryRequirements libraryRequirements = default;
             IList<BigDataPoolLibraryInfo> customLibraries = default;
-            Optional<BigDataPoolSparkConfigProperties> sparkConfigProperties = default;
-            Optional<string> sparkVersion = default;
-            Optional<string> defaultSparkLogFolder = default;
-            Optional<BigDataPoolNodeSize> nodeSize = default;
-            Optional<BigDataPoolNodeSizeFamily> nodeSizeFamily = default;
-            Optional<DateTimeOffset> lastSucceededTimestamp = default;
+            BigDataPoolSparkConfigProperties sparkConfigProperties = default;
+            string sparkVersion = default;
+            string defaultSparkLogFolder = default;
+            BigDataPoolNodeSize? nodeSize = default;
+            BigDataPoolNodeSizeFamily? nodeSizeFamily = default;
+            DateTimeOffset? lastSucceededTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -456,28 +456,28 @@ namespace Azure.ResourceManager.Synapse
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState.Value,
-                autoScale.Value,
-                Optional.ToNullable(creationDate),
-                autoPause.Value,
-                Optional.ToNullable(isComputeIsolationEnabled),
-                Optional.ToNullable(isAutotuneEnabled),
-                Optional.ToNullable(sessionLevelPackagesEnabled),
-                Optional.ToNullable(cacheSize),
-                dynamicExecutorAllocation.Value,
-                sparkEventsFolder.Value,
-                Optional.ToNullable(nodeCount),
-                libraryRequirements.Value,
+                provisioningState,
+                autoScale,
+                creationDate,
+                autoPause,
+                isComputeIsolationEnabled,
+                isAutotuneEnabled,
+                sessionLevelPackagesEnabled,
+                cacheSize,
+                dynamicExecutorAllocation,
+                sparkEventsFolder,
+                nodeCount,
+                libraryRequirements,
                 customLibraries ?? new ChangeTrackingList<BigDataPoolLibraryInfo>(),
-                sparkConfigProperties.Value,
-                sparkVersion.Value,
-                defaultSparkLogFolder.Value,
-                Optional.ToNullable(nodeSize),
-                Optional.ToNullable(nodeSizeFamily),
-                Optional.ToNullable(lastSucceededTimestamp),
+                sparkConfigProperties,
+                sparkVersion,
+                defaultSparkLogFolder,
+                nodeSize,
+                nodeSizeFamily,
+                lastSucceededTimestamp,
                 serializedAdditionalRawData);
         }
 

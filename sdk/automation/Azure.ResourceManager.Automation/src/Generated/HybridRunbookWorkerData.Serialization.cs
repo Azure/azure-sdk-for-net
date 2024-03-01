@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> ip = default;
-            Optional<DateTimeOffset> registeredDateTime = default;
-            Optional<DateTimeOffset> lastSeenDateTime = default;
-            Optional<ResourceIdentifier> vmResourceId = default;
-            Optional<HybridWorkerType> workerType = default;
-            Optional<string> workerName = default;
+            SystemData systemData = default;
+            string ip = default;
+            DateTimeOffset? registeredDateTime = default;
+            DateTimeOffset? lastSeenDateTime = default;
+            ResourceIdentifier vmResourceId = default;
+            HybridWorkerType? workerType = default;
+            string workerName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,13 +225,13 @@ namespace Azure.ResourceManager.Automation
                 id,
                 name,
                 type,
-                systemData.Value,
-                ip.Value,
-                Optional.ToNullable(registeredDateTime),
-                Optional.ToNullable(lastSeenDateTime),
-                vmResourceId.Value,
-                Optional.ToNullable(workerType),
-                workerName.Value,
+                systemData,
+                ip,
+                registeredDateTime,
+                lastSeenDateTime,
+                vmResourceId,
+                workerType,
+                workerName,
                 serializedAdditionalRawData);
         }
 

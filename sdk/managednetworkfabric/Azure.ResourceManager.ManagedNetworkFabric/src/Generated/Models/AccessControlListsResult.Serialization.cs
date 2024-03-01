@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             IReadOnlyList<NetworkFabricAccessControlListData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessControlListsResult(value ?? new ChangeTrackingList<NetworkFabricAccessControlListData>(), nextLink.Value, serializedAdditionalRawData);
+            return new AccessControlListsResult(value ?? new ChangeTrackingList<NetworkFabricAccessControlListData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccessControlListsResult>.Write(ModelReaderWriterOptions options)

@@ -165,18 +165,18 @@ namespace Azure.ResourceManager.Analysis
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ServerAdministrators> asAdministrators = default;
-            Optional<Uri> backupBlobContainerUri = default;
-            Optional<AnalysisGatewayDetails> gatewayDetails = default;
-            Optional<AnalysisIPv4FirewallSettings> ipV4FirewallSettings = default;
-            Optional<AnalysisConnectionMode> querypoolConnectionMode = default;
-            Optional<AnalysisManagedMode> managedMode = default;
-            Optional<ServerMonitorMode> serverMonitorMode = default;
-            Optional<AnalysisState> state = default;
-            Optional<AnalysisProvisioningState> provisioningState = default;
-            Optional<string> serverFullName = default;
-            Optional<AnalysisResourceSku> sku0 = default;
+            SystemData systemData = default;
+            ServerAdministrators asAdministrators = default;
+            Uri backupBlobContainerUri = default;
+            AnalysisGatewayDetails gatewayDetails = default;
+            AnalysisIPv4FirewallSettings ipV4FirewallSettings = default;
+            AnalysisConnectionMode? querypoolConnectionMode = default;
+            AnalysisManagedMode? managedMode = default;
+            ServerMonitorMode? serverMonitorMode = default;
+            AnalysisState? state = default;
+            AnalysisProvisioningState? provisioningState = default;
+            string serverFullName = default;
+            AnalysisResourceSku sku0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -346,20 +346,20 @@ namespace Azure.ResourceManager.Analysis
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                asAdministrators.Value,
-                backupBlobContainerUri.Value,
-                gatewayDetails.Value,
-                ipV4FirewallSettings.Value,
-                Optional.ToNullable(querypoolConnectionMode),
-                Optional.ToNullable(managedMode),
-                Optional.ToNullable(serverMonitorMode),
-                Optional.ToNullable(state),
-                Optional.ToNullable(provisioningState),
-                serverFullName.Value,
-                sku0.Value,
+                asAdministrators,
+                backupBlobContainerUri,
+                gatewayDetails,
+                ipV4FirewallSettings,
+                querypoolConnectionMode,
+                managedMode,
+                serverMonitorMode,
+                state,
+                provisioningState,
+                serverFullName,
+                sku0,
                 sku,
                 serializedAdditionalRawData);
         }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -21,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             AnomalySeverity maxSeverity = default;
             AnomalyIncidentStatus incidentStatus = default;
             double valueOfRootNode = default;
-            Optional<double?> expectedValueOfRootNode = default;
+            double? expectedValueOfRootNode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxSeverity"u8))
@@ -50,7 +49,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new IncidentProperty(maxSeverity, incidentStatus, valueOfRootNode, Optional.ToNullable(expectedValueOfRootNode));
+            return new IncidentProperty(maxSeverity, incidentStatus, valueOfRootNode, expectedValueOfRootNode);
         }
     }
 }

@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.Models
                 return null;
             }
             string name = default;
-            Optional<ArmSkuTier> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<int> capacity = default;
+            ArmSkuTier? tier = default;
+            string size = default;
+            string family = default;
+            int? capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new ArmSku(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity));
+            return new ArmSku(name, tier, size, family, capacity);
         }
 
         BinaryData IPersistableModel<ArmSku>.Write(ModelReaderWriterOptions options)

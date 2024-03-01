@@ -58,12 +58,12 @@ namespace Azure.Communication.MediaComposition
             }
             string presenterId = default;
             string supportId = default;
-            Optional<SupportPosition> supportPosition = default;
-            Optional<double> supportAspectRatio = default;
+            SupportPosition? supportPosition = default;
+            double? supportAspectRatio = default;
             LayoutType kind = default;
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> placeholderImageUri = default;
-            Optional<ScalingMode> scalingMode = default;
+            LayoutResolution resolution = default;
+            string placeholderImageUri = default;
+            ScalingMode? scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("presenterId"u8))
@@ -125,13 +125,13 @@ namespace Azure.Communication.MediaComposition
             }
             return new PresenterLayout(
                 kind,
-                resolution.Value,
-                placeholderImageUri.Value,
-                Optional.ToNullable(scalingMode),
+                resolution,
+                placeholderImageUri,
+                scalingMode,
                 presenterId,
                 supportId,
-                Optional.ToNullable(supportPosition),
-                Optional.ToNullable(supportAspectRatio));
+                supportPosition,
+                supportAspectRatio);
         }
     }
 }

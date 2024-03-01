@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.ContainerRegistry
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerRegistryWebhookStatus> status = default;
-            Optional<string> scope = default;
+            SystemData systemData = default;
+            ContainerRegistryWebhookStatus? status = default;
+            string scope = default;
             IList<ContainerRegistryWebhookAction> actions = default;
-            Optional<ContainerRegistryProvisioningState> provisioningState = default;
+            ContainerRegistryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,13 +243,13 @@ namespace Azure.ResourceManager.ContainerRegistry
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(status),
-                scope.Value,
+                status,
+                scope,
                 actions ?? new ChangeTrackingList<ContainerRegistryWebhookAction>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

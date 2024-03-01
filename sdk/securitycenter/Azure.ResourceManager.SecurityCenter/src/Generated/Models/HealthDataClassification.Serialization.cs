@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> component = default;
-            Optional<string> scenario = default;
-            Optional<string> scope = default;
+            string component = default;
+            string scenario = default;
+            string scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthDataClassification(component.Value, scenario.Value, scope.Value, serializedAdditionalRawData);
+            return new HealthDataClassification(component, scenario, scope, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthDataClassification>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<EncryptionSchemeDefaultKey> defaultKey = default;
+            EncryptionSchemeDefaultKey defaultKey = default;
             IList<StreamingPolicyContentKey> keyToTrackMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingPolicyContentKeys(defaultKey.Value, keyToTrackMappings ?? new ChangeTrackingList<StreamingPolicyContentKey>(), serializedAdditionalRawData);
+            return new StreamingPolicyContentKeys(defaultKey, keyToTrackMappings ?? new ChangeTrackingList<StreamingPolicyContentKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingPolicyContentKeys>.Write(ModelReaderWriterOptions options)

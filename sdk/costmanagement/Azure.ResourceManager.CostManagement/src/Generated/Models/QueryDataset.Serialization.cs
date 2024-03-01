@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<GranularityType> granularity = default;
-            Optional<QueryDatasetConfiguration> configuration = default;
+            GranularityType? granularity = default;
+            QueryDatasetConfiguration configuration = default;
             IDictionary<string, QueryAggregation> aggregation = default;
             IList<QueryGrouping> grouping = default;
-            Optional<QueryFilter> filter = default;
+            QueryFilter filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new QueryDataset(
-                Optional.ToNullable(granularity),
-                configuration.Value,
+                granularity,
+                configuration,
                 aggregation ?? new ChangeTrackingDictionary<string, QueryAggregation>(),
                 grouping ?? new ChangeTrackingList<QueryGrouping>(),
-                filter.Value,
+                filter,
                 serializedAdditionalRawData);
         }
 

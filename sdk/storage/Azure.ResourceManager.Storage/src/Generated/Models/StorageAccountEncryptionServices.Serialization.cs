@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<StorageEncryptionService> blob = default;
-            Optional<StorageEncryptionService> file = default;
-            Optional<StorageEncryptionService> table = default;
-            Optional<StorageEncryptionService> queue = default;
+            StorageEncryptionService blob = default;
+            StorageEncryptionService file = default;
+            StorageEncryptionService table = default;
+            StorageEncryptionService queue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountEncryptionServices(blob.Value, file.Value, table.Value, queue.Value, serializedAdditionalRawData);
+            return new StorageAccountEncryptionServices(blob, file, table, queue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountEncryptionServices>.Write(ModelReaderWriterOptions options)

@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> oracleReaderQuery = default;
-            Optional<DataFactoryElement<string>> queryTimeout = default;
-            Optional<DataFactoryElement<string>> partitionOption = default;
-            Optional<OraclePartitionSettings> partitionSettings = default;
-            Optional<BinaryData> additionalColumns = default;
+            DataFactoryElement<string> oracleReaderQuery = default;
+            DataFactoryElement<string> queryTimeout = default;
+            DataFactoryElement<string> partitionOption = default;
+            OraclePartitionSettings partitionSettings = default;
+            BinaryData additionalColumns = default;
             string type = default;
-            Optional<DataFactoryElement<int>> sourceRetryCount = default;
-            Optional<DataFactoryElement<string>> sourceRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> sourceRetryCount = default;
+            DataFactoryElement<string> sourceRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,16 +221,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new OracleSource(
                 type,
-                sourceRetryCount.Value,
-                sourceRetryWait.Value,
-                maxConcurrentConnections.Value,
-                disableMetricsCollection.Value,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
                 additionalProperties,
-                oracleReaderQuery.Value,
-                queryTimeout.Value,
-                partitionOption.Value,
-                partitionSettings.Value,
-                additionalColumns.Value);
+                oracleReaderQuery,
+                queryTimeout,
+                partitionOption,
+                partitionSettings,
+                additionalColumns);
         }
 
         BinaryData IPersistableModel<OracleSource>.Write(ModelReaderWriterOptions options)

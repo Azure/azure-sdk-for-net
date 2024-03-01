@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string diskId = default;
-            Optional<StorageAccountCustomDetails> primaryStagingStorageAccountCustomContent = default;
-            Optional<RecoveryResourceGroupCustomDetails> recoveryResourceGroupCustomContent = default;
-            Optional<string> recoveryReplicaDiskAccountType = default;
-            Optional<string> recoveryTargetDiskAccountType = default;
-            Optional<ResourceIdentifier> recoveryDiskEncryptionSetId = default;
-            Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
+            StorageAccountCustomDetails primaryStagingStorageAccountCustomContent = default;
+            RecoveryResourceGroupCustomDetails recoveryResourceGroupCustomContent = default;
+            string recoveryReplicaDiskAccountType = default;
+            string recoveryTargetDiskAccountType = default;
+            ResourceIdentifier recoveryDiskEncryptionSetId = default;
+            SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,12 +166,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new A2AProtectionIntentManagedDiskDetails(
                 diskId,
-                primaryStagingStorageAccountCustomContent.Value,
-                recoveryResourceGroupCustomContent.Value,
-                recoveryReplicaDiskAccountType.Value,
-                recoveryTargetDiskAccountType.Value,
-                recoveryDiskEncryptionSetId.Value,
-                diskEncryptionInfo.Value,
+                primaryStagingStorageAccountCustomContent,
+                recoveryResourceGroupCustomContent,
+                recoveryReplicaDiskAccountType,
+                recoveryTargetDiskAccountType,
+                recoveryDiskEncryptionSetId,
+                diskEncryptionInfo,
                 serializedAdditionalRawData);
         }
 

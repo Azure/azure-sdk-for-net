@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<OpenIdConnectRegistration> registration = default;
-            Optional<OpenIdConnectLogin> login = default;
+            bool? enabled = default;
+            OpenIdConnectRegistration registration = default;
+            OpenIdConnectLogin login = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomOpenIdConnectProvider(Optional.ToNullable(enabled), registration.Value, login.Value, serializedAdditionalRawData);
+            return new CustomOpenIdConnectProvider(enabled, registration, login, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomOpenIdConnectProvider>.Write(ModelReaderWriterOptions options)

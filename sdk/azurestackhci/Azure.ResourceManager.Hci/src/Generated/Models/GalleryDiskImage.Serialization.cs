@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<long> sizeInMB = default;
+            long? sizeInMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryDiskImage(Optional.ToNullable(sizeInMB), serializedAdditionalRawData);
+            return new GalleryDiskImage(sizeInMB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryDiskImage>.Write(ModelReaderWriterOptions options)

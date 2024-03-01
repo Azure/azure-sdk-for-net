@@ -149,19 +149,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
-            Optional<ResourceIdentifier> importRoutePolicyId = default;
-            Optional<ResourceIdentifier> exportRoutePolicyId = default;
-            Optional<ImportRoutePolicy> importRoutePolicy = default;
-            Optional<ExportRoutePolicy> exportRoutePolicy = default;
-            Optional<ResourceIdentifier> networkToNetworkInterconnectId = default;
+            SystemData systemData = default;
+            string annotation = default;
+            ResourceIdentifier importRoutePolicyId = default;
+            ResourceIdentifier exportRoutePolicyId = default;
+            ImportRoutePolicy importRoutePolicy = default;
+            ExportRoutePolicy exportRoutePolicy = default;
+            ResourceIdentifier networkToNetworkInterconnectId = default;
             PeeringOption peeringOption = default;
-            Optional<L3OptionBProperties> optionBProperties = default;
-            Optional<ExternalNetworkOptionAProperties> optionAProperties = default;
-            Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            L3OptionBProperties optionBProperties = default;
+            ExternalNetworkOptionAProperties optionAProperties = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -312,19 +312,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 id,
                 name,
                 type,
-                systemData.Value,
-                annotation.Value,
-                importRoutePolicyId.Value,
-                exportRoutePolicyId.Value,
-                importRoutePolicy.Value,
-                exportRoutePolicy.Value,
-                networkToNetworkInterconnectId.Value,
+                systemData,
+                annotation,
+                importRoutePolicyId,
+                exportRoutePolicyId,
+                importRoutePolicy,
+                exportRoutePolicy,
+                networkToNetworkInterconnectId,
                 peeringOption,
-                optionBProperties.Value,
-                optionAProperties.Value,
-                Optional.ToNullable(configurationState),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(administrativeState),
+                optionBProperties,
+                optionAProperties,
+                configurationState,
+                provisioningState,
+                administrativeState,
                 serializedAdditionalRawData);
         }
 

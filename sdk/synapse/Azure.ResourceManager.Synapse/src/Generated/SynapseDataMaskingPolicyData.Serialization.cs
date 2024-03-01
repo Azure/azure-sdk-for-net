@@ -124,17 +124,17 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> kind = default;
-            Optional<string> managedBy = default;
+            AzureLocation? location = default;
+            string kind = default;
+            string managedBy = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SynapseDataMaskingState> dataMaskingState = default;
-            Optional<string> exemptPrincipals = default;
-            Optional<string> applicationPrincipals = default;
-            Optional<string> maskingLevel = default;
+            SystemData systemData = default;
+            SynapseDataMaskingState? dataMaskingState = default;
+            string exemptPrincipals = default;
+            string applicationPrincipals = default;
+            string maskingLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,14 +228,14 @@ namespace Azure.ResourceManager.Synapse
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                kind.Value,
-                managedBy.Value,
-                Optional.ToNullable(dataMaskingState),
-                exemptPrincipals.Value,
-                applicationPrincipals.Value,
-                maskingLevel.Value,
+                systemData,
+                location,
+                kind,
+                managedBy,
+                dataMaskingState,
+                exemptPrincipals,
+                applicationPrincipals,
+                maskingLevel,
                 serializedAdditionalRawData);
         }
 

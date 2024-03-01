@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> appLocation = default;
-            Optional<string> apiLocation = default;
-            Optional<string> appArtifactLocation = default;
-            Optional<string> outputLocation = default;
-            Optional<string> appBuildCommand = default;
-            Optional<string> apiBuildCommand = default;
-            Optional<bool> skipGithubActionWorkflowGeneration = default;
-            Optional<string> githubActionSecretNameOverride = default;
+            string appLocation = default;
+            string apiLocation = default;
+            string appArtifactLocation = default;
+            string outputLocation = default;
+            string appBuildCommand = default;
+            string apiBuildCommand = default;
+            bool? skipGithubActionWorkflowGeneration = default;
+            string githubActionSecretNameOverride = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,14 +167,14 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StaticSiteBuildProperties(
-                appLocation.Value,
-                apiLocation.Value,
-                appArtifactLocation.Value,
-                outputLocation.Value,
-                appBuildCommand.Value,
-                apiBuildCommand.Value,
-                Optional.ToNullable(skipGithubActionWorkflowGeneration),
-                githubActionSecretNameOverride.Value,
+                appLocation,
+                apiLocation,
+                appArtifactLocation,
+                outputLocation,
+                appBuildCommand,
+                apiBuildCommand,
+                skipGithubActionWorkflowGeneration,
+                githubActionSecretNameOverride,
                 serializedAdditionalRawData);
         }
 

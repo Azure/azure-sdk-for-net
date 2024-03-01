@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> appId = default;
-            Optional<string> appSecretSettingName = default;
+            string appId = default;
+            string appSecretSettingName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppRegistration(appId.Value, appSecretSettingName.Value, serializedAdditionalRawData);
+            return new ContainerAppRegistration(appId, appSecretSettingName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppRegistration>.Write(ModelReaderWriterOptions options)

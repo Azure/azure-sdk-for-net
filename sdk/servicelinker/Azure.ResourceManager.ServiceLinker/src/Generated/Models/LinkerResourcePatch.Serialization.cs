@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<TargetServiceBaseInfo> targetService = default;
-            Optional<AuthBaseInfo> authInfo = default;
-            Optional<LinkerClientType> clientType = default;
-            Optional<string> provisioningState = default;
-            Optional<VnetSolution> vnetSolution = default;
-            Optional<LinkerSecretStore> secretStore = default;
-            Optional<string> scope = default;
+            TargetServiceBaseInfo targetService = default;
+            AuthBaseInfo authInfo = default;
+            LinkerClientType? clientType = default;
+            string provisioningState = default;
+            VnetSolution vnetSolution = default;
+            LinkerSecretStore secretStore = default;
+            string scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,13 +215,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LinkerResourcePatch(
-                targetService.Value,
-                authInfo.Value,
-                Optional.ToNullable(clientType),
-                provisioningState.Value,
-                vnetSolution.Value,
-                secretStore.Value,
-                scope.Value,
+                targetService,
+                authInfo,
+                clientType,
+                provisioningState,
+                vnetSolution,
+                secretStore,
+                scope,
                 serializedAdditionalRawData);
         }
 

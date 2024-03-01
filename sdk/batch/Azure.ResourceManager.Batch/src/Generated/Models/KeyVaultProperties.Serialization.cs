@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<Uri> keyIdentifier = default;
+            Uri keyIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultProperties(keyIdentifier.Value, serializedAdditionalRawData);
+            return new KeyVaultProperties(keyIdentifier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultProperties>.Write(ModelReaderWriterOptions options)

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<long> cpuCount = default;
-            Optional<long> memoryMB = default;
-            Optional<long> vmCount = default;
+            long? cpuCount = default;
+            long? memoryMB = default;
+            long? vmCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudCapacity(Optional.ToNullable(cpuCount), Optional.ToNullable(memoryMB), Optional.ToNullable(vmCount), serializedAdditionalRawData);
+            return new CloudCapacity(cpuCount, memoryMB, vmCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudCapacity>.Write(ModelReaderWriterOptions options)

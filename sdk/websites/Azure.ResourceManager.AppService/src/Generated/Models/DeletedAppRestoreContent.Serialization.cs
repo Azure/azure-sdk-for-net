@@ -113,15 +113,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> deletedSiteId = default;
-            Optional<bool> recoverConfiguration = default;
-            Optional<string> snapshotTime = default;
-            Optional<bool> useDRSecondary = default;
+            SystemData systemData = default;
+            ResourceIdentifier deletedSiteId = default;
+            bool? recoverConfiguration = default;
+            string snapshotTime = default;
+            bool? useDRSecondary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,12 +209,12 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                deletedSiteId.Value,
-                Optional.ToNullable(recoverConfiguration),
-                snapshotTime.Value,
-                Optional.ToNullable(useDRSecondary),
-                kind.Value,
+                systemData,
+                deletedSiteId,
+                recoverConfiguration,
+                snapshotTime,
+                useDRSecondary,
+                kind,
                 serializedAdditionalRawData);
         }
 

@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> familyName = default;
+            string name = default;
+            string familyName = default;
             IReadOnlyList<BatchSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchSupportedSku(name.Value, familyName.Value, capabilities ?? new ChangeTrackingList<BatchSkuCapability>(), serializedAdditionalRawData);
+            return new BatchSupportedSku(name, familyName, capabilities ?? new ChangeTrackingList<BatchSkuCapability>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchSupportedSku>.Write(ModelReaderWriterOptions options)
