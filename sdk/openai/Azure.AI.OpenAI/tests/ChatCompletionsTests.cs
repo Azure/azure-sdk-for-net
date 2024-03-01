@@ -130,8 +130,9 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices[0].LogProbabilityInfo?.TokenLogProbabilityResults, Is.Not.Null.Or.Empty);
-            var probResults = response.Value.Choices[0].LogProbabilityInfo.TokenLogProbabilityResults;
+            var probResults = response.Value.Choices[0].LogProbabilityInfo?.TokenLogProbabilityResults;
+
+            Assert.That(probResults, Is.Not.Null.Or.Empty);
 
             foreach (ChatTokenLogProbabilityResult result in probResults)
             {
