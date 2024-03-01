@@ -84,7 +84,7 @@ namespace Azure.Core.Pipeline
 
             private static void ResetContentStreamPosition(PipelineResponse response)
             {
-                if (response.ContentStream is not null &&
+                if (response.ContentStream is MemoryStream &&
                     response.ContentStream.CanSeek &&
                     response.ContentStream.Position != 0)
                 {
