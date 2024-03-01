@@ -48,7 +48,6 @@ string monitorFilter = savedFilterResponse.Value.Filter;
 
 ## Update the monitored assets
 
-
 The monitored assets can be updated with an assets update call:
 
 ```C# Snippet:Sample4_SavedFilters_Update_Monitored_Assets
@@ -56,7 +55,6 @@ AssetUpdatePayload assetUpdateRequest = new AssetUpdatePayload();
 assetUpdateRequest.State = AssetUpdateState.Confirmed;
 client.UpdateAssets(monitorFilter, assetUpdateRequest);
 ```
-
 
 ## Update Filter if Needed
 

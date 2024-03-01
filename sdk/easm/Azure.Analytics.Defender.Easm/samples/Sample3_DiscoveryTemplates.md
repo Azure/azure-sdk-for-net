@@ -27,7 +27,6 @@ foreach (DiscoveryTemplate template in response)
 
 ## Get the seeds associated with a template
 
-
 To get more detail about a disco template, we can use the `DiscoveryTemplatesGet` method. From here, we can see the names and seeds which would be used in a discovery run.
 
 ```C# Snippet:Sample3_DiscoTemplates_Get_Template_Seeds

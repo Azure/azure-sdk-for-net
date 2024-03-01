@@ -53,9 +53,11 @@ Defender EASM includes the discovery of the following kinds of assets:
 These asset types comprise your attack surface inventory in Defender EASM. This solution discovers externally facing assets that are exposed to the open internet outside of traditional firewall protection; they need to be monitored and maintained to minimize risk and improve an organization’s security posture. Microsoft Defender External Attack Surface Management (Defender EASM) actively discovers and monitors these assets, then surfacing key insights that help customers efficiently address any vulnerabilities in their organization.
 
 ### [Discovery][discovery_documentation]
+
 Microsoft Defender External Attack Surface Management (Defender EASM) relies on our proprietary discovery technology to continuously define your organization’s unique Internet-exposed attack surface. Discovery scans known assets owned by your organization to uncover previously unknown and unmonitored properties. Discovered assets are indexed in a customer’s inventory, providing a dynamic system of record of web applications, third party dependencies, and web infrastructure under the organization’s management through a single pane of glass.
 
-#### [Discovery Groups][discovery_groups_documentation]
+#### [Discovery groups][discovery_groups_documentation]
+
 Custom discoveries are organized into Discovery Groups. They are independent seed clusters that comprise a single discovery run and operate on their own recurrence schedules. Users can elect to organize their Discovery Groups to delineate assets in whatever way best benefits their company and workflows. Common options include organizing by responsible team/business unit, brands or subsidiaries.
 
 ### Thread safety
@@ -63,6 +65,7 @@ Custom discoveries are organized into Discovery Groups. They are independent see
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
 
 ### Additional concepts
+
 <!-- CLIENT COMMON BAR -->
 [Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
 [Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
