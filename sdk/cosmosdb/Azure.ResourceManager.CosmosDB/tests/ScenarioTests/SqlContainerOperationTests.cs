@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Data.Resource.IndexingPolicy.IndexingMode, actualValue.Data.Resource.IndexingPolicy.IndexingMode);
             Assert.AreEqual(expectedValue.Data.Resource.PartitionKey.Kind, actualValue.Data.Resource.PartitionKey.Kind);
             Assert.AreEqual(expectedValue.Data.Resource.PartitionKey.Paths, actualValue.Data.Resource.PartitionKey.Paths);
-            Assert.AreEqual(expectedValue.Data.Resource.DefaultTtl, restoreWithTtlDisabled ? 0 : actualValue.Data.Resource.DefaultTtl);
+            Assert.AreEqual(expectedValue.Data.Resource.DefaultTtl, restoreWithTtlDisabled ? null : actualValue.Data.Resource.DefaultTtl);
         }
         protected async Task<CosmosDBAccountResource> CreateDatabaseAccount(string name)
         {
