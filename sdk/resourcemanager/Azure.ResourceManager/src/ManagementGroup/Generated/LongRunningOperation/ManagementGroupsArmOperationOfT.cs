@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.ManagementGroups
     {
         private readonly OperationInternal<T> _operation;
         private readonly RehydrationToken? _rehydrationToken;
+        private readonly NextLinkOperationImplementation _nextLinkOperation;
 
         /// <summary> Initializes a new instance of ManagementGroupsArmOperation for mocking. </summary>
         protected ManagementGroupsArmOperation()
@@ -29,15 +30,22 @@ namespace Azure.ResourceManager.ManagementGroups
 
         internal ManagementGroupsArmOperation(Response<T> response, RehydrationToken? rehydrationToken = null)
         {
-            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value, rehydrationToken);
+            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
             _rehydrationToken = rehydrationToken;
         }
 
         internal ManagementGroupsArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
-            _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, response, "ManagementGroupsArmOperation", fallbackStrategy: new SequentialDelayStrategy());
-            _rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
+            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
+            if (nextLinkOperation is NextLinkOperationImplementation nextLinkOperationValue)
+            {
+                _nextLinkOperation = nextLinkOperationValue;
+            }
+            else
+            {
+                _rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
+            }
+            _operation = new OperationInternal<T>(NextLinkOperationImplementation.Create(source, nextLinkOperation), clientDiagnostics, response, "ManagementGroupsArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
         /// <inheritdoc />
@@ -47,7 +55,7 @@ namespace Azure.ResourceManager.ManagementGroups
 #pragma warning restore CA1822
 
         /// <inheritdoc />
-        public override RehydrationToken? GetRehydrationToken() => _rehydrationToken;
+        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken() ?? _rehydrationToken;
 
         /// <inheritdoc />
         public override T Value => _operation.Value;

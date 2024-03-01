@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Resources
     {
         private readonly OperationInternal _operation;
         private readonly RehydrationToken? _rehydrationToken;
+        private readonly NextLinkOperationImplementation _nextLinkOperation;
 
         /// <summary> Initializes a new instance of ResourcesArmOperation for mocking. </summary>
         protected ResourcesArmOperation()
@@ -29,15 +30,22 @@ namespace Azure.ResourceManager.Resources
 
         internal ResourcesArmOperation(Response response, RehydrationToken? rehydrationToken = null)
         {
-            _operation = OperationInternal.Succeeded(response, rehydrationToken);
+            _operation = OperationInternal.Succeeded(response);
             _rehydrationToken = rehydrationToken;
         }
 
         internal ResourcesArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
+            if (nextLinkOperation is NextLinkOperationImplementation nextLinkOperationValue)
+            {
+                _nextLinkOperation = nextLinkOperationValue;
+            }
+            else
+            {
+                _rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
+            }
             _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "ResourcesArmOperation", fallbackStrategy: new SequentialDelayStrategy());
-            _rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
         }
 
         /// <inheritdoc />
@@ -47,7 +55,7 @@ namespace Azure.ResourceManager.Resources
 #pragma warning restore CA1822
 
         /// <inheritdoc />
-        public override RehydrationToken? GetRehydrationToken() => _rehydrationToken;
+        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken() ?? _rehydrationToken;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;

@@ -13,26 +13,14 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class TenantResource : IJsonModel<TenantData>
     {
-        void IJsonModel<TenantData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStringValue(ModelReaderWriter.Write(Data, options));
-        }
+        void IJsonModel<TenantData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TenantData>)Data).Write(writer, options);
 
-        TenantData IJsonModel<TenantData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Read<TenantData>(new BinaryData(reader.ValueSequence), options);
-        }
+        TenantData IJsonModel<TenantData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TenantData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TenantData>.Write(ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Write(Data, options);
-        }
+        BinaryData IPersistableModel<TenantData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        TenantData IPersistableModel<TenantData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Read<TenantData>(data, options);
-        }
+        TenantData IPersistableModel<TenantData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TenantData>(data, options);
 
-        string IPersistableModel<TenantData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TenantData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TenantData>)Data).GetFormatFromOptions(options);
     }
 }

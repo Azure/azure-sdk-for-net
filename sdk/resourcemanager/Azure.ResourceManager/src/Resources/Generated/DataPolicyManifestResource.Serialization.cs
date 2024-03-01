@@ -13,26 +13,14 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class DataPolicyManifestResource : IJsonModel<DataPolicyManifestData>
     {
-        void IJsonModel<DataPolicyManifestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStringValue(ModelReaderWriter.Write(Data, options));
-        }
+        void IJsonModel<DataPolicyManifestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataPolicyManifestData>)Data).Write(writer, options);
 
-        DataPolicyManifestData IJsonModel<DataPolicyManifestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Read<DataPolicyManifestData>(new BinaryData(reader.ValueSequence), options);
-        }
+        DataPolicyManifestData IJsonModel<DataPolicyManifestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataPolicyManifestData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataPolicyManifestData>.Write(ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Write(Data, options);
-        }
+        BinaryData IPersistableModel<DataPolicyManifestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DataPolicyManifestData IPersistableModel<DataPolicyManifestData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Read<DataPolicyManifestData>(data, options);
-        }
+        DataPolicyManifestData IPersistableModel<DataPolicyManifestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataPolicyManifestData>(data, options);
 
-        string IPersistableModel<DataPolicyManifestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataPolicyManifestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataPolicyManifestData>)Data).GetFormatFromOptions(options);
     }
 }

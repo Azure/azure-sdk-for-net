@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -36,8 +37,8 @@ namespace Azure.ResourceManager.Tests
             var rehydratedOrgOperation = new ArmOperation<ResourceGroupResource>(Client, rgOpRehydrationToken);
             var rehydratedOrgResponse = await rehydratedOrgOperation.UpdateStatusAsync();
             var response = rgOp.GetRawResponse();
-            Assert.AreEqual(201, response.Status);
-            Assert.AreEqual(200, rehydratedOrgResponse.Status);
+            Assert.AreEqual((int)HttpStatusCode.Created, response.Status);
+            Assert.AreEqual((int)HttpStatusCode.OK, rehydratedOrgResponse.Status);
             Assert.AreEqual(response.IsError, rehydratedOrgResponse.IsError);
             Assert.AreEqual(response.Headers.Count(), rehydratedOrgResponse.Headers.Count());
 
@@ -49,8 +50,8 @@ namespace Azure.ResourceManager.Tests
             var deleteOpRehydrationToken = deleteOp.GetRehydrationToken();
             var rehydratedDeleteOperation = new ArmOperation(Client, deleteOpRehydrationToken);
             var rehydatedDeleteResponse = await rehydratedDeleteOperation.UpdateStatusAsync();
-            Assert.AreEqual(deleteResponse.Status, rehydatedDeleteResponse.Status);
-            Assert.AreEqual(deleteResponse.ReasonPhrase, rehydatedDeleteResponse.ReasonPhrase);
+            Assert.AreEqual((int)HttpStatusCode.NoContent, rehydatedDeleteResponse.Status);
+            Assert.AreEqual(HttpStatusCode.NoContent.ToString(), rehydatedDeleteResponse.ReasonPhrase);
             Assert.AreEqual(deleteResponse.IsError, rehydatedDeleteResponse.IsError);
         }
 

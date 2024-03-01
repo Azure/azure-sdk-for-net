@@ -13,26 +13,14 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class PolicyAssignmentResource : IJsonModel<PolicyAssignmentData>
     {
-        void IJsonModel<PolicyAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStringValue(ModelReaderWriter.Write(Data, options));
-        }
+        void IJsonModel<PolicyAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PolicyAssignmentData>)Data).Write(writer, options);
 
-        PolicyAssignmentData IJsonModel<PolicyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Read<PolicyAssignmentData>(new BinaryData(reader.ValueSequence), options);
-        }
+        PolicyAssignmentData IJsonModel<PolicyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicyAssignmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PolicyAssignmentData>.Write(ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Write(Data, options);
-        }
+        BinaryData IPersistableModel<PolicyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        PolicyAssignmentData IPersistableModel<PolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Read<PolicyAssignmentData>(data, options);
-        }
+        PolicyAssignmentData IPersistableModel<PolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicyAssignmentData>(data, options);
 
-        string IPersistableModel<PolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicyAssignmentData>)Data).GetFormatFromOptions(options);
     }
 }

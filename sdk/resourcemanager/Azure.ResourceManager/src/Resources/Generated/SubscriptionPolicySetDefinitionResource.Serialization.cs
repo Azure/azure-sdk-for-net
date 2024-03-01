@@ -13,26 +13,14 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class SubscriptionPolicySetDefinitionResource : IJsonModel<PolicySetDefinitionData>
     {
-        void IJsonModel<PolicySetDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStringValue(ModelReaderWriter.Write(Data, options));
-        }
+        void IJsonModel<PolicySetDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PolicySetDefinitionData>)Data).Write(writer, options);
 
-        PolicySetDefinitionData IJsonModel<PolicySetDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Read<PolicySetDefinitionData>(new BinaryData(reader.ValueSequence), options);
-        }
+        PolicySetDefinitionData IJsonModel<PolicySetDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicySetDefinitionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PolicySetDefinitionData>.Write(ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Write(Data, options);
-        }
+        BinaryData IPersistableModel<PolicySetDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        PolicySetDefinitionData IPersistableModel<PolicySetDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Read<PolicySetDefinitionData>(data, options);
-        }
+        PolicySetDefinitionData IPersistableModel<PolicySetDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicySetDefinitionData>(data, options);
 
-        string IPersistableModel<PolicySetDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PolicySetDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicySetDefinitionData>)Data).GetFormatFromOptions(options);
     }
 }

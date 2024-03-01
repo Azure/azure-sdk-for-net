@@ -13,26 +13,14 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class ManagementLockResource : IJsonModel<ManagementLockData>
     {
-        void IJsonModel<ManagementLockData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStringValue(ModelReaderWriter.Write(Data, options));
-        }
+        void IJsonModel<ManagementLockData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagementLockData>)Data).Write(writer, options);
 
-        ManagementLockData IJsonModel<ManagementLockData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Read<ManagementLockData>(new BinaryData(reader.ValueSequence), options);
-        }
+        ManagementLockData IJsonModel<ManagementLockData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagementLockData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagementLockData>.Write(ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Write(Data, options);
-        }
+        BinaryData IPersistableModel<ManagementLockData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ManagementLockData IPersistableModel<ManagementLockData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Read<ManagementLockData>(data, options);
-        }
+        ManagementLockData IPersistableModel<ManagementLockData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagementLockData>(data, options);
 
-        string IPersistableModel<ManagementLockData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagementLockData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagementLockData>)Data).GetFormatFromOptions(options);
     }
 }

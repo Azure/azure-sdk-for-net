@@ -13,26 +13,14 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class TagResource : IJsonModel<TagResourceData>
     {
-        void IJsonModel<TagResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStringValue(ModelReaderWriter.Write(Data, options));
-        }
+        void IJsonModel<TagResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TagResourceData>)Data).Write(writer, options);
 
-        TagResourceData IJsonModel<TagResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Read<TagResourceData>(new BinaryData(reader.ValueSequence), options);
-        }
+        TagResourceData IJsonModel<TagResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TagResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TagResourceData>.Write(ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Write(Data, options);
-        }
+        BinaryData IPersistableModel<TagResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        TagResourceData IPersistableModel<TagResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Read<TagResourceData>(data, options);
-        }
+        TagResourceData IPersistableModel<TagResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TagResourceData>(data, options);
 
-        string IPersistableModel<TagResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TagResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TagResourceData>)Data).GetFormatFromOptions(options);
     }
 }

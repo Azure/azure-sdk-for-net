@@ -13,26 +13,14 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class ResourceGroupResource : IJsonModel<ResourceGroupData>
     {
-        void IJsonModel<ResourceGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStringValue(ModelReaderWriter.Write(Data, options));
-        }
+        void IJsonModel<ResourceGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceGroupData>)Data).Write(writer, options);
 
-        ResourceGroupData IJsonModel<ResourceGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Read<ResourceGroupData>(new BinaryData(reader.ValueSequence), options);
-        }
+        ResourceGroupData IJsonModel<ResourceGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ResourceGroupData>.Write(ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Write(Data, options);
-        }
+        BinaryData IPersistableModel<ResourceGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ResourceGroupData IPersistableModel<ResourceGroupData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Read<ResourceGroupData>(data, options);
-        }
+        ResourceGroupData IPersistableModel<ResourceGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceGroupData>(data, options);
 
-        string IPersistableModel<ResourceGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResourceGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceGroupData>)Data).GetFormatFromOptions(options);
     }
 }
