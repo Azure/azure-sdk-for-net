@@ -80,7 +80,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/easm/Azure.Analytics.Defender.Easm/samples).
 
-### View assets
+### View Assets
 
 You can call the client's `AssetsList` method to view your assets.
 
